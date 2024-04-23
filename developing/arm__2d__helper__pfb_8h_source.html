@@ -1580,21 +1580,21 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l01471" name="l01471"></a><span class="lineno"> 1471</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptNewRegion);</div>
 <div class="line"><a id="l01472" name="l01472"></a><span class="lineno"> 1472</span><span class="comment"></span> </div>
 <div class="line"><a id="l01473" name="l01473"></a><span class="lineno"> 1473</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01474" name="l01474"></a><span class="lineno"> 1474</span><span class="comment"> * \brief force the dirty region helper to use the minimal enclosure region to</span></div>
-<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span><span class="comment"> *        update.</span></div>
+<div class="line"><a id="l01474" name="l01474"></a><span class="lineno"> 1474</span><span class="comment"> * \brief force an arm_2d_helper_dirty_region_item_t object to use the minimal</span></div>
+<div class="line"><a id="l01475" name="l01475"></a><span class="lineno"> 1475</span><span class="comment"> *         enclosure region to update.</span></div>
 <div class="line"><a id="l01476" name="l01476"></a><span class="lineno"> 1476</span><span class="comment"> * </span></div>
-<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01477" name="l01477"></a><span class="lineno"> 1477</span><span class="comment"> * \param[in] ptThis the target item</span></div>
 <div class="line"><a id="l01478" name="l01478"></a><span class="lineno"> 1478</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
 <div class="line"><a id="l01479" name="l01479"></a><span class="lineno"> 1479</span><span class="comment"> * \return boolean the original setting</span></div>
 <div class="line"><a id="l01480" name="l01480"></a><span class="lineno"> 1480</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"> 1481</span>extern</div>
-<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"> 1482</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga975434ce493469363bdbb570018071ee"> 1483</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga975434ce493469363bdbb570018071ee" title="force the dirty region helper to use the minimal enclosure region to update.">arm_2d_helper_dirty_region_force_to_use_minimal_enclosure</a>(</div>
-<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis,</div>
-<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
-<div class="line"><a id="l01486" name="l01486"></a><span class="lineno"> 1486</span><span class="comment"></span> </div>
-<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span><span class="comment"> * \brief force the dirty region helper to suspend the dirty region update.</span></div>
+<div class="line"><a id="l01481" name="l01481"></a><span class="lineno"> 1481</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01482" name="l01482"></a><span class="lineno"><a class="line" href="group__gHelper.html#gabd30be2dad3dbf16854f95f966236628"> 1482</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gabd30be2dad3dbf16854f95f966236628" title="force an arm_2d_helper_dirty_region_item_t object to use the minimal enclosure region to update.">arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure</a>(</div>
+<div class="line"><a id="l01483" name="l01483"></a><span class="lineno"> 1483</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis,</div>
+<div class="line"><a id="l01484" name="l01484"></a><span class="lineno"> 1484</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
+<div class="line"><a id="l01485" name="l01485"></a><span class="lineno"> 1485</span><span class="comment"></span> </div>
+<div class="line"><a id="l01486" name="l01486"></a><span class="lineno"> 1486</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01487" name="l01487"></a><span class="lineno"> 1487</span><span class="comment"> * \brief force the dirty region helper to use the minimal enclosure region to</span></div>
+<div class="line"><a id="l01488" name="l01488"></a><span class="lineno"> 1488</span><span class="comment"> *        update.</span></div>
 <div class="line"><a id="l01489" name="l01489"></a><span class="lineno"> 1489</span><span class="comment"> * </span></div>
 <div class="line"><a id="l01490" name="l01490"></a><span class="lineno"> 1490</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
 <div class="line"><a id="l01491" name="l01491"></a><span class="lineno"> 1491</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
@@ -1602,88 +1602,88 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l01493" name="l01493"></a><span class="lineno"> 1493</span><span class="comment"> */</span></div>
 <div class="line"><a id="l01494" name="l01494"></a><span class="lineno"> 1494</span>extern</div>
 <div class="line"><a id="l01495" name="l01495"></a><span class="lineno"> 1495</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01496" name="l01496"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e"> 1496</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e" title="force the dirty region helper to suspend the dirty region update.">arm_2d_helper_dirty_region_suspend_update</a>(</div>
+<div class="line"><a id="l01496" name="l01496"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga975434ce493469363bdbb570018071ee"> 1496</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga975434ce493469363bdbb570018071ee" title="force the dirty region helper to use the minimal enclosure region to update.">arm_2d_helper_dirty_region_force_to_use_minimal_enclosure</a>(</div>
 <div class="line"><a id="l01497" name="l01497"></a><span class="lineno"> 1497</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis,</div>
 <div class="line"><a id="l01498" name="l01498"></a><span class="lineno"> 1498</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
 <div class="line"><a id="l01499" name="l01499"></a><span class="lineno"> 1499</span><span class="comment"></span> </div>
 <div class="line"><a id="l01500" name="l01500"></a><span class="lineno"> 1500</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01501" name="l01501"></a><span class="lineno"> 1501</span><span class="comment"> * \brief force the arm_2d_helper_dirty_region_item_t object to suspend the </span></div>
-<div class="line"><a id="l01502" name="l01502"></a><span class="lineno"> 1502</span><span class="comment"> *        dirty region update.</span></div>
-<div class="line"><a id="l01503" name="l01503"></a><span class="lineno"> 1503</span><span class="comment"> * </span></div>
-<div class="line"><a id="l01504" name="l01504"></a><span class="lineno"> 1504</span><span class="comment"> * \param[in] ptThis the target item</span></div>
-<div class="line"><a id="l01505" name="l01505"></a><span class="lineno"> 1505</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
-<div class="line"><a id="l01506" name="l01506"></a><span class="lineno"> 1506</span><span class="comment"> * \return boolean the original setting</span></div>
-<div class="line"><a id="l01507" name="l01507"></a><span class="lineno"> 1507</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01501" name="l01501"></a><span class="lineno"> 1501</span><span class="comment"> * \brief force the dirty region helper to suspend the dirty region update.</span></div>
+<div class="line"><a id="l01502" name="l01502"></a><span class="lineno"> 1502</span><span class="comment"> * </span></div>
+<div class="line"><a id="l01503" name="l01503"></a><span class="lineno"> 1503</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01504" name="l01504"></a><span class="lineno"> 1504</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
+<div class="line"><a id="l01505" name="l01505"></a><span class="lineno"> 1505</span><span class="comment"> * \return boolean the original setting</span></div>
+<div class="line"><a id="l01506" name="l01506"></a><span class="lineno"> 1506</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01507" name="l01507"></a><span class="lineno"> 1507</span>extern</div>
 <div class="line"><a id="l01508" name="l01508"></a><span class="lineno"> 1508</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01509" name="l01509"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43"> 1509</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43" title="force the arm_2d_helper_dirty_region_item_t object to suspend the dirty region update.">arm_2d_helper_dirty_region_item_suspend_update</a>(</div>
-<div class="line"><a id="l01510" name="l01510"></a><span class="lineno"> 1510</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis,</div>
+<div class="line"><a id="l01509" name="l01509"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e"> 1509</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e" title="force the dirty region helper to suspend the dirty region update.">arm_2d_helper_dirty_region_suspend_update</a>(</div>
+<div class="line"><a id="l01510" name="l01510"></a><span class="lineno"> 1510</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis,</div>
 <div class="line"><a id="l01511" name="l01511"></a><span class="lineno"> 1511</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
-<div class="line"><a id="l01512" name="l01512"></a><span class="lineno"> 1512</span> </div>
-<div class="line"><a id="l01513" name="l01513"></a><span class="lineno"> 1513</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
-<div class="line"><a id="l01514" name="l01514"></a><span class="lineno"> 1514</span><span class="comment"> * The Transform Helper Service                                               *</span></div>
-<div class="line"><a id="l01515" name="l01515"></a><span class="lineno"> 1515</span><span class="comment"> *----------------------------------------------------------------------------*/</span><span class="comment"></span></div>
-<div class="line"><a id="l01516" name="l01516"></a><span class="lineno"> 1516</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01517" name="l01517"></a><span class="lineno"> 1517</span><span class="comment"> * \brief initialize a given transform helper</span></div>
-<div class="line"><a id="l01518" name="l01518"></a><span class="lineno"> 1518</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01519" name="l01519"></a><span class="lineno"> 1519</span><span class="comment"> * \param[in] ptTransformOP the target transform OP, NULL is not accepted.</span></div>
-<div class="line"><a id="l01520" name="l01520"></a><span class="lineno"> 1520</span><span class="comment"> * \param[in] fAngleStep the minimal acceptable angle change. </span></div>
-<div class="line"><a id="l01521" name="l01521"></a><span class="lineno"> 1521</span><span class="comment"> * \param[in] fScaleStep the minimal acceptable scale ratio change.</span></div>
-<div class="line"><a id="l01522" name="l01522"></a><span class="lineno"> 1522</span><span class="comment"> * \param[in] ppDirtyRegionList the address of the dirty region list</span></div>
-<div class="line"><a id="l01523" name="l01523"></a><span class="lineno"> 1523</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01524" name="l01524"></a><span class="lineno"> 1524</span>extern</div>
-<div class="line"><a id="l01525" name="l01525"></a><span class="lineno"> 1525</span>ARM_NONNULL(1,2,5)</div>
-<div class="line"><a id="l01526" name="l01526"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e"> 1526</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e" title="initialize a given transform helper">arm_2d_helper_transform_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l01527" name="l01527"></a><span class="lineno"> 1527</span>                                  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__t" title="the base class for operations with only a target tile">arm_2d_op_t</a> *ptTransformOP,</div>
-<div class="line"><a id="l01528" name="l01528"></a><span class="lineno"> 1528</span>                                  <span class="keywordtype">float</span> fAngleStep,</div>
-<div class="line"><a id="l01529" name="l01529"></a><span class="lineno"> 1529</span>                                  <span class="keywordtype">float</span> fScaleStep,</div>
-<div class="line"><a id="l01530" name="l01530"></a><span class="lineno"> 1530</span>                                  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> **ppDirtyRegionList);</div>
-<div class="line"><a id="l01531" name="l01531"></a><span class="lineno"> 1531</span><span class="comment"></span> </div>
-<div class="line"><a id="l01532" name="l01532"></a><span class="lineno"> 1532</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01533" name="l01533"></a><span class="lineno"> 1533</span><span class="comment"> * \brief depose a given transform helper</span></div>
-<div class="line"><a id="l01534" name="l01534"></a><span class="lineno"> 1534</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01535" name="l01535"></a><span class="lineno"> 1535</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01536" name="l01536"></a><span class="lineno"> 1536</span>extern</div>
-<div class="line"><a id="l01537" name="l01537"></a><span class="lineno"> 1537</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01538" name="l01538"></a><span class="lineno"><a class="line" href="group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7"> 1538</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7" title="depose a given transform helper">arm_2d_helper_transform_depose</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
-<div class="line"><a id="l01539" name="l01539"></a><span class="lineno"> 1539</span><span class="comment"></span> </div>
-<div class="line"><a id="l01540" name="l01540"></a><span class="lineno"> 1540</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01541" name="l01541"></a><span class="lineno"> 1541</span><span class="comment"> * \brief the on-frame-begin event handler for a given transform helper</span></div>
-<div class="line"><a id="l01542" name="l01542"></a><span class="lineno"> 1542</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01543" name="l01543"></a><span class="lineno"> 1543</span><span class="comment"> * \note Usually this event handler should be insert the frame start event </span></div>
-<div class="line"><a id="l01544" name="l01544"></a><span class="lineno"> 1544</span><span class="comment"> *       handler of a target scene.</span></div>
-<div class="line"><a id="l01545" name="l01545"></a><span class="lineno"> 1545</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01546" name="l01546"></a><span class="lineno"> 1546</span>extern</div>
-<div class="line"><a id="l01547" name="l01547"></a><span class="lineno"> 1547</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01548" name="l01548"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e"> 1548</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e" title="the on-frame-begin event handler for a given transform helper">arm_2d_helper_transform_on_frame_begin</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
-<div class="line"><a id="l01549" name="l01549"></a><span class="lineno"> 1549</span><span class="comment"></span> </div>
-<div class="line"><a id="l01550" name="l01550"></a><span class="lineno"> 1550</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01551" name="l01551"></a><span class="lineno"> 1551</span><span class="comment"> * \brief force transform helper to update dirty region</span></div>
-<div class="line"><a id="l01552" name="l01552"></a><span class="lineno"> 1552</span><span class="comment"> *</span></div>
-<div class="line"><a id="l01553" name="l01553"></a><span class="lineno"> 1553</span><span class="comment"> * \note sometimes, we want to force transform helper to update dirty regions </span></div>
-<div class="line"><a id="l01554" name="l01554"></a><span class="lineno"> 1554</span><span class="comment"> *       even if both the angel and scale keep the same, for example, the pivots</span></div>
-<div class="line"><a id="l01555" name="l01555"></a><span class="lineno"> 1555</span><span class="comment"> *       are updated.</span></div>
-<div class="line"><a id="l01556" name="l01556"></a><span class="lineno"> 1556</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01557" name="l01557"></a><span class="lineno"> 1557</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01558" name="l01558"></a><span class="lineno"> 1558</span>extern</div>
-<div class="line"><a id="l01559" name="l01559"></a><span class="lineno"> 1559</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01560" name="l01560"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21"> 1560</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21" title="force transform helper to update dirty region">arm_2d_helper_transform_force_update</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
-<div class="line"><a id="l01561" name="l01561"></a><span class="lineno"> 1561</span><span class="comment"></span> </div>
-<div class="line"><a id="l01562" name="l01562"></a><span class="lineno"> 1562</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01563" name="l01563"></a><span class="lineno"> 1563</span><span class="comment"> * \brief force the transform helper to use the minimal enclosure region as</span></div>
-<div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span><span class="comment"> *        the dirty region.</span></div>
-<div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span><span class="comment"> * </span></div>
-<div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
-<div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span><span class="comment"> * \return boolean the original setting</span></div>
-<div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01570" name="l01570"></a><span class="lineno"> 1570</span>extern</div>
-<div class="line"><a id="l01571" name="l01571"></a><span class="lineno"> 1571</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01572" name="l01572"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae0692351fe401d6a3717e767ff4a9dd4"> 1572</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gae0692351fe401d6a3717e767ff4a9dd4" title="force the transform helper to use the minimal enclosure region as the dirty region.">arm_2d_helper_transform_force_to_use_minimal_enclosure</a>(</div>
-<div class="line"><a id="l01573" name="l01573"></a><span class="lineno"> 1573</span>                                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l01574" name="l01574"></a><span class="lineno"> 1574</span>                                            <span class="keywordtype">bool</span> bEnable);</div>
-<div class="line"><a id="l01575" name="l01575"></a><span class="lineno"> 1575</span><span class="comment"></span> </div>
-<div class="line"><a id="l01576" name="l01576"></a><span class="lineno"> 1576</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01577" name="l01577"></a><span class="lineno"> 1577</span><span class="comment"> * \brief force the transform helper to suspend the dirty region update.</span></div>
+<div class="line"><a id="l01512" name="l01512"></a><span class="lineno"> 1512</span><span class="comment"></span> </div>
+<div class="line"><a id="l01513" name="l01513"></a><span class="lineno"> 1513</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01514" name="l01514"></a><span class="lineno"> 1514</span><span class="comment"> * \brief force the arm_2d_helper_dirty_region_item_t object to suspend the </span></div>
+<div class="line"><a id="l01515" name="l01515"></a><span class="lineno"> 1515</span><span class="comment"> *        dirty region update.</span></div>
+<div class="line"><a id="l01516" name="l01516"></a><span class="lineno"> 1516</span><span class="comment"> * </span></div>
+<div class="line"><a id="l01517" name="l01517"></a><span class="lineno"> 1517</span><span class="comment"> * \param[in] ptThis the target item</span></div>
+<div class="line"><a id="l01518" name="l01518"></a><span class="lineno"> 1518</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
+<div class="line"><a id="l01519" name="l01519"></a><span class="lineno"> 1519</span><span class="comment"> * \return boolean the original setting</span></div>
+<div class="line"><a id="l01520" name="l01520"></a><span class="lineno"> 1520</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01521" name="l01521"></a><span class="lineno"> 1521</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01522" name="l01522"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43"> 1522</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43" title="force the arm_2d_helper_dirty_region_item_t object to suspend the dirty region update.">arm_2d_helper_dirty_region_item_suspend_update</a>(</div>
+<div class="line"><a id="l01523" name="l01523"></a><span class="lineno"> 1523</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis,</div>
+<div class="line"><a id="l01524" name="l01524"></a><span class="lineno"> 1524</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
+<div class="line"><a id="l01525" name="l01525"></a><span class="lineno"> 1525</span> </div>
+<div class="line"><a id="l01526" name="l01526"></a><span class="lineno"> 1526</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l01527" name="l01527"></a><span class="lineno"> 1527</span><span class="comment"> * The Transform Helper Service                                               *</span></div>
+<div class="line"><a id="l01528" name="l01528"></a><span class="lineno"> 1528</span><span class="comment"> *----------------------------------------------------------------------------*/</span><span class="comment"></span></div>
+<div class="line"><a id="l01529" name="l01529"></a><span class="lineno"> 1529</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01530" name="l01530"></a><span class="lineno"> 1530</span><span class="comment"> * \brief initialize a given transform helper</span></div>
+<div class="line"><a id="l01531" name="l01531"></a><span class="lineno"> 1531</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01532" name="l01532"></a><span class="lineno"> 1532</span><span class="comment"> * \param[in] ptTransformOP the target transform OP, NULL is not accepted.</span></div>
+<div class="line"><a id="l01533" name="l01533"></a><span class="lineno"> 1533</span><span class="comment"> * \param[in] fAngleStep the minimal acceptable angle change. </span></div>
+<div class="line"><a id="l01534" name="l01534"></a><span class="lineno"> 1534</span><span class="comment"> * \param[in] fScaleStep the minimal acceptable scale ratio change.</span></div>
+<div class="line"><a id="l01535" name="l01535"></a><span class="lineno"> 1535</span><span class="comment"> * \param[in] ppDirtyRegionList the address of the dirty region list</span></div>
+<div class="line"><a id="l01536" name="l01536"></a><span class="lineno"> 1536</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01537" name="l01537"></a><span class="lineno"> 1537</span>extern</div>
+<div class="line"><a id="l01538" name="l01538"></a><span class="lineno"> 1538</span>ARM_NONNULL(1,2,5)</div>
+<div class="line"><a id="l01539" name="l01539"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e"> 1539</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga076b6793e3c2fc6f1ef064ca700f667e" title="initialize a given transform helper">arm_2d_helper_transform_init</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l01540" name="l01540"></a><span class="lineno"> 1540</span>                                  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__t" title="the base class for operations with only a target tile">arm_2d_op_t</a> *ptTransformOP,</div>
+<div class="line"><a id="l01541" name="l01541"></a><span class="lineno"> 1541</span>                                  <span class="keywordtype">float</span> fAngleStep,</div>
+<div class="line"><a id="l01542" name="l01542"></a><span class="lineno"> 1542</span>                                  <span class="keywordtype">float</span> fScaleStep,</div>
+<div class="line"><a id="l01543" name="l01543"></a><span class="lineno"> 1543</span>                                  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> **ppDirtyRegionList);</div>
+<div class="line"><a id="l01544" name="l01544"></a><span class="lineno"> 1544</span><span class="comment"></span> </div>
+<div class="line"><a id="l01545" name="l01545"></a><span class="lineno"> 1545</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01546" name="l01546"></a><span class="lineno"> 1546</span><span class="comment"> * \brief depose a given transform helper</span></div>
+<div class="line"><a id="l01547" name="l01547"></a><span class="lineno"> 1547</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01548" name="l01548"></a><span class="lineno"> 1548</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01549" name="l01549"></a><span class="lineno"> 1549</span>extern</div>
+<div class="line"><a id="l01550" name="l01550"></a><span class="lineno"> 1550</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01551" name="l01551"></a><span class="lineno"><a class="line" href="group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7"> 1551</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gac827ff7995d260f06cd3f80c1df0e9b7" title="depose a given transform helper">arm_2d_helper_transform_depose</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
+<div class="line"><a id="l01552" name="l01552"></a><span class="lineno"> 1552</span><span class="comment"></span> </div>
+<div class="line"><a id="l01553" name="l01553"></a><span class="lineno"> 1553</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01554" name="l01554"></a><span class="lineno"> 1554</span><span class="comment"> * \brief the on-frame-begin event handler for a given transform helper</span></div>
+<div class="line"><a id="l01555" name="l01555"></a><span class="lineno"> 1555</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01556" name="l01556"></a><span class="lineno"> 1556</span><span class="comment"> * \note Usually this event handler should be insert the frame start event </span></div>
+<div class="line"><a id="l01557" name="l01557"></a><span class="lineno"> 1557</span><span class="comment"> *       handler of a target scene.</span></div>
+<div class="line"><a id="l01558" name="l01558"></a><span class="lineno"> 1558</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01559" name="l01559"></a><span class="lineno"> 1559</span>extern</div>
+<div class="line"><a id="l01560" name="l01560"></a><span class="lineno"> 1560</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01561" name="l01561"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e"> 1561</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga646d1178b70b862d77d33f8a84173f0e" title="the on-frame-begin event handler for a given transform helper">arm_2d_helper_transform_on_frame_begin</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
+<div class="line"><a id="l01562" name="l01562"></a><span class="lineno"> 1562</span><span class="comment"></span> </div>
+<div class="line"><a id="l01563" name="l01563"></a><span class="lineno"> 1563</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01564" name="l01564"></a><span class="lineno"> 1564</span><span class="comment"> * \brief force transform helper to update dirty region</span></div>
+<div class="line"><a id="l01565" name="l01565"></a><span class="lineno"> 1565</span><span class="comment"> *</span></div>
+<div class="line"><a id="l01566" name="l01566"></a><span class="lineno"> 1566</span><span class="comment"> * \note sometimes, we want to force transform helper to update dirty regions </span></div>
+<div class="line"><a id="l01567" name="l01567"></a><span class="lineno"> 1567</span><span class="comment"> *       even if both the angel and scale keep the same, for example, the pivots</span></div>
+<div class="line"><a id="l01568" name="l01568"></a><span class="lineno"> 1568</span><span class="comment"> *       are updated.</span></div>
+<div class="line"><a id="l01569" name="l01569"></a><span class="lineno"> 1569</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01570" name="l01570"></a><span class="lineno"> 1570</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01571" name="l01571"></a><span class="lineno"> 1571</span>extern</div>
+<div class="line"><a id="l01572" name="l01572"></a><span class="lineno"> 1572</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01573" name="l01573"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21"> 1573</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gae0a55fbb4852fbfaa59041efc6f1ce21" title="force transform helper to update dirty region">arm_2d_helper_transform_force_update</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis);</div>
+<div class="line"><a id="l01574" name="l01574"></a><span class="lineno"> 1574</span><span class="comment"></span> </div>
+<div class="line"><a id="l01575" name="l01575"></a><span class="lineno"> 1575</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01576" name="l01576"></a><span class="lineno"> 1576</span><span class="comment"> * \brief force the transform helper to use the minimal enclosure region as</span></div>
+<div class="line"><a id="l01577" name="l01577"></a><span class="lineno"> 1577</span><span class="comment"> *        the dirty region.</span></div>
 <div class="line"><a id="l01578" name="l01578"></a><span class="lineno"> 1578</span><span class="comment"> * </span></div>
 <div class="line"><a id="l01579" name="l01579"></a><span class="lineno"> 1579</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
 <div class="line"><a id="l01580" name="l01580"></a><span class="lineno"> 1580</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
@@ -1691,50 +1691,63 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l01582" name="l01582"></a><span class="lineno"> 1582</span><span class="comment"> */</span></div>
 <div class="line"><a id="l01583" name="l01583"></a><span class="lineno"> 1583</span>extern</div>
 <div class="line"><a id="l01584" name="l01584"></a><span class="lineno"> 1584</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01585" name="l01585"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga0492f59e2ed539c16683578ea80e2faf"> 1585</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga0492f59e2ed539c16683578ea80e2faf" title="force the transform helper to suspend the dirty region update.">arm_2d_helper_transform_suspend_update</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l01586" name="l01586"></a><span class="lineno"> 1586</span>                                            <span class="keywordtype">bool</span> bEnable);</div>
-<div class="line"><a id="l01587" name="l01587"></a><span class="lineno"> 1587</span><span class="comment"></span> </div>
-<div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span><span class="comment"> * \brief update a given transform helper with new values</span></div>
-<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span><span class="comment"> * \param[in] fAngle the new angle value</span></div>
-<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span><span class="comment"> * \param[in] fScale the new scale ratio</span></div>
-<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span><span class="comment"> * \note The new value is only accepted when the change between the old value </span></div>
-<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span><span class="comment"> *       and the new value is larger than the minimal acceptable mount.</span></div>
+<div class="line"><a id="l01585" name="l01585"></a><span class="lineno"><a class="line" href="group__gHelper.html#gae0692351fe401d6a3717e767ff4a9dd4"> 1585</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gae0692351fe401d6a3717e767ff4a9dd4" title="force the transform helper to use the minimal enclosure region as the dirty region.">arm_2d_helper_transform_force_to_use_minimal_enclosure</a>(</div>
+<div class="line"><a id="l01586" name="l01586"></a><span class="lineno"> 1586</span>                                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l01587" name="l01587"></a><span class="lineno"> 1587</span>                                            <span class="keywordtype">bool</span> bEnable);</div>
+<div class="line"><a id="l01588" name="l01588"></a><span class="lineno"> 1588</span><span class="comment"></span> </div>
+<div class="line"><a id="l01589" name="l01589"></a><span class="lineno"> 1589</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01590" name="l01590"></a><span class="lineno"> 1590</span><span class="comment"> * \brief force the transform helper to suspend the dirty region update.</span></div>
+<div class="line"><a id="l01591" name="l01591"></a><span class="lineno"> 1591</span><span class="comment"> * </span></div>
+<div class="line"><a id="l01592" name="l01592"></a><span class="lineno"> 1592</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01593" name="l01593"></a><span class="lineno"> 1593</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
+<div class="line"><a id="l01594" name="l01594"></a><span class="lineno"> 1594</span><span class="comment"> * \return boolean the original setting</span></div>
 <div class="line"><a id="l01595" name="l01595"></a><span class="lineno"> 1595</span><span class="comment"> */</span></div>
 <div class="line"><a id="l01596" name="l01596"></a><span class="lineno"> 1596</span>extern</div>
 <div class="line"><a id="l01597" name="l01597"></a><span class="lineno"> 1597</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01598" name="l01598"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a"> 1598</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a" title="update a given transform helper with new values">arm_2d_helper_transform_update_value</a>(  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l01599" name="l01599"></a><span class="lineno"> 1599</span>                                            <span class="keywordtype">float</span> fAngle,</div>
-<div class="line"><a id="l01600" name="l01600"></a><span class="lineno"> 1600</span>                                            <span class="keywordtype">float</span> fScale);</div>
-<div class="line"><a id="l01601" name="l01601"></a><span class="lineno"> 1601</span><span class="comment"></span> </div>
-<div class="line"><a id="l01602" name="l01602"></a><span class="lineno"> 1602</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l01603" name="l01603"></a><span class="lineno"> 1603</span><span class="comment"> * \brief update the dirty region after a transform operation</span></div>
-<div class="line"><a id="l01604" name="l01604"></a><span class="lineno"> 1604</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"> 1605</span><span class="comment"> * \param[in] ptCanvas the canvas</span></div>
-<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span><span class="comment"> * \param[in] bIsNewFrame whether this is a new frame</span></div>
-<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span><span class="comment"> */</span></div>
-<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span>extern</div>
-<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga938c015954225ba6c149498b984accce"> 1610</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga938c015954225ba6c149498b984accce" title="update the dirty region after a transform operation">arm_2d_helper_transform_update_dirty_regions</a>(</div>
-<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"> 1611</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
-<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>                                    const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptCanvas,</div>
-<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span>                                    <span class="keywordtype">bool</span> bIsNewFrame);</div>
-<div class="line"><a id="l01614" name="l01614"></a><span class="lineno"> 1614</span> </div>
-<div class="line"><a id="l01615" name="l01615"></a><span class="lineno"> 1615</span><span class="comment"></span> </div>
-<div class="line"><a id="l01616" name="l01616"></a><span class="lineno"> 1616</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l01617" name="l01617"></a><span class="lineno"> 1617</span> </div>
-<div class="line"><a id="l01618" name="l01618"></a><span class="lineno"> 1618</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l01619" name="l01619"></a><span class="lineno"> 1619</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"> 1620</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span> </div>
-<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"> 1623</span>}</div>
-<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span> </div>
-<div class="line"><a id="l01626" name="l01626"></a><span class="lineno"> 1626</span> </div>
+<div class="line"><a id="l01598" name="l01598"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga0492f59e2ed539c16683578ea80e2faf"> 1598</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga0492f59e2ed539c16683578ea80e2faf" title="force the transform helper to suspend the dirty region update.">arm_2d_helper_transform_suspend_update</a>(<a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l01599" name="l01599"></a><span class="lineno"> 1599</span>                                            <span class="keywordtype">bool</span> bEnable);</div>
+<div class="line"><a id="l01600" name="l01600"></a><span class="lineno"> 1600</span><span class="comment"></span> </div>
+<div class="line"><a id="l01601" name="l01601"></a><span class="lineno"> 1601</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01602" name="l01602"></a><span class="lineno"> 1602</span><span class="comment"> * \brief update a given transform helper with new values</span></div>
+<div class="line"><a id="l01603" name="l01603"></a><span class="lineno"> 1603</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01604" name="l01604"></a><span class="lineno"> 1604</span><span class="comment"> * \param[in] fAngle the new angle value</span></div>
+<div class="line"><a id="l01605" name="l01605"></a><span class="lineno"> 1605</span><span class="comment"> * \param[in] fScale the new scale ratio</span></div>
+<div class="line"><a id="l01606" name="l01606"></a><span class="lineno"> 1606</span><span class="comment"> * \note The new value is only accepted when the change between the old value </span></div>
+<div class="line"><a id="l01607" name="l01607"></a><span class="lineno"> 1607</span><span class="comment"> *       and the new value is larger than the minimal acceptable mount.</span></div>
+<div class="line"><a id="l01608" name="l01608"></a><span class="lineno"> 1608</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01609" name="l01609"></a><span class="lineno"> 1609</span>extern</div>
+<div class="line"><a id="l01610" name="l01610"></a><span class="lineno"> 1610</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01611" name="l01611"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a"> 1611</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga95877df905d15cebfc4abb41b9ecdc6a" title="update a given transform helper with new values">arm_2d_helper_transform_update_value</a>(  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l01612" name="l01612"></a><span class="lineno"> 1612</span>                                            <span class="keywordtype">float</span> fAngle,</div>
+<div class="line"><a id="l01613" name="l01613"></a><span class="lineno"> 1613</span>                                            <span class="keywordtype">float</span> fScale);</div>
+<div class="line"><a id="l01614" name="l01614"></a><span class="lineno"> 1614</span><span class="comment"></span> </div>
+<div class="line"><a id="l01615" name="l01615"></a><span class="lineno"> 1615</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l01616" name="l01616"></a><span class="lineno"> 1616</span><span class="comment"> * \brief update the dirty region after a transform operation</span></div>
+<div class="line"><a id="l01617" name="l01617"></a><span class="lineno"> 1617</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
+<div class="line"><a id="l01618" name="l01618"></a><span class="lineno"> 1618</span><span class="comment"> * \param[in] ptCanvas the canvas</span></div>
+<div class="line"><a id="l01619" name="l01619"></a><span class="lineno"> 1619</span><span class="comment"> * \param[in] bIsNewFrame whether this is a new frame</span></div>
+<div class="line"><a id="l01620" name="l01620"></a><span class="lineno"> 1620</span><span class="comment"> */</span></div>
+<div class="line"><a id="l01621" name="l01621"></a><span class="lineno"> 1621</span>extern</div>
+<div class="line"><a id="l01622" name="l01622"></a><span class="lineno"> 1622</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l01623" name="l01623"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga938c015954225ba6c149498b984accce"> 1623</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga938c015954225ba6c149498b984accce" title="update the dirty region after a transform operation">arm_2d_helper_transform_update_dirty_regions</a>(</div>
+<div class="line"><a id="l01624" name="l01624"></a><span class="lineno"> 1624</span>                                    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__transform__t" title="the Transform helper control block">arm_2d_helper_transform_t</a> *ptThis,</div>
+<div class="line"><a id="l01625" name="l01625"></a><span class="lineno"> 1625</span>                                    const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptCanvas,</div>
+<div class="line"><a id="l01626" name="l01626"></a><span class="lineno"> 1626</span>                                    <span class="keywordtype">bool</span> bIsNewFrame);</div>
 <div class="line"><a id="l01627" name="l01627"></a><span class="lineno"> 1627</span> </div>
-<div class="line"><a id="l01628" name="l01628"></a><span class="lineno"> 1628</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01628" name="l01628"></a><span class="lineno"> 1628</span><span class="comment"></span> </div>
+<div class="line"><a id="l01629" name="l01629"></a><span class="lineno"> 1629</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l01630" name="l01630"></a><span class="lineno"> 1630</span> </div>
+<div class="line"><a id="l01631" name="l01631"></a><span class="lineno"> 1631</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l01632" name="l01632"></a><span class="lineno"> 1632</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l01633" name="l01633"></a><span class="lineno"> 1633</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01634" name="l01634"></a><span class="lineno"> 1634</span> </div>
+<div class="line"><a id="l01635" name="l01635"></a><span class="lineno"> 1635</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l01636" name="l01636"></a><span class="lineno"> 1636</span>}</div>
+<div class="line"><a id="l01637" name="l01637"></a><span class="lineno"> 1637</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01638" name="l01638"></a><span class="lineno"> 1638</span> </div>
+<div class="line"><a id="l01639" name="l01639"></a><span class="lineno"> 1639</span> </div>
+<div class="line"><a id="l01640" name="l01640"></a><span class="lineno"> 1640</span> </div>
+<div class="line"><a id="l01641" name="l01641"></a><span class="lineno"> 1641</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

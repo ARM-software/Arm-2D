@@ -715,6 +715,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga59f0bea3f58066624ba385e0e6bc6bc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga59f0bea3f58066624ba385e0e6bc6bc8">__arm_2d_helper_dirty_region_update_dirty_regions2</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptVisibleArea, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptNewRegion)</td></tr>
 <tr class="memdesc:ga59f0bea3f58066624ba385e0e6bc6bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a specified new region while erase the previous region  <a href="group__gHelper.html#ga59f0bea3f58066624ba385e0e6bc6bc8">More...</a><br /></td></tr>
 <tr class="separator:ga59f0bea3f58066624ba385e0e6bc6bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd30be2dad3dbf16854f95f966236628"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gabd30be2dad3dbf16854f95f966236628">arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis, bool bEnable)</td></tr>
+<tr class="memdesc:gabd30be2dad3dbf16854f95f966236628"><td class="mdescLeft">&#160;</td><td class="mdescRight">force an <a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> object to use the minimal enclosure region to update.  <a href="group__gHelper.html#gabd30be2dad3dbf16854f95f966236628">More...</a><br /></td></tr>
+<tr class="separator:gabd30be2dad3dbf16854f95f966236628"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga975434ce493469363bdbb570018071ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga975434ce493469363bdbb570018071ee">arm_2d_helper_dirty_region_force_to_use_minimal_enclosure</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis, bool bEnable)</td></tr>
 <tr class="memdesc:ga975434ce493469363bdbb570018071ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">force the dirty region helper to use the minimal enclosure region to update.  <a href="group__gHelper.html#ga975434ce493469363bdbb570018071ee">More...</a><br /></td></tr>
 <tr class="separator:ga975434ce493469363bdbb570018071ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7940,6 +7943,44 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gabd30be2dad3dbf16854f95f966236628" name="gabd30be2dad3dbf16854f95f966236628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabd30be2dad3dbf16854f95f966236628">&#9670;&nbsp;</a></span>arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bEnable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>force an <a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> object to use the minimal enclosure region to update. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target item </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bEnable</td><td>whether enable this feature. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean the original setting </dd></dl>
 
 </div>
 </div>
