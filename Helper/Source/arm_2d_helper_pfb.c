@@ -4231,7 +4231,7 @@ arm_2d_helper_dirty_region_item_t * arm_2d_helper_dirty_region_depose(
 }
 
 ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_on_frame_begin( 
+void arm_2d_dynamic_dirty_region_on_frame_start( 
                                         arm_2d_helper_dirty_region_t *ptThis)
 {
     assert(NULL != ptThis);
