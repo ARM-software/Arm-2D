@@ -179,7 +179,7 @@ static void __on_scene_atom_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
-    arm_2d_helper_dirty_region_on_frame_begin(&this.tDirtyRegionHelper);
+    arm_2d_helper_dirty_region_on_frame_start(&this.tDirtyRegionHelper);
 
 }
 

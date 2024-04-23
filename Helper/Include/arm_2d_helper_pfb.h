@@ -1410,14 +1410,14 @@ ARM_NONNULL(1)
 arm_2d_helper_dirty_region_item_t * arm_2d_helper_dirty_region_depose(arm_2d_helper_dirty_region_t *ptThis);
 
 /*!
- * \brief the on-frame-begin event handler for a given dirty region helper
+ * \brief the on-frame-start event handler for a given dirty region helper
  * \param[in] ptThis the target helper
  * \note Usually this event handler should be insert the frame start event 
  *       handler of a target scene.
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_on_frame_begin( 
+void arm_2d_helper_dirty_region_on_frame_start( 
                                         arm_2d_helper_dirty_region_t *ptThis);
 
 /*!
