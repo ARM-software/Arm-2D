@@ -347,9 +347,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
                             __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
 
-                                arm_2d_align_mid_right(__item_region, tTwoDigitsSizeSmall) {
+                                arm_2d_align_centre(__item_region, tTwoDigitsSizeSmall) {
                                     arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
-                                    arm_lcd_text_set_draw_region(&__mid_right_region);
+                                    arm_lcd_text_set_draw_region(&__centre_region);
                                     arm_lcd_text_location(0,0);
                                     arm_lcd_printf("%02d", this.chTenMs);
                                 }
@@ -474,8 +474,8 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
 
                         __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
 
-                            arm_2d_align_mid_right(__item_region, tTwoDigitsSizeSmall) {
-                                s_tDirtyRegions[DIRTY_REGION_IDX_TENMS].tRegion = __mid_right_region;
+                            arm_2d_align_centre(__item_region, tTwoDigitsSizeSmall) {
+                                s_tDirtyRegions[DIRTY_REGION_IDX_TENMS].tRegion = __centre_region;
                             }
                         }
                     }
