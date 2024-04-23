@@ -483,11 +483,11 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
             }
 
             /* ECG Scanning Animation */
-                __item_line_dock_vertical() {
-                    arm_2d_align_centre(__item_region, c_tileECGMask.tRegion.tSize) {
-                        s_tDirtyRegions[DIRTY_REGION_IDX_ECG].tRegion = __centre_region;
-                    }
+            __item_line_dock_vertical() {
+                arm_2d_align_centre(__item_region, c_tileECGMask.tRegion.tSize) {
+                    s_tDirtyRegions[DIRTY_REGION_IDX_ECG].tRegion = __centre_region;
                 }
+            }
         }
     }
     /*--------------initialize static dirty region items: end  ---------------*/
