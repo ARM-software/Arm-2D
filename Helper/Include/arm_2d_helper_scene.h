@@ -200,6 +200,7 @@ typedef struct arm_2d_scene_t arm_2d_scene_t;
 struct arm_2d_scene_t {
 ARM_PRIVATE(
     arm_2d_scene_t *ptNext;                                                     //!< next scene
+
     struct {
         uint8_t bLoaded         : 1;
         uint8_t                 : 7;
@@ -233,7 +234,12 @@ ARM_PRIVATE(
     struct {
         uint8_t bOnSwitchingIgnoreBG    : 1;                                    //!< ignore background during switching period
         uint8_t bOnSwitchingIgnoreScene : 1;                                    //!< ignore forground during switching period
+        uint8_t                         : 2;
+        uint8_t                         : 3;
+        uint8_t bUseDirtyRegionHelper   : 1;                                    //!< indicate whether use the built-in dirty region helper.
     };
+
+    arm_2d_helper_dirty_region_t    tDirtyRegionHelper;
 };
 
 /*!

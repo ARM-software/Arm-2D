@@ -85,7 +85,6 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[9];
     bool bUserAllocated;
-    arm_2d_helper_dirty_region_t tDirtyRegionHelper;
 
     struct {
         arm_2d_location_t tVibration;

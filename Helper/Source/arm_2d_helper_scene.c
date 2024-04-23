@@ -259,6 +259,7 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
             break;
         }
         if (NULL != ptScene->fnDepose) {
+            arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
             ptScene->fnDepose(ptScene);
         }
     } while(false);
@@ -1195,6 +1196,39 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
     return arm_fsm_rt_cpl;
 }
 
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_background_handler)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    arm_2d_scene_t *ptScene = this.SceneFIFO.ptHead;
+
+    return ptScene->fnBackground(ptScene, ptTile, bIsNewFrame);
+
+}
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_handler)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+
+    arm_2d_scene_t *ptScene = this.SceneFIFO.ptHead;
+
+    arm_fsm_rt_t tResult = ptScene->fnScene(ptScene, ptTile, bIsNewFrame);
+
+    arm_2d_helper_dirty_region_update_dirty_regions(&ptScene->tDirtyRegionHelper, 
+                                                    ptTile);
+
+    return tResult;
+}
+
 /*-----------------------------------------------------------------------------*
  * Misc                                                                        *
  *-----------------------------------------------------------------------------*/
@@ -1254,6 +1288,11 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (!ptScene->bLoaded) {
                 ptScene->bLoaded = true;
 
+                if (ptScene->bUseDirtyRegionHelper) {
+                    arm_2d_helper_dirty_region_init(&ptScene->tDirtyRegionHelper,
+                                                    &ptScene->ptDirtyRegion);
+                }
+
                 ARM_2D_INVOKE_RT_VOID(ptScene->fnOnLoad, ptScene);
             }
 
@@ -1263,6 +1302,11 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
         case DRAW_FRAME_START:
             ARM_2D_INVOKE_RT_VOID(ptScene->fnOnFrameStart, ptScene);
+
+            if (ptScene->bUseDirtyRegionHelper) {
+                arm_2d_helper_dirty_region_on_frame_start(&ptScene->tDirtyRegionHelper);
+            }
+
             if (!this.Runtime.bUpdateBG) {
                 this.Runtime.chState = DRAW_SCENE_PREPARE;
                 break;
@@ -1286,8 +1330,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             
                     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                         &this.use_as__arm_2d_helper_pfb_t,
-                        ptScene->fnScene,
-                        ptScene);
+                        __pfb_draw_scene_handler,
+                        ptThis);
                     this.Runtime.chState = DRAW_BACKGROUND;
                 } else {
                     this.Runtime.chState = DRAW_SCENE_PREPARE;
@@ -1298,8 +1342,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             
                 ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                     &this.use_as__arm_2d_helper_pfb_t,
-                    ptScene->fnBackground,
-                    ptScene);
+                    __pfb_draw_scene_background_handler,
+                    ptThis);
                 this.Runtime.chState = DRAW_BACKGROUND;
             }
             // fall-through
@@ -1334,8 +1378,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
             ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &this.use_as__arm_2d_helper_pfb_t,
-                ptScene->fnScene,
-                ptScene);
+                __pfb_draw_scene_handler,
+                ptThis);
             this.Runtime.chState = DRAW_SCENE;
             // fall-through
             
@@ -1431,6 +1475,12 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 if (NULL != this.SceneFIFO.ptHead->ptNext) {
                     if (!this.SceneFIFO.ptHead->ptNext->bLoaded) {
                         this.SceneFIFO.ptHead->ptNext->bLoaded = true;
+
+                        if (this.SceneFIFO.ptHead->ptNext->bUseDirtyRegionHelper) {
+                            arm_2d_helper_dirty_region_init(
+                                &this.SceneFIFO.ptHead->ptNext->tDirtyRegionHelper,
+                                &this.SceneFIFO.ptHead->ptNext->ptDirtyRegion);
+                        }
 
                         ARM_2D_INVOKE_RT_VOID(this.SceneFIFO.ptHead->ptNext->fnOnLoad, ptScene);
                     }

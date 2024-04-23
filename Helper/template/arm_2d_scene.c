@@ -324,6 +324,7 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
             .fnOnFrameCPL   = &__on_scene%Instance%_frame_complete,
             .fnDepose       = &__on_scene%Instance%_depose,
 
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };

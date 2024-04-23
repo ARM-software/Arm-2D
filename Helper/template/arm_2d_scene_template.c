@@ -321,6 +321,8 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
             //.fnBeforeSwitchOut = &__before_scene_<name>_switching_out,
             .fnOnFrameCPL   = &__on_scene_<name>_frame_complete,
             .fnDepose       = &__on_scene_<name>_depose,
+
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
