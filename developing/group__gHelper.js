@@ -283,7 +283,7 @@ var group__gHelper =
     [ "arm_2d_helper_dirty_region_add_items", "group__gHelper.html#ga1222876f950398b34853d9b41e9d9c06", null ],
     [ "arm_2d_helper_dirty_region_remove_items", "group__gHelper.html#ga7a3813144827ea4f0dc996adba635434", null ],
     [ "arm_2d_helper_dirty_region_depose", "group__gHelper.html#ga0a55644fce0c5f86e55bbc39a567b7aa", null ],
-    [ "arm_2d_helper_dirty_region_on_frame_begin", "group__gHelper.html#gaa72e3eeaa3f11790c6773bfab34eccaf", null ],
+    [ "arm_2d_helper_dirty_region_on_frame_start", "group__gHelper.html#ga7bcd77eaa2757462a020c51e95dd738e", null ],
     [ "arm_2d_helper_dirty_region_update_item", "group__gHelper.html#gac365d08ede3baa2c3098e3d59dfc6af1", null ],
     [ "__arm_2d_helper_dirty_region_update_dirty_regions", "group__gHelper.html#ga93ba6ba7cde8a34b016b092ee3d0c8d0", null ],
     [ "__arm_2d_helper_dirty_region_update_dirty_regions2", "group__gHelper.html#ga59f0bea3f58066624ba385e0e6bc6bc8", null ],
