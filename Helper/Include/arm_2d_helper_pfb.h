@@ -1497,6 +1497,19 @@ bool arm_2d_helper_dirty_region_suspend_update(
                                         arm_2d_helper_dirty_region_t *ptThis,
                                         bool bEnable);
 
+/*!
+ * \brief force the arm_2d_helper_dirty_region_item_t object to suspend the 
+ *        dirty region update.
+ * 
+ * \param[in] ptThis the target item
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_item_suspend_update(
+                                        arm_2d_helper_dirty_region_item_t *ptThis,
+                                        bool bEnable);
+
 /*----------------------------------------------------------------------------*
  * The Transform Helper Service                                               *
  *----------------------------------------------------------------------------*/
