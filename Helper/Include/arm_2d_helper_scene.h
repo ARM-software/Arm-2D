@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        03. April 2024
- * $Revision:    V.1.6.4
+ * $Date:        23. April 2024
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -198,7 +198,13 @@ typedef struct arm_2d_scene_player_t arm_2d_scene_player_t;
  */
 typedef struct arm_2d_scene_t arm_2d_scene_t;
 struct arm_2d_scene_t {
+ARM_PRIVATE(
     arm_2d_scene_t *ptNext;                                                     //!< next scene
+    struct {
+        uint8_t bLoaded         : 1;
+        uint8_t                 : 7;
+    };
+)
     arm_2d_scene_player_t *ptPlayer;                                            //!< points to the host scene player
 
     arm_2d_colour_t tCanvas;                                                    //!< the canvas colour
@@ -209,6 +215,7 @@ struct arm_2d_scene_t {
     arm_2d_region_list_item_t       *ptDirtyRegion;                             //!< dirty region list for the scene
     arm_2d_helper_draw_handler_t    *fnScene;                                   //!< the function pointer for the scene
   
+    void (*fnOnLoad)(arm_2d_scene_t *ptThis);                                   //!< on load event handler
     void (*fnOnBGStart)(arm_2d_scene_t *ptThis);                                //!< on-start-drawing-background event handler
     void (*fnOnBGComplete)(arm_2d_scene_t *ptThis);                             //!< on-complete-drawing-background event handler
     void (*fnOnFrameStart)(arm_2d_scene_t *ptThis);                             //!< on-frame-start event handler

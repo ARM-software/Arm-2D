@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        03. April 2024
- * $Revision:    V.1.6.4
+ * $Date:        23. April 2024
+ * $Revision:    V.1.6.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1250,6 +1250,13 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 //! no scene available
                 return arm_fsm_rt_cpl;
             }
+
+            if (!ptScene->bLoaded) {
+                ptScene->bLoaded = true;
+
+                ARM_2D_INVOKE_RT_VOID(ptScene->fnOnLoad, ptScene);
+            }
+
             this.Runtime.bUpdateBG = true;
             this.Runtime.chState++;
             // fall-through
@@ -1420,6 +1427,14 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
                 this.Switch.chState = START;
                 this.Runtime.chState = SWITCH_SCENE;
+
+                if (NULL != this.SceneFIFO.ptHead->ptNext) {
+                    if (!this.SceneFIFO.ptHead->ptNext->bLoaded) {
+                        this.SceneFIFO.ptHead->ptNext->bLoaded = true;
+
+                        ARM_2D_INVOKE_RT_VOID(this.SceneFIFO.ptHead->ptNext->fnOnLoad, ptScene);
+                    }
+                }
             }
             //break;
         case SWITCH_SCENE:

@@ -121,6 +121,12 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_<name>_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
 
 static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
 {
@@ -304,6 +310,7 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
 
             /* Please uncommon the callbacks if you need them
              */
+            .fnOnLoad       = &__on_scene_<name>_load,
             .fnScene        = &__pfb_draw_scene_<name>_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
