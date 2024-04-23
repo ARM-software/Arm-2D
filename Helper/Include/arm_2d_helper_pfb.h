@@ -1471,6 +1471,19 @@ void __arm_2d_helper_dirty_region_update_dirty_regions2(
                                         const arm_2d_region_t *ptNewRegion);
 
 /*!
+ * \brief force an arm_2d_helper_dirty_region_item_t object to use the minimal
+ *         enclosure region to update.
+ * 
+ * \param[in] ptThis the target item
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure(
+                                        arm_2d_helper_dirty_region_item_t *ptThis,
+                                        bool bEnable);
+
+/*!
  * \brief force the dirty region helper to use the minimal enclosure region to
  *        update.
  * 
