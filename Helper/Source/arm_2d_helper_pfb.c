@@ -4231,7 +4231,7 @@ arm_2d_helper_dirty_region_item_t * arm_2d_helper_dirty_region_depose(
 }
 
 ARM_NONNULL(1)
-void arm_2d_dynamic_dirty_region_on_frame_start( 
+void arm_2d_helper_dirty_region_on_frame_start( 
                                         arm_2d_helper_dirty_region_t *ptThis)
 {
     assert(NULL != ptThis);
@@ -4577,7 +4577,7 @@ void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis)
             this.fAngle = this.Angle.fValue;
             this.fScale = this.Scale.fValue;
 
-            arm_2d_helper_dirty_region_on_frame_begin(&this.tHelper);
+            arm_2d_helper_dirty_region_on_frame_start(&this.tHelper);
         }
     }
 }

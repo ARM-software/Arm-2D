@@ -100,6 +100,19 @@ extern const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_atom_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_atom_t *ptThis = (user_scene_atom_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
+                                         &this.Electronic[0].tDirtyRegionItem,
+                                         1);
+
+    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
+                                         &this.Electronic[1].tDirtyRegionItem,
+                                         1);
+}
 
 static void __on_scene_atom_depose(arm_2d_scene_t *ptScene)
 {
@@ -448,6 +461,7 @@ user_scene_atom_t *__arm_2d_scene_atom_init(   arm_2d_scene_player_t *ptDispAdap
 
             /* Please uncommon the callbacks if you need them
              */
+            .fnOnLoad       = &__on_scene_atom_load,
             .fnScene        = &__pfb_draw_scene_atom_handler,
 
             //.fnOnBGStart    = &__on_scene_atom_background_start,
@@ -463,14 +477,6 @@ user_scene_atom_t *__arm_2d_scene_atom_init(   arm_2d_scene_player_t *ptDispAdap
     /* ------------   initialize members of user_scene_atom_t begin ---------------*/
     arm_2d_helper_dirty_region_init(&this.tDirtyRegionHelper,
                                     &this.use_as__arm_2d_scene_t.ptDirtyRegion);
-
-    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
-                                         &this.Electronic[0].tDirtyRegionItem,
-                                         1);
-
-    arm_2d_helper_dirty_region_add_items(&this.tDirtyRegionHelper,
-                                         &this.Electronic[1].tDirtyRegionItem,
-                                         1);
 
     /* ------------   initialize members of user_scene_atom_t end   ---------------*/
 
