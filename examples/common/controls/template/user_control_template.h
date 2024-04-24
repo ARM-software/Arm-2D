@@ -80,14 +80,13 @@ extern
 ARM_NONNULL(1)
 void <control_name>_init( user_<control_name>_t *ptThis,
                           user_<control_name>_cfg_t *ptCFG);
+extern
+ARM_NONNULL(1)
+void <control_name>_depose( user_<control_name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
 void <control_name>_on_load( user_<control_name>_t *ptThis);
-
-extern
-ARM_NONNULL(1)
-void <control_name>_on_depose( user_<control_name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
