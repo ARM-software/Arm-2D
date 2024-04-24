@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        14. April 2024
- * $Revision:    V.1.10.0
+ * $Date:        24. April 2024
+ * $Revision:    V.1.10.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4138,6 +4138,8 @@ void arm_2d_helper_dirty_region_init(
     this.ppDirtyRegionList = ppDirtyRegionList;
 
     arm_2d_dynamic_dirty_region_init(&this.tDirtyRegion);
+
+    this.tDefaultItem.bIgnore = true;
 
     arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
                                                     &this.tDirtyRegion, 
