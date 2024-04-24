@@ -109,17 +109,6 @@ static arm_2d_location_t s_tPointerCenter;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-
-/*! define dirty regions */
-IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-    /* the dirty region for text display*/
-    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        0  /* initialize at runtime later */
-    ),
-
-END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
@@ -134,6 +123,7 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
                                  (arm_2d_op_t *)&this.Pointer.tOP,
                                  0.01f,
                                  0.1f);
+
 }
 
 static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
@@ -204,13 +194,13 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         int16_t iNumber = (int16_t)(200 * (iResult + 1200) / 2400);
-        bool bNumberUnchanged = this.iNumber == iNumber;
+        bool bNumberUnchanged = (this.iNumber == iNumber);
 
         this.iNumber = iNumber;
 
-        arm_2d_dirty_region_item_ignore_set(
-                                &s_tDirtyRegions[0],
-                                bNumberUnchanged);
+        arm_2d_helper_dirty_region_item_suspend_update(
+                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                bNumberUnchanged);
 
     } while(0);
 
@@ -307,6 +297,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                         arm_lcd_text_set_opacity(255 - 64);
                         arm_lcd_printf("%03d", (int)this.iNumber);
                         arm_lcd_text_set_opacity(255);
+
+                        arm_2d_helper_dirty_region_update_item(
+                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                                ptTile,
+                                NULL,
+                                &__item_region);
                     }
                     
                     /* print "km/h" */
@@ -349,36 +346,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
     
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region for pointer
-     */
-
-    
-    /* dirty region for digits */
-    do {
-        arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY
-                                            .use_as__arm_2d_user_font_t
-                                                .use_as__arm_2d_font_t
-                                                    .tCharSize;
-        tTextSize.iWidth *=3;     /* 3 digits */
-        tTextSize.iHeight += 16;  /* reserve space for "km/h" */
-
-        /* calculate the region for text display */
-        arm_2d_align_centre(tScreen, tTextSize) {
-            s_tDirtyRegions[0].tRegion = __centre_region;
-
-            /* we don't want to refresh "km/h" as there is no change at all */
-            s_tDirtyRegions[0].tRegion.tSize.iHeight -= 16; 
-        }
-
-    } while(0);
-    
     if (NULL == ptThis) {
         ptThis = (user_scene_meter_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_meter_t),
@@ -404,8 +371,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
              */
             .fnOnLoad       = &__on_scene_meter_load,
             .fnScene        = &__pfb_draw_scene_meter_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-            
 
             //.fnOnBGStart    = &__on_scene_meter_background_start,
             //.fnOnBGComplete = &__on_scene_meter_background_complete,
