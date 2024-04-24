@@ -109,6 +109,17 @@ static arm_2d_location_t s_tPointerCenter;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+
+/*! define dirty regions */
+IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+    /* the dirty region for text display*/
+    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+        0  /* initialize at runtime later */
+    ),
+
+END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
@@ -198,7 +209,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
         this.iNumber = iNumber;
 
         arm_2d_dirty_region_item_ignore_set(
-                                &this.use_as__arm_2d_scene_t.ptDirtyRegion[0],
+                                &s_tDirtyRegions[0],
                                 bNumberUnchanged);
 
     } while(0);
@@ -337,16 +348,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* the dirty region for text display*/
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            0  /* initialize at runtime later */
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
