@@ -111,6 +111,19 @@ static arm_2d_location_t s_tPointerCenter;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    /* initialize transform helper */
+    arm_2d_helper_dirty_region_transform_init(
+                                &this.Pointer.tHelper,
+                                &ptScene->tDirtyRegionHelper,
+                                 (arm_2d_op_t *)&this.Pointer.tOP,
+                                 0.01f,
+                                 0.1f);
+}
 
 static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
 {
@@ -123,6 +136,8 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
+
+    arm_2d_helper_dirty_region_transform_depose(&this.Pointer.tHelper);
 
     /* depose op */
     ARM_2D_OP_DEPOSE(this.Pointer.tOP);
@@ -189,10 +204,10 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     } while(0);
 
     /* update helper with new values*/
-    arm_2d_helper_transform_update_value(&this.Pointer.tHelper, fAngle,1.0f);
+    arm_2d_helper_dirty_region_transform_update_value(&this.Pointer.tHelper, fAngle,1.0f);
 
-    /* call helper's on-frame-begin event handler */
-    arm_2d_helper_transform_on_frame_begin(&this.Pointer.tHelper);
+    /* call helper's on-frame-start event handler */
+    arm_2d_helper_dirty_region_transform_on_frame_start(&this.Pointer.tHelper);
 }
 
 static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
@@ -249,7 +264,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                                 GLCD_COLOR_RED,
                                 255);
 
-            arm_2d_helper_transform_update_dirty_regions(&this.Pointer.tHelper,
+            arm_2d_helper_dirty_region_transform_update(&this.Pointer.tHelper,
                                                          &__centre_region,
                                                          bIsNewFrame);
 
@@ -386,6 +401,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         
             /* Please uncommon the callbacks if you need them
              */
+            .fnOnLoad       = &__on_scene_meter_load,
             .fnScene        = &__pfb_draw_scene_meter_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
@@ -396,20 +412,14 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
             //.fnBeforeSwitchOut = &__before_scene_meter_switching_out,
             .fnOnFrameCPL   = &__on_scene_meter_frame_complete,
             .fnDepose       = &__on_scene_meter_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
     
     /* initialize op */
     ARM_2D_OP_INIT(this.Pointer.tOP);
-
-
-    /* initialize transform helper */
-    arm_2d_helper_transform_init(&this.Pointer.tHelper,
-                                 (arm_2d_op_t *)&this.Pointer.tOP,
-                                 0.01f,
-                                 0.1f,
-                                 &this.use_as__arm_2d_scene_t.ptDirtyRegion);
 
 
     s_tPointerCenter.iX = c_tilePointerMask.tRegion.tSize.iWidth >> 1;

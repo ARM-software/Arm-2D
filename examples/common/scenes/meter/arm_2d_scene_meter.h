@@ -90,7 +90,7 @@ ARM_PRIVATE(
     
     struct {
         arm_2d_op_fill_cl_msk_opa_trans_t tOP;
-        arm_2d_helper_transform_t tHelper;
+        arm_2d_helper_dirty_region_transform_t tHelper;
     } Pointer;
 
     arm_2d_helper_pi_slider_t tPISlider;
