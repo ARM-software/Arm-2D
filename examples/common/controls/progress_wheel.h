@@ -44,86 +44,6 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 /*============================ MACROS ========================================*/
-
-#if 0
-#define __progress_wheel_init0(__this_ptr, __diameter, __colour)                \
-            do {                                                                \
-                progress_wheel_cfg_t tCFG = {                                   \
-                    .iWheelDiameter = (__diameter),                             \
-                    .tWheelColour = (COLOUR_INT)(__colour),                     \
-                };                                                              \
-                __progress_wheel_init((__this_ptr), &tCFG);                     \
-            } while(0)
-
-#define __progress_wheel_init1(__this_ptr, __diameter, __colour, __dot_colour)  \
-            do {                                                                \
-                progress_wheel_cfg_t tCFG = {                                   \
-                    .iWheelDiameter = (__diameter),                             \
-                    .tWheelColour = (COLOUR_INT)(__colour),                     \
-                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                };                                                              \
-                __progress_wheel_init((__this_ptr), &tCFG);                     \
-            } while(0)
-
-#define __progress_wheel_init2( __this_ptr,                                     \
-                                __diameter,                                     \
-                                __colour,                                       \
-                                __dot_colour,                                   \
-                                __dirty_region_list_pptr)                       \
-            do {                                                                \
-                progress_wheel_cfg_t tCFG = {                                   \
-                    .iWheelDiameter = (__diameter),                             \
-                    .tWheelColour = (COLOUR_INT)(__colour),                     \
-                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                    .ppList = (__dirty_region_list_pptr),                       \
-                };                                                              \
-                __progress_wheel_init((__this_ptr), &tCFG);                     \
-            } while(0)
-
-#define __progress_wheel_init3( __this_ptr,                                     \
-                                __diameter,                                     \
-                                __colour,                                       \
-                                __dot_colour,                                   \
-                                __arc_mask_ptr,                                 \
-                                __dirty_region_list_pptr)                       \
-            do {                                                                \
-                progress_wheel_cfg_t tCFG = {                                   \
-                    .ptileArcMask = (__arc_mask_ptr),                           \
-                    .iWheelDiameter = (__diameter),                             \
-                    .tWheelColour = (COLOUR_INT)(__colour),                     \
-                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                    .ppList = (__dirty_region_list_pptr),                       \
-                };                                                              \
-                __progress_wheel_init((__this_ptr), &tCFG);                     \
-            } while(0)
-
-#define __progress_wheel_init4( __this_ptr,                                     \
-                                __diameter,                                     \
-                                __colour,                                       \
-                                __dot_colour,                                   \
-                                __arc_mask_ptr,                                 \
-                                __dot_mask_ptr,                                 \
-                                __dirty_region_list_pptr)                       \
-            do {                                                                \
-                progress_wheel_cfg_t tCFG = {                                   \
-                    .ptileArcMask = (__arc_mask_ptr),                           \
-                    .ptileDotMask = (__dot_mask_ptr),                           \
-                    .iWheelDiameter = (__diameter),                             \
-                    .tWheelColour = (COLOUR_INT)(__colour),                     \
-                    .tDotColour = (COLOUR_INT)(__dot_colour),                   \
-                    .ppList = (__dirty_region_list_pptr),                       \
-                };                                                              \
-                __progress_wheel_init((__this_ptr), &tCFG);                     \
-            } while(0)
-
-#define progress_wheel_init(__this_ptr, __diameter, __colour, ...)              \
-            ARM_CONNECT2(   __progress_wheel_init,                              \
-                            __ARM_VA_NUM_ARGS(__VA_ARGS__))((__this_ptr),       \
-                                                            (__diameter),       \
-                                                            (__colour),         \
-                                                            ##__VA_ARGS__)
-#endif
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 typedef struct progress_wheel_cfg_t {
@@ -187,6 +107,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             int16_t iProgress,
                             uint8_t chOpacity,
                             bool bIsNewFrame);
+
+extern
+ARM_NONNULL(1)
+void progress_wheel_on_load(progress_wheel_t *ptThis);
 
 extern
 ARM_NONNULL(1)

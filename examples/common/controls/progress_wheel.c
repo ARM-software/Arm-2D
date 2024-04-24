@@ -158,6 +158,7 @@ void progress_wheel_set_diameter(progress_wheel_t *ptThis,
 ARM_NONNULL(1)
 void progress_wheel_depose(progress_wheel_t *ptThis)
 {
+    assert(NULL != ptThis);
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptItem) {
         ARM_2D_OP_DEPOSE(*ptItem);
     }
@@ -169,6 +170,13 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
 
         arm_2d_helper_transform_depose(&this.tTransHelper);
     }
+}
+
+ARM_NONNULL(1)
+void progress_wheel_on_load(progress_wheel_t *ptThis)
+{
+    assert(NULL != ptThis);
+
 }
 
 ARM_NONNULL(1)
