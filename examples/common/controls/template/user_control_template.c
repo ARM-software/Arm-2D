@@ -80,7 +80,21 @@ void <control_name>_init( user_<control_name>_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void <control_name>_depose( user_<control_name>_t *ptThis)
+void <control_name>_on_load( user_<control_name>_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+}
+
+ARM_NONNULL(1)
+void <control_name>_on_depose( user_<control_name>_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+}
+
+ARM_NONNULL(1)
+void <control_name>_on_frame_start( user_<control_name>_t *ptThis)
 {
     assert(NULL != ptThis);
     

@@ -51,7 +51,7 @@ extern "C" {
 
 
 typedef struct user_<control_name>_cfg_t {
-
+    arm_2d_scene_t *ptScene;
 } user_<control_name>_cfg_t;
 
 /*!
@@ -83,7 +83,15 @@ void <control_name>_init( user_<control_name>_t *ptThis,
 
 extern
 ARM_NONNULL(1)
-void <control_name>_depose( user_<control_name>_t *ptThis);
+void <control_name>_on_load( user_<control_name>_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void <control_name>_on_depose( user_<control_name>_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void <control_name>_on_frame_start( user_<control_name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
