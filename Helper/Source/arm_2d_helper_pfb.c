@@ -4587,11 +4587,13 @@ void arm_2d_helper_dirty_region_transform_on_frame_start(
 {
     assert(NULL != ptThis);
 
+    arm_2d_helper_dirty_region_item_suspend_update(&this.DirtyRegion.tItem, !this.bNeedUpdate);
+
     /* make it thread safe */
     arm_irq_safe {
+
         if (this.bNeedUpdate) {
             this.bNeedUpdate = false;
-
             this.fAngle = this.Angle.fValue;
             this.fScale = this.Scale.fValue;
         }

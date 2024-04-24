@@ -78,6 +78,11 @@ extern "C" {
  */
 typedef struct user_scene_watch_t user_scene_watch_t;
 
+typedef struct __clock_pointer_t {
+    arm_2d_op_fill_cl_msk_opa_trans_t       tOP;
+    arm_2d_helper_dirty_region_transform_t  tHelper;
+} __clock_pointer_t;
+
 struct user_scene_watch_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
@@ -86,10 +91,7 @@ ARM_PRIVATE(
     int64_t lTimestamp[4];
     bool bUserAllocated;
 
-    struct {
-        arm_2d_op_fill_cl_msk_opa_trans_t   tOP;
-        arm_2d_helper_transform_t           tHelper;
-    } Pointers[3];
+    __clock_pointer_t Pointers[3];
 
 )
     /* place your public member here */

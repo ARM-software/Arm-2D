@@ -106,6 +106,22 @@ static arm_2d_location_t s_tPointerHourCenter;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    // initialize second pointer
+    arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
+        arm_2d_helper_dirty_region_transform_init(
+                                    &ptItem->tHelper,
+                                    &ptScene->tDirtyRegionHelper,
+                                    (arm_2d_op_t *)&ptItem->tOP,
+                                    ARM_2D_ANGLE(0.5f),
+                                    0.1f);
+    }
+
+}
 
 static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
 {
@@ -117,6 +133,10 @@ static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
+    }
+
+    arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
+        arm_2d_helper_dirty_region_transform_depose(&ptItem->tHelper);
     }
 
     /* depose op */
@@ -165,7 +185,7 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
 
         /* update helper with new values*/
-        arm_2d_helper_transform_update_value(&this.Pointers[0].tHelper, fAngle, 1.0f);
+        arm_2d_helper_dirty_region_transform_update_value(&this.Pointers[0].tHelper, fAngle, 1.0f);
     } while(0);
     
     /* update minute pointer */
@@ -177,7 +197,7 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
 
         /* update helper with new values*/
-        arm_2d_helper_transform_update_value(&this.Pointers[1].tHelper, fAngle, 1.0f);
+        arm_2d_helper_dirty_region_transform_update_value(&this.Pointers[1].tHelper, fAngle, 1.0f);
     } while(0);
 
     /* update hour pointer */
@@ -189,13 +209,14 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
 
         /* update helper with new values*/
-        arm_2d_helper_transform_update_value(&this.Pointers[2].tHelper, fAngle, 1.0f);
+        arm_2d_helper_dirty_region_transform_update_value(&this.Pointers[2].tHelper, fAngle, 1.0f);
     } while(0);
 
-    /* call helper's on-frame-begin event handler */
-    arm_2d_helper_transform_on_frame_begin(&this.Pointers[0].tHelper);
-    arm_2d_helper_transform_on_frame_begin(&this.Pointers[1].tHelper);
-    arm_2d_helper_transform_on_frame_begin(&this.Pointers[2].tHelper);
+    /* call helper's on-frame-start event handler */
+
+    arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
+        arm_2d_helper_dirty_region_transform_on_frame_start(&ptItem->tHelper);
+    }
 }
 
 static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
@@ -252,7 +273,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
                                     GLCD_COLOR_GREEN,
                                     128);
 
-                arm_2d_helper_transform_update_dirty_regions(
+                arm_2d_helper_dirty_region_transform_update(
                                                     &this.Pointers[2].tHelper,
                                                     &__centre_region,
                                                     bIsNewFrame);
@@ -273,7 +294,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
                                     GLCD_COLOR_GREEN,
                                     128);
 
-                arm_2d_helper_transform_update_dirty_regions(
+                arm_2d_helper_dirty_region_transform_update(
                                                     &this.Pointers[1].tHelper,
                                                     &__centre_region,
                                                     bIsNewFrame);
@@ -295,7 +316,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
                                     GLCD_COLOR_RED,
                                     255);
 
-                arm_2d_helper_transform_update_dirty_regions(
+                arm_2d_helper_dirty_region_transform_update(
                                                     &this.Pointers[0].tHelper,
                                                     &__centre_region,
                                                     bIsNewFrame);
@@ -384,7 +405,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         
             /* Please uncommon the callbacks if you need them
              */
-            //.fnBackground   = &__pfb_draw_scene_watch_background_handler,
+            .fnOnLoad       = &__on_scene_watch_load,
             .fnScene        = &__pfb_draw_scene_watch_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
@@ -395,6 +416,8 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
             //.fnBeforeSwitchOut = &__before_scene_watch_switching_out,
             .fnOnFrameCPL   = &__on_scene_watch_frame_complete,
             .fnDepose       = &__on_scene_watch_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -407,12 +430,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         /* initialize op */
         ARM_2D_OP_INIT(this.Pointers[0].tOP);
 
-        /* initialize transform helper */
-        arm_2d_helper_transform_init(&this.Pointers[0].tHelper,
-                                     (arm_2d_op_t *)&this.Pointers[0].tOP,
-                                     ARM_2D_ANGLE(0.5f),
-                                     0.1f,
-                                     &this.use_as__arm_2d_scene_t.ptDirtyRegion);
     } while(0);
 
     // initialize minutes pointer
@@ -423,12 +440,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         /* initialize op */
         ARM_2D_OP_INIT(this.Pointers[1].tOP);
 
-        /* initialize transform helper */
-        arm_2d_helper_transform_init(&this.Pointers[1].tHelper,
-                                     (arm_2d_op_t *)&this.Pointers[1].tOP,
-                                     ARM_2D_ANGLE(0.5f),
-                                     0.1f,
-                                     &this.use_as__arm_2d_scene_t.ptDirtyRegion);
     } while(0);
 
     // initialize hour pointer
@@ -439,12 +450,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         /* initialize op */
         ARM_2D_OP_INIT(this.Pointers[2].tOP);
 
-        /* initialize transform helper */
-        arm_2d_helper_transform_init(&this.Pointers[2].tHelper,
-                                     (arm_2d_op_t *)&this.Pointers[2].tOP,
-                                     ARM_2D_ANGLE(0.5f),
-                                     0.1f,
-                                     &this.use_as__arm_2d_scene_t.ptDirtyRegion);
     } while(0);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
