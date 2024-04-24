@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        24. April 2024
- * $Revision:    V.1.10.1
+ * $Revision:    V.1.11.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4272,6 +4272,8 @@ void arm_2d_helper_dirty_region_update_item(
     this.bIgnore = false;
     this.bOnlyUpdateMinimalEnclosure = false;
 
+    this.ptTile = ptTargetTile;
+
     do {
         arm_2d_region_t tNewRegion = *ptNewRegion;
         if (NULL != ptVisibleArea) {
@@ -4402,6 +4404,10 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
                     break;
                 }
 
+                if (NULL != this.ptCurrent->ptTile) {
+                    ptTargetTile = this.ptCurrent->ptTile;
+                }
+
                 if (this.ptCurrent->bOnlyUpdateMinimalEnclosure) {
                     /* we only update the minimal enclosure region */
                     arm_2d_dynamic_dirty_region_update(
@@ -4497,7 +4503,169 @@ bool arm_2d_helper_dirty_region_suspend_update(
 }
 
 /*----------------------------------------------------------------------------*
- * Transform Helper                                                           *
+ * Dirty Region Transform Helper                                              *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1,2,3)
+void arm_2d_helper_dirty_region_transform_init(
+                                  arm_2d_helper_dirty_region_transform_t *ptThis,
+                                  arm_2d_helper_dirty_region_t *ptHelper,
+                                  arm_2d_op_t *ptTransformOP,
+                                  float fAngleStep,
+                                  float fScaleStep)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTransformOP);
+    assert(NULL != ptHelper);
+
+    memset(ptThis, 0, sizeof(arm_2d_helper_transform_t));
+
+    this.ptTransformOP = ptTransformOP;
+    this.Angle.fStep = fAngleStep;
+    this.Scale.fStep = fScaleStep;
+    this.Scale.fValue = 1.0f;
+    this.fScale = 1.0f;
+
+    this.bNeedUpdate = true;
+    this.DirtyRegion.ptHelper = ptHelper;
+
+    arm_2d_helper_dirty_region_add_items(ptHelper, &this.DirtyRegion.tItem, 1);
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_depose(arm_2d_helper_dirty_region_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_2d_helper_dirty_region_remove_items(this.DirtyRegion.ptHelper,
+                                            &this.DirtyRegion.tItem, 
+                                            1);
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_update(
+                                    arm_2d_helper_dirty_region_transform_t *ptThis,
+                                    const arm_2d_region_t *ptCanvas,
+                                    bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+    ARM_2D_UNUSED(ptCanvas);
+    ARM_2D_UNUSED(bIsNewFrame);
+
+    arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
+    assert(NULL != ptTarget->ptParent);
+
+    if (NULL != ptCanvas) {
+        arm_2d_region_t tCanvasInTarget = *ptCanvas;
+
+        /* move canvas to the target tile (calculate its relative location 
+         * in the target tile) 
+         */
+        tCanvasInTarget.tLocation.iX -= ptTarget->tRegion.tLocation.iX;
+        tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
+        
+        arm_2d_helper_dirty_region_update_item(
+                                        this.DirtyRegion.ptHelper,
+                                        &this.DirtyRegion.tItem,
+                                        ptTarget,
+                                        &tCanvasInTarget,
+                                        (this.ptTransformOP->Target.ptRegion));
+    } else {
+        arm_2d_helper_dirty_region_update_item(
+                                        this.DirtyRegion.ptHelper,
+                                        &this.DirtyRegion.tItem,
+                                        ptTarget,
+                                        NULL,
+                                        (this.ptTransformOP->Target.ptRegion));
+    }
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_on_frame_start(
+                                arm_2d_helper_dirty_region_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    /* make it thread safe */
+    arm_irq_safe {
+        if (this.bNeedUpdate) {
+            this.bNeedUpdate = false;
+
+            this.fAngle = this.Angle.fValue;
+            this.fScale = this.Scale.fValue;
+        }
+    }
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_force_update(
+                                arm_2d_helper_dirty_region_transform_t *ptThis)
+{
+    assert(NULL != ptThis);
+    this.bNeedUpdate = true;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_transform_force_to_use_minimal_enclosure(
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                bool bEnable)
+{
+    assert(NULL != ptThis);
+
+    return arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure(
+                                                        &this.DirtyRegion.tItem,
+                                                        bEnable);
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_transform_suspend_update(
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                bool bEnable)
+{
+    assert(NULL != ptThis);
+
+    return arm_2d_helper_dirty_region_item_suspend_update(
+                                                        &this.DirtyRegion.tItem,
+                                                        bEnable);
+}
+
+
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_update_value(  
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                float fAngle,
+                                float fScale)
+{
+    assert(NULL != ptThis);
+    
+    float fDelta = 0.0f;
+
+    arm_irq_safe {
+        float fDelta = this.Angle.fValue - fAngle;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Angle.fStep) {
+            this.Angle.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
+
+    arm_irq_safe {
+        fDelta = this.Scale.fValue - fScale;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Scale.fStep) {
+            this.Scale.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
+}
+
+
+
+/*----------------------------------------------------------------------------*
+ * Transform Helper (Deprecated)                                              *
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1,2,5)

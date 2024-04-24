@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        24. April 2024
- * $Revision:    V.1.10.1
+ * $Revision:    V.1.11.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -771,6 +771,7 @@ struct arm_2d_helper_dirty_region_item_t{
 ARM_PRIVATE(
     arm_2d_helper_dirty_region_item_t *ptNext;
     arm_2d_helper_dirty_region_t *ptHelper;
+    const arm_2d_tile_t *ptTile;
 
     union {
         arm_2d_region_t tRegions[2];
@@ -817,6 +818,40 @@ ARM_PRIVATE(
 /*!
  * \brief the Transform helper control block
  * 
+ */
+typedef struct arm_2d_helper_dirty_region_transform_t {
+
+    float fAngle;
+    float fScale;
+
+ARM_PRIVATE(
+    
+    arm_2d_op_t *ptTransformOP;
+
+    struct {
+        arm_2d_helper_dirty_region_t *ptHelper;
+        arm_2d_helper_dirty_region_item_t tItem;
+    } DirtyRegion;
+
+    struct {
+        float fValue;
+        float fStep;
+    } Angle;
+
+    struct {
+        float fValue;
+        float fStep;
+    } Scale;
+
+    bool bNeedUpdate;
+)
+
+} arm_2d_helper_dirty_region_transform_t;
+
+
+/*!
+ * \brief the Transform helper control block
+ * \note Deprecated.
  */
 typedef struct {
     implement_ex(arm_2d_helper_dirty_region_t, tHelper);
@@ -1524,10 +1559,11 @@ bool arm_2d_helper_dirty_region_item_suspend_update(
                                         bool bEnable);
 
 /*----------------------------------------------------------------------------*
- * The Transform Helper Service                                               *
+ * The Transform Helper Service (Deprecated)                                  *
  *----------------------------------------------------------------------------*/
 /*!
  * \brief initialize a given transform helper
+ * \note Deprecated.
  * \param[in] ptThis the target helper
  * \param[in] ptTransformOP the target transform OP, NULL is not accepted.
  * \param[in] fAngleStep the minimal acceptable angle change. 
@@ -1544,6 +1580,7 @@ void arm_2d_helper_transform_init(arm_2d_helper_transform_t *ptThis,
 
 /*!
  * \brief depose a given transform helper
+ * \note Deprecated.
  * \param[in] ptThis the target helper
  */
 extern
@@ -1552,6 +1589,7 @@ void arm_2d_helper_transform_depose(arm_2d_helper_transform_t *ptThis);
 
 /*!
  * \brief the on-frame-begin event handler for a given transform helper
+ * \note Deprecated.
  * \param[in] ptThis the target helper
  * \note Usually this event handler should be insert the frame start event 
  *       handler of a target scene.
@@ -1562,7 +1600,7 @@ void arm_2d_helper_transform_on_frame_begin(arm_2d_helper_transform_t *ptThis);
 
 /*!
  * \brief force transform helper to update dirty region
- *
+ * \note Deprecated.
  * \note sometimes, we want to force transform helper to update dirty regions 
  *       even if both the angel and scale keep the same, for example, the pivots
  *       are updated.
@@ -1575,7 +1613,7 @@ void arm_2d_helper_transform_force_update(arm_2d_helper_transform_t *ptThis);
 /*!
  * \brief force the transform helper to use the minimal enclosure region as
  *        the dirty region.
- * 
+ * \note Deprecated.
  * \param[in] ptThis the target helper
  * \param[in] bEnable whether enable this feature.
  * \return boolean the original setting
@@ -1588,7 +1626,7 @@ bool arm_2d_helper_transform_force_to_use_minimal_enclosure(
 
 /*!
  * \brief force the transform helper to suspend the dirty region update.
- * 
+ * \note Deprecated. 
  * \param[in] ptThis the target helper
  * \param[in] bEnable whether enable this feature.
  * \return boolean the original setting
@@ -1600,6 +1638,7 @@ bool arm_2d_helper_transform_suspend_update(arm_2d_helper_transform_t *ptThis,
 
 /*!
  * \brief update a given transform helper with new values
+ * \note Deprecated.
  * \param[in] ptThis the target helper
  * \param[in] fAngle the new angle value
  * \param[in] fScale the new scale ratio
@@ -1614,6 +1653,7 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
 
 /*!
  * \brief update the dirty region after a transform operation
+ * \note Deprecated.
  * \param[in] ptThis the target helper
  * \param[in] ptCanvas the canvas
  * \param[in] bIsNewFrame whether this is a new frame
@@ -1624,6 +1664,121 @@ void arm_2d_helper_transform_update_dirty_regions(
                                     arm_2d_helper_transform_t *ptThis,
                                     const arm_2d_region_t *ptCanvas,
                                     bool bIsNewFrame);
+
+
+/*----------------------------------------------------------------------------*
+ * The Dirty Region Transform Helper Service                                  *
+ *----------------------------------------------------------------------------*/
+/*!
+ * \brief initialize a given dirty region transform helper
+ *
+ * \param[in] ptThis the target helper
+ * \param[in] ptHelper the host arm_2d_helper_dirty_region_t object.
+ * \param[in] ptTransformOP the target transform OP, NULL is not accepted.
+ * \param[in] fAngleStep the minimal acceptable angle change. 
+ * \param[in] fScaleStep the minimal acceptable scale ratio change.
+ */
+extern
+ARM_NONNULL(1,2,3)
+void arm_2d_helper_dirty_region_transform_init(
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                arm_2d_helper_dirty_region_t *ptHelper,
+                                arm_2d_op_t *ptTransformOP,
+                                float fAngleStep,
+                                float fScaleStep);
+
+/*!
+ * \brief depose a given dirty region transform helper
+ *
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_depose(
+                                arm_2d_helper_dirty_region_transform_t *ptThis);
+
+/*!
+ * \brief the on-frame-begin event handler for a given dirty region transform 
+ *        helper
+ *
+ * \param[in] ptThis the target helper
+ * \note Usually this event handler should be insert the frame start event 
+ *       handler of a target scene.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_on_frame_start(
+                                arm_2d_helper_dirty_region_transform_t *ptThis);
+
+/*!
+ * \brief force a dirty region transform helper to update its dirty region
+ *
+ * \note sometimes, we want to force transform helper to update dirty regions 
+ *       even if both the angel and scale keep the same, for example, the pivots
+ *       are updated.
+ * \param[in] ptThis the target helper
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_force_update(
+                                arm_2d_helper_dirty_region_transform_t *ptThis);
+
+/*!
+ * \brief force a dirty region transform helper to use the minimal enclosure 
+ *        region as the dirty region.
+ *
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_transform_force_to_use_minimal_enclosure(
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                bool bEnable);
+
+/*!
+ * \brief force a dirty region transform helper to suspend updating.
+ * 
+ * \param[in] ptThis the target helper
+ * \param[in] bEnable whether enable this feature.
+ * \return boolean the original setting
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_dirty_region_transform_suspend_update(
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                bool bEnable);
+
+/*!
+ * \brief update a given dirty region transform helper with new values
+ *
+ * \param[in] ptThis the target helper
+ * \param[in] fAngle the new angle value
+ * \param[in] fScale the new scale ratio
+ * \note The new value is only accepted when the change between the old value 
+ *       and the new value is larger than the minimal acceptable mount.
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_update_value(  
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                float fAngle,
+                                float fScale);
+
+/*!
+ * \brief update the dirty region after a transform operation
+ *
+ * \param[in] ptThis the target helper
+ * \param[in] ptCanvas the canvas
+ * \param[in] bIsNewFrame whether this is a new frame
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_dirty_region_transform_update(
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                const arm_2d_region_t *ptCanvas,
+                                bool bIsNewFrame);
 
 
 /*! @} */
