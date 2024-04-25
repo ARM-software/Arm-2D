@@ -96,6 +96,13 @@ const arm_2d_tile_t c_tileWhiteDotMiddleMask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_fitness_on_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    progress_wheel_on_load(&this.tWheel);
+}
 
 static void __on_scene_fitness_depose(arm_2d_scene_t *ptScene)
 {
@@ -115,7 +122,6 @@ static void __on_scene_fitness_depose(arm_2d_scene_t *ptScene)
         number_list_depose(ptItem);
     }
     
-
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -351,6 +357,7 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
         
             /* Please uncommon the callbacks if you need them
              */
+            .fnOnLoad       = &__on_scene_fitness_on_load,
             .fnScene        = &__pfb_draw_scene_fitness_handler,
         #if __FITNESS_CFG_NEBULA_ENABLE__
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
@@ -362,6 +369,8 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
             //.fnBeforeSwitchOut = &__before_scene_fitness_switching_out,
             .fnOnFrameCPL   = &__on_scene_fitness_frame_complete,
             .fnDepose       = &__on_scene_fitness_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
