@@ -126,15 +126,8 @@ void progress_wheel_init( progress_wheel_t *ptThis,
     if (this.tCFG.bUseDirtyRegions) {
         arm_2d_dirty_region_item_ignore_set(&this.tDirtyRegion, true);
 
-        /* initialize transform helper */
-        arm_2d_helper_transform_init(&this.tTransHelper,
-                                    (arm_2d_op_t *)&this.tOP[5],
-                                    0.01f,
-                                    0.1f,
-                                    &ptTargetScene->ptDirtyRegion);
-
         arm_2d_scene_player_dynamic_dirty_region_init(  &this.tDirtyRegion,
-                                                ptTargetScene);
+                                                        ptTargetScene);
     }
 }
 
@@ -168,7 +161,7 @@ void progress_wheel_depose(progress_wheel_t *ptThis)
         arm_2d_scene_player_dynamic_dirty_region_depose(&this.tDirtyRegion,
                                                 this.ptTargetScene);
 
-        arm_2d_helper_transform_depose(&this.tTransHelper);
+        arm_2d_helper_dirty_region_transform_depose(&this.tTransHelper);
     }
 }
 
@@ -177,6 +170,15 @@ void progress_wheel_on_load(progress_wheel_t *ptThis)
 {
     assert(NULL != ptThis);
 
+    if (this.tCFG.bUseDirtyRegions) {
+        /* initialize transform helper */
+        arm_2d_helper_dirty_region_transform_init(  
+                &this.tTransHelper,
+                &this.ptTargetScene->tDirtyRegionHelper,
+                (arm_2d_op_t *)&this.tOP[5],
+                0.01f,
+                0.1f);
+    }
 }
 
 ARM_NONNULL(1)
@@ -192,10 +194,10 @@ void progress_wheel_on_frame_start(progress_wheel_t *ptThis)
         arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, 0xFF);
 
         /* update helper with new values*/
-        arm_2d_helper_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
+        arm_2d_helper_dirty_region_transform_update_value(&this.tTransHelper, this.fAngle, 1.0f);
 
         /* call helper's on-frame-begin event handler */
-        arm_2d_helper_transform_on_frame_begin(&this.tTransHelper);
+        arm_2d_helper_dirty_region_transform_on_frame_start(&this.tTransHelper);
     }
 }
 
@@ -659,22 +661,23 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             if (this.tCFG.bUseDirtyRegions) {
                 /* apply transform region patch */
-                this.tTransHelper.tHelper.tDefaultItem.tRegionPatch.tLocation.iX = -1;
-                this.tTransHelper.tHelper.tDefaultItem.tRegionPatch.tSize.iWidth = 1;
+                this.tTransHelper.tItem.tRegionPatch.tLocation.iX = -1;
+                this.tTransHelper.tItem.tRegionPatch.tSize.iWidth = 1;
+
 
                 if (bIsNewFrame) {
-                    arm_2d_helper_transform_force_to_use_minimal_enclosure(
+                    arm_2d_helper_dirty_region_transform_force_to_use_minimal_enclosure(
                                                     &this.tTransHelper,
                                                     (chState == DRAW_MIDDLE_STEP)
                                                 );
                     
-                    arm_2d_helper_transform_suspend_update(
+                    arm_2d_helper_dirty_region_transform_suspend_update(
                                                     &this.tTransHelper,
                                                     (chState == DRAW_WHOLE_WHEEL)
                                                 );
                 }
 
-                arm_2d_helper_transform_update_dirty_regions(   &this.tTransHelper,
+                arm_2d_helper_dirty_region_transform_update(   &this.tTransHelper,
                                                                 &__wheel_canvas,
                                                                 bIsNewFrame);
             }

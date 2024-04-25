@@ -67,7 +67,7 @@ ARM_PRIVATE(
     float fAngle;
     arm_2d_op_fill_cl_msk_opa_trans_t tOP[7];
 
-    arm_2d_helper_transform_t tTransHelper;
+    arm_2d_helper_dirty_region_transform_t tTransHelper;
     
     arm_2d_region_list_item_t tDirtyRegion;
     //arm_2d_region_t tLastCurveRegion;
