@@ -4059,11 +4059,15 @@ void arm_2d_dynamic_dirty_region_change_user_region_index_only(
     }
 }
 
+
+
 ARM_NONNULL(1)
-void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
-                                        arm_2d_tile_t *ptTarget,
-                                        arm_2d_region_t *ptRegion,
-                                        uint8_t chNextUserIndex)
+static
+void __arm_2d_dynamic_dirty_region_update(  arm_2d_region_list_item_t *ptThis,
+                                            arm_2d_tile_t *ptTarget,
+                                            arm_2d_region_t *ptRegion,
+                                            uint8_t chNextUserIndex,
+                                            bool bIsAbsoluteRegion)
 {
     enum {
         START = 0,
@@ -4098,11 +4102,13 @@ void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
     /* update region */
     this.tRegion = *ptRegion;
 
+#if 0
     if (NULL == ptTarget) {
         ptTarget = arm_2d_get_default_frame_buffer();
     }
+#endif
 
-    if (NULL != ptTarget) {
+    if (NULL != ptTarget && !bIsAbsoluteRegion) {
         /* get the absolute region */
         this.tRegion.tLocation 
             = arm_2d_helper_pfb_get_absolute_location(  ptTarget, 
@@ -4114,6 +4120,17 @@ void arm_2d_dynamic_dirty_region_update(arm_2d_region_list_item_t *ptThis,
 
 }
 
+void arm_2d_dynamic_dirty_region_update(  arm_2d_region_list_item_t *ptThis,
+                                            arm_2d_tile_t *ptTarget,
+                                            arm_2d_region_t *ptRegion,
+                                            uint8_t chNextUserIndex)
+{
+    __arm_2d_dynamic_dirty_region_update(   ptThis, 
+                                            ptTarget, 
+                                            ptRegion, 
+                                            chNextUserIndex, 
+                                            false);
+}
 
 /*----------------------------------------------------------------------------*
  * Dirty Region Helper                                                        *
@@ -4272,33 +4289,9 @@ void arm_2d_helper_dirty_region_update_item(
     this.bIgnore = false;
     this.bOnlyUpdateMinimalEnclosure = false;
 
-    this.ptTile = ptTargetTile;
-
     do {
         arm_2d_region_t tNewRegion = *ptNewRegion;
-        if (NULL != ptVisibleArea) {
 
-            tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
-                                                (arm_2d_tile_t *)ptTargetTile, 
-                                                tNewRegion.tLocation);
-
-            arm_2d_region_t tTargetRegion = *ptVisibleArea;
-            tTargetRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
-                                                (arm_2d_tile_t *)ptTargetTile, 
-                                                tTargetRegion.tLocation);
-
-            if (!arm_2d_region_intersect(   &tNewRegion, 
-                                            &tTargetRegion,
-                                            &tNewRegion)) {
-                this.bIgnore = true;
-                break;
-            }
-        }
-
-        /* keep the old region */
-        this.tOldRegion = this.tNewRegion;
-
-        tNewRegion = *ptNewRegion;
         /* apply region patch */
         do {
             /* note: tRegionPatch stores the patch values (deltas) */
@@ -4309,6 +4302,28 @@ void arm_2d_helper_dirty_region_update_item(
             tNewRegion.tLocation.iX += this.tRegionPatch.tLocation.iX;
             tNewRegion.tLocation.iY += this.tRegionPatch.tLocation.iY;
         } while(0);
+
+        //! get absolute location
+        tNewRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                                (arm_2d_tile_t *)ptTargetTile, 
+                                                tNewRegion.tLocation);
+        if (NULL != ptVisibleArea) {
+
+            arm_2d_region_t tTargetRegion = *ptVisibleArea;
+            tTargetRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                                (arm_2d_tile_t *)ptTargetTile, 
+                                                tTargetRegion.tLocation);
+
+            if (!arm_2d_region_intersect(   &tNewRegion, 
+                                            &tTargetRegion,
+                                            &tTargetRegion)) {
+                this.bIgnore = true;
+                break;
+            }
+        }
+
+        /* keep the old region */
+        this.tOldRegion = this.tNewRegion;
 
         /* update the new region */
         this.tNewRegion = tNewRegion;
@@ -4404,24 +4419,22 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
                     break;
                 }
 
-                if (NULL != this.ptCurrent->ptTile) {
-                    ptTargetTile = this.ptCurrent->ptTile;
-                }
-
                 if (this.ptCurrent->bOnlyUpdateMinimalEnclosure) {
                     /* we only update the minimal enclosure region */
-                    arm_2d_dynamic_dirty_region_update(
+                    __arm_2d_dynamic_dirty_region_update(
                                         &this.tDirtyRegion,
-                                        (arm_2d_tile_t *)ptTargetTile, 
+                                        NULL, 
                                         &this.ptCurrent->tEnclosureArea,
-                                        DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM);             
+                                        DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
+                                        true);             
                     this.ptCurrent = this.ptCurrent->ptNext;                    /* move to next */
                 } else {
-                    arm_2d_dynamic_dirty_region_update( 
+                    __arm_2d_dynamic_dirty_region_update( 
                                         &this.tDirtyRegion,
-                                        (arm_2d_tile_t *)ptTargetTile, 
+                                        NULL, 
                                         &this.ptCurrent->tOldRegion,
-                                        DIRTY_REGION_HELPER_UPDATE_NEW_REGION);
+                                        DIRTY_REGION_HELPER_UPDATE_NEW_REGION,
+                                        true);
                 }
             } else {
                 arm_2d_dynamic_dirty_region_change_user_region_index_only(
@@ -4430,10 +4443,11 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
             }
             break;
         case DIRTY_REGION_HELPER_UPDATE_NEW_REGION:
-            arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
-                                                (arm_2d_tile_t *)ptTargetTile, 
+            __arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
+                                                NULL, 
                                                 &this.ptCurrent->tNewRegion,
-                                                DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM);
+                                                DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
+                                                true);
             this.ptCurrent = this.ptCurrent->ptNext;                            /* move to next */
 
             break;

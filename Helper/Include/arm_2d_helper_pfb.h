@@ -771,7 +771,6 @@ struct arm_2d_helper_dirty_region_item_t{
 ARM_PRIVATE(
     arm_2d_helper_dirty_region_item_t *ptNext;
     arm_2d_helper_dirty_region_t *ptHelper;
-    const arm_2d_tile_t *ptTile;
 
     union {
         arm_2d_region_t tRegions[2];
