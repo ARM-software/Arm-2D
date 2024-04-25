@@ -4518,7 +4518,7 @@ void arm_2d_helper_dirty_region_transform_init(
     assert(NULL != ptTransformOP);
     assert(NULL != ptHelper);
 
-    memset(ptThis, 0, sizeof(arm_2d_helper_transform_t));
+    memset(ptThis, 0, sizeof(arm_2d_helper_dirty_region_transform_t));
 
     this.ptTransformOP = ptTransformOP;
     this.Angle.fStep = fAngleStep;
@@ -4527,9 +4527,9 @@ void arm_2d_helper_dirty_region_transform_init(
     this.fScale = 1.0f;
 
     this.bNeedUpdate = true;
-    this.DirtyRegion.ptHelper = ptHelper;
+    this.ptHelper = ptHelper;
 
-    arm_2d_helper_dirty_region_add_items(ptHelper, &this.DirtyRegion.tItem, 1);
+    arm_2d_helper_dirty_region_add_items(ptHelper, &this.tItem, 1);
 }
 
 ARM_NONNULL(1)
@@ -4537,8 +4537,8 @@ void arm_2d_helper_dirty_region_transform_depose(arm_2d_helper_dirty_region_tran
 {
     assert(NULL != ptThis);
 
-    arm_2d_helper_dirty_region_remove_items(this.DirtyRegion.ptHelper,
-                                            &this.DirtyRegion.tItem, 
+    arm_2d_helper_dirty_region_remove_items(this.ptHelper,
+                                            &this.tItem, 
                                             1);
 }
 
@@ -4565,15 +4565,15 @@ void arm_2d_helper_dirty_region_transform_update(
         tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
         
         arm_2d_helper_dirty_region_update_item(
-                                        this.DirtyRegion.ptHelper,
-                                        &this.DirtyRegion.tItem,
+                                        this.ptHelper,
+                                        &this.tItem,
                                         ptTarget,
                                         &tCanvasInTarget,
                                         (this.ptTransformOP->Target.ptRegion));
     } else {
         arm_2d_helper_dirty_region_update_item(
-                                        this.DirtyRegion.ptHelper,
-                                        &this.DirtyRegion.tItem,
+                                        this.ptHelper,
+                                        &this.tItem,
                                         ptTarget,
                                         NULL,
                                         (this.ptTransformOP->Target.ptRegion));
@@ -4587,7 +4587,7 @@ void arm_2d_helper_dirty_region_transform_on_frame_start(
 {
     assert(NULL != ptThis);
 
-    arm_2d_helper_dirty_region_item_suspend_update(&this.DirtyRegion.tItem, !this.bNeedUpdate);
+    arm_2d_helper_dirty_region_item_suspend_update(&this.tItem, !this.bNeedUpdate);
 
     /* make it thread safe */
     arm_irq_safe {
@@ -4616,7 +4616,7 @@ bool arm_2d_helper_dirty_region_transform_force_to_use_minimal_enclosure(
     assert(NULL != ptThis);
 
     return arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure(
-                                                        &this.DirtyRegion.tItem,
+                                                        &this.tItem,
                                                         bEnable);
 }
 
@@ -4628,7 +4628,7 @@ bool arm_2d_helper_dirty_region_transform_suspend_update(
     assert(NULL != ptThis);
 
     return arm_2d_helper_dirty_region_item_suspend_update(
-                                                        &this.DirtyRegion.tItem,
+                                                        &this.tItem,
                                                         bEnable);
 }
 

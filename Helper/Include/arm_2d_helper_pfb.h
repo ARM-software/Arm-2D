@@ -823,15 +823,12 @@ typedef struct arm_2d_helper_dirty_region_transform_t {
 
     float fAngle;
     float fScale;
-
+    arm_2d_helper_dirty_region_item_t tItem;
 ARM_PRIVATE(
     
     arm_2d_op_t *ptTransformOP;
 
-    struct {
-        arm_2d_helper_dirty_region_t *ptHelper;
-        arm_2d_helper_dirty_region_item_t tItem;
-    } DirtyRegion;
+    arm_2d_helper_dirty_region_t *ptHelper;
 
     struct {
         float fValue;
