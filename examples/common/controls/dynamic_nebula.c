@@ -127,10 +127,6 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 
         arm_2d_align_centre(__control_canvas, this.tCFG.iRadius * 2, this.tCFG.iRadius * 2) {
 
-            if (!arm_2d_helper_pfb_is_region_being_drawing(&__control, &__centre_region, NULL)) {
-                break;
-            }
-
             arm_2d_location_t tCentre = {
                     .iX = (__centre_region.tSize.iWidth >> 1) + __centre_region.tLocation.iX,
                     .iY = (__centre_region.tSize.iHeight >> 1) + __centre_region.tLocation.iY,
@@ -139,8 +135,24 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
             int n = this.tCFG.hwParticleCount;
             dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
             float fInvisibleRadius = (float)(this.tCFG.iRadius - this.tCFG.iVisibleRingWidth);
-
+            bool bIsBeenDrawing = arm_2d_helper_pfb_is_region_being_drawing(&__control, &__centre_region, NULL);
             do {
+
+                if (bIsNewFrame) {
+                    ptParticle->fOffset -= this.tCFG.fSpeed;
+
+                    if (ptParticle->fOffset <= 0.0f) {
+                        ptParticle->fOffset = (float)this.tCFG.iVisibleRingWidth;
+
+                        float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
+        
+                        ptParticle->fSin = arm_sin_f32(fAngle);
+                        ptParticle->fCos = arm_cos_f32(fAngle);
+                    }
+                } else if (!bIsBeenDrawing) {
+                    continue;
+                }
+
                 float fRadius = ptParticle->fOffset + fInvisibleRadius;
                 float fX = ptParticle->fCos * fRadius;
                 float fY = ptParticle->fSin * fRadius;
