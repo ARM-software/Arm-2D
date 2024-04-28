@@ -87,7 +87,6 @@
 
 /*============================ TYPES =========================================*/
 enum {
-    DIRTY_REGION_FAN,
     DIRTY_REGION_TEMPERATURE, 
 };
 
@@ -112,10 +111,6 @@ struct {
 
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-    
-    ADD_REGION_TO_LIST(s_tDirtyRegions,
-        0
-    ),
 
     /* add the last region:
         * it is the top left corner for text display 
@@ -135,15 +130,15 @@ struct {
 } c_tFanLevel[] = {
     [0] = {
         .tColour = GLCD_COLOR_GREEN,
-        .fSpeed = 3.0f,
+        .fSpeed = 1.0f,
     },
     [1] = {
         .tColour = GLCD_COLOR_BLUE,
-        .fSpeed = 5.0f,
+        .fSpeed = 2.0f,
     },
     [2] = {
         .tColour = __RGB(0xFF, 0xA5, 0x00),
-        .fSpeed = 8.0f,
+        .fSpeed = 3.0f,
     },
 };
 
@@ -154,6 +149,15 @@ static void __on_scene_fan_load(arm_2d_scene_t *ptScene)
     user_scene_fan_t *ptThis = (user_scene_fan_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
+        /* initialize transform helper */
+        arm_2d_helper_dirty_region_transform_init(
+                                    &ptFanBlade->tHelper,
+                                    &ptScene->tDirtyRegionHelper,
+                                    (arm_2d_op_t *)&ptFanBlade->tOP,
+                                    0.01f,
+                                    0.1f);
+    }
 }
 
 static void __on_scene_fan_depose(arm_2d_scene_t *ptScene)
@@ -167,8 +171,8 @@ static void __on_scene_fan_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptOP) {
-        ARM_2D_OP_DEPOSE(*ptOP);
+    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
+        ARM_2D_OP_DEPOSE(ptFanBlade->tOP);
     }
 
     if (!this.bUserAllocated) {
@@ -219,11 +223,17 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
                                             true); 
     }
 
+    for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {
 
+        this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
+        this.fAngle = fmodf(this.fAngle, 120.0f);
 
-    this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
-    this.fAngle = fmodf(this.fAngle, 120.0f);
+        /* update helper with new values*/
+        arm_2d_helper_dirty_region_transform_update_value(&this.tFanBlade[n].tHelper, ARM_2D_ANGLE(this.fAngle + n * 120.0f), 1.0f);
 
+        /* call helper's on-frame-start event handler */
+        arm_2d_helper_dirty_region_transform_on_frame_start(&this.tFanBlade[n].tHelper);
+    }
 }
 
 static void __on_scene_fan_frame_complete(arm_2d_scene_t *ptScene)
@@ -266,21 +276,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
             arm_2d_layout(__centre_region) {
 
                 __item_line_dock_vertical(140) {
-                    for (int_fast32_t n = 0; n < 3; n++) {
+                    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
 
                         /* draw pointer */
                         arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &this.tOP[n],
+                                            &ptFanBlade->tOP,
                                             &c_tileFanBladeMask,
                                             ptTile,
                                             &__item_region,
                                             s_tFanCentre,
-                                            ARM_2D_ANGLE(this.fAngle + 120.0f * n),
+                                            ptFanBlade->tHelper.fAngle,
                                             1.001f,
                                             c_tFanLevel[this.chLevel].tColour,
                                             255);
                         
-                        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[n]);
+                        arm_2d_helper_dirty_region_transform_update(
+                                                        &ptFanBlade->tHelper,
+                                                        &__item_region,
+                                                        bIsNewFrame);
+
+
+                        arm_2d_op_wait_async((arm_2d_op_core_t *)&ptFanBlade->tOP);
                     }
 
 
@@ -345,7 +361,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
             arm_2d_layout(__centre_region) {
 
                 __item_line_dock_vertical(140) {
-                    s_tDirtyRegions[DIRTY_REGION_FAN].tRegion = __item_region;
+                    //s_tDirtyRegions[DIRTY_REGION_FAN].tRegion = __item_region;
                 }
 
                 __item_line_dock_vertical() {
@@ -402,15 +418,15 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
             .fnOnFrameCPL   = &__on_scene_fan_frame_complete,
             .fnDepose       = &__on_scene_fan_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
     /* ------------   initialize members of user_scene_fan_t begin ---------------*/
 
-    arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, this.tOP, ptOP) {
-        ARM_2D_OP_INIT(*ptOP);
+    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
+        ARM_2D_OP_INIT(ptFanBlade->tOP);
     }
 
     s_tFanCentre.iX = (c_tileFanBladeMask.tRegion.tSize.iWidth >> 1) - 5;
