@@ -10,7 +10,7 @@
       <TargetName>V2M-MPS2-CM4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::.\ArmCompilerforEmbedded6.21</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -340,7 +340,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -459,6 +459,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1257,7 +1267,7 @@
               <MiscControls></MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,ITERATION_CNT=10</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1375,6 +1385,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2173,7 +2193,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2292,6 +2312,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3021,7 +3051,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3140,6 +3170,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3938,7 +3978,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4057,6 +4097,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4855,7 +4905,7 @@
               <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4974,6 +5024,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5772,7 +5832,7 @@
               <MiscControls>-Wno-nonportable-include-path -Omax</MiscControls>
               <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=28</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5891,6 +5951,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6413,7 +6483,7 @@
             <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
+            <Capability>0</Capability>
             <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -6620,7 +6690,7 @@
               <MiscControls>-Wno-padded -Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6739,6 +6809,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7537,7 +7617,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7656,6 +7736,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8385,7 +8475,7 @@
               <MiscControls>-Omax -Wno-invalid-utf8</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8504,6 +8594,16 @@
               <FileName>arm_2d_scene_watch.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8997,7 +9097,7 @@
       </api>
     </apis>
     <components>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9012,7 +9112,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9102,7 +9202,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9132,7 +9232,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.0" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.2" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9162,7 +9262,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.3" condition="Arm-2D-Helper" maxInstances="8">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.4" condition="Arm-2D-Helper" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9177,7 +9277,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.11.1" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.11.7" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9706,9 +9806,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="2.3.3">
+      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="2.3.4">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.3" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.4" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9723,9 +9823,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="2.3.3">
+      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="2.3.4">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.3" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.4" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9812,9 +9912,9 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_atom.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_atom.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_atom.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9829,9 +9929,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_atom.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_atom.h" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_atom.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9846,9 +9946,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_audiomark.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_audiomark.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_audiomark.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -9863,9 +9963,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_audiomark.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_audiomark.h" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_audiomark.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10050,9 +10150,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_panel.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_panel.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_panel.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
@@ -10067,9 +10167,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_panel.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_panel.h" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_panel.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>

@@ -99,6 +99,13 @@ const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_panel_on_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
+
+    progress_wheel_on_load(&this.tWheel);
+}
+
 static void __on_scene_panel_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
@@ -429,21 +436,23 @@ user_scene_panel_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAd
     *ptScene = (user_scene_panel_t){
         .use_as__arm_2d_scene_t = {
 
-        /* the canvas colour */
-        .tCanvas = {GLCD_COLOR_BLACK}, 
-        
-        /* Please uncommon the callbacks if you need them
-         */
-        //.fnBackground   = &__pfb_draw_scene_panel_background_handler,
-        .fnScene        = &__pfb_draw_scene_panel_handler,
-        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+            
+            /* Please uncommon the callbacks if you need them
+            */
+            .fnOnLoad       = &__on_scene_panel_on_load,
+            .fnScene        = &__pfb_draw_scene_panel_handler,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            
 
-        //.fnOnBGStart    = &__on_scene_panel_background_start,
-        //.fnOnBGComplete = &__on_scene_panel_background_complete,
-        .fnOnFrameStart = &__on_scene_panel_frame_start,
-        .fnOnFrameCPL   = &__on_scene_panel_frame_complete,
-        .fnDepose       = &__on_scene_panel_depose,
+            //.fnOnBGStart    = &__on_scene_panel_background_start,
+            //.fnOnBGComplete = &__on_scene_panel_background_complete,
+            .fnOnFrameStart = &__on_scene_panel_frame_start,
+            .fnOnFrameCPL   = &__on_scene_panel_frame_complete,
+            .fnDepose       = &__on_scene_panel_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };

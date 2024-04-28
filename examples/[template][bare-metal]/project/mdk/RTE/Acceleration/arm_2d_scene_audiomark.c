@@ -126,6 +126,17 @@ static const struct {
 
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_audiomark_on_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_audiomark_t *ptThis = (user_scene_audiomark_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    for (uint_fast8_t n = 0; n < dimof(this.Processor); n++) {
+        progress_wheel_on_load(&this.Processor[n].tWheel);
+    }
+
+}
+
 
 static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
 {
@@ -314,6 +325,7 @@ user_scene_audiomark_t *__arm_2d_scene_audiomark_init(   arm_2d_scene_player_t *
         
             /* Please uncommon the callbacks if you need them
              */
+            .fnOnLoad       = &__on_scene_audiomark_on_load,
             .fnScene        = &__pfb_draw_scene_audiomark_handler,
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
@@ -324,6 +336,8 @@ user_scene_audiomark_t *__arm_2d_scene_audiomark_init(   arm_2d_scene_player_t *
             //.fnBeforeSwitchOut = &__before_scene_audiomark_switching_out,
             .fnOnFrameCPL   = &__on_scene_audiomark_frame_complete,
             .fnDepose       = &__on_scene_audiomark_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
