@@ -402,7 +402,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
             f.write(f"    {{ {round(index / char_max_width)}, {{ {width}, {height}, }}, {advance_width}, {bearing_x}, {bearing_y}, {len(utf8_encoding)}, {utf8_c_array} }},\n")
 
         last_index += char_max_width * last_height
-        f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {last_advance}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
+        f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {char_max_width}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
 
         f.write("};\n")
 
@@ -415,7 +415,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.2)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.3)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
