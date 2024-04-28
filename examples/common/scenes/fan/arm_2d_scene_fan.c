@@ -137,15 +137,15 @@ struct {
 } c_tFanLevel[] = {
     [0] = {
         .tColour = GLCD_COLOR_GREEN,
-        .fSpeed = 1.0f,
+        .fSpeed = 3.0f,
     },
     [1] = {
         .tColour = GLCD_COLOR_BLUE,
-        .fSpeed = 2.0f,
+        .fSpeed = 5.0f,
     },
     [2] = {
         .tColour = __RGB(0xFF, 0xA5, 0x00),
-        .fSpeed = 3.0f,
+        .fSpeed = 8.0f,
     },
 };
 
@@ -230,10 +230,10 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
                                             true); 
     }
 
-    for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {
+    this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
+    this.fAngle = fmodf(this.fAngle, 120.0f);
 
-        this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
-        this.fAngle = fmodf(this.fAngle, 360.0f);
+    for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {
 
         /* update helper with new values*/
         arm_2d_helper_dirty_region_transform_update_value(&this.tFanBlade[n].tHelper, ARM_2D_ANGLE(this.fAngle + n * 120.0f), 1.0f);
