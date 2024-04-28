@@ -96,11 +96,13 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileWhiteDotMiddleA4Mask;
 extern const arm_2d_tile_t c_tileFanBladeMask;
 
+extern
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
 } ARM_2D_FONT_ALARM_CLOCK_32_A4;
 
+extern
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
