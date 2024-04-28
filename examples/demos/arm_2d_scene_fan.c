@@ -86,12 +86,26 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+enum {
+    DIRTY_REGION_FAN,
+    DIRTY_REGION_TEMPERATURE, 
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileWhiteDotMiddleA4Mask;
 extern const arm_2d_tile_t c_tileFanBladeMask;
 
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A4;
+
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_64_A4;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -99,14 +113,15 @@ extern const arm_2d_tile_t c_tileFanBladeMask;
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
     
+    ADD_REGION_TO_LIST(s_tDirtyRegions,
+        0
+    ),
+
     /* add the last region:
         * it is the top left corner for text display 
         */
     ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        .tSize = {
-            .iWidth = 140,
-            .iHeight = 140,
-        },
+        0
     ),
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
@@ -186,12 +201,25 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /* demo code */
-    if (arm_2d_helper_is_time_out(4000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(4000, &this.lTimestamp[1])) {
         this.chLevel++;
         if (this.chLevel >= 3) {
             this.chLevel = 0;
         }
     }
+
+    /* demo code */
+    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[2])) {
+        this.fTemperature = 25.0 + (float)(rand() % 20) / 10.0f;
+
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_TEMPERATURE],
+                                            false); 
+    } else {
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_TEMPERATURE],
+                                            true); 
+    }
+
+
 
     this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
     this.fAngle = fmodf(this.fAngle, 120.0f);
@@ -203,12 +231,11 @@ static void __on_scene_fan_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_fan_t *ptThis = (user_scene_fan_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
+
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(13000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
-#endif
 }
 
 static void __before_scene_fan_switching_out(arm_2d_scene_t *ptScene)
@@ -233,38 +260,61 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
 
-
-
         /* draw fan*/
-        arm_2d_align_centre(__top_canvas, 140, 140) {
+        arm_2d_align_centre(__top_canvas, 140, 200) {
 
-            for (int_fast32_t n = 0; n < 3; n++) {
+            arm_2d_layout(__centre_region) {
 
-                /* draw pointer */
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                    &this.tOP[n],
-                                    &c_tileFanBladeMask,
+                __item_line_dock_vertical(140) {
+                    for (int_fast32_t n = 0; n < 3; n++) {
+
+                        /* draw pointer */
+                        arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &this.tOP[n],
+                                            &c_tileFanBladeMask,
+                                            ptTile,
+                                            &__item_region,
+                                            s_tFanCentre,
+                                            ARM_2D_ANGLE(this.fAngle + 120.0f * n),
+                                            1.001f,
+                                            c_tFanLevel[this.chLevel].tColour,
+                                            255);
+                        
+                        arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[n]);
+                    }
+
+
+                    /* draw fan pivot */
+                    arm_2d_align_centre(__item_region, 
+                                        c_tileWhiteDotMiddleA4Mask.tRegion.tSize) {
+                        arm_2d_fill_colour_with_a4_mask(
                                     ptTile,
                                     &__centre_region,
-                                    s_tFanCentre,
-                                    ARM_2D_ANGLE(this.fAngle + 120.0f * n),
-                                    1.001f,
-                                    c_tFanLevel[this.chLevel].tColour,
-                                    255);
-                
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[n]);
+                                    &c_tileWhiteDotMiddleA4Mask, 
+                                    (__arm_2d_color_t){c_tFanLevel[this.chLevel].tColour});
+                    }
+                }
+
+                __item_line_dock_vertical() {
+                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+
+                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("-00.0", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+
+                    arm_2d_align_centre(__item_region, tStringSize) {
+                        arm_lcd_text_set_draw_region(&__centre_region);
+                        arm_lcd_text_location(0,0);
+                        if (this.fTemperature < 0) {
+                            arm_lcd_printf("%02.1f", this.fTemperature);
+                        } else {
+                            arm_lcd_printf(" %02.1f", this.fTemperature);
+                        }
+                    }
+                }
             }
         }
 
-        /* draw fan pivot */
-        arm_2d_align_centre(__top_canvas, 
-                            c_tileWhiteDotMiddleA4Mask.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask(
-                        ptTile,
-                        &__centre_region,
-                        &c_tileWhiteDotMiddleA4Mask, 
-                        (__arm_2d_color_t){c_tFanLevel[this.chLevel].tColour});
-        }
+        
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -282,21 +332,40 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(tScreen, s_tDirtyRegions->tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
+    /*-----------------------   static dirty region   -----------------------*/
+    do {
+        /* get the screen region */
+        arm_2d_region_t tScreen
+            = arm_2d_helper_pfb_get_display_area(
+                &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
 
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
-                                                        = tScreen.tSize.iWidth;
+        /* draw fan*/
+        arm_2d_align_centre(tScreen, 140, 200) {
+
+            arm_2d_layout(__centre_region) {
+
+                __item_line_dock_vertical(140) {
+                    s_tDirtyRegions[DIRTY_REGION_FAN].tRegion = __item_region;
+                }
+
+                __item_line_dock_vertical() {
+                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+
+                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("-00.0", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+
+                    arm_2d_align_centre(__item_region, tStringSize) {
+
+                        s_tDirtyRegions[DIRTY_REGION_TEMPERATURE].tRegion = __centre_region;
+
+                    }
+                }
+            }
+        }
+
+        
+    } while(0);
+    /*-----------------------   static dirty region   -----------------------*/
 
     if (NULL == ptThis) {
         ptThis = (user_scene_fan_t *)
@@ -346,6 +415,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
     s_tFanCentre.iX = (c_tileFanBladeMask.tRegion.tSize.iWidth >> 1) - 5;
     s_tFanCentre.iY = 70;
+    this.fTemperature = 25.0f;
 
     /* ------------   initialize members of user_scene_fan_t end   ---------------*/
 
