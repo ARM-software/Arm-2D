@@ -161,6 +161,11 @@ void scene_menu_loader(void)
     arm_2d_scene_menu_init(&DISP0_ADAPTER);
 }
 
+void scene_fan_loader(void) 
+{
+    arm_2d_scene_fan_init(&DISP0_ADAPTER);
+}
+
 void scene_console_window_loader(void)
 {
     arm_2d_scene_console_window_init(&DISP0_ADAPTER);
@@ -173,6 +178,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #if 1
     scene_basics_loader,
     scene_progress_status_loader,
+    scene_fan_loader,
     scene_console_window_loader,
     scene_meter_loader,
     scene_alarm_clock_loader,
@@ -186,6 +192,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_fitness_loader,
     scene_audiomark_loader,
 #else
+    
     scene_histogram_loader,
 #endif
 
