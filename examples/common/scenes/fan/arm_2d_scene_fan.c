@@ -87,6 +87,7 @@
 
 /*============================ TYPES =========================================*/
 enum {
+    DIRTY_REGION_PIVOT,
     DIRTY_REGION_TEMPERATURE, 
 };
 
@@ -113,6 +114,10 @@ struct {
 
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+    ADD_REGION_TO_LIST(s_tDirtyRegions,
+        0
+    ),
 
     /* add the last region:
         * it is the top left corner for text display 
@@ -228,7 +233,7 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
     for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {
 
         this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
-        this.fAngle = fmodf(this.fAngle, 120.0f);
+        this.fAngle = fmodf(this.fAngle, 360.0f);
 
         /* update helper with new values*/
         arm_2d_helper_dirty_region_transform_update_value(&this.tFanBlade[n].tHelper, ARM_2D_ANGLE(this.fAngle + n * 120.0f), 1.0f);
@@ -363,7 +368,11 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
             arm_2d_layout(__centre_region) {
 
                 __item_line_dock_vertical(140) {
-                    //s_tDirtyRegions[DIRTY_REGION_FAN].tRegion = __item_region;
+                    /* draw fan pivot */
+                    arm_2d_align_centre(__item_region, 
+                                        c_tileWhiteDotMiddleA4Mask.tRegion.tSize) {
+                        s_tDirtyRegions[DIRTY_REGION_PIVOT].tRegion = __centre_region;
+                    }
                 }
 
                 __item_line_dock_vertical() {
