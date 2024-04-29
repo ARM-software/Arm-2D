@@ -162,22 +162,22 @@ extern "C" {
                                                         __DES_ADDR,             \
                                                         __TRANS)                \
             do {                                                                \
-                __arm_2d_color_fast_rgb_t tTargetPix;                           \
-                uint16_t *phwTargetPixel = (__DES_ADDR);                        \
-                uint8_t *pchSourceChannel = (uint8_t *)(__SRC_ADDR);            \
-                __arm_2d_rgb565_unpack(*phwTargetPixel, &tTargetPix);           \
-                uint16_t *phwTargetChannel = (uint16_t *)&tTargetPix;           \
-                uint16_t hwOPA = pchSourceChannel[3];                           \
+                __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \
+                __arm_2d_brga8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
+                uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
                 hwOPA = hwOPA * ((__TRANS == 0))                                \
                       + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
                 uint16_t hwTRANS = 256 - hwOPA;                                 \
                                                                                 \
+                uint16_t *phwTargetPixel = (__DES_ADDR);                        \
+                __arm_2d_rgb565_unpack(*phwTargetPixel, &tTargetPix);           \
+                                                                                \
                 for (int i = 0; i < 3; i++) {                                   \
-                    uint16_t hwTemp =                                           \
-                        ((uint16_t)(*pchSourceChannel++) * hwOPA) +             \
-                        ((*phwTargetChannel) * hwTRANS);                        \
-                    *phwTargetChannel++ = (uint16_t) (hwTemp >> 8);             \
+                    uint16_t        hwTemp =                                    \
+                        (uint16_t) (tSrcPix.BGRA[i] * hwOPA) +                  \
+                        (tTargetPix.BGRA[i] * (hwTRANS));                       \
+                    tTargetPix.BGRA[i] = (uint16_t) (hwTemp >> 8);              \
                 }                                                               \
                                                                                 \
                 /* pack merged stream */                                        \
