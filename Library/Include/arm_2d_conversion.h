@@ -114,15 +114,18 @@ extern "C" {
                                             (__DES_ADDR),                       \
                                             (__DES_REGION))
 
-#define arm_2d_pixel_brga8888_to_rgb565(__COLOUR)                               \
+#define arm_2d_pixel_ccca8888_to_rgb565(__COLOUR)                               \
             ({__arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tChannels);            \
-            __arm_2d_brga8888_unpack((__COLOUR), &ARM_2D_SAFE_NAME(tChannels)); \
+            __arm_2d_ccca8888_unpack((__COLOUR), &ARM_2D_SAFE_NAME(tChannels)); \
             __arm_2d_rgb565_pack(&ARM_2D_SAFE_NAME(tChannels));})
 
-#define arm_2d_pixel_brga8888_to_gray8(__COLOUR)                                \
+#define arm_2d_pixel_ccca8888_to_gray8(__COLOUR)                                \
             ({__arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tChannels);            \
-            __arm_2d_brga8888_unpack((__COLOUR), &ARM_2D_SAFE_NAME(tChannels)); \
+            __arm_2d_ccca8888_unpack((__COLOUR), &ARM_2D_SAFE_NAME(tChannels)); \
             __arm_2d_gray8_pack(&ARM_2D_SAFE_NAME(tChannels));})
+
+#define arm_2d_pixel_brga8888_to_rgb565 arm_2d_pixel_ccca8888_to_rgb565
+#define arm_2d_pixel_brga8888_to_gray8 arm_2d_pixel_ccca8888_to_gray8
 
 /*============================ TYPES =========================================*/
 
@@ -175,8 +178,8 @@ __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
  * \param[in] ptRGB a __arm_2d_color_fast_rgb_t object
  */
 ARM_NONNULL(2)
-__STATIC_INLINE void __arm_2d_brga8888_unpack(uint32_t wColor,
-                                              __arm_2d_color_fast_rgb_t * ptRGB)
+__STATIC_INLINE void __arm_2d_ccca8888_unpack( uint32_t wColor,
+                                            __arm_2d_color_fast_rgb_t * ptRGB)
 {
     assert(NULL != ptRGB);
 
@@ -231,7 +234,7 @@ __STATIC_INLINE uint16_t __arm_2d_rgb565_pack(__arm_2d_color_fast_rgb_t * ptRGB)
  * \note the alpha channel will be kept in the output value
  */
 ARM_NONNULL(1)
-__STATIC_INLINE uint32_t __arm_2d_cccn888_pack(__arm_2d_color_fast_rgb_t * ptRGB)
+__STATIC_INLINE uint32_t __arm_2d_ccca888_pack(__arm_2d_color_fast_rgb_t * ptRGB)
 {
     assert(NULL != ptRGB);
     

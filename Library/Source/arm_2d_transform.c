@@ -107,7 +107,7 @@ extern "C" {
         tPixel.G >>= 8,                                         \
         tPixel.B >>= 8,                                         \
         tPixel.A = *((uint8_t *)pTarget + 3),                   \
-        __arm_2d_cccn888_pack(&tPixel))
+        __arm_2d_ccca888_pack(&tPixel))
 
 
 #define __API_COLOUR                gray8

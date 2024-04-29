@@ -115,24 +115,20 @@ extern "C" {
                                                         __DES_ADDR,             \
                                                         __TRANS)                \
             do {                                                                \
-                __arm_2d_color_fast_rgb_t tTargetPix;                           \
-                uint8_t *pchSourceChannel = (uint8_t *)(__SRC_ADDR);            \
-                uint8_t *pchTargetChannel = (uint8_t *)(__DES_ADDR);            \
-                uint16_t hwOPA = pchSourceChannel[3];                           \
+                __arm_2d_color_fast_rgb_t tSrcPix;                              \
+                __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
+                uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
                 hwOPA = hwOPA * ((__TRANS == 0))                                \
                       + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
                 uint16_t hwTRANS = 256 - hwOPA;                                 \
                                                                                 \
-                uint16_t hwSourceGray8 = *pchSourceChannel++;                   \
-                hwSourceGray8 += *pchSourceChannel++;                           \
-                hwSourceGray8 += *pchSourceChannel;                             \
-                hwSourceGray8 /= 3;                                             \
+                uint8_t *pchTargetPixel = (__DES_ADDR);                         \
+                uint8_t chSrcPixel = __arm_2d_gray8_pack(&tSrcPix);             \
                                                                                 \
-                uint16_t hwTemp =                                               \
-                    (hwSourceGray8 * hwOPA) +                                   \
-                    ((uint16_t)(*pchTargetChannel) * hwTRANS);                  \
-                *pchTargetChannel = (uint8_t)(hwTemp >> 8);                     \
+                *pchTargetPixel = ((uint16_t)( ((uint16_t)(chSrcPixel) * hwOPA) \
+                                     + ((uint16_t)(*pchTargetPixel) * (hwTRANS))\
+                                     ) >> 8);                                   \
             } while(0)
 #endif
 
@@ -163,7 +159,7 @@ extern "C" {
                                                         __TRANS)                \
             do {                                                                \
                 __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \
-                __arm_2d_brga8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
+                __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
                 uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
                 hwOPA = hwOPA * ((__TRANS == 0))                                \
@@ -208,21 +204,26 @@ extern "C" {
                                                         __DES_ADDR,             \
                                                         __TRANS)                \
             do {                                                                \
-                __arm_2d_color_fast_rgb_t tTargetPix;                           \
-                uint8_t *pchSourceChannel = (uint8_t *)(__SRC_ADDR);            \
-                uint8_t *pchTargetChannel = (uint8_t *)(__DES_ADDR);            \
-                uint16_t hwOPA = pchSourceChannel[3];                           \
+                __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \
+                __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
+                uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
                 hwOPA = hwOPA * ((__TRANS == 0))                                \
                       + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
                 uint16_t hwTRANS = 256 - hwOPA;                                 \
                                                                                 \
+                uint32_t *pwTargetPixel = (__DES_ADDR);                         \
+                __arm_2d_ccca8888_unpack(*pwTargetPixel, &tTargetPix);          \
+                                                                                \
                 for (int i = 0; i < 3; i++) {                                   \
-                    uint16_t hwTemp =                                           \
-                        ((uint16_t)(*pchSourceChannel++) * hwOPA) +             \
-                        ((uint16_t)(*pchTargetChannel) * hwTRANS);              \
-                    *pchTargetChannel++ = (uint8_t) (hwTemp >> 8);              \
+                    uint16_t        hwTemp =                                    \
+                        (uint16_t) (tSrcPix.BGRA[i] * hwOPA) +                  \
+                        (tTargetPix.BGRA[i] * (hwTRANS));                       \
+                    tTargetPix.BGRA[i] = (uint16_t) (hwTemp >> 8);              \
                 }                                                               \
+                                                                                \
+                /* pack merged stream */                                        \
+                *pwTargetPixel = __arm_2d_ccca888_pack(&tTargetPix);            \
             } while(0)
 #endif
 
