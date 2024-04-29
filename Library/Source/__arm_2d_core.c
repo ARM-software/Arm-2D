@@ -1592,7 +1592,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
         if  (   OP_CORE.ptOp->Info.Param.bHasSrcMask 
             &&  !OP_CORE.ptOp->Info.Param.bHasOrigin) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
-            ptSourceMaskTile = ptOP->Mask.ptSourceSide;
+            ptSourceMaskTile = (arm_2d_tile_t *)ptOP->Mask.ptSourceSide;
         }
 
         if (OP_CORE.ptOp->Info.Colour.u3ColourSZ >= ARM_2D_COLOUR_SZ_8BIT) {
