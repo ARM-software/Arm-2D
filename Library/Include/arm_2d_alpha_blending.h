@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.6.6
+ * $Date:        29. April 2024
+ * $Revision:    V.1.6.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

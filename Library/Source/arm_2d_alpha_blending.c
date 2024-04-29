@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.6.6
+ * $Date:        29. April 2024
+ * $Revision:    V.1.6.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -63,14 +63,6 @@ extern "C" {
 #   pragma diag_suppress 174,177,188,68,513,144
 #endif
 
-/*============================ MACROS ========================================*/
-/*============================ MACROFIED FUNCTIONS ===========================*/
-/*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
-/*============================ PROTOTYPES ====================================*/
-/*============================ LOCAL VARIABLES ===============================*/
-/*============================ INCLUDES ======================================*/
-
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_alpha.c"
 
@@ -83,6 +75,40 @@ extern "C" {
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_vertical_line_mask.c"
 
+/*============================ MACROS ========================================*/
+/*============================ MACROFIED FUNCTIONS ===========================*/
+/*============================ TYPES =========================================*/
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+
+extern
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio);
+
+extern
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio);
+
+extern
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio);
+
+/*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
 
@@ -802,7 +828,22 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_opacity(
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptOP);
-    
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (this.Source.ptTile->tInfo.bHasEnforcedColour) {
+        switch (this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_GRAY8:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
@@ -832,7 +873,22 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_opacity(
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptOP);
-    
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (this.Source.ptTile->tInfo.bHasEnforcedColour) {
+        switch (this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_RGB565:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
@@ -861,12 +917,29 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_opacity( arm_2d_op_alpha_t *ptOP,
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptOP);
-    
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (this.Source.ptTile->tInfo.bHasEnforcedColour) {
+        switch (this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_CCCN888:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
     
     //memset(ptThis, 0, sizeof(*ptThis));
+
+
 
     OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB888;
 
@@ -883,23 +956,45 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTas
 {
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptTask->ptOP)
     assert(ARM_2D_COLOUR_GRAY8 == OP_CORE.ptOp->Info.Colour.chScheme);
-    
-    if (255 == this.chRatio) {
-        __arm_2d_impl_c8bit_copy(   ptTask->Param.tCopy.tSource.pBuffer,
-                                    ptTask->Param.tCopy.tSource.iStride,
-                                    ptTask->Param.tCopy.tTarget.pBuffer,
-                                    ptTask->Param.tCopy.tTarget.iStride,
-                                    &ptTask->Param.tCopy.tCopySize);
-    } else {
-        __arm_2d_impl_gray8_tile_copy_opacity( 
-                                    ptTask->Param.tCopy.tSource.pBuffer,
-                                    ptTask->Param.tCopy.tSource.iStride,
-                                    ptTask->Param.tCopy.tTarget.pBuffer,
-                                    ptTask->Param.tCopy.tTarget.iStride,
-                                    &(ptTask->Param.tCopy.tCopySize),
-                                    this.chRatio);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+        if (255 == this.chRatio) {
+            __arm_2d_impl_ccca8888_to_gray8(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+        } else {
+            __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &(ptTask->Param.tCopy.tCopySize),
+                                        this.chRatio);
+        }
+    } else 
+#endif
+    {
+        if (255 == this.chRatio) {
+            __arm_2d_impl_c8bit_copy(   ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+        } else {
+            __arm_2d_impl_gray8_tile_copy_opacity( 
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &(ptTask->Param.tCopy.tCopySize),
+                                        this.chRatio);
+        }
     }
-    
+
     return arm_fsm_rt_cpl;
 }
 
@@ -908,20 +1003,45 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTa
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptTask->ptOP)
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
 
-    if (255 == this.chRatio) {
-        __arm_2d_impl_rgb16_copy(   ptTask->Param.tCopy.tSource.pBuffer,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+
+        if (255 == this.chRatio) {
+            __arm_2d_impl_ccca8888_to_rgb565(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+        } else {
+            __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &(ptTask->Param.tCopy.tCopySize),
+                                        this.chRatio);
+        }
+
+    } else 
+#endif
+
+    {
+        if (255 == this.chRatio) {
+            __arm_2d_impl_rgb16_copy(   ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+        } else {
+            __arm_2d_impl_rgb565_tile_copy_opacity(
+                                    ptTask->Param.tCopy.tSource.pBuffer,
                                     ptTask->Param.tCopy.tSource.iStride,
                                     ptTask->Param.tCopy.tTarget.pBuffer,
                                     ptTask->Param.tCopy.tTarget.iStride,
-                                    &ptTask->Param.tCopy.tCopySize);
-    } else {
-        __arm_2d_impl_rgb565_tile_copy_opacity(
-                                ptTask->Param.tCopy.tSource.pBuffer,
-                                ptTask->Param.tCopy.tSource.iStride,
-                                ptTask->Param.tCopy.tTarget.pBuffer,
-                                ptTask->Param.tCopy.tTarget.iStride,
-                                &(ptTask->Param.tCopy.tCopySize),
-                                this.chRatio);
+                                    &(ptTask->Param.tCopy.tCopySize),
+                                    this.chRatio);
+        }
     }
     
     return arm_fsm_rt_cpl;
@@ -932,21 +1052,44 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptT
 {
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptTask->ptOP)
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
-    
-    if (255 == this.chRatio) {
-        __arm_2d_impl_rgb32_copy(   ptTask->Param.tCopy.tSource.pBuffer,
-                                    ptTask->Param.tCopy.tSource.iStride,
-                                    ptTask->Param.tCopy.tTarget.pBuffer,
-                                    ptTask->Param.tCopy.tTarget.iStride,
-                                    &ptTask->Param.tCopy.tCopySize);
-    } else {
-        __arm_2d_impl_cccn888_tile_copy_opacity(   
-                                            ptTask->Param.tCopy.tSource.pBuffer,
-                                            ptTask->Param.tCopy.tSource.iStride,
-                                            ptTask->Param.tCopy.tTarget.pBuffer,
-                                            ptTask->Param.tCopy.tTarget.iStride,
-                                            &(ptTask->Param.tCopy.tCopySize),
-                                            this.chRatio);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+        if (255 == this.chRatio) {
+            __arm_2d_impl_ccca8888_to_cccn888(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+        } else {
+            __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &(ptTask->Param.tCopy.tCopySize),
+                                        this.chRatio);
+        }
+    } else 
+#endif
+
+    {
+        if (255 == this.chRatio) {
+            __arm_2d_impl_rgb32_copy(   ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+        } else {
+            __arm_2d_impl_cccn888_tile_copy_opacity(   
+                                                ptTask->Param.tCopy.tSource.pBuffer,
+                                                ptTask->Param.tCopy.tSource.iStride,
+                                                ptTask->Param.tCopy.tTarget.pBuffer,
+                                                ptTask->Param.tCopy.tTarget.iStride,
+                                                &(ptTask->Param.tCopy.tCopySize),
+                                                this.chRatio);
+        }
     }
 
     return arm_fsm_rt_cpl;
@@ -1241,7 +1384,42 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(   uint16_t *__RESTRICT phwSourceBas
     }
 }
 
+__WEAK
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
 
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    hwRatio += (hwRatio == 255);
+#endif
+
+    uint16_t        hwRatioCompl = 256 - hwRatio;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *pwSourceLine = pwSourceBase;
+        uint8_t *pchTargetLine = pchTargetBase;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(  pwSourceLine++, 
+                                                        pchTargetLine++,
+                                                        hwRatioCompl);
+
+        }
+
+        pwSourceBase += iSourceStride;
+        pchTargetBase += iTargetStride;
+    }
+
+}
 
 __WEAK
 void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
@@ -1276,6 +1454,43 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
 
         pwSourceBase += iSourceStride;
         phwTargetBase += iTargetStride;
+    }
+
+}
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    hwRatio += (hwRatio == 255);
+#endif
+
+    uint16_t        hwRatioCompl = 256 - hwRatio;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *pwSourceLine = pwSourceBase;
+        uint32_t *pwTargetLine = pwTargetBase;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(pwSourceLine++, 
+                                                        pwTargetLine++,
+                                                        hwRatioCompl);
+
+        }
+
+        pwSourceBase += iSourceStride;
+        pwTargetBase += iTargetStride;
     }
 
 }
@@ -1627,6 +1842,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_GRAY8 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
         
@@ -1645,6 +1863,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB565 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
         
@@ -1663,6 +1884,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB888 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
         
