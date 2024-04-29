@@ -9525,6 +9525,30 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
                             uint8_t chBlurDegree,
                             arm_2d_scratch_mem_t *ptScratchMemory);
 
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_ARM_COMPILER_5__
