@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.2.5
+ * $Date:        29. April 2024
+ * $Revision:    V.1.2.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -82,6 +82,10 @@ extern "C" {
  __ARM_2D_SUPPRESS_GCC_HELIUM_PERFORMANCE_WARNING__ to suppress this warning."
 #       endif
 
+#       ifndef USE_MVE_INTRINSICS
+#           define USE_MVE_INTRINSICS
+#       endif
+
 #   else
     /* the gcc version is too low to support helium well */
 #       ifndef __ARM_2D_SUPPRESS_GCC_HELIUM_PATCH_WARNING__
@@ -100,6 +104,12 @@ extern "C" {
 
 #   endif
 
+#endif
+
+#if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
+#   ifndef USE_MVE_INTRINSICS
+#       define USE_MVE_INTRINSICS
+#   endif
 #endif
 
 
