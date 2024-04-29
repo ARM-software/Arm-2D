@@ -1368,9 +1368,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
-#endif
 
     uint16_t        hwRatioCompl = 256 - hwRatio;
 
@@ -1405,9 +1403,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
-#endif
 
     uint16_t        hwRatioCompl = 256 - hwRatio;
 
@@ -1442,9 +1438,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
-#endif
 
     uint16_t        hwRatioCompl = 256 - hwRatio;
 

@@ -57,9 +57,7 @@ void __ARM_2D_FUNC(tile_copy_opacity) (__API_INT_TYPE *__RESTRICT pSourceBase,
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
-#endif
 
     uint16_t        hwRatioCompl = 256 - hwRatio;
 
@@ -100,9 +98,7 @@ void __ARM_2D_FUNC(tile_copy_colour_keying_opacity)(
     int_fast16_t    iHeight = ptCopySize->iHeight;
     int_fast16_t    iWidth = ptCopySize->iWidth;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
-#endif
 
     uint16_t        hwRatioCompl = 256 - hwRatio;
 

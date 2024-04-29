@@ -59,9 +59,7 @@ void __ARM_2D_FUNC(colour_filling_with_opacity)(
     int_fast16_t iWidth = ptCopySize->iWidth;
     int_fast16_t iHeight = ptCopySize->iHeight;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
     hwRatio += (hwRatio == 255);
-#endif
 
     uint16_t hwRatioCompl = 256 - hwRatio;
 
