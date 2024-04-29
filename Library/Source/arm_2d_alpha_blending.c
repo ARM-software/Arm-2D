@@ -1162,7 +1162,7 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(   uint16_t *__RESTRICT phwSourceBas
     
     for (uint32_t y = 0; y < iHeight; y++) {
 
-#if (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1))
+#if (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1) && !__IS_COMPILER_IAR__)
         /* M55 NOMVE optimization */
         register unsigned loopCnt  __asm("lr");
         loopCnt = iWidth;
@@ -1239,6 +1239,45 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(   uint16_t *__RESTRICT phwSourceBas
         phwSourceBase += (iSourceStride - iWidth);
         phwTargetBase += (iTargetStride - iWidth);
     }
+}
+
+
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwRatio)
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    hwRatio += (hwRatio == 255);
+#endif
+
+    uint16_t        hwRatioCompl = 256 - hwRatio;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *pwSourceLine = pwSourceBase;
+        uint16_t *phwTargetLine = phwTargetBase;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565( pwSourceLine++, 
+                                                        phwTargetLine++,
+                                                        hwRatioCompl);
+
+        }
+
+        pwSourceBase += iSourceStride;
+        phwTargetBase += iTargetStride;
+    }
+
 }
 
 /*----------------------------------------------------------------------------*
