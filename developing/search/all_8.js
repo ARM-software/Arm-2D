@@ -1,8 +1,8 @@
 var searchData=
 [
   ['_5f_5farm_5f2d_5fallocate_5fscratch_5fmemory_0',['__arm_2d_allocate_scratch_memory',['../group__gKernel.html#ga6c15020a09927cd68765b059d1f203bb',1,'arm_2d.h']]],
-  ['_5f_5farm_5f2d_5fbrga8888_5funpack_1',['__arm_2d_brga8888_unpack',['../group__gConversion.html#ga90b24349bc8cd47466280eb7d6aef393',1,'arm_2d_conversion.h']]],
-  ['_5f_5farm_5f2d_5fcccn888_5fpack_2',['__arm_2d_cccn888_pack',['../group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e',1,'arm_2d_conversion.h']]],
+  ['_5f_5farm_5f2d_5fccca8888_5funpack_1',['__arm_2d_ccca8888_unpack',['../group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038',1,'arm_2d_conversion.h']]],
+  ['_5f_5farm_5f2d_5fccca888_5fpack_2',['__arm_2d_ccca888_pack',['../group__gConversion.html#gaca14cb871b004f4a0240370af0207e07',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5fcfg_5fdefault_5fsub_5ftask_5fpool_5fsize_5f_5f_3',['__ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__',['../group__gKernel.html#ga849a39b45e7a5a22160515dda935ce09',1,'arm_2d_features.h']]],
   ['_5f_5farm_5f2d_5fcfg_5fforced_5ffixed_5fpoint_5ftransform_5f_5f_4',['__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__',['../group__gKernel.html#gaa832111ac7c0cde008384bf6ff5f1fd8',1,'arm_2d_features.h']]],
   ['_5f_5farm_5f2d_5fcfg_5fsupport_5fcolour_5fchannel_5faccess_5f_5f_5',['__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__',['../group__gKernel.html#gaf7ee22ee8caba96056e63a8cd544031d',1,'arm_2d_features.h']]],

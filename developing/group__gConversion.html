@@ -135,10 +135,16 @@ Macros</h2></td></tr>
 <tr class="separator:gaf79f4b72d0446d39d1b2fa6fa11d301e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf09c6fd69ffd30dd49f516bf25b29d07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#gaf09c6fd69ffd30dd49f516bf25b29d07">arm_2d_tile_copy_to_cccn888</a>(__SRC_ADDR,  __DES_ADDR,  __DES_REGION)</td></tr>
 <tr class="separator:gaf09c6fd69ffd30dd49f516bf25b29d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafff28802e75e0bcacd335ece078e074b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#gafff28802e75e0bcacd335ece078e074b">arm_2d_pixel_brga8888_to_rgb565</a>(__COLOUR)</td></tr>
-<tr class="separator:gafff28802e75e0bcacd335ece078e074b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b5e15235c078fe95595f6d01d8d3d4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga6b5e15235c078fe95595f6d01d8d3d4c">arm_2d_pixel_brga8888_to_gray8</a>(__COLOUR)</td></tr>
-<tr class="separator:ga6b5e15235c078fe95595f6d01d8d3d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d362f07e5db8fd35188fdaaa78f1e0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga2d362f07e5db8fd35188fdaaa78f1e0d">arm_2d_pixel_ccca8888_to_rgb565</a>(__COLOUR)</td></tr>
+<tr class="separator:ga2d362f07e5db8fd35188fdaaa78f1e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cfa0177564bddaa35d937954e20763a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga5cfa0177564bddaa35d937954e20763a">arm_2d_pixel_ccca8888_to_gray8</a>(__COLOUR)</td></tr>
+<tr class="separator:ga5cfa0177564bddaa35d937954e20763a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3de6cacebf8d92662a403870063f2731"><td class="memItemLeft" align="right" valign="top"><a id="ga3de6cacebf8d92662a403870063f2731" name="ga3de6cacebf8d92662a403870063f2731"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_pixel_brga8888_to_rgb565</b>&#160;&#160;&#160;arm_2d_pixel_ccca8888_to_rgb565</td></tr>
+<tr class="separator:ga3de6cacebf8d92662a403870063f2731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga427d6ffd4305a489e7306cca149677a8"><td class="memItemLeft" align="right" valign="top"><a id="ga427d6ffd4305a489e7306cca149677a8" name="ga427d6ffd4305a489e7306cca149677a8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_pixel_brga8888_to_gray8</b>&#160;&#160;&#160;arm_2d_pixel_ccca8888_to_gray8</td></tr>
+<tr class="separator:ga427d6ffd4305a489e7306cca149677a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -151,18 +157,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0dac4bd927c28a54130bfe279542065c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga0dac4bd927c28a54130bfe279542065c">__arm_2d_rgb565_unpack</a> (uint16_t hwColor, <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
 <tr class="memdesc:ga0dac4bd927c28a54130bfe279542065c"><td class="mdescLeft">&#160;</td><td class="mdescRight">unpack a rgb565 colour into a given <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#ga0dac4bd927c28a54130bfe279542065c">More...</a><br /></td></tr>
 <tr class="separator:ga0dac4bd927c28a54130bfe279542065c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga90b24349bc8cd47466280eb7d6aef393"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga90b24349bc8cd47466280eb7d6aef393">__arm_2d_brga8888_unpack</a> (uint32_t wColor, <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
-<tr class="memdesc:ga90b24349bc8cd47466280eb7d6aef393"><td class="mdescLeft">&#160;</td><td class="mdescRight">unpack a 32bit colour into a given <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#ga90b24349bc8cd47466280eb7d6aef393">More...</a><br /></td></tr>
-<tr class="separator:ga90b24349bc8cd47466280eb7d6aef393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae27856c7d0a9aadfeaea9844e2a8c038"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038">__arm_2d_ccca8888_unpack</a> (uint32_t wColor, <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
+<tr class="memdesc:gae27856c7d0a9aadfeaea9844e2a8c038"><td class="mdescLeft">&#160;</td><td class="mdescRight">unpack a 32bit colour into a given <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038">More...</a><br /></td></tr>
+<tr class="separator:gae27856c7d0a9aadfeaea9844e2a8c038"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6724d46af939985faf17e3c9697c6c38"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga6724d46af939985faf17e3c9697c6c38">__arm_2d_gray8_pack</a> (<a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
 <tr class="memdesc:ga6724d46af939985faf17e3c9697c6c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a gray8 colour from a <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#ga6724d46af939985faf17e3c9697c6c38">More...</a><br /></td></tr>
 <tr class="separator:ga6724d46af939985faf17e3c9697c6c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad741f60e362467e251ef35febec37c28"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#gad741f60e362467e251ef35febec37c28">__arm_2d_rgb565_pack</a> (<a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
 <tr class="memdesc:gad741f60e362467e251ef35febec37c28"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a rgb565 colour from a <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#gad741f60e362467e251ef35febec37c28">More...</a><br /></td></tr>
 <tr class="separator:gad741f60e362467e251ef35febec37c28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50cef518f8e1fe3aa7b6870ac797c66e"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e">__arm_2d_cccn888_pack</a> (<a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
-<tr class="memdesc:ga50cef518f8e1fe3aa7b6870ac797c66e"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a cccn888 colour from a <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#ga50cef518f8e1fe3aa7b6870ac797c66e">More...</a><br /></td></tr>
-<tr class="separator:ga50cef518f8e1fe3aa7b6870ac797c66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca14cb871b004f4a0240370af0207e07"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07">__arm_2d_ccca888_pack</a> (<a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *ptRGB)</td></tr>
+<tr class="memdesc:gaca14cb871b004f4a0240370af0207e07"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a cccn888 colour from a <a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> object  <a href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07">More...</a><br /></td></tr>
+<tr class="separator:gaca14cb871b004f4a0240370af0207e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga60c2471e899128c2a21f02e1a38017de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de">arm_2dp_convert_colour_to_gray8</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__src__t">arm_2d_op_cl_convt_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptSource, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget)</td></tr>
 <tr class="memdesc:ga60c2471e899128c2a21f02e1a38017de"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert the colour format of a given tile to gray8  <a href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de">More...</a><br /></td></tr>
 <tr class="separator:ga60c2471e899128c2a21f02e1a38017de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -466,14 +472,14 @@ A</td>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="gafff28802e75e0bcacd335ece078e074b" name="gafff28802e75e0bcacd335ece078e074b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafff28802e75e0bcacd335ece078e074b">&#9670;&nbsp;</a></span>arm_2d_pixel_brga8888_to_rgb565</h2>
+<a id="ga2d362f07e5db8fd35188fdaaa78f1e0d" name="ga2d362f07e5db8fd35188fdaaa78f1e0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d362f07e5db8fd35188fdaaa78f1e0d">&#9670;&nbsp;</a></span>arm_2d_pixel_ccca8888_to_rgb565</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define arm_2d_pixel_brga8888_to_rgb565</td>
+          <td class="memname">#define arm_2d_pixel_ccca8888_to_rgb565</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">__COLOUR</td><td>)</td>
@@ -482,19 +488,19 @@ A</td>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            ({<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels);            \</div>
-<div class="line">            __arm_2d_brga8888_unpack((__COLOUR), &amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels)); \</div>
+<div class="line">            __arm_2d_ccca8888_unpack((__COLOUR), &amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels)); \</div>
 <div class="line">            __arm_2d_rgb565_pack(&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels));})</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ga6b5e15235c078fe95595f6d01d8d3d4c" name="ga6b5e15235c078fe95595f6d01d8d3d4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6b5e15235c078fe95595f6d01d8d3d4c">&#9670;&nbsp;</a></span>arm_2d_pixel_brga8888_to_gray8</h2>
+<a id="ga5cfa0177564bddaa35d937954e20763a" name="ga5cfa0177564bddaa35d937954e20763a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5cfa0177564bddaa35d937954e20763a">&#9670;&nbsp;</a></span>arm_2d_pixel_ccca8888_to_gray8</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define arm_2d_pixel_brga8888_to_gray8</td>
+          <td class="memname">#define arm_2d_pixel_ccca8888_to_gray8</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">__COLOUR</td><td>)</td>
@@ -503,7 +509,7 @@ A</td>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            ({<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels);            \</div>
-<div class="line">            __arm_2d_brga8888_unpack((__COLOUR), &amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels)); \</div>
+<div class="line">            __arm_2d_ccca8888_unpack((__COLOUR), &amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels)); \</div>
 <div class="line">            __arm_2d_gray8_pack(&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tChannels));})</div>
 </div><!-- fragment -->
 </div>
@@ -546,14 +552,14 @@ A</td>
 
 </div>
 </div>
-<a id="ga90b24349bc8cd47466280eb7d6aef393" name="ga90b24349bc8cd47466280eb7d6aef393"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga90b24349bc8cd47466280eb7d6aef393">&#9670;&nbsp;</a></span>__arm_2d_brga8888_unpack()</h2>
+<a id="gae27856c7d0a9aadfeaea9844e2a8c038" name="gae27856c7d0a9aadfeaea9844e2a8c038"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae27856c7d0a9aadfeaea9844e2a8c038">&#9670;&nbsp;</a></span>__arm_2d_ccca8888_unpack()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void __arm_2d_brga8888_unpack </td>
+          <td class="memname">__STATIC_INLINE void __arm_2d_ccca8888_unpack </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>wColor</em>, </td>
@@ -637,14 +643,14 @@ A</td>
 
 </div>
 </div>
-<a id="ga50cef518f8e1fe3aa7b6870ac797c66e" name="ga50cef518f8e1fe3aa7b6870ac797c66e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga50cef518f8e1fe3aa7b6870ac797c66e">&#9670;&nbsp;</a></span>__arm_2d_cccn888_pack()</h2>
+<a id="gaca14cb871b004f4a0240370af0207e07" name="gaca14cb871b004f4a0240370af0207e07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca14cb871b004f4a0240370af0207e07">&#9670;&nbsp;</a></span>__arm_2d_ccca888_pack()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE uint32_t __arm_2d_cccn888_pack </td>
+          <td class="memname">__STATIC_INLINE uint32_t __arm_2d_ccca888_pack </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t">__arm_2d_color_fast_rgb_t</a> *&#160;</td>
           <td class="paramname"><em>ptRGB</em></td><td>)</td>
