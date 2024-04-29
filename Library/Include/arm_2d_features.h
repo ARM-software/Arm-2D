@@ -184,6 +184,10 @@ extern "C" {
 #   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__     0
 #endif
 
+#ifndef __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+#   define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__          0
+#endif
+
 /*----------------------------------------------------------------------------*
  * Unsafe configurations                                                      *
  *----------------------------------------------------------------------------*
