@@ -1376,8 +1376,8 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwSourceLine = pwSourceBase;
-        uint8_t *pchTargetLine = pchTargetBase;
+        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
+        uint8_t *__RESTRICT pchTargetLine = pchTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
@@ -1413,8 +1413,8 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwSourceLine = pwSourceBase;
-        uint16_t *phwTargetLine = phwTargetBase;
+        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
+        uint16_t *__RESTRICT phwTargetLine = phwTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
@@ -1450,8 +1450,8 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwSourceLine = pwSourceBase;
-        uint32_t *pwTargetLine = pwTargetBase;
+        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
+        uint32_t *__RESTRICT pwTargetLine = pwTargetBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
