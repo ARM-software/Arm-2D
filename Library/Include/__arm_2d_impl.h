@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.4.9
+ * $Date:        29. April 2024
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -110,6 +110,32 @@ extern "C" {
             } while(0)
 #endif
 
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(   __SRC_ADDR,             \
+                                                        __DES_ADDR,             \
+                                                        __TRANS)                \
+            do {                                                                \
+                __arm_2d_color_fast_rgb_t tTargetPix;                           \
+                uint8_t *pchSourceChannel = (uint8_t *)(__SRC_ADDR);            \
+                uint8_t *pchTargetChannel = (uint8_t *)(__DES_ADDR);            \
+                uint16_t hwOPA = pchSourceChannel[3];                           \
+                hwOPA += (hwOPA == 255);                                        \
+                hwOPA = hwOPA * ((__TRANS == 0))                                \
+                      + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
+                uint16_t hwTRANS = 256 - hwOPA;                                 \
+                                                                                \
+                uint16_t hwSourceGray8 = *pchSourceChannel++;                   \
+                hwSourceGray8 += *pchSourceChannel++;                           \
+                hwSourceGray8 += *pchSourceChannel;                             \
+                hwSourceGray8 /= 3;                                             \
+                                                                                \
+                uint16_t hwTemp =                                               \
+                    (hwSourceGray8 * hwOPA) +                                   \
+                    ((uint16_t)(*pchTargetChannel) * hwTRANS);                  \
+                *pchTargetChannel = (uint8_t)(hwTemp >> 8);                     \
+            } while(0)
+#endif
+
 #ifndef __ARM_2D_PIXEL_BLENDING_RGB565
 #   define __ARM_2D_PIXEL_BLENDING_RGB565(__SRC_ADDR, __DES_ADDR, __TRANS)      \
             do {                                                                \
@@ -124,6 +150,34 @@ extern "C" {
                         (uint16_t) (tSrcPix.BGRA[i] * hwOPA) +                  \
                         (tTargetPix.BGRA[i] * (__TRANS));                       \
                     tTargetPix.BGRA[i] = (uint16_t) (hwTemp >> 8);              \
+                }                                                               \
+                                                                                \
+                /* pack merged stream */                                        \
+                *phwTargetPixel = __arm_2d_rgb565_pack(&tTargetPix);            \
+            } while(0)
+#endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(  __SRC_ADDR,             \
+                                                        __DES_ADDR,             \
+                                                        __TRANS)                \
+            do {                                                                \
+                __arm_2d_color_fast_rgb_t tTargetPix;                           \
+                uint16_t *phwTargetPixel = (__DES_ADDR);                        \
+                uint8_t *pchSourceChannel = (uint8_t *)(__SRC_ADDR);            \
+                __arm_2d_rgb565_unpack(*phwTargetPixel, &tTargetPix);           \
+                uint16_t *phwTargetChannel = (uint16_t *)&tTargetPix;           \
+                uint16_t hwOPA = pchSourceChannel[3];                           \
+                hwOPA += (hwOPA == 255);                                        \
+                hwOPA = hwOPA * ((__TRANS == 0))                                \
+                      + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
+                uint16_t hwTRANS = 256 - hwOPA;                                 \
+                                                                                \
+                for (int i = 0; i < 3; i++) {                                   \
+                    uint16_t hwTemp =                                           \
+                        ((uint16_t)(*pchSourceChannel++) * hwOPA) +             \
+                        ((*phwTargetChannel) * hwTRANS);                        \
+                    *phwTargetChannel++ = (uint16_t) (hwTemp >> 8);             \
                 }                                                               \
                                                                                 \
                 /* pack merged stream */                                        \
@@ -146,6 +200,29 @@ extern "C" {
                               ) >> 8;                                           \
                      pchDes++;                                                  \
                 } while(--ARM_2D_SAFE_NAME(n));                                 \
+            } while(0)
+#endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888( __SRC_ADDR,             \
+                                                        __DES_ADDR,             \
+                                                        __TRANS)                \
+            do {                                                                \
+                __arm_2d_color_fast_rgb_t tTargetPix;                           \
+                uint8_t *pchSourceChannel = (uint8_t *)(__SRC_ADDR);            \
+                uint8_t *pchTargetChannel = (uint8_t *)(__DES_ADDR);            \
+                uint16_t hwOPA = pchSourceChannel[3];                           \
+                hwOPA += (hwOPA == 255);                                        \
+                hwOPA = hwOPA * ((__TRANS == 0))                                \
+                      + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
+                uint16_t hwTRANS = 256 - hwOPA;                                 \
+                                                                                \
+                for (int i = 0; i < 3; i++) {                                   \
+                    uint16_t hwTemp =                                           \
+                        ((uint16_t)(*pchSourceChannel++) * hwOPA) +             \
+                        ((uint16_t)(*pchTargetChannel) * hwTRANS);              \
+                    *pchTargetChannel++ = (uint8_t) (hwTemp >> 8);              \
+                }                                                               \
             } while(0)
 #endif
 

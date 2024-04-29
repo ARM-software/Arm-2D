@@ -21,8 +21,8 @@
  * Title:        arm-2d_draw.c
  * Description:  APIs for colour format conversion
  *
- * $Date:        3. April 2024
- * $Revision:    V.1.0.5
+ * $Date:        29. April 2024
+ * $Revision:    V.1.0.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -533,31 +533,9 @@ void __arm_2d_impl_ccca8888_to_rgb565(uint32_t *__RESTRICT pwSourceBase,
         uint16_t *__RESTRICT phwTarget = phwTargetBase;
 
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
-
-            __arm_2d_color_fast_rgb_t tTargetPixel;
-            __arm_2d_rgb565_unpack(*phwTarget, &tTargetPixel);
-
-
-            arm_2d_color_bgra8888_t wSourcePixelOrigin = {.tValue = *pwSource++};
-
-            /* get opacity and transparency */
-            uint16_t hwOPA = wSourcePixelOrigin.u8A;
-            uint16_t hwTrans = 256 - hwOPA;
-
-            /* CCCA8888 -> RGB565 */
-
-            uint16_t hwChannel0 = (uint16_t)(wSourcePixelOrigin.chChannel[0] * hwOPA)
-                                   + (tTargetPixel.BGRA[0] * hwTrans);
-            tTargetPixel.BGRA[0] = (uint16_t) (hwChannel0 >> 8);
-            uint16_t hwChannel1 = (uint16_t)(wSourcePixelOrigin.chChannel[1] * hwOPA)
-                                   + (tTargetPixel.BGRA[1] * hwTrans);
-            tTargetPixel.BGRA[1] = (uint16_t) (hwChannel1 >> 8);
-            uint16_t hwChannel2 = (uint16_t)(wSourcePixelOrigin.chChannel[2] * hwOPA)
-                                   + (tTargetPixel.BGRA[2] * hwTrans);
-            tTargetPixel.BGRA[2] = (uint16_t) (hwChannel2 >> 8);
-
-
-            *phwTarget++ = __arm_2d_rgb565_pack(&tTargetPixel);
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565( pwSource++, 
+                                                        phwTarget++, 
+                                                        0);
         }
 
         pwSourceBase += iSourceStride;
@@ -636,27 +614,9 @@ void __arm_2d_impl_ccca8888_to_cccn888( uint32_t *__RESTRICT pwSourceBase,
         uint32_t       *__RESTRICT pwTarget = pwTargetBase;
 
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
-
-            register arm_2d_color_bgra8888_t tTargetPixel = *(arm_2d_color_bgra8888_t *)pwTarget;
-            register arm_2d_color_bgra8888_t tSourcePixel = *(arm_2d_color_bgra8888_t *)pwSource++;
-
-            uint16_t hwOPA = tSourcePixel.u8A;
-            uint16_t hwTrans = 256 - hwOPA;
-
-            uint16_t hwChannel0 = (uint16_t)(tSourcePixel.chChannel[0] * hwOPA)
-                                + (tTargetPixel.chChannel[0] * hwTrans);
-            tTargetPixel.chChannel[0] = (uint16_t) (hwChannel0 >> 8);
-
-            uint16_t hwChannel1 = (uint16_t)(tSourcePixel.chChannel[1] * hwOPA)
-                                + (tTargetPixel.chChannel[1] * hwTrans);
-            tTargetPixel.chChannel[1] = (uint16_t) (hwChannel1 >> 8);
-
-            uint16_t hwChannel2 = (uint16_t)(tSourcePixel.chChannel[2] * hwOPA)
-                                + (tTargetPixel.chChannel[2] * hwTrans);
-            tTargetPixel.chChannel[2] = (uint16_t) (hwChannel2 >> 8);
-
-            *pwTarget++ = tTargetPixel.tValue;
-
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(pwSource++, 
+                                                        pwTarget++, 
+                                                        0);
         }
 
         pwSourceBase += iSourceStride;
@@ -736,19 +696,11 @@ void __arm_2d_impl_ccca8888_to_gray8(   uint32_t *__RESTRICT pwSourceBase,
         uint8_t *__RESTRICT pchTarget = pchTargetBase;
 
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++) {
-            arm_2d_color_bgra8888_t wSrcPixel = *(arm_2d_color_bgra8888_t *)pwSource++;
-            uint_fast16_t hwPixel = 0, hwTarget = *pchTarget;
+        
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(  pwSource++, 
+                                                        pchTarget++, 
+                                                        0);
 
-            uint16_t hwOPA = wSrcPixel.u8A;
-            uint16_t hwTrans = 256 - hwOPA;
-
-            hwPixel += wSrcPixel.u8R;
-            hwPixel += wSrcPixel.u8G;
-            hwPixel += wSrcPixel.u8B;
-            hwPixel /= 3;
-
-            uint16_t hwChannel = (uint16_t)(hwPixel * hwOPA) + (hwTarget * hwTrans);
-            *pchTarget++ = (uint16_t) (hwChannel >> 8);
         }
 
         pwSourceBase += iSourceStride;
