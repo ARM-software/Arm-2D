@@ -237,6 +237,112 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_chn_ma
     }
 }
 
+__WEAK
+void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize)
+{
+    /* handle source mask */
+    assert(ptSourceMaskSize->iWidth >= ptCopySize->iWidth);
+    int_fast16_t iSourceMaskY = 0;
+    int_fast16_t iSourceMaskHeight = ptSourceMaskSize->iHeight;
+    uint8_t *pchSourceMask = pchSourceMaskBase;
+
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+    
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
+        {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}TargetBase;
+
+        uint8_t *__RESTRICT pchSourceMaskLine = pchSourceMask;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            uint16_t hwTransparency = 256 - (*pchSourceMaskLine++);
+
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
+                                                        p{{colour_int_prefix}}TargetLine++,
+                                                        hwTransparency);
+        }
+
+        pwSourceBase += iSourceStride;
+        p{{colour_int_prefix}}TargetBase += iTargetStride;
+
+        /* source mask rolling */
+        if (++iSourceMaskY >= iSourceMaskHeight) {
+            pchSourceMask = pchSourceMaskBase;
+            iSourceMaskY = 0;
+        } else {
+            pchSourceMask += iSourceMaskStride;
+        }
+    }
+}
+
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_chn_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize)
+{
+    /* handle source mask */
+    assert(ptSourceMaskSize->iWidth >= ptCopySize->iWidth);
+    int_fast16_t iSourceMaskY = 0;
+    int_fast16_t iSourceMaskHeight = ptSourceMaskSize->iHeight;
+    uint32_t *pwSourceMask = pwSourceMaskBase;
+
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+    
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
+        {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}TargetBase;
+
+        uint32_t *__RESTRICT pwSourceMaskLine = pwSourceMask;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            uint16_t hwTransparency = 256 - (*(uint8_t *)(pwSourceMaskLine++));
+
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
+                                                        p{{colour_int_prefix}}TargetLine++,
+                                                        hwTransparency);
+        }
+
+        pwSourceBase += iSourceStride;
+        p{{colour_int_prefix}}TargetBase += iTargetStride;
+
+        /* source mask rolling */
+        if (++iSourceMaskY >= iSourceMaskHeight) {
+            pwSourceMask = pwSourceMaskBase;
+            iSourceMaskY = 0;
+        } else {
+            pwSourceMask += iSourceMaskStride;
+        }
+    }
+}
+
+
 
 {%- endfor %}
 
