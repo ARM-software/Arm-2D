@@ -75,6 +75,9 @@ extern "C" {
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_vertical_line_mask.c"
 
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_tile_copy_with_mask_and_opacity.c"
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -1354,111 +1357,6 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(   uint16_t *__RESTRICT phwSourceBas
         phwSourceBase += (iSourceStride - iWidth);
         phwTargetBase += (iTargetStride - iWidth);
     }
-}
-
-__WEAK
-void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint8_t *__RESTRICT pchTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
-{
-    int_fast16_t iHeight = ptCopySize->iHeight;
-    int_fast16_t iWidth  = ptCopySize->iWidth;
-
-    hwRatio += (hwRatio == 255);
-
-    uint16_t        hwRatioCompl = 256 - hwRatio;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-
-        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
-        uint8_t *__RESTRICT pchTargetLine = pchTargetBase;
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(  pwSourceLine++, 
-                                                        pchTargetLine++,
-                                                        hwRatioCompl);
-
-        }
-
-        pwSourceBase += iSourceStride;
-        pchTargetBase += iTargetStride;
-    }
-
-}
-
-__WEAK
-void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint16_t *__RESTRICT phwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
-{
-    int_fast16_t iHeight = ptCopySize->iHeight;
-    int_fast16_t iWidth  = ptCopySize->iWidth;
-
-    hwRatio += (hwRatio == 255);
-
-    uint16_t        hwRatioCompl = 256 - hwRatio;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-
-        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
-        uint16_t *__RESTRICT phwTargetLine = phwTargetBase;
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565( pwSourceLine++, 
-                                                        phwTargetLine++,
-                                                        hwRatioCompl);
-
-        }
-
-        pwSourceBase += iSourceStride;
-        phwTargetBase += iTargetStride;
-    }
-
-}
-
-__WEAK
-void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint32_t *__RESTRICT pwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
-{
-    int_fast16_t iHeight = ptCopySize->iHeight;
-    int_fast16_t iWidth  = ptCopySize->iWidth;
-
-    hwRatio += (hwRatio == 255);
-
-    uint16_t        hwRatioCompl = 256 - hwRatio;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-
-        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
-        uint32_t *__RESTRICT pwTargetLine = pwTargetBase;
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(pwSourceLine++, 
-                                                        pwTargetLine++,
-                                                        hwRatioCompl);
-
-        }
-
-        pwSourceBase += iSourceStride;
-        pwTargetBase += iTargetStride;
-    }
-
 }
 
 /*----------------------------------------------------------------------------*
