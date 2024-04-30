@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.2.4
+ * $Date:        30. April 2024
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -9531,7 +9531,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
                                     uint8_t *__RESTRICT pchTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio);
+                                    uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
@@ -9539,7 +9539,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
                                     uint16_t *__RESTRICT phwTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio);
+                                    uint_fast16_t hwOpacity);
 
 void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
@@ -9547,7 +9547,159 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
                                     uint32_t *__RESTRICT pwTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio);
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize);
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
