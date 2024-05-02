@@ -2429,6 +2429,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_GRAY8 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK,
         
@@ -2450,6 +2453,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_RGB565 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK,
         
@@ -2471,6 +2477,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_CCCN888 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK,
         
@@ -2492,6 +2501,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_ONLY_GRAY8 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_ONLY,
         
@@ -2512,6 +2524,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_ONLY_RGB565 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_ONLY,
         
@@ -2532,6 +2547,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_ONLY_CCCN888 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_ONLY,
         

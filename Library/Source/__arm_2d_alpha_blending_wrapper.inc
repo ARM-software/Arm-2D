@@ -120,6 +120,128 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTask)
 
     uint32_t wMode = this.wMode;
 
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+
+        assert(wMode == ARM_2D_CP_MODE_COPY);
+
+        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+            if (ARM_2D_COLOUR_SZ_8BIT == __API_ABW_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.iStride,
+
+                    ptTask->Param.tCopyMask.tSrcMask.pBuffer,
+                    ptTask->Param.tCopyMask.tSrcMask.iStride,
+                    &ptTask->Param.tCopyMask.tSrcMask.tValidRegion.tSize,
+
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.iStride,
+
+                    &ptTask->Param.tCopy.tCopySize);
+
+            }
+            if (ARM_2D_COLOUR_SZ_16BIT == __API_ABW_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.iStride,
+
+                    ptTask->Param.tCopyMask.tSrcMask.pBuffer,
+                    ptTask->Param.tCopyMask.tSrcMask.iStride,
+                    &ptTask->Param.tCopyMask.tSrcMask.tValidRegion.tSize,
+
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.iStride,
+
+                    &ptTask->Param.tCopy.tCopySize);
+            }
+            if (ARM_2D_COLOUR_SZ_32BIT == __API_ABW_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.iStride,
+
+                    ptTask->Param.tCopyMask.tSrcMask.pBuffer,
+                    ptTask->Param.tCopyMask.tSrcMask.iStride,
+                    &ptTask->Param.tCopyMask.tSrcMask.tValidRegion.tSize,
+
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.iStride,
+
+                    &ptTask->Param.tCopy.tCopySize);
+            }
+        } else {
+            if (ARM_2D_COLOUR_SZ_8BIT == __API_ABW_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask(
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.iStride,
+
+                    ptTask->Param.tCopyMask.tSrcMask.pBuffer,
+                    ptTask->Param.tCopyMask.tSrcMask.iStride,
+                    &ptTask->Param.tCopyMask.tSrcMask.tValidRegion.tSize,
+
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.iStride,
+
+                    &ptTask->Param.tCopy.tCopySize);
+
+            }
+            if (ARM_2D_COLOUR_SZ_16BIT == __API_ABW_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask(
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.iStride,
+
+                    ptTask->Param.tCopyMask.tSrcMask.pBuffer,
+                    ptTask->Param.tCopyMask.tSrcMask.iStride,
+                    &ptTask->Param.tCopyMask.tSrcMask.tValidRegion.tSize,
+
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.iStride,
+
+                    &ptTask->Param.tCopy.tCopySize);
+            }
+            if (ARM_2D_COLOUR_SZ_32BIT == __API_ABW_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask(
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tSource.iStride,
+
+                    ptTask->Param.tCopyMask.tSrcMask.pBuffer,
+                    ptTask->Param.tCopyMask.tSrcMask.iStride,
+                    &ptTask->Param.tCopyMask.tSrcMask.tValidRegion.tSize,
+
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.pBuffer,
+                    ptTask->Param.tCopyMask
+                        .use_as____arm_2d_param_copy_t.tTarget.iStride,
+
+                    &ptTask->Param.tCopy.tCopySize);
+            }
+        }
+
+        return arm_fsm_rt_cpl;
+    }
+#endif
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
     
