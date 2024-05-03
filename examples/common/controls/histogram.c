@@ -127,10 +127,11 @@ void histogram_init( histogram_t *ptThis,
         this.tCFG.Bin.nMaxValue = INT32_MAX;
     }
 
-    if (this.tCFG.Bin.tSize.iWidth < 24) {
-        this.u5BinsPerDirtyRegion = (32 + (this.tCFG.Bin.tSize.iWidth - 1)) / this.tCFG.Bin.tSize.iWidth;
+    int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth + this.tCFG.Bin.chPadding;
+    if (iBinWidth < 16) {
+        this.u5BinsPerDirtyRegion = ((16 + (iBinWidth - 1)) / iBinWidth) - 1;
     } else {
-        this.u5BinsPerDirtyRegion = 1;
+        this.u5BinsPerDirtyRegion = 0;
     }
 
     if (this.tCFG.Bin.bSupportNegative) {
@@ -341,8 +342,7 @@ void histogram_show(histogram_t *ptThis,
                     }
                 case HISTOGRAM_DR_UPDATE_BINS: {
                     bool bValueChanged = false;
-                    uint_fast8_t chBinCount = this.u5BinsPerDirtyRegion;
-                    chBinCount += (chBinCount == 0);
+                    uint_fast8_t chBinCount = this.u5BinsPerDirtyRegion + 1;
                     arm_2d_region_t tRedrawRegion = {0};
                     bool bFirstBin = true;
                     do {
@@ -364,7 +364,7 @@ void histogram_show(histogram_t *ptThis,
                         
                         } else {
                         #endif
-                            bValueChanged = true;
+                            
 
                             int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth;
 
@@ -400,13 +400,18 @@ void histogram_show(histogram_t *ptThis,
                                                                 &tBinRegion,
                                                                 &tBinRedrawRegion);
                             
-                            if (bFirstBin) {
-                                bFirstBin = false;
-                                tRedrawRegion = tBinRedrawRegion;
-                            } else {
-                                arm_2d_region_get_minimal_enclosure(&tBinRedrawRegion,
-                                                                    &tRedrawRegion,
-                                                                    &tRedrawRegion);
+                            if (arm_2d_region_intersect(&tBinRedrawRegion, 
+                                                        &__panel_canvas, 
+                                                        &tBinRedrawRegion)) {
+                                bValueChanged = true;
+                                if (bFirstBin) {
+                                    bFirstBin = false;
+                                    tRedrawRegion = tBinRedrawRegion;
+                                } else {
+                                    arm_2d_region_get_minimal_enclosure(&tBinRedrawRegion,
+                                                                        &tRedrawRegion,
+                                                                        &tRedrawRegion);
+                                }
                             }
                         }
 
@@ -431,8 +436,7 @@ void histogram_show(histogram_t *ptThis,
 
                             break;
                         } else if (!bValueChanged) {
-                            chBinCount = this.u5BinsPerDirtyRegion;
-                            chBinCount += (chBinCount == 0);
+                            chBinCount = this.u5BinsPerDirtyRegion + 1;
                             continue;
                         }
 
