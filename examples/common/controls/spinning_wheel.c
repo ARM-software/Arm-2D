@@ -105,7 +105,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                     GLCD_COLOR_BLACK,
                                     64,
                                     bIsNewFrame);    
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
         }
 
         
@@ -135,7 +135,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                                 GLCD_COLOR_WHITE,
                                                 254);
 
-                arm_2d_op_wait_async(&s_tMaskRotateCB[0].use_as__arm_2d_op_core_t);
+                ARM_2D_OP_WAIT_ASYNC(&s_tMaskRotateCB[0].use_as__arm_2d_op_core_t);
             }
         } while(0);
     }
@@ -167,7 +167,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             &c_tileGreenCircleQuaterMask,
                                             (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
                                             64);
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
 
             tDrawRegion.tLocation.iX += c_tileGreenCircleQuaterMask.tRegion.tSize.iWidth;
 
@@ -178,7 +178,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                 (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
                                 64);
 
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
 
             tDrawRegion.tLocation.iY += c_tileGreenCircleQuaterMask.tRegion.tSize.iHeight;
 
@@ -189,7 +189,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                 (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
                                 64);
 
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
 
             tDrawRegion.tLocation.iX -= c_tileGreenCircleQuaterMask.tRegion.tSize.iWidth;
 
@@ -200,7 +200,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                 (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
                                 64);
 
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
 
             const arm_2d_location_t c_tCentre = {
                 .iX = 0,
@@ -224,7 +224,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             128
                                         );
 
-            arm_2d_op_wait_async(&s_tMaskRotateCB[1].use_as__arm_2d_op_core_t);
+            ARM_2D_OP_WAIT_ASYNC(&s_tMaskRotateCB[1].use_as__arm_2d_op_core_t);
         }
     }
 }
