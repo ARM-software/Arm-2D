@@ -166,7 +166,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             &tDrawRegion,
                                             &c_tileGreenCircleQuaterMask,
                                             (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                            128);
+                                            64);
             arm_2d_op_wait_async(NULL);
 
             tDrawRegion.tLocation.iX += c_tileGreenCircleQuaterMask.tRegion.tSize.iWidth;
@@ -176,7 +176,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                 &tDrawRegion,
                                 &c_tileGreenCircleQuaterMask,
                                 (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                128);
+                                64);
 
             arm_2d_op_wait_async(NULL);
 
@@ -187,7 +187,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                 &tDrawRegion,
                                 &c_tileGreenCircleQuaterMask,
                                 (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                128);
+                                64);
 
             arm_2d_op_wait_async(NULL);
 
@@ -198,7 +198,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                 &tDrawRegion,
                                 &c_tileGreenCircleQuaterMask,
                                 (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY},
-                                128);
+                                64);
 
             arm_2d_op_wait_async(NULL);
 
@@ -221,7 +221,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             s_fAngle,
                                             1.01f,
                                             Colour,
-                                            64
+                                            128
                                         );
 
             arm_2d_op_wait_async(&s_tMaskRotateCB[1].use_as__arm_2d_op_core_t);
