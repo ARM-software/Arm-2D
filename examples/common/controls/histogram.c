@@ -127,6 +127,12 @@ void histogram_init( histogram_t *ptThis,
         this.tCFG.Bin.nMaxValue = INT32_MAX;
     }
 
+    if (this.tCFG.Bin.tSize.iWidth < 24) {
+        this.u5BinsPerDirtyRegion = (32 + (this.tCFG.Bin.tSize.iWidth - 1)) / this.tCFG.Bin.tSize.iWidth;
+    } else {
+        this.u5BinsPerDirtyRegion = 1;
+    }
+
     if (this.tCFG.Bin.bSupportNegative) {
         this.q16Ratio = (   INT16_2_Q16((this.tCFG.Bin.tSize.iHeight >> 1))  
                         /   this.tCFG.Bin.nMaxValue);
@@ -176,7 +182,6 @@ void histogram_init( histogram_t *ptThis,
                                             &this.DirtyRegion.tDirtyRegionItem,
                                             this.tCFG.ptParent);
     }
-
 
 }
 
@@ -334,13 +339,18 @@ void histogram_show(histogram_t *ptThis,
                         );
                         break;
                     }
-                case HISTOGRAM_DR_UPDATE_BINS:
+                case HISTOGRAM_DR_UPDATE_BINS: {
+                    bool bValueChanged = false;
+                    uint_fast8_t chBinCount = this.u5BinsPerDirtyRegion;
+                    chBinCount += (chBinCount == 0);
+                    arm_2d_region_t tRedrawRegion = {0};
+                    bool bFirstBin = true;
                     do {
                         histogram_bin_item_t *ptItem 
                             = &this.tCFG.Bin.ptItems[this.DirtyRegion.hwCurrentBin++];
 
-                        if (ptItem->iCurrentValue == ptItem->iLastValue) {
-
+                        if (ptItem->iCurrentValue != ptItem->iLastValue) {
+                        #if 0
                             /* we would like to ignore current bin */
                             if (this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount) {
                                 /* encounter the final bin */
@@ -351,9 +361,12 @@ void histogram_show(histogram_t *ptThis,
                                 break;
                             }
                             continue;
+                        
                         } else {
-                            int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth;
+                        #endif
+                            bValueChanged = true;
 
+                            int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth;
 
                             arm_2d_location_t tBaseLine = {
                                 .iX = (iBinWidth + this.tCFG.Bin.chPadding) * (this.DirtyRegion.hwCurrentBin - 1),
@@ -382,33 +395,59 @@ void histogram_show(histogram_t *ptThis,
                                 },
                             };
                             
-                            arm_2d_region_t tRedrawRegion;
+                            arm_2d_region_t tBinRedrawRegion;
                             arm_2d_region_get_minimal_enclosure(&tLastBinRegion,
                                                                 &tBinRegion,
-                                                                &tRedrawRegion);
+                                                                &tBinRedrawRegion);
                             
-                            if (this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount) {
-                                /* the final one */
-                                arm_2d_dynamic_dirty_region_update(
-                                        &this.DirtyRegion.tDirtyRegionItem,
-                                        &__panel,
-                                        &tRedrawRegion,
-                                        HISTOGRAM_DR_DONE
-                                    );
+                            if (bFirstBin) {
+                                bFirstBin = false;
+                                tRedrawRegion = tBinRedrawRegion;
                             } else {
+                                arm_2d_region_get_minimal_enclosure(&tBinRedrawRegion,
+                                                                    &tRedrawRegion,
+                                                                    &tRedrawRegion);
+                            }
+                        }
+
+                        bool bNoMoreBin = this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount;
+
+                        if (--chBinCount && !bNoMoreBin) {
+                            continue;
+                        } else if (bNoMoreBin) {
+
+                            if (bValueChanged) {
                                 arm_2d_dynamic_dirty_region_update(
-                                        &this.DirtyRegion.tDirtyRegionItem,
-                                        &__panel,
-                                        &tRedrawRegion,
-                                        HISTOGRAM_DR_UPDATE_BINS
-                                    );
+                                    &this.DirtyRegion.tDirtyRegionItem,
+                                    &__panel,
+                                    &tRedrawRegion,
+                                    HISTOGRAM_DR_DONE);
+                            } else {
+                                /* encounter the final bin and nothing changed */
+                                arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                    &this.DirtyRegion.tDirtyRegionItem,
+                                    HISTOGRAM_DR_DONE);
                             }
 
                             break;
+                        } else if (!bValueChanged) {
+                            chBinCount = this.u5BinsPerDirtyRegion;
+                            chBinCount += (chBinCount == 0);
+                            continue;
                         }
+
+                        arm_2d_dynamic_dirty_region_update(
+                                &this.DirtyRegion.tDirtyRegionItem,
+                                &__panel,
+                                &tRedrawRegion,
+                                HISTOGRAM_DR_UPDATE_BINS);
+
+                        break;
+                        
                     } while(true);
 
                     break;
+                }    
                 case HISTOGRAM_DR_DONE:
                     break;
                 default:

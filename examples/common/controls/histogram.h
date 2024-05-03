@@ -115,8 +115,9 @@ ARM_PRIVATE(
         uint16_t hwCurrentBin; 
     } DirtyRegion;
 
-    uint8_t bUseDirtyRegion : 1;
-    uint8_t                 : 7;
+    uint8_t bUseDirtyRegion         : 1;
+    uint8_t                         : 2;
+    uint8_t u5BinsPerDirtyRegion    : 5;
     uint8_t chOpacity;
 
     int32_t q16Ratio;
