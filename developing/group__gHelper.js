@@ -249,6 +249,7 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_get_absolute_location", "group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f", null ],
     [ "arm_2d_helper_pfb_get_pfb_size", "group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6", null ],
     [ "arm_2d_helper_pfb_is_region_being_drawing", "group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d", null ],
+    [ "arm_2d_helper_pfb_is_region_active", "group__gHelper.html#ga58476a75eb78777bde8d7adb90e9cd13", null ],
     [ "arm_2d_helper_pfb_task", "group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88", null ],
     [ "arm_2d_helper_pfb_flush", "group__gHelper.html#ga8568abf593c04cf6df798e82cda60676", null ],
     [ "arm_2d_helper_hide_navigation_layer", "group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c", null ],

@@ -587,8 +587,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga012c85746e62c16a38f5253fd9d0dca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the inital PFB size  <a href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">More...</a><br /></td></tr>
 <tr class="separator:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga133523ec2682ddb18cccb6324f4cad8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">arm_2d_helper_pfb_is_region_being_drawing</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **ppVirtualScreen)</td></tr>
-<tr class="memdesc:ga133523ec2682ddb18cccb6324f4cad8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether specified region is being drawing  <a href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">More...</a><br /></td></tr>
+<tr class="memdesc:ga133523ec2682ddb18cccb6324f4cad8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">test whether specified region is being drawing  <a href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">More...</a><br /></td></tr>
 <tr class="separator:ga133523ec2682ddb18cccb6324f4cad8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58476a75eb78777bde8d7adb90e9cd13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga58476a75eb78777bde8d7adb90e9cd13">arm_2d_helper_pfb_is_region_active</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, bool bConsiderDryRun)</td></tr>
+<tr class="memdesc:ga58476a75eb78777bde8d7adb90e9cd13"><td class="mdescLeft">&#160;</td><td class="mdescRight">test whether the target region is active (used by PFB service)  <a href="group__gHelper.html#ga58476a75eb78777bde8d7adb90e9cd13">More...</a><br /></td></tr>
+<tr class="separator:ga58476a75eb78777bde8d7adb90e9cd13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">arm_2d_helper_pfb_task</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptDirtyRegions)</td></tr>
 <tr class="memdesc:gab2cec999a9abbf7ec42bed4352a17b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">the task function for pfb helper  <a href="group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88">More...</a><br /></td></tr>
 <tr class="separator:gab2cec999a9abbf7ec42bed4352a17b88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -6403,7 +6406,7 @@ false the new content is stored in ptOrigin </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>check whether specified region is being drawing </p>
+<p>test whether specified region is being drawing </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
@@ -6415,6 +6418,53 @@ false the new content is stored in ptOrigin </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>true the specified region is currently being drawing </dd>
 <dd>
 false the PFB is out of the range. </dd></dl>
+
+</div>
+</div>
+<a id="ga58476a75eb78777bde8d7adb90e9cd13" name="ga58476a75eb78777bde8d7adb90e9cd13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga58476a75eb78777bde8d7adb90e9cd13">&#9670;&nbsp;</a></span>arm_2d_helper_pfb_is_region_active()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_pfb_is_region_active </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bConsiderDryRun</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>test whether the target region is active (used by PFB service) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region to test </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">bConsiderDryRun</td><td>whether taking dry run into consideration </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true the region is active </dd>
+<dd>
+false the region is inactive </dd></dl>
 
 </div>
 </div>
