@@ -291,7 +291,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
         histogram_cfg_t tCFG = {
             .Bin = {
-                .tSize = {10, 128},
+                .tSize = {12, 128},
                 .chPadding = 4,
                 .bUseScanLine = true,
                 //.bDrawEndPointOnly = true,
