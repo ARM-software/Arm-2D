@@ -76,6 +76,7 @@ enum {
 
 enum {
     CONSOLE_BOX_DIRTY_REGION_START = 0,
+    CONSOLE_BOX_DIRTY_REGION_UPDATE_LINES,
     CONSOLE_BOX_DIRTY_REGION_DONE,
 };
 
@@ -209,6 +210,52 @@ bool __console_box_peek_utf8(arm_2d_byte_fifo_t *ptFIFO, uint32_t *pwUTF8)
     }
 
     return true;
+}
+
+static
+uint_fast16_t __console_box_peek_line(console_box_t *ptThis, arm_2d_byte_fifo_t *ptFIFO)
+{
+    uint32_t wUTF8;
+    uint_fast16_t hwColumn = 0;
+    bool bFindR = false;
+    do {
+        wUTF8 = 0;
+        if (!__console_box_peek_utf8(ptFIFO, &wUTF8)) {
+            break;
+        }
+
+        switch ((char)wUTF8) {
+            case '\r':
+                /* move to start of the line */
+                bFindR = true;
+                break;
+            case '\n':
+                goto exit_peek_line;
+                //break;
+            case '\b':
+                if (hwColumn) { /* delete one byte */
+                    hwColumn--;
+                }
+                break;
+            case '\t':
+                hwColumn += 4;
+                hwColumn &= ~0x3;
+                break;
+            default:
+                if (bFindR) {
+                    hwColumn = 0;
+                    bFindR = false;
+                }
+                
+                hwColumn++;
+                break;
+        }
+
+    } while(hwColumn < this.Console.hwMaxColumn);
+
+exit_peek_line:
+
+    return hwColumn;
 }
 
 static 
@@ -447,6 +494,8 @@ bool console_box_on_frame_start(console_box_t *ptThis)
 
                 /* update size */
                 this.tReDrawRegion.tSize = this.tBoxSize;
+
+                this.Console.hwDirtyRegionRow = 0;
                 break;
 
         }
@@ -509,19 +558,55 @@ void console_box_show(  console_box_t *ptThis,
                 switch (arm_2d_dynamic_dirty_region_wait_next(
                                                         &this.tDirtyRegion)) {
                     case CONSOLE_BOX_DIRTY_REGION_START:
+                        //! fall-through
+                    case CONSOLE_BOX_DIRTY_REGION_UPDATE_LINES:
                         if (    this.u2RTOneTimeRefreshMode 
                             !=  REFRESH_MODE_NO_UPDATE) {
-                            this.tReDrawRegion.tLocation.iX 
-                                += __centre_region.tLocation.iX;
-                            this.tReDrawRegion.tLocation.iY 
-                                += __centre_region.tLocation.iY;
+                            
+                            if (REFRESH_MODE_NEW_LINES == this.u2RTOneTimeRefreshMode) {
+                                this.tReDrawRegion.tLocation.iX 
+                                    += __centre_region.tLocation.iX;
+                                this.tReDrawRegion.tLocation.iY 
+                                    += __centre_region.tLocation.iY;
 
-                            arm_2d_dynamic_dirty_region_update(
-                                                &this.tDirtyRegion,
-                                                &__console_box,
-                                                &this.tReDrawRegion,
-                                                CONSOLE_BOX_DIRTY_REGION_DONE);
+                                arm_2d_dynamic_dirty_region_update(
+                                                    &this.tDirtyRegion,
+                                                    &__console_box,
+                                                    &this.tReDrawRegion,
+                                                    CONSOLE_BOX_DIRTY_REGION_DONE);
+                            } else {
+                                arm_2d_size_t tCharSize = this.ptFont->tCharSize;
+                                uint_fast16_t hwRowToSkip = this.Console.hwDirtyRegionRow;
 
+                                bool bEndOfFIFO = false;
+                                arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
+                                while(hwRowToSkip--) {
+                                    if (0 == __console_box_peek_line(ptThis, &this.tConsoleFIFO)) {
+                                        bEndOfFIFO = true;
+                                        break;
+                                    }
+                                }
+
+                                if (bEndOfFIFO) {
+                                    arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                        &this.tDirtyRegion,
+                                        CONSOLE_BOX_DIRTY_REGION_DONE);
+                                } else {
+                                    this.tReDrawRegion.tLocation = __centre_region.tLocation;
+                                    this.tReDrawRegion.tLocation.iY += (this.Console.hwDirtyRegionRow++) * tCharSize.iHeight;
+
+                                    this.tReDrawRegion.tSize.iWidth
+                                        =   __console_box_peek_line(ptThis, &this.tConsoleFIFO)
+                                        *   tCharSize.iWidth;
+                                    this.tReDrawRegion.tSize.iHeight = tCharSize.iHeight;
+
+                                    arm_2d_dynamic_dirty_region_update(
+                                                        &this.tDirtyRegion,
+                                                        &__console_box,
+                                                        &this.tReDrawRegion,
+                                                        CONSOLE_BOX_DIRTY_REGION_UPDATE_LINES);
+                                }
+                            }
                         } else {
                             arm_2d_dynamic_dirty_region_change_user_region_index_only(
                                 &this.tDirtyRegion,

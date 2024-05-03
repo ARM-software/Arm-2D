@@ -454,7 +454,7 @@ void arm_lcd_putchar(const char *str)
         } else if (*str == '\t') { 
             s_tLCDTextControl.tDrawOffset.iX += tCharSize.iWidth * 4;
             s_tLCDTextControl.tDrawOffset.iX -= s_tLCDTextControl.tDrawOffset.iX 
-                                              % tCharSize.iWidth;
+                                              % (tCharSize.iWidth * 4);
 
             __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
 

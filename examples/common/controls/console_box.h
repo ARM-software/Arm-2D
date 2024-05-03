@@ -88,6 +88,7 @@ ARM_PRIVATE(
         uint16_t hwLastColumn;
         uint16_t hwCurrentRow;
         uint16_t hwCurrentColumn;
+        uint16_t hwDirtyRegionRow;
     } Console;
 
     arm_2d_scene_t                  *ptTargetScene;
