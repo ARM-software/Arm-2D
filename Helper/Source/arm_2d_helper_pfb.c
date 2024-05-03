@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        24. April 2024
- * $Revision:    V.1.11.0
+ * $Date:        3. May 2024
+ * $Revision:    V.1.11.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4832,7 +4832,6 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
  * Misc                                                                       *
  *----------------------------------------------------------------------------*/
 
-ARM_NONNULL(1)
 bool arm_2d_helper_pfb_is_region_being_drawing(
                                     const arm_2d_tile_t *ptTarget,
                                     const arm_2d_region_t *ptRegion,
@@ -4840,7 +4839,12 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
 {
     bool bResult = false;
     arm_2d_tile_t tTempTile;
-    if (NULL != ptRegion) {
+
+    if (NULL == ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
+    }
+
+    if (NULL != ptRegion && NULL != ptTarget) {
         ptTarget = arm_2d_tile_generate_child(ptTarget, ptRegion, &tTempTile, false);
     }
 
@@ -4857,6 +4861,42 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
                                                     false)) {
             bResult = true;
         }
+    } while(0);
+
+    return bResult;
+}
+
+bool arm_2d_helper_pfb_is_region_active(const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        bool bConsiderDryRun)
+{
+    const arm_2d_tile_t *ptScreen = NULL;
+
+    bool bResult = arm_2d_helper_pfb_is_region_being_drawing(   ptTarget, 
+                                                                ptRegion, 
+                                                                &ptScreen);
+
+    do {
+        if (bResult) {
+            break;
+        }
+
+        if (NULL == ptScreen) {
+            break;
+        }
+
+        if ((ptScreen->tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_PFB)) {
+            break;
+        }
+        if (!ptScreen->tInfo.Extension.PFB.bIsNewFrame) {
+            break;
+        }
+        if (!(bConsiderDryRun && ptScreen->tInfo.Extension.PFB.bIsDryRun)) {
+            break;
+        }
+
+        bResult = true;
+
     } while(0);
 
     return bResult;

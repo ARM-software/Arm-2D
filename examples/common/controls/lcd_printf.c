@@ -434,6 +434,11 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
 
 void arm_lcd_putchar(const char *str)
 {
+
+    if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &s_tLCDTextControl.tRegion, true)) {
+        return ;
+    }
+
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 

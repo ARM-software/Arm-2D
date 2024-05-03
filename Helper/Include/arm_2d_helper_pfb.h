@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        24. April 2024
- * $Revision:    V.1.11.0
+ * $Date:        3. May 2024
+ * $Revision:    V.1.11.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -931,9 +931,8 @@ ARM_NONNULL(1)
 arm_2d_size_t arm_2d_helper_pfb_get_pfb_size(arm_2d_helper_pfb_t *ptThis);
 
 extern
-ARM_NONNULL(1)
 /*!
- * \brief check whether specified region is being drawing
+ * \brief test whether specified region is being drawing
  * 
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region to test
@@ -945,6 +944,20 @@ ARM_NONNULL(1)
 bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
                                                const arm_2d_region_t *ptRegion,
                                                const arm_2d_tile_t **ppVirtualScreen);
+
+extern
+/*!
+ * \brief test whether the target region is active (used by PFB service)
+ * 
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region to test
+ * \param bConsiderDryRun whether taking dry run into consideration
+ * \return true the region is active
+ * \return false the region is inactive
+ */
+bool arm_2d_helper_pfb_is_region_active(const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        bool bConsiderDryRun);
 
 /*!
  * \brief the task function for pfb helper
