@@ -152,7 +152,7 @@ void arm_lcd_text_set_scale(float fScale)
     }
 }
 
-bool arm_lcd_text_force_char_use_same_with(bool bForced)
+bool arm_lcd_text_force_char_use_same_width(bool bForced)
 {
     bool bOriginalValue = s_tLCDTextControl.bForceAllCharUseSameWidth;
 

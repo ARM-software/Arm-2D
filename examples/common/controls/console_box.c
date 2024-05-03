@@ -546,9 +546,9 @@ void console_box_show(  console_box_t *ptThis,
             arm_lcd_text_set_colour(this.tColor, GLCD_COLOR_BLACK);
 
             /* force all char use the same with in display */
-            arm_using(bool bOriginal = arm_lcd_text_force_char_use_same_with(true),
+            arm_using(bool bOriginal = arm_lcd_text_force_char_use_same_width(true),
                       /* on leave resume the original configuration */
-                      arm_lcd_text_force_char_use_same_with(bOriginal)) {
+                      arm_lcd_text_force_char_use_same_width(bOriginal)) {
 
                 uint32_t wUTF8;
                 arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
