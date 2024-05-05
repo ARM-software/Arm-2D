@@ -88,7 +88,7 @@
 /*============================ TYPES =========================================*/
 enum {
     DIRTY_REGION_PIVOT,
-    DIRTY_REGION_TEMPERATURE, 
+    DIRTY_REGION_NUMBER_TO_SHOW, 
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -221,12 +221,12 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
 
     /* demo code */
     if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[2])) {
-        this.fTemperature = 25.0 + (float)(rand() % 20) / 10.0f;
+        this.fSomeNumberToShow = MIN(arm_2d_helper_get_reference_clock_frequency() / DISP0_ADAPTER.Benchmark.wAverage, 999);
 
-        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_TEMPERATURE],
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW],
                                             false); 
     } else {
-        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_TEMPERATURE],
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW],
                                             true); 
     }
 
@@ -327,10 +327,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                     arm_2d_align_centre(__item_region, tStringSize) {
                         arm_lcd_text_set_draw_region(&__centre_region);
                         arm_lcd_text_location(0,0);
-                        if (this.fTemperature < 0) {
-                            arm_lcd_printf("%02.1f", this.fTemperature);
+                        if (this.fSomeNumberToShow < 0) {
+                            arm_lcd_printf("%02.1f", this.fSomeNumberToShow);
                         } else {
-                            arm_lcd_printf(" %02.1f", this.fTemperature);
+                            arm_lcd_printf(" %02.1f", this.fSomeNumberToShow);
                         }
                     }
                 }
@@ -383,7 +383,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
                     arm_2d_align_centre(__item_region, tStringSize) {
 
-                        s_tDirtyRegions[DIRTY_REGION_TEMPERATURE].tRegion = __centre_region;
+                        s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW].tRegion = __centre_region;
 
                     }
                 }
@@ -442,7 +442,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
     s_tFanCentre.iX = (c_tileFanBladeMask.tRegion.tSize.iWidth >> 1) - 5;
     s_tFanCentre.iY = 70;
-    this.fTemperature = 25.0f;
+    this.fSomeNumberToShow = 99.9f;
 
     /* ------------   initialize members of user_scene_fan_t end   ---------------*/
 

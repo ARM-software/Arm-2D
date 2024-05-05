@@ -98,7 +98,7 @@ ARM_PRIVATE(
     bool bUserAllocated;
     uint8_t chLevel;
 
-    float fTemperature;
+    float fSomeNumberToShow;
 
     float fAngle;
 
