@@ -221,7 +221,8 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
 
     /* demo code */
     if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[2])) {
-        this.fSomeNumberToShow = MIN(arm_2d_helper_get_reference_clock_frequency() / DISP0_ADAPTER.Benchmark.wAverage, 999);
+        this.fSomeNumberToShow = (float)arm_2d_helper_get_reference_clock_frequency() / (float)DISP0_ADAPTER.Benchmark.wAverage;
+        this.fSomeNumberToShow = MIN(this.fSomeNumberToShow, 999.0f);
 
         arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW],
                                             false); 
