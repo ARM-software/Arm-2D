@@ -2339,9 +2339,11 @@ uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1,
 {
     chAlpha1 = MIN(255, chAlpha1);
     chAlpha2 = MIN(255, chAlpha2);
-    return (uint8_t)((chAlpha1 == 255) ? chAlpha2 
-                             : ((chAlpha2 == 255) ? chAlpha1 
-                                                  : (chAlpha1 * chAlpha2 >> 8)));
+    return (uint8_t)(   (chAlpha1 == 255) 
+                    ?   chAlpha2 
+                    :   (   (chAlpha2 == 255) 
+                        ?   chAlpha1 
+                        :   ((uint16_t)chAlpha1 * (uint16_t)chAlpha2 >> 8)));
 }
 
 /*! @} */
