@@ -21,7 +21,8 @@
                 "${workspaceFolder}/../../examples/common/scenes/watch",
                 "${workspaceFolder}/../../examples/common/scenes/alarm_clock",
                 "${workspaceFolder}/../../examples/common/scenes/histogram",
-                "${workspaceFolder}/../../examples/common/scenes/fan"
+                "${workspaceFolder}/../../examples/common/scenes/fan",
+                "${workspaceFolder}/../../examples/common/scenes/bubble_charging"
             ],
             "defines": [
                 "_RTE_",
@@ -55,7 +56,8 @@
                 "${workspaceFolder}/../../examples/common/scenes/watch",
                 "${workspaceFolder}/../../examples/common/scenes/alarm_clock",
                 "${workspaceFolder}/../../examples/common/scenes/histogram",
-                "${workspaceFolder}/../../examples/common/scenes/fan"
+                "${workspaceFolder}/../../examples/common/scenes/fan",
+                "${workspaceFolder}/../../examples/common/scenes/bubble_charging"
             ],
             "defines": [
                 "_RTE_",

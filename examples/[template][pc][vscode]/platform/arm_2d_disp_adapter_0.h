@@ -88,13 +88,13 @@ extern "C" {
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           32 //__DISP0_CFG_SCEEN_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           __DISP0_CFG_SCEEN_WIDTH__
 #endif
 
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          32 //__DISP0_CFG_SCEEN_HEIGHT__
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          __DISP0_CFG_SCEEN_HEIGHT__
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -184,7 +184,7 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
 #endif
 
 // <q>Disable the navigation layer

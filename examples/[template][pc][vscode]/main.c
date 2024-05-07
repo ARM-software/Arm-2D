@@ -33,6 +33,7 @@
 #include "arm_2d_scene_alarm_clock.h"
 #include "arm_2d_scene_histogram.h"
 #include "arm_2d_scene_fan.h"
+#include "arm_2d_scene_bubble_charging.h"
 
 #include "arm_2d_demos.h"
 
@@ -172,6 +173,11 @@ void scene_console_window_loader(void)
     arm_2d_scene_console_window_init(&DISP0_ADAPTER);
 }
 
+void scene_bubble_charging_loader(void) 
+{
+    arm_2d_scene_bubble_charging_init(&DISP0_ADAPTER);
+}
+
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
@@ -185,6 +191,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_alarm_clock_loader,
     scene_atom_loader,
     scene_histogram_loader,
+    //scene_bubble_charging_loader,
     scene_gas_gauge_loader,
     scene_listview_loader,
     scene_menu_loader,
@@ -193,8 +200,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_fitness_loader,
     scene_audiomark_loader,
 #else
-    scene_fan_loader,
-    //scene_histogram_loader,
+    scene_bubble_charging_loader,
 #endif
 
 

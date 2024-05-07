@@ -15,6 +15,7 @@ CC_SRC  += $(wildcard ../../examples/common/scenes/watch/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/alarm_clock/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/histogram/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/fan/*.c)
+CC_SRC  += $(wildcard ../../examples/common/scenes/bubble_charging/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 
 CC_INC  := .
@@ -31,6 +32,7 @@ CC_INC  += ../../examples/common/scenes/watch
 CC_INC  += ../../examples/common/scenes/alarm_clock
 CC_INC  += ../../examples/common/scenes/histogram
 CC_INC  += ../../examples/common/scenes/fan
+CC_INC  += ../../examples/common/scenes/bubble_charging
 CC_INC  += ../../examples/demos
 
 CC_DEF  := ARM_SECTION\(x\)=
