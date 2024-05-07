@@ -153,6 +153,9 @@ static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
         progress_wheel_depose(&this.Processor[n].tWheel);
         this.Processor[n].lTimestamp = 0;
     }
+#if __FITNESS_CFG_NEBULA_ENABLE__
+    dynamic_nebula_depose(&this.tNebula);
+#endif
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
