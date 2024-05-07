@@ -85,7 +85,6 @@ ARM_PRIVATE(
     number_list_cfg_t tNumListCFG;
     arm_2d_list_item_t tTempItem;
     
-    int32_t nSelection;
     int32_t nIterationIndex;
 
     arm_2d_region_list_item_t tDirtyRegion;
