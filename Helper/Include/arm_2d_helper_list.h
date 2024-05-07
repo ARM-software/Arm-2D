@@ -214,11 +214,14 @@ typedef struct __arm_2d_list_core_cfg_t {
     arm_2d_draw_list_item_handler_t         *fnOnDrawListItemBackground;        /*!< the On-Draw-List-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListBackground;            /*!< the On-Draw-List-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListCover;                 /*!< the On-Draw-List-Cover event handler */
-    uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
-    uint16_t hwItemCount;                                                       /*!< the total number of items, 0 means update later */
-    uint16_t hwItemSizeInByte;                                                  /*!< the size of the item (in byte) */
+    int32_t nTotalLength;                                                       /*!< the total length of the list in pixel, 0 means update later */
     arm_2d_list_item_t                      *ptItems;                           /*!< an optional pointer for items (array/list) */
-    int32_t nTotalLength;                                                       /*!< the total lenght of the list, 0 means update later */
+    uint16_t hwItemSizeInByte;                                                  /*!< the size of the item (in byte) */
+    uint16_t hwItemCount;                                                       /*!< the total number of items, 0 means update later */
+    uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
+
+    uint16_t bDisableRingMode               : 1;                                /*!< whether disable ring mode */
+    
 } __arm_2d_list_core_cfg_t;
 
 /*!
@@ -373,8 +376,8 @@ arm_fsm_rt_t __arm_2d_list_core_show(   __arm_2d_list_core_t *ptThis,
 extern
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis, 
-                                                int16_t iSteps,
-                                                int32_t nFinishInMs);
+                                        int16_t iSteps,
+                                        int32_t nFinishInMs);
 
 /*!
  * \brief move selection with specified pixel offset

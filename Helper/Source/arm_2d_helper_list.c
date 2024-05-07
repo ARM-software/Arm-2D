@@ -477,7 +477,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             }
 
             if (iSteps > 0) {
-                
+            
+            #if 0
                 /* handle the first item */
                 do {
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
@@ -489,29 +490,36 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     nOffsetChange -= ptItem->Padding.chNext;
                     nOffsetChange -= ptItem->Padding.chPrevious;
                     
-                    ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            this.Runtime.hwSelection));
+                    arm_2d_list_item_t *ptItemNew = ARM_2D_INVOKE(fnIterator, 
+                                                        ARM_2D_PARAM(
+                                                            ptThis, 
+                                                            __ARM_2D_LIST_GET_NEXT,
+                                                            this.Runtime.hwSelection));
                     
-                    if (NULL == ptItem) {
-                        /* just in case the iterator doesn't support ring mode */
-                        ptItem = ARM_2D_INVOKE(fnIterator, 
-                                    ARM_2D_PARAM(
-                                        ptThis, 
-                                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                                        this.Runtime.hwSelection));
-                        assert(NULL != ptItem);
-                        
-                        if (NULL == ptItem) {
-                            /* this shouldn't happen */
-                            return ARM_2D_ERR_NOT_AVAILABLE;
+                    if (NULL == ptItemNew) {
+                        if (this.tCFG.bDisableRingMode) {
+                            break;
+                        } else {
+                            /* just in case the iterator doesn't support ring mode */
+                            ptItem = ARM_2D_INVOKE(fnIterator, 
+                                        ARM_2D_PARAM(
+                                            ptThis, 
+                                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                                            this.Runtime.hwSelection));
+                            assert(NULL != ptItem);
+                            
+                            if (NULL == ptItem) {
+                                /* this shouldn't happen */
+                                return ARM_2D_ERR_NOT_AVAILABLE;
+                            }
                         }
+                    } else {
+                        ptItem = ptItemNew;
                     }
                 } while(0);
+            #endif 
 
-                while(--iSteps) {
+                do {
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
                         nOffsetChange -= ptItem->tSize.iHeight;
                     } else {
@@ -522,30 +530,37 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     nOffsetChange -= ptItem->Padding.chPrevious;
                     
                     /* next */
-                    ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_NEXT,
-                            this.Runtime.hwSelection));
+                    arm_2d_list_item_t *ptItemNew = ARM_2D_INVOKE(fnIterator,
+                                                        ARM_2D_PARAM(
+                                                            ptThis, 
+                                                            __ARM_2D_LIST_GET_NEXT,
+                                                            this.Runtime.hwSelection));
                     
-                    if (NULL == ptItem) {
-                        /* just in case the iterator doesn't support ring mode */
-                        ptItem = ARM_2D_INVOKE(fnIterator, 
-                                    ARM_2D_PARAM(
-                                        ptThis, 
-                                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                                        this.Runtime.hwSelection));
-                        assert(NULL != ptItem);
-                        
-                        if (NULL == ptItem) {
-                            /* this shouldn't happen */
-                            return ARM_2D_ERR_NOT_AVAILABLE;
+                    if (NULL == ptItemNew) {
+                        if (this.tCFG.bDisableRingMode) {
+                            break;
+                        } else {
+                            /* just in case the iterator doesn't support ring mode */
+                            ptItem = ARM_2D_INVOKE(fnIterator, 
+                                        ARM_2D_PARAM(
+                                            ptThis, 
+                                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                                            this.Runtime.hwSelection));
+                            assert(NULL != ptItem);
+                            
+                            if (NULL == ptItem) {
+                                /* this shouldn't happen */
+                                return ARM_2D_ERR_NOT_AVAILABLE;
+                            }
                         }
+                    } else {
+                        ptItem = ptItemNew;
                     }
-                }
+                } while(--iSteps);
 
             } else {
             
+            #if 0
                 /* handle the first item */
                 do {
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
@@ -578,8 +593,9 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                         }
                     }
                 } while(0);
-            
-                while(++iSteps) {
+            #endif
+
+                do {
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
                         nOffsetChange += ptItem->tSize.iHeight;
                     } else {
@@ -589,27 +605,33 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     nOffsetChange += ptItem->Padding.chNext;
                     nOffsetChange += ptItem->Padding.chPrevious;
                     
-                    ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_PREVIOUS,
-                            this.Runtime.hwSelection));
+                    arm_2d_list_item_t *ptItemNew = ARM_2D_INVOKE(fnIterator, 
+                                                        ARM_2D_PARAM(
+                                                            ptThis, 
+                                                            __ARM_2D_LIST_GET_PREVIOUS,
+                                                            this.Runtime.hwSelection));
                     
-                    if (NULL == ptItem) {
-                        /* just in case the iterator doesn't support ring mode */
-                        ptItem = ARM_2D_INVOKE(fnIterator, 
-                                    ARM_2D_PARAM(
-                                        ptThis, 
-                                        __ARM_2D_LIST_GET_LAST_ITEM,
-                                        this.Runtime.hwSelection));
-                        assert(NULL != ptItem);
-                        
-                        if (NULL == ptItem) {
-                            /* this shouldn't happen */
-                            return ARM_2D_ERR_NOT_AVAILABLE;
+                    if (NULL == ptItemNew) {
+                        if (this.tCFG.bDisableRingMode) {
+                            break;
+                        } else {
+                            /* just in case the iterator doesn't support ring mode */
+                            ptItem = ARM_2D_INVOKE(fnIterator, 
+                                        ARM_2D_PARAM(
+                                            ptThis, 
+                                            __ARM_2D_LIST_GET_LAST_ITEM,
+                                            this.Runtime.hwSelection));
+                            assert(NULL != ptItem);
+                            
+                            if (NULL == ptItem) {
+                                /* this shouldn't happen */
+                                return ARM_2D_ERR_NOT_AVAILABLE;
+                            }
                         }
+                    } else {
+                        ptItem = ptItemNew;
                     }
-                } 
+                } while(++iSteps);
             }
 
             hwTargetID = ptItem->hwID;
@@ -713,24 +735,28 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
     }
 
     if (NULL == ptItem) {
-        if (tDirection == __ARM_2D_LIST_GET_NEXT) {
-            /* just in case the iterator won't support ring mode */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_FIRST_ITEM,
-                        0));
-            assert(NULL != ptItem);
-        } else if (tDirection == __ARM_2D_LIST_GET_PREVIOUS) {
-            /* just in case the iterator won't support ring mode */
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_LAST_ITEM,
-                        0));
-            assert(NULL != ptItem);
-        } else {
+        if (this.tCFG.bDisableRingMode) {
             return NULL;
+        } else {
+            if (tDirection == __ARM_2D_LIST_GET_NEXT) {
+                /* just in case the iterator won't support ring mode */
+                ptItem = ARM_2D_INVOKE(fnIterator, 
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0));
+                assert(NULL != ptItem);
+            } else if (tDirection == __ARM_2D_LIST_GET_PREVIOUS) {
+                /* just in case the iterator won't support ring mode */
+                ptItem = ARM_2D_INVOKE(fnIterator, 
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            __ARM_2D_LIST_GET_LAST_ITEM,
+                            0));
+                assert(NULL != ptItem);
+            } else {
+                return NULL;
+            }
         }
     }
 
@@ -750,13 +776,17 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
                         0));
                 
                 if (NULL == ptItem) {
-                    /* just in case the iterator won't support ring mode */
-                    ptItem = ARM_2D_INVOKE(fnIterator, 
-                            ARM_2D_PARAM(
-                                ptThis, 
-                                __ARM_2D_LIST_GET_LAST_ITEM,
-                                0));
-                    assert(NULL != ptItem);
+                    if (this.tCFG.bDisableRingMode) {
+                        return NULL;
+                    } else {
+                        /* just in case the iterator won't support ring mode */
+                        ptItem = ARM_2D_INVOKE(fnIterator, 
+                                ARM_2D_PARAM(
+                                    ptThis, 
+                                    __ARM_2D_LIST_GET_LAST_ITEM,
+                                    0));
+                        assert(NULL != ptItem);
+                    }
                 }
                 break;
             case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
@@ -769,13 +799,17 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
                         0));
                 
                 if (NULL == ptItem) {
-                    /* just in case the iterator won't support ring mode */
-                    ptItem = ARM_2D_INVOKE(fnIterator, 
-                            ARM_2D_PARAM(
-                                ptThis, 
-                                __ARM_2D_LIST_GET_FIRST_ITEM,
-                                0));
-                    assert(NULL != ptItem);
+                    if (this.tCFG.bDisableRingMode) {
+                        return NULL;
+                    } else {
+                        /* just in case the iterator won't support ring mode */
+                        ptItem = ARM_2D_INVOKE(fnIterator, 
+                                ARM_2D_PARAM(
+                                    ptThis, 
+                                    __ARM_2D_LIST_GET_FIRST_ITEM,
+                                    0));
+                        assert(NULL != ptItem);
+                    }
                 }
                 break;
             default:
@@ -2114,59 +2148,119 @@ arm_2d_list_item_t *ARM_2D_LIST_ITERATOR_ARRAY(
                                     )
 {
     int32_t nIterationIndex;
-    switch (tDirection) {
-        default:
-        case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
-            nIterationIndex = hwID;
-            nIterationIndex %= this.tCFG.hwItemCount;
-            break;
 
-        case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
-            this.Runtime.Iterator.Array.hwIndex = hwID;
-            this.Runtime.Iterator.Array.hwIndex %= this.tCFG.hwItemCount;
-            nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
-            break;
+    if (this.tCFG.bDisableRingMode) {
+        switch (tDirection) {
+            default:
+            case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
+                if (hwID >= this.tCFG.hwItemCount) {
+                    /* out of range */
+                    return NULL;
+                }
+                nIterationIndex = hwID;
+                break;
 
-        case __ARM_2D_LIST_GET_PREVIOUS:
-            if (this.Runtime.Iterator.Array.hwIndex) {
-                this.Runtime.Iterator.Array.hwIndex--;
-            } else {
-                this.Runtime.Iterator.Array.hwIndex = this.tCFG.hwItemCount - 1;
-            }
-            nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
-            break;
+            case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
+                if (hwID >= this.tCFG.hwItemCount) {
+                    /* out of range */
+                    return NULL;
+                }
+                this.Runtime.Iterator.Array.hwIndex = hwID;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
+                break;
 
-        case __ARM_2D_LIST_GET_NEXT:
-            this.Runtime.Iterator.Array.hwIndex++;
-            this.Runtime.Iterator.Array.hwIndex %= this.tCFG.hwItemCount;
-            
-            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
-            break;
+            case __ARM_2D_LIST_GET_PREVIOUS:
+                if (this.Runtime.Iterator.Array.hwIndex) {
+                    this.Runtime.Iterator.Array.hwIndex--;
+                } else {
+                    return NULL;
+                }
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
+                break;
 
-        case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
-            nIterationIndex = 0;
-            break;
+            case __ARM_2D_LIST_GET_NEXT:
+                if ((this.Runtime.Iterator.Array.hwIndex + 1) >= this.tCFG.hwItemCount) {
+                    return NULL;
+                }
+                this.Runtime.Iterator.Array.hwIndex++;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
 
-        case __ARM_2D_LIST_GET_FIRST_ITEM:
-            this.Runtime.Iterator.Array.hwIndex  = 0;
-            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
-            break;
+            case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = 0;
+                break;
 
-        case __ARM_2D_LIST_GET_CURRENT:
-            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
-            break;
+            case __ARM_2D_LIST_GET_FIRST_ITEM:
+                this.Runtime.Iterator.Array.hwIndex  = 0;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
 
-        case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
-            nIterationIndex = this.tCFG.hwItemCount - 1;
-            break;
+            case __ARM_2D_LIST_GET_CURRENT:
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
 
-        case __ARM_2D_LIST_GET_LAST_ITEM:
-            this.Runtime.Iterator.Array.hwIndex  = this.tCFG.hwItemCount - 1;
-            nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
-            break;
+            case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = this.tCFG.hwItemCount - 1;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM:
+                this.Runtime.Iterator.Array.hwIndex  = this.tCFG.hwItemCount - 1;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
+        }
+    } else {
+        switch (tDirection) {
+            default:
+            case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
+                nIterationIndex = hwID;
+                nIterationIndex %= this.tCFG.hwItemCount;
+                break;
+
+            case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
+                this.Runtime.Iterator.Array.hwIndex = hwID;
+                this.Runtime.Iterator.Array.hwIndex %= this.tCFG.hwItemCount;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_PREVIOUS:
+                if (this.Runtime.Iterator.Array.hwIndex) {
+                    this.Runtime.Iterator.Array.hwIndex--;
+                } else {
+                    this.Runtime.Iterator.Array.hwIndex = this.tCFG.hwItemCount - 1;
+                }
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_NEXT:
+                this.Runtime.Iterator.Array.hwIndex++;
+                this.Runtime.Iterator.Array.hwIndex %= this.tCFG.hwItemCount;
+                
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
+
+            case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = 0;
+                break;
+
+            case __ARM_2D_LIST_GET_FIRST_ITEM:
+                this.Runtime.Iterator.Array.hwIndex  = 0;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
+
+            case __ARM_2D_LIST_GET_CURRENT:
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = this.tCFG.hwItemCount - 1;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM:
+                this.Runtime.Iterator.Array.hwIndex  = this.tCFG.hwItemCount - 1;
+                nIterationIndex = this.Runtime.Iterator.Array.hwIndex ;
+                break;
+        }
     }
-
-
 
     nIterationIndex %= this.tCFG.hwItemCount;
 
