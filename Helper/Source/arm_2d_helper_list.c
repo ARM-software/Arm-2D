@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        20. Nov 2022
- * $Revision:    V.1.1.0
+ * $Date:        7. May 2024
+ * $Revision:    V.1.1.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -406,8 +406,8 @@ void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis,
 
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis, 
-                                                int16_t iSteps,
-                                                int32_t nFinishInMs)
+                                        int16_t iSteps,
+                                        int32_t nFinishInMs)
 {
     assert(NULL != ptThis);
     arm_irq_safe {
@@ -415,6 +415,26 @@ void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis,
         this.Runtime.MoveReq.nFinishInMs = nFinishInMs;
     }
 }
+
+ARM_NONNULL(1)
+uint16_t __arm_2d_list_core_get_selected_item_id(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.Runtime.hwSelection;
+}
+
+ARM_NONNULL(1)
+arm_2d_list_item_t *__arm_2d_list_core_get_selected_item(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+    return ARM_2D_INVOKE(this.tCFG.fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER,
+                        this.Runtime.hwSelection));
+}
+
 
 static
 arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 

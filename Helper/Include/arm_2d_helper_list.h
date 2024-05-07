@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        10. Dec 2022
- * $Revision:    V.1.1.1
+ * $Date:        7. May 2024
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -392,6 +392,26 @@ extern
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
                                     int16_t iOffset);
+
+/*!
+ * \brief get the currently selected item id
+ * 
+ * \param[in] ptThis the target list core object
+ * \return uint16_t the item ID
+ */
+extern
+ARM_NONNULL(1)
+uint16_t __arm_2d_list_core_get_selected_item_id(__arm_2d_list_core_t *ptThis);
+
+/*!
+ * \brief get the currently selected item
+ * 
+ * \param[in] ptThis the target list core object
+ * \return arm_2d_list_item_t* the selected item
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_list_item_t *__arm_2d_list_core_get_selected_item(__arm_2d_list_core_t *ptThis);
 
 /*!
  * \brief check whether the list need a redraw
