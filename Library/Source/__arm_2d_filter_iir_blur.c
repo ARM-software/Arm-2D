@@ -151,7 +151,7 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     __arm_2d_iir_blur_acc_gray8_t *ptStatusV = NULL;
     uint8_t *pchChannel = NULL;
 
-    if (NULL != (void *)ptScratchMemory->pBuffer) {
+    if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_gray8_t *)ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
@@ -190,8 +190,10 @@ void __arm_2d_impl_gray8_filter_iir_blur(
     
     uint8_t *pchPixel = pchTarget;
 
-    /* rows direct path */
-    ptStatusV += tOffset.iY;
+    if (NULL != ptStatusV) {
+        /* rows direct path */
+        ptStatusV += tOffset.iY;
+    }
 
     for (iY = 0; iY < iHeight; iY++) {   
 
@@ -251,7 +253,9 @@ void __arm_2d_impl_gray8_filter_iir_blur(
 
     pchPixel = pchTarget;
 
-    ptStatusH += tOffset.iX;
+    if (NULL != ptStatusH) {
+        ptStatusH += tOffset.iX;
+    }
 
     /* columns direct path */
     for (iX = 0; iX < iWidth; iX++) {     
@@ -428,7 +432,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
     __arm_2d_iir_blur_acc_rgb565_t *ptStatusV = NULL;
     __arm_2d_color_fast_rgb_t tPixel;
 
-    if (NULL != (void *)ptScratchMemory->pBuffer) {
+    if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_rgb565_t *)ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
@@ -467,8 +471,10 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
     
     uint16_t *phwPixel = phwTarget;
 
-    /* rows direct path */
-    ptStatusV += tOffset.iY;
+    if (NULL != ptStatusV) {
+        /* rows direct path */
+        ptStatusV += tOffset.iY;
+    }
 
     for (iY = 0; iY < iHeight; iY++) {   
 
@@ -544,7 +550,9 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
     phwPixel = phwTarget;
 
-    ptStatusH += tOffset.iX;
+    if (NULL != ptStatusH) {
+        ptStatusH += tOffset.iX;
+    }
 
     /* columns direct path */
     for (iX = 0; iX < iWidth; iX++) {     
@@ -737,7 +745,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     __arm_2d_iir_blur_acc_cccn888_t *ptStatusV = NULL;
     uint8_t *pchChannel = NULL;
 
-    if (NULL != (void *)ptScratchMemory->pBuffer) {
+    if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_cccn888_t *)ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
@@ -776,8 +784,10 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     
     uint32_t *pwPixel = pwTarget;
 
-    /* rows direct path */
-    ptStatusV += tOffset.iY;
+    if (NULL != ptStatusV) {
+        /* rows direct path */
+        ptStatusV += tOffset.iY;
+    }
 
     for (iY = 0; iY < iHeight; iY++) {   
 
@@ -849,7 +859,9 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
 
     pwPixel = pwTarget;
 
-    ptStatusH += tOffset.iX;
+    if (NULL != ptStatusH) {
+        ptStatusH += tOffset.iX;
+    }
 
     /* columns direct path */
     for (iX = 0; iX < iWidth; iX++) {     

@@ -226,7 +226,7 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
     __arm_2d_iir_blur_acc_{{colour_name | lower}}_t *ptStatusV = NULL;
     {{algorithm_init}}
 
-    if (NULL != (void *)ptScratchMemory->pBuffer) {
+    if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_{{colour_name | lower}}_t *)ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
@@ -265,8 +265,10 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
     
     {{colour_int}} *p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
 
-    /* rows direct path */
-    ptStatusV += tOffset.iY;
+    if (NULL != ptStatusV) {
+        /* rows direct path */
+        ptStatusV += tOffset.iY;
+    }
 
     for (iY = 0; iY < iHeight; iY++) {   
 
@@ -320,7 +322,9 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
 
     p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
 
-    ptStatusH += tOffset.iX;
+    if (NULL != ptStatusH) {
+        ptStatusH += tOffset.iX;
+    }
 
     /* columns direct path */
     for (iX = 0; iX < iWidth; iX++) {     
