@@ -167,12 +167,24 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 
                     uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
 
-                    arm_2d_draw_point(  &__control, 
-                                        tParicleLocation,
-                                        tColour,
-                                        (uint8_t)hwOpacity);
-                    
-                    arm_2d_op_wait_async(NULL);
+                    if (NULL == this.tCFG.evtOnDrawParticles.fnHandler) {
+                        arm_2d_draw_point(  &__control, 
+                                            tParicleLocation,
+                                            tColour,
+                                            (uint8_t)hwOpacity);
+                        
+                        arm_2d_op_wait_async(NULL);
+                    } else {
+                        ARM_2D_INVOKE_RT_VOID(this.tCFG.evtOnDrawParticles.fnHandler,
+                                             ARM_2D_PARAM(
+                                                this.tCFG.evtOnDrawParticles.pTarget,
+                                                ptThis,
+                                                &__control,
+                                                tParicleLocation,
+                                                hwOpacity,
+                                                (int16_t)fRadius
+                                             ));
+                    }
                 }
 
                 if (bIsNewFrame) {

@@ -56,18 +56,33 @@ ARM_PRIVATE(
 )
 } dynamic_nebula_particle_t;
 
+typedef struct dynamic_nebula_t dynamic_nebula_t;
+
+typedef void dynamic_nebula_draw_particle_handler_t(void *pObj,
+                                                    dynamic_nebula_t *ptThis,
+                                                    const arm_2d_tile_t *ptTile,
+                                                    arm_2d_location_t tLocation,
+                                                    uint8_t chOpacity,
+                                                    int16_t iDistance);
+
+typedef struct dynamic_nebula_on_draw_particle_evt_t {
+    dynamic_nebula_draw_particle_handler_t *fnHandler;
+    void *pTarget;
+} dynamic_nebula_on_draw_particle_evt_t;
+
 typedef struct dynamic_nebula_cfg_t {
     int16_t                     iRadius;
     int16_t                     iVisibleRingWidth;
     float                       fSpeed;
     uint16_t                    hwParticleCount;
     dynamic_nebula_particle_t  *ptParticles;
+    dynamic_nebula_on_draw_particle_evt_t evtOnDrawParticles;
 } dynamic_nebula_cfg_t;
 
 /*!
  * \brief a class for dynamic nebula
  */
-typedef struct dynamic_nebula_t dynamic_nebula_t;
+
 
 struct dynamic_nebula_t {
 
