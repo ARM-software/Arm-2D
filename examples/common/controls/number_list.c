@@ -415,12 +415,19 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 
 ARM_NONNULL(1)
 void numer_list_move_selection( number_list_t *ptThis,
-                                        int16_t iSteps,
-                                        int32_t nFinishInMs)
+                                int16_t iSteps,
+                                int32_t nFinishInMs)
 {
-    __arm_2d_list_core_move_request( &this.use_as____arm_2d_list_core_t,
-                                             iSteps,
-                                             nFinishInMs);
+    __arm_2d_list_core_move_request(&this.use_as____arm_2d_list_core_t,
+                                    iSteps,
+                                    nFinishInMs);
+}
+
+extern
+ARM_NONNULL(1)
+uint16_t number_list_get_selected_item_id(number_list_t *ptThis)
+{
+    return __arm_2d_list_core_get_selected_item_id(&this.use_as____arm_2d_list_core_t);
 }
 
 #if defined(__clang__)

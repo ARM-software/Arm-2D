@@ -139,6 +139,10 @@ ARM_NONNULL(1)
 void number_list_on_frame_start(number_list_t *ptThis);
 
 
+extern
+ARM_NONNULL(1)
+uint16_t number_list_get_selected_item_id(number_list_t *ptThis);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
