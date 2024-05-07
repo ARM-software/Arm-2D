@@ -106,6 +106,14 @@ void list_view_move_selection(  list_view_t *ptThis,
                                 int16_t iSteps,
                                 int32_t nFinishInMs);
 
+extern
+ARM_NONNULL(1)
+arm_2d_list_item_t * list_view_get_selected_item(list_view_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+uint16_t list_view_get_selected_item_id(list_view_t *ptThis);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

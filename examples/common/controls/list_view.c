@@ -158,13 +158,26 @@ arm_fsm_rt_t list_view_show(list_view_t *ptThis,
 
 ARM_NONNULL(1)
 void list_view_move_selection(  list_view_t *ptThis,
-                                        int16_t iSteps,
-                                        int32_t nFinishInMs)
+                                int16_t iSteps,
+                                int32_t nFinishInMs)
 {
     __arm_2d_list_core_move_request(&this.use_as____arm_2d_list_core_t,
                                              iSteps,
                                              nFinishInMs);
 }
+
+ARM_NONNULL(1)
+arm_2d_list_item_t * list_view_get_selected_item(list_view_t *ptThis)
+{
+    return __arm_2d_list_core_get_selected_item(&this.use_as____arm_2d_list_core_t);
+}
+
+ARM_NONNULL(1)
+uint16_t list_view_get_selected_item_id(list_view_t *ptThis)
+{
+    return __arm_2d_list_core_get_selected_item_id(&this.use_as____arm_2d_list_core_t);
+}
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
