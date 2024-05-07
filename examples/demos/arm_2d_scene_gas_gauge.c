@@ -137,6 +137,18 @@ static void __on_scene_gas_gauge_frame_start(arm_2d_scene_t *ptScene)
     user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    int32_t nResult;
+    
+    /* simulate a full battery charging/discharge cycle */
+    arm_2d_helper_time_cos_slider(0, 1000, 30000, 0, &nResult, &this.lTimestamp[1]);
+    
+    if (this.hwGasgauge < nResult) {
+        this.tStatus = BATTERY_STATUS_CHARGING;
+    } else if (this.hwGasgauge > nResult) {
+        this.tStatus = BATTERY_STATUS_DISCHARGING;
+    }
+    this.hwGasgauge = (uint16_t)nResult;
+
 }
 
 static void __before_scene_gas_gauge_switching_out(arm_2d_scene_t *ptScene)
@@ -183,20 +195,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
     /*-----------------------draw the foreground begin-----------------------*/
     
     /* following code is just a demo, you can remove them */
-
-    if (bIsNewFrame) {
-        int32_t iResult;
-        
-        /* simulate a full battery charging/discharge cycle */
-        arm_2d_helper_time_cos_slider(0, 1000, 30000, 0, &iResult, &this.lTimestamp[1]);
-        
-        if (this.hwGasgauge < iResult) {
-            this.tStatus = BATTERY_STATUS_CHARGING;
-        } else if (this.hwGasgauge > iResult) {
-            this.tStatus = BATTERY_STATUS_DISCHARGING;
-        }
-        this.hwGasgauge = (uint16_t)iResult;
-    }
 
     arm_2d_canvas(ptTile, __canvas) {
 
