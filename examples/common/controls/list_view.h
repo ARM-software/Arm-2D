@@ -78,9 +78,7 @@ typedef struct list_view_t {
 
 ARM_PRIVATE(
     list_view_cfg_t tListViewCFG;
-    
-    int32_t nSelection;
-    int32_t nIterationIndex;
+
 )
 
 } list_view_t;
