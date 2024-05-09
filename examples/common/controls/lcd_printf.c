@@ -478,6 +478,11 @@ void arm_lcd_putchar(const char *str)
 
 void arm_lcd_puts(const char *str)
 {
+    
+    if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &s_tLCDTextControl.tRegion, true)) {
+        return ;
+    }
+
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 

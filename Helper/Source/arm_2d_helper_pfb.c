@@ -4840,7 +4840,7 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
     bool bResult = false;
     arm_2d_tile_t tTempTile;
 
-    if (NULL == ptTarget) {
+    if (NULL == ptTarget || (-1 == (intptr_t)ptTarget)) {
         ptTarget = arm_2d_get_default_frame_buffer();
     }
 

@@ -143,6 +143,12 @@ extern "C" {
 #endif
 // </h>
 
+// <q> Optimize the scaler version of transform operations for hollow out masks
+// <i> This feature is disabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. If your application uses a lot of hollow out masks, it might help.
+// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
+#ifndef __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+#   define __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__         0
+#endif
 
 // <h>Extra Components
 // =======================
