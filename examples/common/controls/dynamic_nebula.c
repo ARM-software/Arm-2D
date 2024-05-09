@@ -151,7 +151,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     }
                 } else if (!bIsBeenDrawing) {
                     continue;
-                }
+                } 
 
                 float fRadius = ptParticle->fOffset + fInvisibleRadius;
                 float fX = ptParticle->fCos * fRadius;
@@ -162,20 +162,22 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                         .iY = tCentre.iY + (int16_t)fY,
                     };
 
-                if (arm_2d_is_point_inside_region(  &tValidRegionInRoot, 
+
+                uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+
+                if (NULL == this.tCFG.evtOnDrawParticles.fnHandler) {
+                    if (arm_2d_is_point_inside_region(  &tValidRegionInRoot, 
                                                     &tParicleLocation)) {
-
-                    uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
-
-                    if (NULL == this.tCFG.evtOnDrawParticles.fnHandler) {
                         arm_2d_draw_point(  &__control, 
-                                            tParicleLocation,
-                                            tColour,
-                                            (uint8_t)hwOpacity);
+                                                tParicleLocation,
+                                                tColour,
+                                                (uint8_t)hwOpacity);
                         
-                        arm_2d_op_wait_async(NULL);
-                    } else {
-                        ARM_2D_INVOKE_RT_VOID(this.tCFG.evtOnDrawParticles.fnHandler,
+                        ARM_2D_OP_WAIT_ASYNC();
+                    }
+                    
+                } else {
+                    ARM_2D_INVOKE_RT_VOID(this.tCFG.evtOnDrawParticles.fnHandler,
                                              ARM_2D_PARAM(
                                                 this.tCFG.evtOnDrawParticles.pTarget,
                                                 ptThis,
@@ -184,7 +186,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                                                 hwOpacity,
                                                 (int16_t)fRadius
                                              ));
-                    }
+                    ARM_2D_OP_WAIT_ASYNC();
                 }
 
                 if (bIsNewFrame) {
