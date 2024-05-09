@@ -127,7 +127,8 @@ void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
                         uint16_t hwGasgauge,
                         int16_t iWaveOffset,
                         arm_2d_margin_t tMargin,
-                        COLOUR_INT tColour);
+                        COLOUR_INT tColour,
+                        const arm_2d_tile_t *ptSinWave);
 
 
 #if defined(__clang__)

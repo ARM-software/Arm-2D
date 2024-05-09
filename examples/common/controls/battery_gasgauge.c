@@ -289,21 +289,15 @@ void battery_gasgauge_liquid_init(battery_liquid_t *ptThis)
     this.iWaveOffset = 0;
 }
 
+ARM_NONNULL(1)
 void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
                         const arm_2d_region_t *ptRegion,
                         uint16_t hwGasgauge,
                         int16_t iWaveOffset,
                         arm_2d_margin_t tMargin,
-                        COLOUR_INT tColour)
+                        COLOUR_INT tColour,
+                        const arm_2d_tile_t *ptSinWave)
 {
-    iWaveOffset %= c_tileSinWaveMask.tRegion.tSize.iWidth;
-
-    int16_t iWaveOffset1 = iWaveOffset - c_tileSinWaveMask.tRegion.tSize.iWidth;
-    int16_t iWaveOffset2 = -(c_tileSinWaveMask.tRegion.tSize.iWidth >> 1) - iWaveOffset;
-
-    if (iWaveOffset2 <= -c_tileSinWaveMask.tRegion.tSize.iWidth) {
-        iWaveOffset2 += (c_tileSinWaveMask.tRegion.tSize.iWidth - 1);
-    }
 
     arm_2d_container(ptTile, __inner_container, ptRegion,
                         .chLeft = tMargin.chLeft,
@@ -319,74 +313,73 @@ void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
             -  tWaterLevelRegion.tSize.iHeight 
             *  hwGasgauge / 1000;
 
-        /* draw background wave */
-        do {
-            arm_2d_region_t tWaveRegion = tWaterLevelRegion;
-            tWaveRegion.tLocation.iY 
-                = tWaterLevelRegion.tLocation.iY
-                - c_tileSinWaveMask.tRegion.tSize.iHeight;
-            tWaveRegion.tLocation.iX = iWaveOffset1;
-            tWaveRegion.tSize = c_tileSinWaveMask.tRegion.tSize;
-            
-            arm_2d_fill_colour_with_mask_and_opacity(
-                    &__inner_container,
-                    &tWaveRegion,
-                    &c_tileSinWaveMask,
-                    (__arm_2d_color_t) {tColour},
-                    96
-                );
-            arm_2d_op_wait_async(NULL);
-            
-            tWaveRegion.tLocation.iX 
-                += c_tileSinWaveMask.tRegion.tSize.iWidth;
 
-            arm_2d_fill_colour_with_mask_and_opacity(
-                    &__inner_container,
-                    &tWaveRegion,
-                    &c_tileSinWaveMask,
-                    (__arm_2d_color_t) {tColour},
-                    96
-                );
-            arm_2d_op_wait_async(NULL);
-        } while(0);
+        if (NULL != ptSinWave) {
+            iWaveOffset %= ptSinWave->tRegion.tSize.iWidth;
 
-        /* draw foreground wave */
-        do {
-            arm_2d_region_t tWaveRegion = tWaterLevelRegion;
-            tWaveRegion.tLocation.iY 
-                = tWaterLevelRegion.tLocation.iY
-                - c_tileSinWaveMask.tRegion.tSize.iHeight;
-            tWaveRegion.tLocation.iX = iWaveOffset2;
-            tWaveRegion.tSize = c_tileSinWaveMask.tRegion.tSize;
-            
-            arm_2d_fill_colour_with_mask_and_opacity(
-                    &__inner_container,
-                    &tWaveRegion,
-                    &c_tileSinWaveMask,
-                    (__arm_2d_color_t) {tColour},
-                    255
-                );
-            arm_2d_op_wait_async(NULL);
-            
-            tWaveRegion.tLocation.iX 
-                += c_tileSinWaveMask.tRegion.tSize.iWidth;
+            int16_t iWaveOffset1 = iWaveOffset - ptSinWave->tRegion.tSize.iWidth;
+            int16_t iWaveOffset2 = -(ptSinWave->tRegion.tSize.iWidth >> 1) - iWaveOffset;
 
-            arm_2d_fill_colour_with_mask_and_opacity(
-                    &__inner_container,
-                    &tWaveRegion,
-                    &c_tileSinWaveMask,
-                    (__arm_2d_color_t) {tColour},
-                    255
-                );
-            arm_2d_op_wait_async(NULL);
-        } while(0);
+            if (iWaveOffset2 <= -ptSinWave->tRegion.tSize.iWidth) {
+                iWaveOffset2 += (ptSinWave->tRegion.tSize.iWidth - 1);
+            }
+
+            /* draw background wave */
+            do {
+                arm_2d_region_t tWaveRegion = tWaterLevelRegion;
+                tWaveRegion.tLocation.iY 
+                    = tWaterLevelRegion.tLocation.iY
+                    - ptSinWave->tRegion.tSize.iHeight;
+                tWaveRegion.tLocation.iX = iWaveOffset1;
+                tWaveRegion.tSize = ptSinWave->tRegion.tSize;
+                
+                while(tWaveRegion.tLocation.iX < tWaterLevelRegion.tLocation.iX + tWaterLevelRegion.tSize.iWidth) {
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                            &__inner_container,
+                            &tWaveRegion,
+                            ptSinWave,
+                            (__arm_2d_color_t) {tColour},
+                            96
+                        );
+                    ARM_2D_OP_WAIT_ASYNC();
+                    
+                    tWaveRegion.tLocation.iX 
+                        += ptSinWave->tRegion.tSize.iWidth;
+                };
+            } while(0);
+
+            /* draw foreground wave */
+            do {
+                arm_2d_region_t tWaveRegion = tWaterLevelRegion;
+                tWaveRegion.tLocation.iY 
+                    = tWaterLevelRegion.tLocation.iY
+                    - ptSinWave->tRegion.tSize.iHeight;
+                tWaveRegion.tLocation.iX = iWaveOffset2;
+                tWaveRegion.tSize = ptSinWave->tRegion.tSize;
+                
+                while(tWaveRegion.tLocation.iX < tWaterLevelRegion.tLocation.iX + tWaterLevelRegion.tSize.iWidth) {
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                            &__inner_container,
+                            &tWaveRegion,
+                            ptSinWave,
+                            (__arm_2d_color_t) {tColour},
+                            255
+                        );
+                    ARM_2D_OP_WAIT_ASYNC();
+                    
+                    tWaveRegion.tLocation.iX 
+                        += ptSinWave->tRegion.tSize.iWidth;
+                };
+
+            } while(0);
+        }
 
         arm_2d_fill_colour_with_opacity(
                         &__inner_container, 
                         &tWaterLevelRegion,
                         (__arm_2d_color_t) {tColour},
                         255);
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     } 
 }
 
@@ -540,7 +533,9 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                                     .chRight = 9,
                                     .chTop = 16,
                                     .chBottom = 10},
-                                    tColour);
+                                tColour,
+                                &c_tileSinWaveMask);
+
             arm_2d_container(&__battery, __inner_container, &__centre_region,
                              //8,9,16,10
                              .chLeft = 9,
