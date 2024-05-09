@@ -334,7 +334,7 @@ user_scene_gas_gauge_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *
 
         //.fnOnBGStart    = &__on_scene_gas_gauge_background_start,
         //.fnOnBGComplete = &__on_scene_gas_gauge_background_complete,
-        //.fnOnFrameStart = &__on_scene_gas_gauge_frame_start,
+        .fnOnFrameStart = &__on_scene_gas_gauge_frame_start,
         .fnBeforeSwitchOut = &__before_scene_gas_gauge_switching_out,
         .fnOnFrameCPL   = &__on_scene_gas_gauge_frame_complete,
         .fnDepose       = &__on_scene_gas_gauge_depose,
