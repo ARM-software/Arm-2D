@@ -455,6 +455,7 @@
             <file category="sourceC"     name="examples/common/asset/fan_blade.c" />
             <file category="sourceC"     name="examples/common/asset/RadialGradient.c" />
             <file category="sourceC"     name="examples/common/asset/GlassBall.c" />
+            <file category="sourceC"     name="examples/common/asset/HallowOutCircleMask.c" />
           </files>
           <RTE_Components_h>
 
