@@ -182,7 +182,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
+#if 0
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -191,7 +191,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_alarm_clock_loader,
     scene_atom_loader,
     scene_histogram_loader,
-    //scene_bubble_charging_loader,
+    scene_bubble_charging_loader,
     scene_gas_gauge_loader,
     scene_listview_loader,
     scene_menu_loader,
@@ -201,6 +201,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_audiomark_loader,
 #else
     scene_bubble_charging_loader,
+    //scene_gas_gauge_loader,
 #endif
 
 

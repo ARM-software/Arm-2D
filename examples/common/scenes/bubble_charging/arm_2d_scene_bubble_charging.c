@@ -95,6 +95,11 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 extern const arm_2d_tile_t c_tileQuaterArcMask;
 extern const arm_2d_tile_t c_tileBigWhiteDotMask;
 extern const arm_2d_tile_t c_tileWhiteDotMiddleMask;
+extern const arm_2d_tile_t c_tileRadialGradientMask;
+extern const arm_2d_tile_t c_tileGlassBallMask;
+extern const arm_2d_tile_t c_tileHallowOutCircleMask;
+extern const arm_2d_tile_t c_tileSinWaveMask;
+
 /*============================ PROTOTYPES ====================================*/
 extern
 struct {
@@ -106,10 +111,6 @@ struct {
 
 static arm_2d_size_t c_tChargingArea = {0};
 static const arm_2d_tile_t *s_ptileQuaterArcMask = &c_tileQuaterArcMask;
-
-const uint32_t c_wSatelliteSpeed[] = {
-    1000*2, 2000*2, 3000*2, 4000*2
-};
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -167,10 +168,17 @@ static void __on_scene_bubble_charging_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         /* simulate a full battery charging/discharge cycle */
-        arm_2d_helper_time_cos_slider(0, 100, 200000, 0, &nResult, &this.lTimestamp[1]);
+        arm_2d_helper_time_cos_slider(0, 1000, 60000, 0, &nResult, &this.lTimestamp[1]);
 
-        this.chSoC = nResult;
+        this.iSoC = nResult;
     } while(0);
+
+    if (arm_2d_helper_is_time_out(10, &this.lTimestamp[2])) {
+
+        if (this.iWaveOffset++ >= c_tileSinWaveMask.tRegion.tSize.iWidth) {
+            this.iWaveOffset = 0;
+        }
+    }
 
 }
 
@@ -179,8 +187,8 @@ static void __on_scene_bubble_charging_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+    /* switch to next scene after 30s */
+    if (arm_2d_helper_is_time_out(30000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 
@@ -213,6 +221,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
     arm_2d_canvas(ptTile, __charging_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
 
+
+        arm_2d_align_centre(__charging_canvas, c_tileHallowOutCircleMask.tRegion.tSize) {
+
+            draw_liquid_wave(   ptTile, &
+                                __centre_region, 
+                                this.iSoC,
+                                this.iWaveOffset,
+                                (arm_2d_margin_t){0},
+                                GLCD_COLOR_GREEN,
+                                &c_tileSinWaveMask);
+
+            arm_2d_fill_colour_with_mask(
+                                    ptTile, 
+                                    &__centre_region,
+                                    &c_tileHallowOutCircleMask,
+                                    (__arm_2d_color_t) {GLCD_COLOR_BLACK});
+
+            ARM_2D_OP_WAIT_ASYNC();
+
+        }
+
         /* show nebula */
         dynamic_nebula_show(&this.tNebula, 
                             ptTile, 
@@ -220,46 +249,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
                             GLCD_COLOR_WHITE, 
                             255,
                             bIsNewFrame);
-
-        /* following code is just a demo, you can remove them */
-        arm_2d_size_t tRingSize = {
-            .iWidth = s_ptileQuaterArcMask->tRegion.tSize.iWidth * 2,
-            .iHeight = s_ptileQuaterArcMask->tRegion.tSize.iHeight * 2,
-        };
-
-
-        arm_2d_align_centre(__charging_canvas, tRingSize ) {
-
-            arm_2d_align_top_left(__centre_region, s_ptileQuaterArcMask->tRegion.tSize ) {
-                arm_2d_fill_colour_with_mask(ptTile, 
-                                            &__top_left_region, 
-                                            s_ptileQuaterArcMask,
-                                            (__arm_2d_color_t) {GLCD_COLOR_GREEN});
-            }
-
-            arm_2d_align_top_right(__centre_region, s_ptileQuaterArcMask->tRegion.tSize ) {
-                arm_2d_fill_colour_with_mask_and_x_mirror(  ptTile, 
-                                                            &__top_right_region, 
-                                                            s_ptileQuaterArcMask,
-                                                            (__arm_2d_color_t) {GLCD_COLOR_GREEN});
-            }
-
-            arm_2d_align_bottom_left(__centre_region, s_ptileQuaterArcMask->tRegion.tSize ) {
-                arm_2d_fill_colour_with_mask_and_y_mirror(  ptTile, 
-                                                            &__bottom_left_region, 
-                                                            s_ptileQuaterArcMask,
-                                                            (__arm_2d_color_t) {GLCD_COLOR_GREEN});
-            }
-
-            arm_2d_align_bottom_right(__centre_region, s_ptileQuaterArcMask->tRegion.tSize ) {
-                arm_2d_fill_colour_with_mask_and_xy_mirror( ptTile, 
-                                                            &__bottom_right_region, 
-                                                            s_ptileQuaterArcMask,
-                                                            (__arm_2d_color_t) {GLCD_COLOR_GREEN});
-            }
-
-            
-        }
 
         if (bIsNewFrame) {
             arm_2d_filter_iir_blur_descriptor_t *ptOP = &this.tBlurOP;
@@ -277,18 +266,26 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
             ptOP->tScratchMemory.u2ItemSize = sizeof(__arm_2d_iir_blur_acc_t);
             ptOP->tScratchMemory.u2Type = ARM_2D_MEM_TYPE_FAST;
         }
-
+    
         arm_2d_filter_iir_blur_api_params_t tParams = {
-            .chBlurDegree = 255 - 32,
+            .chBlurDegree = 255 - 16,//this.chBlurDegree,
         };
-
+    
         arm_2dp_filter_iir_blur(&this.tBlurOP,
                                 ptTile,
                                 &__charging_canvas,
                                 &tParams);
 
+        arm_2d_align_centre(__charging_canvas, c_tileGlassBallMask.tRegion.tSize) {
 
+            arm_2d_fill_colour_with_mask_and_opacity(
+                                    ptTile, 
+                                    &__centre_region,
+                                    &c_tileGlassBallMask,
+                                    (__arm_2d_color_t) {GLCD_COLOR_WHITE},
+                                    255);
 
+        }
 
         arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
@@ -298,7 +295,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
             arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
             arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
-            arm_lcd_printf("%02d", this.chSoC);
+            arm_lcd_printf("%02d", (this.iSoC / 10));
+
+            arm_lcd_text_set_font(NULL);
+            
+            __centre_region.tLocation.iX += tStringSize.iWidth + 6;
+            __centre_region.tLocation.iY += tStringSize.iHeight - 8;
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(__RGB(0, 128, 0), GLCD_COLOR_BLACK);
+            arm_lcd_printf("%%");
         }
 
     /*-----------------------draw the foreground end  -----------------------*/
@@ -318,15 +323,26 @@ void __draw_bubble_handler_t(void *pObj,
 {
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)pObj;
 
-    arm_2d_region_t tBubbleRegion = c_tileWhiteDotMiddleMask.tRegion;
-    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth / 2;
-    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight / 2;
+    iDistance -= s_ptileQuaterArcMask->tRegion.tSize.iWidth;
+
+
+    arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
+    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
+    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
+
+    uint8_t chOriginalOpacity = 256 - chOpacity;
+
+    if (iDistance > 16) {
+        chOpacity = chOriginalOpacity;
+    } else {
+        chOpacity = MIN((iDistance << 4), chOriginalOpacity);
+    }
 
     arm_2d_fill_colour_with_mask_and_opacity(ptTile, 
                                     &tBubbleRegion, 
-                                    &c_tileWhiteDotMiddleMask, 
+                                    &c_tileRadialGradientMask, 
                                     (__arm_2d_color_t){GLCD_COLOR_GREEN},
-                                   256 - chOpacity);
+                                    chOpacity);
 }
 
 ARM_NONNULL(1)
@@ -389,7 +405,7 @@ user_scene_bubble_charging_t *__arm_2d_scene_bubble_charging_init(   arm_2d_scen
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 1.0f,
+            .fSpeed = 0.5f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius - s_ptileQuaterArcMask->tRegion.tSize.iWidth,
             .hwParticleCount = dimof(this.tParticles),

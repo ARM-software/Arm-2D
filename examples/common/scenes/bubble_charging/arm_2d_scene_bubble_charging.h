@@ -84,7 +84,7 @@ struct user_scene_bubble_charging_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[3];
 
     arm_2d_filter_iir_blur_descriptor_t tBlurOP;
     dynamic_nebula_t tNebula;
@@ -92,7 +92,8 @@ ARM_PRIVATE(
 
     bool bUserAllocated;
 
-    int8_t chSoC;                                                               //!< state of the charge (1000 ‰)
+    int16_t iWaveOffset;
+    int16_t iSoC;                                                               //!< state of the charge (1000 ‰)
     
 )
     /* place your public member here */
