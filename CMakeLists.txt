@@ -150,6 +150,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/ECG.c
             examples/common/asset/ECGScan.c
             examples/common/asset/fan_blade.c
+            examples/common/asset/RadialGradient.c
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls
