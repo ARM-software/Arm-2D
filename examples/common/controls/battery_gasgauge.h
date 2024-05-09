@@ -80,7 +80,7 @@ ARM_PRIVATE(
     uint16_t hwGasGauge;
     uint8_t chBoarderOpacity;
     uint8_t chChargingMarkOpacity;
-    int16_t iWaveOffset[2];
+    int16_t iWaveOffset;
     
     uint8_t bBoarderFlashing;
 
@@ -119,6 +119,15 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                                     uint16_t hwGasgauge,
                                     battery_status_t tStatus,
                                     bool bIsNewFrame);
+
+extern
+ARM_NONNULL(1)
+void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
+                        const arm_2d_region_t *ptRegion,
+                        uint16_t hwGasgauge,
+                        int16_t iWaveOffset,
+                        arm_2d_margin_t tMargin,
+                        COLOUR_INT tColour);
 
 
 #if defined(__clang__)
