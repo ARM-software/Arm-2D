@@ -1071,8 +1071,6 @@ extern "C" {
                         (__arm_2d_color_t){tColor},                             \
                         200);                                                   \
                 } while(0)
-
-
 #endif
 /*!
  * \brief Please do NOT use this macro
