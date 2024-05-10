@@ -261,7 +261,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
             }
 
         }
-    
+        
         arm_2dp_filter_iir_blur(&this.tBlurOP,
                                 ptTile,
                                 &__charging_canvas,
@@ -305,12 +305,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
 }
 
 static
-void __draw_bubble_handler_t(void *pObj,
-                             dynamic_nebula_t *ptDN,
-                             const arm_2d_tile_t *ptTile,
-                             arm_2d_location_t tLocation,
-                             uint8_t chOpacity,
-                             int16_t iDistance)
+void __draw_bubble_handler( void *pObj,
+                            dynamic_nebula_t *ptDN,
+                            const arm_2d_tile_t *ptTile,
+                            arm_2d_location_t tLocation,
+                            uint8_t chOpacity,
+                            int16_t iDistance)
 {
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)pObj;
 
@@ -403,7 +403,7 @@ user_scene_bubble_charging_t *__arm_2d_scene_bubble_charging_init(   arm_2d_scen
             .ptParticles = this.tParticles,
 
             .evtOnDrawParticles = {
-                .fnHandler = &__draw_bubble_handler_t,
+                .fnHandler = &__draw_bubble_handler,
                 .pTarget = ptThis,
             },
         };
