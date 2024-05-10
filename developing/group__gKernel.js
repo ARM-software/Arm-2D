@@ -36,6 +36,18 @@ var group__gKernel =
     [ "arm_2d_tile_t", "group__gKernel.html#structarm__2d__tile__t", [
       [ "arm_2d_region_t", "group__gKernel.html#a233b05087f132d3ec5f826c99046e094", null ]
     ] ],
+    [ "arm_2d_margin_t", "group__gKernel.html#structarm__2d__margin__t", [
+      [ "chLeft", "group__gKernel.html#a738b261ce69d8e1d58eaa6af25ea8d0d", null ],
+      [ "chRight", "group__gKernel.html#aa636cca5095ce65681fd204984937e70", null ],
+      [ "chTop", "group__gKernel.html#a6b49ebf4c4cc060fd6464c75aa43e965", null ],
+      [ "chBottom", "group__gKernel.html#aadfea8f7af0650bbcb6337e9c9fb7080", null ]
+    ] ],
+    [ "arm_2d_padding_t", "group__gKernel.html#structarm__2d__padding__t", [
+      [ "chLeft", "group__gKernel.html#ae48973023807fe240dfa88082b816dcc", null ],
+      [ "chRight", "group__gKernel.html#a7a0e5e5af47ec069fa3cd18b4d54787c", null ],
+      [ "chTop", "group__gKernel.html#aa79ccc9d79898a4a2d42e7c22649db54", null ],
+      [ "chBottom", "group__gKernel.html#a9fb2c56d725176124321d27460d17df5", null ]
+    ] ],
     [ "__arm_2d_mem_info_t", "group__gKernel.html#union____arm__2d__mem__info__t", [
       [ "Value", "group__gKernel.html#afaabe6b178692c0b57afa1bc65a8f701", null ]
     ] ],
@@ -447,6 +459,18 @@ var group__gKernel =
       [ "ARM_2D_COLOUR_SZ_24BIT", "group__gKernel.html#gga06fc87d81c62e9abb8790b6e5713c55bab0943aba100210ae3202c32fd14e6e15", null ],
       [ "ARM_2D_TILE_EXTENSION_NONE", "group__gKernel.html#gga99fb83031ce9923c84392b4e92f956b5a3bae1996a35a1229476bcbc6bacccb3a", null ],
       [ "ARM_2D_TILE_EXTENSION_PFB", "group__gKernel.html#gga99fb83031ce9923c84392b4e92f956b5a05c76785fcbcb222b52848d45509d5d2", null ]
+    ] ],
+    [ "arm_2d_align_t", "group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3", [
+      [ "ARM_2D_ALIGN_LEFT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a41ab45a6e16ba24c0dc5b71e40942c5b", null ],
+      [ "ARM_2D_ALIGN_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a3883c9d1f7bd609104227964da825b91", null ],
+      [ "ARM_2D_ALIGN_TOP", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3ab773434441edea7f78f62f1cf7a19864", null ],
+      [ "ARM_2D_ALIGN_BOTTOM", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3af19809813df671cf0761bf69e792951a", null ],
+      [ "ARM_2D_ALIGN_CENTRE", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a70c40a4530d2ea97cb121094d4449dba", null ],
+      [ "ARM_2D_ALIGN_CENTRE_ALIAS", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a3a2d4d184400cccd14b4966d1b4e3a7e", null ],
+      [ "ARM_2D_ALIGN_TOP_LEFT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a98cac0ad64f4d819ebcd2677562597df", null ],
+      [ "ARM_2D_ALIGN_TOP_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a35c881c173d4c91cc1c2299b0bea464c", null ],
+      [ "ARM_2D_ALIGN_BOTTOM_LEFT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a86c5767497217fbba15b7537e41e4c0e", null ],
+      [ "ARM_2D_ALIGN_BOTTOM_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a62f5fe387910173f6eea15c8286d4764", null ]
     ] ],
     [ "arm_2d_mem_type_t", "group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc", [
       [ "ARM_2D_MEM_TYPE_UNSPECIFIED", "group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5ccac7f5e1b2ee0887e398840015ecd496c2", null ],

@@ -168,6 +168,12 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structarm__2d__tile__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td></tr>
 <tr class="memdesc:structarm__2d__tile__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">a type for tile  <a href="group__gKernel.html#structarm__2d__tile__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__tile__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__margin__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__margin__t">arm_2d_margin_t</a></td></tr>
+<tr class="memdesc:structarm__2d__margin__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the margin inside a region / container  <a href="group__gKernel.html#structarm__2d__margin__t">More...</a><br /></td></tr>
+<tr class="separator:structarm__2d__margin__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__padding__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__padding__t">arm_2d_padding_t</a></td></tr>
+<tr class="memdesc:structarm__2d__padding__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the padding between rectanglar areas  <a href="group__gKernel.html#structarm__2d__padding__t">More...</a><br /></td></tr>
+<tr class="separator:structarm__2d__padding__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:union____arm__2d__mem__info__t"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#union____arm__2d__mem__info__t">__arm_2d_mem_info_t</a></td></tr>
 <tr class="separator:union____arm__2d__mem__info__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scratch__mem__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a></td></tr>
@@ -1070,6 +1076,30 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga99fb83031ce9923c84392b4e92f956b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">the tile extension ID  <a href="group__gKernel.html#ga99fb83031ce9923c84392b4e92f956b5">More...</a><br /></td></tr>
 <tr class="separator:ga99fb83031ce9923c84392b4e92f956b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a759b205152a054a4abea10c8ff01b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3">arm_2d_align_t</a> { <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a41ab45a6e16ba24c0dc5b71e40942c5b">ARM_2D_ALIGN_LEFT</a> = _BV(0)
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a3883c9d1f7bd609104227964da825b91">ARM_2D_ALIGN_RIGHT</a> = _BV(1)
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3ab773434441edea7f78f62f1cf7a19864">ARM_2D_ALIGN_TOP</a> = _BV(2)
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3af19809813df671cf0761bf69e792951a">ARM_2D_ALIGN_BOTTOM</a> = _BV(3)
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a70c40a4530d2ea97cb121094d4449dba">ARM_2D_ALIGN_CENTRE</a> = 0
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a3a2d4d184400cccd14b4966d1b4e3a7e">ARM_2D_ALIGN_CENTRE_ALIAS</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a98cac0ad64f4d819ebcd2677562597df">ARM_2D_ALIGN_TOP_LEFT</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a35c881c173d4c91cc1c2299b0bea464c">ARM_2D_ALIGN_TOP_RIGHT</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a86c5767497217fbba15b7537e41e4c0e">ARM_2D_ALIGN_BOTTOM_LEFT</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a62f5fe387910173f6eea15c8286d4764">ARM_2D_ALIGN_BOTTOM_RIGHT</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ga5a759b205152a054a4abea10c8ff01b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">alignment  <a href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3">More...</a><br /></td></tr>
+<tr class="separator:ga5a759b205152a054a4abea10c8ff01b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga75983a418ea2c46866c20e2f1379c5cc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc">arm_2d_mem_type_t</a> { <br />
 &#160;&#160;<a class="el" href="group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5ccac7f5e1b2ee0887e398840015ecd496c2">ARM_2D_MEM_TYPE_UNSPECIFIED</a>
 , <br />
@@ -1735,6 +1765,98 @@ the region of the tile </td></tr>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__margin__t" id="structarm__2d__margin__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__margin__t">&#9670;&nbsp;</a></span>arm_2d_margin_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_margin_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >the margin inside a region / container </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a738b261ce69d8e1d58eaa6af25ea8d0d" name="a738b261ce69d8e1d58eaa6af25ea8d0d"></a>uint8_t</td>
+<td class="fieldname">
+chLeft</td>
+<td class="fielddoc">
+<p >left margin </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa636cca5095ce65681fd204984937e70" name="aa636cca5095ce65681fd204984937e70"></a>uint8_t</td>
+<td class="fieldname">
+chRight</td>
+<td class="fielddoc">
+<p >right margin </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a6b49ebf4c4cc060fd6464c75aa43e965" name="a6b49ebf4c4cc060fd6464c75aa43e965"></a>uint8_t</td>
+<td class="fieldname">
+chTop</td>
+<td class="fielddoc">
+<p >top margin </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aadfea8f7af0650bbcb6337e9c9fb7080" name="aadfea8f7af0650bbcb6337e9c9fb7080"></a>uint8_t</td>
+<td class="fieldname">
+chBottom</td>
+<td class="fielddoc">
+<p >bottom margin </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__padding__t" id="structarm__2d__padding__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__padding__t">&#9670;&nbsp;</a></span>arm_2d_padding_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_padding_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >the padding between rectanglar areas </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae48973023807fe240dfa88082b816dcc" name="ae48973023807fe240dfa88082b816dcc"></a>int8_t</td>
+<td class="fieldname">
+chLeft</td>
+<td class="fielddoc">
+<p >left padding </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a7a0e5e5af47ec069fa3cd18b4d54787c" name="a7a0e5e5af47ec069fa3cd18b4d54787c"></a>int8_t</td>
+<td class="fieldname">
+chRight</td>
+<td class="fielddoc">
+<p >right padding </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aa79ccc9d79898a4a2d42e7c22649db54" name="aa79ccc9d79898a4a2d42e7c22649db54"></a>int8_t</td>
+<td class="fieldname">
+chTop</td>
+<td class="fielddoc">
+<p >top padding </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a9fb2c56d725176124321d27460d17df5" name="a9fb2c56d725176124321d27460d17df5"></a>int8_t</td>
+<td class="fieldname">
+chBottom</td>
+<td class="fielddoc">
+<p >bottom padding </p>
 </td></tr>
 </table>
 
@@ -8820,6 +8942,44 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga99fb83031ce9923c84392b4e92f956b5a3bae1996a35a1229476bcbc6bacccb3a" name="gga99fb83031ce9923c84392b4e92f956b5a3bae1996a35a1229476bcbc6bacccb3a"></a>ARM_2D_TILE_EXTENSION_NONE&#160;</td><td class="fielddoc"><p >no extension in the tile.tInfo.Extension field </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga99fb83031ce9923c84392b4e92f956b5a05c76785fcbcb222b52848d45509d5d2" name="gga99fb83031ce9923c84392b4e92f956b5a05c76785fcbcb222b52848d45509d5d2"></a>ARM_2D_TILE_EXTENSION_PFB&#160;</td><td class="fielddoc"><p >contains PFB extension information </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5a759b205152a054a4abea10c8ff01b3" name="ga5a759b205152a054a4abea10c8ff01b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a759b205152a054a4abea10c8ff01b3">&#9670;&nbsp;</a></span>arm_2d_align_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3">arm_2d_align_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>alignment </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a41ab45a6e16ba24c0dc5b71e40942c5b" name="gga5a759b205152a054a4abea10c8ff01b3a41ab45a6e16ba24c0dc5b71e40942c5b"></a>ARM_2D_ALIGN_LEFT&#160;</td><td class="fielddoc"><p >align to left </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a3883c9d1f7bd609104227964da825b91" name="gga5a759b205152a054a4abea10c8ff01b3a3883c9d1f7bd609104227964da825b91"></a>ARM_2D_ALIGN_RIGHT&#160;</td><td class="fielddoc"><p >align to right </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3ab773434441edea7f78f62f1cf7a19864" name="gga5a759b205152a054a4abea10c8ff01b3ab773434441edea7f78f62f1cf7a19864"></a>ARM_2D_ALIGN_TOP&#160;</td><td class="fielddoc"><p >align to top </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3af19809813df671cf0761bf69e792951a" name="gga5a759b205152a054a4abea10c8ff01b3af19809813df671cf0761bf69e792951a"></a>ARM_2D_ALIGN_BOTTOM&#160;</td><td class="fielddoc"><p >align to bottom </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a70c40a4530d2ea97cb121094d4449dba" name="gga5a759b205152a054a4abea10c8ff01b3a70c40a4530d2ea97cb121094d4449dba"></a>ARM_2D_ALIGN_CENTRE&#160;</td><td class="fielddoc"><p >align to centre </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a3a2d4d184400cccd14b4966d1b4e3a7e" name="gga5a759b205152a054a4abea10c8ff01b3a3a2d4d184400cccd14b4966d1b4e3a7e"></a>ARM_2D_ALIGN_CENTRE_ALIAS&#160;</td><td class="fielddoc"><p >align to centre </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a98cac0ad64f4d819ebcd2677562597df" name="gga5a759b205152a054a4abea10c8ff01b3a98cac0ad64f4d819ebcd2677562597df"></a>ARM_2D_ALIGN_TOP_LEFT&#160;</td><td class="fielddoc"><p >align to top left corner </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a35c881c173d4c91cc1c2299b0bea464c" name="gga5a759b205152a054a4abea10c8ff01b3a35c881c173d4c91cc1c2299b0bea464c"></a>ARM_2D_ALIGN_TOP_RIGHT&#160;</td><td class="fielddoc"><p >align to top right corner </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a86c5767497217fbba15b7537e41e4c0e" name="gga5a759b205152a054a4abea10c8ff01b3a86c5767497217fbba15b7537e41e4c0e"></a>ARM_2D_ALIGN_BOTTOM_LEFT&#160;</td><td class="fielddoc"><p >align to bottom left corner </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5a759b205152a054a4abea10c8ff01b3a62f5fe387910173f6eea15c8286d4764" name="gga5a759b205152a054a4abea10c8ff01b3a62f5fe387910173f6eea15c8286d4764"></a>ARM_2D_ALIGN_BOTTOM_RIGHT&#160;</td><td class="fielddoc"><p >align to bottom right corner </p>
 </td></tr>
 </table>
 
