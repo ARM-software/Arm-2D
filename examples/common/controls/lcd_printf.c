@@ -542,6 +542,82 @@ int arm_lcd_printf(const char *format, ...)
     return real_size;
 }
 
+#if 0
+typedef enum {
+    ARM_2D_ALIGN_LEFT               = _BV(0),                                   /*!< align to left */
+    ARM_2D_ALIGN_RIGHT              = _BV(1),                                   /*!< align to right */
+    ARM_2D_ALIGN_TOP                = _BV(2),                                   /*!< align to top */
+    ARM_2D_ALIGN_BOTTOM             = _BV(3),                                   /*!< align to bottom */
+    
+    ARM_2D_ALIGN_CENTRE             = 0,                                        /*!< align to centre */
+    ARM_2D_ALIGN_CENTRE_ALIAS       = ARM_2D_ALIGN_LEFT                         /*!< align to centre */
+                                    | ARM_2D_ALIGN_RIGHT
+                                    | ARM_2D_ALIGN_TOP
+                                    | ARM_2D_ALIGN_BOTTOM,
+
+    ARM_2D_ALIGN_TOP_LEFT           = ARM_2D_ALIGN_TOP                          /*!< align to top left corner */
+                                    | ARM_2D_ALIGN_LEFT,
+    ARM_2D_ALIGN_TOP_RIGHT          = ARM_2D_ALIGN_TOP                          /*!< align to top right corner */
+                                    | ARM_2D_ALIGN_RIGHT,
+    ARM_2D_ALIGN_BOTTOM_LEFT        = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom left corner */
+                                    | ARM_2D_ALIGN_LEFT,
+    ARM_2D_ALIGN_BOTTOM_RIGHT       = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom right corner */
+                                    | ARM_2D_ALIGN_RIGHT,
+} arm_2d_align_t ;
+#endif
+
+
+int arm_lcd_printf_label(   arm_2d_align_t tAlignment, 
+                            const char *format, ...)
+{
+    int real_size;
+    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
+    __va_list ap;
+    va_start(ap, format);
+        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+    va_end(ap);
+    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
+    s_chBuffer[real_size] = '\0';
+
+    arm_2d_size_t tLabelSize = arm_lcd_get_string_line_box(s_chBuffer);
+
+    arm_2d_region_t tOriginalDrawRegion = s_tLCDTextControl.tRegion;
+
+    arm_2d_region_t tLabelRegion = {
+        .tLocation = tOriginalDrawRegion.tLocation,
+        .tSize = tLabelSize,
+    };
+
+    switch (tAlignment & (ARM_2D_ALIGN_LEFT | ARM_2D_ALIGN_RIGHT)) {
+        case ARM_2D_ALIGN_LEFT:
+            break;
+        case ARM_2D_ALIGN_RIGHT:
+            tLabelRegion.tLocation.iX += tOriginalDrawRegion.tSize.iWidth - tLabelSize.iWidth;
+            break;
+        default:
+            tLabelRegion.tLocation.iX += (tOriginalDrawRegion.tSize.iWidth - tLabelSize.iWidth) >> 1;
+            break;
+    }
+
+    switch (tAlignment & (ARM_2D_ALIGN_TOP | ARM_2D_ALIGN_BOTTOM)) {
+        case ARM_2D_ALIGN_TOP:
+            break;
+        case ARM_2D_ALIGN_BOTTOM:
+            tLabelRegion.tLocation.iY += tOriginalDrawRegion.tSize.iHeight - tLabelSize.iHeight;
+            break;
+        default:
+            tLabelRegion.tLocation.iY += (tOriginalDrawRegion.tSize.iHeight - tLabelSize.iHeight) >> 1;
+            break;
+    }
+
+    arm_lcd_text_set_draw_region(&tLabelRegion);
+    arm_lcd_puts(s_chBuffer);
+    arm_lcd_text_set_draw_region(&tOriginalDrawRegion);
+
+    return real_size;
+
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

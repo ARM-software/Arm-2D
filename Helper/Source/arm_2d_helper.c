@@ -41,6 +41,10 @@
 #   include "perf_counter.h"
 #endif
 
+#if __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   include "arm_extra_lcd_printf.h"
+#endif
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -584,6 +588,33 @@ void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex)
         = (nIndex / this.hwColumn) * ptFrame->tRegion.tSize.iHeight;
 }
 
+#if __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+ARM_NONNULL(1)
+void __arm_2d_helper_layout_debug_print_label(const arm_2d_tile_t *ptTile, 
+                                              arm_2d_region_t *ptRegion,
+                                              const char *pchString)
+{
+    arm_lcd_text_set_font(
+        (const arm_2d_font_t *)&ARM_2D_FONT_6x8); 
+
+    arm_lcd_text_set_display_mode(
+        ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR);
+
+    arm_lcd_text_set_target_framebuffer(ptTile);
+
+    if (NULL == ptRegion) {
+        arm_2d_region_t tRegion = {
+            .tSize = ptTile->tRegion.tSize,
+        };
+        arm_lcd_text_set_draw_region(&tRegion);
+    } else {
+        arm_lcd_text_set_draw_region(ptRegion);
+    }
+
+    arm_lcd_printf_label(ARM_2D_ALIGN_TOP_RIGHT, "CANVAS: %s", pchString);
+    arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
+}
+#endif
 
 /*----------------------------------------------------------------------------*
  * RTOS Port                                                                  *

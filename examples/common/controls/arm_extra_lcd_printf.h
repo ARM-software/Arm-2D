@@ -157,6 +157,9 @@ extern
 int arm_lcd_printf(const char *format, ...);
 
 extern
+int arm_lcd_printf_label(arm_2d_align_t tAlignment, const char *format, ...);
+
+extern
 void arm_lcd_puts(const char *str);
 
 extern 

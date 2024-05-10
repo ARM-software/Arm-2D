@@ -378,13 +378,15 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.2.5" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.3.0" condition="Arm-2D-CORE">
           <description>An example module to print ASCII strings to target string.</description>
           <files>
             <file category="include"     name="examples/common/controls/" />
             <file category="sourceC"     name="examples/common/controls/lcd_printf.c" />
-            <file category="sourceC"     name="examples/common/controls/GLCD_Fonts.c" attr="config" version="1.0.0" />
-            <file category="sourceC"     name="examples/common/asset/DigitsFont.c"    attr="config" version="1.2.0" />
+            <file category="sourceC"     name="examples/common/controls/GLCD_Fonts.c"       attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/common/asset/DigitsFont.c"          attr="config" version="1.2.0" />
+            <file category="sourceC"     name="examples/common/asset/alarm_clock_font32.c"  attr="config" version="1.1.0" />
+            <file category="sourceC"     name="examples/common/asset/alarm_clock_font64.c"  attr="config" version="1.1.0" />
           </files>
           <RTE_Components_h>
 
@@ -447,8 +449,6 @@
             <file category="sourceC"     name="examples/common/asset/background.c" />
             <file category="sourceC"     name="examples/common/asset/WatchCoverRound.c" />
             <file category="sourceC"     name="examples/common/asset/GlassHalo.c" />
-            <file category="sourceC"     name="examples/common/asset/alarm_clock_font32.c" />
-            <file category="sourceC"     name="examples/common/asset/alarm_clock_font64.c" />
             <file category="sourceC"     name="examples/common/asset/ECG.c" />
             <file category="sourceC"     name="examples/common/asset/ECGScan.c" />
             <file category="sourceC"     name="examples/common/asset/Cuisine.c" />

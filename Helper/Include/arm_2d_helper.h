@@ -719,6 +719,14 @@ void arm_2d_helper_fill_tile_colour(const arm_2d_tile_t *ptTile,
                                     arm_2d_color_info_t tColourFormat,
                                     arm_2d_colour_t tColour);
 
+#if __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+extern
+ARM_NONNULL(1)
+void __arm_2d_helper_layout_debug_print_label(const arm_2d_tile_t *ptTile, 
+                                              arm_2d_region_t *ptRegion,
+                                              const char *pchString);
+#endif
+
 /*! @} */
 
 #if defined(__clang__)

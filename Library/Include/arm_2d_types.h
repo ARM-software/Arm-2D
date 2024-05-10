@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        29. April 2024
- * $Revision:    V.1.2.6
+ * $Date:        10. May 2024
+ * $Revision:    V.1.2.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -619,6 +619,55 @@ struct arm_2d_tile_t {
         intptr_t            nAddress;                                           //!< a pointer in integer
     };
 };
+
+/*----------------------------------------------------------------------------*
+ * Misc                                                                       *
+ *----------------------------------------------------------------------------*/
+
+/*! 
+ * \brief alignment 
+ */
+typedef enum {
+    ARM_2D_ALIGN_LEFT               = _BV(0),                                   /*!< align to left */
+    ARM_2D_ALIGN_RIGHT              = _BV(1),                                   /*!< align to right */
+    ARM_2D_ALIGN_TOP                = _BV(2),                                   /*!< align to top */
+    ARM_2D_ALIGN_BOTTOM             = _BV(3),                                   /*!< align to bottom */
+    
+    ARM_2D_ALIGN_CENTRE             = 0,                                        /*!< align to centre */
+    ARM_2D_ALIGN_CENTRE_ALIAS       = ARM_2D_ALIGN_LEFT                         /*!< align to centre */
+                                    | ARM_2D_ALIGN_RIGHT
+                                    | ARM_2D_ALIGN_TOP
+                                    | ARM_2D_ALIGN_BOTTOM,
+
+    ARM_2D_ALIGN_TOP_LEFT           = ARM_2D_ALIGN_TOP                          /*!< align to top left corner */
+                                    | ARM_2D_ALIGN_LEFT,
+    ARM_2D_ALIGN_TOP_RIGHT          = ARM_2D_ALIGN_TOP                          /*!< align to top right corner */
+                                    | ARM_2D_ALIGN_RIGHT,
+    ARM_2D_ALIGN_BOTTOM_LEFT        = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom left corner */
+                                    | ARM_2D_ALIGN_LEFT,
+    ARM_2D_ALIGN_BOTTOM_RIGHT       = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom right corner */
+                                    | ARM_2D_ALIGN_RIGHT,
+} arm_2d_align_t ;
+
+/*!
+ * \brief the margin inside a region / container
+ */
+typedef struct arm_2d_margin_t {
+    uint8_t chLeft;                                                             /*!< left margin */
+    uint8_t chRight;                                                            /*!< right margin */
+    uint8_t chTop;                                                              /*!< top margin */
+    uint8_t chBottom;                                                           /*!< bottom margin */
+} arm_2d_margin_t;
+
+/*!
+ * \brief the padding between rectanglar areas
+ */
+typedef struct arm_2d_padding_t {
+    int8_t chLeft;                                                              /*!< left padding */
+    int8_t chRight;                                                             /*!< right padding */
+    int8_t chTop;                                                               /*!< top padding */
+    int8_t chBottom;                                                            /*!< bottom padding */
+} arm_2d_padding_t;
 
 /*!
  * \brief the enumeration type for describing memory types

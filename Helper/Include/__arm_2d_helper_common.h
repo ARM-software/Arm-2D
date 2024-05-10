@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.4.5
+ * $Date:        10. May 2024
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -806,6 +806,16 @@ extern "C" {
  * Helper Macros for Alignment                                                *
  *----------------------------------------------------------------------------*/
 
+#if !defined(__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__)
+#   define __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__      0
+#endif
+
+//#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_CONTAINER_DEBUG__(__tile_ptr, __name, __region_ptr)
+//#else
+//#   define __ARM_2D_CONTAINER_DEBUG__(__tile_ptr, __name, __region_ptr)
+//#endif
+
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -814,6 +824,7 @@ extern "C" {
                             __container_name,                                   \
                             __region_ptr,                                       \
                             ...)                                                \
+        __ARM_2D_CONTAINER_DEBUG__(__tile_ptr, __container_name, __region_ptr)  \
             for (arm_2d_margin_t ARM_2D_SAFE_NAME(tMargin),                     \
                 *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;              \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -892,8 +903,37 @@ extern "C" {
                                 __container_name,                               \
                                 (__region_ptr),##__VA_ARGS__)
 
+#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)
+#else
+#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                   \
+        __ARM_USING2(__arm_2d_layout_debug_t __arm_2d_reserve_canvas__ = {      \
+                        .ptTile = (arm_2d_tile_t *)(__tile_ptr)                 \
+                    },                                                          \
+                    { /* on leave */                                            \
+                    uint16_t hwOpacity = 128                                    \
+                                       + __arm_2d_reserve_canvas__.wLevel * 16; \
+                    hwOpacity = MIN(hwOpacity, 255);                            \
+                    arm_2d_helper_draw_box(                                     \
+                        (__arm_2d_reserve_canvas__.ptTile),                     \
+                        NULL,                                                   \
+                        1,                                                      \
+                        GLCD_COLOR_GREEN,                                       \
+                        hwOpacity);                                             \
+                    __arm_2d_helper_layout_debug_print_label((__tile_ptr),      \
+                                                             NULL,              \
+                                                             #__region_name);   \
+                })
+#endif
+
+#define __arm_2d_canvas(__tile_ptr, __region_name, ...)                         \
+            arm_using(arm_2d_region_t __region_name = {0},                      \
+                        {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
+                        {arm_2d_op_wait_async(NULL);})
+
 #if 1
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
+            __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                  \
                 for (arm_2d_region_t __region_name = {0},                       \
                     *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;          \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -942,9 +982,7 @@ extern "C" {
                 )
 #else
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
-            arm_using(arm_2d_region_t __region_name = {0},                      \
-                        {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
-                        {arm_2d_op_wait_async(NULL);})
+            __arm_2d_canvas((__tile_ptr, __region_name, ##__VA_ARGS__))
 #endif
 
 #define arm_2d_layout(__region)                                                 \
@@ -2263,50 +2301,10 @@ extern "C" {
 
 /*============================ TYPES =========================================*/
 
-/*! 
- * \brief alignment 
- */
-enum {
-    ARM_2D_ALIGN_LEFT               = _BV(0),                                   /*!< align to left */
-    ARM_2D_ALIGN_RIGHT              = _BV(1),                                   /*!< align to right */
-    ARM_2D_ALIGN_TOP                = _BV(2),                                   /*!< align to top */
-    ARM_2D_ALIGN_BOTTOM             = _BV(3),                                   /*!< align to bottom */
-    
-    ARM_2D_ALIGN_CENTRE             = 0,                                        /*!< align to centre */
-    ARM_2D_ALIGN_CENTRE_ALIAS       = ARM_2D_ALIGN_LEFT                         /*!< align to centre */
-                                    | ARM_2D_ALIGN_RIGHT
-                                    | ARM_2D_ALIGN_TOP
-                                    | ARM_2D_ALIGN_BOTTOM,
-
-    ARM_2D_ALIGN_TOP_LEFT           = ARM_2D_ALIGN_TOP                          /*!< align to top left corner */
-                                    | ARM_2D_ALIGN_LEFT,
-    ARM_2D_ALIGN_TOP_RIGHT          = ARM_2D_ALIGN_TOP                          /*!< align to top right corner */
-                                    | ARM_2D_ALIGN_RIGHT,
-    ARM_2D_ALIGN_BOTTOM_LEFT        = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom left corner */
-                                    | ARM_2D_ALIGN_LEFT,
-    ARM_2D_ALIGN_BOTTOM_RIGHT       = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom right corner */
-                                    | ARM_2D_ALIGN_RIGHT,
-};
-
-/*!
- * \brief the margin inside a region / container
- */
-typedef struct arm_2d_margin_t {
-    uint8_t chLeft;                                                             /*!< left margin */
-    uint8_t chRight;                                                            /*!< right margin */
-    uint8_t chTop;                                                              /*!< top margin */
-    uint8_t chBottom;                                                           /*!< bottom margin */
-} arm_2d_margin_t;
-
-/*!
- * \brief the padding between rectanglar areas
- */
-typedef struct arm_2d_padding_t {
-    int8_t chLeft;                                                              /*!< left padding */
-    int8_t chRight;                                                             /*!< right padding */
-    int8_t chTop;                                                               /*!< top padding */
-    int8_t chBottom;                                                            /*!< bottom padding */
-} arm_2d_padding_t;
+typedef struct __arm_2d_layout_debug_t {
+    const arm_2d_tile_t *ptTile;
+    uint32_t wLevel;
+} __arm_2d_layout_debug_t;
 
 /*!
  * \brief the On-Drawing event handler for application layer
