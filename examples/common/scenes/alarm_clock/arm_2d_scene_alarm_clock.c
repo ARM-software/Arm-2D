@@ -310,7 +310,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
                     arm_2d_dock_horizontal(__item_region, tStringSize.iWidth) {
 
-                        arm_2d_layout(__horizontal_region) {
+                        arm_2d_layout(__horizontal_region, true) {
 
                             __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
                                 arm_lcd_text_set_draw_region(&__item_region);

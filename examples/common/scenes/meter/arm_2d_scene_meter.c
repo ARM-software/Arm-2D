@@ -286,7 +286,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
 
             arm_2d_align_centre(__canvas,  tTextSize) {
                 
-                arm_2d_layout(__centre_region) {
+                arm_2d_layout(__centre_region, true) {
                 
                     arm_lcd_text_set_target_framebuffer(ptTile);
                     /* print speed */

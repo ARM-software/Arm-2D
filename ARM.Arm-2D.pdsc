@@ -283,7 +283,7 @@
         </component>
 
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.11.10" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.12.0" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -297,27 +297,27 @@
             <file category="sourceC"     name="Helper/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.1" />
             
             <!-- scene template -->
-            <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="1.2.8" />
-            <file category="sourceC"     name="examples/common/asset/MeterPanel.c"                  attr="template"  select="Scene Template: Meter"   version="1.2.8" />
-            <file category="header"      name="examples/common/scenes/meter/arm_2d_scene_meter.h"   attr="template"  select="Scene Template: Meter"   version="1.2.8" />
+            <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="1.2.9" />
+            <file category="sourceC"     name="examples/common/asset/MeterPanel.c"                  attr="template"  select="Scene Template: Meter"   version="1.2.9" />
+            <file category="header"      name="examples/common/scenes/meter/arm_2d_scene_meter.h"   attr="template"  select="Scene Template: Meter"   version="1.2.9" />
             
-            <file category="sourceC"     name="examples/common/scenes/watch/arm_2d_scene_watch.c"   attr="template"  select="Scene Template: Watch"   version="1.1.0" />
-            <file category="header"      name="examples/common/scenes/watch/arm_2d_scene_watch.h"   attr="template"  select="Scene Template: Watch"   version="1.1.0" />
+            <file category="sourceC"     name="examples/common/scenes/watch/arm_2d_scene_watch.c"   attr="template"  select="Scene Template: Watch"   version="1.1.1" />
+            <file category="header"      name="examples/common/scenes/watch/arm_2d_scene_watch.h"   attr="template"  select="Scene Template: Watch"   version="1.1.1" />
 
-            <file category="sourceC"     name="examples/common/scenes/fitness/arm_2d_scene_fitness.c" attr="template"  select="Scene Template: Fitness"   version="1.2.2" />
-            <file category="header"      name="examples/common/scenes/fitness/arm_2d_scene_fitness.h" attr="template"  select="Scene Template: Fitness"   version="1.2.2" />
+            <file category="sourceC"     name="examples/common/scenes/fitness/arm_2d_scene_fitness.c" attr="template"  select="Scene Template: Fitness"   version="1.2.3" />
+            <file category="header"      name="examples/common/scenes/fitness/arm_2d_scene_fitness.h" attr="template"  select="Scene Template: Fitness"   version="1.2.3" />
 
-            <file category="sourceC"     name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.c" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.1" />
-            <file category="header"      name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.h" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.1" />
+            <file category="sourceC"     name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.c" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.2" />
+            <file category="header"      name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.h" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.2" />
 
-            <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="1.1.0" />
-            <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="1.1.0" />
+            <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="1.1.1" />
+            <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="1.1.1" />
 
-            <file category="sourceC"     name="examples/common/scenes/fan/arm_2d_scene_fan.c"   attr="template"  select="Scene Template: Fan"   version="1.0.0" />
-            <file category="header"      name="examples/common/scenes/fan/arm_2d_scene_fan.h"   attr="template"  select="Scene Template: Fan"   version="1.0.0" />
+            <file category="sourceC"     name="examples/common/scenes/fan/arm_2d_scene_fan.c"   attr="template"  select="Scene Template: Fan"   version="1.0.1" />
+            <file category="header"      name="examples/common/scenes/fan/arm_2d_scene_fan.h"   attr="template"  select="Scene Template: Fan"   version="1.0.1" />
 
-            <file category="sourceC"     name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.c"   attr="template"  select="Scene Template: Bubble Charging"   version="1.0.0" />
-            <file category="header"      name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.h"   attr="template"  select="Scene Template: Bubble Charging"   version="1.0.0" />
+            <file category="sourceC"     name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.c"   attr="template"  select="Scene Template: Bubble Charging"   version="1.0.1" />
+            <file category="header"      name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.h"   attr="template"  select="Scene Template: Bubble Charging"   version="1.0.1" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_PFB
@@ -491,99 +491,99 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cversion="1.0.1" condition="Arm-2D-EXTRA">
           <description>A demo for some basic operations.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_basics.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_basics.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_basics.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_basics.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Basics
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cversion="1.0.2" condition="Arm-2D-EXTRA">
           <description>A demo for how to use the dirty region helper service.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_atom.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/arm_2d_scene_atom.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_atom.c" attr="config" version="1.0.2" />
+            <file category="header"      name="examples/demos/arm_2d_scene_atom.h" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Atom
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cversion="1.0.2" condition="Arm-2D-EXTRA">
           <description>A complex demo for evaluating the system performance under the heavy load.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_audiomark.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/arm_2d_scene_audiomark.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_audiomark.c" attr="config" version="1.0.2" />
+            <file category="header"      name="examples/demos/arm_2d_scene_audiomark.h" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_AudioMark
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cversion="1.0.1" condition="Arm-2D-EXTRA">
           <description>A demo for how to create a floating window of a text console.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_console_window.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_console_window.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_console_window.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_console_window.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Console_Window
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cversion="1.0.1" condition="Arm-2D-EXTRA">
           <description>A demo for the battery gas gauge.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_gas_gauge.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_gas_gauge.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_gas_gauge.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_gas_gauge.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Gas_Gauge
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cversion="1.0.1" condition="Arm-2D-EXTRA">
           <description>A demo for the listview </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_listview.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_listview.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_listview.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_listview.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Listview
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.0.2" condition="Arm-2D-EXTRA">
           <description>A demo for typical controls on a panel </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_panel.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/arm_2d_scene_panel.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_panel.c" attr="config" version="1.0.2" />
+            <file category="header"      name="examples/demos/arm_2d_scene_panel.h" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Panel
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="1.0.1" condition="Arm-2D-EXTRA">
           <description>A demo for progress indication and gif </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_progress_status.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_progress_status.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_progress_status.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_progress_status.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Progress_Status
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cversion="1.0.1" condition="Arm-2D-EXTRA">
           <description>A demo for menu </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_menu.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_menu.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_menu.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_menu.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Menu

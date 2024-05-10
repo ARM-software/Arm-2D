@@ -238,7 +238,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
         /* draw atom core */
         arm_2d_align_centre(__top_canvas, tAtomCoreSize) {
 
-            arm_2d_layout(__centre_region) {
+            arm_2d_layout(__centre_region, true) {
             
                 __item_line_dock_vertical(c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight * 2) {
                     

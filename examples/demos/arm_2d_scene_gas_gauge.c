@@ -200,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
 
         arm_2d_align_centre( __canvas, 128, 130) {
 
-            arm_2d_layout(__centre_region) {
+            arm_2d_layout(__centre_region, true) {
 
                 __item_line_horizontal(64, 130) {
                     battery_gasgauge_nixie_tube_show(   &this.tBatteryNixieTube, 
