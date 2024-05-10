@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        1. April 2024
+ * $Date:        10. May 2024
  * $Revision:    V.1.1.6-dev
  *
  * Target Processor:  Cortex-M cores
@@ -289,6 +289,37 @@ void *__arm_2d_allocate_scratch_memory( uint32_t wSize,
 extern
 void __arm_2d_free_scratch_memory( arm_2d_mem_type_t tType,
                                    void *pBuff);
+
+/*!
+ * \brief allocate a scratch memory and initialize arm_2d_scratch_mem_t object
+ * 
+ * \param[out] ptMemory the address of an arm_2d_scratch_mem_t object to hold
+ *                      the result
+ * \param[in] hwItemSize  the size of each item
+ * \param[in] hwItemCount the number of items
+ * \param[in] hwAlignment the alignment requirement
+ * \param[in] tType the type of memory
+ * \return arm_2d_scratch_mem_t* the initialized the arm_2d_scratch_mem_t object
+ *            address. NULL means failed to allocate scratch memory
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
+                                                uint16_t hwItemSize,
+                                                uint16_t hwItemCount, 
+                                                uint16_t hwAlignment, 
+                                                arm_2d_mem_type_t tType);
+
+
+/*!
+ * \brief free a scratch memory with a given scratch memory descriptor object
+ * 
+ * \param[in] the target scratch memory descriptor
+ * \return arm_2d_scratch_mem_t * the de-initialized the scratch memory descriptor
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_scratch_mem_t *arm_2d_scratch_memory_free(arm_2d_scratch_mem_t *ptMemory);
 
 /*! @} */
 

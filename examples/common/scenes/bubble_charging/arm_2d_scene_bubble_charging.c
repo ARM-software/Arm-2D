@@ -192,10 +192,8 @@ static void __on_scene_bubble_charging_frame_complete(arm_2d_scene_t *ptScene)
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 
-    __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, 
-                                (void *)this.tBlurOP.tScratchMemory.pBuffer);
-    this.tBlurOP.tScratchMemory.pBuffer = 0;
-    this.tBlurOP.tScratchMemory.u24SizeInByte = 0;
+    arm_2d_scratch_memory_free(&this.tBlurOP.tScratchMemory);
+
 }
 
 static void __before_scene_bubble_charging_switching_out(arm_2d_scene_t *ptScene)
@@ -251,20 +249,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
                             bIsNewFrame);
 
         if (bIsNewFrame) {
-            arm_2d_filter_iir_blur_descriptor_t *ptOP = &this.tBlurOP;
-            size_t tMemorySize = (__charging_canvas.tSize.iHeight + __charging_canvas.tSize.iWidth) 
-                                * sizeof(__arm_2d_iir_blur_acc_t);
 
-            ptOP->tScratchMemory.pBuffer 
-                = (uintptr_t)__arm_2d_allocate_scratch_memory( 
-                                                    tMemorySize , 
-                                                    __alignof__(__arm_2d_iir_blur_acc_t),
-                                                    ARM_2D_MEM_TYPE_FAST);
+            if (NULL == arm_2d_scratch_memory_new(  
+                                        &this.tBlurOP.tScratchMemory,
+                                        sizeof(__arm_2d_iir_blur_acc_t),
+                                        (   __charging_canvas.tSize.iHeight 
+                                        +   __charging_canvas.tSize.iWidth),
+                                        __alignof__(__arm_2d_iir_blur_acc_t),
+                                        ARM_2D_MEM_TYPE_FAST)) {
+                assert(false);  /* insufficient memory */
+            }
 
-            ptOP->tScratchMemory.u24SizeInByte = tMemorySize;
-            ptOP->tScratchMemory.u2Align = __alignof__(__arm_2d_iir_blur_acc_t);
-            ptOP->tScratchMemory.u2ItemSize = sizeof(__arm_2d_iir_blur_acc_t);
-            ptOP->tScratchMemory.u2Type = ARM_2D_MEM_TYPE_FAST;
         }
     
         arm_2d_filter_iir_blur_api_params_t tParams = {

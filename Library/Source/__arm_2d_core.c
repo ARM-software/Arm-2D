@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.7.2
+ * $Date:        10. May 2024
+ * $Revision:    V.1.7.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2258,7 +2258,7 @@ arm_fsm_rt_t arm_2d_task(arm_2d_task_t *ptTask)
 }
 
 /*----------------------------------------------------------------------------*
- * Utilieis                                                                   *
+ * Utilities                                                                  *
  *----------------------------------------------------------------------------*/
 
 bool __arm_2d_valid_mask(   const arm_2d_tile_t *ptAlpha, 
@@ -2366,6 +2366,54 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
     return ARM_2D_ERR_NONE;
 }
 
+ARM_NONNULL(1)
+arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
+                                                uint16_t hwItemSize,
+                                                uint16_t hwItemCount, 
+                                                uint16_t hwAlignment, 
+                                                arm_2d_mem_type_t tType)
+{
+    size_t tSize = (size_t)hwItemCount * (size_t)hwItemCount;
+    do {
+        if (NULL == ptMemory) {
+            assert(false);
+            break;
+        } else if (0 == tSize) {
+            break;
+        }
+
+        ptMemory->pBuffer 
+            = (uintptr_t)__arm_2d_allocate_scratch_memory(  tSize , 
+                                                            hwAlignment,
+                                                            tType);
+
+        ptMemory->u24SizeInByte = tSize;
+        ptMemory->u2Align = hwAlignment;
+        ptMemory->u2ItemSize = hwItemSize;
+        ptMemory->u2Type = tType;
+
+        return ptMemory;
+    } while(0);
+
+    return NULL;
+}
+
+ARM_NONNULL(1)
+arm_2d_scratch_mem_t *arm_2d_scratch_memory_free(arm_2d_scratch_mem_t *ptMemory)
+{
+    do {
+        if (NULL == ptMemory) {
+            break;
+        }
+
+        __arm_2d_free_scratch_memory(   ptMemory->u2Type, 
+                                        (void *)(ptMemory->pBuffer));
+        memset(ptMemory, 0, sizeof(arm_2d_scratch_mem_t));
+
+    } while(0);
+
+    return ptMemory;
+}
 
 /*----------------------------------------------------------------------------*
  * Low Level IO Interfaces                                                    *
