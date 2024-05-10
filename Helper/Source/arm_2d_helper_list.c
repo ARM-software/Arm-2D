@@ -610,24 +610,6 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                         hwSaveID));
     } while(0);
 
-                if (this.tCFG.nTotalLength) {
-                    this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
-                }
-                this.Runtime.nTargetOffset = this.Runtime.nOffset;
-                this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
-
-                this.Runtime.bIsMoving = false;     /* update flag to indicate moving complete */
-
-                if (this.Runtime.MoveReq.iSteps && this.Runtime.bIsRegCalInit) {
-                    __arm_2d_list_core_move_selection(
-                        ptThis, 
-                        this.Runtime.MoveReq.iSteps,
-                        this.Runtime.MoveReq.nFinishInMs);
-                    /* reset request */
-                    this.Runtime.MoveReq.iSteps = 0;
-                    this.Runtime.MoveReq.nFinishInMs = 0;
-                }
-
     if (0 == nFinishInMs) {
         /* jump to the new position immediately */
         arm_irq_safe {
