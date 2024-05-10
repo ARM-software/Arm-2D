@@ -293,7 +293,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
         arm_2d_dock_vertical(__top_canvas, 64+c_tileECGMask.tRegion.tSize.iHeight) {
 
-            arm_2d_layout(__vertical_region) {
+            arm_2d_layout(__vertical_region, true) {
 
                 /* Draw Clock */
                 __item_line_dock_vertical(64) {

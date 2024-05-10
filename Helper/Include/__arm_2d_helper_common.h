@@ -986,9 +986,34 @@ extern "C" {
 #endif
 
 #if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
-#   define __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)
+#   define __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug)
+#   define __ARM_2D_LAYOUT_DEBUG_END__()
 #else
-#   define __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)                      \
+#   define __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug)                          \
+            do {                                                                \
+                if (__bool_debug) {                                             \
+                    __layout_assistant__.ptDebug = &__arm_2d_reserve_canvas__;  \
+                    __layout_assistant__.wLevel =                               \
+                        __arm_2d_reserve_canvas__.wLevel++;                     \
+                }                                                               \
+            } while(0)
+
+#   define __ARM_2D_LAYOUT_DEBUG_END__()                                        \
+            do {                                                                \
+                if (NULL != __layout_assistant__.ptDebug) {                     \
+                    COLOUR_INT tColor = arm_2d_pixel_from_brga8888(             \
+                                    __arm_2d_helper_colour_slider(              \
+                                        __RGB32(0, 0xFF, 0),                    \
+                                        __RGB32(0xFF, 0, 0xFF),                 \
+                                        4,                                      \
+                                        __layout_assistant__.wLevel));          \
+                    arm_2d_fill_colour_with_opacity(                            \
+                        (__layout_assistant__.ptDebug->ptTile),                 \
+                        &__layout_assistant__.tArea,                            \
+                        (__arm_2d_color_t){tColor},                             \
+                        32);                                                    \
+                }                                                               \
+            } while(0)
 
 #endif
 
@@ -1005,15 +1030,16 @@ extern "C" {
                 )
 
 #define arm_2d_layout2(__region, __bool_debug)                                  \
-        __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)                         \
             arm_using(  __arm_2d_layout_t __layout_assistant__ = {0},           \
                         {                                                       \
                             __layout_assistant__.tLayout.tLocation              \
                                 = (__region).tLocation;                         \
                             __layout_assistant__.tArea = (__region);            \
+                            __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug);        \
                         },                                                      \
                         {                                                       \
                             ARM_2D_OP_WAIT_ASYNC();                             \
+                            __ARM_2D_LAYOUT_DEBUG_END__();                      \
                         }                                                       \
                     )
 
@@ -2342,6 +2368,7 @@ typedef struct __arm_2d_layout_t {
     __arm_2d_layout_debug_t *ptDebug;
     arm_2d_region_t tLayout;
     arm_2d_region_t tArea;
+    uint32_t wLevel;
 } __arm_2d_layout_t;
 
 /*!
