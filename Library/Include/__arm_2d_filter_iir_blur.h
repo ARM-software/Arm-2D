@@ -70,16 +70,11 @@ typedef struct __arm_2d_iir_blur_acc_gray8_t {
     uint16_t hwC;
 } __arm_2d_iir_blur_acc_gray8_t;
 
-typedef struct arm_2d_filter_iir_blur_api_params_t {
-    /* add your parameters here */
-    uint_fast8_t chBlurDegree;
-} arm_2d_filter_iir_blur_api_params_t;
-
 typedef struct arm_2d_filter_iir_blur_descriptor_t {
 ARM_PRIVATE(
     implement(arm_2d_op_t);                         /* inherit from base class arm_2d_op_cp_t*/
 
-    arm_2d_filter_iir_blur_api_params_t tParams;
+    uint8_t chBlurDegree;
 )
 
     arm_2d_scratch_mem_t tScratchMemory;
@@ -90,52 +85,58 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2)
 /*!
  *  \brief Apply IIR blur to a specified region on the target tile
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
- *  \param[in] ptParams the user configurations for the IIR Blur
+ *  \param[in] chBlurDegree the blur degree, 
+ *  \note - 0~127 works as generic anti-alias, and
+ *        - 128~239 works as blur
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
-                    const arm_2d_filter_iir_blur_api_params_t *ptParams);
+                    uint8_t chBlurDegree);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2)
 /*!
  *  \brief Apply IIR blur to a specified region on the target tile
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
- *  \param[in] ptParams the user configurations for the IIR Blur
+ *  \param[in] chBlurDegree the blur degree, 
+ *  \note - 0~127 works as generic anti-alias, and
+ *        - 128~239 works as blur
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
-                    const arm_2d_filter_iir_blur_api_params_t *ptParams);
+                    uint8_t chBlurDegree);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2)
 /*!
  *  \brief Apply IIR blur to a specified region on the target tile
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
- *  \param[in] ptParams the user configurations for the IIR Blur
+ *  \param[in] chBlurDegree the blur degree, 
+ *  \note - 0~127 works as generic anti-alias, and
+ *        - 128~239 works as blur
  *  \return arm_fsm_rt_t the operations result
  */
 arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
-                    const arm_2d_filter_iir_blur_api_params_t *ptParams);
+                    uint8_t chBlurDegree);
 
 /*! @} */
 

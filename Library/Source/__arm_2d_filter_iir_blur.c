@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        5. April 2024
- * $Revision:    V.1.0.0
+ * $Date:        10. May 2024
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -92,12 +92,12 @@ extern "C" {
  * the Frontend API
  */
 
-ARM_NONNULL(2,4)
+ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
-                            const arm_2d_filter_iir_blur_api_params_t *ptParams)
+                            uint8_t chBlurDegree)
 {
     assert(NULL != ptTarget);
 
@@ -112,7 +112,7 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
 
-    this.tParams = *ptParams;
+    this.chBlurDegree = chBlurDegree;
 
     if (NULL != (void *)this.tScratchMemory.pBuffer) {
         arm_2d_size_t tSize;
@@ -334,7 +334,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
                         ptTask->Param.tTileProcess.iStride,
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
-                        this.tParams.chBlurDegree,
+                        this.chBlurDegree,
                         &this.tScratchMemory);
 
     return arm_fsm_rt_cpl;
@@ -373,12 +373,12 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_GRAY8 = {
  * the Frontend API
  */
 
-ARM_NONNULL(2,4)
+ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
-                            const arm_2d_filter_iir_blur_api_params_t *ptParams)
+                            uint8_t chBlurDegree)
 {
     assert(NULL != ptTarget);
 
@@ -393,7 +393,7 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
 
-    this.tParams = *ptParams;
+    this.chBlurDegree = chBlurDegree;
 
     if (NULL != (void *)this.tScratchMemory.pBuffer) {
         arm_2d_size_t tSize;
@@ -647,7 +647,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
                         ptTask->Param.tTileProcess.iStride,
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
-                        this.tParams.chBlurDegree,
+                        this.chBlurDegree,
                         &this.tScratchMemory);
 
     return arm_fsm_rt_cpl;
@@ -686,12 +686,12 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_RGB565 = {
  * the Frontend API
  */
 
-ARM_NONNULL(2,4)
+ARM_NONNULL(2)
 arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
-                            const arm_2d_filter_iir_blur_api_params_t *ptParams)
+                            uint8_t chBlurDegree)
 {
     assert(NULL != ptTarget);
 
@@ -706,7 +706,7 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
 
-    this.tParams = *ptParams;
+    this.chBlurDegree = chBlurDegree;
 
     if (NULL != (void *)this.tScratchMemory.pBuffer) {
         arm_2d_size_t tSize;
@@ -952,7 +952,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
                         ptTask->Param.tTileProcess.iStride,
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
-                        this.tParams.chBlurDegree,
+                        this.chBlurDegree,
                         &this.tScratchMemory);
 
     return arm_fsm_rt_cpl;

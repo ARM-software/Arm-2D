@@ -262,14 +262,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
 
         }
     
-        arm_2d_filter_iir_blur_api_params_t tParams = {
-            .chBlurDegree = 255 - 16,//this.chBlurDegree,
-        };
-    
         arm_2dp_filter_iir_blur(&this.tBlurOP,
                                 ptTile,
                                 &__charging_canvas,
-                                &tParams);
+                                255 - 16);
 
         arm_2d_align_centre(__charging_canvas, c_tileGlassBallMask.tRegion.tSize) {
 
