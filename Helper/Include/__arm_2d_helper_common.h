@@ -911,15 +911,18 @@ extern "C" {
                         .ptTile = (arm_2d_tile_t *)(__tile_ptr)                 \
                     },                                                          \
                     { /* on leave */                                            \
-                    uint16_t hwOpacity = 128                                    \
-                                       + __arm_2d_reserve_canvas__.wLevel * 16; \
-                    hwOpacity = MIN(hwOpacity, 255);                            \
-                    arm_2d_helper_draw_box(                                     \
-                        (__arm_2d_reserve_canvas__.ptTile),                     \
-                        NULL,                                                   \
-                        1,                                                      \
-                        GLCD_COLOR_GREEN,                                       \
-                        hwOpacity);                                             \
+                        COLOUR_INT tColor = arm_2d_pixel_from_brga8888(         \
+                                        __arm_2d_helper_colour_slider(          \
+                                            __RGB32(0, 0xFF, 0),                \
+                                            __RGB32(0, 0, 0xFF),                \
+                                            8,                                  \
+                                            __arm_2d_reserve_canvas__.wLevel)); \
+                        arm_2d_helper_draw_box(                                 \
+                            (__arm_2d_reserve_canvas__.ptTile),                 \
+                            NULL,                                               \
+                            1,                                                  \
+                            tColor,                                             \
+                            128);                                               \
                 })
 #endif
 
@@ -978,11 +981,18 @@ extern "C" {
                  ({ARM_2D_OP_WAIT_ASYNC();})                                    \
                 )
 #else
-#define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
+#   define arm_2d_canvas(__tile_ptr, __region_name, ...)                        \
             __arm_2d_canvas((__tile_ptr, __region_name, ##__VA_ARGS__))
 #endif
 
-#define arm_2d_layout(__region)                                                 \
+#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)
+#else
+#   define __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)                      \
+
+#endif
+
+#define arm_2d_layout1(__region)                                                \
         arm_using(  arm_2d_region_t __arm_2d_layout = {                         \
                         .tLocation = (__region).tLocation                       \
                     },                                                          \
@@ -994,6 +1004,23 @@ extern "C" {
                         ARM_2D_OP_WAIT_ASYNC();                                 \
                     }                                                           \
                 )
+
+#define arm_2d_layout2(__region, __bool_debug)                                  \
+        __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)                         \
+            arm_using(  arm_2d_region_t __arm_2d_layout = {                     \
+                        .tLocation = (__region).tLocation                       \
+                    },                                                          \
+                    __arm_2d_layout_area = (__region),                          \
+                    {                                                           \
+                        ARM_2D_UNUSED(__arm_2d_layout_area);                    \
+                    },                                                          \
+                    {                                                           \
+                        ARM_2D_OP_WAIT_ASYNC();                                 \
+                    }                                                           \
+                )
+
+#define arm_2d_layout(...)                                                      \
+        ARM_CONNECT2(arm_2d_layout, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
  * \brief Please do NOT use this macro
@@ -2302,6 +2329,12 @@ typedef struct __arm_2d_layout_debug_t {
     const arm_2d_tile_t *ptTile;
     uint32_t wLevel;
 } __arm_2d_layout_debug_t;
+
+typedef struct __arm_2d_layout_t {
+    __arm_2d_layout_debug_t *ptDebug;
+    arm_2d_region_t tLayout;
+    arm_2d_region_t tArea;
+} __arm_2d_layout_t;
 
 /*!
  * \brief the On-Drawing event handler for application layer
