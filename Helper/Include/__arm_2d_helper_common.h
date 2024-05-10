@@ -993,12 +993,11 @@ extern "C" {
 #endif
 
 #define arm_2d_layout1(__region)                                                \
-        arm_using(  arm_2d_region_t __arm_2d_layout = {                         \
-                        .tLocation = (__region).tLocation                       \
-                    },                                                          \
-                    __arm_2d_layout_area = (__region),                          \
+        arm_using(  __arm_2d_layout_t __layout_assistant__ = {0},               \
                     {                                                           \
-                        ARM_2D_UNUSED(__arm_2d_layout_area);                    \
+                        __layout_assistant__.tLayout.tLocation                  \
+                            = (__region).tLocation;                             \
+                        __layout_assistant__.tArea = (__region);                \
                     },                                                          \
                     {                                                           \
                         ARM_2D_OP_WAIT_ASYNC();                                 \
@@ -1007,17 +1006,16 @@ extern "C" {
 
 #define arm_2d_layout2(__region, __bool_debug)                                  \
         __ARM_2D_LAYOUT_DEBUG__(__region, __bool_debug)                         \
-            arm_using(  arm_2d_region_t __arm_2d_layout = {                     \
-                        .tLocation = (__region).tLocation                       \
-                    },                                                          \
-                    __arm_2d_layout_area = (__region),                          \
-                    {                                                           \
-                        ARM_2D_UNUSED(__arm_2d_layout_area);                    \
-                    },                                                          \
-                    {                                                           \
-                        ARM_2D_OP_WAIT_ASYNC();                                 \
-                    }                                                           \
-                )
+            arm_using(  __arm_2d_layout_t __layout_assistant__ = {0},           \
+                        {                                                       \
+                            __layout_assistant__.tLayout.tLocation              \
+                                = (__region).tLocation;                         \
+                            __layout_assistant__.tArea = (__region);            \
+                        },                                                      \
+                        {                                                       \
+                            ARM_2D_OP_WAIT_ASYNC();                             \
+                        }                                                       \
+                    )
 
 #define arm_2d_layout(...)                                                      \
         ARM_CONNECT2(arm_2d_layout, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
@@ -1055,23 +1053,24 @@ extern "C" {
                 {                                                               \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
-                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation =                                   \
+                        __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tLocation.iX +=                             \
+                    __layout_assistant__.tLayout.tLocation.iX +=                \
                         (__width) + (__left) + (__right);                       \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
-                    __arm_2d_layout.tSize.iHeight = MAX(                        \
-                                                __arm_2d_layout.tSize.iHeight,  \
-                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
+                            __layout_assistant__.tLayout.tSize.iHeight,         \
+                            ARM_2D_SAFE_NAME(iHeight));                         \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
-                    __arm_2d_layout.tSize.iWidth = MAX(                         \
-                                                __arm_2d_layout.tSize.iWidth,   \
-                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
+                                    __layout_assistant__.tLayout.tSize.iWidth,  \
+                                    ARM_2D_SAFE_NAME(iWidth));                  \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -1117,24 +1116,26 @@ extern "C" {
                 {                                                               \
                     __item_region.tSize.iWidth = MAX((__width), 0);             \
                     __item_region.tSize.iHeight                                 \
-                        = (__arm_2d_layout_area.tSize.iHeight)                  \
+                        = (__layout_assistant__.tArea.tSize.iHeight)            \
                         - (__top) - (__bottom);                                 \
                     __item_region.tSize.iHeight                                 \
                         = MAX(0, __item_region.tSize.iHeight);                  \
-                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation =                                   \
+                        __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tSize.iHeight =                             \
-                        MAX(__arm_2d_layout_area.tSize.iHeight,                 \
-                            __arm_2d_layout.tSize.iHeight);                     \
+                    __layout_assistant__.tLayout.tSize.iHeight =                \
+                        MAX(__layout_assistant__.tArea.tSize.iHeight,           \
+                            __layout_assistant__.tLayout.tSize.iHeight);        \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                                 = MAX((__width), 0) + (__left) + (__right);     \
-                    __arm_2d_layout.tSize.iWidth = MAX(                         \
-                                                __arm_2d_layout.tSize.iWidth,   \
-                                                ARM_2D_SAFE_NAME(iWidth));      \
-                    __arm_2d_layout.tLocation.iX += ARM_2D_SAFE_NAME(iWidth);   \
+                    __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
+                                    __layout_assistant__.tLayout.tSize.iWidth,  \
+                                    ARM_2D_SAFE_NAME(iWidth));                  \
+                    __layout_assistant__.tLayout.tLocation.iX                   \
+                        += ARM_2D_SAFE_NAME(iWidth);                            \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -1151,10 +1152,11 @@ extern "C" {
  * 
  */
 #define ____item_line_dock_horizontal0()                                        \
-            ____item_line_dock_horizontal5( ( __arm_2d_layout_area.tLocation.iX \
-                                            + __arm_2d_layout_area.tSize.iWidth \
-                                            - __arm_2d_layout.tLocation.iX),    \
-                                            0, 0, 0, 0)
+            ____item_line_dock_horizontal5(                                     \
+                                ( __layout_assistant__.tArea.tLocation.iX       \
+                                + __layout_assistant__.tArea.tSize.iWidth       \
+                                - __layout_assistant__.tLayout.tLocation.iX),   \
+                                0, 0, 0, 0)
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
@@ -1216,23 +1218,24 @@ extern "C" {
                 {                                                               \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
-                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation =                                   \
+                        __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tLocation.iY +=                             \
+                    __layout_assistant__.tLayout.tLocation.iY +=                \
                         (__height) + (__top) + (__bottom);                      \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
-                    __arm_2d_layout.tSize.iHeight = MAX(                        \
-                                                __arm_2d_layout.tSize.iHeight,  \
-                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
+                                __layout_assistant__.tLayout.tSize.iHeight,     \
+                                ARM_2D_SAFE_NAME(iHeight));                     \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
-                    __arm_2d_layout.tSize.iWidth = MAX(                         \
-                                                __arm_2d_layout.tSize.iWidth,   \
-                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
+                                    __layout_assistant__.tLayout.tSize.iWidth,  \
+                                    ARM_2D_SAFE_NAME(iWidth));                  \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -1276,25 +1279,27 @@ extern "C" {
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
                     __item_region.tSize.iWidth                                  \
-                        = (__arm_2d_layout_area.tSize.iWidth)                   \
+                        = (__layout_assistant__.tArea.tSize.iWidth)             \
                         - (__left) - (__right);                                 \
                     __item_region.tSize.iWidth                                  \
                         = MAX(0, __item_region.tSize.iWidth);                   \
                     __item_region.tSize.iHeight = MAX((__height), 0);           \
-                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation =                                   \
+                        __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                                 =  MAX((__height), 0) + (__top) + (__bottom);   \
-                    __arm_2d_layout.tSize.iHeight = MAX(                        \
-                                                __arm_2d_layout.tSize.iHeight,  \
-                                                ARM_2D_SAFE_NAME(iHeight));     \
-                    __arm_2d_layout.tLocation.iY += ARM_2D_SAFE_NAME(iHeight);  \
-                    __arm_2d_layout.tSize.iWidth =                              \
-                        MAX(__arm_2d_layout_area.tSize.iWidth,                  \
-                            __arm_2d_layout.tSize.iWidth);                      \
+                    __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
+                                    __layout_assistant__.tLayout.tSize.iHeight, \
+                                    ARM_2D_SAFE_NAME(iHeight));                 \
+                    __layout_assistant__.tLayout.tLocation.iY                   \
+                        += ARM_2D_SAFE_NAME(iHeight);                           \
+                    __layout_assistant__.tLayout.tSize.iWidth =                 \
+                        MAX(__layout_assistant__.tArea.tSize.iWidth,            \
+                            __layout_assistant__.tLayout.tSize.iWidth);         \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
 
@@ -1311,10 +1316,11 @@ extern "C" {
  * 
  */
 #define ____item_line_dock_vertical0()                                          \
-            ____item_line_dock_vertical5(   ( __arm_2d_layout_area.tLocation.iY \
-                                            + __arm_2d_layout_area.tSize.iHeight\
-                                            - __arm_2d_layout.tLocation.iY),    \
-                                            0, 0, 0, 0)
+            ____item_line_dock_vertical5(                                       \
+                                ( __layout_assistant__.tArea.tLocation.iY       \
+                                + __layout_assistant__.tArea.tSize.iHeight      \
+                                - __layout_assistant__.tLayout.tLocation.iY),   \
+                                0, 0, 0, 0)
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
@@ -1368,52 +1374,53 @@ extern "C" {
                                 __left, __right, __top, __bottom)               \
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
-                    int16_t iTempX = __arm_2d_layout.tLocation.iX               \
+                    int16_t iTempX = __layout_assistant__.tLayout.tLocation.iX  \
                                    + (__left) + (__width);                      \
                     /* is end of the line */                                    \
                     if (    iTempX                                              \
-                       >=   (   __arm_2d_layout_area.tLocation.iX               \
-                            +   __arm_2d_layout_area.tSize.iWidth)) {           \
+                       >=   (   __layout_assistant__.tArea.tLocation.iX         \
+                            +   __layout_assistant__.tArea.tSize.iWidth)) {     \
                         /* move to the next line */                             \
-                        __arm_2d_layout.tLocation.iY +=                         \
-                            __arm_2d_layout.tSize.iHeight;                      \
+                        __layout_assistant__.tLayout.tLocation.iY +=            \
+                            __layout_assistant__.tLayout.tSize.iHeight;         \
                         /* reset the max line height */                         \
-                        __arm_2d_layout.tSize.iHeight = 0;                      \
+                        __layout_assistant__.tLayout.tSize.iHeight = 0;         \
                         /* start from the left */                               \
-                        __arm_2d_layout.tLocation.iX                            \
-                            = __arm_2d_layout_area.tLocation.iX;                \
+                        __layout_assistant__.tLayout.tLocation.iX               \
+                            = __layout_assistant__.tArea.tLocation.iX;          \
                     }                                                           \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
-                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation =                                   \
+                        __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tLocation.iX +=                             \
+                    __layout_assistant__.tLayout.tLocation.iX +=                \
                         (__width) + (__left) + (__right);                       \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
-                    __arm_2d_layout.tSize.iHeight = MAX(                        \
-                                                __arm_2d_layout.tSize.iHeight,  \
-                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
+                                    __layout_assistant__.tLayout.tSize.iHeight, \
+                                    ARM_2D_SAFE_NAME(iHeight));                 \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
-                    __arm_2d_layout.tSize.iWidth = MAX(                         \
-                                                __arm_2d_layout.tSize.iWidth,   \
-                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
+                                    __layout_assistant__.tLayout.tSize.iWidth,  \
+                                    ARM_2D_SAFE_NAME(iWidth));                  \
                     /* is end of the line */                                    \
-                    if (    __arm_2d_layout.tLocation.iX                        \
-                       >=   (   __arm_2d_layout_area.tLocation.iX               \
-                            +   __arm_2d_layout_area.tSize.iWidth)) {           \
+                    if (    __layout_assistant__.tLayout.tLocation.iX           \
+                       >=   (   __layout_assistant__.tArea.tLocation.iX         \
+                            +   __layout_assistant__.tArea.tSize.iWidth)) {     \
                         /* move to the next line */                             \
-                        __arm_2d_layout.tLocation.iY +=                         \
-                            __arm_2d_layout.tSize.iHeight;                      \
+                        __layout_assistant__.tLayout.tLocation.iY +=            \
+                            __layout_assistant__.tLayout.tSize.iHeight;         \
                         /* reset the max line height */                         \
-                        __arm_2d_layout.tSize.iHeight = 0;                      \
+                        __layout_assistant__.tLayout.tSize.iHeight = 0;         \
                         /* start from the left */                               \
-                        __arm_2d_layout.tLocation.iX                            \
-                            = __arm_2d_layout_area.tLocation.iX;                \
+                        __layout_assistant__.tLayout.tLocation.iX               \
+                            = __layout_assistant__.tArea.tLocation.iX;          \
                     }                                                           \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
@@ -1482,52 +1489,53 @@ extern "C" {
                             __left, __right, __top, __bottom)                   \
     arm_using(  arm_2d_region_t __item_region,                                  \
                 {                                                               \
-                    int16_t iTempY = __arm_2d_layout.tLocation.iY               \
+                    int16_t iTempY = __layout_assistant__.tLayout.tLocation.iY  \
                                    + (__top) + (__bottom);                      \
                     /* is end of the column */                                  \
                     if (    iTempY                                              \
-                       >=   (   __arm_2d_layout_area.tLocation.iY               \
-                            +   __arm_2d_layout_area.tSize.iHeight)) {          \
+                       >=   (   __layout_assistant__.tArea.tLocation.iY         \
+                            +   __layout_assistant__.tArea.tSize.iHeight)) {    \
                         /* move to the next column */                           \
-                        __arm_2d_layout.tLocation.iX +=                         \
-                            __arm_2d_layout.tSize.iWidth;                       \
+                        __layout_assistant__.tLayout.tLocation.iX +=            \
+                            __layout_assistant__.tLayout.tSize.iWidth;          \
                         /* reset the max line width */                          \
-                        __arm_2d_layout.tSize.iWidth = 0;                       \
+                        __layout_assistant__.tLayout.tSize.iWidth = 0;          \
                         /* start from the top */                                \
-                        __arm_2d_layout.tLocation.iY                            \
-                            = __arm_2d_layout_area.tLocation.iY;                \
+                        __layout_assistant__.tLayout.tLocation.iY               \
+                            = __layout_assistant__.tArea.tLocation.iY;          \
                     }                                                           \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
-                    __item_region.tLocation = __arm_2d_layout.tLocation;        \
+                    __item_region.tLocation =                                   \
+                        __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
                 },                                                              \
                 {                                                               \
-                    __arm_2d_layout.tLocation.iY +=                             \
+                    __layout_assistant__.tLayout.tLocation.iY +=                \
                         (__height) + (__top) + (__bottom);                      \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
-                    __arm_2d_layout.tSize.iHeight = MAX(                        \
-                                                __arm_2d_layout.tSize.iHeight,  \
-                                                ARM_2D_SAFE_NAME(iHeight));     \
+                    __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
+                                    __layout_assistant__.tLayout.tSize.iHeight, \
+                                    ARM_2D_SAFE_NAME(iHeight));                 \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
-                    __arm_2d_layout.tSize.iWidth = MAX(                         \
-                                                __arm_2d_layout.tSize.iWidth,   \
-                                                ARM_2D_SAFE_NAME(iWidth));      \
+                    __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
+                                    __layout_assistant__.tLayout.tSize.iWidth,  \
+                                    ARM_2D_SAFE_NAME(iWidth));                  \
                     /* is end of the column */                                  \
-                    if (    __arm_2d_layout.tLocation.iY                        \
-                       >=   (   __arm_2d_layout_area.tLocation.iY               \
-                            +   __arm_2d_layout_area.tSize.iHeight)) {          \
+                    if (    __layout_assistant__.tLayout.tLocation.iY           \
+                       >=   (   __layout_assistant__.tArea.tLocation.iY         \
+                            +   __layout_assistant__.tArea.tSize.iHeight)) {    \
                         /* move to the next column */                           \
-                        __arm_2d_layout.tLocation.iX +=                         \
-                            __arm_2d_layout.tSize.iWidth;                       \
+                        __layout_assistant__.tLayout.tLocation.iX +=            \
+                            __layout_assistant__.tLayout.tSize.iWidth;          \
                         /* reset the max line width */                          \
-                        __arm_2d_layout.tSize.iWidth = 0;                       \
+                        __layout_assistant__.tLayout.tSize.iWidth = 0;          \
                         /* start from the top */                                \
-                        __arm_2d_layout.tLocation.iY                            \
-                            = __arm_2d_layout_area.tLocation.iY;                \
+                        __layout_assistant__.tLayout.tLocation.iY               \
+                            = __layout_assistant__.tArea.tLocation.iY;          \
                     }                                                           \
                     arm_2d_op_wait_async(NULL);                                 \
                 })
