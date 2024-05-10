@@ -121,7 +121,7 @@ extern "C" {
 // <q>Enable The Layout Debug Mode
 // <i> Arm-2D will mark the layout areas.
 #ifndef __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
-#   define __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__                     1
+#   define __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__                     0
 #endif
 
 // </h>
