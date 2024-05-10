@@ -71,7 +71,10 @@ extern "C" {
 #ifndef __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 #   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                 0
 #endif
+
 // </h>
+
+
 
 // <h>Log and Debug
 // =======================
@@ -114,6 +117,13 @@ extern "C" {
             |   ARM_2D_LOG_CHN_APP)
 
 #endif
+
+// <q>Enable The Layout Debug Mode
+// <i> Arm-2D will mark the layout areas.
+#ifndef __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__                     1
+#endif
+
 // </h>
 
 // <h>Patches for improving performance
