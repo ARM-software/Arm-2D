@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        7. May 2024
- * $Revision:    V.1.1.3
+ * $Date:        10. May 2024
+ * $Revision:    V.1.1.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -497,47 +497,6 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             }
 
             if (iSteps > 0) {
-            
-            #if 0
-                /* handle the first item */
-                do {
-                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
-                        nOffsetChange -= ptItem->tSize.iHeight;
-                    } else {
-                        nOffsetChange -= ptItem->tSize.iWidth;
-                    }
-                    
-                    nOffsetChange -= ptItem->Padding.chNext;
-                    nOffsetChange -= ptItem->Padding.chPrevious;
-                    
-                    arm_2d_list_item_t *ptItemNew = ARM_2D_INVOKE(fnIterator, 
-                                                        ARM_2D_PARAM(
-                                                            ptThis, 
-                                                            __ARM_2D_LIST_GET_NEXT,
-                                                            this.Runtime.hwSelection));
-                    
-                    if (NULL == ptItemNew) {
-                        if (this.tCFG.bDisableRingMode) {
-                            break;
-                        } else {
-                            /* just in case the iterator doesn't support ring mode */
-                            ptItem = ARM_2D_INVOKE(fnIterator, 
-                                        ARM_2D_PARAM(
-                                            ptThis, 
-                                            __ARM_2D_LIST_GET_FIRST_ITEM,
-                                            this.Runtime.hwSelection));
-                            assert(NULL != ptItem);
-                            
-                            if (NULL == ptItem) {
-                                /* this shouldn't happen */
-                                return ARM_2D_ERR_NOT_AVAILABLE;
-                            }
-                        }
-                    } else {
-                        ptItem = ptItemNew;
-                    }
-                } while(0);
-            #endif 
 
                 do {
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
@@ -579,41 +538,6 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                 } while(--iSteps);
 
             } else {
-            
-            #if 0
-                /* handle the first item */
-                do {
-                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
-                        nOffsetChange += ptItem->tSize.iHeight;
-                    } else {
-                        nOffsetChange += ptItem->tSize.iWidth;
-                    }
-                    
-                    nOffsetChange += ptItem->Padding.chNext;
-                    nOffsetChange += ptItem->Padding.chPrevious;
-                    
-                    ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_PREVIOUS,
-                            this.Runtime.hwSelection));
-                    
-                    if (NULL == ptItem) {
-                        /* just in case the iterator doesn't support ring mode */
-                        ptItem = ARM_2D_INVOKE(fnIterator, 
-                                    ARM_2D_PARAM(
-                                        ptThis, 
-                                        __ARM_2D_LIST_GET_LAST_ITEM,
-                                        this.Runtime.hwSelection));
-                        assert(NULL != ptItem);
-                        
-                        if (NULL == ptItem) {
-                            /* this shouldn't happen */
-                            return ARM_2D_ERR_NOT_AVAILABLE;
-                        }
-                    }
-                } while(0);
-            #endif
 
                 do {
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
@@ -686,14 +610,57 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                         hwSaveID));
     } while(0);
 
+                if (this.tCFG.nTotalLength) {
+                    this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
+                }
+                this.Runtime.nTargetOffset = this.Runtime.nOffset;
+                this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
 
-    arm_irq_safe {
-        this.Runtime.hwSelection = hwTargetID;
-        this.Runtime.nStartOffset = this.Runtime.nOffset;
-        this.Runtime.nTargetOffset += nOffsetChange;
-        this.Runtime.lPeriod = lPeriod;
-        this.Runtime.lTimestamp = 0;
-        this.Runtime.bIsMoving = true;  /* update flag to indicate the list is moving */
+                this.Runtime.bIsMoving = false;     /* update flag to indicate moving complete */
+
+                if (this.Runtime.MoveReq.iSteps && this.Runtime.bIsRegCalInit) {
+                    __arm_2d_list_core_move_selection(
+                        ptThis, 
+                        this.Runtime.MoveReq.iSteps,
+                        this.Runtime.MoveReq.nFinishInMs);
+                    /* reset request */
+                    this.Runtime.MoveReq.iSteps = 0;
+                    this.Runtime.MoveReq.nFinishInMs = 0;
+                }
+
+    if (0 == nFinishInMs) {
+        /* jump to the new position immediately */
+        arm_irq_safe {
+            int32_t nNewOffset = this.Runtime.nTargetOffset + nOffsetChange;
+
+            if (this.tCFG.nTotalLength) {
+                nNewOffset = nNewOffset % this.tCFG.nTotalLength;
+            }
+
+            if (this.Runtime.nOffset != nNewOffset) {
+                this.Runtime.bNeedRedraw = true;
+            }
+            this.Runtime.nOffset = nNewOffset;
+
+            this.Runtime.nTargetOffset = this.Runtime.nOffset;
+            this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
+            this.Runtime.bIsMoving = false;  /* update flag to indicate the list is moving */
+            this.Runtime.hwSelection = hwTargetID;
+
+            /* reset */
+            this.Runtime.lTimestamp = 0;
+            this.Runtime.MoveReq.iSteps = 0;
+            this.Runtime.MoveReq.nFinishInMs = 0;
+        }
+    } else {
+        arm_irq_safe {
+            this.Runtime.hwSelection = hwTargetID;
+            this.Runtime.nStartOffset = this.Runtime.nOffset;
+            this.Runtime.nTargetOffset += nOffsetChange;
+            this.Runtime.lPeriod = lPeriod;
+            this.Runtime.lTimestamp = 0;
+            this.Runtime.bIsMoving = true;  /* update flag to indicate the list is moving */
+        }
     }
     
     return ARM_2D_ERR_NONE;
