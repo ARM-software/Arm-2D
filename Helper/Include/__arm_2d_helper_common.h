@@ -677,6 +677,7 @@ extern "C" {
 #define GLCD_COLOR_MAGENTA      __RGB( 255,   0, 255  )
 #define GLCD_COLOR_YELLOW       __RGB( 255, 255, 0    )
 #define GLCD_COLOR_WHITE        __RGB( 255, 255, 255  )
+#define GLCD_COLOR_ORANGE       __RGB( 255, 128, 0    )
 
 /*!
  * \brief Please do NOT use this macro
@@ -993,8 +994,9 @@ extern "C" {
             do {                                                                \
                 if (__bool_debug) {                                             \
                     __layout_assistant__.ptDebug = &__arm_2d_reserve_canvas__;  \
-                    __layout_assistant__.wLevel =                               \
+                    __layout_assistant__.hwLevel =                              \
                         __arm_2d_reserve_canvas__.wLevel++;                     \
+                    __layout_assistant__.hwInternalLevel = 0;                   \
                 }                                                               \
             } while(0)
 
@@ -1003,15 +1005,16 @@ extern "C" {
                 if (NULL != __layout_assistant__.ptDebug) {                     \
                     COLOUR_INT tColor = arm_2d_pixel_from_brga8888(             \
                                     __arm_2d_helper_colour_slider(              \
-                                        __RGB32(0, 0xFF, 0),                    \
-                                        __RGB32(0xFF, 0, 0xFF),                 \
+                                        __RGB32(0x40, 0x40, 0x00),              \
+                                        __RGB32(0xFF, 0xFF, 0x00),              \
                                         4,                                      \
-                                        __layout_assistant__.wLevel));          \
-                    arm_2d_fill_colour_with_opacity(                            \
+                                        __layout_assistant__.hwLevel));         \
+                    arm_2d_helper_draw_box(                                     \
                         (__layout_assistant__.ptDebug->ptTile),                 \
                         &__layout_assistant__.tArea,                            \
-                        (__arm_2d_color_t){tColor},                             \
-                        32);                                                    \
+                        2,                                                      \
+                        tColor,                                                 \
+                        128);                                                   \
                 }                                                               \
             } while(0)
 
@@ -1046,6 +1049,31 @@ extern "C" {
 #define arm_2d_layout(...)                                                      \
         ARM_CONNECT2(arm_2d_layout, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+
+#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__()
+#   define __ARM_2D_LAYOUT_ITEM_DEBUG_END__()
+#else
+#   define __ARM_2D_LAYOUT_ITEM_DEBUG_END__()
+#   define __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__()                                 \
+                if (NULL != __layout_assistant__.ptDebug) {                     \
+                    uint32_t hwLevel = __layout_assistant__.hwInternalLevel++ ; \
+                    hwLevel &= 0x7;                                             \
+                    COLOUR_INT tColor = arm_2d_pixel_from_brga8888(             \
+                                    __arm_2d_helper_colour_slider(              \
+                                        __RGB32(0x00, 0x40, 0x00),              \
+                                        __RGB32(0xFF, 0x80, 0x00),              \
+                                        8,                                      \
+                                        hwLevel));                              \
+                    arm_2d_fill_colour_with_opacity(                            \
+                        (__layout_assistant__.ptDebug->ptTile),                 \
+                        &__item_region,                                         \
+                        (__arm_2d_color_t){tColor},                             \
+                        200);                                                   \
+                } while(0)
+
+
+#endif
 /*!
  * \brief Please do NOT use this macro
  * 
@@ -1083,6 +1111,7 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     __layout_assistant__.tLayout.tLocation.iX +=                \
@@ -1097,7 +1126,8 @@ extern "C" {
                     __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
                                     __layout_assistant__.tLayout.tSize.iWidth,  \
                                     ARM_2D_SAFE_NAME(iWidth));                  \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    ARM_2D_OP_WAIT_ASYNC();                                     \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
 
@@ -1150,6 +1180,7 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     __layout_assistant__.tLayout.tSize.iHeight =                \
@@ -1162,7 +1193,8 @@ extern "C" {
                                     ARM_2D_SAFE_NAME(iWidth));                  \
                     __layout_assistant__.tLayout.tLocation.iX                   \
                         += ARM_2D_SAFE_NAME(iWidth);                            \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    ARM_2D_OP_WAIT_ASYNC();                                     \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
 
@@ -1248,6 +1280,7 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     __layout_assistant__.tLayout.tLocation.iY +=                \
@@ -1262,7 +1295,8 @@ extern "C" {
                     __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
                                     __layout_assistant__.tLayout.tSize.iWidth,  \
                                     ARM_2D_SAFE_NAME(iWidth));                  \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    ARM_2D_OP_WAIT_ASYNC();                                     \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
 /*!
@@ -1314,6 +1348,7 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
@@ -1326,7 +1361,8 @@ extern "C" {
                     __layout_assistant__.tLayout.tSize.iWidth =                 \
                         MAX(__layout_assistant__.tArea.tSize.iWidth,            \
                             __layout_assistant__.tLayout.tSize.iWidth);         \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    ARM_2D_OP_WAIT_ASYNC();                                     \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
 /*!
@@ -1421,6 +1457,7 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     __layout_assistant__.tLayout.tLocation.iX +=                \
@@ -1448,7 +1485,8 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation.iX               \
                             = __layout_assistant__.tArea.tLocation.iX;          \
                     }                                                           \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    ARM_2D_OP_WAIT_ASYNC();                                     \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
 
@@ -1536,6 +1574,7 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation;                 \
                     __item_region.tLocation.iX += (__left);                     \
                     __item_region.tLocation.iY += (__top);                      \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     __layout_assistant__.tLayout.tLocation.iY +=                \
@@ -1563,7 +1602,8 @@ extern "C" {
                         __layout_assistant__.tLayout.tLocation.iY               \
                             = __layout_assistant__.tArea.tLocation.iY;          \
                     }                                                           \
-                    arm_2d_op_wait_async(NULL);                                 \
+                    ARM_2D_OP_WAIT_ASYNC();                                     \
+                    __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
 
@@ -2368,7 +2408,8 @@ typedef struct __arm_2d_layout_t {
     __arm_2d_layout_debug_t *ptDebug;
     arm_2d_region_t tLayout;
     arm_2d_region_t tArea;
-    uint32_t wLevel;
+    uint16_t hwLevel;
+    uint16_t hwInternalLevel;
 } __arm_2d_layout_t;
 
 /*!
