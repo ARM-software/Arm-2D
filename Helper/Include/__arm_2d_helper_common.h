@@ -920,9 +920,6 @@ extern "C" {
                         1,                                                      \
                         GLCD_COLOR_GREEN,                                       \
                         hwOpacity);                                             \
-                    __arm_2d_helper_layout_debug_print_label((__tile_ptr),      \
-                                                             NULL,              \
-                                                             #__region_name);   \
                 })
 #endif
 

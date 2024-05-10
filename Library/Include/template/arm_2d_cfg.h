@@ -112,6 +112,13 @@ extern "C" {
             |   ARM_2D_LOG_CHN_CONTROLS                                         \
             |   ARM_2D_LOG_CHN_APP)
 #endif
+
+// <q>Enable The Layout Debug Mode
+// <i> Arm-2D will mark the layout areas.
+#ifndef __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__                  0
+#endif
+
 // </h>
 
 // <h>Patches for improving performance
