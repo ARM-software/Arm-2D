@@ -1137,6 +1137,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6d1168d18401f7799e37c0c2306a9241"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga6d1168d18401f7799e37c0c2306a9241">__arm_2d_free_scratch_memory</a> (<a class="el" href="group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc">arm_2d_mem_type_t</a> tType, void *pBuff)</td></tr>
 <tr class="memdesc:ga6d1168d18401f7799e37c0c2306a9241"><td class="mdescLeft">&#160;</td><td class="mdescRight">free a specified memory block  <a href="group__gKernel.html#ga6d1168d18401f7799e37c0c2306a9241">More...</a><br /></td></tr>
 <tr class="separator:ga6d1168d18401f7799e37c0c2306a9241"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab60ab4bdcb3de4b91501d5191e62d70c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gab60ab4bdcb3de4b91501d5191e62d70c">arm_2d_scratch_memory_new</a> (<a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> *ptMemory, uint16_t hwItemSize, uint16_t hwItemCount, uint16_t hwAlignment, <a class="el" href="group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc">arm_2d_mem_type_t</a> tType)</td></tr>
+<tr class="memdesc:gab60ab4bdcb3de4b91501d5191e62d70c"><td class="mdescLeft">&#160;</td><td class="mdescRight">allocate a scratch memory and initialize <a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t" title="scratch memory descriptor">arm_2d_scratch_mem_t</a> object  <a href="group__gKernel.html#gab60ab4bdcb3de4b91501d5191e62d70c">More...</a><br /></td></tr>
+<tr class="separator:gab60ab4bdcb3de4b91501d5191e62d70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98f60c6a5906ad8fb5cafce126047edd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga98f60c6a5906ad8fb5cafce126047edd">arm_2d_scratch_memory_free</a> (<a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> *ptMemory)</td></tr>
+<tr class="memdesc:ga98f60c6a5906ad8fb5cafce126047edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">free a scratch memory with a given scratch memory descriptor object  <a href="group__gKernel.html#ga98f60c6a5906ad8fb5cafce126047edd">More...</a><br /></td></tr>
+<tr class="separator:ga98f60c6a5906ad8fb5cafce126047edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -9362,6 +9368,92 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gab60ab4bdcb3de4b91501d5191e62d70c" name="gab60ab4bdcb3de4b91501d5191e62d70c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab60ab4bdcb3de4b91501d5191e62d70c">&#9670;&nbsp;</a></span>arm_2d_scratch_memory_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> * arm_2d_scratch_memory_new </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> *&#160;</td>
+          <td class="paramname"><em>ptMemory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>hwItemSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>hwItemCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>hwAlignment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc">arm_2d_mem_type_t</a>&#160;</td>
+          <td class="paramname"><em>tType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>allocate a scratch memory and initialize <a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t" title="scratch memory descriptor">arm_2d_scratch_mem_t</a> object </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">ptMemory</td><td>the address of an <a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t" title="scratch memory descriptor">arm_2d_scratch_mem_t</a> object to hold the result </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hwItemSize</td><td>the size of each item </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hwItemCount</td><td>the number of items </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hwAlignment</td><td>the alignment requirement </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tType</td><td>the type of memory </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_scratch_mem_t* the initialized the <a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t" title="scratch memory descriptor">arm_2d_scratch_mem_t</a> object address. NULL means failed to allocate scratch memory </dd></dl>
+
+</div>
+</div>
+<a id="ga98f60c6a5906ad8fb5cafce126047edd" name="ga98f60c6a5906ad8fb5cafce126047edd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98f60c6a5906ad8fb5cafce126047edd">&#9670;&nbsp;</a></span>arm_2d_scratch_memory_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> * arm_2d_scratch_memory_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t">arm_2d_scratch_mem_t</a> *&#160;</td>
+          <td class="paramname"><em>ptMemory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>free a scratch memory with a given scratch memory descriptor object </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">the</td><td>target scratch memory descriptor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__scratch__mem__t" title="scratch memory descriptor">arm_2d_scratch_mem_t</a> * the de-initialized the scratch memory descriptor </dd></dl>
 
 </div>
 </div>

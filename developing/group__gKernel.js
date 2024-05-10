@@ -470,6 +470,8 @@ var group__gKernel =
     [ "arm_2d_task", "group__gKernel.html#ga14a09993e474bef1266e2572146b8341", null ],
     [ "__arm_2d_allocate_scratch_memory", "group__gKernel.html#ga6c15020a09927cd68765b059d1f203bb", null ],
     [ "__arm_2d_free_scratch_memory", "group__gKernel.html#ga6d1168d18401f7799e37c0c2306a9241", null ],
+    [ "arm_2d_scratch_memory_new", "group__gKernel.html#gab60ab4bdcb3de4b91501d5191e62d70c", null ],
+    [ "arm_2d_scratch_memory_free", "group__gKernel.html#ga98f60c6a5906ad8fb5cafce126047edd", null ],
     [ "ARM_2D_RUNTIME_FEATURE", "group__gKernel.html#gae30937777f3c67e2418c9c26c76fb501", null ],
     [ "ARM_2D_VERSION_INFO", "group__gKernel.html#ga76f331271253911a2df3e75e1a8283e9", null ]
 ];
