@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        arm_2d_utils.h</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for Arm-2D Library</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        17. March 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.2</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        12. April 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.3</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
@@ -634,13 +634,13 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span><span class="comment"> * \note do NOT use this macro directly</span></div>
 <div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno"><a class="line" href="group__gKernel.html#gae7e2fbdc51acaa300e657e7338940fd4">  527</a></span><span class="preprocessor">#define __ARM_WITH2(__type, __addr)                                             \</span></div>
-<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="preprocessor">            ARM_USING(__type *_p=(__addr))</span></div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="preprocessor">            arm_using(__type *_=(__addr))</span></div>
 <div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span><span class="comment"></span> </div>
 <div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span><span class="comment"> * \note do NOT use this macro directly</span></div>
 <div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00533" name="l00533"></a><span class="lineno"><a class="line" href="group__gKernel.html#ga347f0d62a99c1918cc6a139f5a6b09d2">  533</a></span><span class="preprocessor">#define __ARM_WITH3(__type, __addr, __item)                                     \</span></div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span><span class="preprocessor">            ARM_USING(__type *_p=(__addr), *__item = _p, (void)_p, (void)0)</span></div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span><span class="preprocessor">            arm_using(__type *_=(__addr), *__item = _, (void)_, (void)0)</span></div>
 <div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span><span class="comment"></span> </div>
 <div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span><span class="comment"> * \brief a with block to access members of a given object</span></div>
