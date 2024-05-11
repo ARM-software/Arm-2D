@@ -111,7 +111,13 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
     
     this.CalMidAligned.bListHeightChanged = true;
     this.Runtime.bIsRegCalInit = false;
-
+#if 0
+    ARM_2D_INVOKE(  this.tCFG.fnCalculator,
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            this.tCFG.fnIterator,
+                            this.Runtime.nOffset));
+#endif
     return ARM_2D_ERR_NONE;
 }
 
@@ -171,13 +177,24 @@ ARM_PT_BEGIN(this.Runtime.chState)
         }
         
         if (bIsNewFrame) {
-            int32_t nOldOffset = this.Runtime.nOffset;
 
-            if (__arm_2d_helper_time_liner_slider(this.Runtime.nStartOffset,    /* from */
-                                                  this.Runtime.nTargetOffset,   /* to */
-                                                  this.Runtime.lPeriod,         /* finish in specified period */
-                                                  &this.Runtime.nOffset,        /* output offset */
-                                                  &this.Runtime.lTimestamp)) {  /* timestamp */
+            if (!this.Runtime.bIsRegCalInit) {
+                ARM_2D_INVOKE(  this.tCFG.fnCalculator,
+                            ARM_2D_PARAM(
+                                ptThis, 
+                                this.tCFG.fnIterator,
+                                this.Runtime.nOffset));
+            }
+
+            int32_t nOldOffset = this.Runtime.nOffset;
+            bool bUpdateOffset = false;
+            if (0 == this.Runtime.MoveReq.nFinishInMs) {
+                bUpdateOffset = true;
+            } else if (__arm_2d_helper_time_liner_slider(this.Runtime.nStartOffset, /* from */
+                                                    this.Runtime.nTargetOffset,     /* to */
+                                                    this.Runtime.lPeriod,           /* finish in specified period */
+                                                    &this.Runtime.nOffset,          /* output offset */
+                                                    &this.Runtime.lTimestamp)) {    /* timestamp */
                 if (this.tCFG.nTotalLength) {
                     this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
                 }
@@ -186,6 +203,10 @@ ARM_PT_BEGIN(this.Runtime.chState)
 
                 this.Runtime.bIsMoving = false;     /* update flag to indicate moving complete */
 
+                bUpdateOffset = true;
+            }
+
+            if (bUpdateOffset) {
                 if (this.Runtime.MoveReq.iSteps && this.Runtime.bIsRegCalInit) {
                     __arm_2d_list_core_move_selection(
                         ptThis, 
@@ -499,10 +520,10 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             if (iSteps > 0) {
 
                 do {
-                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
-                        nOffsetChange -= ptItem->tSize.iHeight;
-                    } else {
+                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
                         nOffsetChange -= ptItem->tSize.iWidth;
+                    } else {
+                        nOffsetChange -= ptItem->tSize.iHeight;
                     }
                     
                     nOffsetChange -= ptItem->Padding.chNext;
@@ -601,21 +622,14 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             nOffsetChange += iStartOffset - this.CalMidAligned.iStartOffset;
         } while(0);
 
-        if (nFinishInMs > 0) {
-            /* resume id */
-            ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                            hwSaveID));
-        } else {
-            /* move to id */
-            ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                            hwTargetID));
-        }
+
+        /* resume id */
+        ARM_2D_INVOKE(fnIterator, 
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                        hwSaveID));
+
     } while(0);
 
     if (0 == nFinishInMs) {
