@@ -271,12 +271,15 @@ ARM_PROTECTED(
     } Runtime;                                                                  /*!< list runtime */
 
 ARM_PROTECTED(
+
+    uint8_t chState;
+    bool bListSizeChanged;
+    int16_t iStartOffset;
+    int32_t nOffset;
+
     union {
         struct {
-            uint8_t chState;
-            bool bListHeightChanged;
-            int16_t iStartOffset;
-            int32_t nOffset;
+
             int16_t iTopVisiableOffset;
             uint16_t hwTopVisibleItemID;
             

@@ -109,7 +109,7 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
         this.tCFG.hwItemSizeInByte = sizeof(arm_2d_list_item_t);
     }
     
-    this.CalMidAligned.bListHeightChanged = true;
+    this.bListSizeChanged = true;
     this.Runtime.bIsRegCalInit = false;
 
     return ARM_2D_ERR_NONE;
@@ -613,7 +613,7 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             }
             iStartOffset -= ptItem->Padding.chPrevious;
         
-            nOffsetChange += iStartOffset - this.CalMidAligned.iStartOffset;
+            nOffsetChange += iStartOffset - this.iStartOffset;
         } while(0);
 
 
@@ -812,8 +812,8 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
     arm_2d_list_item_t *ptItem = NULL;
     
     /* update start-offset */
-    if (this.CalMidAligned.bListHeightChanged) {
-        this.CalMidAligned.bListHeightChanged = false;
+    if (this.bListSizeChanged) {
+        this.bListSizeChanged = false;
         
         /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
@@ -828,18 +828,18 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
         }
 
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.CalMidAligned.iStartOffset
+            this.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iWidth 
                 -   ptItem->tSize.iWidth) 
             >> 1;
         } else {
-            this.CalMidAligned.iStartOffset
+            this.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iHeight 
                 -   ptItem->tSize.iHeight) 
             >> 1;
         }
         
-        this.CalMidAligned.iStartOffset -= ptItem->Padding.chPrevious;
+        this.iStartOffset -= ptItem->Padding.chPrevious;
     }
 
     /* update total length and item count */
@@ -909,8 +909,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
     arm_2d_list_item_t *ptItem = NULL;
     
     /* update start-offset */
-    if (this.CalMidAligned.bListHeightChanged) {
-        this.CalMidAligned.bListHeightChanged = false;
+    if (this.bListSizeChanged) {
+        this.bListSizeChanged = false;
         
         /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
@@ -925,18 +925,18 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
         }
 
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.CalMidAligned.iStartOffset
+            this.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iWidth 
                 -   ptItem->tSize.iWidth) 
             >> 1;
         } else {
-            this.CalMidAligned.iStartOffset
+            this.iStartOffset
             = (     this.Runtime.tileList.tRegion.tSize.iHeight 
                 -   ptItem->tSize.iHeight) 
             >> 1;
         }
         
-        this.CalMidAligned.iStartOffset -= ptItem->Padding.chPrevious;
+        this.iStartOffset -= ptItem->Padding.chPrevious;
     }
 
     /* update total length and item count */
@@ -1026,11 +1026,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
     /* reset the calculator */
     if (!this.Runtime.bIsRegCalInit) {
         this.Runtime.bIsRegCalInit = true;
-        this.CalMidAligned.chState = 0;
+        this.chState = 0;
         this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_VERTICAL;
     }
 
-ARM_PT_BEGIN(this.CalMidAligned.chState)
+ARM_PT_BEGIN(this.chState)
 
     if (!__arm_2d_list_core_update(ptThis, fnIterator)) {
         ARM_PT_RETURN(NULL)
@@ -1058,7 +1058,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         /* move the nOffset to the top invisible area */
         do {
             int32_t nStartY = nOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
                     
             if (nStartY <= 0) {
@@ -1068,13 +1068,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         } while(true);
         
         /* get the inital offset */
-        this.CalMidAligned.nOffset = nOffset;
+        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
         while(NULL != ptItem) {
             int32_t nY1 = nTempOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
             int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
         
@@ -1129,7 +1129,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
             
             int32_t nY1 = nTempOffset 
-                        +   this.CalMidAligned.iStartOffset 
+                        +   this.iStartOffset 
                         +   ptItem->Padding.chPrevious;
             
             if (nY1 >= this.Runtime.tileList.tRegion.tSize.iHeight) {
@@ -1157,7 +1157,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY 
             = this.CalMidAligned.iTopVisiableOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
         
@@ -1221,7 +1221,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY 
             = this.CalMidAligned.iBottomVisibleOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
         
@@ -1296,11 +1296,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL (
     /* reset the calculator */
     if (!this.Runtime.bIsRegCalInit) {
         this.Runtime.bIsRegCalInit = true;
-        this.CalMidAligned.chState = 0;
+        this.chState = 0;
         this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_HORIZONTAL;
     }
 
-ARM_PT_BEGIN(this.CalMidAligned.chState)
+ARM_PT_BEGIN(this.chState)
 
     if (!__arm_2d_list_core_update(ptThis, fnIterator)) {
         ARM_PT_RETURN(NULL)
@@ -1328,7 +1328,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         /* move the nOffset to the top invisible area */
         do {
             int32_t nStartX = nOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
                     
             if (nStartX <= 0) {
@@ -1338,13 +1338,13 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         } while(true);
         
         /* get the inital offset */
-        this.CalMidAligned.nOffset = nOffset;
+        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
         while(NULL != ptItem) {
             int32_t nX1 = nTempOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
             int32_t nX2 = nX1 + ptItem->tSize.iWidth - 1;
         
@@ -1399,7 +1399,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
             
             int32_t nX1 = nTempOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
             
             if (nX1 >= this.Runtime.tileList.tRegion.tSize.iWidth) {
@@ -1427,7 +1427,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
             = this.CalMidAligned.iTopVisiableOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
         
@@ -1491,7 +1491,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
             = this.CalMidAligned.iBottomVisibleOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
 
@@ -1566,11 +1566,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL 
     /* reset the calculator */
     if (!this.Runtime.bIsRegCalInit) {
         this.Runtime.bIsRegCalInit = true;
-        this.CalMidAligned.chState = 0;
+        this.chState = 0;
         this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_VERTICAL;
     }
 
-ARM_PT_BEGIN(this.CalMidAligned.chState)
+ARM_PT_BEGIN(this.chState)
 
     if (!__arm_2d_list_core_update_fixed_size_no_status_check(  ptThis, 
                                                                 fnIterator)) {
@@ -1599,7 +1599,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         /* move the nOffset to the top invisible area */
         do {
             int32_t nStartY = nOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
                     
             if (nStartY <= 0) {
@@ -1609,7 +1609,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         } while(true);
         
         /* get the inital offset */
-        this.CalMidAligned.nOffset = nOffset;
+        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -1618,14 +1618,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                          + ptItem->Padding.chPrevious
                          + ptItem->Padding.chNext;
             
-            int32_t nLength = ABS(nTempOffset) - this.CalMidAligned.iStartOffset;
+            int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
             int32_t nCount = nLength / iItemActualHeight;
             
             nTempOffset += nCount * iItemActualHeight;
             
             do {
                 int32_t nY1 = nTempOffset 
-                                +   this.CalMidAligned.iStartOffset 
+                                +   this.iStartOffset 
                                 +   ptItem->Padding.chPrevious;
                 int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
                 
@@ -1682,7 +1682,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
             
             int32_t nY1 = nTempOffset 
-                        +   this.CalMidAligned.iStartOffset 
+                        +   this.iStartOffset 
                         +   ptItem->Padding.chPrevious;
             
             if (nY1 >= this.Runtime.tileList.tRegion.tSize.iHeight) {
@@ -1710,7 +1710,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY 
             = this.CalMidAligned.iTopVisiableOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
         
@@ -1774,7 +1774,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY 
             = this.CalMidAligned.iBottomVisibleOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
         
@@ -1851,11 +1851,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTA
     /* reset the calculator */
     if (!this.Runtime.bIsRegCalInit) {
         this.Runtime.bIsRegCalInit = true;
-        this.CalMidAligned.chState = 0;
+        this.chState = 0;
         this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_HORIZONTAL;
     }
 
-ARM_PT_BEGIN(this.CalMidAligned.chState)
+ARM_PT_BEGIN(this.chState)
 
     if (!__arm_2d_list_core_update_fixed_size_no_status_check(  ptThis, 
                                                                 fnIterator)) {
@@ -1884,7 +1884,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         /* move the nOffset to the top invisible area */
         do {
             int32_t nStartX = nOffset 
-                            +   this.CalMidAligned.iStartOffset 
+                            +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
                     
             if (nStartX <= 0) {
@@ -1894,7 +1894,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         } while(true);
         
         /* get the inital offset */
-        this.CalMidAligned.nOffset = nOffset;
+        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -1903,14 +1903,14 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
                          + ptItem->Padding.chPrevious
                          + ptItem->Padding.chNext;
             
-            int32_t nLength = ABS(nTempOffset) - this.CalMidAligned.iStartOffset;
+            int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
             int32_t nCount = nLength / iItemActualWidth;
             
             nTempOffset += nCount * iItemActualWidth;
             
             do {
                 int32_t nX1 = nTempOffset 
-                                +   this.CalMidAligned.iStartOffset 
+                                +   this.iStartOffset 
                                 +   ptItem->Padding.chPrevious;
                 int32_t nX2 = nX1 + ptItem->tSize.iWidth - 1;
                 
@@ -1967,7 +1967,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
             }
             
             int32_t nX1 = nTempOffset 
-                        +   this.CalMidAligned.iStartOffset 
+                        +   this.iStartOffset 
                         +   ptItem->Padding.chPrevious;
             
             if (nX1 >= this.Runtime.tileList.tRegion.tSize.iWidth) {
@@ -1995,7 +1995,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
             = this.CalMidAligned.iTopVisiableOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
         
@@ -2059,7 +2059,7 @@ ARM_PT_BEGIN(this.CalMidAligned.chState)
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
             = this.CalMidAligned.iBottomVisibleOffset 
-            + this.CalMidAligned.iStartOffset 
+            + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
         
