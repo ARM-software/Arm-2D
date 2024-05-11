@@ -111,13 +111,7 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
     
     this.CalMidAligned.bListHeightChanged = true;
     this.Runtime.bIsRegCalInit = false;
-#if 0
-    ARM_2D_INVOKE(  this.tCFG.fnCalculator,
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            this.tCFG.fnIterator,
-                            this.Runtime.nOffset));
-#endif
+
     return ARM_2D_ERR_NONE;
 }
 
