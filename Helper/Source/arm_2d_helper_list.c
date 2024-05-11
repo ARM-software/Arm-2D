@@ -608,6 +608,13 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                             ptThis, 
                             __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                             hwSaveID));
+        } else {
+            /* move to id */
+            ARM_2D_INVOKE(fnIterator, 
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                            hwTargetID));
         }
     } while(0);
 
