@@ -182,7 +182,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
 
             int32_t nOldOffset = this.Runtime.nOffset;
             bool bUpdateOffset = false;
-            if (0 == this.Runtime.MoveReq.nFinishInMs) {
+            if (0 == this.Runtime.MoveReq.nFinishInMs && 0 != this.Runtime.MoveReq.iSteps) {
                 bUpdateOffset = true;
             } else if (__arm_2d_helper_time_liner_slider(this.Runtime.nStartOffset, /* from */
                                                     this.Runtime.nTargetOffset,     /* to */
