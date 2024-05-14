@@ -56,22 +56,12 @@ extern void VT_Clear(color_typedef color);
 extern bool VT_Mouse_Get_Point(int16_t *x,int16_t *y);
 
 
-/*******************************************************************************
- * @name     :VT_Mouse_Get_Point
- * @brief    :get mouse click position
- * @param    :x       pointer,save click position x
- *            y       pointer,save click position y
- * @return   :true    press
- *            false   relase
- * @version  :V0.1
- * @author   :
- * @date     :2018.11.20
- * @details  :
-*******************************************************************************/
-bool VT_mouse_get_point(int16_t *x,int16_t *y)
+
+bool VT_mouse_get_location(arm_2d_location_t *ptLocation)
 {
-    *x=last_x;
-    *y=last_y;
+    assert(NULL != ptLocation);
+    ptLocation->iX = last_x;
+    ptLocation->iY = last_y;
     return left_button_is_down;
 }
 
