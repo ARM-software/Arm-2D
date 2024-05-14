@@ -126,7 +126,7 @@ void scene_basics_loader(void)
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
+    //arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
 
     arm_2d_scene_basics_init(&DISP0_ADAPTER);
 }
@@ -277,7 +277,8 @@ int app_2d_main_thread (void *argument)
 
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-    arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
+    //arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
+    arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, 0);
 
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
@@ -285,6 +286,29 @@ int app_2d_main_thread (void *argument)
     while(1) {
         if (arm_fsm_rt_cpl == disp_adapter0_task()) {
             VT_sdl_flush(1);
+        }
+
+        if (arm_2d_scene_player_is_switching(&DISP0_ADAPTER)) {
+            switch (arm_2d_scene_player_get_switching_status(&DISP0_ADAPTER)) {
+                case ARM_2D_SCENE_SWITCH_STATUS_MANUAL: {
+                    arm_2d_location_t tPointerLocation;
+                    static arm_2d_location_t s_tLastLocation = {0};
+
+                    if (VT_mouse_get_location(&tPointerLocation)) {
+                        /* mouse down */
+                        arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, tPointerLocation.iX);
+                        s_tLastLocation = tPointerLocation;
+                    } else {
+                        /* mouse up */
+                        
+                    }
+
+                    break;
+                }
+                default:
+                    break;
+            }
+            //
         }
     }
 

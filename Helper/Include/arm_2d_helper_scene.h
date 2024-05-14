@@ -163,13 +163,18 @@ typedef enum {
 
 } arm_2d_scene_player_switch_mode_t;
 
-enum {
-    __ARM_2D_SCENE_SWITCH_CTRL_AUTO,                                            //!< time-based auto switching
-    __ARM_2D_SCENE_SWITCH_CTRL_MANUAL,                                          //!< offset-based manual switching
-    __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_CANCEL,                                   //!< cancel existing manual switching
-    __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_AUTO_CPL,                                 //!< automatically finish the rest part of switching.
-};
+/*!
+ * \brief the scene switching status
+ * 
+ */
+typedef enum {
+    ARM_2D_SCENE_SWITCH_STATUS_AUTO,                                            //!< time-based auto switching
+    ARM_2D_SCENE_SWITCH_STATUS_MANUAL,                                          //!< offset-based manual switching
+    ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL,                                   //!< cancel existing manual switching
+    ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL,                                 //!< automatically finish the rest part of switching.
+} arm_2d_scene_player_switch_status_t;
 
+#define ARM_2D_SCENE_SWITCHING_STATUS_MASK          ((uint16_t)3 << 14)
 
 /*!
  * \brief an internal data structure for scene switching
@@ -185,7 +190,7 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
         uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
         uint8_t u2DefaultBG             : 2;                                    //!< the default background
-        uint8_t u2Control               : 2;                                    //!< the control for the switching, default: __ARM_2D_SCENE_SWITCH_CTRL_AUTO
+        uint8_t u2Status                : 2;                                     //!< the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO
     } Feature;
     uint16_t hwSetting;                                                         //!< the setting value
 
@@ -448,6 +453,27 @@ extern
 ARM_NONNULL(1)
 void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
 
+/*!
+ * \brief check whether scene player is switching scenes
+ * 
+ * \param[in] ptThis the target scene player
+ * \return true the scene player is switching scenes
+ * \return false the scene player stays in tge current scene.
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_scene_player_is_switching(arm_2d_scene_player_t *ptThis);
+
+/*!
+ * \brief get the scene player switching status
+ * 
+ * \param[in] ptThis the target scene player
+ * \return arm_2d_scene_player_switch_status_t the switching status
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_scene_player_switch_status_t
+arm_2d_scene_player_get_switching_status(arm_2d_scene_player_t *ptThis);
 /*!
  * \brief configure the scene switching mode
  *
