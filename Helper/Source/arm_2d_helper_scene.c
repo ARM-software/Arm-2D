@@ -568,7 +568,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
             int16_t iScreenWidth = tScreenSize.iWidth;
             int16_t iTouchOffset = MIN(this.Switch.iTouchOffset, tScreenSize.iWidth);
-            int16_t iZoneWidth = (iScreenWidth >> 2);
+            int16_t iZoneWidth = (iScreenWidth / 5);
             int_fast8_t chStage = iTouchOffset / iZoneWidth;
             switch (chStage) {
                 case 0:
@@ -583,12 +583,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                     this.Runtime.bCallOldSceneFrameCPL = true;
                     break;
                 case 2:
-                    this.Switch.chState = FADE_OUT;
-                    iTouchOffset -= iZoneWidth * 2;
-                    hwOpacity = 255 - (iTouchOffset * 255 / iZoneWidth);
+                    this.Switch.chState = KEEP;
                     this.Runtime.bCallOldSceneFrameCPL = false;
                     break;
                 case 3:
+                    this.Switch.chState = FADE_OUT;
+                    iTouchOffset -= iZoneWidth * 3;
+                    hwOpacity = 255 - (iTouchOffset * 255 / iZoneWidth);
+                    this.Runtime.bCallOldSceneFrameCPL = false;
+                    break;
+                case 4:
                     this.Switch.chState = RIGHT_PAD;
                     hwOpacity = 0;
                     this.Runtime.bCallOldSceneFrameCPL = false;
