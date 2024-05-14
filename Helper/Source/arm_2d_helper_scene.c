@@ -330,8 +330,11 @@ arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_
     if (__ARM_2D_SCENE_SWITCH_CTRL_AUTO == this.Switch.tConfig.Feature.u2Control) {
         /* you cannot call this API for auto-switching mode */
         return ARM_2D_ERR_INVALID_STATUS;
+    } else if (this.Switch.tConfig.Feature.u2Control !=  __ARM_2D_SCENE_SWITCH_CTRL_MANUAL) {
+        return ARM_2D_ERR_NONE;
     }
 
+    this.Switch.lTimeStamp = arm_2d_helper_get_system_timestamp();
     this.Switch.tConfig.Feature.u2Control = bMoveToPreviousScene 
                                           ? __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_CANCEL
                                           : __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_AUTO_CPL;
@@ -446,9 +449,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
 {
     enum {
         START = 0,
+        LEFT_PAD,
         FADE_IN,
         KEEP,
         FADE_OUT,
+        RIGHT_PAD,
     };
 
     arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
@@ -463,85 +468,124 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
         ?   (__arm_2d_color_t){GLCD_COLOR_BLACK}
         :   (__arm_2d_color_t){GLCD_COLOR_WHITE};
 
-
-    uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
-    
     /* internal statemachine */
     if (bIsNewFrame) {
-        int32_t nElapsed;
-        int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
-        uint_fast16_t hwOpacity;
-        switch (this.Switch.chState) {
-            case START:
-                this.Switch.Fade.chOpacity = 0;
-                this.Switch.lTimeStamp = lTimeStamp;
-                this.Switch.chState++;
-                //break;
-            case FADE_IN:
-                this.Runtime.bCallOldSceneFrameCPL = true;
-
-                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
-                
-            #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
-                hwOpacity = (900ul * (int64_t)nElapsed 
-                                   / arm_2d_helper_convert_ms_to_ticks(
-                                        (this.Switch.hwPeriod - hwKeepPeriod) 
-                                            >> 1));
-                                            
-                hwOpacity = (uint_fast16_t)
-                            (256.0f 
-                                * arm_sin_f32(ARM_2D_ANGLE(
-                                    (float)hwOpacity / 10.0f)));
-            #else
-                hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
-                                   / arm_2d_helper_convert_ms_to_ticks(
-                                        (this.Switch.hwPeriod - hwKeepPeriod) 
-                                            >> 1));
-            #endif
-                this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
-                if (this.Switch.Fade.chOpacity >= 255) {
+        if (__ARM_2D_SCENE_SWITCH_CTRL_AUTO == this.Switch.tConfig.Feature.u2Control) {
+            uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
+        
+            int32_t nElapsed;
+            int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+            uint_fast16_t hwOpacity;
+            switch (this.Switch.chState) {
+                case START:
+                    this.Switch.Fade.chOpacity = 0;
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.chState = KEEP;
-                }
-                break;
-            case KEEP:
-                this.Runtime.bCallOldSceneFrameCPL = false;
+                    this.Switch.chState = FADE_IN;
+                    //break;
+                case FADE_IN:
+                    this.Runtime.bCallOldSceneFrameCPL = true;
 
-                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
-                if (nElapsed >= arm_2d_helper_convert_ms_to_ticks(hwKeepPeriod)) {
-                    this.Switch.lTimeStamp = lTimeStamp;
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    
+                #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+                    hwOpacity = (900ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                                                
+                    hwOpacity = (uint_fast16_t)
+                                (256.0f 
+                                    * arm_sin_f32(ARM_2D_ANGLE(
+                                        (float)hwOpacity / 10.0f)));
+                #else
+                    hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                #endif
+                    this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
+                    if (this.Switch.Fade.chOpacity >= 255) {
+                        this.Switch.lTimeStamp = lTimeStamp;
+                        this.Switch.chState = KEEP;
+                    }
+                    break;
+                case KEEP:
+                    this.Runtime.bCallOldSceneFrameCPL = false;
+
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    if (nElapsed >= arm_2d_helper_convert_ms_to_ticks(hwKeepPeriod)) {
+                        this.Switch.lTimeStamp = lTimeStamp;
+                        this.Switch.chState = FADE_OUT;
+                    }
+                    break;
+                case FADE_OUT:
+
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    
+                #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+                    hwOpacity = (900ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                                                
+                    hwOpacity = (uint_fast16_t)
+                                (256.0f 
+                                    * arm_sin_f32(ARM_2D_ANGLE(
+                                        (float)hwOpacity / 10.0f)));
+                #else
+                    hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                #endif
+                    
+                    this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
+                    if (this.Switch.Fade.chOpacity == 0) {
+                        this.Runtime.bSwitchCPL = true;
+                        SCENE_SWITCH_RESET_FSM();
+                    }
+                    break;
+            }
+
+        } else if (__ARM_2D_SCENE_SWITCH_CTRL_MANUAL == this.Switch.tConfig.Feature.u2Control) {
+            uint_fast16_t hwOpacity;
+            arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
+            int16_t iScreenWidth = tScreenSize.iWidth;
+            int16_t iTouchOffset = MIN(this.Switch.iTouchOffset, tScreenSize.iWidth);
+            int16_t iZoneWidth = (iScreenWidth >> 2);
+            int_fast8_t chStage = iTouchOffset / iZoneWidth;
+            switch (chStage) {
+                case 0:
+                    this.Switch.chState = LEFT_PAD;
+                    this.Switch.Fade.chOpacity = 0;
+                    this.Runtime.bCallOldSceneFrameCPL = true;
+                    break;
+                case 1:
+                    this.Switch.chState = FADE_IN;
+                    iTouchOffset -= iZoneWidth;
+                    hwOpacity = iTouchOffset * 255 / iZoneWidth;
+                    this.Runtime.bCallOldSceneFrameCPL = true;
+                    break;
+                case 2:
                     this.Switch.chState = FADE_OUT;
-                }
-                break;
-            case FADE_OUT:
+                    iTouchOffset -= iZoneWidth * 2;
+                    hwOpacity = 255 - (iTouchOffset * 255 / iZoneWidth);
+                    this.Runtime.bCallOldSceneFrameCPL = false;
+                    break;
+                case 3:
+                    this.Switch.chState = RIGHT_PAD;
+                    this.Switch.Fade.chOpacity = 0;
+                    this.Runtime.bCallOldSceneFrameCPL = false;
 
-                nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
-                
-            #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
-                hwOpacity = (900ul * (int64_t)nElapsed 
-                                   / arm_2d_helper_convert_ms_to_ticks(
-                                        (this.Switch.hwPeriod - hwKeepPeriod) 
-                                            >> 1));
-                                            
-                hwOpacity = (uint_fast16_t)
-                            (256.0f 
-                                * arm_sin_f32(ARM_2D_ANGLE(
-                                    (float)hwOpacity / 10.0f)));
-            #else
-                hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
-                                   / arm_2d_helper_convert_ms_to_ticks(
-                                        (this.Switch.hwPeriod - hwKeepPeriod) 
-                                            >> 1));
-            #endif
-                
-                this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
-                if (this.Switch.Fade.chOpacity == 0) {
-                    this.Runtime.bSwitchCPL = true;
-                    SCENE_SWITCH_RESET_FSM();
-                }
-                break;
+                    //this.Runtime.bSwitchCPL = true;
+                    break;
+            }
+        } else if (__ARM_2D_SCENE_SWITCH_CTRL_MANUAL_CANCEL == this.Switch.tConfig.Feature.u2Control) {
+
+        } else if (__ARM_2D_SCENE_SWITCH_CTRL_MANUAL_AUTO_CPL == this.Switch.tConfig.Feature.u2Control) {
+            
         }
-    }
+    } 
 
     do {
         if (KEEP == this.Switch.chState) {
@@ -622,7 +666,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                                         this.Switch.Fade.chOpacity);
     } while(0);
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
