@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        23. April 2024
- * $Revision:    V.1.6.5
+ * $Date:        14. May 2024
+ * $Revision:    V.1.6.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -55,6 +55,7 @@
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wpedantic"
 #   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+#   pragma clang diagnostic ignored "-Wtautological-constant-out-of-range-compare"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
@@ -294,21 +295,52 @@ uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
-                                                int32_t nMS)
+void arm_2d_scene_player_set_auto_switching_period( arm_2d_scene_player_t *ptThis,
+                                                    int_fast16_t iMS)
 {
     assert(NULL != ptThis);
 
-    if (nMS < 0) {
+    if (iMS < 0) {
         /* use the manual switching mode */
-        this.Switch.tConfig.Feature.bUseManualSwitching = true;
-        this.Switch.iProgress = 0;
+        this.Switch.tConfig.Feature.u2Control = __ARM_2D_SCENE_SWITCH_CTRL_MANUAL;
     } else {
-        this.Switch.tConfig.Feature.bUseManualSwitching = false;
-        this.Switch.hwPeriod = MIN(nMS, UINT16_MAX);
-        this.Switch.hwPeriod = MAX(nMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
+        this.Switch.tConfig.Feature.u2Control = __ARM_2D_SCENE_SWITCH_CTRL_AUTO;
+        this.Switch.hwPeriod = MIN(iMS, UINT16_MAX);
+        this.Switch.hwPeriod = MAX(iMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
     }
 }
+
+ARM_NONNULL(1)
+void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *ptThis,
+                                                        int16_t iTouchOffset)
+{
+    if (iTouchOffset < 0) {
+        this.Switch.tConfig.Feature.u2Control = __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_CANCEL;
+    } else {
+        this.Switch.tConfig.Feature.u2Control = __ARM_2D_SCENE_SWITCH_CTRL_MANUAL;
+        this.Switch.iTouchOffset = iTouchOffset;
+    }
+}
+
+ARM_NONNULL(1)
+arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_t *ptThis, 
+                                                            bool bMoveToPreviousScene,
+                                                            int_fast16_t iInMS)
+{
+    if (__ARM_2D_SCENE_SWITCH_CTRL_AUTO == this.Switch.tConfig.Feature.u2Control) {
+        /* you cannot call this API for auto-switching mode */
+        return ARM_2D_ERR_INVALID_STATUS;
+    }
+
+    this.Switch.tConfig.Feature.u2Control = bMoveToPreviousScene 
+                                          ? __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_CANCEL
+                                          : __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_AUTO_CPL;
+    this.Switch.hwPeriod = MIN(iInMS, UINT16_MAX);
+    this.Switch.hwPeriod = MAX(iInMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
+
+    return ARM_2D_ERR_NONE;
+}
+
 
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(

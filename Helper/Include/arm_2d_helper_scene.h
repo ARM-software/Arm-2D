@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        23. April 2024
- * $Revision:    V.1.6.5
+ * $Date:        14. May 2024
+ * $Revision:    V.1.6.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -46,13 +46,20 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
 
+/*============================ MACROS ========================================*/
+
+/*!
+ * \addtogroup Deprecated
+ * @{
+ */
+#define arm_2d_scene_player_set_switching_period                                \
+            arm_2d_scene_player_set_auto_switching_period
+/*! @} */
+
 /*!
  * \addtogroup gHelper 8 Helper Services
  * @{
  */
-
-
-/*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -156,6 +163,12 @@ typedef enum {
 
 } arm_2d_scene_player_switch_mode_t;
 
+enum {
+    __ARM_2D_SCENE_SWITCH_CTRL_AUTO,                                            //!< time-based auto switching
+    __ARM_2D_SCENE_SWITCH_CTRL_MANUAL,                                          //!< offset-based manual switching
+    __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_CANCEL,                                   //!< cancel existing manual switching
+    __ARM_2D_SCENE_SWITCH_CTRL_MANUAL_AUTO_CPL,                                 //!< automatically finish the rest part of switching.
+};
 
 
 /*!
@@ -172,8 +185,7 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
         uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
         uint8_t u2DefaultBG             : 2;                                    //!< the default background
-        uint8_t bUseManualSwitching     : 1;                                    //!< when set, use the user controlled switching progress/offset for switching
-        uint8_t                         : 1;
+        uint8_t u2Control               : 2;                                    //!< the control for the switching, default: __ARM_2D_SCENE_SWITCH_CTRL_AUTO
     } Feature;
     uint16_t hwSetting;                                                         //!< the setting value
 
@@ -321,13 +333,16 @@ struct arm_2d_scene_player_t {
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
                     int16_t iOffset;                                            //!< slide offset
                 }Slide;
+                struct {
+                    uint8_t chState;                                            //!< FSM state
+                    arm_2d_tile_t tSceneWindow;                                 //!< scene window
+                    int16_t iOffset;                                            //!< slide offset
+                }Fly;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
-            union {
-                uint16_t hwPeriod;                                              //!< the switching should finish in specified millisecond
-                int16_t iProgress;                                              //!< the progress for manual switching mode, used in fade in/fade out etc.
-                int16_t iOffset;                                                //!< the coordinate offset for manual switching mode, used in erasing, sliding etc.
-            };
+
+            uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
+            int16_t iTouchOffset;                                               //!< the coordinate offset for manual switching mode, used in erasing, sliding etc.
             int64_t lTimeStamp;
         }Switch;
         
@@ -457,16 +472,41 @@ ARM_NONNULL(1)
 uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis);
 
 /*!
- * \brief configure the scene switching period
+ * \brief configure the scene switching period in auto-switching
  *
  * \param[in] ptThis the target scene player
- * \param[in] nMS period in millisecond, -1 means using manual switching mode
+ * \param[in] iMS period in millisecond
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_scene_player_set_switching_period(  arm_2d_scene_player_t *ptThis,
-                                                int32_t nMS);
+void arm_2d_scene_player_set_auto_switching_period(  arm_2d_scene_player_t *ptThis,
+                                                int_fast16_t iMS);
 
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief use manual switch mode and set the offset
+ * 
+ * \param[in] ptThis the target scene player
+ * \param[in] iTouchOffset the touch offset
+ */
+void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *ptThis,
+                                                        int16_t iTouchOffset);
+
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief end the manual switching and finish the left part in a specific period (ms)
+ * 
+ * \param[in] ptThis the target scene player
+ * \param[in] bMoveToPreviousScene a boolean value indicating whether move back to the
+ *              previous scene, i.e. whether cancel the current switching
+ * \param iInMS the period to finish the rest part
+ * \return arm_2d_err_t configuration result
+ */
+arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_t *ptThis, 
+                                                            bool bMoveToPreviousScene,
+                                                            int_fast16_t iInMS);
 
 /*!
  * \brief register / update the evtOnDrawNavigation event handler. You can use 
