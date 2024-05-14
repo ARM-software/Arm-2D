@@ -432,6 +432,7 @@ var group__gKernel =
       [ "arm_fsm_rt_wait_for_res", "group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca562c08f6021b1434f1797ccbe7dfd2e3", null ]
     ] ],
     [ "arm_2d_err_t", "group__gKernel.html#ga27a24a896295488772e6d847c790fd1c", [
+      [ "ARM_2D_ERR_INVALID_STATUS", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca96d031ecac47995473a0e8571d79f7d3", null ],
       [ "ARM_2D_ERR_NOT_AVAILABLE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca00c5128b49967bd7d5924c8b6a9b005b", null ],
       [ "ARM_2D_ERR_UNSUPPORTED_COLOUR", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca8fd670a66215d2e91066f99f5588c329", null ],
       [ "ARM_2D_ERR_BUSY", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca41102c5d32c1c956c4eca7213a029016", null ],
