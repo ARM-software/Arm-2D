@@ -174,8 +174,6 @@ typedef enum {
     ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL,                                 //!< automatically finish the rest part of switching.
 } arm_2d_scene_player_switch_status_t;
 
-#define ARM_2D_SCENE_SWITCHING_STATUS_MASK          ((uint16_t)3 << 14)
-
 /*!
  * \brief an internal data structure for scene switching
  * 
@@ -190,7 +188,7 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
         uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
         uint8_t u2DefaultBG             : 2;                                    //!< the default background
-        uint8_t u2Status                : 2;                                     //!< the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO
+        uint8_t                         : 2;
     } Feature;
     uint16_t hwSetting;                                                         //!< the setting value
 
@@ -306,10 +304,15 @@ struct arm_2d_scene_player_t {
         } SceneFIFO;                                                            //!< Scene FIFO
         
         struct {
+            
             uint8_t bNextSceneReq           : 1;                                //!< a flag to request switching-to-the next-scene
+            uint8_t u2SwitchingStatusReq    : 2;                                //!< request changing SwitchingState
+            uint8_t                         : 5;
+            uint8_t                         : 8;
+
             uint8_t bSwitchCPL              : 1;                                //!< indication of scene switching completion
             uint8_t bUpdateBG               : 1;                                //!< update the background of the current scene
-            uint8_t                         : 1;
+            uint8_t u2SwitchingStatus       : 2;                                //!< the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO
             uint8_t bCallOldSceneFrameCPL   : 1;                                //!< call the old scene frame complete event handler
             uint8_t bCallNewSceneFrameCPL   : 1;                                //!< call the new scene frame complete event handler
             uint8_t bCallOldSceneBGCPL      : 1;                                //!< call the old scene Background complete event handler

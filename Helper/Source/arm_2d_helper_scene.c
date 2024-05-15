@@ -283,10 +283,6 @@ void __arm_2d_scene_player_set_switching_mode(  arm_2d_scene_player_t *ptThis,
                 >>  __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos) 
             <   3);
 
-
-    hwSettings &= ~ARM_2D_SCENE_SWITCHING_STATUS_MASK;
-    hwSettings |= this.Switch.tConfig.hwSetting & ARM_2D_SCENE_SWITCHING_STATUS_MASK;
-
     this.Switch.tConfig.hwSetting = hwSettings ;
     this.Switch.tConfig.Feature.chMode = ptMode->chEffects;
 }
@@ -306,9 +302,9 @@ void arm_2d_scene_player_set_auto_switching_period( arm_2d_scene_player_t *ptThi
 
     if (iMS < 0) {
         /* use the manual switching mode */
-        this.Switch.tConfig.Feature.u2Status = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
+        this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
     } else {
-        this.Switch.tConfig.Feature.u2Status = ARM_2D_SCENE_SWITCH_STATUS_AUTO;
+        this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_AUTO;
         this.Switch.hwPeriod = MIN(iMS, UINT16_MAX);
         this.Switch.hwPeriod = MAX(iMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
     }
@@ -323,9 +319,17 @@ void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *p
     if (iTouchOffset < 0) {
         return ;
     } else {
-        this.Switch.tConfig.Feature.u2Status = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
+        this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
         this.Switch.iTouchOffset = iTouchOffset;
     }
+}
+
+ARM_NONNULL(1)
+arm_2d_scene_player_switch_status_t
+arm_2d_scene_player_get_switching_status(arm_2d_scene_player_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.Runtime.u2SwitchingStatus;
 }
 
 ARM_NONNULL(1)
@@ -335,15 +339,18 @@ arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_
 {
     assert(NULL != ptThis);
 
-    if (ARM_2D_SCENE_SWITCH_STATUS_AUTO == this.Switch.tConfig.Feature.u2Status) {
+    arm_2d_scene_player_switch_status_t tStatus 
+        = arm_2d_scene_player_get_switching_status(ptThis);
+
+    if (ARM_2D_SCENE_SWITCH_STATUS_AUTO == tStatus) {
         /* you cannot call this API for auto-switching mode */
         return ARM_2D_ERR_INVALID_STATUS;
-    } else if (this.Switch.tConfig.Feature.u2Status !=  ARM_2D_SCENE_SWITCH_STATUS_MANUAL) {
+    } else if (tStatus !=  ARM_2D_SCENE_SWITCH_STATUS_MANUAL) {
         return ARM_2D_ERR_NONE;
     }
 
     this.Switch.lTimeStamp = arm_2d_helper_get_system_timestamp();
-    this.Switch.tConfig.Feature.u2Status = bMoveToPreviousScene 
+    this.Runtime.u2SwitchingStatusReq = bMoveToPreviousScene 
                                           ? ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL
                                           : ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL;
     this.Switch.hwPeriod = MIN(iInMS, UINT16_MAX);
@@ -352,13 +359,7 @@ arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_
     return ARM_2D_ERR_NONE;
 }
 
-ARM_NONNULL(1)
-arm_2d_scene_player_switch_status_t
-arm_2d_scene_player_get_switching_status(arm_2d_scene_player_t *ptThis)
-{
-    assert(NULL != ptThis);
-    return this.Switch.tConfig.Feature.u2Status;
-}
+
 
 
 ARM_NONNULL(1)
@@ -486,7 +487,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
 
     /* internal statemachine */
     if (bIsNewFrame) {
-        if (ARM_2D_SCENE_SWITCH_STATUS_AUTO == this.Switch.tConfig.Feature.u2Status) {
+
+        //! update the switching status
+        this.Runtime.u2SwitchingStatus = this.Runtime.u2SwitchingStatusReq;
+
+        arm_2d_scene_player_switch_status_t tStatus = this.Runtime.u2SwitchingStatus;
+
+        if (ARM_2D_SCENE_SWITCH_STATUS_AUTO == tStatus) {
             uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
         
             int32_t nElapsed;
@@ -563,7 +570,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                     break;
             }
 
-        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL == this.Switch.tConfig.Feature.u2Status) {
+        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL == tStatus) {
             uint_fast16_t hwOpacity = 0;
             arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
             int16_t iScreenWidth = tScreenSize.iWidth;
@@ -603,9 +610,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
 
             this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
 
-        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL == this.Switch.tConfig.Feature.u2Status) {
+        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL == tStatus) {
 
-        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == this.Switch.tConfig.Feature.u2Status) {
+        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == tStatus) {
             
         }
     } 
