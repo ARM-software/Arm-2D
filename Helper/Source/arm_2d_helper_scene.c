@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        14. May 2024
- * $Revision:    V.1.6.6
+ * $Date:        15. May 2024
+ * $Revision:    V.1.6.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -308,6 +308,21 @@ void arm_2d_scene_player_set_auto_switching_period( arm_2d_scene_player_t *ptThi
         this.Switch.hwPeriod = MIN(iMS, UINT16_MAX);
         this.Switch.hwPeriod = MAX(iMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
     }
+
+    do {
+        if (this.Runtime.u2SwitchingStatusReq == this.Runtime.u2SwitchingStatus) {
+            break;
+        }
+        if (NULL == this.Switch.ptMode) {
+            break;
+        }
+        
+        /* call on request chaging switching status event handler */
+        ARM_2D_INVOKE_RT_VOID(this.Switch.ptMode->fnOnRequestChangeSwitchingStatus,
+                            ARM_2D_PARAM(
+                                ptThis
+                            ));
+    } while(0);
 }
 
 ARM_NONNULL(1)
@@ -322,6 +337,21 @@ void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *p
         this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
         this.Switch.iTouchOffset = iTouchOffset;
     }
+
+    do {
+        if (this.Runtime.u2SwitchingStatusReq == this.Runtime.u2SwitchingStatus) {
+            break;
+        }
+        if (NULL == this.Switch.ptMode) {
+            break;
+        }
+        
+        /* call on request chaging switching status event handler */
+        ARM_2D_INVOKE_RT_VOID(this.Switch.ptMode->fnOnRequestChangeSwitchingStatus,
+                            ARM_2D_PARAM(
+                                ptThis
+                            ));
+    } while(0);
 }
 
 ARM_NONNULL(1)
@@ -355,6 +385,21 @@ arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_
                                           : ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL;
     this.Switch.hwPeriod = MIN(iInMS, UINT16_MAX);
     this.Switch.hwPeriod = MAX(iInMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
+
+    do {
+        if (this.Runtime.u2SwitchingStatusReq == this.Runtime.u2SwitchingStatus) {
+            break;
+        }
+        if (NULL == this.Switch.ptMode) {
+            break;
+        }
+        
+        /* call on request chaging switching status event handler */
+        ARM_2D_INVOKE_RT_VOID(this.Switch.ptMode->fnOnRequestChangeSwitchingStatus,
+                            ARM_2D_PARAM(
+                                ptThis
+                            ));
+    } while(0);
 
     return ARM_2D_ERR_NONE;
 }
