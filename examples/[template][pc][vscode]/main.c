@@ -277,8 +277,8 @@ int app_2d_main_thread (void *argument)
 
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-    //arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
-    arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, 0);
+    arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
+    //arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, 0);
 
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
@@ -300,9 +300,11 @@ int app_2d_main_thread (void *argument)
                         s_tLastLocation = tPointerLocation;
                     } else {
                         /* mouse up */
+                    #if 0
                         arm_2d_scene_player_finish_manual_switching(&DISP0_ADAPTER, 
                                                                     (tPointerLocation.iX < s_tLastLocation.iX),
                                                                     3000);
+                    #endif
                     }
 
                     break;
