@@ -805,8 +805,12 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptOP);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (this.Source.ptTile->tInfo.bHasEnforcedColour) {
-        switch (this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
             case ARM_2D_COLOUR_GRAY8:
             case ARM_2D_COLOUR_CCCA8888:
                 /* code */
@@ -850,8 +854,12 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptOP);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (this.Source.ptTile->tInfo.bHasEnforcedColour) {
-        switch (this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
             case ARM_2D_COLOUR_RGB565:
             case ARM_2D_COLOUR_CCCA8888:
                 /* code */
@@ -894,8 +902,12 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_opacity( arm_2d_op_alpha_t *ptOP,
     ARM_2D_IMPL(arm_2d_op_alpha_t, ptOP);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (this.Source.ptTile->tInfo.bHasEnforcedColour) {
-        switch (this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
             case ARM_2D_COLOUR_CCCN888:
             case ARM_2D_COLOUR_CCCA8888:
                 /* code */

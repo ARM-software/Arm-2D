@@ -351,6 +351,7 @@ struct arm_2d_scene_player_t {
 
             uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
             int16_t iTouchOffset;                                               //!< the coordinate offset for manual switching mode, used in erasing, sliding etc.
+            int16_t iFullLength;
             int64_t lTimeStamp;
         }Switch;
         

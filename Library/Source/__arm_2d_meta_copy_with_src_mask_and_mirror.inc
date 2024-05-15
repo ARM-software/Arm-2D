@@ -104,6 +104,11 @@
 #define __MCSMM_API_FUNC(__NAME)                                                 \
             ___MCSMM_API_FUNC(__NAME, __API_MCSMM_COLOUR, __API_MCSMM_MIRROR_TYPE)
 
+#undef __MSCMM_COLOR_TYPE
+#undef ____MSCMM_COLOR_TYPE
+#define ____MSCMM_COLOR_TYPE(__COLOUR)                                             \
+            ARM_2D_COLOUR_##__COLOUR
+#define __MSCMM_COLOR_TYPE(__COLOUR)        ____MSCMM_COLOR_TYPE(__COLOUR)
 
 ARM_NONNULL(2,3)
 arm_fsm_rt_t __MCSMM_API_FUNC(tile_copy_with_src_mask)(
@@ -129,6 +134,25 @@ arm_fsm_rt_t __MCSMM_API_FUNC(tile_copy_with_src_mask)(
     if (tErr < 0) {
         return (arm_fsm_rt_t)tErr;
     }
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            case __MSCMM_COLOR_TYPE(__API_MCSMM_COLOUR_UPPERCASE):
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
 
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
@@ -355,3 +379,4 @@ arm_fsm_rt_t __MCSMM_SW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTa
 #undef __API_MCSMM_COLOUR_UPPERCASE
 #undef __API_MCSMM_COLOUR
 #undef __API_MCSMM_INT_TYPE
+#undef __MSCMM_COLOR_TYPE
