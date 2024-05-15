@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        29. April 2024
- * $Revision:    V.1.6.7
+ * $Date:        16. May 2024
+ * $Revision:    V.1.6.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -253,6 +253,27 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks(
 
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
 
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (wMode == ARM_2D_CP_MODE_COPY && NULL == ptDesMask && NULL != ptSrcMask) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_GRAY8:
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
+
     arm_2d_err_t tErr = __arm_mask_validate(
                                             ptSource, ptSrcMask,
                                             ptTarget, ptDesMask, wMode);
@@ -293,8 +314,28 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks(
     assert(NULL != ptTarget);
     assert(NULL != ptDesMask);
 
-    
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (wMode == ARM_2D_CP_MODE_COPY && NULL == ptDesMask && NULL != ptSrcMask) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_RGB565:
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
 
     arm_2d_err_t tErr = __arm_mask_validate(
                                             ptSource, ptSrcMask,
@@ -339,6 +380,27 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks(
     assert(NULL != ptDesMask);
     
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (wMode == ARM_2D_CP_MODE_COPY && NULL == ptDesMask && NULL != ptSrcMask) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_CCCN888:
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
 
     arm_2d_err_t tErr = __arm_mask_validate(
                                             ptSource, ptSrcMask,
@@ -386,6 +448,27 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_src_mask(
 
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
 
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (wMode == ARM_2D_CP_MODE_COPY) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_GRAY8:
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
+
     arm_2d_err_t tErr = __arm_mask_validate(
                                             ptSource, ptSrcMask,
                                             ptTarget, NULL, wMode);
@@ -424,8 +507,28 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask(
     assert(NULL != ptSrcMask);
     assert(NULL != ptTarget);
 
-    
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (wMode == ARM_2D_CP_MODE_COPY) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_RGB565:
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
 
     arm_2d_err_t tErr = __arm_mask_validate(
                                             ptSource, ptSrcMask,
@@ -468,6 +571,27 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask(
     assert(NULL != ptTarget);
     
     ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    if (wMode == ARM_2D_CP_MODE_COPY) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_CCCN888:
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
 
     arm_2d_err_t tErr = __arm_mask_validate(
                                             ptSource, ptSrcMask,
