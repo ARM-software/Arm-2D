@@ -689,7 +689,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
                     this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
                     if (this.Switch.Fade.chOpacity == 0) {
                         this.Runtime.bSwitchCPL = true;
-                        SCENE_SWITCH_RESET_FSM();
+                        //SCENE_SWITCH_RESET_FSM();
                     }
                     break;
             }
