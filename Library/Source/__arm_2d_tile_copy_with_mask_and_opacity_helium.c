@@ -186,7 +186,6 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
 {
     hwRatio += (hwRatio == 255);
 
-
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
 
         const uint8_t   *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
@@ -586,7 +585,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask)(
     int_fast16_t iSourceMaskHeight = ptSourceMaskSize->iHeight;
     uint8_t *pchSourceMask = pchSourceMaskBase;
 
-
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
@@ -723,7 +721,6 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask)(
 
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -1055,7 +1052,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask)(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
@@ -1173,7 +1169,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity)(
                                     uint_fast16_t hwRatio)
 {
     hwRatio += (hwRatio == 255);
-
 
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
 
@@ -1444,7 +1439,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mas
 
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-
 
     /* offset to replicate 2 masks accros the 4 channels */
     uint16x8_t offsetMsk = {0, 0, 0, 0, 4, 4, 4, 4};

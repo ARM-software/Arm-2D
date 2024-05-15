@@ -634,7 +634,8 @@ user_scene_menu_t *__arm_2d_scene_menu_init(   arm_2d_scene_player_t *ptDispAdap
         };
         
         list_view_init(&this.tListView, &tCFG);
-        
+        list_view_move_selection(&this.tListView, 1, 0);
+
         arm_foreach(my_list_item_t, s_tListArray, ptItem) {
             ptItem->use_as__arm_2d_list_item_t.pTarget = (uintptr_t)ptThis;
         }

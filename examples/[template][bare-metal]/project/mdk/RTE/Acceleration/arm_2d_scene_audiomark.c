@@ -153,6 +153,9 @@ static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
         progress_wheel_depose(&this.Processor[n].tWheel);
         this.Processor[n].lTimestamp = 0;
     }
+#if __FITNESS_CFG_NEBULA_ENABLE__
+    dynamic_nebula_depose(&this.tNebula);
+#endif
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -273,34 +276,6 @@ user_scene_audiomark_t *__arm_2d_scene_audiomark_init(   arm_2d_scene_player_t *
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-
-#if 0
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            0
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_bottom_centre(tScreen, tScreen.tSize.iWidth, tScreen.tSize.iHeight >> 1) {
-        arm_2d_align_centre(__bottom_centre_region, 415, 415) {
-            s_tDirtyRegions[0].tRegion = __centre_region;
-        }
-    } 
-#endif
 
     if (NULL == ptThis) {
         ptThis = (user_scene_audiomark_t *)
