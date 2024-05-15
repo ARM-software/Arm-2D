@@ -288,9 +288,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ga0c896791f09bdcbb1115746844ddba2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b">arm_2d_scene_player_register_before_switching_event_handler</a>( __SCENE_PLAYER_PTR,  __HANDLER,  ...)</td></tr>
 <tr class="memdesc:ga0c896791f09bdcbb1115746844ddba2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtBeforeSwitching event handler. You can use this event to prepare next scenes.  <a href="group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b">More...</a><br /></td></tr>
 <tr class="separator:ga0c896791f09bdcbb1115746844ddba2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf06e9d69a4a3e2dfc63f5073ae58f607"><td class="memItemLeft" align="right" valign="top"><a id="gaf06e9d69a4a3e2dfc63f5073ae58f607" name="gaf06e9d69a4a3e2dfc63f5073ae58f607"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCHING_STATUS_MASK</b>&#160;&#160;&#160;((uint16_t)3 &lt;&lt; 14)</td></tr>
-<tr class="separator:gaf06e9d69a4a3e2dfc63f5073ae58f607"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga31d44d0cf7fe5bb395622d23784c87c7"><td class="memItemLeft" align="right" valign="top"><a id="ga31d44d0cf7fe5bb395622d23784c87c7" name="ga31d44d0cf7fe5bb395622d23784c87c7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_FPS_MODE_RENDER_ONLY</b>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:ga31d44d0cf7fe5bb395622d23784c87c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1368,7 +1365,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
+the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene request changing SwitchingState indication of scene switching completion update the background of the current scene the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a479edcdaa0343fe3c3b4cbf61eaeb34d" name="a479edcdaa0343fe3c3b4cbf61eaeb34d"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed143____">arm_2d_scene_player_t.__unnamed143__</a></td>
@@ -2354,12 +2351,6 @@ when set, ignore the new scene </td></tr>
 u2DefaultBG: 2</td>
 <td class="fielddoc">
 the default background </td></tr>
-<tr><td class="fieldtype">
-<a id="aa0c3a0138af94bc9521ff3d0190a471e" name="aa0c3a0138af94bc9521ff3d0190a471e"></a>uint8_t</td>
-<td class="fieldname">
-u2Status: 2</td>
-<td class="fielddoc">
-the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO </td></tr>
 </table>
 
 </div>
@@ -2627,6 +2618,18 @@ bNextSceneReq: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
+<a id="a00557d21ea80081994afb324ad668506" name="a00557d21ea80081994afb324ad668506"></a>uint8_t</td>
+<td class="fieldname">
+u2SwitchingStatusReq: 2</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint8_t</td>
+<td class="fieldname">
+__pad1__: 8</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="a97f8e2466a24e7c33b7b708b7c11f1ec" name="a97f8e2466a24e7c33b7b708b7c11f1ec"></a>uint8_t</td>
 <td class="fieldname">
 bSwitchCPL: 1</td>
@@ -2636,6 +2639,12 @@ bSwitchCPL: 1</td>
 <a id="aa451c9cbeab2e70bd80d01cee5a21b10" name="aa451c9cbeab2e70bd80d01cee5a21b10"></a>uint8_t</td>
 <td class="fieldname">
 bUpdateBG: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a88deb8173b8de2b17a367c32e67ced28" name="a88deb8173b8de2b17a367c32e67ced28"></a>uint8_t</td>
+<td class="fieldname">
+u2SwitchingStatus: 2</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
