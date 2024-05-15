@@ -321,7 +321,7 @@ void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *p
     assert(NULL != ptThis);
 
     if (iTouchOffset < 0) {
-        this.Switch.tConfig.Feature.u2Status = ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL;
+        return ;
     } else {
         this.Switch.tConfig.Feature.u2Status = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
         this.Switch.iTouchOffset = iTouchOffset;

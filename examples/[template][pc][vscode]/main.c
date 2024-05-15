@@ -300,7 +300,9 @@ int app_2d_main_thread (void *argument)
                         s_tLastLocation = tPointerLocation;
                     } else {
                         /* mouse up */
-                        
+                        arm_2d_scene_player_finish_manual_switching(&DISP0_ADAPTER, 
+                                                                    (tPointerLocation.iX < s_tLastLocation.iX),
+                                                                    3000);
                     }
 
                     break;

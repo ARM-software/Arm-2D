@@ -527,7 +527,7 @@ ARM_NONNULL(1)
  * \param[in] ptThis the target scene player
  * \param[in] bMoveToPreviousScene a boolean value indicating whether move back to the
  *              previous scene, i.e. whether cancel the current switching
- * \param iInMS the period to finish the rest part
+ * \param iInMS the planned period as if the switching is done in auto-switching mode
  * \return arm_2d_err_t configuration result
  */
 arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_t *ptThis, 
