@@ -459,6 +459,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_default_background)
     return arm_fsm_rt_cpl;
 }
 
+/*----------------------------------------------------------------------------*
+ * Switch Mode: Fade-In-Fade-Out                                              *
+ *----------------------------------------------------------------------------*/
 
 #define SCENE_SWITCH_RESET_FSM()    do {this.Switch.chState = START;} while(0)
 
@@ -713,6 +716,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
     return arm_fsm_rt_cpl;
 }
 
+/*----------------------------------------------------------------------------*
+ * Switch Mode: Erase                                                         *
+ *----------------------------------------------------------------------------*/
 
 static 
 void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
@@ -1078,6 +1084,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 }
 
 
+/*----------------------------------------------------------------------------*
+ * Switch Mode: Slide                                                         *
+ *----------------------------------------------------------------------------*/
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 {

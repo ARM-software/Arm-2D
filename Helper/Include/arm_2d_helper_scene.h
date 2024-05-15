@@ -194,6 +194,7 @@ typedef union __arm_2d_helper_scene_switch_t {
 
 }__arm_2d_helper_scene_switch_t;
 
+typedef struct arm_2d_scene_player_t arm_2d_scene_player_t;
 
 /*!
  * \brief scene switching mode descriptor
@@ -201,10 +202,9 @@ typedef union __arm_2d_helper_scene_switch_t {
 typedef const struct {
     uint8_t                         chEffects;                                  //!< switching effects
     arm_2d_helper_draw_handler_t    *fnSwitchDrawer;                            //!< switching algorithm
+
+    void (*fnOnRequestChangeSwitchingStatus)(arm_2d_scene_player_t *ptThis);    //!< on request change-switch-status event handler
 } arm_2d_scene_switch_mode_t;
-
-
-typedef struct arm_2d_scene_player_t arm_2d_scene_player_t;
 
 /*!
  * \brief a class for describing scenes which are the combination of a
