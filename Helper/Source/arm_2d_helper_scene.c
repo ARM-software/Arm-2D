@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        15. May 2024
- * $Revision:    V.1.6.7
+ * $Date:        16. May 2024
+ * $Revision:    V.1.6.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -271,6 +271,43 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
             ARM_LIST_QUEUE_DEQUEUE(this.SceneFIFO.ptHead,
                                    this.SceneFIFO.ptTail,
                                    ptScene);
+        }
+        if (NULL == ptScene) {
+            break;
+        }
+        if (NULL != ptScene->fnDepose) {
+            arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
+            ptScene->fnDepose(ptScene);
+        }
+    } while(false);
+}
+
+static void __arm_2d_scene_player_delete_next_scene(arm_2d_scene_player_t *ptThis) 
+{
+    arm_2d_scene_t *ptScene = NULL;
+    this.Runtime.bNextSceneReq = false;
+
+    do {
+        arm_irq_safe {
+            do {
+                ptScene = NULL;
+                arm_2d_scene_t *ptHead = this.SceneFIFO.ptHead;
+                if (NULL == ptHead) {
+                    break;
+                }
+                ptScene = ptHead->ptNext;
+                if (ptScene) {
+                    /* no next item */
+                    break;
+                }
+
+                /* remove next item */
+                ptHead->ptNext = ptScene->ptNext;
+                ptScene->ptNext = NULL;
+                if (ptScene == this.SceneFIFO.ptTail) {
+                    this.SceneFIFO.ptTail = ptHead;
+                }
+            } while(0);
         }
         if (NULL == ptScene) {
             break;
@@ -1707,6 +1744,12 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                     /* update switching mode */
                     this.Switch.tConfig.Feature.chMode = this.Switch.ptMode->chEffects;
                 }
+
+                /* reset flags */
+                this.Runtime.bFinishManualSwitchReq = false;
+                this.Runtime.bFinishManualSwitch = false;
+                this.Runtime.bCancelSwitchReq = false;
+                this.Runtime.bCancelSwitch = false;
                 
                 if (    (    ARM_2D_SCENE_SWITCH_CFG_NONE 
                         ==   this.Switch.tConfig.Feature.chMode)
@@ -1818,7 +1861,18 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             return arm_fsm_rt_cpl;
         
         case SWITCH_SCENE_POST:
-            __arm_2d_scene_player_next_scene(ptThis);
+            if (this.Runtime.bFinishManualSwitch && this.Runtime.bCancelSwitch) {
+                __arm_2d_scene_player_delete_next_scene(ptThis);
+            } else {
+                __arm_2d_scene_player_next_scene(ptThis);
+            }
+
+            /* reset flags */
+            this.Runtime.bFinishManualSwitchReq = false;
+            this.Runtime.bFinishManualSwitch = false;
+            this.Runtime.bCancelSwitchReq = false;
+            this.Runtime.bCancelSwitch = false;
+
             ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
             break;
     }
