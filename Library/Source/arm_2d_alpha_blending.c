@@ -1069,7 +1069,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTas
     assert(ARM_2D_COLOUR_GRAY8 == OP_CORE.ptOp->Info.Colour.chScheme);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
         if (255 == this.chRatio) {
             __arm_2d_impl_ccca8888_to_gray8(
                                         ptTask->Param.tCopy.tSource.pBuffer,
@@ -1115,7 +1117,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTa
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
         if (255 == this.chRatio) {
             __arm_2d_impl_ccca8888_to_rgb565(
@@ -1165,7 +1169,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptT
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
         if (255 == this.chRatio) {
             __arm_2d_impl_ccca8888_to_cccn888(
                                         ptTask->Param.tCopy.tSource.pBuffer,

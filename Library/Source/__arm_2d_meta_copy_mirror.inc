@@ -160,7 +160,7 @@ arm_fsm_rt_t __MCM_API_FUNC(tile_copy)( __API_MCM_OP_TYPE *ptOP,
 
     ARM_2D_IMPL(__API_MCM_OP_TYPE, ptOP);
 
-#if     __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
     if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MCM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
         arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
         if (NULL == ptSourceRoot) {
@@ -205,7 +205,9 @@ arm_fsm_rt_t __MCM_SW_FUNC(tile_copy)( __arm_2d_sub_task_t *ptTask)
     assert(__API_MCM_COLOUR_SZ == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
-    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
         if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MCM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
 
             if (ARM_2D_COLOUR_SZ_8BIT == __API_MCM_COLOUR_SZ) {

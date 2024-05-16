@@ -198,15 +198,24 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     /* draw the cmsis logo in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
                     #if 1
+                        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+                        arm_2d_tile_copy_with_src_mask_only( &c_tileCMSISLogoCCCA8888,
+                                                        &c_tileCMSISLogoMask2,
+                                                        ptTile,
+                                                        &__centre_region);
+                        #else
                         arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
                                                         &c_tileCMSISLogoMask,
                                                         ptTile,
                                                         &__centre_region,
                                                         ARM_2D_CP_MODE_COPY);
-                    #else
-                        arm_2d_tile_copy_to_rgb565(&c_tileCMSISLogoCCCA8888,
-                                                    ptTile,
-                                                    &__centre_region);
+                        #endif
+                        
+                    #elif __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+                        arm_2d_tile_copy_with_opacity(  &c_tileCMSISLogoCCCA8888,
+                                                        ptTile,
+                                                        &__centre_region,
+                                                        128);
                     #endif
                     }
                 #else

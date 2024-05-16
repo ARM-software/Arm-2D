@@ -121,7 +121,9 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTask)
     uint32_t wMode = this.wMode;
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
         assert(wMode == ARM_2D_CP_MODE_COPY);
 

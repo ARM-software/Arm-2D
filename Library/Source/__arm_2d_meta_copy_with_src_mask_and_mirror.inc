@@ -186,7 +186,9 @@ arm_fsm_rt_t __MCSMM_SW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTa
     }
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
         if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
             if (ARM_2D_COLOUR_SZ_8BIT == __API_MCSMM_COLOUR_SZ) {

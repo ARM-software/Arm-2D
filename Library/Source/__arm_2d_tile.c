@@ -1012,7 +1012,9 @@ arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy( __arm_2d_sub_task_t *ptTask)
     } else {
     
     #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
-        if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+        assert(NULL != ptSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
             __arm_2d_impl_ccca8888_to_gray8(
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
@@ -1050,7 +1052,9 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy( __arm_2d_sub_task_t *ptTask)
                                         wMode);
     } else {
     #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
-        if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+        assert(NULL != ptSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
             __arm_2d_impl_ccca8888_to_rgb565(
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
@@ -1086,7 +1090,9 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy( __arm_2d_sub_task_t *ptTask)
                                         wMode);
     } else {
     #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
-        if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+        assert(NULL != ptSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
             __arm_2d_impl_ccca8888_to_cccn888(
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
