@@ -121,6 +121,9 @@ void __arm_2d_helium_init(void)
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_tile_copy_with_mask_and_opacity_helium.c"
 
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_horizontal_line_mask_helium.c"
+
 /*----------------------------------------------------------------------------*
  * Helper
  *----------------------------------------------------------------------------*/
