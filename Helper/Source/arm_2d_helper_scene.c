@@ -546,6 +546,7 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
         int16_t iZoneWidth = (iFullLength >> 3);
         int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
         uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
+        int32_t nElapsedTime = 0;
 
         if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == tNewStatus) {
 
@@ -558,11 +559,29 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
                     break;
 
                 case FADE_IN:
+                    iTouchOffset -= iZoneWidth * 1;
+                    nElapsedTime = iTouchOffset * ((this.Switch.hwPeriod - hwKeepPeriod)>> 1) / (iZoneWidth * 2);
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
                     break;
+
                 case KEEP:
+                    iTouchOffset -= iZoneWidth * 3;
+                    nElapsedTime = iTouchOffset * (hwKeepPeriod>> 1) / (iZoneWidth * 2);
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
                     break;
-                case FADE_OUT:
+
+                case FADE_OUT: 
+                    iTouchOffset -= iZoneWidth * 5;
+                    nElapsedTime = iTouchOffset * ((this.Switch.hwPeriod - hwKeepPeriod)>> 1) / (iZoneWidth * 2);
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
                     break;
+
                 case RIGHT_PAD:
                     this.Switch.chState = FADE_OUT;
                     this.Switch.lTimeStamp 
