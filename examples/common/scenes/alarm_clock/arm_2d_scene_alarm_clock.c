@@ -104,6 +104,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 extern const arm_2d_tile_t c_tileECGMask;
 extern const arm_2d_tile_t c_tileECGScanMask;
 extern const arm_2d_tile_t c_tileECGScanLineMask;
+extern const arm_2d_tile_t c_tileECGScanLineMask2;
 /*============================ PROTOTYPES ====================================*/
 extern
 struct {
