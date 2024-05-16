@@ -275,14 +275,15 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
         if (NULL == ptScene) {
             break;
         }
+
+        arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
         if (NULL != ptScene->fnDepose) {
-            arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
             ptScene->fnDepose(ptScene);
         }
     } while(false);
 }
 
-static void __arm_2d_scene_player_delete_next_scene(arm_2d_scene_player_t *ptThis) 
+static void __arm_2d_scene_player_delete_all_next_scene(arm_2d_scene_player_t *ptThis) 
 {
     arm_2d_scene_t *ptScene = NULL;
     this.Runtime.bNextSceneReq = false;
@@ -301,21 +302,27 @@ static void __arm_2d_scene_player_delete_next_scene(arm_2d_scene_player_t *ptThi
                     break;
                 }
 
-                /* remove next item */
-                ptHead->ptNext = ptScene->ptNext;
-                ptScene->ptNext = NULL;
-                if (ptScene == this.SceneFIFO.ptTail) {
-                    this.SceneFIFO.ptTail = ptHead;
-                }
+                /* remove all next item */
+                ptHead->ptNext = NULL;
+                this.SceneFIFO.ptTail = ptHead;
             } while(0);
         }
         if (NULL == ptScene) {
             break;
         }
-        if (NULL != ptScene->fnDepose) {
-            arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
-            ptScene->fnDepose(ptScene);
+        arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
+
+        /* depose all following scenes */
+        while (NULL != ptScene) {
+            arm_2d_scene_t *ptItem = ptScene;
+            ptScene = ptScene->ptNext;
+
+            if (NULL != ptItem->fnDepose) {
+                ptItem->fnDepose(ptItem);
+            }
+            ptItem->ptNext = NULL;
         }
+
     } while(false);
 }
 
@@ -1862,7 +1869,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
         
         case SWITCH_SCENE_POST:
             if (this.Runtime.bFinishManualSwitch && this.Runtime.bCancelSwitch) {
-                __arm_2d_scene_player_delete_next_scene(ptThis);
+                __arm_2d_scene_player_delete_all_next_scene(ptThis);
             } else {
                 __arm_2d_scene_player_next_scene(ptThis);
             }
