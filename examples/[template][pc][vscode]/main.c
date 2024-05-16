@@ -309,14 +309,14 @@ int app_2d_main_thread (void *argument)
 
                     if (VT_mouse_get_location(&tPointerLocation)) {
                         /* mouse down */
-                        arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, tPointerLocation.iX);
+                        arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, (__DISP0_CFG_SCEEN_WIDTH__ -  tPointerLocation.iX));
                         s_tLastLocation = tPointerLocation;
                         s_bTouchDown = true;
                     } else {
                         if (s_bTouchDown) {
                             /* touch up */
                             arm_2d_scene_player_finish_manual_switching(&DISP0_ADAPTER, 
-                                                                        true, //(tPointerLocation.iX < s_tLastLocation.iX),
+                                                                        (tPointerLocation.iX > s_tLastLocation.iX),
                                                                         3000);
                             s_tLastLocation.iX = 0;
                             s_tLastLocation.iY = 0;
