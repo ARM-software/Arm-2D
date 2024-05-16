@@ -758,8 +758,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
 
         } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL == tStatus) {
 
-        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == tStatus) {
-            
         }
     } 
 
