@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        30. April 2024
- * $Revision:    V.1.3.0
+ * $Date:        16. May 2024
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -9708,16 +9708,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask(
                                         arm_2d_size_t *__RESTRICT ptCopySize,
                                         uint8_t chColour);
 
-void   __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask(
-                                        uint8_t *__RESTRICT pchTarget,
-                                        int16_t iTargetStride,
-                                        uint8_t *__RESTRICT pchLineMask,
-                                        //int16_t iMaskStride,
-                                        arm_2d_size_t *__RESTRICT ptCopySize,
-                                        uint8_t chColour);
-
-
-void    __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9725,9 +9716,7 @@ void    __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask(
                                         arm_2d_size_t *__RESTRICT ptCopySize,
                                         uint8_t chColour);
 
-
-
-void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9737,7 +9726,7 @@ void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask(
                                         uint8_t chColour);
 
 
-void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9748,7 +9737,7 @@ void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask(
 
 
 
-void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9757,7 +9746,7 @@ void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask(
                                         uint16_t hwColour);
 
 
-void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9766,7 +9755,7 @@ void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t hwColour);
 
 
-void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9776,7 +9765,7 @@ void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask(
                                         uint16_t hwColour);
 
 
-void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9786,7 +9775,7 @@ void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t hwColour);
 
 
-void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9795,7 +9784,7 @@ void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
                                         uint32_t wColour);
 
 
-void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9804,7 +9793,7 @@ void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
                                         uint32_t wColour);
 
 
-void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
+void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9814,7 +9803,7 @@ void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
                                         uint32_t wColour);
 
 
-void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
+void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9825,7 +9814,7 @@ void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
 
 
 
-void    __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
+void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9835,7 +9824,7 @@ void    __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9845,7 +9834,7 @@ void    __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask_and_opacit
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9856,7 +9845,7 @@ void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask_and_opa
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9867,7 +9856,7 @@ void    __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask_and
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
+void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9877,7 +9866,7 @@ void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9886,9 +9875,7 @@ void    __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask_and_opaci
                                         uint16_t hwColour,
                                         uint8_t chOpacity);
 
-
-
-void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9898,8 +9885,7 @@ void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask_and_op
                                         uint16_t hwColour,
                                         uint8_t chOpacity);
 
-
-void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9910,7 +9896,7 @@ void    __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_an
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9920,7 +9906,7 @@ void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9930,7 +9916,7 @@ void    __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opac
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9941,7 +9927,7 @@ void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_o
                                         uint8_t chOpacity);
 
 
-void    __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
