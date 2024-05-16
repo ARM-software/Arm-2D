@@ -104,6 +104,12 @@
 #define __MCM_API_FUNC(__NAME)                                                  \
             ___MCM_API_FUNC(__NAME, __API_MCM_COLOUR, __API_MCM_MIRROR_TYPE)
 
+#undef __MCM_COLOR_TYPE
+#undef ____MCM_COLOR_TYPE
+#define ____MCM_COLOR_TYPE(__COLOUR)                                             \
+            ARM_2D_COLOUR_##__COLOUR
+#define __MCM_COLOR_TYPE(__COLOUR)        ____MCM_COLOR_TYPE(__COLOUR)
+
 #if 0
 __WEAK
 def_low_lv_io(  ARM_CONNECT(__API_MCM_IO,
@@ -153,7 +159,28 @@ arm_fsm_rt_t __MCM_API_FUNC(tile_copy)( __API_MCM_OP_TYPE *ptOP,
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(__API_MCM_OP_TYPE, ptOP);
-    
+
+#if     __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+    if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MCM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
+        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+        if (NULL == ptSourceRoot) {
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+                case __MCM_COLOR_TYPE(__API_MCM_COLOUR_UPPERCASE):
+                case ARM_2D_COLOUR_CCCA8888:
+                    /* code */
+                    break;
+                
+                default:
+                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                    break;
+            }
+        }
+    }
+#endif
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
@@ -177,12 +204,50 @@ arm_fsm_rt_t __MCM_SW_FUNC(tile_copy)( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(__API_MCM_OP_TYPE, ptTask->ptOP);
     assert(__API_MCM_COLOUR_SZ == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-    __MCM_IMPL_FUNC(copy)    (   ptTask->Param.tCopy.tSource.pBuffer,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+    if (ARM_2D_COLOUR_CCCA8888 == this.Source.ptTile->tInfo.tColourInfo.chScheme) {
+        if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MCM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
+
+            if (ARM_2D_COLOUR_SZ_8BIT == __API_MCM_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_to_gray8(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+            }
+
+            if (ARM_2D_COLOUR_SZ_16BIT == __API_MCM_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_to_rgb565(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+            }
+
+            if (ARM_2D_COLOUR_SZ_32BIT == __API_MCM_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_to_cccn888(
+                                        ptTask->Param.tCopy.tSource.pBuffer,
+                                        ptTask->Param.tCopy.tSource.iStride,
+                                        ptTask->Param.tCopy.tTarget.pBuffer,
+                                        ptTask->Param.tCopy.tTarget.iStride,
+                                        &ptTask->Param.tCopy.tCopySize);
+            }
+
+            return arm_fsm_rt_cpl;
+        } else {
+            return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+        }
+    }
+    
+#endif
+
+    __MCM_IMPL_FUNC(copy)    (  ptTask->Param.tCopy.tSource.pBuffer,
                                 ptTask->Param.tCopy.tSource.iStride,
                                 ptTask->Param.tCopy.tTarget.pBuffer,
                                 ptTask->Param.tCopy.tTarget.iStride,
                                 &ptTask->Param.tCopy.tCopySize);
-
     return arm_fsm_rt_cpl;
 }
 
@@ -210,3 +275,4 @@ arm_fsm_rt_t __MCM_SW_FUNC(tile_copy)( __arm_2d_sub_task_t *ptTask)
 #undef __API_MCM_COLOUR_UPPERCASE
 #undef __API_MCM_COLOUR
 #undef __API_MCM_INT_TYPE
+#undef __MCM_COLOR_TYPE
