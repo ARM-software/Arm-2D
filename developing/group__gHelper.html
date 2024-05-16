@@ -1411,7 +1411,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene request changing SwitchingState indication of scene switching completion update the background of the current scene the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
+the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a479edcdaa0343fe3c3b4cbf61eaeb34d" name="a479edcdaa0343fe3c3b4cbf61eaeb34d"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed143____">arm_2d_scene_player_t.__unnamed143__</a></td>
@@ -2664,15 +2664,45 @@ bNextSceneReq: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a00557d21ea80081994afb324ad668506" name="a00557d21ea80081994afb324ad668506"></a>uint8_t</td>
+<a id="a9c602d9d1e7845378ea60a9fdefbf831" name="a9c602d9d1e7845378ea60a9fdefbf831"></a>uint8_t</td>
 <td class="fieldname">
-u2SwitchingStatusReq: 2</td>
+bManualSwitchReq: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac0184cbbb2f99080c9c136530620cbe8" name="ac0184cbbb2f99080c9c136530620cbe8"></a>uint8_t</td>
+<td class="fieldname">
+bCancelSwitchReq: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ad8930e75a70e610e5027d8d72b2b4555" name="ad8930e75a70e610e5027d8d72b2b4555"></a>uint8_t</td>
+<td class="fieldname">
+bFinishManualSwitchReq: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab994eed69ea6a34da809e16341adea2f" name="ab994eed69ea6a34da809e16341adea2f"></a>uint8_t</td>
+<td class="fieldname">
+bManualSwitch: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="adc249c3c055b0898664215cb9841ed17" name="adc249c3c055b0898664215cb9841ed17"></a>uint8_t</td>
+<td class="fieldname">
+bCancelSwitch: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a253cffa53a40ffa6e61b219ffdcdd9e9" name="a253cffa53a40ffa6e61b219ffdcdd9e9"></a>uint8_t</td>
+<td class="fieldname">
+bFinishManualSwitch: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
 <a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint8_t</td>
 <td class="fieldname">
-__pad1__: 8</td>
+__pad1__: 5</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -2688,9 +2718,9 @@ bUpdateBG: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="a88deb8173b8de2b17a367c32e67ced28" name="a88deb8173b8de2b17a367c32e67ced28"></a>uint8_t</td>
+<a id="a2780c6c77e1f937563d98e2f517c2aeb" name="a2780c6c77e1f937563d98e2f517c2aeb"></a>uint8_t</td>
 <td class="fieldname">
-u2SwitchingStatus: 2</td>
+__pad2__: 2</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
