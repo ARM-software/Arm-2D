@@ -297,7 +297,7 @@ static void __arm_2d_scene_player_delete_all_next_scene(arm_2d_scene_player_t *p
                     break;
                 }
                 ptScene = ptHead->ptNext;
-                if (ptScene) {
+                if (NULL == ptScene) {
                     /* no next item */
                     break;
                 }
@@ -657,8 +657,54 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
                 default:
                     break;
             }
-        } else{
+        } else {
+            /* cancel the swiching, move back to the old scene */
+            int16_t iBarLength =  (iZoneWidth * 2);
 
+            switch (this.Switch.chState) {
+                case START:
+                case LEFT_PAD:
+                    this.Switch.Fade.chOpacity = 0;
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(
+                            (this.Switch.hwPeriod - hwKeepPeriod)>> 1);
+                    this.Switch.chState = FADE_IN;
+                    break;
+
+                case FADE_IN:
+                    iTouchOffset -= iZoneWidth * 1;
+
+                    nElapsedTime = (iBarLength - iTouchOffset) * ((this.Switch.hwPeriod - hwKeepPeriod)>> 1) / iBarLength;
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
+                    break;
+
+                case KEEP:
+                    iTouchOffset -= iZoneWidth * 3;
+                    nElapsedTime = (iBarLength - iTouchOffset) * (hwKeepPeriod>> 1) / iBarLength;
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
+                    break;
+
+                case FADE_OUT: 
+                    iTouchOffset -= iZoneWidth * 5;
+                    nElapsedTime = (iBarLength - iTouchOffset) * ((this.Switch.hwPeriod - hwKeepPeriod)>> 1) / iBarLength;
+                    this.Switch.lTimeStamp 
+                        = lTimeStamp 
+                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
+                    break;
+
+                case RIGHT_PAD:
+                    this.Switch.chState = FADE_OUT;
+                    this.Switch.lTimeStamp = lTimeStamp;
+                    this.Switch.Fade.chOpacity = 0;
+                    break;
+                default:
+                    break;
+            }
         
         }
     }
@@ -823,6 +869,83 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
 
         } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL == tStatus) {
+            uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
+        
+            int32_t nElapsed;
+            int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+            uint_fast16_t hwOpacity;
+            switch (this.Switch.chState) {
+                case START:
+                    this.Switch.Fade.chOpacity = 0;
+                    this.Switch.lTimeStamp = lTimeStamp;
+                    this.Switch.chState = FADE_OUT;
+                    //break;
+
+                case FADE_OUT:
+                    this.Runtime.bCallOldSceneFrameCPL = false;
+
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    
+                #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+                    hwOpacity = (900ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                                                
+                    hwOpacity = (uint_fast16_t)
+                                (256.0f 
+                                    * arm_sin_f32(ARM_2D_ANGLE(
+                                        (float)hwOpacity / 10.0f)));
+                #else
+                    hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                #endif
+                    this.Switch.Fade.chOpacity = MIN(255, hwOpacity);
+                    if (this.Switch.Fade.chOpacity >= 255) {
+                        this.Switch.lTimeStamp = lTimeStamp;
+                        this.Switch.chState = KEEP;
+                    }
+                    break;
+                case KEEP:
+                    this.Runtime.bCallOldSceneFrameCPL = false;
+
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    if (nElapsed >= arm_2d_helper_convert_ms_to_ticks(hwKeepPeriod)) {
+                        this.Switch.lTimeStamp = lTimeStamp;
+                        this.Switch.chState = FADE_IN;
+                    }
+                    break;
+                case FADE_IN:
+                    this.Runtime.bCallOldSceneFrameCPL = true;
+
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    
+                #if __ARM_2D_CFG_HELPER_SWITCH_FADE_USE_SIN__
+                    hwOpacity = (900ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                                                
+                    hwOpacity = (uint_fast16_t)
+                                (256.0f 
+                                    * arm_sin_f32(ARM_2D_ANGLE(
+                                        (float)hwOpacity / 10.0f)));
+                #else
+                    hwOpacity = (uint_fast16_t)(256ul * (int64_t)nElapsed 
+                                    / arm_2d_helper_convert_ms_to_ticks(
+                                            (this.Switch.hwPeriod - hwKeepPeriod) 
+                                                >> 1));
+                #endif
+                    
+                    this.Switch.Fade.chOpacity = 255 - MIN(255, hwOpacity);
+                    if (this.Switch.Fade.chOpacity == 0) {
+                        this.Runtime.bSwitchCPL = true;
+                        //SCENE_SWITCH_RESET_FSM();
+                    }
+                    break;
+            }
 
         }
     } 

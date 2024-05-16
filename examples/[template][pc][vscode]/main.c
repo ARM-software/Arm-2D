@@ -182,7 +182,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
+#if 0
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -200,8 +200,9 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_fitness_loader,
     scene_audiomark_loader,
 #else
-    scene_bubble_charging_loader,
-    //scene_gas_gauge_loader,
+    scene_basics_loader,
+    scene_progress_status_loader,
+    scene_fan_loader,
 #endif
 
 
@@ -213,15 +214,26 @@ void before_scene_switching_handler(void *pTarget,
                                     arm_2d_scene_player_t *ptPlayer,
                                     arm_2d_scene_t *ptScene)
 {
-    static uint_fast8_t s_chIndex = 0;
+    static int_fast8_t s_chIndex = -1;
+
+    switch (arm_2d_scene_player_get_switching_status(&DISP0_ADAPTER)) {
+        case ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL:
+            s_chIndex--;
+            break;
+        default:
+            s_chIndex++;
+            break;
+    }
 
     if (s_chIndex >= dimof(c_SceneLoaders)) {
         s_chIndex = 0;
+    } else if (s_chIndex < 0) {
+        s_chIndex += dimof(c_SceneLoaders);
     }
     
     /* call loader */
     c_SceneLoaders[s_chIndex]();
-    s_chIndex++;
+    
 }
 
 #if __DISP0_CFG_SCEEN_WIDTH__ == 480                                            \
@@ -304,8 +316,10 @@ int app_2d_main_thread (void *argument)
                         if (s_bTouchDown) {
                             /* touch up */
                             arm_2d_scene_player_finish_manual_switching(&DISP0_ADAPTER, 
-                                                                        false, //(tPointerLocation.iX < s_tLastLocation.iX),
+                                                                        true, //(tPointerLocation.iX < s_tLastLocation.iX),
                                                                         3000);
+                            s_tLastLocation.iX = 0;
+                            s_tLastLocation.iY = 0;
                         }
 
                         s_bTouchDown = false;
