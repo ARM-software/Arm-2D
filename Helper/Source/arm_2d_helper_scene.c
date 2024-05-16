@@ -318,9 +318,9 @@ void arm_2d_scene_player_set_auto_switching_period( arm_2d_scene_player_t *ptThi
 
     if (iMS < 0) {
         /* use the manual switching mode */
-        this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
+        this.Runtime.bManualSwitchReq = true;
     } else {
-        this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_AUTO;
+        this.Runtime.bManualSwitchReq = false;
         this.Switch.hwPeriod = MIN(iMS, UINT16_MAX);
         this.Switch.hwPeriod = MAX(iMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
     }
@@ -348,7 +348,7 @@ void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *p
     if (iTouchOffset < 0) {
         return ;
     } else {
-        this.Runtime.u2SwitchingStatusReq = ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
+        this.Runtime.bManualSwitchReq = true;
         this.Switch.iTouchOffset = iTouchOffset;
     }
 
@@ -370,7 +370,20 @@ arm_2d_scene_player_switch_status_t
 arm_2d_scene_player_get_switching_status(arm_2d_scene_player_t *ptThis)
 {
     assert(NULL != ptThis);
-    return this.Runtime.u2SwitchingStatus;
+    if (this.Runtime.bManualSwitch) {
+
+        if (this.Runtime.bFinishManualSwitch) {
+            if (this.Runtime.bCancelSwitch) {
+                return ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL;
+            }
+
+            return ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL;
+        }
+
+        return ARM_2D_SCENE_SWITCH_STATUS_MANUAL;
+    }
+
+    return ARM_2D_SCENE_SWITCH_STATUS_AUTO;
 }
 
 ARM_NONNULL(1)
@@ -391,9 +404,9 @@ arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_
     }
 
     this.Switch.lTimeStamp = arm_2d_helper_get_system_timestamp();
-    this.Runtime.u2SwitchingStatusReq = bMoveToPreviousScene 
-                                          ? ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL
-                                          : ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL;
+    this.Runtime.bFinishManualSwitchReq = true;
+    this.Runtime.bCancelSwitchReq = bMoveToPreviousScene;
+
     this.Switch.hwPeriod = MIN(iInMS, UINT16_MAX);
     this.Switch.hwPeriod = MAX(iInMS, __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__);
 
@@ -532,14 +545,21 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
 
     assert(NULL != ptThis);
 
-    arm_2d_scene_player_switch_status_t tNewStatus = this.Runtime.u2SwitchingStatusReq;
-    arm_2d_scene_player_switch_status_t tCurrentStatus = this.Runtime.u2SwitchingStatus;
+    if (this.Runtime.bManualSwitchReq == this.Runtime.bManualSwitch) {
+        if (!this.Runtime.bManualSwitch) {
+            /* auto switch, no change */
+            return ;
+        }
 
-    if (tNewStatus == tCurrentStatus) {
-        return;
+        if (this.Runtime.bFinishManualSwitch == this.Runtime.bFinishManualSwitchReq) {
+            if (this.Runtime.bCancelSwitch == this.Runtime.bCancelSwitchReq) {
+                /* no switch mode changed */
+                return ;
+            }
+        }
     }
 
-    if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL == tCurrentStatus) {
+    if (this.Runtime.bManualSwitch && this.Runtime.bFinishManualSwitchReq) {
 
         int16_t iFullLength = this.Switch.iFullLength;
         int16_t iTouchOffset = MIN(this.Switch.iTouchOffset, iFullLength);
@@ -548,7 +568,8 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
         uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
         int32_t nElapsedTime = 0;
 
-        if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == tNewStatus) {
+
+        if (!this.Runtime.bCancelSwitchReq) {
 
             switch (this.Switch.chState) {
                 case START:
@@ -592,9 +613,7 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
                 default:
                     break;
             }
-            
-
-        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL == tNewStatus) {
+        } else{
 
         
         }
@@ -630,10 +649,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
     if (bIsNewFrame) {
 
         //! update the switching status
-        this.Runtime.u2SwitchingStatus = this.Runtime.u2SwitchingStatusReq;
+        this.Runtime.bManualSwitch = this.Runtime.bManualSwitchReq;
+        this.Runtime.bFinishManualSwitch = this.Runtime.bFinishManualSwitchReq;
+        this.Runtime.bCancelSwitch = this.Runtime.bCancelSwitchReq;
+
         this.Switch.iFullLength = ptTile->tRegion.tSize.iWidth;
 
-        arm_2d_scene_player_switch_status_t tStatus = this.Runtime.u2SwitchingStatus;
+        arm_2d_scene_player_switch_status_t tStatus = arm_2d_scene_player_get_switching_status(ptThis);
 
         if (    (ARM_2D_SCENE_SWITCH_STATUS_AUTO == tStatus)
            ||   (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == tStatus)) {

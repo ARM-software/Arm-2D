@@ -306,13 +306,19 @@ struct arm_2d_scene_player_t {
         struct {
             
             uint8_t bNextSceneReq           : 1;                                //!< a flag to request switching-to-the next-scene
-            uint8_t u2SwitchingStatusReq    : 2;                                //!< request changing SwitchingState
+            uint8_t bManualSwitchReq        : 1;                                //!< a flag to request using manual switching
+            uint8_t bCancelSwitchReq        : 1;                                //!< a flag to request cancel a manual switching
+            uint8_t bFinishManualSwitchReq  : 1;                                //!< a flag to request finishing a manual switching
+            uint8_t                         : 4;
+
+            uint8_t bManualSwitch           : 1;                                //!< manual switching 
+            uint8_t bCancelSwitch           : 1;                                //!< cancel a manual switching
+            uint8_t bFinishManualSwitch     : 1;                                //!< finish a manual switching
             uint8_t                         : 5;
-            uint8_t                         : 8;
 
             uint8_t bSwitchCPL              : 1;                                //!< indication of scene switching completion
             uint8_t bUpdateBG               : 1;                                //!< update the background of the current scene
-            uint8_t u2SwitchingStatus       : 2;                                //!< the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO
+            uint8_t                         : 2;
             uint8_t bCallOldSceneFrameCPL   : 1;                                //!< call the old scene frame complete event handler
             uint8_t bCallNewSceneFrameCPL   : 1;                                //!< call the new scene frame complete event handler
             uint8_t bCallOldSceneBGCPL      : 1;                                //!< call the old scene Background complete event handler
