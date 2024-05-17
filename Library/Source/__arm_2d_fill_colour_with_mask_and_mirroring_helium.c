@@ -726,7 +726,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_m
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
-
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchMask = pchAlpha;
@@ -777,7 +776,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -947,7 +945,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_m
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
-
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint8_t *pchMask = pchAlpha;
@@ -1036,12 +1033,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
 }
 #endif
 
-
-
-
-
-
-
 __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -1057,7 +1048,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_m
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -1154,11 +1144,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
  * Target Colour: RGB565
  */
 
-
-
-
-
-
 __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -1173,7 +1158,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
