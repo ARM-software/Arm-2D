@@ -251,7 +251,7 @@
           
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cversion="1.1.6" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cversion="1.7.0" condition="Arm-2D-CORE">
           <description>Alpha-blending related APIs for Arm-2D</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_alpha_blending.c" />
