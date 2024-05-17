@@ -32,8 +32,8 @@ var group__gTransform =
       [ "wColour", "group__gTransform.html#a9f162c8dd605b531b0443f4f8d74453d", null ],
       [ "hwColour", "group__gTransform.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ]
     ] ],
-    [ "__arm_2d_transform_info_t.__unnamed78__", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed78____", null ],
-    [ "__arm_2d_transform_info_t.__unnamed78__.Target", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed78_____8Target", null ],
+    [ "__arm_2d_transform_info_t.__unnamed81__", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed81____", null ],
+    [ "__arm_2d_transform_info_t.__unnamed81__.Target", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed81_____8Target", null ],
     [ "arm_2d_op_trans_t.Target", "group__gTransform.html#structarm__2d__op__trans__t_8Target", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gTransform.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
