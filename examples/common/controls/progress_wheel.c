@@ -382,7 +382,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
 
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
+                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[3]);
             } while(0);
 
         }
@@ -418,7 +418,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
                 
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
+                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[1]);
             }
         }
 
@@ -451,7 +451,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
                     
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
+                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[2]);
             }
         }
 
@@ -481,8 +481,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             tWheelColour,
                                             chOpacity,
                                             &tTargetCentre);
-                
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
+
+            ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[0]);
 
         } while(0);
 
@@ -532,7 +532,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
                 
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[4]);
+                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[4]);
             }
 
             /* draw the end point */
@@ -571,7 +571,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                                 bIsNewFrame);
             }
 
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[5]);
+            ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[5]);
 
             if (this.tCFG.tDotColour != this.tCFG.tWheelColour) {
 
@@ -590,7 +590,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 255,
                                                 &tTargetCentre);
 
-                arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[6]);
+                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[6]);
             }
 
         }
