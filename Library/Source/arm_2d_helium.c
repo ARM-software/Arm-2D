@@ -118,11 +118,18 @@ void __arm_2d_helium_init(void)
  */
 
 __STATIC_FORCEINLINE
-uint16x8_t __arm_2d_blend_gray8(uint16x8_t vtrgt, uint16_t vChColour, uint16x8_t opa)
+uint16x8_t __arm_2d_blend_gray8(uint16x8_t vtrgt, uint16_t chColour, uint16x8_t opa)
 {
     uint16x8_t      vTrans = 256 - opa;
 
-    return (vmulq(vTrans, vChColour) + vmulq(vtrgt, opa)) >> 8;
+    return (vmulq(vTrans, chColour) + vmulq(vtrgt, opa)) >> 8;
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_blend_n_gray8(uint16x8_t vtrgt, uint16_t chColour, uint16_t opa)
+{
+    return vaddq_n_u16(vmulq(vtrgt, opa), ((256 - opa) * chColour)) >> 8;
+//    return vmlasq_n_u16(vtrgt, opa, ((256 - opa) * chColour)) >> 8;
 }
 
 
@@ -141,13 +148,32 @@ uint16x8_t __arm_2d_blend_rgb565(uint16x8_t vtrgt, __arm_2d_color_fast_rgb_t * R
     return __arm_2d_rgb565_pack_single_vec(vRtgt, vGtgt, vBtgt);
 }
 
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_blend_n_rgb565(uint16x8_t vtrgt, __arm_2d_color_fast_rgb_t * RGB, uint16_t opa)
+{
+    uint16_t        trans = 256 - opa;
+    uint16x8_t      vRtgt, vGtgt, vBtgt;
+
+    __arm_2d_rgb565_unpack_single_vec(vtrgt, &vRtgt, &vGtgt, &vBtgt);
+
+    vRtgt = vaddq_n_u16(vmulq(vRtgt, opa), (trans * RGB->R)) >> 8;
+    vGtgt = vaddq_n_u16(vmulq(vGtgt, opa), (trans * RGB->G)) >> 8;
+    vBtgt = vaddq_n_u16(vmulq(vBtgt, opa), (trans * RGB->B)) >> 8;
+
+    return __arm_2d_rgb565_pack_single_vec(vRtgt, vGtgt, vBtgt);
+}
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_blend_cccn888(uint16x8_t       vTrg, uint16x8_t vChColour, uint16x8_t opa)
 {
     uint16x8_t      vTrans = 256 - opa;
-
     return (vTrg * opa + vChColour * vTrans) >> 8;
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_blend_n_cccn888(uint16x8_t        vTrg, uint16x8_t vChColour, uint16_t opa)
+{
+    return (vmulq(vTrg, opa) + vmulq(vChColour,(256 - opa))) >> 8;
 }
 
 #define __ARM_2D_COMPILATION_UNIT
@@ -161,6 +187,9 @@ uint16x8_t __arm_2d_blend_cccn888(uint16x8_t       vTrg, uint16x8_t vChColour, u
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_horizontal_line_mask_helium.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_vertical_line_mask_helium.c"
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_mask_and_mirroring_helium.c"
