@@ -191,6 +191,8 @@ arm_fsm_rt_t __MCSMM_SW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTa
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
         if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+        
+        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
             if (ARM_2D_COLOUR_SZ_8BIT == __API_MCSMM_COLOUR_SZ) {
                 __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
                     ptTask->Param.tCopyMask
@@ -246,6 +248,9 @@ arm_fsm_rt_t __MCSMM_SW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTa
 
                     &ptTask->Param.tCopy.tCopySize);
             }
+        #else
+            return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+        #endif
         } else {
             if (ARM_2D_COLOUR_SZ_8BIT == __API_MCSMM_COLOUR_SZ) {
                 __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask(

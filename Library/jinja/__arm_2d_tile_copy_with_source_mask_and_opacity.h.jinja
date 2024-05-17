@@ -64,13 +64,13 @@ extern "C" {
     ] 
 %}
 
-#define arm_2d_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacity_only(               \
+#define arm_2d_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacity_only(                 \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
                                     __DES_ADDR,     /*   target tile address */ \
                                     __REGION,       /*   region address */      \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacity_only(          \
+            arm_2dp_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacity_only(            \
                                         NULL,                                   \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -126,4 +126,4 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacit
 #endif
 
 
-#endif /* __ARM_2D_FILTER_IIR_BLUR_H__ */
+#endif /* __ARM_2D_TILE_COPY_WITH_MASK_AND_OPACITY_H__ */
