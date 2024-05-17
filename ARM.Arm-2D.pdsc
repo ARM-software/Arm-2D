@@ -288,7 +288,7 @@
         </component>
 
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.12.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.12.1" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -371,11 +371,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.2.8" condition="Arm-2D-Helper" maxInstances="1000">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.2.9" condition="Arm-2D-Helper" maxInstances="1000">
           <description>A template for scene</description>
           <files>
-            <file category="sourceC"     name="Helper/template/arm_2d_scene.c" attr="config" version="1.2.8" />
-            <file category="header"      name="Helper/template/arm_2d_scene.h" attr="config" version="1.2.8" />
+            <file category="sourceC"     name="Helper/template/arm_2d_scene.c" attr="config" version="1.2.9" />
+            <file category="header"      name="Helper/template/arm_2d_scene.h" attr="config" version="1.2.9" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Scene%Instance%
