@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        16. May 2024
- * $Revision:    V.1.4.0
+ * $Date:        17. May 2024
+ * $Revision:    V.1.4.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -9895,7 +9895,6 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_and_o
                                         uint16_t hwColour,
                                         uint8_t chOpacity);
 
-
 void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
@@ -9904,7 +9903,6 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
                                         arm_2d_size_t *__RESTRICT ptCopySize,
                                         uint32_t wColour,
                                         uint8_t chOpacity);
-
 
 void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
@@ -9915,7 +9913,6 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity
                                         uint32_t wColour,
                                         uint8_t chOpacity);
 
-
 void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
@@ -9925,7 +9922,6 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opac
                                         arm_2d_size_t *__RESTRICT ptMaskSize,
                                         uint32_t wColour,
                                         uint8_t chOpacity);
-
 
 void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
@@ -9945,8 +9941,6 @@ void __arm_2d_impl_gray8_colour_filling_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -9954,11 +9948,6 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
@@ -9969,9 +9958,6 @@ void __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -9981,11 +9967,6 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -9994,8 +9975,6 @@ void __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -10003,11 +9982,6 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
@@ -10018,9 +9992,6 @@ void __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -10030,11 +10001,6 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -10043,8 +10009,6 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -10052,11 +10016,6 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
@@ -10067,9 +10026,6 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
@@ -10079,11 +10035,6 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10092,8 +10043,6 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10101,11 +10050,6 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
@@ -10116,9 +10060,6 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10128,11 +10069,6 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10141,8 +10077,6 @@ void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10150,11 +10084,6 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
@@ -10165,9 +10094,6 @@ void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10177,11 +10103,6 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10190,8 +10111,6 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10199,11 +10118,6 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
@@ -10214,9 +10128,6 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
@@ -10226,11 +10137,6 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10239,8 +10145,6 @@ void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10248,10 +10152,6 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
-
-#endif
-
-
 
 
 void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
@@ -10263,9 +10163,6 @@ void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10275,11 +10172,6 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10288,8 +10180,6 @@ void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10297,11 +10187,6 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
-
-#endif
-
-
-
 
 void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
@@ -10312,9 +10197,6 @@ void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10324,11 +10206,6 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-#endif
-
-
-
-
 void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10337,7 +10214,6 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
                             uint32_t *__RESTRICT pwTarget,
@@ -10346,10 +10222,6 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
                             int16_t iAlphaStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
-
-#endif
-
-
 
 
 void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
@@ -10362,8 +10234,6 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
                             uint16_t hwOpacity);
 
 
-#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-
 void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
@@ -10373,7 +10243,89 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-#endif
+void __arm_2d_impl_gray8_tile_copy_with_src_mask_and_opacity(
+                                    uint8_t *__RESTRICT pchSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_gray8_tile_copy_src_chn_mask_and_opacity(
+                                    uint8_t *__RESTRICT pchSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity(
+                                    uint16_t *__RESTRICT phwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_rgb565_tile_copy_src_chn_mask_and_opacity(
+                                    uint16_t *__RESTRICT phwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_cccn888_tile_copy_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
