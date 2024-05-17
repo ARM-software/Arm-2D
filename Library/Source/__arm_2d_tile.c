@@ -1822,6 +1822,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_C8BIT = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+            .bAllowEnforcedColour   = true,
+    #endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY,
         
@@ -1840,6 +1843,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB16 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+            .bAllowEnforcedColour   = true,
+    #endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY,
         
@@ -1858,6 +1864,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB32 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+            .bAllowEnforcedColour   = true,
+    #endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY,
         
@@ -1877,6 +1886,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_C8BIT = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+            .bAllowEnforcedColour   = true,
+    #endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_ONLY,
         
@@ -1895,6 +1907,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_RGB16 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+            .bAllowEnforcedColour   = true,
+    #endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_ONLY,
         
@@ -1913,6 +1928,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_RGB32 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+            .bAllowEnforcedColour   = true,
+    #endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_ONLY,
         
@@ -2090,8 +2108,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_XY_MIRROR_RGB32 = {
         },
     },
 };
-
-
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_C8BIT = {
     .Info = {
