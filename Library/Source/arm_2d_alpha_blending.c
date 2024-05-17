@@ -76,7 +76,7 @@ extern "C" {
 #include "__arm_2d_fill_colour_with_vertical_line_mask.c"
 
 #define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_tile_copy_with_mask_and_opacity.c"
+#include "__arm_2d_tile_copy_with_source_mask_and_opacity.c"
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
