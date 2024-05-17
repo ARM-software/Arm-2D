@@ -112,6 +112,44 @@ void __arm_2d_helium_init(void)
 #include "__arm_2d_ll_copy_helium.inc"
 
 
+/*
+ * common blendig utilities used in:
+ * __arm_2d_tile_copy_with_mask_and_opacity_helium.c /__arm_2d_fill_colour_with_horizontal_line_mask_helium.c
+ */
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_blend_gray8(uint16x8_t vtrgt, uint16_t vChColour, uint16x8_t opa)
+{
+    uint16x8_t      vTrans = 256 - opa;
+
+    return (vmulq(vTrans, vChColour) + vmulq(vtrgt, opa)) >> 8;
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_blend_rgb565(uint16x8_t vtrgt, __arm_2d_color_fast_rgb_t * RGB, uint16x8_t opa)
+{
+    uint16x8_t      vTrans = 256 - opa;
+    uint16x8_t      vRtgt, vGtgt, vBtgt;
+
+    __arm_2d_rgb565_unpack_single_vec(vtrgt, &vRtgt, &vGtgt, &vBtgt);
+
+    vRtgt = (vmulq(vTrans, RGB->R) + vmulq(vRtgt, opa)) >> 8;
+    vGtgt = (vmulq(vTrans, RGB->G) + vmulq(vGtgt, opa)) >> 8;
+    vBtgt = (vmulq(vTrans, RGB->B) + vmulq(vBtgt, opa)) >> 8;
+
+    return __arm_2d_rgb565_pack_single_vec(vRtgt, vGtgt, vBtgt);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_blend_cccn888(uint16x8_t       vTrg, uint16x8_t vChColour, uint16x8_t opa)
+{
+    uint16x8_t      vTrans = 256 - opa;
+
+    return (vTrg * opa + vChColour * vTrans) >> 8;
+}
+
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_transform_helium.c"
 
@@ -123,6 +161,10 @@ void __arm_2d_helium_init(void)
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_horizontal_line_mask_helium.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_mask_and_mirroring_helium.c"
+
 
 /*----------------------------------------------------------------------------*
  * Helper

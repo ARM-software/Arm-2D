@@ -18,10 +18,10 @@
 
  /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_fill_colour_with_horizontal_line_mask.c
+ * Title:        __arm_2d_fill_colour_with_horizontal_line_mas_helium.c
  * Description:  APIs for colour-filling-with-horizontal-line-mask
  *
- * $Date:        17. April 2024
+ * $Date:        15. May 2024
  * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
@@ -77,41 +77,6 @@ extern "C" {
 /*============================ IMPLEMENTATION ================================*/
 
 
-__STATIC_FORCEINLINE
-uint16x8_t __arm_2d_blend_gray8(uint16x8_t vtrgt, uint16_t vChColour, uint16x8_t opa)
-
-{
-    uint16x8_t      vTrans = 256 - opa;
-
-    return (vmulq(vTrans, vChColour) + vmulq(vtrgt, opa)) >> 8;
-}
-
-
-
-
-__STATIC_FORCEINLINE
-uint16x8_t __arm_2d_blend_rgb565(uint16x8_t vtrgt, __arm_2d_color_fast_rgb_t * RGB, uint16x8_t opa)
-{
-    uint16x8_t      vTrans = 256 - opa;
-    uint16x8_t      vRtgt, vGtgt, vBtgt;
-
-    __arm_2d_rgb565_unpack_single_vec(vtrgt, &vRtgt, &vGtgt, &vBtgt);
-
-    vRtgt = (vmulq(vTrans, RGB->R) + vmulq(vRtgt, opa)) >> 8;
-    vGtgt = (vmulq(vTrans, RGB->G) + vmulq(vGtgt, opa)) >> 8;
-    vBtgt = (vmulq(vTrans, RGB->B) + vmulq(vBtgt, opa)) >> 8;
-
-    return __arm_2d_rgb565_pack_single_vec(vRtgt, vGtgt, vBtgt);
-}
-
-
-__STATIC_FORCEINLINE
-uint16x8_t __arm_2d_blend_cccn888(uint16x8_t       vTrg, uint16x8_t vChColour, uint16x8_t opa)
-{
-    uint16x8_t      vTrans = 256 - opa;
-
-    return (vTrg * opa + vChColour * vTrans) >> 8;
-}
 
 __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask)(
                                         uint8_t *__RESTRICT pchTarget,
