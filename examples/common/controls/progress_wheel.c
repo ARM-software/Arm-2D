@@ -336,16 +336,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
 
         }
-        #if 0
-        else if (DRAW_ERASE_LAST_CURVE == chState) {
-
-            arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
-                                                            &__wheel,
-                                                            &this.tLastCurveRegion,
-                                                            WAIT_CHANGE);
-            this.chLastQuadrant = chCurrentQuadrant;
-        }
-        #endif
     
         arm_2d_region_t tRotationRegion = __wheel_canvas;
 
@@ -395,37 +385,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[3]);
             } while(0);
 
-        #if 0
-            /* update dirty region */
-            if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 0) {
-
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    0, 
-                    "Progress Wheel", 
-                    "Draw Last Quadrant 0:  Arc [0~90]"
-                );
-
-                arm_2d_region_t tReDrawRegion = tQuater;
-                if (!bNoScale) {
-                    tReDrawRegion = *(this.tOP[3].Target.ptRegion);
-                    tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
-                    tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
-
-                    arm_2d_region_intersect(&tReDrawRegion, 
-                                            &tQuater,
-                                            &tReDrawRegion);
-                }
-                
-                this.chLastQuadrant = chCurrentQuadrant;
-
-                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
-                                                        &__wheel,
-                                                        &tReDrawRegion,
-                                                        DRAW_CURVE);
-
-            }
-        #endif 
         }
 
         //if(this.fAngle >= ARM_2D_ANGLE(180.0f)){
@@ -461,30 +420,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[1]);
             }
-        
-        #if 0
-            /* update dirty region */
-            if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 1) {
-
-                arm_2d_region_t tReDrawRegion = tQuater;
-                if (!bNoScale) {
-                    tReDrawRegion = *(this.tOP[1].Target.ptRegion);
-                    tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
-                    tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
-
-                    arm_2d_region_intersect(&tReDrawRegion, 
-                                            &tQuater,
-                                            &tReDrawRegion);
-                }
-                
-                this.chLastQuadrant = chCurrentQuadrant;
-
-                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
-                                                        &__wheel,
-                                                        &tReDrawRegion,
-                                                        DRAW_CURVE);
-            }
-        #endif
         }
 
         //if(this.fAngle >= ARM_2D_ANGLE(270.0)){
@@ -518,28 +453,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     
                 arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[2]);
             }
-        #if 0
-            /* update dirty region */
-            if (DRAW_LAST_QUADRANT == chState && this.chLastQuadrant == 2) {
-            
-                arm_2d_region_t tReDrawRegion = tQuater;
-                if (!bNoScale) {
-                    tReDrawRegion = *(this.tOP[2].Target.ptRegion);
-                    tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
-                    tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
-
-                    arm_2d_region_intersect(&tReDrawRegion, 
-                                            &tQuater,
-                                            &tReDrawRegion);
-                }
-                
-                arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
-                                                        &__wheel,
-                                                        &tReDrawRegion,
-                                                        DRAW_CURVE);
-
-            }
-        #endif
         }
 
         do {
@@ -571,30 +484,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 
             arm_2d_op_wait_async((arm_2d_op_core_t *)&this.tOP[0]);
 
-            #if 0
-            do {
-                arm_2d_region_t tReDrawRegion = *(this.tOP[0].Target.ptRegion);
-                tReDrawRegion.tLocation.iX += tQuater.tLocation.iX;
-                tReDrawRegion.tLocation.iY += tQuater.tLocation.iY;
-
-                arm_2d_region_intersect(&tReDrawRegion, 
-                                        &tQuater,
-                                        &tReDrawRegion);
-
-                this.tLastCurveRegion = tReDrawRegion;
-
-                /* update dirty region */
-                if (DRAW_CURVE == chState) {
-                    this.chLastQuadrant = chCurrentQuadrant;
-
-                    arm_2d_user_dynamic_dirty_region_update(&this.tDirtyRegion,
-                                                            &__wheel,
-                                                            &tReDrawRegion,
-                                                            WAIT_CHANGE);
-
-                }
-            } while(0);
-            #endif
         } while(0);
 
 
