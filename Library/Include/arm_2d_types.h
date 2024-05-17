@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        14. May 2024
- * $Revision:    V.1.2.7
+ * $Date:        17. May 2024
+ * $Revision:    V.1.2.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1028,6 +1028,30 @@ typedef struct arm_2d_op_src_msk_t {
         const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
     } Mask;
 } arm_2d_op_src_msk_t;
+
+/*!
+ * \brief the base class for operations with a target tile, a source tile and masks
+ * \note arm_2d_op_src_msk_opc_t inherits from arm_2d_op_src_msk_t
+ */
+typedef struct arm_2d_op_src_msk_opc_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< source tile
+    }Source;
+    uint32_t wMode;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
+    } Mask;
+
+    uint8_t chOpacity;                                  //!< opacity
+} arm_2d_op_src_msk_opc_t;
 
 /*!
  * \brief the base class for operations with a target tile, a dummy tile and a reference to the original source tile
