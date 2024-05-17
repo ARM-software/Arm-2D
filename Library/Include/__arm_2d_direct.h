@@ -10503,7 +10503,7 @@ void __arm_2d_impl_gray8_tile_copy_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_tile_copy_src_chn_mask_and_opacity(
+void __arm_2d_impl_gray8_tile_copy_with_src_chn_mask_and_opacity(
                                     uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iSourceStride,
 
@@ -10531,7 +10531,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_tile_copy_src_chn_mask_and_opacity(
+void __arm_2d_impl_rgb565_tile_copy_with_src_chn_mask_and_opacity(
                                     uint16_t *__RESTRICT phwSourceBase,
                                     int16_t iSourceStride,
 
@@ -10559,7 +10559,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_tile_copy_src_chn_mask_and_opacity(
+void __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
