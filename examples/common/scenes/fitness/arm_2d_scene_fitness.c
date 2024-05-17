@@ -91,6 +91,8 @@ const arm_2d_tile_t c_tileListCoverLineMask;
 extern
 const arm_2d_tile_t c_tileQuaterArcMiddleMask;
 extern
+const arm_2d_tile_t c_tileQuaterArcMiddleMask2;
+extern
 const arm_2d_tile_t c_tileWhiteDotMiddleMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
