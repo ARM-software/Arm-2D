@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_tile_copy_with_mask_and_opacity.c
- * Description:  APIs tile copy with mask and opacity
+ * Title:        __arm_2d_tile_copy_with_source_mask_and_opacity.c
+ * Description:  APIs for tile copy with source mask and opacity only
  *
- * $Date:        30. April 2024
- * $Revision:    V.0.5.0
+ * $Date:        18. May 2024
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -446,6 +446,69 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
         }
     }
 }
+
+ARM_NONNULL(2,3,4)
+arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        uint8_t chOpacity)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptSrcMask);
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_GRAY8:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
+
+    arm_2d_err_t tErr = __arm_mask_validate(ptSource, 
+                                            ptSrcMask,
+                                            ptTarget, 
+                                            NULL, 
+                                            ARM_2D_CP_MODE_COPY);
+    if (tErr < 0) {
+        return (arm_fsm_rt_t)tErr;
+    }
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+    
+    //memset(ptThis, 0, sizeof(*ptThis));
+
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
+    this.Source.ptTile = ptSource;
+    this.wMode = 0;
+    this.Mask.ptSourceSide = ptSrcMask;
+    this.Mask.ptTargetSide = NULL;
+    this.chOpacity = chOpacity;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
 
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_source_mask_and_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
@@ -962,6 +1025,69 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
     }
 }
 
+ARM_NONNULL(2,3,4)
+arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        uint8_t chOpacity)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptSrcMask);
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_RGB565:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
+
+    arm_2d_err_t tErr = __arm_mask_validate(ptSource, 
+                                            ptSrcMask,
+                                            ptTarget, 
+                                            NULL, 
+                                            ARM_2D_CP_MODE_COPY);
+    if (tErr < 0) {
+        return (arm_fsm_rt_t)tErr;
+    }
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+    
+    //memset(ptThis, 0, sizeof(*ptThis));
+
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
+    this.Source.ptTile = ptSource;
+    this.wMode = 0;
+    this.Mask.ptSourceSide = ptSrcMask;
+    this.Mask.ptTargetSide = NULL;
+    this.chOpacity = chOpacity;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+
 arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_source_mask_and_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptTask->ptOP);
@@ -1476,6 +1602,69 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
         }
     }
 }
+
+ARM_NONNULL(2,3,4)
+arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(
+                                        arm_2d_op_cp_msk_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        uint8_t chOpacity)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptSrcMask);
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_CCCN888:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+                break;
+        }
+    }
+#endif
+
+    arm_2d_err_t tErr = __arm_mask_validate(ptSource, 
+                                            ptSrcMask,
+                                            ptTarget, 
+                                            NULL, 
+                                            ARM_2D_CP_MODE_COPY);
+    if (tErr < 0) {
+        return (arm_fsm_rt_t)tErr;
+    }
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+    
+    //memset(ptThis, 0, sizeof(*ptThis));
+
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
+    this.Source.ptTile = ptSource;
+    this.wMode = 0;
+    this.Mask.ptSourceSide = ptSrcMask;
+    this.Mask.ptTargetSide = NULL;
+    this.chOpacity = chOpacity;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
 
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_source_mask_and_opacity_only( __arm_2d_sub_task_t *ptTask)
 {

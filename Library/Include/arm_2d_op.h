@@ -513,6 +513,15 @@ extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_ONLY_CCCN888;
 
 extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_CCCN888;
+
+extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_X_MIRROR_GRAY8;
 
 extern
