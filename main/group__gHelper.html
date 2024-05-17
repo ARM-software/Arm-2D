@@ -288,9 +288,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ga0c896791f09bdcbb1115746844ddba2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b">arm_2d_scene_player_register_before_switching_event_handler</a>( __SCENE_PLAYER_PTR,  __HANDLER,  ...)</td></tr>
 <tr class="memdesc:ga0c896791f09bdcbb1115746844ddba2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtBeforeSwitching event handler. You can use this event to prepare next scenes.  <a href="group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b">More...</a><br /></td></tr>
 <tr class="separator:ga0c896791f09bdcbb1115746844ddba2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf06e9d69a4a3e2dfc63f5073ae58f607"><td class="memItemLeft" align="right" valign="top"><a id="gaf06e9d69a4a3e2dfc63f5073ae58f607" name="gaf06e9d69a4a3e2dfc63f5073ae58f607"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCHING_STATUS_MASK</b>&#160;&#160;&#160;((uint16_t)3 &lt;&lt; 14)</td></tr>
-<tr class="separator:gaf06e9d69a4a3e2dfc63f5073ae58f607"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga31d44d0cf7fe5bb395622d23784c87c7"><td class="memItemLeft" align="right" valign="top"><a id="ga31d44d0cf7fe5bb395622d23784c87c7" name="ga31d44d0cf7fe5bb395622d23784c87c7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_FPS_MODE_RENDER_ONLY</b>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:ga31d44d0cf7fe5bb395622d23784c87c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -999,21 +996,67 @@ the setting value </td></tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p >scene switching mode descriptor </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a8d98fc5df986d9a2db7ccd4df5b41ddf" name="a8d98fc5df986d9a2db7ccd4df5b41ddf"></a>uint8_t</td>
-<td class="fieldname">
-chEffects</td>
-<td class="fielddoc">
-switching effects </td></tr>
-<tr><td class="fieldtype">
-<a id="abb828a64c4ccfbd867ffd5461824968a" name="abb828a64c4ccfbd867ffd5461824968a"></a>arm_2d_helper_draw_handler_t *</td>
-<td class="fieldname">
-fnSwitchDrawer</td>
-<td class="fielddoc">
-switching algorithm </td></tr>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a8d98fc5df986d9a2db7ccd4df5b41ddf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a8d98fc5df986d9a2db7ccd4df5b41ddf">chEffects</a></td></tr>
+<tr class="memdesc:a8d98fc5df986d9a2db7ccd4df5b41ddf"><td class="mdescLeft">&#160;</td><td class="mdescRight">switching effects  <a href="group__gHelper.html#a8d98fc5df986d9a2db7ccd4df5b41ddf">More...</a><br /></td></tr>
+<tr class="separator:a8d98fc5df986d9a2db7ccd4df5b41ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb828a64c4ccfbd867ffd5461824968a"><td class="memItemLeft" align="right" valign="top">arm_2d_helper_draw_handler_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a">fnSwitchDrawer</a></td></tr>
+<tr class="memdesc:abb828a64c4ccfbd867ffd5461824968a"><td class="mdescLeft">&#160;</td><td class="mdescRight">switching algorithm  <a href="group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a">More...</a><br /></td></tr>
+<tr class="separator:abb828a64c4ccfbd867ffd5461824968a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a269e2461a84bb2081c6ddc25357974a9"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9">fnOnRequestChangeSwitchingStatus</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:a269e2461a84bb2081c6ddc25357974a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">on request change-switch-status event handler  <a href="group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9">More...</a><br /></td></tr>
+<tr class="separator:a269e2461a84bb2081c6ddc25357974a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a id="a8d98fc5df986d9a2db7ccd4df5b41ddf" name="a8d98fc5df986d9a2db7ccd4df5b41ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d98fc5df986d9a2db7ccd4df5b41ddf">&#9670;&nbsp;</a></span>chEffects</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t arm_2d_scene_switch_mode_t::chEffects</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>switching effects </p>
+
+</div>
+</div>
+<a id="abb828a64c4ccfbd867ffd5461824968a" name="abb828a64c4ccfbd867ffd5461824968a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb828a64c4ccfbd867ffd5461824968a">&#9670;&nbsp;</a></span>fnSwitchDrawer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_2d_helper_draw_handler_t* arm_2d_scene_switch_mode_t::fnSwitchDrawer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>switching algorithm </p>
+
+</div>
+</div>
+<a id="a269e2461a84bb2081c6ddc25357974a9" name="a269e2461a84bb2081c6ddc25357974a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a269e2461a84bb2081c6ddc25357974a9">&#9670;&nbsp;</a></span>fnOnRequestChangeSwitchingStatus</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* arm_2d_scene_switch_mode_t::fnOnRequestChangeSwitchingStatus) (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>on request change-switch-status event handler </p>
+
+</div>
+</div>
 
 </div>
 </div>
@@ -1368,7 +1411,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
+the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a479edcdaa0343fe3c3b4cbf61eaeb34d" name="a479edcdaa0343fe3c3b4cbf61eaeb34d"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed143____">arm_2d_scene_player_t.__unnamed143__</a></td>
@@ -2354,12 +2397,6 @@ when set, ignore the new scene </td></tr>
 u2DefaultBG: 2</td>
 <td class="fielddoc">
 the default background </td></tr>
-<tr><td class="fieldtype">
-<a id="aa0c3a0138af94bc9521ff3d0190a471e" name="aa0c3a0138af94bc9521ff3d0190a471e"></a>uint8_t</td>
-<td class="fieldname">
-u2Status: 2</td>
-<td class="fielddoc">
-the status of the switching, default: ARM_2D_SCENE_SWITCH_STATUS_AUTO </td></tr>
 </table>
 
 </div>
@@ -2627,6 +2664,48 @@ bNextSceneReq: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
+<a id="a9c602d9d1e7845378ea60a9fdefbf831" name="a9c602d9d1e7845378ea60a9fdefbf831"></a>uint8_t</td>
+<td class="fieldname">
+bManualSwitchReq: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac0184cbbb2f99080c9c136530620cbe8" name="ac0184cbbb2f99080c9c136530620cbe8"></a>uint8_t</td>
+<td class="fieldname">
+bCancelSwitchReq: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ad8930e75a70e610e5027d8d72b2b4555" name="ad8930e75a70e610e5027d8d72b2b4555"></a>uint8_t</td>
+<td class="fieldname">
+bFinishManualSwitchReq: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab994eed69ea6a34da809e16341adea2f" name="ab994eed69ea6a34da809e16341adea2f"></a>uint8_t</td>
+<td class="fieldname">
+bManualSwitch: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="adc249c3c055b0898664215cb9841ed17" name="adc249c3c055b0898664215cb9841ed17"></a>uint8_t</td>
+<td class="fieldname">
+bCancelSwitch: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a253cffa53a40ffa6e61b219ffdcdd9e9" name="a253cffa53a40ffa6e61b219ffdcdd9e9"></a>uint8_t</td>
+<td class="fieldname">
+bFinishManualSwitch: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint8_t</td>
+<td class="fieldname">
+__pad1__: 5</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="a97f8e2466a24e7c33b7b708b7c11f1ec" name="a97f8e2466a24e7c33b7b708b7c11f1ec"></a>uint8_t</td>
 <td class="fieldname">
 bSwitchCPL: 1</td>
@@ -2636,6 +2715,12 @@ bSwitchCPL: 1</td>
 <a id="aa451c9cbeab2e70bd80d01cee5a21b10" name="aa451c9cbeab2e70bd80d01cee5a21b10"></a>uint8_t</td>
 <td class="fieldname">
 bUpdateBG: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a2780c6c77e1f937563d98e2f517c2aeb" name="a2780c6c77e1f937563d98e2f517c2aeb"></a>uint8_t</td>
+<td class="fieldname">
+__pad2__: 2</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -2713,6 +2798,12 @@ hwPeriod</td>
 <a id="a9254846d24542783071ec637c756b8b5" name="a9254846d24542783071ec637c756b8b5"></a>int16_t</td>
 <td class="fieldname">
 iTouchOffset</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a2f03fc674e2cefad1b6b22b30a68f6e1" name="a2f03fc674e2cefad1b6b22b30a68f6e1"></a>int16_t</td>
+<td class="fieldname">
+iFullLength</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -6015,7 +6106,7 @@ false the scene player stays in tge current scene. </dd></dl>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">bMoveToPreviousScene</td><td>a boolean value indicating whether move back to the previous scene, i.e. whether cancel the current switching </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">iInMS</td><td>the period to finish the rest part </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iInMS</td><td>the planned period as if the switching is done in auto-switching mode </td></tr>
   </table>
   </dd>
 </dl>

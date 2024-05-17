@@ -5,7 +5,8 @@ var group__gHelper =
     ] ],
     [ "arm_2d_scene_switch_mode_t", "group__gHelper.html#structarm__2d__scene__switch__mode__t", [
       [ "chEffects", "group__gHelper.html#a8d98fc5df986d9a2db7ccd4df5b41ddf", null ],
-      [ "fnSwitchDrawer", "group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a", null ]
+      [ "fnSwitchDrawer", "group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a", null ],
+      [ "fnOnRequestChangeSwitchingStatus", "group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9", null ]
     ] ],
     [ "arm_2d_scene_t", "group__gHelper.html#structarm__2d__scene__t", [
       [ "ptPlayer", "group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5", null ],
@@ -99,8 +100,7 @@ var group__gHelper =
       [ "bIgnoreOldScene", "group__gHelper.html#a28bde530bc229b73e7327109ca751c3b", null ],
       [ "bIgnoreNewSceneBG", "group__gHelper.html#a31bfffcfb36db42f038df1a618ce79d1", null ],
       [ "bIgnoreNewScene", "group__gHelper.html#a0d79e6b6fd0828d4792ccd87b5c78bd1", null ],
-      [ "u2DefaultBG", "group__gHelper.html#afebb53e17c0600849d68596f532ed3fe", null ],
-      [ "u2Status", "group__gHelper.html#aa0c3a0138af94bc9521ff3d0190a471e", null ]
+      [ "u2DefaultBG", "group__gHelper.html#afebb53e17c0600849d68596f532ed3fe", null ]
     ] ],
     [ "arm_2d_scene_t.__unnamed136__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed136____", null ],
     [ "arm_2d_scene_t.__unnamed136__.__unnamed140__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed136_____8____unnamed140____", null ],
