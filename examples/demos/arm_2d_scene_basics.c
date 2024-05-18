@@ -197,7 +197,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                 #if 1
                     /* draw the cmsis logo in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
-                    #if 1
+                    #if 0
                         #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
                         arm_2d_tile_copy_with_src_mask_and_opacity_only( 
                                                         &c_tileCMSISLogoCCCA8888,
