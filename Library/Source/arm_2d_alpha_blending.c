@@ -63,21 +63,6 @@ extern "C" {
 #   pragma diag_suppress 174,177,188,68,513,144
 #endif
 
-#define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_fill_colour_with_alpha.c"
-
-#define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_fill_colour_with_mask_and_mirroring.c"
-
-#define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_fill_colour_with_horizontal_line_mask.c"
-
-#define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_fill_colour_with_vertical_line_mask.c"
-
-#define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_tile_copy_with_source_mask_and_opacity.c"
-
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -3653,6 +3638,22 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
         },
     },
 };
+
+/*============================ INCLUDES ======================================*/
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_alpha.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_mask_and_mirroring.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_horizontal_line_mask.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_vertical_line_mask.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_tile_copy_with_source_mask_and_opacity.c"
 
 #ifdef   __cplusplus
 }

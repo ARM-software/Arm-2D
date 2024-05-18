@@ -503,7 +503,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacit
     
     //memset(ptThis, 0, sizeof(*ptThis));
 
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_{{colour_name | upper }};
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;

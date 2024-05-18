@@ -1074,7 +1074,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only(
     
     //memset(ptThis, 0, sizeof(*ptThis));
 
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_RGB565;
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
@@ -1652,7 +1652,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(
     
     //memset(ptThis, 0, sizeof(*ptThis));
 
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_CCCN888;
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
