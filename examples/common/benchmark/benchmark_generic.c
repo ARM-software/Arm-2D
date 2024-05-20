@@ -40,6 +40,7 @@
 #   pragma clang diagnostic ignored "-Wextra-semi"
 #   pragma clang diagnostic ignored "-Wfloat-conversion"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wswitch-default"
 #endif
 
 /*============================ MACROS ========================================*/

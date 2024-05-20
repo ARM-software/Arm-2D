@@ -1291,3 +1291,4 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_cccn888_repeat_fill_colour_wi
 #endif
 
 #endif
+

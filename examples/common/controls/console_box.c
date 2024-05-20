@@ -45,6 +45,9 @@
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wformat-nonliteral"
+#   pragma clang diagnostic ignored "-Wsign-compare"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -546,6 +549,9 @@ void console_box_show(  console_box_t *ptThis,
                         bool bIsNewFrame,
                         uint8_t chOpacity)
 {
+    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_UNUSED(chOpacity);
+
     assert(NULL!= ptThis);
 
     arm_2d_container(ptTile, __console_box, ptRegion) {

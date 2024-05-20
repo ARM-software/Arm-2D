@@ -50,7 +50,8 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion" 
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
@@ -231,6 +232,7 @@ int32_t histogram_get_bin_value(void *pTarget,
                                 histogram_t *ptHistogram, 
                                 uint_fast16_t hwBinIndex)
 {
+    ARM_2D_UNUSED(ptHistogram);
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)pTarget;
 
     uint16_t hwAccessIndex = (hwBinIndex + this.WindowFIFO.hwPointer);

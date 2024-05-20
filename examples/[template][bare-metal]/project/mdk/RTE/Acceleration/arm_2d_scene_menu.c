@@ -47,7 +47,9 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wdouble-promotion"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_GCC__
@@ -230,12 +232,12 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -287,12 +289,12 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
     }
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -347,12 +349,12 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -401,12 +403,12 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);

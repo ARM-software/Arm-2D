@@ -64,6 +64,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
 #   pragma clang diagnostic ignored "-Wc23-extensions"
 #   pragma clang diagnostic ignored "-Wunused-value"
+#   pragma clang diagnostic ignored "-Wbad-function-cast"
+#   pragma clang diagnostic ignored "-Wundef"
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wmissing-braces"

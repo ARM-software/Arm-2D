@@ -1845,3 +1845,4 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_line_mask_and_op
 #endif
 
 #endif
+

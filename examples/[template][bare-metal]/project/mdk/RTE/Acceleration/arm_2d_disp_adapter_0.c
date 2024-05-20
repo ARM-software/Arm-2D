@@ -168,6 +168,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 __WEAK 
 IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
 {
+    ARM_2D_PARAM(ptTile);
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(bIsNewFrame);
 

@@ -44,6 +44,7 @@
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #   pragma clang diagnostic ignored "-Winitializer-overrides"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -210,7 +211,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             bool bIsNewFrame)
 {
 
-    bool bNoScale = ABS(this.fScale - 1.0f) < 0.01;
+    bool bNoScale = ABS(this.fScale - 1.0f) < 0.01f;
     bool bIgnoreCurve = false;
 
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;

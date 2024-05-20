@@ -50,7 +50,11 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+#   pragma clang diagnostic ignored "-Wsign-compare"
+#   pragma clang diagnostic ignored "-Wdouble-promotion"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
@@ -130,7 +134,7 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 static arm_2d_location_t s_tFanCentre;
 
-const
+static const
 struct {
     COLOUR_INT tColour;
     float fSpeed;

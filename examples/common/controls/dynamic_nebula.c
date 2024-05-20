@@ -183,7 +183,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                                                 ptThis,
                                                 &__control,
                                                 tParicleLocation,
-                                                hwOpacity,
+                                                (uint8_t)hwOpacity,
                                                 (int16_t)fRadius
                                              ));
                     ARM_2D_OP_WAIT_ASYNC();

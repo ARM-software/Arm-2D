@@ -1822,3 +1822,4 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_CCCN
 #endif
 
 #endif /* __ARM_2D_COMPILATION_UNIT */
+

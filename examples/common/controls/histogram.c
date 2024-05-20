@@ -42,6 +42,8 @@
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wimplicit-fallthrough"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -340,6 +342,7 @@ void histogram_show(histogram_t *ptThis,
                         );
                         break;
                     }
+                    //fallthrough
                 case HISTOGRAM_DR_UPDATE_BINS: {
                     bool bValueChanged = false;
                     uint_fast8_t chBinCount = this.u5BinsPerDirtyRegion + 1;

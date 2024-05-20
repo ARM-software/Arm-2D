@@ -44,6 +44,14 @@
 #include <arm_math_f16.h>
 #endif
 
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#   pragma clang diagnostic ignored "-Wnan-infinity-disabled"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -405,6 +413,10 @@ __STATIC_FORCEINLINE float16x8_t vsqrtf_f16(
 
 #ifdef   __cplusplus
 }
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
 #endif
 
 #endif // (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEF) || defined(ARM_MATH_MVEI)
