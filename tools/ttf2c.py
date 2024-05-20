@@ -54,6 +54,8 @@ c_head_string="""
 #   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wunused-parameter"
+#   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wsign-conversion"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
