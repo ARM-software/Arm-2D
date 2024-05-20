@@ -704,6 +704,26 @@
           <GroupName>asset</GroupName>
         </Group>
         <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Acceleration</GroupName>
         </Group>
         <Group>
@@ -1628,6 +1648,26 @@
         </Group>
         <Group>
           <GroupName>asset</GroupName>
+        </Group>
+        <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::Acceleration</GroupName>
@@ -2557,6 +2597,26 @@
           <GroupName>asset</GroupName>
         </Group>
         <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Acceleration</GroupName>
         </Group>
         <Group>
@@ -3413,6 +3473,26 @@
         </Group>
         <Group>
           <GroupName>asset</GroupName>
+        </Group>
+        <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::Acceleration</GroupName>
@@ -4342,6 +4422,26 @@
           <GroupName>asset</GroupName>
         </Group>
         <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Acceleration</GroupName>
         </Group>
         <Group>
@@ -5267,6 +5367,26 @@
         </Group>
         <Group>
           <GroupName>asset</GroupName>
+        </Group>
+        <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::Acceleration</GroupName>
@@ -6196,6 +6316,26 @@
           <GroupName>asset</GroupName>
         </Group>
         <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Acceleration</GroupName>
         </Group>
         <Group>
@@ -6360,7 +6500,7 @@
       <TargetName>AN547-Cortex-M55_r0</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
+      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -7052,6 +7192,95 @@
         </Group>
         <Group>
           <GroupName>asset</GroupName>
+        </Group>
+        <Group>
+          <GroupName>ACI</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::Acceleration</GroupName>
@@ -7981,6 +8210,26 @@
           <GroupName>asset</GroupName>
         </Group>
         <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Acceleration</GroupName>
         </Group>
         <Group>
@@ -8839,6 +9088,973 @@
           <GroupName>asset</GroupName>
         </Group>
         <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>::Acceleration</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Board Support</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Compiler</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Device</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>1</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+        </Group>
+        <Group>
+          <GroupName>::Utilities</GroupName>
+        </Group>
+      </Groups>
+    </Target>
+    <Target>
+      <TargetName>AN552_Cortex-M55</TargetName>
+      <ToolsetNumber>0x4</ToolsetNumber>
+      <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
+      <uAC6>1</uAC6>
+      <TargetOption>
+        <TargetCommonOption>
+          <Device>SSE-300-MPS3</Device>
+          <Vendor>ARM</Vendor>
+          <PackID>ARM.V2M_MPS3_SSE_300_BSP.1.5.0</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
+          <Cpu>IRAM(0x00000000,0x00080000) IRAM2(0x01000000,0x00200000) XRAM(0x20000000,0x00020000) XRAM2(0x20020000,0x00020000) XRAM3(0x20040000,0x00020000) CPUTYPE("Cortex-M55") FPU3(DFPU) DSP TZ MVE(FP) CLOCK(12000000) ESEL ELITTLE</Cpu>
+          <FlashUtilSpec></FlashUtilSpec>
+          <StartupFile></StartupFile>
+          <FlashDriverDll>UL2V8M(-S0 -C0 -P0 -FD01000000 -FC1000)</FlashDriverDll>
+          <DeviceId>0</DeviceId>
+          <RegisterFile>$$Device:SSE-300-MPS3$Device\Include\SSE300MPS3.h</RegisterFile>
+          <MemoryEnv></MemoryEnv>
+          <Cmp></Cmp>
+          <Asm></Asm>
+          <Linker></Linker>
+          <OHString></OHString>
+          <InfinionOptionDll></InfinionOptionDll>
+          <SLE66CMisc></SLE66CMisc>
+          <SLE66AMisc></SLE66AMisc>
+          <SLE66LinkerMisc></SLE66LinkerMisc>
+          <SFDFile>$$Device:SSE-300-MPS3$SVD\SSE300.svd</SFDFile>
+          <bCustSvd>0</bCustSvd>
+          <UseEnv>0</UseEnv>
+          <BinPath></BinPath>
+          <IncludePath></IncludePath>
+          <LibPath></LibPath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
+          <TargetStatus>
+            <Error>0</Error>
+            <ExitCodeStop>0</ExitCodeStop>
+            <ButtonStop>0</ButtonStop>
+            <NotGenerated>0</NotGenerated>
+            <InvalidFlash>1</InvalidFlash>
+          </TargetStatus>
+          <OutputDirectory>.\Out\</OutputDirectory>
+          <OutputName>template</OutputName>
+          <CreateExecutable>1</CreateExecutable>
+          <CreateLib>0</CreateLib>
+          <CreateHexFile>0</CreateHexFile>
+          <DebugInformation>1</DebugInformation>
+          <BrowseInformation>1</BrowseInformation>
+          <ListingPath>.\Out\</ListingPath>
+          <HexFormatSelection>1</HexFormatSelection>
+          <Merge32K>0</Merge32K>
+          <CreateBatchFile>0</CreateBatchFile>
+          <BeforeCompile>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
+          </BeforeCompile>
+          <BeforeMake>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
+          </BeforeMake>
+          <AfterMake>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
+          </AfterMake>
+          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SVCSIdString></SVCSIdString>
+        </TargetCommonOption>
+        <CommonProperty>
+          <UseCPPCompiler>0</UseCPPCompiler>
+          <RVCTCodeConst>0</RVCTCodeConst>
+          <RVCTZI>0</RVCTZI>
+          <RVCTOtherData>0</RVCTOtherData>
+          <ModuleSelection>0</ModuleSelection>
+          <IncludeInBuild>1</IncludeInBuild>
+          <AlwaysBuild>0</AlwaysBuild>
+          <GenerateAssemblyFile>0</GenerateAssemblyFile>
+          <AssembleAssemblyFile>0</AssembleAssemblyFile>
+          <PublicsOnly>0</PublicsOnly>
+          <StopOnExitCode>3</StopOnExitCode>
+          <CustomArgument></CustomArgument>
+          <IncludeLibraryModules></IncludeLibraryModules>
+          <ComprImg>1</ComprImg>
+        </CommonProperty>
+        <DllOption>
+          <SimDllName></SimDllName>
+          <SimDllArguments></SimDllArguments>
+          <SimDlgDll></SimDlgDll>
+          <SimDlgDllArguments></SimDlgDllArguments>
+          <TargetDllName>SARMV8M.DLL</TargetDllName>
+          <TargetDllArguments> -MPU -MVE</TargetDllArguments>
+          <TargetDlgDll>TCM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM55</TargetDlgDllArguments>
+        </DllOption>
+        <DebugOption>
+          <OPTHX>
+            <HexSelection>1</HexSelection>
+            <HexRangeLowAddress>0</HexRangeLowAddress>
+            <HexRangeHighAddress>0</HexRangeHighAddress>
+            <HexOffset>0</HexOffset>
+            <Oh166RecLen>16</Oh166RecLen>
+          </OPTHX>
+        </DebugOption>
+        <Utilities>
+          <Flash1>
+            <UseTargetDll>0</UseTargetDll>
+            <UseExternalTool>1</UseExternalTool>
+            <RunIndependent>0</RunIndependent>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <Capability>1</Capability>
+            <DriverSelection>4102</DriverSelection>
+          </Flash1>
+          <bUseTDR>1</bUseTDR>
+          <Flash2>BIN\UL2V8M.DLL</Flash2>
+          <Flash3></Flash3>
+          <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
+          <FcArmLst>0</FcArmLst>
+        </Utilities>
+        <TargetArmAds>
+          <ArmAdsMisc>
+            <GenerateListings>0</GenerateListings>
+            <asHll>1</asHll>
+            <asAsm>1</asAsm>
+            <asMacX>1</asMacX>
+            <asSyms>1</asSyms>
+            <asFals>1</asFals>
+            <asDbgD>1</asDbgD>
+            <asForm>1</asForm>
+            <ldLst>0</ldLst>
+            <ldmm>1</ldmm>
+            <ldXref>1</ldXref>
+            <BigEnd>0</BigEnd>
+            <AdsALst>1</AdsALst>
+            <AdsACrf>1</AdsACrf>
+            <AdsANop>0</AdsANop>
+            <AdsANot>0</AdsANot>
+            <AdsLLst>1</AdsLLst>
+            <AdsLmap>1</AdsLmap>
+            <AdsLcgr>1</AdsLcgr>
+            <AdsLsym>1</AdsLsym>
+            <AdsLszi>1</AdsLszi>
+            <AdsLtoi>1</AdsLtoi>
+            <AdsLsun>1</AdsLsun>
+            <AdsLven>1</AdsLven>
+            <AdsLsxf>1</AdsLsxf>
+            <RvctClst>0</RvctClst>
+            <GenPPlst>0</GenPPlst>
+            <AdsCpuType>"Cortex-M55"</AdsCpuType>
+            <RvctDeviceName></RvctDeviceName>
+            <mOS>0</mOS>
+            <uocRom>0</uocRom>
+            <uocRam>0</uocRam>
+            <hadIROM>0</hadIROM>
+            <hadIRAM>1</hadIRAM>
+            <hadXRAM>1</hadXRAM>
+            <uocXRam>0</uocXRam>
+            <RvdsVP>3</RvdsVP>
+            <RvdsMve>2</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
+            <hadIRAM2>1</hadIRAM2>
+            <hadIROM2>0</hadIROM2>
+            <StupSel>0</StupSel>
+            <useUlib>0</useUlib>
+            <EndSel>1</EndSel>
+            <uLtcg>0</uLtcg>
+            <nSecure>2</nSecure>
+            <RoSelD>0</RoSelD>
+            <RwSelD>4</RwSelD>
+            <CodeSel>0</CodeSel>
+            <OptFeed>0</OptFeed>
+            <NoZi1>0</NoZi1>
+            <NoZi2>0</NoZi2>
+            <NoZi3>0</NoZi3>
+            <NoZi4>0</NoZi4>
+            <NoZi5>0</NoZi5>
+            <Ro1Chk>0</Ro1Chk>
+            <Ro2Chk>0</Ro2Chk>
+            <Ro3Chk>0</Ro3Chk>
+            <Ir1Chk>0</Ir1Chk>
+            <Ir2Chk>0</Ir2Chk>
+            <Ra1Chk>0</Ra1Chk>
+            <Ra2Chk>0</Ra2Chk>
+            <Ra3Chk>0</Ra3Chk>
+            <Im1Chk>1</Im1Chk>
+            <Im2Chk>1</Im2Chk>
+            <OnChipMemories>
+              <Ocm1>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm1>
+              <Ocm2>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm2>
+              <Ocm3>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm3>
+              <Ocm4>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm4>
+              <Ocm5>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm5>
+              <Ocm6>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm6>
+              <IRAM>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x80000</Size>
+              </IRAM>
+              <IROM>
+                <Type>1</Type>
+                <StartAddress>0x10000000</StartAddress>
+                <Size>0x200000</Size>
+              </IROM>
+              <XRAM>
+                <Type>1</Type>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x20000</Size>
+              </XRAM>
+              <OCR_RVCT1>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT1>
+              <OCR_RVCT2>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT2>
+              <OCR_RVCT3>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT3>
+              <OCR_RVCT4>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT4>
+              <OCR_RVCT5>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT5>
+              <OCR_RVCT6>
+                <Type>0</Type>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x20000</Size>
+              </OCR_RVCT6>
+              <OCR_RVCT7>
+                <Type>0</Type>
+                <StartAddress>0x20020000</StartAddress>
+                <Size>0x20000</Size>
+              </OCR_RVCT7>
+              <OCR_RVCT8>
+                <Type>0</Type>
+                <StartAddress>0x20040000</StartAddress>
+                <Size>0x20000</Size>
+              </OCR_RVCT8>
+              <OCR_RVCT9>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x80000</Size>
+              </OCR_RVCT9>
+              <OCR_RVCT10>
+                <Type>0</Type>
+                <StartAddress>0x1000000</StartAddress>
+                <Size>0x200000</Size>
+              </OCR_RVCT10>
+            </OnChipMemories>
+            <RvctStartVector></RvctStartVector>
+          </ArmAdsMisc>
+          <Cads>
+            <interw>1</interw>
+            <Optim>0</Optim>
+            <oTime>1</oTime>
+            <SplitLS>0</SplitLS>
+            <OneElfS>1</OneElfS>
+            <Strict>0</Strict>
+            <EnumInt>0</EnumInt>
+            <PlainCh>0</PlainCh>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <wLevel>3</wLevel>
+            <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
+            <useXO>0</useXO>
+            <v6Lang>6</v6Lang>
+            <v6LangP>3</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>1</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
+            <VariousControls>
+              <MiscControls>-Wno-padded -Omax -mcpu=cortex-m55+cdecp0</MiscControls>
+              <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
+              <Undefine></Undefine>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\..\Acceleration\Arm\ACI</IncludePath>
+            </VariousControls>
+          </Cads>
+          <Aads>
+            <interw>1</interw>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <thumb>0</thumb>
+            <SplitLS>0</SplitLS>
+            <SwStkChk>0</SwStkChk>
+            <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
+            <VariousControls>
+              <MiscControls></MiscControls>
+              <Define></Define>
+              <Undefine></Undefine>
+              <IncludePath></IncludePath>
+            </VariousControls>
+          </Aads>
+          <LDads>
+            <umfTarg>0</umfTarg>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <noStLib>0</noStLib>
+            <RepFail>1</RepFail>
+            <useFile>0</useFile>
+            <TextAddressRange>0x00000000</TextAddressRange>
+            <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
+            <ScatterFile>.\RTE\Device\SSE-300-MPS3\fvp_sse300_mps3_s.sct</ScatterFile>
+            <IncludeLibs></IncludeLibs>
+            <IncludeLibsPath></IncludeLibsPath>
+            <Misc>--entry=Reset_Handler
+--diag_suppress=6314,6329,6848</Misc>
+            <LinkerInputFile></LinkerInputFile>
+            <DisabledWarnings></DisabledWarnings>
+          </LDads>
+        </TargetArmAds>
+      </TargetOption>
+      <Groups>
+        <Group>
+          <GroupName>Source Files</GroupName>
+          <Files>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\app_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtual_resource_demo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\virtual_resource_demo.c</FilePath>
+            </File>
+            <File>
+              <FileName>virtual_resource_demo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\virtual_resource_demo.h</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\MeterPanel.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_alarm_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_alarm_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_histogram.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\histogram\arm_2d_scene_histogram.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_histogram.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\histogram\arm_2d_scene_histogram.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\meter\arm_2d_scene_meter.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_meter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\meter\arm_2d_scene_meter.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fitness.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fitness.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fitness\arm_2d_scene_fitness.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_watch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\watch\arm_2d_scene_watch.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_fan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\scenes\fan\arm_2d_scene_fan.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>platform</GroupName>
+          <Files>
+            <File>
+              <FileName>app_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\app_platform.c</FilePath>
+            </File>
+            <File>
+              <FileName>Board_GLCD.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\platform\Board_GLCD.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\platform\platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bsp_mps2</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>GLCD_V2M-MPS2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\mps2\GLCD_V2M-MPS2.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_mps2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\mps2\platform_mps2.c</FilePath>
+            </File>
+            <File>
+              <FileName>stdout_USART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\mps2\stdout_USART.c</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\platform\mps2\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bsp_mps3</GroupName>
+          <Files>
+            <File>
+              <FileName>GLCD_V2M-MPS3_AN540.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\mps3\GLCD_V2M-MPS3_AN540.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_mps3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\mps3\platform_mps3.c</FilePath>
+            </File>
+            <File>
+              <FileName>stdout_USART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\mps3\stdout_USART.c</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\platform\mps3\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bsp_stm32f746g-discovery</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>GLCD_746G_Discovery.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_746G_Discovery.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_stm32f746g_discovery.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\platform\stm32f746g-discovery\platform_stm32f746g_discovery.c</FilePath>
+            </File>
+            <File>
+              <FileName>GLCD_Config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\common\platform\stm32f746g-discovery\GLCD_Config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>asset</GroupName>
+        </Group>
+        <Group>
+          <GroupName>ACI</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_rgb565_aci_lib.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_rgb565_aci_lib.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_user_aci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\..\..\Acceleration\Arm\ACI\arm_2d_user_aci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Acceleration</GroupName>
         </Group>
         <Group>
@@ -9101,6 +10317,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9116,6 +10333,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9131,6 +10349,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9146,6 +10365,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9161,6 +10381,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9176,6 +10397,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9191,6 +10413,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9206,6 +10429,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9221,6 +10445,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9232,10 +10457,27 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.6" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-Generic" Cvendor="ARM" Cversion="1.4.3" condition="Arm-2D-Benchmark-Generic">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.7" condition="Arm-2D-EXTRA">
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9251,6 +10493,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9266,6 +10509,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9277,10 +10521,11 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.12.0" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.12.1" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9292,10 +10537,11 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.1.6" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.7.0" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9311,6 +10557,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9326,6 +10573,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9341,6 +10589,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9356,6 +10605,7 @@
         <package name="CMSIS" schemaVersion="1.7.31" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0-rc1"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9371,6 +10621,11 @@
         <package name="CMSIS-DSP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.15.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="AN552_Cortex-M55">
             <c>
               <MiscControls>-w</MiscControls>
             </c>
@@ -9436,30 +10691,35 @@
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Native Driver" Csub="SysCounter" Cvendor="ARM" Cversion="1.1.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Native Driver" Csub="SysTimer" Cvendor="ARM" Cversion="1.1.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Native Driver" Csub="Timeout" Cvendor="ARM" Cversion="1.0.0" condition="SSE-300-MPS3 Systimer Syscounter">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.0.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM55 CMSIS">
@@ -9482,6 +10742,7 @@
         <package name="perf_counter" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.3.1"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9530,6 +10791,11 @@
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0">
+            <c>
+              <MiscControls>-w</MiscControls>
+            </c>
+          </targetInfo>
+          <targetInfo name="AN552_Cortex-M55">
             <c>
               <MiscControls>-w</MiscControls>
             </c>
@@ -9585,6 +10851,7 @@
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9727,6 +10994,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9744,6 +11012,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9761,6 +11030,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9778,6 +11048,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9795,6 +11066,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9812,6 +11084,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9829,6 +11102,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9846,6 +11120,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9863,6 +11138,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9952,6 +11228,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9969,6 +11246,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -9986,6 +11264,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10003,6 +11282,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10020,6 +11300,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10037,6 +11318,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10054,6 +11336,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10071,6 +11354,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10088,6 +11372,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10105,6 +11390,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10122,6 +11408,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10139,6 +11426,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10156,6 +11444,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10173,6 +11462,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10190,6 +11480,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10207,6 +11498,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10224,6 +11516,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10241,6 +11534,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10258,6 +11552,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10275,6 +11570,7 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10292,6 +11588,7 @@
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
@@ -10665,6 +11962,7 @@
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" name="Device\Source\armclang\fvp_sse300_mps3_s.sct" version="1.1.0">
@@ -10703,6 +12001,7 @@
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </file>
       <file attr="config" category="source" name="Device\Source\startup_fvp_sse300_mps3.c" version="1.1.1">
@@ -10717,6 +12016,7 @@
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
           <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </file>
       <file attr="config" category="header" name="Device\Include\system_SSE300MPS3.h" version="1.1.1">
