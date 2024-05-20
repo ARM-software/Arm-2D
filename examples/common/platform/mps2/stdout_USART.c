@@ -32,6 +32,7 @@
 #   pragma clang diagnostic ignored "-Wmissing-braces"
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
+#   pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
 #endif
 
 /* IO definitions (access restrictions to peripheral registers) */
