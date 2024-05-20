@@ -222,11 +222,11 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_gray8_repeat_fill_colour_with
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-
     int_fast16_t iMaskY = iMaskHeight;
+    uint32_t *pwMask = pwLineMask;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
-        uint32_t *pwMask = pwLineMask;
+        
         uint8_t *pchTargetLine = pchTarget;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)));
@@ -424,10 +424,10 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_rgb565_repeat_fill_colour_wit
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
     int_fast16_t iMaskY = iMaskHeight;
+    uint32_t *pwMask = pwLineMask;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwMask = pwLineMask;
         uint16_t *phwTargetLine = phwTarget;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)));
@@ -638,10 +638,10 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_cccn888_repeat_fill_colour_wi
     /* clear alpha */
     vwColour[3] = vwColour[7] = 0;
 
+    uint32_t *pwMask = pwLineMask;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwMask = pwLineMask;
         uint32_t *pwTargetLine = pwTarget;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)));
@@ -836,10 +836,10 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_gray8_repeat_fill_colour_with
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
     int_fast16_t iMaskY = iMaskHeight;
+    uint32_t *pwMask = pwLineMask;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwMask = pwLineMask;
         uint8_t *pchTargetLine = pchTarget;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)) * (uint16_t)chOpacity >> 8);
@@ -1032,10 +1032,11 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_rgb565_repeat_fill_colour_wit
 
 
     int_fast16_t iMaskY = iMaskHeight;
+    uint32_t *pwMask = pwLineMask;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwMask = pwLineMask;
+
         uint16_t *phwTargetLine = phwTarget;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)) * (uint16_t)chOpacity >> 8);
@@ -1248,10 +1249,10 @@ __OVERRIDE_WEAK void __MVE_WRAPPER(  __arm_2d_impl_cccn888_repeat_fill_colour_wi
     /* clear alpha */
     vwColour[3] = vwColour[7] = 0;
 
+    uint32_t *pwMask = pwLineMask;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *pwMask = pwLineMask;
         uint32_t *pwTargetLine = pwTarget;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)) * (uint16_t)chOpacity >> 8);
