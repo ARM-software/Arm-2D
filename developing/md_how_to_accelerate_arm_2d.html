@@ -559,7 +559,7 @@ Asynchronous Mode</h4>
 <div class="line"><span class="preprocessor">#endif  </span><span class="comment">/* end of __ARM_2D_USER_ACI_H__ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><p >For example, suppose you want to accelerate <code>__arm_2d_impl_rgb565_src_msk_copy</code> and replace the Helium version with your own ACI accelerated one, then please do the following steps:</p>
 <ol type="1">
-<li>create a C source file for your own ACI accelerated low level function(s):</li>
+<li>Create a C source file for your own ACI accelerated low level function(s):</li>
 </ol>
 <div class="fragment"><div class="line"><span class="preprocessor">#define __ARM_2D_IMPL__     </span><span class="comment">/* it is important to define this macro in the begining of your C source file */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#include &quot;__arm_2d_impl.h&quot;</span></div>
@@ -585,7 +585,7 @@ Asynchronous Mode</h4>
 <div class="line">    <span class="comment">/* your own implementation */</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><ol type="1">
-<li>copy the <code>arm_2d_user_aci.h</code> from the <code>Library/Include/template</code> to your own directory and add the following content:</li>
+<li>Copy the <code>arm_2d_user_aci.h</code> from the <code>Library/Include/template</code> to your own directory and add the following content:</li>
 </ol>
 <div class="fragment"><div class="line"><span class="preprocessor">#if !defined(__ARM_2D_USER_ACI_H__) &amp;&amp; __ARM_2D_HAS_ACI__</span></div>
 <div class="line"><span class="preprocessor">#define __ARM_2D_USER_ACI_H__</span></div>
@@ -617,7 +617,7 @@ Asynchronous Mode</h4>
 <div class="line"> </div>
 <div class="line">#endif</div>
 </div><!-- fragment --><ol type="1">
-<li>define the macro <code>__ARM_2D_HAS_ACI</code> to <code>1</code> for the arm-2d library.</li>
+<li>Enable the ACI support in compilation (for example, adding option <code>-mcpu=cortex-m55+cdecp0</code> in the command line), after that the macro <code>__ARM_2D_HAS_ACI</code> will be set to <code>1</code> by arm-2d library automatically.</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md156"></a>
 3.3 Insert An User Defined Header File</h2>
