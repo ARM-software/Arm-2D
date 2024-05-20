@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_vertical_line_mask.c
  * Description:  APIs for colour-filling-with-vertical-line-mask
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.0.1
+ * $Date:        20. May 2024
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -278,15 +278,12 @@ void __arm_2d_impl_{{colour_name | lower}}_repeat_fill_colour_with_vertical_line
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         {{colour_int}} *p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)){{opacity_impl}});
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -509,3 +506,4 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_vertical_li
 #endif
 
 #endif
+

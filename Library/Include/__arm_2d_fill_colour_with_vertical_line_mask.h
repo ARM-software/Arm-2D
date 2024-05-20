@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_vertical_line_mask.h
  * Description:  APIs for colour-filling-with-vertical-line-mask
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.0.1
+ * $Date:        20. May 2024
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -57,63 +57,63 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_fill_colour_with_vertical_line_mask(                       \
+#define arm_2d_gray8_fill_colour_with_vertical_line_mask(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_gray8_fill_colour_with_vertical_line_mask(                  \
+            arm_2dp_gray8_fill_colour_with_vertical_line_mask(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_gray8_t){(__COLOUR).tValue})
 
-#define arm_2d_rgb565_fill_colour_with_vertical_line_mask(                      \
+#define arm_2d_rgb565_fill_colour_with_vertical_line_mask(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_rgb565_fill_colour_with_vertical_line_mask(                 \
+            arm_2dp_rgb565_fill_colour_with_vertical_line_mask(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_rgb565_t){(__COLOUR).tValue})
 
-#define arm_2d_cccn888_fill_colour_with_vertical_line_mask(                     \
+#define arm_2d_cccn888_fill_colour_with_vertical_line_mask(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_cccn888_fill_colour_with_vertical_line_mask(                \
+            arm_2dp_cccn888_fill_colour_with_vertical_line_mask(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
                                  (arm_2d_color_cccn888_t){(__COLOUR).tValue})
 
-#define arm_2d_gray8_fill_colour_with_vertical_line_mask_and_opacity(           \
+#define arm_2d_gray8_fill_colour_with_vertical_line_mask_and_opacity(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*    Opacity */            \
-            arm_2dp_gray8_fill_colour_with_vertical_line_mask_and_opacity(      \
+            arm_2dp_gray8_fill_colour_with_vertical_line_mask_and_opacity(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
-                                 (arm_2d_color_gray8_t){(__COLOUR).tValue},     \
+                                 (arm_2d_color_gray8_t){(__COLOUR).tValue},    \
                                  (__OPACITY))
 
-#define arm_2d_rgb565_fill_colour_with_vertical_line_mask_and_opacity(          \
+#define arm_2d_rgb565_fill_colour_with_vertical_line_mask_and_opacity(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*    Opacity */            \
-            arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity(     \
+            arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
@@ -121,18 +121,18 @@ extern "C" {
                                  (arm_2d_color_rgb565_t){(__COLOUR).tValue},    \
                                  (__OPACITY))
 
-#define arm_2d_cccn888_fill_colour_with_vertical_line_mask_and_opacity(         \
+#define arm_2d_cccn888_fill_colour_with_vertical_line_mask_and_opacity(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __MASK_ADDR,    /*   mask tile address */   \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*    Opacity */            \
-            arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity(    \
+            arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity(              \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
                                  (__MASK_ADDR),                                 \
-                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},   \
+                                 (arm_2d_color_cccn888_t){(__COLOUR).tValue},    \
                                  (__OPACITY))
 
 /*============================ TYPES =========================================*/

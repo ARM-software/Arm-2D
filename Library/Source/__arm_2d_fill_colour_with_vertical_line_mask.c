@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_vertical_line_mask.c
  * Description:  APIs for colour-filling-with-vertical-line-mask
  *
- * $Date:        17. April 2024
- * $Revision:    V.1.0.1
+ * $Date:        20. May 2024
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -243,15 +243,12 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask(
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         uint8_t *pchTargetLine = pchTarget;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)));
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -474,15 +471,12 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask(
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         uint16_t *phwTargetLine = phwTarget;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)));
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -705,15 +699,12 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask(
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         uint32_t *pwTargetLine = pwTarget;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)));
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -941,15 +932,12 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask_and_opac
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         uint8_t *pchTargetLine = pchTarget;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)) * (uint16_t)chOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1177,15 +1165,12 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask_and_opa
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         uint16_t *phwTargetLine = phwTarget;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)) * (uint16_t)chOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1413,15 +1398,12 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask_and_op
 
     int_fast16_t iMaskHeight = ptMaskSize->iHeight;
 
-    uint32_t *pwMask = pwLineMask;
     int_fast16_t iMaskY = iMaskHeight;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         uint32_t *pwMask = pwLineMask;
         uint32_t *pwTargetLine = pwTarget;
-
-        int_fast16_t iMaskWidth = ptMaskSize->iWidth;
 
         uint16_t hwAlpha = 256 - ((*(uint8_t *)(pwMask)) * (uint16_t)chOpacity >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
