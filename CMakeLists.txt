@@ -143,6 +143,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/wifi_signal.c
             examples/common/asset/helium.c
             examples/common/asset/background.c
+            examples/common/asset/BackgroundSmall.c
             examples/common/asset/WatchCoverRound.c
             examples/common/asset/GlassHalo.c
             examples/common/asset/alarm_clock_font32.c

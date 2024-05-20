@@ -452,6 +452,7 @@
             <file category="sourceC"     name="examples/common/asset/wifi_signal.c" />
             <file category="sourceC"     name="examples/common/asset/helium.c" />
             <file category="sourceC"     name="examples/common/asset/background.c" />
+            <file category="sourceC"     name="examples/common/asset/BackgroundSmall.c" />
             <file category="sourceC"     name="examples/common/asset/WatchCoverRound.c" />
             <file category="sourceC"     name="examples/common/asset/GlassHalo.c" />
             <file category="sourceC"     name="examples/common/asset/ECG.c" />
