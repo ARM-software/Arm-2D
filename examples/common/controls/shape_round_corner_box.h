@@ -113,7 +113,7 @@ extern "C" {
                                         (__target_region_ptr),                  \
                                         (__colour),                             \
                                         __VA_ARGS__,                            \
-                                        &c_tileCircleMask2)
+                                        &c_tileCircleMask)
 
 #define draw_round_corner_border_with_circle_mask(__target_tile_ptr,            \
                                  __target_region_ptr,                           \
