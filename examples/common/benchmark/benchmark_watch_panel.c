@@ -158,10 +158,10 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
 
 static floating_range_t s_ptFloatingBoxes[] = {
     {
-        .tRegion = {{   0-(480 - 240), 
+        .tRegion = {{   0-(320 - 240), 
                         0-(240 - 240)
                     }, 
-                    {   240 + ((480 - 240) * 2), 
+                    {   240 + ((320 - 240) * 2), 
                         240 + ((240 - 240) * 2)
                     }
                    },
