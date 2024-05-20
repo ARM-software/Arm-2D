@@ -35,7 +35,6 @@
 - **Optimization for ultra-small memory footprint**
   - Enable existing Cortex-M processors to use modernized GUI with no or few cost increases.
   - Helping customers to cost-down
-- **Adopt algorithms for video input processing**
 
 ## Key Messages for You
 
@@ -101,7 +100,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (ver1.1.6-dev)
+### In this version (ver1.1.6)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -112,19 +111,24 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Filling-Colour with an mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
     - Supports A2, A4 and A8 masks
-  
+    - **[new]** Supports horizontal and vertical line masks
+
 - **Image Copy (Tiling)**
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
-  
+  - **[new]** Provides API variants that accepts **Opacity** as arguments.
+  - **[new]** Implicit colour conversion for **ARGB8888** (**ccca8888**)
+
 - **Supported Colour formats**
+
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
   - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
+    - **[new]** Implicit colour conversion for **ARGB8888** (**ccca8888**)
   - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
-  
+
 - **Display Adapter Service for connecting LCD**
   - Generic Partial Frame-buffer (PFB)
     - Easy to Use: transparent for applications
@@ -139,17 +143,18 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
-    - **[new]** Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.
+    - Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.
+    - **[new]** Provides dirty region helper services for ease of use.
     
   - Supports swapping high and low bytes for RGB16 pixels
-  
+
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-  
+
   - Supports various Buffer Modes with a built-in framebuffer pool.
     - Single Buffer/Double-Buffers
-    - **[new]** Provides a helper service for Direct Mode
+    - Provides a helper service for Direct Mode
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
-  
+
 - **Transform** (i.e. rotation and scaling)
   - With/Without Colour-keying
   - Supports an optional **Opacity** ratio
@@ -162,7 +167,8 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Supports both **bare-metal** and **RTOS** environments
   - Ultra small memory footprint
 
-- **Helper Services and Tools**
+- **Helper Services ,Tools and Others**
+
   - **Timer Services**
 
     - Timeout: `arm_2d_helper_is_time_out`
@@ -179,35 +185,44 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
 
-    - **[new]** Docking, e.g. `arm_2d_dock_top`,`arm_2d_dock_right`, `arm_2d_dock_vertical`, `__item_line_dock_horizontal` etc.
+    - Docking, e.g. `arm_2d_dock_top`,`arm_2d_dock_right`, `arm_2d_dock_vertical`, `__item_line_dock_horizontal` etc.
 
     - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertical`
 
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
 
+    - **[new]** A dedicated layout debug mode
+
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
 
-  - Templates
-  
+  - **Templates**
     - Provides templates for user controls and scenes.
     - Scene templates for Meter, Watch and Fitness trackers
     - Provides a template for adding new RTOS support.
 
-  - Other Helper services
-  
+  - **Other Helper services**
     - A dedicated helper service for transform operations
       - Provide dynamic dirty region tracking
       - Double-buffered Angle and Scale updating
-  - A `img2c.py` for generating arm-2d resources from user specified images
-  - A `ttf2c.py` for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font
-  
+  - **Tools**
+    - A `img2c.py` for generating arm-2d resources from user specified images
+    - A `ttf2c.py` for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font
+    - **[new]** A `jinja2c.py` for code generation.
+  - **Demos**
+    - Demos for various scenarios
+    - **[new]** An dedicated demo for Helium-ACI acceleration (running on [AN552](https://developer.arm.com/downloads/view/AN552)). 
+
 - **Ready and Welcome 3rd party adoption**
 
   - Successful story: accelerating LVGL as soft-GPU when Helium is ready
 
+### Experimental Features
+
+- **[new]** Generic Anti-alias
+- **[new]** Fast IIR-Blur
+
 ### New Features Planned in the Future
 
-- Image Filters, e.g. Generic Anti-aliasing algorithms
 - Stretch and Perspective Transform
 - Supports DMAC-350
 
@@ -275,6 +290,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 | \[template\]\[bare-metal\]   | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]   |      |
 | \[template\]\[cmsis-rtos2\]  | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]  |      |
 | \[template\]\[pc\]\[vscode\] | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\] |      |
+| \[template\]\[csolution\]    | It is a csolution project template.                          | examples/\[template\]\[csolution\]    |      |
 
 ### 3.2 Benchmark
 
@@ -308,7 +324,9 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-5 Performance Comparison among some Cortex-M processors**
 
-![Performance Comparison among some Cortex-M processors](./documentation/pictures/TopReadme_1_6_2_b.png) 
+![Performance Comparison among some Cortex-M processors](./documentation/pictures/PerformanceDiagram.png) 
+
+
 
 ## 4 Limitations
 
@@ -327,10 +345,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 ### 4.2 The Temporary Limitations
 
-- The GCC support of Cortex-M55 (helium acceleration) is broken (waiting for tool-chain update).
-- The generic Anti-aliasing algorithms haven't been introduced, but anti-alias in transform (i.e. rotation and scaling) is supported.
-- The library currently only provides default software algorithms and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**.
-  - Although planned and implemented, the [ACI (Arm Custom Instruction)](https://developer.arm.com/architectures/instruction-sets/custom-instructions) acceleration solutions are not open-source for now. Please contact local Arm FAE for details.
+- The library currently only provides default software algorithms in C and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**.
 - The provided example projects only run on [MPS2](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2), [MPS3](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3), [FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software) and some 3rd party development platforms, e.g. **STM32F746G-Discovery**.
   - Feel free to try the library on your own devices. The library depends on no specific peripheral.
 - Most of the example projects are created in MDK.
@@ -341,6 +356,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | :-------------- | ------- | ------------------------------------------------------------ |
 | **Library**     | Folder  | This folder contains the source files and header files of the library. |
 | **Helper**      | Folder  | This folder contains the source files and header files of helper functions / services. |
+| Acceleration    | Folder  | This folder contains hardware specific accelerations, e.g. Helium-ACI example in [AN552](https://developer.arm.com/downloads/view/AN552). |
 | documentation   | Folder  | This folder contains all the documents.                      |
 | examples        | Folder  | This folder contains all the examples, controls and templates etc. |
 | README          | .md     | The README.md you are currently reading.                     |
@@ -391,4 +407,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-1 Dec 2023
+20 May 2024
