@@ -549,7 +549,7 @@ In the `Library/Include/template` folder, there is a template file for the `arm_
 
 For example, suppose you want to accelerate `__arm_2d_impl_rgb565_src_msk_copy` and replace the Helium version with your own ACI accelerated one, then please do the following steps:
 
-1. create a C source file for your own ACI accelerated low level function(s):
+1. Create a C source file for your own ACI accelerated low level function(s):
 
 ```c
 #define __ARM_2D_IMPL__			/* it is important to define this macro in the begining of your C source file */
@@ -577,7 +577,7 @@ void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
 }
 ```
 
-2. copy the `arm_2d_user_aci.h` from the `Library/Include/template` to your own directory and add the following content:
+2. Copy the `arm_2d_user_aci.h` from the `Library/Include/template` to your own directory and add the following content:
 
 ```c
 #if !defined(__ARM_2D_USER_ACI_H__) && __ARM_2D_HAS_ACI__
@@ -611,7 +611,7 @@ void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
 #endif
 ```
 
-3. define the macro `__ARM_2D_HAS_ACI` to `1` for the arm-2d library. 
+3. Enable the ACI support in compilation (for example, adding option `-mcpu=cortex-m55+cdecp0` in the command line), after that the macro `__ARM_2D_HAS_ACI` will be set to `1` by arm-2d library automatically. 
 
 
 
