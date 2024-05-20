@@ -50,7 +50,7 @@
 #   define c_tileGear01             c_tileGear01GRAY8
 #   define c_tileGear02             c_tileGear02GRAY8
 #   define c_tilePointerSec         c_tilePointerSecGRAY8
-#   define c_tileBackground         c_tileBackgroundGRAY8
+#   define c_tileBackground         c_tileHeliumGRAY8
 #   define c_tileWatchPanel         c_tileWatchPanelGRAY8
 #   define c_tileStar               c_tileStarGRAY8
 
@@ -59,7 +59,7 @@
 #   define c_tileGear01             c_tileGear01RGB565
 #   define c_tileGear02             c_tileGear02RGB565
 #   define c_tilePointerSec         c_tilePointerSecRGB565
-#   define c_tileBackground         c_tileBackgroundRGB565
+#   define c_tileBackground         c_tileHeliumRGB565
 #   define c_tileWatchPanel         c_tileWatchPanelRGB565
 #   define c_tileStar               c_tileStarRGB565
 
@@ -68,7 +68,7 @@
 #   define c_tileGear01             c_tileGear01CCCA8888
 #   define c_tileGear02             c_tileGear02CCCA8888
 #   define c_tilePointerSec         c_tilePointerSecCCCA8888
-#   define c_tileBackground         c_tileBackgroundCCCA8888
+#   define c_tileBackground         c_tileHeliumCCCN888
 #   define c_tileWatchPanel         c_tileWatchPanelCCCA8888
 #   define c_tileStar               c_tileStarCCCA8888
 

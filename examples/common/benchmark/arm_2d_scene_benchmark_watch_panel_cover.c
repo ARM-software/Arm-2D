@@ -63,15 +63,15 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define c_tileBackground         c_tileBackgroundGRAY8
+#   define c_tileBackground         c_tileHeliumGRAY8;
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
-#   define c_tileBackground         c_tileBackgroundRGB565
+#   define c_tileBackground         c_tileHeliumRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileBackground         c_tileBackgroundCCCA8888
+#   define c_tileBackground         c_tileHeliumCCCN888
 
 #else
 #   error Unsupported colour depth!
