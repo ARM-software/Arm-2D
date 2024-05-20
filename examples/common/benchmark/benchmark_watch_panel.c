@@ -50,7 +50,7 @@
 #   define c_tileGear01             c_tileGear01GRAY8
 #   define c_tileGear02             c_tileGear02GRAY8
 #   define c_tilePointerSec         c_tilePointerSecGRAY8
-#   define c_tileBackground         c_tileHeliumGRAY8
+#   define c_tileBackground         c_tileBackgroundSmallGRAY8
 #   define c_tileWatchPanel         c_tileWatchPanelGRAY8
 #   define c_tileStar               c_tileStarGRAY8
 
@@ -59,7 +59,7 @@
 #   define c_tileGear01             c_tileGear01RGB565
 #   define c_tileGear02             c_tileGear02RGB565
 #   define c_tilePointerSec         c_tilePointerSecRGB565
-#   define c_tileBackground         c_tileHeliumRGB565
+#   define c_tileBackground         c_tileBackgroundSmallRGB565
 #   define c_tileWatchPanel         c_tileWatchPanelRGB565
 #   define c_tileStar               c_tileStarRGB565
 
@@ -68,7 +68,7 @@
 #   define c_tileGear01             c_tileGear01CCCA8888
 #   define c_tileGear02             c_tileGear02CCCA8888
 #   define c_tilePointerSec         c_tilePointerSecCCCA8888
-#   define c_tileBackground         c_tileHeliumCCCN888
+#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
 #   define c_tileWatchPanel         c_tileWatchPanelCCCA8888
 #   define c_tileStar               c_tileStarCCCA8888
 
@@ -158,11 +158,11 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
 
 static floating_range_t s_ptFloatingBoxes[] = {
     {
-        .tRegion = {{   0-(559 - 240), 
-                        0-(260 - 240)
+        .tRegion = {{   0-(480 - 240), 
+                        0-(240 - 240)
                     }, 
-                    {   240 + ((559 - 240) * 2), 
-                        240 + ((260 - 240) * 2)
+                    {   240 + ((480 - 240) * 2), 
+                        240 + ((240 - 240) * 2)
                     }
                    },
         .ptLayer = &s_ptRefreshLayers[0],
