@@ -79,7 +79,7 @@ extern "C" {
                 (__region_ptr),                                                 \
                 (__is_new_frame),                                               \
                 (__opacity),                                                    \
-                ((const arm_2d_tile_t *)&c_tileWhiteDotMask))
+                ((const arm_2d_tile_t *)&c_tileWhiteDotMask2))
 
 #define __draw_round_corner_image0( __source_tile_ptr,                          \
                                     __target_tile_ptr,                          \
@@ -91,7 +91,7 @@ extern "C" {
                 (__region_ptr),                                                 \
                 (__is_new_frame),                                               \
                 0xFF,                                                           \
-                ((const arm_2d_tile_t *)&c_tileWhiteDotMask))
+                ((const arm_2d_tile_t *)&c_tileWhiteDotMask2))
 
 #define draw_round_corner_image(__source_tile_ptr,                              \
                                 __target_tile_ptr,                              \
@@ -147,6 +147,9 @@ typedef struct {
 
 extern
 const arm_2d_tile_t c_tileWhiteDotMask;
+
+extern
+const arm_2d_tile_t c_tileWhiteDotMask2;
 
 extern 
 const arm_2d_tile_t c_tileCircleMask;
