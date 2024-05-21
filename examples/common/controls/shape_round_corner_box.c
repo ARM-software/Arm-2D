@@ -204,7 +204,6 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
 {
     assert(NULL != ptTarget);
     assert(NULL != ptCircleMask);
-    assert(ptCircleMask->tInfo.tColourInfo.chScheme == ARM_2D_COLOUR_8BIT);
 
     int16_t iCircleWidth = ((ptCircleMask->tRegion.tSize.iWidth + 1) >> 1);
     int16_t iCircleHeight = ((ptCircleMask->tRegion.tSize.iHeight + 1) >> 1);
