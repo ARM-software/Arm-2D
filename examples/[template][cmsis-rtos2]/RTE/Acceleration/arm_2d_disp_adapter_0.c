@@ -71,6 +71,26 @@
 #   endif
 #endif
 
+#if __DISP0_CFG_USE_CONSOLE__
+
+#ifndef __DISP0_CONSOLE_WIDTH__
+#   if __DISP0_CFG_SCEEN_WIDTH__ < 204
+#       define __DISP0_CONSOLE_WIDTH__      __DISP0_CFG_SCEEN_WIDTH__
+#   else
+#       define __DISP0_CONSOLE_WIDTH__      204
+#   endif
+#endif
+
+#ifndef __DISP0_CONSOLE_HEIGHT__
+#   if __DISP0_CFG_SCEEN_HEIGHT__ < 200
+#       define __DISP0_CONSOLE_HEIGHT__      __DISP0_CFG_SCEEN_HEIGHT__
+#   else
+#       define __DISP0_CONSOLE_HEIGHT__      192
+#   endif
+#endif
+
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -126,8 +146,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     ARM_2D_PARAM(ptTile);
 
     arm_2d_canvas(ptTile, __top_container) {
-    
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
         
         arm_2d_align_centre(__top_container, 100, 100) {
             draw_round_corner_box(  ptTile,
@@ -146,11 +164,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 }
 
 #if !__DISP0_CFG_DISABLE_NAVIGATION_LAYER__
+
+__WEAK 
+IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
+{
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    return arm_fsm_rt_cpl;
+}
+
 __WEAK
 IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(bIsNewFrame);
+
+    while(  arm_fsm_rt_cpl != 
+            __disp_adapter0_user_draw_navigation(  pTarget, 
+                                                            ptTile, 
+                                                            bIsNewFrame));
 
 #if __DISP0_CFG_USE_CONSOLE__
 
@@ -186,7 +220,9 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
         if (DISP0_CONSOLE.bShowConsole) {
-            arm_2d_align_top_left(__navigation_canvas, 220, 200) {
+            arm_2d_align_top_left(  __navigation_canvas, 
+                                    __DISP0_CONSOLE_WIDTH__ + 8, 
+                                    __DISP0_CONSOLE_HEIGHT__ + 8) {
 
                 draw_round_corner_box(  ptTile, 
                                         &__top_left_region, 
@@ -646,17 +682,6 @@ void disp_adapter0_navigator_init(void)
 
 #if __DISP0_CFG_USE_CONSOLE__
     do {
-    #if __DISP0_CFG_SCEEN_WIDTH__ < 204
-    #   define __DISP0_CONSOLE_WIDTH__      __DISP0_CFG_SCEEN_WIDTH__
-    #else
-    #   define __DISP0_CONSOLE_WIDTH__      204
-    #endif
-
-    #if __DISP0_CFG_SCEEN_HEIGHT__ < 200
-    #   define __DISP0_CONSOLE_HEIGHT__      __DISP0_CFG_SCEEN_HEIGHT__
-    #else
-    #   define __DISP0_CONSOLE_HEIGHT__      192
-    #endif
 
     #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
         static uint8_t s_chInputBuffer[256];
@@ -804,6 +829,10 @@ void disp_adapter0_init(void)
     
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
+            
+                /* the canvas colour */
+                .tCanvas = {GLCD_COLOR_WHITE}, 
+        
                 .fnScene        = &__pfb_draw_handler,
                 //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
                 .fnOnFrameStart = &__on_frame_start,

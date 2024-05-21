@@ -16,19 +16,21 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE3_H__
-#define __ARM_2D_SCENE3_H__
+#ifndef __ARM_2D_SCENE_CONSOLE_WINDOW_H__
+#define __ARM_2D_SCENE_CONSOLE_WINDOW_H__
 
 /*============================ INCLUDES ======================================*/
 
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene3
-
 #include "arm_2d_helper_scene.h"
-#include "list_view.h"
-#include "progress_wheel.h"
-
+#include "arm_2d_example_controls.h"
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -50,8 +52,8 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE3_IMPLEMENT__
-#   undef __USER_SCENE3_IMPLEMENT__
+#ifdef __USER_SCENE_CONSOLE_WINDOW_IMPLEMENT__
+#   undef __USER_SCENE_CONSOLE_WINDOW_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
@@ -59,36 +61,33 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene3 and add it to a user specified scene player
- * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \brief initalize scene_console_window and add it to a user specified scene player
+ * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_3_t will be allocated from HEAP and freed on
+ *            user_scene_console_window_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_3_t* the user_scene_3_t instance
+ * \return user_scene_console_window_t* the user_scene_console_window_t instance
  */
-#define arm_2d_scene3_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene3_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_console_window_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_console_window_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene 3
+ * \brief a user class for scene console_window
  */
-typedef struct user_scene_3_t user_scene_3_t;
+typedef struct user_scene_console_window_t user_scene_console_window_t;
 
-struct user_scene_3_t {
+struct user_scene_console_window_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t             lTimestamp[3];
-    bool                bUserAllocated;
-    list_view_t         tListView;
-    progress_wheel_t    tWheel;
-    int16_t             iProgress;
+    int64_t lTimestamp[2];
+    bool bUserAllocated;
 )
     /* place your public member here */
-    
+    console_box_t tConsole;
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -96,8 +95,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_3_t *__arm_2d_scene3_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_3_t *ptScene);
+user_scene_console_window_t *__arm_2d_scene_console_window_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_console_window_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

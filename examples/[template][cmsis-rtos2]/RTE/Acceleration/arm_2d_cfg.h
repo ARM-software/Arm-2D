@@ -58,6 +58,19 @@ extern "C" {
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 #   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__             1
 #endif
+
+// <q>Enable ccca8888(ARGB8888) implicit conversion 
+// <i> This feature is disabled by default to save code size
+#ifndef __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+#   define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__      1
+#endif
+
+// <q>Improve the Quality of IIR Blur
+// <i> Note that enabling this feature will half the performance of IIR Blur and only works correctly in Full framebuffer mode
+// <i> This feature is disabled by default to improve performance
+#ifndef __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+#   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                 0
+#endif
 // </h>
 
 // <h>Log and Debug
@@ -96,8 +109,16 @@ extern "C" {
             |   ARM_2D_LOG_CHN_SCENE_PLAYER                                     \
             |   ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION                        \
             |   ARM_2D_LOG_CHN_STATISTICS                                       \
+            |   ARM_2D_LOG_CHN_CONTROLS                                         \
             |   ARM_2D_LOG_CHN_APP)
 #endif
+
+// <q>Enable The Layout Debug Mode
+// <i> Arm-2D will mark the layout areas.
+#ifndef __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__                  0
+#endif
+
 // </h>
 
 // <h>Patches for improving performance

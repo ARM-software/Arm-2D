@@ -22,7 +22,8 @@
 LR_CODE S_CODE_START {
     ER_CODE S_CODE_START {
         *.o (RESET +First)
-        .ANY (+RO)
+        *.o (Region$$Table)
+        .ANY (+RO-CODE)
     }
 
     /*
@@ -56,6 +57,7 @@ LR_CODE S_CODE_START {
 
     ER_DATA S_DATA_START {
         .ANY (+ZI +RW)
+        .ANY (+RO-DATA)
     }
 
     #if HEAP_SIZE > 0
@@ -76,3 +78,11 @@ LR_CODE S_CODE_START {
      */
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
 }
+
+#if 0
+LR_RO_DATA 0x11000000 {
+    ER_RO_DATA +0 {
+        .ANY (+RO-DATA)
+    }
+}
+#endif

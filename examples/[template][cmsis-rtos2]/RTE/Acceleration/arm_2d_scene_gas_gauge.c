@@ -20,13 +20,15 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene4
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#define __USER_SCENE4_IMPLEMENT__
+#define __USER_SCENE_GAS_GAUGE_IMPLEMENT__
 #include "arm_2d_scenes.h"
 
 #include "arm_2d_helper.h"
-#include "arm_extra_controls.h"
+#include "arm_2d_example_controls.h"
+
+#include "arm_2d_scene_gas_gauge.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -94,9 +96,9 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ IMPLEMENTATION ================================*/
 
 
-static void __on_scene4_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -115,49 +117,61 @@ static void __on_scene4_depose(arm_2d_scene_t *ptScene)
  * Scene 4                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene4_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene4_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene4_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    int32_t nResult;
+    
+    /* simulate a full battery charging/discharge cycle */
+    arm_2d_helper_time_cos_slider(0, 1000, 30000, 0, &nResult, &this.lTimestamp[1]);
+    
+    if (this.hwGasgauge < nResult) {
+        this.tStatus = BATTERY_STATUS_CHARGING;
+    } else if (this.hwGasgauge > nResult) {
+        this.tStatus = BATTERY_STATUS_DISCHARGING;
+    }
+    this.hwGasgauge = (uint16_t)nResult;
 
 }
 
-static void __before_scene4_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_gas_gauge_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 }
 
-static void __on_scene4_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_gas_gauge_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)ptScene;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(59000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(29000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene4_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_background_handler)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -171,9 +185,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_background_handler)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
 {
-    user_scene_4_t *ptThis = (user_scene_4_t *)pTarget;
+    user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
 
@@ -181,28 +195,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
     /*-----------------------draw the foreground begin-----------------------*/
     
     /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
-
-    if (bIsNewFrame) {
-        int32_t iResult;
-        
-        /* simulate a full battery charging/discharge cycle */
-        arm_2d_helper_time_cos_slider(0, 1000, 60000, 0, &iResult, &this.lTimestamp[1]);
-        
-        if (this.hwGasgauge < iResult) {
-            this.tStatus = BATTERY_STATUS_CHARGING;
-        } else if (this.hwGasgauge > iResult) {
-            this.tStatus = BATTERY_STATUS_DISCHARGING;
-        }
-        this.hwGasgauge = (uint16_t)iResult;
-    }
 
     arm_2d_canvas(ptTile, __canvas) {
 
         arm_2d_align_centre( __canvas, 128, 130) {
 
-            arm_2d_layout(__centre_region) {
+            arm_2d_layout(__centre_region, true) {
 
                 __item_line_horizontal(64, 130) {
                     battery_gasgauge_nixie_tube_show(   &this.tBatteryNixieTube, 
@@ -256,7 +254,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
                         arm_2d_op_wait_async(NULL);
                     }
                 }
-                
             }
         }
     }
@@ -268,7 +265,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
     arm_lcd_text_set_draw_region(NULL);
     arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_WHITE);
     arm_lcd_text_location(0,0);
-    arm_lcd_puts("Scene 4");
+    arm_lcd_puts("Scene Battery Gas Gauge");
 
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
@@ -277,8 +274,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene4_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_4_t *ptThis)
+user_scene_gas_gauge_t *__arm_2d_scene_gas_gauge_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_gas_gauge_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -287,48 +284,31 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
     IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
         /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions,
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
             .tSize = {
                 128, 130,
             },
         ),
         
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = 60,
-                .iHeight = 8,
-            },
-        ),
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
     /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
      */
     arm_2d_align_centre(tScreen, s_tDirtyRegions[0].tRegion.tSize) {
         s_tDirtyRegions[0].tRegion = __centre_region;
     }
-//    s_tDirtyRegions[0].tRegion.tLocation = (arm_2d_location_t){
-//        .iX = ((tScreen.tSize.iWidth - s_tDirtyRegions[0].tRegion.tSize.iWidth) >> 1),
-//        .iY = ((tScreen.tSize.iHeight - 130) >> 1),
-//    };
     
     if (NULL == ptThis) {
-        ptThis = (user_scene_4_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_4_t),
-                                                        __alignof__(user_scene_4_t),
+        ptThis = (user_scene_gas_gauge_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_gas_gauge_t),
+                                                        __alignof__(user_scene_gas_gauge_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -336,24 +316,28 @@ user_scene_4_t *__arm_2d_scene4_init(   arm_2d_scene_player_t *ptDispAdapter,
         }
     } else {
         bUserAllocated = true;
-        memset(ptThis, 0, sizeof(user_scene_4_t));
+        memset(ptThis, 0, sizeof(user_scene_gas_gauge_t));
     }
 
-    *ptThis = (user_scene_4_t){
+    *ptThis = (user_scene_gas_gauge_t){
         .use_as__arm_2d_scene_t = {
+
+        /* the canvas colour */
+        .tCanvas = {GLCD_COLOR_BLACK}, 
+
         /* Please uncommon the callbacks if you need them
          */
-        //.fnBackground   = &__pfb_draw_scene4_background_handler,
-        .fnScene        = &__pfb_draw_scene4_handler,
+        //.fnBackground   = &__pfb_draw_scene_gas_gauge_background_handler,
+        .fnScene        = &__pfb_draw_scene_gas_gauge_handler,
         .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
         
 
-        //.fnOnBGStart    = &__on_scene4_background_start,
-        //.fnOnBGComplete = &__on_scene4_background_complete,
-        //.fnOnFrameStart = &__on_scene4_frame_start,
-        .fnBeforeSwitchOut = &__before_scene4_switching_out,
-        .fnOnFrameCPL   = &__on_scene4_frame_complete,
-        .fnDepose       = &__on_scene4_depose,
+        //.fnOnBGStart    = &__on_scene_gas_gauge_background_start,
+        //.fnOnBGComplete = &__on_scene_gas_gauge_background_complete,
+        .fnOnFrameStart = &__on_scene_gas_gauge_frame_start,
+        .fnBeforeSwitchOut = &__before_scene_gas_gauge_switching_out,
+        .fnOnFrameCPL   = &__on_scene_gas_gauge_frame_complete,
+        .fnDepose       = &__on_scene_gas_gauge_depose,
         },
         .bUserAllocated = bUserAllocated,
     };

@@ -20,10 +20,10 @@
 
 #include "arm_2d.h"
 
-#ifdef RTE_Acceleration_Arm_2D_Scene2
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#define __USER_SCENE2_IMPLEMENT__
-#include "arm_2d_scene_2.h"
+#define __USER_SCENE_PANEL_IMPLEMENT__
+#include "arm_2d_scene_panel.h"
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -89,7 +89,7 @@
 
 /*============================ GLOBAL VARIABLES ==============================*/
 extern 
-const arm_2d_tile_t c_tileListCoverMask;
+const arm_2d_tile_t c_tileListCoverLineMask;
 
 extern
 const arm_2d_tile_t c_tileWhiteDotMask;
@@ -99,9 +99,16 @@ const arm_2d_tile_t c_tileWhiteDotMask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-static void __on_scene2_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_panel_on_load(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
+
+    progress_wheel_on_load(&this.tWheel);
+}
+
+static void __on_scene_panel_depose(arm_2d_scene_t *ptScene)
+{
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -127,24 +134,24 @@ static void __on_scene2_depose(arm_2d_scene_t *ptScene)
  * Scene 2                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene2_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_panel_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene2_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_panel_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene2_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_panel_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
 
     progress_wheel_on_frame_start(&this.tWheel);
 
@@ -153,9 +160,9 @@ static void __on_scene2_frame_start(arm_2d_scene_t *ptScene)
     }
 }
 
-static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_panel_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
@@ -184,9 +191,9 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene2_background_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_background_handler)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)pTarget;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     /*-----------------------draw back ground begin-----------------------*/
@@ -222,22 +229,20 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
 {
-    user_scene_2_t *ptThis = (user_scene_2_t *)pTarget;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)pTarget;
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
     
     /*-----------------------draw the foreground begin-----------------------*/
 
     /* following code is just a demo, you can remove them */
-    
-    arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
 
     arm_2d_canvas(ptTile, __canvas) {
         arm_2d_align_centre(__canvas, 240, 128) {
 
-            arm_2d_layout(__centre_region) {
+            arm_2d_layout(__centre_region, true) {
 
                 __item_line_horizontal(60,80) {
                     progress_wheel_show(&this.tWheel,
@@ -283,7 +288,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                      *     [0]
                      */
                 
-                    arm_2d_layout(__item_region) {
+                    arm_2d_layout(__item_region, true) {
                         __item_horizontal(28,28,2,2,2,2) {
                             draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_WHITE, 128, bIsNewFrame);
                         }
@@ -335,27 +340,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
                                                      (__arm_2d_color_t){GLCD_COLOR_RED},
                                                      this.chOpacity);
         }
-        
-    //    arm_2d_align_centre(__canvas, 100, 100) {
-    //        static arm_2d_location_t s_tOffset = {0,0};
-    //        if (bIsNewFrame) {
-    //            static int64_t s_lTimestamp[2] = {0};
-    //            int32_t iXOffset, iYOffset;
-    //            arm_2d_helper_time_cos_slider(0, 100, 2000, 0, &iXOffset, &s_lTimestamp[0]);
-    //            arm_2d_helper_time_cos_slider(0, 100, 2000, ARM_2D_ANGLE(90), &iYOffset, &s_lTimestamp[1]);
-    //            s_tOffset.iX = iXOffset;
-    //            s_tOffset.iY = iYOffset;
-    //        }
-    //        
-    //        __centre_region.tLocation.iX += 100 - s_tOffset.iX;
-    //        __centre_region.tLocation.iY += s_tOffset.iY;
-    //        arm_2d_fill_colour_with_mask(ptTile,
-    //                                     &__centre_region,
-    //                                     &c_tileWhiteDotMask,
-    //                                     (__arm_2d_color_t){GLCD_COLOR_RED});
-    //    
-    //    }
-
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -363,7 +347,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene2_handler)
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_printf("scene 2");
+        arm_lcd_printf("Scene Panel");
     }
     /*-----------------------draw the foreground end  -----------------------*/
     arm_2d_op_wait_async(NULL);
@@ -380,11 +364,11 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
 
     arm_2d_canvas(ptTile, __canvas) {
 
-        arm_2d_align_centre(__canvas, c_tileListCoverMask.tRegion.tSize) {
-            arm_2d_fill_colour_with_mask(   ptTile, 
-                                            &__centre_region, 
-                                            &c_tileListCoverMask, 
-                                            (__arm_2d_color_t){GLCD_COLOR_BLACK});
+        arm_2d_dock_vertical(__canvas, c_tileListCoverLineMask.tRegion.tSize.iHeight) {
+            arm_2d_fill_colour_with_vertical_line_mask( ptTile, 
+                                                        &__vertical_region, 
+                                                        &c_tileListCoverLineMask, 
+                                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
         }
     }
 
@@ -394,17 +378,17 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
 }
 
 ARM_NONNULL(1)
-user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_2_t *ptScene)
+user_scene_panel_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_panel_t *ptScene)
 {
 
     bool bUserAllocated = true;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptScene) {
-        ptScene = (user_scene_2_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_2_t),
-                                                        __alignof__(user_scene_2_t),
+        ptScene = (user_scene_panel_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_panel_t),
+                                                        __alignof__(user_scene_panel_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptScene);
         if (NULL == ptScene) {
@@ -413,7 +397,7 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         bUserAllocated = false;
     }
 
-    memset(ptScene, 0, sizeof(user_scene_2_t));
+    memset(ptScene, 0, sizeof(user_scene_panel_t));
 
 
     /*! define dirty regions */
@@ -434,6 +418,8 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         ),
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
     
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
@@ -447,25 +433,31 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
     }
 
 
-    *ptScene = (user_scene_2_t){
+    *ptScene = (user_scene_panel_t){
         .use_as__arm_2d_scene_t = {
-        /* Please uncommon the callbacks if you need them
-         */
-        //.fnBackground   = &__pfb_draw_scene2_background_handler,
-        .fnScene        = &__pfb_draw_scene2_handler,
-        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        
 
-        //.fnOnBGStart    = &__on_scene2_background_start,
-        //.fnOnBGComplete = &__on_scene2_background_complete,
-        .fnOnFrameStart = &__on_scene2_frame_start,
-        .fnOnFrameCPL   = &__on_scene2_frame_complete,
-        .fnDepose       = &__on_scene2_depose,
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_BLACK}, 
+            
+            /* Please uncommon the callbacks if you need them
+            */
+            .fnOnLoad       = &__on_scene_panel_on_load,
+            .fnScene        = &__pfb_draw_scene_panel_handler,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            
+
+            //.fnOnBGStart    = &__on_scene_panel_background_start,
+            //.fnOnBGComplete = &__on_scene_panel_background_complete,
+            .fnOnFrameStart = &__on_scene_panel_frame_start,
+            .fnOnFrameCPL   = &__on_scene_panel_frame_complete,
+            .fnDepose       = &__on_scene_panel_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
-    user_scene_2_t *ptThis = (user_scene_2_t *)ptScene;
+    user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
 
     do {
         progress_wheel_cfg_t tCFG = {
