@@ -132,6 +132,13 @@ uint16x8_t __arm_2d_blend_n_gray8(uint16x8_t vtrgt, uint16_t chColour, uint16_t 
 //    return vmlasq_n_u16(vtrgt, opa, ((256 - opa) * chColour)) >> 8;
 }
 
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_vblend_gray8(uint16x8_t vtrgt, uint16x8_t vSrc, uint16x8_t opa)
+{
+    uint16x8_t      vTrans = 256 - opa;
+
+    return (vmulq(vTrans, vSrc) + vmulq(vtrgt, opa)) >> 8;
+}
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_blend_rgb565(uint16x8_t vtrgt, __arm_2d_color_fast_rgb_t * RGB, uint16x8_t opa)
@@ -162,6 +169,9 @@ uint16x8_t __arm_2d_blend_n_rgb565(uint16x8_t vtrgt, __arm_2d_color_fast_rgb_t *
 
     return __arm_2d_rgb565_pack_single_vec(vRtgt, vGtgt, vBtgt);
 }
+
+#define  __arm_2d_vblend_rgb565  __arm_2d_rgb565_blending_opacity_single_vec
+
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_blend_cccn888(uint16x8_t       vTrg, uint16x8_t vChColour, uint16x8_t opa)
