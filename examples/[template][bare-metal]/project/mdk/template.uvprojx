@@ -1026,7 +1026,7 @@
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
+      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1720,6 +1720,75 @@
         </Group>
         <Group>
           <GroupName>ACI</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
             <File>
               <FileName>arm_2d_rgb565_aci_lib.c</FileName>
@@ -6842,7 +6911,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>AN547-Cortex-M55_r0</TargetName>
+      <TargetName>AN547-AN556</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
@@ -10799,7 +10868,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10815,7 +10884,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10831,7 +10900,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10847,7 +10916,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10863,7 +10932,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10879,7 +10948,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10895,7 +10964,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10911,7 +10980,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10927,23 +10996,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
-          <targetInfo name="AN552_Cortex-M55"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-WatchPanel" Cvendor="ARM" Cversion="1.4.3" condition="Arm-2D-Benchmark-WatchPanel">
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10959,7 +11012,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.7" condition="Arm-2D-EXTRA">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10975,7 +11028,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -10991,7 +11044,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.5" condition="Arm-2D-Helper" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11007,7 +11060,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.12.1" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11023,7 +11076,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.7.0" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11039,7 +11092,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.6" condition="CMSIS-DSP">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11055,7 +11108,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.1.6" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11071,7 +11124,7 @@
       <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.1.6" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.9"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11087,7 +11140,7 @@
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.0" condition="ARMv6_7_8-M Device">
         <package name="CMSIS" schemaVersion="1.7.31" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0-rc1"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11103,7 +11156,7 @@
       <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source" Cvendor="ARM" Cversion="1.15.0" condition="CMSISCORE" isTargetSpecific="1">
         <package name="CMSIS-DSP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.15.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0">
+          <targetInfo name="AN547-AN556">
             <c>
               <MiscControls>-w</MiscControls>
             </c>
@@ -11173,35 +11226,35 @@
       <component Cclass="Device" Cgroup="Definition" Cvendor="ARM" Cversion="2.0.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Native Driver" Csub="SysCounter" Cvendor="ARM" Cversion="1.1.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Native Driver" Csub="SysTimer" Cvendor="ARM" Cversion="1.1.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Native Driver" Csub="Timeout" Cvendor="ARM" Cversion="1.0.0" condition="SSE-300-MPS3 Systimer Syscounter">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.0.0" condition="SSE-300-MPS3 Device">
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="ARM" version="1.4.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
@@ -11224,7 +11277,7 @@
       <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.3.1" condition="CMSIS-CORE">
         <package name="perf_counter" schemaVersion="1.7.28" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.3.1"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11273,7 +11326,7 @@
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0">
+          <targetInfo name="AN547-AN556">
             <c>
               <MiscControls>-w</MiscControls>
             </c>
@@ -11333,7 +11386,7 @@
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="EVR" Cvendor="Keil" Cversion="1.2.0" condition="ARMCC Cortex-M with EVR">
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11476,7 +11529,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11494,7 +11547,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11512,7 +11565,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.6" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11530,7 +11583,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11548,7 +11601,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11566,7 +11619,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.6" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11584,7 +11637,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.6" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11602,7 +11655,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.5" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11620,7 +11673,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="2.3.5" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11710,7 +11763,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11728,7 +11781,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11746,7 +11799,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11764,7 +11817,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11782,7 +11835,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11800,7 +11853,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11818,7 +11871,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11836,7 +11889,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11854,7 +11907,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11872,7 +11925,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11890,7 +11943,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11908,7 +11961,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11926,7 +11979,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11944,7 +11997,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11962,7 +12015,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11980,7 +12033,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -11998,7 +12051,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -12016,7 +12069,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -12034,7 +12087,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.6" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -12052,7 +12105,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.6" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -12070,7 +12123,7 @@
         <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device"/>
         <package name="ARM_Compiler" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="1.7.2"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -12444,7 +12497,7 @@
         <component Cclass="Device" Cgroup="Definition" Cvendor="ARM" Cversion="2.0.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </file>
@@ -12483,7 +12536,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.0.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </file>
@@ -12498,7 +12551,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.0.0" condition="SSE-300-MPS3 Device"/>
         <package name="V2M_MPS3_SSE_300_BSP" schemaVersion="1.7.28" url="http://www.keil.com/pack/" vendor="ARM" version="1.5.0"/>
         <targetInfos>
-          <targetInfo name="AN547-Cortex-M55_r0"/>
+          <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </file>
