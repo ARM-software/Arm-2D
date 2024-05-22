@@ -142,7 +142,7 @@ __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 #if defined(__PERF_COUNTER__)
     return get_system_ticks();
 #else
-    return (int64_t)clock();
+    return 0;
 #endif
 }
 
