@@ -20,6 +20,7 @@
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
