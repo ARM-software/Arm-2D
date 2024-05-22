@@ -198,12 +198,6 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     return ptDescriptor;
 }}
 
-extern const
-struct {{
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-}} ARM_2D_FONT_{0}_A{5};
-
 const
 struct {{
     implement(arm_2d_user_font_t);
