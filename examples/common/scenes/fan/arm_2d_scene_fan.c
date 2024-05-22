@@ -328,15 +328,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                     arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
                     arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
-                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("-00.0", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("-00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
                     arm_2d_align_centre(__item_region, tStringSize) {
                         arm_lcd_text_set_draw_region(&__centre_region);
                         arm_lcd_text_location(0,0);
                         if (this.fSomeNumberToShow < 0) {
-                            arm_lcd_printf("%02.1f", this.fSomeNumberToShow);
+                            arm_lcd_printf("%02d" PRIi32, (int32_t)this.fSomeNumberToShow);
                         } else {
-                            arm_lcd_printf(" %02.1f", this.fSomeNumberToShow);
+                            arm_lcd_printf(" %02d" PRIi32, (int32_t)this.fSomeNumberToShow);
                         }
                     }
                 }
