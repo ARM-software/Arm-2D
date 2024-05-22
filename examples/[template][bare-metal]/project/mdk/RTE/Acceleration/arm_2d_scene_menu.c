@@ -472,7 +472,7 @@ static void __on_scene_menu_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
 
-    int nResult;
+    int32_t nResult;
     if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &nResult, &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
     }

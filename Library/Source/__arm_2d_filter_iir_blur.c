@@ -71,6 +71,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 174,177,188,68,513,144
+#elif defined(__IS_COMPILER_GCC__)
+#   pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif
 
 /*============================ MACROS ========================================*/
