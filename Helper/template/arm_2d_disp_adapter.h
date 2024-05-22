@@ -108,7 +108,7 @@ extern "C" {
 //     <7=>   128 pixel
 // <i> Make sure the x and width of the PFB is always aligned to 2^n pixels
 #ifndef __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_WIDTH__
-#   define __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_WIDTH__                     0
+#   define __DISP%Instance%_CFG_PFB_PIXEL_ALIGN_WIDTH__                     1
 #endif
 
 // <o>Height Alignment of generated PFBs
