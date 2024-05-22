@@ -148,7 +148,7 @@ const static __ttf_char_descriptor_t c_tUTF8LookUpTableA1[] = {
 
 
 ARM_SECTION("arm2d.tile.c_tileUTF8UserFontA1Mask")
-static arm_2d_tile_t c_tileUTF8UserFontA1Mask = {
+static const arm_2d_tile_t c_tileUTF8UserFontA1Mask = {
     .tRegion = {
         .tSize = {
             .iWidth = 17,
@@ -267,7 +267,13 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a1_font_get_char_descriptor)
     return ptDescriptor;
 }
 
+extern const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A1;
 
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
@@ -444,7 +450,7 @@ const static __ttf_char_descriptor_t c_tUTF8LookUpTableA2[] = {
 
 
 ARM_SECTION("arm2d.tile.c_tileUTF8UserFontA2Mask")
-static arm_2d_tile_t c_tileUTF8UserFontA2Mask = {
+static const arm_2d_tile_t c_tileUTF8UserFontA2Mask = {
     .tRegion = {
         .tSize = {
             .iWidth = 17,
@@ -563,7 +569,13 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a2_font_get_char_descriptor)
     return ptDescriptor;
 }
 
+extern const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A2;
 
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
@@ -807,7 +819,7 @@ const static __ttf_char_descriptor_t c_tUTF8LookUpTableA4[] = {
 
 
 ARM_SECTION("arm2d.tile.c_tileUTF8UserFontA4Mask")
-static arm_2d_tile_t c_tileUTF8UserFontA4Mask = {
+static const arm_2d_tile_t c_tileUTF8UserFontA4Mask = {
     .tRegion = {
         .tSize = {
             .iWidth = 17,
@@ -926,7 +938,13 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
     return ptDescriptor;
 }
 
+extern const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A4;
 
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
@@ -1287,7 +1305,7 @@ const static __ttf_char_descriptor_t c_tUTF8LookUpTableA8[] = {
 
 
 ARM_SECTION("arm2d.tile.c_tileUTF8UserFontA8Mask")
-static arm_2d_tile_t c_tileUTF8UserFontA8Mask = {
+static const arm_2d_tile_t c_tileUTF8UserFontA8Mask = {
     .tRegion = {
         .tSize = {
             .iWidth = 17,
@@ -1406,7 +1424,13 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a8_font_get_char_descriptor)
     return ptDescriptor;
 }
 
+extern const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A8;
 
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
