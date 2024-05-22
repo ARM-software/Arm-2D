@@ -2,6 +2,101 @@
 
 
 
+## Release v1.1.6 (22 May 2024)
+
+### Core and Library
+
+- Improves the compatibility with IAR and GCC
+- Various fixes in the Helium library
+- Adds new APIs for fill-colour-with-mirroring (with/without opacity)
+- Adds new APIs for fill-colour-with-horizontal/vertical-line-masks (with/without opacity)
+- Adds new APIs for tile-copy-with-source-mask-and-opacity
+- Adds implicit conversion for ARGB8888 (ccca8888) in tile-copy APIs
+  - Copy with Opacity
+  - Copy with Source Masks (with/without Opacity)
+- Adds experimental APIs for IIR blur
+- Adds a Helium-ACI example library.
+- Uses jinja scripts for generating source files
+
+
+
+### Helper Services
+
+- Improves performance statistics
+  - Allows frame-skipping when no valid dirty region
+- Improves log services
+  - Adds a dedicated channel for statistics
+  - Adds a dedicated channel for example controls
+  - Adds line number
+- Improves scratch memory management
+- Improves the layout assistant
+  - Adds macro helpers for docking
+  - Allows `arm_2d_canvas` to skip running when it is out of the partial-framebuffer valid region.
+  - Improves the capability of the layout nesting. 
+  - Adds a layout assistant debug mode
+- Improves the lcd printf service
+  - Improves the scaling service
+- Improves the Display Adapter service
+  - Adds the support for screen rotation (90, 180 and 270 degrees) in the Display Adapter service
+  - Adds colour information
+  - Allows retargeting printf to LCD
+  - Improves user application performance
+  - Improves the support for UTF8
+  - Adds `arm_2d_helper_pfb_is_region_being_drawing`
+  - 
+- Improves the Scene Player service
+  - Adds the canvas colour to arm_2d_scene_t.
+  - Adds an onLoad event to arm_2d_scene_t.
+  - Adds a built-in dirty region helper service
+  - Improves the scene switching effects
+- Adds a helper service for byte FIFO: `arm_2d_byte_fifo_t`
+- Adds `__arm_2d_helper_time_elapsed`
+- 
+- Adds helper services for dirty regions
+- Adds a code template for adding user defined OPCODE
+- Improves pixel-pipeline for processing masks
+
+
+
+### Examples and Templates
+
+- Improves the compatibility with CMSIS6
+- Improves the complexity of the generic benchmark
+- Adds an example control for drawing rounded corner images
+- Allows changing the masks when 
+  - drawing rounded corner boxes
+  - drawing rounded corner border
+  - drawing progress wheel
+- Adds built-in dirty region support to example controls
+- Adds example project for csolution: `[template][csolution]`
+- Improves code templates of the scene, the display adapter and the example control
+- Adds demos
+- Marks `arm_extra_controls.h` as deprecated. Please use `arm_2d_example_controls.h` instead.
+- Adds new example controls:
+  - console box
+  - histogram
+- Adds new scene templates:
+  - alarm clock
+  - bubble charging
+  - fan
+- Adds new assets 
+- Adds an `onDrawParticles` event handler to the dynamic nebular 
+- Fixes small issues in example controls
+- Improve the PC template
+- Reduces the memory footprint of example controls.
+- Improves the performance of example controls
+
+
+
+### Documentation and Misc
+
+- Improves python scripts in the `tools` folder.
+- Adds a document for how-to-use-jinja-script-for-code-generation
+
+
+
+
+
 ## Release v1.1.5 (01 Dec 2023)
 
 ### Core and Library
