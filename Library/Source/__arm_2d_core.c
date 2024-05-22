@@ -2375,7 +2375,7 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
                                                 uint16_t hwAlignment, 
                                                 arm_2d_mem_type_t tType)
 {
-    size_t tSize = (size_t)hwItemCount * (size_t)hwItemCount;
+    size_t tSize = (size_t)hwItemSize * (size_t)hwItemCount;
     do {
         if (NULL == ptMemory) {
             assert(false);
