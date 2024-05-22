@@ -79,7 +79,7 @@ c_body_string="""
 
 
 ARM_SECTION(\"arm2d.tile.c_tileUTF8UserFontA{5}Mask\")
-static arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
+static const arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -198,7 +198,13 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     return ptDescriptor;
 }}
 
+extern const
+struct {{
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+}} ARM_2D_FONT_{0}_A{5};
 
+const
 struct {{
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
@@ -419,7 +425,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.3)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.4)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
