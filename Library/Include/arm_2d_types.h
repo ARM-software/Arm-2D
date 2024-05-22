@@ -36,6 +36,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <inttypes.h>
 
 #include "arm_2d_features.h"
 #include "arm_2d_utils.h"

@@ -249,6 +249,8 @@ void histogram_show(histogram_t *ptThis,
             .tSize = this.tHistogramSize,
         };
 
+        ARM_2D_UNUSED(__histogram_canvas);
+
         arm_2d_container(&__histogram, __panel, &tPanelRegion) {
 
             arm_2d_location_t tBaseLine = {0,0};
