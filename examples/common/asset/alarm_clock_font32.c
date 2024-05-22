@@ -569,12 +569,6 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a2_font_get_char_descriptor)
     return ptDescriptor;
 }
 
-extern const
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ALARM_CLOCK_32_A2;
-
 const
 struct {
     implement(arm_2d_user_font_t);
@@ -937,12 +931,6 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
 
     return ptDescriptor;
 }
-
-extern const
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ALARM_CLOCK_32_A4;
 
 const
 struct {
@@ -1423,12 +1411,6 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a8_font_get_char_descriptor)
 
     return ptDescriptor;
 }
-
-extern const
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ALARM_CLOCK_32_A8;
 
 const
 struct {

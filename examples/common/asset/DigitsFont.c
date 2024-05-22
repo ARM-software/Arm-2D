@@ -2132,20 +2132,7 @@ static
 arm_2d_char_descriptor_t *
 __digit_font_get_char_descriptor(const arm_2d_font_t *ptFont, 
                                     arm_2d_char_descriptor_t *ptDescriptor,
-                                    uint8_t *pchCharCode);
-
-extern const
-struct {
-    implement(arm_2d_user_font_t);
-
-    arm_2d_char_idx_t tNumbers;
-    arm_2d_char_idx_t tABCDEF;
-    arm_2d_char_idx_t tMinor;
-    arm_2d_char_idx_t tPlus;
-    arm_2d_char_idx_t tDot;
-    arm_2d_char_idx_t tE;
-    arm_2d_char_idx_t tBlank;
-} ARM_2D_FONT_A2_DIGITS_ONLY;                         
+                                    uint8_t *pchCharCode);                       
 
 const
 struct {
@@ -2223,19 +2210,6 @@ struct {
     },
 };
 
-extern const
-struct {
-    implement(arm_2d_user_font_t);
-
-    arm_2d_char_idx_t tNumbers;
-    arm_2d_char_idx_t tABCDEF;
-    arm_2d_char_idx_t tMinor;
-    arm_2d_char_idx_t tPlus;
-    arm_2d_char_idx_t tDot;
-    arm_2d_char_idx_t tE;
-    arm_2d_char_idx_t tBlank;
-} ARM_2D_FONT_A4_DIGITS_ONLY;
-
 const
 struct {
     implement(arm_2d_user_font_t);
@@ -2311,19 +2285,6 @@ struct {
         .hwOffset = 19,
     },
 };
-
-extern const
-struct {
-    implement(arm_2d_user_font_t);
-
-    arm_2d_char_idx_t tNumbers;
-    arm_2d_char_idx_t tABCDEF;
-    arm_2d_char_idx_t tMinor;
-    arm_2d_char_idx_t tPlus;
-    arm_2d_char_idx_t tDot;
-    arm_2d_char_idx_t tE;
-    arm_2d_char_idx_t tBlank;
-} ARM_2D_FONT_A8_DIGITS_ONLY;
 
 const
 struct {
