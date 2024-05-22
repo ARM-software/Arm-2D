@@ -334,9 +334,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                         arm_lcd_text_set_draw_region(&__centre_region);
                         arm_lcd_text_location(0,0);
                         if (this.fSomeNumberToShow < 0) {
-                            arm_lcd_printf("%02d" PRIi32, (int32_t)this.fSomeNumberToShow);
+                            arm_lcd_printf("%02" PRIi32, (int32_t)this.fSomeNumberToShow);
                         } else {
-                            arm_lcd_printf(" %02d" PRIi32, (int32_t)this.fSomeNumberToShow);
+                            arm_lcd_printf(" %02" PRIi32, (int32_t)this.fSomeNumberToShow);
                         }
                     }
                 }
