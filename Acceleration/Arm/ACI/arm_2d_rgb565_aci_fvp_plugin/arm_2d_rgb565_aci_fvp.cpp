@@ -61,6 +61,8 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
     uint16_t        maskGpk = 0x00fc;
     uint8_t         r1, g1, b1;
     uint8_t         r2, g2, b2;
+    /* ratio encoded with 7-bit*/
+    uint16_t        ratioScal = ((*ratio & 0x7f) << 1) ;
 
     blkCnt = 2;
     do {
@@ -93,13 +95,13 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
 
 
         /* merge */
-        tmp = (r1 * *ratio) + (r2 * (256 - *ratio));
+        tmp = (r1 * ratioScal) + (r2 * (256 - ratioScal));
         r1 = (uint8_t) (tmp >> 8);
 
-        tmp = (g1 * *ratio) + (g2 * (256 - *ratio));
+        tmp = (g1 * ratioScal) + (g2 * (256 - ratioScal));
         g1 = (uint8_t) (tmp >> 8);
 
-        tmp = (b1 * *ratio) + (b2 * (256 - *ratio));
+        tmp = (b1 * ratioScal) + (b2 * (256 - ratioScal));
         b1 = (uint8_t) (tmp >> 8);
 
         /* pack merged stream */
@@ -353,7 +355,7 @@ ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_beatwise(const ACIVCX3DecodeInfo * d
             arm_mix_rgb16_uint16x2((uint16_t *) & d_val, (uint16_t *) & d_val, (uint16_t *) & n_val,
                                    (uint16_t *) & m_val);
         else {
-            bool is_bottom = (decode_info->imm & 0b100) > 0 ? false : true;
+            bool is_bottom = (decode_info->imm & 0b1000) > 0 ? false : true;
             arm_pack_rgb16_uint16x2((uint16_t *) & d_val, (uint16_t *) & d_val,
                                     (uint16_t *) & n_val, (uint16_t *) & m_val, is_bottom);
         //printf("%x %x %x\n",d_val, n_val, m_val);
