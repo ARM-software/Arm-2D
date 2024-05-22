@@ -38,12 +38,12 @@
 /*
     // Mnemonic                  | Class          | Copro |  Opcode        | CDERTLID  | Comment
     //---------------------------|----------------|-------|----------------|-----------|----------
-    // VRGB16UNPR<T>  Qd, Qm     | VCX2  (vector) |   0   |  7'b<T>000001  |   2/3/5   | Unpacking of red unpack
-    // VRGB16UNPR<T>A Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>000001  |   2/3/5   | Unpacking of Red unpack with accumulate
+    // VRGB16UNPB<T>  Qd, Qm     | VCX2  (vector) |   0   |  7'b<T>000001  |   2/3/5   | Unpacking of Blue unpack
+    // VRGB16UNPB<T>A Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>000001  |   2/3/5   | Unpacking of Blue unpack with accumulate
     // VRGB16UNPG<T>  Qd, Qm     | VCX2  (vector) |   0   |  7'b<T>000010  |   2/3/5   | Unpacking of green unpack
     // VRGB16UNPG<T>A Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>000010  |   2/3/5   | Unpacking of green unpack with accumulate
-    // VRGB16UNPB<T>  Qd, Qm     | VCX2  (vector) |   0   |  7'b<T>000100  |   2/3/5   | Unpacking of Blue unpack
-    // VRGB16UNPB<T>A Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>000100  |   2/3/5   | Unpacking of Blue unpack with accumulate
+    // VRGB16UNPR<T>  Qd, Qm     | VCX2  (vector) |   0   |  7'b<T>000100  |   2/3/5   | Unpacking of Red unpack
+    // VRGB16UNPR<T>A Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>000100  |   2/3/5   | Unpacking of Red unpack with accumulate
     // VRGB16PR<T>A   Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>001000  |    2/5    | Packing of red channel
     // VRGB16PG<T>A   Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>010000  |    2/5    | Packing of green channel
     // VRGB16PB<T>A   Qd, Qm     | VCX2A (vector) |   0   |  7'b<T>100000  |    2/5    | Packing of blue channel
@@ -89,25 +89,25 @@ uint16x8_t __arm_2d_cde_rgb565_blendq_m(uint16x8_t vec1, uint16x8_t vec2,
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_red_unpckbq(uint16x8_t in)
 {
-    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000001);
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000100);
 }
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_red_unpckbq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
 {
-    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000001, p);
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000100, p);
 }
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_red_unpcktq(uint16x8_t in)
 {
-    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000001);
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000100);
 }
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_red_unpcktq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
 {
-    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b1000001, p);
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b1000100, p);
 }
 
 
@@ -132,32 +132,32 @@ uint16x8_t __arm_2d_cde_rgb565_green_unpcktq(uint16x8_t in)
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_blue_unpcktq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
 {
-    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000100, p);
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b1000001, p);
 }
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_blue_unpckbq(uint16x8_t in)
 {
-    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000100);
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b0000001);
 }
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_blue_unpckbq_m(uint16x8_t inactive, uint16x8_t in, mve_pred16_t p)
 {
-    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b0000010, p);
+    return __arm_vcx2q_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, inactive, in, 0b000001, p);
 }
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_blue_unpcktq(uint16x8_t in)
 {
-    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000100);
+    return __arm_vcx2q(ARM_2D_RGB565_ACI_LIB_COPRO_ID, in, 0b1000001);
 }
 
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_packbq(uint16x8_t R, uint16x8_t G,        uint16x8_t B)
 {
-    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0);
+    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, B, G, R, 0);
 }
 
 
@@ -166,14 +166,14 @@ uint16x8_t __arm_2d_cde_rgb565_packbq_m(uint16x8_t R, uint16x8_t G,
                                                                uint16x8_t B,
                                                                mve_pred16_t p)
 {
-    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0, p);
+    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, B, G, R, 0, p);
 }
 
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_packtq(uint16x8_t R, uint16x8_t G,        uint16x8_t B)
 {
-    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0b1000);
+    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, B, G, R, 0b1000);
 }
 
 
@@ -182,7 +182,7 @@ uint16x8_t __arm_2d_cde_rgb565_packtq_m(uint16x8_t R, uint16x8_t G,
                                                                uint16x8_t B,
                                                                mve_pred16_t p)
 {
-    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, R, G, B, 0b1000, p);
+    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, B, G, R, 0b1000, p);
 }
 
 

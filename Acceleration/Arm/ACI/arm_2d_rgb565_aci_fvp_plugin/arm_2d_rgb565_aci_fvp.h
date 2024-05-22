@@ -36,6 +36,8 @@
 #include <cstdio>
 #define ARM_2D_RGB565_ACI_LIB_COPRO_ID  0
 
+/* mimic RTL behavior with swapped R/B channels handling */
+#define R_B_CHAN_REVERSED 1
 
 class arm_2d_rgb565_aci_fvp
 {

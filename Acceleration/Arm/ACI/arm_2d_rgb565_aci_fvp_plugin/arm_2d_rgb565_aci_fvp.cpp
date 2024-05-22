@@ -21,8 +21,8 @@
  * Title:        arm_2d_rgb565_aci_fvp.c
  * Description:  Arm-2D RGB565 ACI FVP emulation Library
  *
- * $Date:        23. Jan 2024
- * $Revision:    V.0.0.1
+ * $Date:        22. May 2024
+ * $Revision:    V.0.0.2
  *
  * -------------------------------------------------------------------- */
 
@@ -30,6 +30,7 @@
 #include "arm_2d_rgb565_aci_fvp.h"
 #include <valarray>
 #include <cstdio>
+
 
 
 std::valarray < uint8_t > uint32x1_to_uint8x4(uint32_t val)
@@ -115,8 +116,13 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
 }
 
 
+#ifdef R_B_CHAN_REVERSED
+void arm_pack_rgb16_uint16x2(uint16_t * out, uint16_t * in_b, const uint16_t * in_g,
+                             const uint16_t * in_r, bool is_bottom)
+#else
 void arm_pack_rgb16_uint16x2(uint16_t * out, uint16_t * in_r, const uint16_t * in_g,
                              const uint16_t * in_b, bool is_bottom)
+#endif
 {
 
     int32_t         blkCnt;
@@ -137,7 +143,9 @@ void arm_pack_rgb16_uint16x2(uint16_t * out, uint16_t * in_r, const uint16_t * i
             B >>= 8;
         }
 
+
         *out = (B >> 3) | ((G & maskGpk) << 3) | ((R & maskRpk) << 8);
+
         out++;
         in_r++;
         in_g++;
@@ -293,7 +301,11 @@ ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_beatwise(const ACIVCX2DecodeInfo * d
     bool is_bottom = (decode_info->imm & 0b1000000) > 0 ? false : true;
 
     switch (decode_info->imm & 0xf) {
+#ifdef R_B_CHAN_REVERSED
+      case 0b0000100:
+#else
       case 0b0000001:
+#endif
           arm_mix_unpack_red_uint16x2((uint16_t *) & d_val, (uint16_t *) & m_val, is_bottom);
           *result = *(uint32_t *) & d_val;
           return ACI_STATUS_OK;
@@ -303,7 +315,11 @@ ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx2_beatwise(const ACIVCX2DecodeInfo * d
           *result = *(uint32_t *) & d_val;
           return ACI_STATUS_OK;
           break;
+#ifdef R_B_CHAN_REVERSED
+      case 0b0000001:
+#else
       case 0b0000100:
+#endif
           arm_mix_unpack_blue_uint16x2((uint16_t *) & d_val, (uint16_t *) & m_val, is_bottom);
           *result = *(uint32_t *) & d_val;
           return ACI_STATUS_OK;
@@ -358,7 +374,6 @@ ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_beatwise(const ACIVCX3DecodeInfo * d
             bool is_bottom = (decode_info->imm & 0b1000) > 0 ? false : true;
             arm_pack_rgb16_uint16x2((uint16_t *) & d_val, (uint16_t *) & d_val,
                                     (uint16_t *) & n_val, (uint16_t *) & m_val, is_bottom);
-        //printf("%x %x %x\n",d_val, n_val, m_val);
         }
 
         *result = *(uint32_t *) & d_val;
