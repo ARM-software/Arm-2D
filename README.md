@@ -80,7 +80,8 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (ver1.1.6-dev)](#in-this-version-ver116-dev)
+  - [In this version (ver1.1.6)](#in-this-version-ver116)
+  - [Experimental Features](#experimental-features)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -210,7 +211,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - **[new]** A `jinja2c.py` for code generation.
   - **Demos**
     - Demos for various scenarios
-    - **[new]** An dedicated demo for Helium-ACI acceleration (running on [AN552](https://developer.arm.com/downloads/view/AN552)). 
+    - **[new]** An dedicated demo for Helium-ACI acceleration. 
 
 - **Ready and Welcome 3rd party adoption**
 
@@ -356,7 +357,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | :-------------- | ------- | ------------------------------------------------------------ |
 | **Library**     | Folder  | This folder contains the source files and header files of the library. |
 | **Helper**      | Folder  | This folder contains the source files and header files of helper functions / services. |
-| Acceleration    | Folder  | This folder contains hardware specific accelerations, e.g. Helium-ACI example in [AN552](https://developer.arm.com/downloads/view/AN552). |
+| Acceleration    | Folder  | This folder contains hardware specific accelerations, e.g. Helium-ACI example in FVP |
 | documentation   | Folder  | This folder contains all the documents.                      |
 | examples        | Folder  | This folder contains all the examples, controls and templates etc. |
 | README          | .md     | The README.md you are currently reading.                     |
@@ -407,4 +408,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-20 May 2024
+22 May 2024
