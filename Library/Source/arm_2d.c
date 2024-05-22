@@ -236,7 +236,7 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
         s_wLineNumber++;
 
         /* start a new line */
-        __ARM_2D_PORT_PRINTF__("\r\n[%010d]\t", s_wLineNumber);
+        __ARM_2D_PORT_PRINTF__("\r\n[%010" PRIu32 "]\t", s_wLineNumber);
 
         for (int32_t n = 0; n < nIndentLevel; n++) {
             __ARM_2D_PORT_PRINTF__("\t");
