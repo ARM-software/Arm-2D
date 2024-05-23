@@ -85,6 +85,9 @@ var group__gKernel =
     [ "arm_2d_op_msk_t", "group__gKernel.html#structarm__2d__op__msk__t", null ],
     [ "arm_2d_op_src_t", "group__gKernel.html#structarm__2d__op__src__t", null ],
     [ "arm_2d_op_src_msk_t", "group__gKernel.html#structarm__2d__op__src__msk__t", null ],
+    [ "arm_2d_op_src_msk_opc_t", "group__gKernel.html#structarm__2d__op__src__msk__opc__t", [
+      [ "chOpacity", "group__gKernel.html#aa9395f719e2f99b23712cab3e6f15ac7", null ]
+    ] ],
     [ "arm_2d_op_src_orig_t", "group__gKernel.html#structarm__2d__op__src__orig__t", null ],
     [ "arm_2d_op_src_orig_msk_t", "group__gKernel.html#structarm__2d__op__src__orig__msk__t", null ],
     [ "arm_2d_rot_linear_regr_t", "group__gKernel.html#structarm__2d__rot__linear__regr__t", null ],
@@ -212,6 +215,17 @@ var group__gKernel =
       [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
     [ "arm_2d_op_src_msk_t.Mask", "group__gKernel.html#structarm__2d__op__src__msk__t_8Mask", [
+      [ "ptSourceSide", "group__gKernel.html#a13d713fa0ec43e86713c9b6cf51e5bf4", null ],
+      [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
+    ] ],
+    [ "arm_2d_op_src_msk_opc_t.Target", "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Target", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
+    ] ],
+    [ "arm_2d_op_src_msk_opc_t.Source", "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Source", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
+    ] ],
+    [ "arm_2d_op_src_msk_opc_t.Mask", "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Mask", [
       [ "ptSourceSide", "group__gKernel.html#a13d713fa0ec43e86713c9b6cf51e5bf4", null ],
       [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
