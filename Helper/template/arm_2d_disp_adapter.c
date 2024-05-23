@@ -275,16 +275,16 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
         arm_lcd_text_location(0,0);
         if (DISP%Instance%_ADAPTER.Benchmark.wAverage) {
             arm_lcd_printf(
-                " FPS:%3"PRIu32":%"PRIu32"ms\r\n",
+                "  FPS:%3"PRIu32":%"PRIu32"ms\r\n",
                 MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%Instance%_ADAPTER.Benchmark.wAverage, 999),
                 (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage));
         }
         arm_lcd_printf( 
-            " CPU:%2.2f%% \r\n", 
+            "  CPU:%2.2f%% \r\n", 
             DISP%Instance%_ADAPTER.Benchmark.fCPUUsage);
 
         arm_lcd_printf( 
-            " LCD:%2"PRIu32"ms",
+            "  LCD:%2"PRIu32"ms",
             (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
         
     }
