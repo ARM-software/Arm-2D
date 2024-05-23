@@ -2,7 +2,7 @@
 
 
 
-## Release v1.1.6 (22 May 2024)
+## Release v1.1.6 (23 May 2024)
 
 ### Core and Library
 
@@ -17,7 +17,6 @@
 - Adds experimental APIs for IIR blur
 - Adds a Helium-ACI example library.
 - Uses jinja scripts for generating source files
-
 
 
 ### Helper Services
@@ -43,7 +42,7 @@
   - Improves user application performance
   - Improves the support for UTF8
   - Adds `arm_2d_helper_pfb_is_region_being_drawing`
-  - 
+  - Adds a Tiny Mode for navigation layer
 - Improves the Scene Player service
   - Adds the canvas colour to arm_2d_scene_t.
   - Adds an onLoad event to arm_2d_scene_t.
@@ -55,7 +54,6 @@
 - Adds helper services for dirty regions
 - Adds a code template for adding user defined OPCODE
 - Improves pixel-pipeline for processing masks
-
 
 
 ### Examples and Templates
