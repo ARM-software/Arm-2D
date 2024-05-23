@@ -280,7 +280,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                 (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage));
         }
         arm_lcd_printf( 
-            " CPU:%2.2f%% \r\n“, 
+            " CPU:%2.2f%% \r\n", 
             DISP%Instance%_ADAPTER.Benchmark.fCPUUsage);
 
         arm_lcd_printf( 
