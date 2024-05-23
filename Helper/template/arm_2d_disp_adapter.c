@@ -106,6 +106,21 @@ int32_t Disp%Instance%_DrawBitmap(int16_t x,
 
 /*============================ LOCAL VARIABLES ===============================*/
 
+#if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__ == 2
+/* the round mode */
+IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
+
+    /* a region for the status bar on the bottom of the screen */
+    ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
+        .tSize = {
+            .iWidth = 84,
+            .iHeight = 16,
+        },
+    ),
+
+END_IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList)
+#endif
+
 ARM_NOINIT 
 arm_2d_scene_player_t DISP%Instance%_ADAPTER;
 
@@ -163,7 +178,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     return arm_fsm_rt_cpl;
 }
 
-#if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
+#if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__
 
 __WEAK 
 IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_user_draw_navigation)
@@ -241,6 +256,35 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 
 #endif
 
+#if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__ == 2
+    /* round mode */
+    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+    arm_lcd_text_set_draw_region(&(s_tNavDirtyRegionList[0].tRegion));
+    
+    if (__DISP%Instance%_CFG_ITERATION_CNT__) {
+        draw_round_corner_box(  ptTile, 
+                                &(s_tNavDirtyRegionList[0].tRegion), 
+                                __RGB(64,64,64),
+                                255-32,
+                                bIsNewFrame);
+
+        ARM_2D_OP_WAIT_ASYNC();
+
+        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        if (DISP%Instance%_ADAPTER.Benchmark.wAverage) {
+            arm_lcd_printf(
+                " FPS:%3"PRIu32":%"PRIu32"ms\r\n",
+                MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%Instance%_ADAPTER.Benchmark.wAverage, 999),
+                (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage));
+        }
+        arm_lcd_printf( 
+            " LCD:%2"PRIu32"ms",
+            (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
+        
+    }
+#else
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
     arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
     arm_lcd_text_set_draw_region(NULL);
@@ -263,27 +307,29 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                     }, 
                     (__arm_2d_color_t){__RGB(64,64,64)}, 
                     255 - 32);
-        arm_2d_op_wait_async(NULL);
+
+        ARM_2D_OP_WAIT_ASYNC();
+
         arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
         arm_lcd_text_location((__DISP%Instance%_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
                               0);
 
         if (DISP%Instance%_ADAPTER.Benchmark.wAverage) {
             arm_lcd_printf(
-                "FPS:%3d:%dms ",
+                "FPS:%3"PRIu32":%"PRIu32"ms ",
                 MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%Instance%_ADAPTER.Benchmark.wAverage, 999),
-                (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage));
+                (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage));
         }
 
 #if __DISP%Instance%_CFG_SCEEN_WIDTH__ >= 240
         arm_lcd_printf( 
-            "CPU:%2.2f%% LCD-Latency:%2dms", 
+            "CPU:%2.2f%% LCD-Latency:%2"PRIu32"ms", 
             DISP%Instance%_ADAPTER.Benchmark.fCPUUsage,
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency));
+            (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency));
 #else
         arm_lcd_printf( 
-            "LCD:%2dms",
-            (int32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
+            "LCD:%2"PRIu32"ms",
+            (uint_fast64_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
 #endif
     }
 
@@ -303,8 +349,8 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                     ARM_2D_VERSION_STR
                     );
 #endif
-
-    arm_2d_op_wait_async(NULL);
+#endif
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -660,10 +706,24 @@ static void __user_scene_player_init(void)
     DISP%Instance%_ADAPTER.Benchmark.hwFrameCounter = 0;
 }
 
-#if !__DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
+#if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__
 __WEAK 
 void disp_adapter%Instance%_navigator_init(void)
 {
+#if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__ == 2
+    
+    static const arm_2d_region_t tScreen = {
+        .tSize = {
+            .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
+            .iHeight = __DISP%Instance%_CFG_SCEEN_HEIGHT__,
+        },
+    };
+    
+    arm_2d_align_bottom_centre(tScreen, s_tNavDirtyRegionList[0].tRegion.tSize) {
+        s_tNavDirtyRegionList[0].tRegion = __bottom_centre_region;
+        s_tNavDirtyRegionList[0].tRegion.tLocation.iY -= 16;
+    }
+#else
     /*! define dirty regions for the navigation layer */
     IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
 
@@ -678,7 +738,8 @@ void disp_adapter%Instance%_navigator_init(void)
             },
         ),
 
-    END_IMPL_ARM_2D_REGION_LIST()
+    END_IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList)
+#endif
 
 #if __DISP%Instance%_CFG_USE_CONSOLE__
     do {

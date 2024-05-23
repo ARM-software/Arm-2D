@@ -187,10 +187,14 @@ extern "C" {
 #   define __DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
-// <q>Disable the navigation layer
-// <i> Remove the navigation layer for this display adapter. NOTE: Disable the navigation layer will also remove the real-time FPS display.
-#ifndef __DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__
-#   define __DISP%Instance%_CFG_DISABLE_NAVIGATION_LAYER__                  0
+// <o>Navigation Layer Mode
+//     <0=>     Disable Navigation Layer
+//     <1=>     Normal Mode (Bottom)
+//     <2=>     Tiny Mode (Bottom Centre)
+// <i> Configure the default navigation layer of this display adapter. 
+// <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
+#ifndef __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__
+#   define __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__                              1
 #endif
 
 // <q> Enable Console
