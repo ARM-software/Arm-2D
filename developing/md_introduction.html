@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('md_introduction.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p >This document explains the basic concepts of Arm-2D. It doesn't matter whether you have read the <b>README</b> in the root directory. The content is suitable for everyone.</p>
-<h1><a class="anchor" id="autotoc_md58"></a>
+<h1><a class="anchor" id="autotoc_md69"></a>
 1 Overview</h1>
 <p >At the beginning of our adventure, you might have a lot of questions, such as</p>
 <ul>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('md_introduction.html',''); initResizab
 <li>What about the development environment?</li>
 </ul>
 <p >You will find the answers in the following sections.</p>
-<h2><a class="anchor" id="autotoc_md59"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <ul>
 <li><a href="#1-overview">1 Overview</a><ul>
@@ -181,7 +181,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md60"></a>
+<h2><a class="anchor" id="autotoc_md71"></a>
 1.1 What is Arm-2D</h2>
 <p >If you want to design GUI applications in Linux, you don’t have to face hardware directly. The Linux ecosystem provides you with all necessary software components, including GPU drivers, GUI stacks and many handy reference designs.</p>
 <p >Unfortunately, if you are an embedded developer using Cortex-M devices, you must face various display hardware directly. Even worse, you might face various non-standard 2D graphics accelerators from different silicon vendors. Many GUI stacks are available for embedded applications, but most of them are not ready for your target device immediately. As a result, you have to do the porting work first. In summary, using GUI in the Cortex-M system is feasible, but there is a lot of low-level work beforehand.</p>
@@ -191,17 +191,17 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <p ><b>Figure 1-2 The Hierarchy of a Typical Embedded GUI System.</b></p>
 <p ><img src="TopReadme_1_2b.png" alt="" class="inline" title="The Hierarchy of a Typical Embedded GUI System"/></p>
 <p ><b>Arm-2D focuses on low-level 2D image processing and provides a unified software interface for the various 2D accelerators.</b></p>
-<h2><a class="anchor" id="autotoc_md61"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 1.2 Target Audiences</h2>
 <p >There are three types of participants in arm-2d: GUI service providers, silicon vendors, and embedded software developers.</p>
-<h3><a class="anchor" id="autotoc_md62"></a>
+<h3><a class="anchor" id="autotoc_md73"></a>
 1.2.1 GUI Service Provider</h3>
 <p >GUI service providers can benefit from Arm-2D, which provides a standard interface for commonly used hardware acceleration. GUI service providers can use Arm-2D to get low-level acceleration by default. As a result, they are freed from writing drivers for hardware; and concentrate on improving the software and providing customisation services for their VIP customers.</p>
-<h3><a class="anchor" id="autotoc_md63"></a>
+<h3><a class="anchor" id="autotoc_md74"></a>
 1.2.2 Silicon Vendor</h3>
 <p >Semiconductor manufacturers can benefit from Arm-2D. To save the efforts of learning new architectures, programmers want to use microcontrollers under the same architecture, and in most cases, that means using Cortex-M processors. Since devices use the same processor architecture, semiconductor manufacturers are motivated to introduce proprietary peripherals for differentiation. Introducing dedicated accelerators for 2D graphics has become the new trend. While differentiation in hardware brings benefits to end-users, it also inevitably introduces the problem of software fragmentation. Introducing a hardware abstract layer to mitigate the issue is common practice in software engineering. Arm-2D is such an abstract layer for various 2D graphic accelerations.</p>
 <p >In an ideal condition, chip manufacturers only need to implement arm-2d compliant drivers for their hardware accelerators, and this is sufficient to get support from the mainstream GUI stacks.</p>
-<h3><a class="anchor" id="autotoc_md64"></a>
+<h3><a class="anchor" id="autotoc_md75"></a>
 1.2.3 Embedded Application Designers</h3>
 <p >Most embedded software developers use devices with constrained resources. A typical system has less than 64KB FLASH and 4~32K SRAM. As a reference, a standard low-cost serial LCD (320*240 resolution and 65K colour) requires 150KB RAM for the display buffer, which is unaffordable.</p>
 <p >Also, for such microcontrollers, most of the existing GUI stacks are too expensive to use in terms of memory footprint. On the other hand, many GUI applications are so simple that even some home-brew implementations are good enough to fulfil the requirements. In such cases, most existing GUI stacks are too heavy.</p>
@@ -214,23 +214,23 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 </ul>
 <p >In conclusion, <b>in the past, it was hard to implement a modern-looking GUI in a bare-metal environment</b>. And now, Arm-2D provides a series of easy-to-use APIs to help users implement desired graphic effects using the so-called Partial-Frame-Buffer helper service. It is worth mentioning that the <b>PFB-backed design paradigm introduced by Arm-2D is transparent to upper-layer software</b>, which dramatically simplifies the application development in a bare-metal environment, i.e. <b>users can design applications as if there is a full frame buffer.</b></p>
 <p ><b>In summary, Arm-2D enables many devices (traditionally unsuitable for modern-looking GUI) to implement a modern-looking GUI with a small memory footprint.</b></p>
-<h2><a class="anchor" id="autotoc_md65"></a>
+<h2><a class="anchor" id="autotoc_md76"></a>
 1.3 Arm-2D Libraries</h2>
-<h3><a class="anchor" id="autotoc_md66"></a>
+<h3><a class="anchor" id="autotoc_md77"></a>
 1.3.1 Standard Software Implementation</h3>
 <p >As a starting point, Arm-2D provides a default software implementation for all algorithms. These software implementations are mainly written in the C language and occasionally include some local assembly acceleration. This ensures that Arm-2D can be used directly on all Cortex-M processors without modification.</p>
-<h3><a class="anchor" id="autotoc_md67"></a>
+<h3><a class="anchor" id="autotoc_md78"></a>
 1.3.2 Helium Acceleration</h3>
 <p >If you are using an Armv8.1-M processor, such as Cortex-M55, as long as you enable Helium support with compilation options, <b>Arm-2D library will automatically use Helium technology for acceleration</b>.</p>
-<h3><a class="anchor" id="autotoc_md68"></a>
+<h3><a class="anchor" id="autotoc_md79"></a>
 1.3.4 Third-party Implementation</h3>
 <p >Arm-2D has provided standard ways to add support for various third-party hardware accelerators. Although not included now, In the future, we will introduce templates, examples and documents to show how to add support for third-party hardware accelerators.</p>
-<h3><a class="anchor" id="autotoc_md69"></a>
+<h3><a class="anchor" id="autotoc_md80"></a>
 1.3.5 Arm Custom Instruction Support</h3>
 <p >Arm-2D has provided standard ways to add support for 2D image processing algorithms accelerated with customised instructions. Although not included now, In the future, we will introduce templates, examples and documents to show how.</p>
-<h2><a class="anchor" id="autotoc_md70"></a>
+<h2><a class="anchor" id="autotoc_md81"></a>
 1.4 Scope and Limitations</h2>
-<h3><a class="anchor" id="autotoc_md71"></a>
+<h3><a class="anchor" id="autotoc_md82"></a>
 1.4.1 Scope</h3>
 <ul>
 <li>The Arm-2D should fulfil the requirements of Smart-Watch applications<ul>
@@ -250,7 +250,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 </ul>
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md72"></a>
+<h3><a class="anchor" id="autotoc_md83"></a>
 1.4.2 Limitations</h3>
 <ul>
 <li>The library focus on Cortex-M processors in principle.</li>
@@ -269,11 +269,11 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 </li>
 </ul>
 <p ><b>NOTE: For the temporary limitations in current version, please check section 5.2 in <a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">README</a> for details.</b></p>
-<h2><a class="anchor" id="autotoc_md73"></a>
+<h2><a class="anchor" id="autotoc_md84"></a>
 1.5 Operation Categories</h2>
 <p ><b>Table 1-1 Summary of Operation Categories.</b></p>
 <p ><img src="Introduction1_5_1.png" alt="" class="inline" title="Summary of Operation Categories."/></p>
-<h2><a class="anchor" id="autotoc_md74"></a>
+<h2><a class="anchor" id="autotoc_md85"></a>
 1.6 Folder Structures</h2>
 <p ><b>Table 1-2 The Folder Structure of Arm-2d Root</b></p>
 <table class="markdownTable">
@@ -296,10 +296,10 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">tools   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains some useful utilities for using the library. For example, img2c.py is a python script that convert a specified picture into the tile data structure.   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md75"></a>
+<h1><a class="anchor" id="autotoc_md86"></a>
 2 Basics</h1>
 <p >Arm-2D defines some basic data structures for ease of use, providing a unified description method for various graphic resources and simplifying the parameters that need to be passed to 2D processing APIs. This chapter will introduce some basic concepts and corresponding data structures that you must know to work with the Arm-2D library. Arm-2D systematically introduces a Bounding Box Model to provide more sophisticated and easy to use 2D graphics operations.</p>
-<h2><a class="anchor" id="autotoc_md76"></a>
+<h2><a class="anchor" id="autotoc_md87"></a>
 2.1 Region</h2>
 <p >Region is a rectangular area described by the Location (the coordinates of the upper left corner) and the Size information.</p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> {</div>
@@ -308,7 +308,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <div class="line">} <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a>;</div>
 </div><!-- fragment --><p >**Figure 2-1 Region with Location and Size **</p>
 <p ><img src="Introduction2_1a.png" alt="" class="inline" title="Region with Location and Size"/></p>
-<h3><a class="anchor" id="autotoc_md77"></a>
+<h3><a class="anchor" id="autotoc_md88"></a>
 2.1.1 Location</h3>
 <p >The coordinate of the Region is defined by the vertices at the upper left corner of the bit rectangle. Its data structure is as follows:</p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> {</div>
@@ -319,7 +319,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <p ><b>Figure 2-2 When Location has a negative coordinates.</b></p>
 <p ><img src="Introduction2_1b.png" alt="" class="inline" title="When Location has a negative coordinates"/></p>
 <p >As shown in <b>Figure 2-2</b>, when the <em><b>x</b></em> and <em><b>y</b></em> coordinates of a Region are both negative, it actually has a considerable area outside (upper left corner) of its parent Region. When we try to find the intersection of the current Region and its parent Region, we will find that only part of the region is valid.</p>
-<h3><a class="anchor" id="autotoc_md78"></a>
+<h3><a class="anchor" id="autotoc_md89"></a>
 2.1.2 Size</h3>
 <p >The size information of the Region is described by the Height and Width together. The data structure is defined as follows:</p>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> {</div>
@@ -327,23 +327,23 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <div class="line">    int16_t <a class="code hl_variable" href="group__gKernel.html#a44f7520235d22c8906b2c192442a0c31" title="height of an rectangular area">iHeight</a>;</div>
 <div class="line">} <a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a>;</div>
 </div><!-- fragment --><p >Although a signed type <em><b>int16_t</b></em> is used to describe the width and height, negative numbers are meaningless and should be avoided.</p>
-<h2><a class="anchor" id="autotoc_md79"></a>
+<h2><a class="anchor" id="autotoc_md90"></a>
 2.2 Bounding Box Model</h2>
 <p >The so-called Bounding Box Model describes the affiliation among Regions, which is often used to describe the relationship between containers and visual elements.</p>
 <p >In a GUI stack, the Bounding Box Model usually talks about more complex stuff, such as the border's width, the margin inside a container border, the padding of / distance between the elements inside a container etc. Arm-2D does <em><b>NOT</b></em> cares about these details but only describes the simple relationship between a container and the elements inside.</p>
-<h3><a class="anchor" id="autotoc_md80"></a>
+<h3><a class="anchor" id="autotoc_md91"></a>
 2.2.1 Absolute Location and Relative Location</h3>
 <p >In Arm-2d, we consider panels or windows as containers, and the Locations of the panels and the windows are their coordinates in the display buffer. <b>We call this kind of location information that directly describes the coordinates in a display buffer as an Absolute Location</b>. In <b>Figure 2-3</b>, the panel (top container) coordinates are absolute coordinates.</p>
 <p >The coordinates of the elements inside a container are described as <b>coordinates relative to the upper left corner of the parent container</b>. We call this kind of Locations the <b>Relative Locations</b>. In addition to that, since the container is only a special element, container nesting becomes possible. In <b>Figure 2-3</b>, the two innermost Regions have Relative Locations.</p>
 <p ><b>Figure 2-3 A Typical Example of Absolute Locations and Relative Locations</b></p>
 <p ><img src="Introduction2_2a.png" alt="" class="inline" title="A Typical Example of Absolute Locations and Relative Locations"/></p>
-<h3><a class="anchor" id="autotoc_md81"></a>
+<h3><a class="anchor" id="autotoc_md92"></a>
 2.2.2 Absolute Region and Relative Region</h3>
 <p >If a Region has absolute Location, it is an <b>Absolute Region</b>; similarly, if a Region has relative Location, it is a <b>Relative Region</b>.</p>
 <p ><b>Figure 2-4 A Typical Example of Absolute Regions and Relative Regions</b></p>
 <p ><img src="Introduction2_2b.png" alt="" class="inline" title="A Typical Example of Absolute Regions and Relative Regions"/></p>
 <p >When we use these relative and absolute information to perform visual area calculations, it is easy to exclude those areas that are actually invisible to the user from various graphic operations, thereby improving the overall 2D processing performance (as shown in <b>Figure 2-4</b> ).</p>
-<h2><a class="anchor" id="autotoc_md82"></a>
+<h2><a class="anchor" id="autotoc_md93"></a>
 2.3 Tile</h2>
 <p >Tile is the smallest unit of various 2D operations in Arm-2D. The Tile data structure consists of three parts:</p>
 <ul>
@@ -402,7 +402,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>pchBuffer</b></em>   </td><td class="markdownTableBodyNone">Pointers   </td><td class="markdownTableBodyNone"><em><b>uint8_t *</b></em>   </td><td class="markdownTableBodyNone">When <em><b>bIsRoot</b></em> is "***1***", this pointer is used to point to a display buffer that contains pixels that have less or equals to 8bits.   </td><td class="markdownTableBodyNone">See <b><a href="#231-root-tile">section 2.3.1</a></b> for details.   </td></tr>
 </table>
-<h3><a class="anchor" id="autotoc_md83"></a>
+<h3><a class="anchor" id="autotoc_md94"></a>
 2.3.1 Root Tile</h3>
 <p >A Root tile is a kind of tiles that directly contain the display buffer, and its feature bit <code>bIsRoot</code> is set, according to the pixel types used in the display buffer to which corresponding pointers should be used. For more details, please refer to <b>Table 2-1</b>.</p>
 <p >It is worth emphasizing that for a root Tile, its Location coordinate must be <em><b>(0,0)</b></em>; otherwise, it is considered illegal.</p>
@@ -488,7 +488,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <div class="line">    }</div>
 <div class="line">    ...</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md84"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md95"></a>
 2.3.2 Child Tile</h3>
 <p >Given any tile, we can derive a theoretically unlimited number of sub-tiles based on it, which are called Child Tiles in Arm-2D. It is worth emphasizing that the Tile that can be used to derive child tiles does not need to be a root Tile. The <code>bIsRoot</code> flag of the Child Tile is 0, which means that the pointer<code>ptParent</code> points to its parent Tile.</p>
 <p >The Location information of the child tile is used to indicate its location in the parent tile. Negative numbers are allowed for the coordinates here. The region of a child tile can be larger than the size of the parent tile. This is often used to implement the Partial Frame-buffer. For more, please refer to <b><a href="#233-partial-frame-buffer">section 2.3.3</a></b>.</p>
@@ -496,13 +496,13 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <p ><b>Figure 2-3 A Chain of Child Tiles and Their Root Tile</b></p>
 <p ><img src="Introduction2_3a.png" alt="" class="inline" title="A Chain of Child Tiles and Their Root Tile"/></p>
 <p >The introduction of Child Tiles can greatly simplify the storing and representing of GUI resources. Smart designers can even put many image elements in the same picture and retrieve them by creating Child Tiles with different sizes from different locations. In practice, A multi-level Child Tile suffers almost no performance loss in 2D operations.</p>
-<h3><a class="anchor" id="autotoc_md85"></a>
+<h3><a class="anchor" id="autotoc_md96"></a>
 2.3.3 Partial Frame Buffer</h3>
 <p >The so-called Partial Frame Buffer is a special use of the Tile Child scheme. It establishes a root Tile for a tiny rectangular display buffer and derives a Child Tile having the same size as the actual screen. In practice, the GUI software in the upper layer uses the Child Tile (with the full-screen size) to draw graphics and blend visual layers. After completing a frame, the PFB that actually saves the pixel information is sent to the LCD driver for a flush. Since FPB only covers a small area, the drawing process aforementioned, in most cases, will be judged as "no need for actual drawing" and skipped. To display the entire screen, we need to repeat this process continuously and adjust the relative Location between FPB and the Child Tile at the beginning of each iteration. For us, it looks like moving FPB line by line on the screen as shown in <b>Figure 2-4</b>.</p>
 <p ><b>Figure 2-4 How Partial Frame Buffer Works</b></p>
 <p ><img src="Introduction2_3b.png" alt="" class="inline" title="How Partial Frame Buffer Works"/></p>
 <p >The partial frame buffer feature has been integrated into the display adapter service.</p>
-<h2><a class="anchor" id="autotoc_md86"></a>
+<h2><a class="anchor" id="autotoc_md97"></a>
 2.4 Colour</h2>
 <p >Arm-2D has reserved sufficient space for supporting more colour formats. A data structure has been introduced to describe a colour format used in a given tile. The C definition is shown below:</p>
 <div class="fragment"><div class="line"><span class="comment">/*! </span></div>
@@ -674,19 +674,19 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <div class="line">} <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__nccc888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its first byte.">arm_2d_color_nccc888_t</a>;</div>
 </div><!-- fragment --><p >As shown above, <b>arm-2d describes colour format in little-end manner</b>, for example, <b>BGRA8888</b> means the blue-channel is the 1st byte and the Alpha channel is the 3rd byte. The colour format <b>CCCA8888</b> means the Alpha channel is the 3rd byte and there are three colour channels whose name and order we don't care. The colour format <b>CCCN888</b> means the 8 MSB are unused (reserved for alpha) and the lower 3 bytes are used to store colour channels.</p>
 <p >However, Some well know colour formats do not follow the naming rule aforementioned in arm-2d, for example RGB565 (It's R, G, B channels are listed in big-ending manner.). We don't want to confuse people.</p>
-<h2><a class="anchor" id="autotoc_md87"></a>
+<h2><a class="anchor" id="autotoc_md98"></a>
 2.4 API Usage Modes</h2>
 <p >Arm-2D APIs can be used in both Synchronous mode and Asynchronous mode. In fact, The Arm-2D library is designed for working asynchronously, and wrappers are added to support synchronous mode.</p>
-<h3><a class="anchor" id="autotoc_md88"></a>
+<h3><a class="anchor" id="autotoc_md99"></a>
 2.4.1 Synchronous Mode</h3>
 <p >The Synchronous mode is also known as the classic mode, in which a function call won't return until the service is finished or an error occurred.</p>
-<h3><a class="anchor" id="autotoc_md89"></a>
+<h3><a class="anchor" id="autotoc_md100"></a>
 2.4.2 Asynchronous Mode</h3>
 <p >The Asynchronous mode is good for the event-driven design paradigm, and it is suitable for most of the RTOS based applications and applications that are written in protoThread and/or FSM in the bare-metal system.</p>
 <p >In the current version of the Arm-2D library, all examples are written in Asynchronous mode.</p>
-<h1><a class="anchor" id="autotoc_md90"></a>
+<h1><a class="anchor" id="autotoc_md101"></a>
 3 API Summary for commonly used APIs</h1>
-<h2><a class="anchor" id="autotoc_md91"></a>
+<h2><a class="anchor" id="autotoc_md102"></a>
 3.1 Tile Operations</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -820,7 +820,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">Fill a given tile into a target tile with Colour-Keying and xy-mirroring. Both tiles should use 32bits for each pixel. No alpha channel is used in this function.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md92"></a>
+<h2><a class="anchor" id="autotoc_md103"></a>
 3.2 Colour Space Conversion</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -832,7 +832,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><em><b>arm_2d_convert_colour_to_gray8</b></em>   </td><td class="markdownTableBodyNone">Convert a tile in any other colour formats to a new tile in <em><b>GRAY8</b></em>.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md93"></a>
+<h2><a class="anchor" id="autotoc_md104"></a>
 3.3 Alpha Blending and Masks related</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1078,7 +1078,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror</b></em>   </td><td class="markdownTableBodyNone">fill a source tile to a target tile with a mask on the source side and xy-mirroring. Both tiles use <em><b>CCCN888</b></em> as their colour format.   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md94"></a>
+<h2><a class="anchor" id="autotoc_md105"></a>
 3.4 Transform (Rotation/Scaling)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1128,7 +1128,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_tile_transform</b></em>   </td><td class="markdownTableBodyNone">start a transform operation   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md95"></a>
+<h2><a class="anchor" id="autotoc_md106"></a>
 3.5 Drawing</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -1158,7 +1158,7 @@ Table of Contents &lt;!-- omit from toc --&gt;</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><em><b>arm_2dp_rgb32_draw_pattern</b></em>   </td><td class="markdownTableBodyNone">copy a bit-pattern (A1) to a target tile in 32bit colour   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md96"></a>
+<h2><a class="anchor" id="autotoc_md107"></a>
 3.6 Filters</h2>
 <p >To be added in the future. </p>
 </div></div><!-- contents -->
