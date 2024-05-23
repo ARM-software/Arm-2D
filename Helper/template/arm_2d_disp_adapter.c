@@ -113,7 +113,7 @@ IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
     /* a region for the status bar on the bottom of the screen */
     ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
         .tSize = {
-            .iWidth = 84,
+            .iWidth = 100,
             .iHeight = 24,
         },
     ),
