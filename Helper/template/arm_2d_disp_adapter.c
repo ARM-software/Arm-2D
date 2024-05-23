@@ -114,7 +114,7 @@ IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
     ADD_LAST_REGION_TO_LIST(s_tNavDirtyRegionList,
         .tSize = {
             .iWidth = 84,
-            .iHeight = 16,
+            .iHeight = 24,
         },
     ),
 
@@ -279,6 +279,10 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                 MIN(arm_2d_helper_get_reference_clock_frequency() / DISP%Instance%_ADAPTER.Benchmark.wAverage, 999),
                 (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wAverage));
         }
+        arm_lcd_printf( 
+            " CPU:%2.2f%% \r\n“, 
+            DISP%Instance%_ADAPTER.Benchmark.fCPUUsage);
+
         arm_lcd_printf( 
             " LCD:%2"PRIu32"ms",
             (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
