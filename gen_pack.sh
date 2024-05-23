@@ -23,6 +23,7 @@ PACK_DIRS="
   documentation/html
   examples/common
   examples/demos
+  Acceleration
   Helper
   Library
   tools
@@ -33,6 +34,8 @@ PACK_BASE_FILES="
   documentation/index.html
   documentation/version.css
   documentation/version.js
+  ReleaseNote.md
+  CMakeLists.txt
   LICENSE
   README.md
 "

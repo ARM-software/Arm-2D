@@ -1,7 +1,5 @@
 # Getting Started as an Professional User
 
-
-
 ### "I am interested in the implementation"
 
 - We apologise that at the current stage (it's the early stage, as you can see), there is no sufficient guidance or documents about:
