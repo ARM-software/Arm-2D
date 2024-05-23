@@ -206,5 +206,8 @@ var group__gAlpha =
     [ "arm_2dp_rgb565_fill_colour_with_vertical_line_mask", "group__gAlpha.html#ga8ee373d9dadcd415bf69ffbf0d8ec4da", null ],
     [ "arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity", "group__gAlpha.html#ga2c6043dcebaba4521f3770411edb45a3", null ],
     [ "arm_2dp_cccn888_fill_colour_with_vertical_line_mask", "group__gAlpha.html#ga499ad4f34fa09f19d580e396740b52f3", null ],
-    [ "arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity", "group__gAlpha.html#ga009619f0275876afa8fe7fe333bc951e", null ]
+    [ "arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity", "group__gAlpha.html#ga009619f0275876afa8fe7fe333bc951e", null ],
+    [ "arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gad183117190a6fc1d8a48666aba9fa296", null ],
+    [ "arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gadf5f158479a2eeee0f0f70367cf14179", null ],
+    [ "arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gadf2c6378b96a64b53b5a43f56e0b86a6", null ]
 ];
