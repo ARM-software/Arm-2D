@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        22. May 2024
- * $Revision:    V.1.1.6
+ * $Date:        23. May 2024
+ * $Revision:    V.1.1.7-dev
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -86,8 +86,8 @@ extern "C" {
 /*  arm-2d version */
 #define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
 #define ARM_2D_VERSION_MINOR        1                                           //!< Minor version
-#define ARM_2D_VERSION_PATCH        6                                           //!< Patch number
-#define ARM_2D_VERSION_STR          ""                                          //!< tag
+#define ARM_2D_VERSION_PATCH        7                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "dev"                                       //!< tag
 
 /*!
  * \brief arm-2d version number in decimal
