@@ -25,6 +25,10 @@
 #   include "RTE_Components.h"
 #endif
 
+#if defined(__ARM_2D_USER_APP_CFG_H__)
+#   include __ARM_2D_USER_APP_CFG_H__
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
