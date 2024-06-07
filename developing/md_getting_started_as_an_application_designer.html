@@ -148,6 +148,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <ul>
 <li><a href="https://github.com/GorgonMeducer/Pico_Template">A porting for Raspberry Pi Pico (using MDK)</a></li>
 <li><a href="https://github.com/lvgl/lv_port_an547_cm55_sim">A porting for LVGL + Arm-2D on Corstone-300-FVP</a></li>
+<li><a href="https://github.com/RT-Thread-Studio/sdk-bsp-ra8d1-vision-board/tree/arm2d/projects/arm2d/vision_board_mipi_2.0inch_arm2d">A porting for RA8D1-Vision-Board</a></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md41"></a>
 2.3 Try the basic Tile Operations and the Layout Assistant</h2>
@@ -256,7 +257,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <ul>
 <li><b>For the Arm Compiler 6</b><ul>
 <li>Avoid using Arm Compiler 5 whenever possible.</li>
-<li>If the ROM is sufficient, try to use <b>-Omax + Link Time Optimisation</b></li>
+<li>If the ROM is sufficient, try to use <b>-Ofast + Link Time Optimisation</b></li>
 <li>If the both the performance and the code memory footprint are important, try to use <b>-Os + Link Time Optimisation</b></li>
 <li>If the code memory footprint is vital, try to use <b>-Oz + Link Time Optimisation</b></li>
 <li>Do <b>NOT</b> use <b>-O0</b> unless you are debugging.</li>
