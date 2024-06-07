@@ -47,6 +47,7 @@ Of course, if you want to skip the porting step and jump to learn how to use the
 
 - [A porting for Raspberry Pi Pico (using MDK)](https://github.com/GorgonMeducer/Pico_Template)
 - [A porting for LVGL + Arm-2D on Corstone-300-FVP](https://github.com/lvgl/lv_port_an547_cm55_sim)
+- [A porting for RA8D1-Vision-Board](https://github.com/RT-Thread-Studio/sdk-bsp-ra8d1-vision-board/tree/arm2d/projects/arm2d/vision_board_mipi_2.0inch_arm2d)
 
 
 
@@ -210,7 +211,7 @@ The design consideration of optimizing performance and memory footprint deserves
 - **For the Arm Compiler 6**
 
   - Avoid using Arm Compiler 5 whenever possible. 
-  - If the ROM is sufficient, try to use **-Omax + Link Time Optimisation**
+  - If the ROM is sufficient, try to use **-Ofast + Link Time Optimisation**
   - If the both the performance and the code memory footprint are important, try to use **-Os + Link Time Optimisation**
   - If the code memory footprint is vital, try to use **-Oz + Link Time Optimisation**
   - Do **NOT** use **-O0** unless you are debugging. 
