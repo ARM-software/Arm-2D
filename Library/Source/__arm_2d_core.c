@@ -2385,7 +2385,7 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
         }
 
         ptMemory->pBuffer 
-            = (uintptr_t)__arm_2d_allocate_scratch_memory(  tSize , 
+            = (uintptr_t)__arm_2d_allocate_scratch_memory(  tSize + 4, 
                                                             hwAlignment,
                                                             tType);
 
@@ -2393,6 +2393,11 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
         ptMemory->u2Align = hwAlignment;
         ptMemory->u2ItemSize = hwItemSize;
         ptMemory->u2Type = tType;
+
+        if (NULL != ptMemory->pBuffer) {
+            /* add canary */
+            *(volatile uint32_t *)((uintptr_t)(ptMemory->pBuffer) + tSize) = 0xCAFE0ACE;
+        }
 
         return ptMemory;
     } while(0);
@@ -2406,6 +2411,12 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_free(arm_2d_scratch_mem_t *ptMemory)
     do {
         if (NULL == ptMemory) {
             break;
+        }
+        size_t tSize = ptMemory->u24SizeInByte;
+
+        /* check canary */
+        if (*(volatile uint32_t *)((uintptr_t)(ptMemory->pBuffer) + tSize) != 0xCAFE0ACE) {
+            assert(false);
         }
 
         __arm_2d_free_scratch_memory(   ptMemory->u2Type, 
