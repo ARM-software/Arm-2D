@@ -540,7 +540,6 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
 
 
 
-
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT pwTarget,
                                                            int16_t iTargetStride,
@@ -649,9 +648,9 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT
 
         if (NULL != ptStatusV) {
             pAccBase = (int16_t *) ptStatusV;
-            vst1q(pAccBase, vaccR);
+            vst1q(pAccBase, vaccB);
             vst1q(pAccBase + 8, vaccG);
-            vst1q(pAccBase + 16, vaccB);
+            vst1q(pAccBase + 16, vaccR);
             ptStatusV += 8;
         }
         pwPixel += (iTargetStride * 8);
@@ -703,9 +702,9 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT
 
         if (NULL != ptStatusV) {
             pAccBase = (int16_t *) ptStatusV;
-            vst1q(pAccBase, vaccR);
+            vst1q(pAccBase, vaccB);
             vst1q(pAccBase + 8, vaccG);
-            vst1q(pAccBase + 16, vaccB);
+            vst1q(pAccBase + 16, vaccR);
         }
     }
 
@@ -768,9 +767,9 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT
 
         if (NULL != ptStatusH) {
             pAccBase = (int16_t *) ptStatusH;
-            vst1q(pAccBase, vaccR);
+            vst1q(pAccBase, vaccB);
             vst1q(pAccBase + 8, vaccG);
-            vst1q(pAccBase + 16, vaccB);
+            vst1q(pAccBase + 16, vaccR);
 
             ptStatusH += 8;
         }
@@ -821,9 +820,9 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT
 
         if (NULL != ptStatusH) {
             pAccBase = (int16_t *) ptStatusH;
-            vst1q(pAccBase, vaccR);
+            vst1q(pAccBase, vaccB);
             vst1q(pAccBase + 8, vaccG);
-            vst1q(pAccBase + 16, vaccB);
+            vst1q(pAccBase + 16, vaccR);
 
         }
     }
