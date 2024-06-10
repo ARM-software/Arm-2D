@@ -2416,6 +2416,7 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_free(arm_2d_scratch_mem_t *ptMemory)
 
         /* check canary */
         if (*(volatile uint32_t *)((uintptr_t)(ptMemory->pBuffer) + tSize) != 0xCAFE0ACE) {
+            __BKPT(0x01);
             assert(false);
         }
 
