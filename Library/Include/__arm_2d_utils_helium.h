@@ -103,6 +103,34 @@ uint16x8_t __arm_2d_rgb565_pack_single_vec(uint16x8_t R, uint16x8_t G, uint16x8_
     return vOut;
 }
 
+__STATIC_FORCEINLINE
+void __arm_2d_ccca8888_unpack_u16(const uint8_t * pSource, uint16x8_t * opa,
+                                      uint16x8_t * R, uint16x8_t * G, uint16x8_t * B)
+{
+    uint8x16x2_t    vdeintr2 = vld2q_u8(pSource);
+
+    *opa = vmovltq(vdeintr2.val[1]);
+    *G = vmovlbq(vdeintr2.val[1]);
+    *R = vmovltq(vdeintr2.val[0]);
+    *B = vmovlbq(vdeintr2.val[0]);
+}
+
+__STATIC_FORCEINLINE
+void __arm_2d_ccca8888_pack_u16( uint8_t * pDst, uint16x8_t opa,
+                                    uint16x8_t R, uint16x8_t G, uint16x8_t B)
+{
+    uint8x16x2_t    vintr2;
+
+    vintr2.val[1] = vmovntq_u16(vintr2.val[1], opa);
+    vintr2.val[1] = vmovnbq_u16(vintr2.val[1], G);
+
+    vintr2.val[0] = vmovntq_u16(vintr2.val[0], R);
+    vintr2.val[0] = vmovnbq_u16(vintr2.val[0], B);
+
+    vst2q_u8(pDst, vintr2);
+}
+
+
 
 #if !defined(__ARM_2D_HAS_CDE__) || __ARM_2D_HAS_CDE__ == 0
 

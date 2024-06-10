@@ -204,6 +204,8 @@ uint16x8_t __arm_2d_blend_n_cccn888(uint16x8_t        vTrg, uint16x8_t vChColour
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_mask_and_mirroring_helium.c"
 
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_filter_iir_blur_helium.c"
 
 /*----------------------------------------------------------------------------*
  * Helper

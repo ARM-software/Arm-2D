@@ -84,17 +84,7 @@ extern "C" {
 /*============================ IMPLEMENTATION ================================*/
 
 
-__STATIC_FORCEINLINE
-void __arm_2d_ccca8888_unpack_u16(const uint8_t * pSource, uint16x8_t * opa,
-                                      uint16x8_t * R, uint16x8_t * G, uint16x8_t * B)
-{
-    uint8x16x2_t    vdeintr2 = vld2q_u8(pSource);
 
-    *opa = vmovltq(vdeintr2.val[1]);
-    *G = vmovlbq(vdeintr2.val[1]);
-    *R = vmovltq(vdeintr2.val[0]);
-    *B = vmovlbq(vdeintr2.val[0]);
-}
 
 __STATIC_FORCEINLINE
 void __arm_2d_ccca8888_get_and_dup_opa(const uint8_t * pSource, uint16x8_t * opa,
