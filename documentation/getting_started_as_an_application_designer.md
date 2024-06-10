@@ -16,15 +16,15 @@ If you happen to meet the conditions above, **don't panic**; we will try our bes
 
 - [1 Before We Start](#1-before-we-start)
 - [2 Step by Step Guidance](#2-step-by-step-guidance)
-  - [2.1 Familiar with the basic concepts](#21-familiar-with-the-basic-concepts)
+  - [2.1 The basic concepts](#21-the-basic-concepts)
   - [2.2 Port Arm-2D to your local platform](#22-port-arm-2d-to-your-local-platform)
   - [2.3 Try the basic Tile Operations and the Layout Assistant](#23-try-the-basic-tile-operations-and-the-layout-assistant)
-  - [2.4 Try existing example controls](#24-try-existing-example-controls)
+  - [2.4 Try example controls](#24-try-example-controls)
   - [2.5 Write a simple GUI Application](#25-write-a-simple-gui-application)
   - [2.6 Learn the basic method to optimize the performance and memory footprint](#26-learn-the-basic-method-to-optimize-the-performance-and-memory-footprint)
   - [2.7 Tips for other advanced topics](#27-tips-for-other-advanced-topics)
     - [2.7.1 Benchmarks](#271-benchmarks)
-    - [2.7.2 Asynchronose Mode and RTOS support](#272-asynchronose-mode-and-rtos-support)
+    - [2.7.2 Asynchronous Mode and RTOS support](#272-asynchronous-mode-and-rtos-support)
 - [3 Tips For Exploring the Library](#3-tips-for-exploring-the-library)
   - ["I am a library user, I only care about how to use the library"](#i-am-a-library-user-i-only-care-about-how-to-use-the-library)
 
@@ -47,7 +47,7 @@ Of course, if you want to skip the porting step and jump to learn how to use the
 
 - [A porting for Raspberry Pi Pico (using MDK)](https://github.com/GorgonMeducer/Pico_Template)
 - [A porting for LVGL + Arm-2D on Corstone-300-FVP](https://github.com/lvgl/lv_port_an547_cm55_sim)
-- [A porting for RA8D1-Vision-Board](https://github.com/RT-Thread-Studio/sdk-bsp-ra8d1-vision-board/tree/arm2d/projects/arm2d/vision_board_mipi_2.0inch_arm2d)
+- [A porting for RA8D1-Vision-Board](https://github.com/RT-Thread-Studio/sdk-bsp-ra8d1-vision-board/tree/master/projects/arm2d/vision_board_mipi_2.0inch_arm2d)
 
 
 
