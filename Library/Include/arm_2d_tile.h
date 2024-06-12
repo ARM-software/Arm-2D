@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.4.5
+ * $Date:        13. June 2024
+ * $Revision:    V.1.4.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -958,6 +958,20 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                             arm_2d_location_t *ptOffset,
                                             const arm_2d_tile_t **ppVirtualScreen,
                                             bool bQuitWhenFindVirtualScreen);
+
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief check whether a given target tile contains the boolean value of 
+ *        bIsNewFrame, if it is, return the bIsNewFrame value
+ * 
+ * \param[in] ptTarget the target tile
+ * \retval ARM_2D_ERR_INVALID_PARAM the target tile is invalid
+ * \retval ARM_2D_RT_TRUE   The bIsNewFrame is true, or there is no virtual 
+ *                          screen.
+ * \retval ARM_2D_RT_FALSE  The bIsNewFrame is false
+ */
+arm_2d_err_t arm_2d_target_tile_is_new_frame(const arm_2d_tile_t *ptTarget);
 
 /*!
  * \brief generate a child tile from the target tile with a given region

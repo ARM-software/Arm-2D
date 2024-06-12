@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        16. May 2024
- * $Revision:    V.1.5.0
+ * $Date:        13. June 2024
+ * $Revision:    V.1.4.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -590,6 +590,35 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
                                                         NULL, 
                                                         false);
 }
+
+ARM_NONNULL(1)
+arm_2d_err_t arm_2d_target_tile_is_new_frame(const arm_2d_tile_t *ptTarget)
+{
+    const arm_2d_tile_t *ptScreen = NULL;
+    arm_2d_err_t tResult = ARM_2D_ERR_INVALID_PARAM;
+    do {
+        if (NULL == __arm_2d_tile_get_virtual_screen_or_root(   ptTarget,
+                                                                NULL,
+                                                                NULL,
+                                                                &ptScreen,
+                                                                true)) {
+            break;
+        }
+
+        tResult = ARM_2D_RT_TRUE;
+        if ((ptScreen->tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_PFB)) {
+            break;
+        }
+        if (ptScreen->tInfo.Extension.PFB.bIsNewFrame) {
+            break;
+        }
+
+        return ARM_2D_RT_FALSE;
+    } while(0);
+
+    return tResult;
+}
+
 
 ARM_NONNULL(1,2)
 arm_2d_cmp_t arm_2d_tile_width_compare( const arm_2d_tile_t *ptTarget,
