@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.h
  * Description:  APIs for IIR Blur
  *
- * $Date:        5. April 2024
- * $Revision:    V.1.0.0
+ * $Date:        12. June 2024
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *

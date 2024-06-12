@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        10. May 2024
- * $Revision:    V.1.1.0
+ * $Date:        12. June 2024
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -69,10 +69,10 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wswitch-enum"
 #   pragma clang diagnostic ignored "-Wswitch"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
-#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 174,177,188,68,513,144
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress 174,177,188,68,513,144
 #endif
 
 /*============================ MACROS ========================================*/
@@ -104,30 +104,46 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
+        case ARM_2D_RT_FALSE:
+            break;
+        case ARM_2D_RT_TRUE:
+            do {
+                if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+                    return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
+                }
+
+                OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_GRAY8;
     
+                OPCODE.Target.ptTile = ptTarget;
+                OPCODE.Target.ptRegion = ptRegion;
+
+                this.chBlurDegree = chBlurDegree;
+
+                arm_2d_size_t tSize = ptTarget->tRegion.tSize;
+                if (NULL != ptRegion) {
+                    tSize = ptRegion->tSize;
+                }
+
+                if (NULL == arm_2d_scratch_memory_new(  
+                                            &this.tScratchMemory,
+                                            sizeof(__arm_2d_iir_blur_acc_gray8_t),
+                                            (tSize.iHeight + tSize.iWidth + 14),
+                                            __alignof__(__arm_2d_iir_blur_acc_gray8_t),
+                                            ARM_2D_MEM_TYPE_FAST)) {
+                    return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+
+            } while(0);
+            break;
+        case ARM_2D_ERR_INVALID_PARAM:
+        default:
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
-    }
-    
-    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_GRAY8;
-    
-    OPCODE.Target.ptTile = ptTarget;
-    OPCODE.Target.ptRegion = ptRegion;
-
-    this.chBlurDegree = chBlurDegree;
-
-    if (NULL != (void *)this.tScratchMemory.pBuffer) {
-        arm_2d_size_t tSize;
-        if (NULL != ptRegion) {
-            tSize = ptRegion->tSize;
-        } else {
-            tSize = ptTarget->tRegion.tSize;
-        }
-
-        size_t tSizeInByte = (tSize.iHeight + tSize.iWidth) * (sizeof(__arm_2d_iir_blur_acc_gray8_t));
-        if (this.tScratchMemory.u24SizeInByte < tSizeInByte) {
-            return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
-        }
     }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -155,7 +171,7 @@ void __arm_2d_impl_gray8_filter_iir_blur(
 
     if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_gray8_t *)ptScratchMemory->pBuffer;
-        ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
+        ptStatusV = ptStatusH + 7 + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
 
     /* calculate the offset between the target region and the valid region */
@@ -385,30 +401,46 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
+        case ARM_2D_RT_FALSE:
+            break;
+        case ARM_2D_RT_TRUE:
+            do {
+                if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+                    return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
+                }
+
+                OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_RGB565;
     
+                OPCODE.Target.ptTile = ptTarget;
+                OPCODE.Target.ptRegion = ptRegion;
+
+                this.chBlurDegree = chBlurDegree;
+
+                arm_2d_size_t tSize = ptTarget->tRegion.tSize;
+                if (NULL != ptRegion) {
+                    tSize = ptRegion->tSize;
+                }
+
+                if (NULL == arm_2d_scratch_memory_new(  
+                                            &this.tScratchMemory,
+                                            sizeof(__arm_2d_iir_blur_acc_rgb565_t),
+                                            (tSize.iHeight + tSize.iWidth + 14),
+                                            __alignof__(__arm_2d_iir_blur_acc_rgb565_t),
+                                            ARM_2D_MEM_TYPE_FAST)) {
+                    return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+
+            } while(0);
+            break;
+        case ARM_2D_ERR_INVALID_PARAM:
+        default:
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
-    }
-    
-    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_RGB565;
-    
-    OPCODE.Target.ptTile = ptTarget;
-    OPCODE.Target.ptRegion = ptRegion;
-
-    this.chBlurDegree = chBlurDegree;
-
-    if (NULL != (void *)this.tScratchMemory.pBuffer) {
-        arm_2d_size_t tSize;
-        if (NULL != ptRegion) {
-            tSize = ptRegion->tSize;
-        } else {
-            tSize = ptTarget->tRegion.tSize;
-        }
-
-        size_t tSizeInByte = (tSize.iHeight + tSize.iWidth) * (sizeof(__arm_2d_iir_blur_acc_rgb565_t));
-        if (this.tScratchMemory.u24SizeInByte < tSizeInByte) {
-            return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
-        }
     }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -436,7 +468,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
     if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_rgb565_t *)ptScratchMemory->pBuffer;
-        ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
+        ptStatusV = ptStatusH + 7 + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
 
     /* calculate the offset between the target region and the valid region */
@@ -698,30 +730,46 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
+        case ARM_2D_RT_FALSE:
+            break;
+        case ARM_2D_RT_TRUE:
+            do {
+                if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+                    return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
+                }
+
+                OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_CCCN888;
     
+                OPCODE.Target.ptTile = ptTarget;
+                OPCODE.Target.ptRegion = ptRegion;
+
+                this.chBlurDegree = chBlurDegree;
+
+                arm_2d_size_t tSize = ptTarget->tRegion.tSize;
+                if (NULL != ptRegion) {
+                    tSize = ptRegion->tSize;
+                }
+
+                if (NULL == arm_2d_scratch_memory_new(  
+                                            &this.tScratchMemory,
+                                            sizeof(__arm_2d_iir_blur_acc_cccn888_t),
+                                            (tSize.iHeight + tSize.iWidth + 14),
+                                            __alignof__(__arm_2d_iir_blur_acc_cccn888_t),
+                                            ARM_2D_MEM_TYPE_FAST)) {
+                    return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+                }
+
+            } while(0);
+            break;
+        case ARM_2D_ERR_INVALID_PARAM:
+        default:
+            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
-    }
-    
-    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_CCCN888;
-    
-    OPCODE.Target.ptTile = ptTarget;
-    OPCODE.Target.ptRegion = ptRegion;
-
-    this.chBlurDegree = chBlurDegree;
-
-    if (NULL != (void *)this.tScratchMemory.pBuffer) {
-        arm_2d_size_t tSize;
-        if (NULL != ptRegion) {
-            tSize = ptRegion->tSize;
-        } else {
-            tSize = ptTarget->tRegion.tSize;
-        }
-
-        size_t tSizeInByte = (tSize.iHeight + tSize.iWidth) * (sizeof(__arm_2d_iir_blur_acc_cccn888_t));
-        if (this.tScratchMemory.u24SizeInByte < tSizeInByte) {
-            return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
-        }
     }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -749,7 +797,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
 
     if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_cccn888_t *)ptScratchMemory->pBuffer;
-        ptStatusV = ptStatusH + ptTargetRegionOnVirtualScreen->tSize.iWidth;
+        ptStatusV = ptStatusH + 7 + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
 
     /* calculate the offset between the target region and the valid region */

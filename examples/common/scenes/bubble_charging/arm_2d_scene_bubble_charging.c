@@ -248,20 +248,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
                             255,
                             bIsNewFrame);
 
-        if (bIsNewFrame) {
-
-            if (NULL == arm_2d_scratch_memory_new(  
-                                        &this.tBlurOP.tScratchMemory,
-                                        sizeof(__arm_2d_iir_blur_acc_t),
-                                        (   __charging_canvas.tSize.iHeight 
-                                        +   __charging_canvas.tSize.iWidth),
-                                        __alignof__(__arm_2d_iir_blur_acc_t),
-                                        ARM_2D_MEM_TYPE_FAST)) {
-                assert(false);  /* insufficient memory */
-            }
-
-        }
-        
         arm_2dp_filter_iir_blur(&this.tBlurOP,
                                 ptTile,
                                 &__charging_canvas,
