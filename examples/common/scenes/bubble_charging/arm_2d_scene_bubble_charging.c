@@ -192,7 +192,7 @@ static void __on_scene_bubble_charging_frame_complete(arm_2d_scene_t *ptScene)
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 
-    arm_2dp_rgb565_filter_iir_blur_depose(&this.tBlurOP);
+    arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
 
 }
 
