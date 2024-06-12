@@ -290,6 +290,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7a188b8ca4402c7853bf966e2dd05ef0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0">__arm_2d_tile_get_virtual_screen_or_root</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptValidRegion, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptOffset, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **ppVirtualScreen, bool bQuitWhenFindVirtualScreen)</td></tr>
 <tr class="memdesc:ga7a188b8ca4402c7853bf966e2dd05ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the root tile (and/or the virtual screen tile)  <a href="group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0">More...</a><br /></td></tr>
 <tr class="separator:ga7a188b8ca4402c7853bf966e2dd05ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab793615ac10a2bbbfd4c1714afb1d6e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gab793615ac10a2bbbfd4c1714afb1d6e4">arm_2d_target_tile_is_new_frame</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget)</td></tr>
+<tr class="memdesc:gab793615ac10a2bbbfd4c1714afb1d6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a given target tile contains the boolean value of bIsNewFrame, if it is, return the bIsNewFrame value  <a href="group__Tile.html#gab793615ac10a2bbbfd4c1714afb1d6e4">More...</a><br /></td></tr>
+<tr class="separator:gab793615ac10a2bbbfd4c1714afb1d6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae4ee095763b33e1a6e9b0203263edfde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde">arm_2d_tile_generate_child</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptOutput, bool bClipRegion)</td></tr>
 <tr class="memdesc:gae4ee095763b33e1a6e9b0203263edfde"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a child tile from the target tile with a given region  <a href="group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde">More...</a><br /></td></tr>
 <tr class="separator:gae4ee095763b33e1a6e9b0203263edfde"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3624,6 +3627,40 @@ wColour</td>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>const arm_2d_tile_t* the root tile or the virtual screen tile when bQuitWhenFindVirtualScreen is true </dd></dl>
+
+</div>
+</div>
+<a id="gab793615ac10a2bbbfd4c1714afb1d6e4" name="gab793615ac10a2bbbfd4c1714afb1d6e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab793615ac10a2bbbfd4c1714afb1d6e4">&#9670;&nbsp;</a></span>arm_2d_target_tile_is_new_frame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a> arm_2d_target_tile_is_new_frame </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>check whether a given target tile contains the boolean value of bIsNewFrame, if it is, return the bIsNewFrame value </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">ARM_2D_ERR_INVALID_PARAM</td><td>the target tile is invalid </td></tr>
+    <tr><td class="paramname">ARM_2D_RT_TRUE</td><td>The bIsNewFrame is true, or there is no virtual screen. </td></tr>
+    <tr><td class="paramname">ARM_2D_RT_FALSE</td><td>The bIsNewFrame is false </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
