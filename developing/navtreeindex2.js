@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"group__gHelper.html#ga244fcde0c53f1d123ac5a6c2fa2b2ff2":[11,7,164],
+"group__gHelper.html#ga263f3e14194ec8fa2fc491efbe20344b":[11,7,129],
+"group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af":[11,7,95],
 "group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa":[11,7,170],
 "group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584":[11,7,227],
 "group__gHelper.html#ga36e4f860adbf479e6928621878e5b744":[11,7,112],
@@ -246,8 +249,5 @@ var NAVTREEINDEX2 =
 "group__gHelper.html#structarm__2d__scene__t_8____unnamed139____":[11,7,35],
 "group__gHelper.html#structarm__2d__scene__t_8____unnamed139_____8____unnamed143____":[11,7,36],
 "group__gHelper.html#structarm__2d__scene__t_8____unnamed141____":[11,7,37],
-"group__gHelper.html#structarm__2d__user__font__t":[11,7,33],
-"group__gHelper.html#union____arm__2d__helper__scene__switch__t":[11,7,0],
-"group__gHelper.html#unionarm__2d__helper__dirty__region__item__t_8____unnamed181_____8____unnamed183____":[11,7,65],
-"group__gHelper.html#unionarm__2d__helper__dirty__region__item__t_8____unnamed181_____8____unnamed183_____8____unnamed185_____8____unnamed187____":[11,7,67]
+"group__gHelper.html#structarm__2d__user__font__t":[11,7,33]
 };
