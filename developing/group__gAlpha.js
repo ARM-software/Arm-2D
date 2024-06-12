@@ -2,33 +2,33 @@ var group__gAlpha =
 [
     [ "arm_2d_op_alpha_t", "group__gAlpha.html#structarm__2d__op__alpha__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#aea403a4255e444d2b886f48e9a07bbb8", null ],
-      [ "Target", "group__gAlpha.html#a1a768d5cee2a53da8f3295eb6e464a72", null ],
-      [ "Source", "group__gAlpha.html#a7c6d75e503d7efc96683b9c5afea8fce", null ],
+      [ "Target", "group__gAlpha.html#a800a6095dccef97ddcf482e3b3226567", null ],
+      [ "Source", "group__gAlpha.html#ae91721b615b61a73c1e60fc57fd93a29", null ],
       [ "wMode", "group__gAlpha.html#a62e802b58cbaf51f05e8b5ec41436da8", null ],
       [ "chRatio", "group__gAlpha.html#ad388497db0e4fd29a1dcffa9a8124d5b", null ]
     ] ],
     [ "arm_2d_op_alpha_cl_key_t", "group__gAlpha.html#structarm__2d__op__alpha__cl__key__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#aa25ee06c23b4722003bbbf0abaf6b995", null ],
-      [ "Target", "group__gAlpha.html#aefef78f0447140df96f7813c5f99e118", null ],
-      [ "Source", "group__gAlpha.html#afae10839e516e5e63ebc735e988be03b", null ],
+      [ "Target", "group__gAlpha.html#a9cfb7066cbafd2b0674f53ce0f4eb764", null ],
+      [ "Source", "group__gAlpha.html#a5f4c60b7824aea95e337231ede277e71", null ],
       [ "wMode", "group__gAlpha.html#a1116adbfe72a3d50257f9fcb6c2d05b2", null ],
       [ "chRatio", "group__gAlpha.html#a847ada916032c171108dd3c81e465d32", null ]
     ] ],
     [ "arm_2d_op_fill_cl_msk_t", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#a6dce4413320f2aa7ead0a8deeba8fa1c", null ],
-      [ "Target", "group__gAlpha.html#a9450cb4c798597ec95a67826e0679a9e", null ],
-      [ "Mask", "group__gAlpha.html#ac7f768fcf00eb621d206aade9053ab44", null ],
+      [ "Target", "group__gAlpha.html#a19b83826e439df341ae5437a4869e6c0", null ],
+      [ "Mask", "group__gAlpha.html#a83d8200e9e7bf9cc5db7c6cba7ffbbf8", null ],
       [ "wMode", "group__gAlpha.html#a3eecb67b068680cf206df2a75eefb2f0", null ]
     ] ],
     [ "arm_2d_op_fill_cl_msk_opc_t", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__opc__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#ae7f1581159de276fd1752c9bcec52cb2", null ],
-      [ "Target", "group__gAlpha.html#afd8ed7e1316410a09c43da525fb63ee4", null ],
-      [ "Mask", "group__gAlpha.html#a57bbe38a34cb001919c9401c4fec89d4", null ],
+      [ "Target", "group__gAlpha.html#a2ffd0309eee4b06e5eb86ec43cfd1992", null ],
+      [ "Mask", "group__gAlpha.html#a6d0ea56ae279486a28e0f9b77595c9ff", null ],
       [ "wMode", "group__gAlpha.html#ad0254d07a5cbfb009bec898443245c98", null ]
     ] ],
     [ "arm_2d_op_fill_cl_opc_t", "group__gAlpha.html#structarm__2d__op__fill__cl__opc__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#a434790e4bf185ebc635e88a3bb8233d6", null ],
-      [ "Target", "group__gAlpha.html#ad1d2690634348b2f8d6af618d7284816", null ],
+      [ "Target", "group__gAlpha.html#a1e82f95a5de58cd6bbd59947ed2b44e5", null ],
       [ "chRatio", "group__gAlpha.html#a08ddfde2b216f45914bf76fe86b63cae", null ]
     ] ],
     [ "arm_2d_op_alpha_t.Target", "group__gAlpha.html#structarm__2d__op__alpha__t_8Target", [
@@ -45,7 +45,7 @@ var group__gAlpha =
     [ "arm_2d_op_alpha_cl_key_t.Source", "group__gAlpha.html#structarm__2d__op__alpha__cl__key__t_8Source", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_alpha_cl_key_t.__unnamed119__", "group__gAlpha.html#unionarm__2d__op__alpha__cl__key__t_8____unnamed119____", [
+    [ "arm_2d_op_alpha_cl_key_t.__unnamed120__", "group__gAlpha.html#unionarm__2d__op__alpha__cl__key__t_8____unnamed120____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -57,7 +57,7 @@ var group__gAlpha =
     [ "arm_2d_op_fill_cl_msk_t.Mask", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__t_8Mask", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_msk_t.__unnamed123__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__t_8____unnamed123____", [
+    [ "arm_2d_op_fill_cl_msk_t.__unnamed124__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__t_8____unnamed124____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -69,19 +69,19 @@ var group__gAlpha =
     [ "arm_2d_op_fill_cl_msk_opc_t.Mask", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__opc__t_8Mask", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed127__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed127____", [
+    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed128__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed128____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed129__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed129____", [
+    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed130__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed130____", [
       [ "chRatio", "group__gAlpha.html#a76aae367b0d10ccb4492541180f67787", null ]
     ] ],
     [ "arm_2d_op_fill_cl_opc_t.Target", "group__gAlpha.html#structarm__2d__op__fill__cl__opc__t_8Target", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gAlpha.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_opc_t.__unnamed132__", "group__gAlpha.html#unionarm__2d__op__fill__cl__opc__t_8____unnamed132____", [
+    [ "arm_2d_op_fill_cl_opc_t.__unnamed133__", "group__gAlpha.html#unionarm__2d__op__fill__cl__opc__t_8____unnamed133____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]

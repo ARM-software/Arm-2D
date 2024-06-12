@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('md_how_to_deploy_the_arm_2d_library.ht
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p >This document describes how to deploy the <b>Arm-2D</b> library to your existing MDK projects. If you are not familiar with <b>Arm-2D</b>, please start from the <b><a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">README</a></b> first.</p>
-<h2><a class="anchor" id="autotoc_md53"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 Table of Contents</h2>
 <ul>
 <li><a href="#1-how-to-get-the-arm-2d">1 How to get the Arm-2D</a></li>
@@ -126,7 +126,7 @@ Table of Contents</h2>
 </li>
 <li><a href="#4-example-projects">4 Example Projects</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md54"></a>
+<h1><a class="anchor" id="autotoc_md53"></a>
 1 How to get the Arm-2D</h1>
 <p >There are three methods to get Arm-2D:</p>
 <ul>
@@ -141,9 +141,9 @@ Table of Contents</h2>
 <p ><img src="HowToDeploy1_1.png" alt="" class="inline"/></p>
 <p ><b>Figure 1-2 Install Arm-2D in Pack Installer</b></p>
 <p ><img src="HowToDeploy1_2.png" alt="" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md55"></a>
+<h1><a class="anchor" id="autotoc_md54"></a>
 2 How to Deploy Arm-2D</h1>
-<h2><a class="anchor" id="autotoc_md56"></a>
+<h2><a class="anchor" id="autotoc_md55"></a>
 2.1 Deploy Using CMSIS-Pack in MDK</h2>
 <ol type="1">
 <li><p class="startli">Open the Run-Time Environment configuration dialog using menu "Project-&gt;Manage-&gt;Run-Time Environment" as shown in <b>Figure 2-6</b>.</p>
@@ -183,16 +183,16 @@ Table of Contents</h2>
 <p ><b>Figure 2-9 Configuration Wizard for Arm-2D</b></p>
 <p ><img src="HowToDeploy2_9.png" alt="" class="inline" title="ConfigurationWizardForArm-2D"/></p>
 <p ><b>NOTE</b>: If you want to support <b>CCCA8888</b> (i.e. <b>RGBA8888</b>), please selet the <code>Enable support for accessing individual colour channels</code>.</p>
-<h2><a class="anchor" id="autotoc_md57"></a>
+<h2><a class="anchor" id="autotoc_md56"></a>
 2.2 Deploy Using CMake</h2>
 <p >It is easy to deploying arm-2d as a library using CMake, for details, please check the <a href="../CMakeLists.txt">CMakeLists.txt</a>.</p>
-<h2><a class="anchor" id="autotoc_md58"></a>
+<h2><a class="anchor" id="autotoc_md57"></a>
 2.3 Deploy Using Makefile</h2>
 <p >It is possible to deploy arm-2d using Makefile. We supposes you familiar with writing Makefile scripts and hence provide an <a href="../examples/[template][pc][vscode]/Makefile">Makefile</a> used on PC as a good example.</p>
-<h1><a class="anchor" id="autotoc_md59"></a>
+<h1><a class="anchor" id="autotoc_md58"></a>
 3 Helper Services and Extras</h1>
 <p >Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called partial frame buffer (PFB). This feature is vital for resource-constraint embedded platforms. Arm-2D provide a similar feature through a helper service called Display Adapter Service.</p>
-<h2><a class="anchor" id="autotoc_md60"></a>
+<h2><a class="anchor" id="autotoc_md59"></a>
 3.1 Preparation</h2>
 <p >Before we start, we have to prepare a low-level flushing function called Disp0_DrawBitmap(). Its prototype is shown below:</p>
 <div class="fragment"><div class="line">int32_t Disp0_DrawBitmap(int16_t x, </div>
@@ -240,7 +240,7 @@ Table of Contents</h2>
 <li>When exiting the <code>Disp0_DrawBitmap()</code>, Arm-2D assumes that the target frame buffer has already been flushed to the target screen.</li>
 <li><b>Please verify the <code>Disp0_DrawBitmap()</code> functional correctness without Arm-2d before moving to the next steps.</b></li>
 </ol>
-<h2><a class="anchor" id="autotoc_md61"></a>
+<h2><a class="anchor" id="autotoc_md60"></a>
 3.2 Add Display Adapter Service</h2>
 <p >Deploying Display Adatper service in MDK is simple:</p>
 <ol type="1">
@@ -310,7 +310,7 @@ Table of Contents</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">//osThreadExit();</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md62"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md61"></a>
 3.3 Configure the Display Adapter Service</h2>
 <p >You should configure the Display Adapter service before using it. All the configurations of a Display Adapter service are stored in the corresponding header file, e.g. <code>arm_2d_disp_adapter_0.h</code>. In MDK, all configuration work can be done through the GUI wizard, as shown in <b>Figure 3-3</b>.</p>
 <p ><b>Figure 3-3 Configure the Display Adapter Using the Wizard</b></p>
@@ -358,7 +358,7 @@ Table of Contents</h2>
 <li>For <b>4-bit e-ink LCDs</b>, you should use 8-bit colour depth and pack every 2 pixels into one byte in the <code>Disp0_DrawBitmap()</code>. Don't forget to set the PFB alignment to 2 horizontally or vertically depending on the e-ink LCD pixel layout.</li>
 <li>Please make sure the stack size is no less than 3K Bytes.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md63"></a>
+<h2><a class="anchor" id="autotoc_md62"></a>
 3.4 Implement the External Reference Timer</h2>
 <p >Arm-2D helper service relies on an external reference timer which we should implement:</p>
 <p ><b>Table 3-2 The Interface for Accessing the External Timer</b></p>
@@ -371,7 +371,7 @@ Table of Contents</h2>
 <td class="markdownTableBodyNone">uint32_t <a class="el" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12" title="get the reference clock frequency">arm_2d_helper_get_reference_clock_frequency(void)</a>   </td><td class="markdownTableBodyNone">the frequency of the reference timer.   </td></tr>
 </table>
 <p ><b>We highly recommand you to install perf_counter from Pack-Installer, <a href="https://www.keil.arm.com/packs/">Keil Website</a> or <a href="https://github.com/GorgonMeducer/perf_counter/releases">its Github repo</a> to simplify this process.</b> You have to initialize the perf_counter before using Arm-2D. For more, please read the <a href="https://github.com/GorgonMeducer/perf_counter/blob/main/README.md">guidance here</a>.</p>
-<h2><a class="anchor" id="autotoc_md64"></a>
+<h2><a class="anchor" id="autotoc_md63"></a>
 3.5 Verifying The Porting Result</h2>
 <p >After finished steps above, if everything goes well, you should see a screen as shown in <b>Figure 3-4</b>. If the colour doesn't look right and the LCD uses RGB565, try to swap the high and low bytes for each pixel. <br  />
 </p>
@@ -379,7 +379,7 @@ Table of Contents</h2>
 <p ><img src="DispAdapterDefaultScene.gif" alt="" class="inline"/></p>
 <p >If you encounter any problems, please feel free to raise an issue.</p>
 <p >Enjoy.</p>
-<h2><a class="anchor" id="autotoc_md65"></a>
+<h2><a class="anchor" id="autotoc_md64"></a>
 3.6 Asynchronous Flushing Mode</h2>
 <p >Different from the method described in <b>section 3.1</b> that lets the CPU flush the LCD directly, it is possible to use DMA (or peripherals with similar capability) to offload the processor - we call it <b>Asynchronous Flushing</b> mode, and the method described before is often referred as <b>Synchronous Flushing</b> mode.</p>
 <p >To enable Asynchronous Flushing:</p>
@@ -434,7 +434,7 @@ Table of Contents</h2>
 <li>If the <b>actual LCD Latency</b> is equals to or smaller than the PFB drawing time, the <b>displayed LCD Latency</b> is <code>0ms</code>, otherwise</li>
 <li>The <b>displayed LCD latency</b> is equals to <b>the Actual LCD Latency minus the PFB Drawing time</b>, and usually very small.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md66"></a>
+<h2><a class="anchor" id="autotoc_md65"></a>
 3.7 Direct Mode (3FB Mode)</h2>
 <p >To avoid the tearing effects, some devices provide a dedicated LCD controller peripheral, often known as <b>LTDC</b>. The LCD controller maps a <b>FULL framebuffer</b> as the display RAM and copies the content in the display RAM to the LCD in a fixed frequency. During this period, there is a time-window indicated by a signal often known as <b>TE</b> or <b>VSYNC</b>, as long as we can finish flushing the LCD in this time-window, the tearing problem can be avoided.</p>
 <p >Direct mode is such a mode that exchanges the FULL framebuffer as the display RAM on VSYNC or TE events. Arm-2D supports the Direct Mode through a dedicated helper service.</p>
@@ -531,7 +531,7 @@ Table of Contents</h2>
 </div><!-- fragment --><blockquote class="doxtable">
 <p >NOTE: Here, <b>N</b> and <b>n</b> represents the display adapter index number. </p>
 </blockquote>
-<h1><a class="anchor" id="autotoc_md67"></a>
+<h1><a class="anchor" id="autotoc_md66"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
 <table class="markdownTable">

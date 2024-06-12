@@ -21,8 +21,8 @@ var searchData=
   ['fnonrequestchangeswitchingstatus_18',['fnOnRequestChangeSwitchingStatus',['../group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9',1,'arm_2d_scene_switch_mode_t']]],
   ['fnscene_19',['fnScene',['../group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733',1,'arm_2d_scene_t']]],
   ['fnswitchdrawer_20',['fnSwitchDrawer',['../group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a',1,'arm_2d_scene_switch_mode_t']]],
-  ['foreground_21',['Foreground',['../group__Drawing.html#a3f221a5cb9036a04c10afe5a0039f657',1,'arm_2d_op_drw_patn_t']]],
-  ['framebuffer_22',['FrameBuffer',['../group__gHelper.html#a5536181e2c3164d86deb4ea49dd43f90',1,'arm_2d_helper_pfb_cfg_t']]],
+  ['foreground_21',['Foreground',['../group__Drawing.html#acb5ea5dcfc34b8bf93ce0b60bd43aabd',1,'arm_2d_op_drw_patn_t']]],
+  ['framebuffer_22',['FrameBuffer',['../group__gHelper.html#a7e232906d5b3549bbd6b1ac8215969cf',1,'arm_2d_helper_pfb_cfg_t']]],
   ['fscale_23',['fScale',['../group__gTransform.html#afe43ae7c569abd89f499db003873b915',1,'__arm_2d_transform_info_t']]],
   ['fx_24',['fX',['../group__gKernel.html#ad1c4e04b3b22f47fdc69c1fc92ecb905',1,'arm_2d_point_float_t']]],
   ['fy_25',['fY',['../group__gKernel.html#a912063b5c4243a0ed4e1a655e3cb3082',1,'arm_2d_point_float_t']]]
