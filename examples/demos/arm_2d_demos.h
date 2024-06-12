@@ -31,6 +31,7 @@
 #include "./arm_2d_scene_panel.h"
 #include "./arm_2d_scene_progress_status.h"
 #include "./arm_2d_scene_menu.h"
+#include "./arm_2d_scene_virtual_resource.h"
 
 #ifdef   __cplusplus
 extern "C" {

@@ -178,6 +178,13 @@ void scene_bubble_charging_loader(void)
     arm_2d_scene_bubble_charging_init(&DISP0_ADAPTER);
 }
 
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+void scene_virtual_resource_loader(void) 
+{
+    arm_2d_scene_virtual_resource_init(&DISP0_ADAPTER);
+}
+#endif
+
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
@@ -199,6 +206,10 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_panel_loader,
     scene_fitness_loader,
     scene_audiomark_loader,
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    scene_virtual_resource_loader,
+#endif
+
 #else
     scene_basics_loader,
     scene_fan_loader,

@@ -231,8 +231,8 @@
             <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.2.0"/>
             
             <!-- the template for scenes -->
-            <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c" attr="template"  select="User Scene Template"   version="1.2.8" />
-            <file category="header"      name="Helper/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.2.8" />
+            <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c" attr="template"  select="User Scene Template"   version="1.2.10" />
+            <file category="header"      name="Helper/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.2.10" />
 
             <!-- the template for user defined OPCODEs -->
             <file category="sourceC"     name="Library/template/arm_2d_user_opcode_template_i_cp_src.c" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.0.0" />
@@ -372,11 +372,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.2.9" condition="Arm-2D-Helper" maxInstances="1000">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.2.10" condition="Arm-2D-Helper" maxInstances="1000">
           <description>A template for scene</description>
           <files>
-            <file category="sourceC"     name="Helper/template/arm_2d_scene.c" attr="config" version="1.2.9" />
-            <file category="header"      name="Helper/template/arm_2d_scene.h" attr="config" version="1.2.9" />
+            <file category="sourceC"     name="Helper/template/arm_2d_scene.c" attr="config" version="1.2.10" />
+            <file category="header"      name="Helper/template/arm_2d_scene.h" attr="config" version="1.2.10" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Scene%Instance%
@@ -583,6 +583,17 @@
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Progress_Status
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+          <description>A demo for how to use virtual resources </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_virtual_resources.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_virtual_resources.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Virtual_Resources
           </RTE_Components_h>
         </component>
 
