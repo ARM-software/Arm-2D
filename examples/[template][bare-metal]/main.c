@@ -21,7 +21,6 @@
 #include "platform.h"
 #include "arm_2d_helper.h"
 
-#include "virtual_resource_demo.h"
 #include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"
 
@@ -130,14 +129,6 @@ void Disp0_DrawBitmap(  int16_t x,
     GLCD_DrawBitmap(x, y, width, height, bitmap);
 #endif
 }
-
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-void virtual_resource_demo_loader(void)
-{
-    virtual_resource_demo_init();
-}
-#endif
-
 
 void scene_meter_loader(void) 
 {
@@ -251,11 +242,18 @@ void scene_bubble_charging_loader(void)
     arm_2d_scene_bubble_charging_init(&DISP0_ADAPTER);
 }
 
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+void scene_virtual_resource_loader(void) 
+{
+    arm_2d_scene_virtual_resource_init(&DISP0_ADAPTER);
+}
+#endif
+
 typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
+#if 0
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -271,10 +269,13 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_meter_loader,
     scene_fitness_loader,
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-    virtual_resource_demo_loader,
+    scene_virtual_resource_loader,
 #endif
-    //scene_audiomark_loader,
+
 #else
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    scene_virtual_resource_loader,
+#endif
     scene_bubble_charging_loader,
 #endif
 

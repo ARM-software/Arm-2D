@@ -94,7 +94,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          60
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          24
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -187,10 +187,14 @@ extern "C" {
 #   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
-// <q>Disable the navigation layer
-// <i> Remove the navigation layer for this display adapter. NOTE: Disable the navigation layer will also remove the real-time FPS display.
-#ifndef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  0
+// <o>Navigation Layer Mode
+//     <0=>     Disable Navigation Layer
+//     <1=>     Normal Mode (Bottom)
+//     <2=>     Tiny Mode (Bottom Centre)
+// <i> Configure the default navigation layer of this display adapter. 
+// <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
+#ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                              1
 #endif
 
 // <q> Enable Console
@@ -214,13 +218,15 @@ extern "C" {
 
 // <o>Maximum number of Virtual Resources used per API
 //     <0=>     NO Virtual Resource
-//     <1=>     1 Per API
-//     <2=>     2 Per API
-//     <3=>     3 Per API
+//     <1=>     Background Loading Mode
+//     <2=>     1 Per API
+//     <3=>     2 Per API
+//     <4=>     3 Per API
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
+// <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   0
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
