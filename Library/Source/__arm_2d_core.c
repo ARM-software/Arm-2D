@@ -21,8 +21,8 @@
  * Title:        __arm-2d_core.c
  * Description:  Basic Tile operations
  *
- * $Date:        10. May 2024
- * $Revision:    V.1.7.3
+ * $Date:        12. June 2024
+ * $Revision:    V.1.7.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2394,7 +2394,7 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
         ptMemory->u2ItemSize = hwItemSize;
         ptMemory->u2Type = tType;
 
-        if (NULL != ptMemory->pBuffer) {
+        if (NULL != (void *)(ptMemory->pBuffer)) {
             /* add canary */
             *(volatile uint32_t *)((uintptr_t)(ptMemory->pBuffer) + tSize) = 0xCAFE0ACE;
         }
@@ -2412,11 +2412,14 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_free(arm_2d_scratch_mem_t *ptMemory)
         if (NULL == ptMemory) {
             break;
         }
+        if (NULL == (void *)(ptMemory->pBuffer)) {
+            break;
+        }
+
         size_t tSize = ptMemory->u24SizeInByte;
 
         /* check canary */
         if (*(volatile uint32_t *)((uintptr_t)(ptMemory->pBuffer) + tSize) != 0xCAFE0ACE) {
-            __BKPT(0x01);
             assert(false);
         }
 
