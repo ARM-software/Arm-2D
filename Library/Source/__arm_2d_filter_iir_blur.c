@@ -22,7 +22,7 @@
  * Description:  APIs for IIR Blur
  *
  * $Date:        12. June 2024
- * $Revision:    V.1.2.0
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -72,7 +72,7 @@ extern "C" {
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 174,177,188,68,513,144
+#   pragma diag_suppress 174,177,188,68,513,144,64
 #endif
 
 /*============================ MACROS ========================================*/
@@ -129,7 +129,11 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
                 if (NULL == arm_2d_scratch_memory_new(  
                                             &this.tScratchMemory,
                                             sizeof(__arm_2d_iir_blur_acc_gray8_t),
-                                            (tSize.iHeight + tSize.iWidth + 14),
+                                            (tSize.iHeight + tSize.iWidth 
+                                        #if __ARM_2D_HAS_HELIUM__
+                                            + 14
+                                        #endif
+                                            ),
                                             __alignof__(__arm_2d_iir_blur_acc_gray8_t),
                                             ARM_2D_MEM_TYPE_FAST)) {
                     return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
@@ -147,6 +151,16 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
     }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur_depose(  
+                    arm_2d_filter_iir_blur_descriptor_t *ptOP)
+{
+    ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    arm_2d_scratch_memory_free(&this.tScratchMemory);
+
+    return (arm_fsm_rt_t)ARM_2D_ERR_NONE;
 }
 
 /* default low level implementation */
@@ -171,7 +185,11 @@ void __arm_2d_impl_gray8_filter_iir_blur(
 
     if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_gray8_t *)ptScratchMemory->pBuffer;
-        ptStatusV = ptStatusH + 7 + ptTargetRegionOnVirtualScreen->tSize.iWidth;
+        ptStatusV = ptStatusH
+                #if __ARM_2D_HAS_HELIUM__
+                  + 7
+                #endif 
+                  + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
 
     /* calculate the offset between the target region and the valid region */
@@ -426,7 +444,11 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
                 if (NULL == arm_2d_scratch_memory_new(  
                                             &this.tScratchMemory,
                                             sizeof(__arm_2d_iir_blur_acc_rgb565_t),
-                                            (tSize.iHeight + tSize.iWidth + 14),
+                                            (tSize.iHeight + tSize.iWidth 
+                                        #if __ARM_2D_HAS_HELIUM__
+                                            + 14
+                                        #endif
+                                            ),
                                             __alignof__(__arm_2d_iir_blur_acc_rgb565_t),
                                             ARM_2D_MEM_TYPE_FAST)) {
                     return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
@@ -444,6 +466,16 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
     }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur_depose(  
+                    arm_2d_filter_iir_blur_descriptor_t *ptOP)
+{
+    ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    arm_2d_scratch_memory_free(&this.tScratchMemory);
+
+    return (arm_fsm_rt_t)ARM_2D_ERR_NONE;
 }
 
 /* default low level implementation */
@@ -468,7 +500,11 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
     if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_rgb565_t *)ptScratchMemory->pBuffer;
-        ptStatusV = ptStatusH + 7 + ptTargetRegionOnVirtualScreen->tSize.iWidth;
+        ptStatusV = ptStatusH
+                #if __ARM_2D_HAS_HELIUM__
+                  + 7
+                #endif 
+                  + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
 
     /* calculate the offset between the target region and the valid region */
@@ -755,7 +791,11 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
                 if (NULL == arm_2d_scratch_memory_new(  
                                             &this.tScratchMemory,
                                             sizeof(__arm_2d_iir_blur_acc_cccn888_t),
-                                            (tSize.iHeight + tSize.iWidth + 14),
+                                            (tSize.iHeight + tSize.iWidth 
+                                        #if __ARM_2D_HAS_HELIUM__
+                                            + 14
+                                        #endif
+                                            ),
                                             __alignof__(__arm_2d_iir_blur_acc_cccn888_t),
                                             ARM_2D_MEM_TYPE_FAST)) {
                     return (arm_fsm_rt_t)ARM_2D_ERR_INSUFFICIENT_RESOURCE;
@@ -773,6 +813,16 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
     }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur_depose(  
+                    arm_2d_filter_iir_blur_descriptor_t *ptOP)
+{
+    ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    arm_2d_scratch_memory_free(&this.tScratchMemory);
+
+    return (arm_fsm_rt_t)ARM_2D_ERR_NONE;
 }
 
 /* default low level implementation */
@@ -797,7 +847,11 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
 
     if (NULL != (void *)(ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_cccn888_t *)ptScratchMemory->pBuffer;
-        ptStatusV = ptStatusH + 7 + ptTargetRegionOnVirtualScreen->tSize.iWidth;
+        ptStatusV = ptStatusH
+                #if __ARM_2D_HAS_HELIUM__
+                  + 7
+                #endif 
+                  + ptTargetRegionOnVirtualScreen->tSize.iWidth;
     }
 
     /* calculate the offset between the target region and the valid region */

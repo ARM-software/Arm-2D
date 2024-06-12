@@ -22,7 +22,7 @@
  * Description:  APIs for IIR Blur
  *
  * $Date:        12. June 2024
- * $Revision:    V.1.2.0
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -47,6 +47,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress 174,177,188,68,513,144,64
 #endif
 
 /*!
@@ -102,6 +104,16 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
                     const arm_2d_region_t *ptRegion,
                     uint8_t chBlurDegree);
 
+
+extern
+/*!
+ *  \brief Release the resource used by the given IIR blur
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur_depose(  
+                    arm_2d_filter_iir_blur_descriptor_t *ptOP);
+
 extern
 ARM_NONNULL(2)
 /*!
@@ -120,6 +132,16 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
                     const arm_2d_region_t *ptRegion,
                     uint8_t chBlurDegree);
 
+
+extern
+/*!
+ *  \brief Release the resource used by the given IIR blur
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur_depose(  
+                    arm_2d_filter_iir_blur_descriptor_t *ptOP);
+
 extern
 ARM_NONNULL(2)
 /*!
@@ -137,6 +159,16 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
                     uint8_t chBlurDegree);
+
+
+extern
+/*!
+ *  \brief Release the resource used by the given IIR blur
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur_depose(  
+                    arm_2d_filter_iir_blur_descriptor_t *ptOP);
 
 /*! @} */
 
