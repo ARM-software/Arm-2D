@@ -163,6 +163,11 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - You can enable it by defining the macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
   - Supports source masks
 
+- **Filters**
+
+  - **[new]** Generic Anti-alias
+  - **[new]** Fast IIR-Blur
+
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
   - Supports both **bare-metal** and **RTOS** environments
@@ -217,10 +222,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
   - Successful story: accelerating LVGL as soft-GPU when Helium is ready
 
-### Experimental Features
 
-- **[new]** Generic Anti-alias
-- **[new]** Fast IIR-Blur
 
 ### New Features Planned in the Future
 
@@ -408,4 +410,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-23 May 2024
+13 June 2024
