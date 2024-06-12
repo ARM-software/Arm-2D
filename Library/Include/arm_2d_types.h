@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the Arm-2D structs
  *
  * $Date:        12. June 2024
- * $Revision:    V.1.2.9
+ * $Revision:    V.1.2.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -582,6 +582,7 @@ typedef struct arm_2d_region_t {
 enum {
     ARM_2D_TILE_EXTENSION_NONE = 0,             //!< no extension in the tile.tInfo.Extension field
     ARM_2D_TILE_EXTENSION_PFB,                  //!< contains PFB extension information
+    ARM_2D_TILE_EXTENSION_VRES,                 //!< contains Virtual resource extension information
 };
 
 /*!
@@ -605,6 +606,9 @@ struct arm_2d_tile_t {
                 uint8_t bIsNewFrame     : 1;
                 uint8_t bIsDryRun       : 1;
             }PFB;
+            struct {
+                int16_t iTargetStride;
+            }VRES;
         } Extension;
         
     }, tInfo);

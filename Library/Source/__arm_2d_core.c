@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm-2d_core.c
- * Description:  Basic Tile operations
+ * Title:        __arm_2d_core.c
+ * Description:  The pixel-pipeline
  *
  * $Date:        12. June 2024
- * $Revision:    V.1.7.4
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -159,6 +159,8 @@ static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
         return ARM_2D_ERR_MISSING_PARAM;
     }
 
+    ptVRES->tTile.tInfo.u3ExtensionID = ARM_2D_TILE_EXTENSION_NONE;
+
     /* load virtual resource */
     intptr_t nAddress = (ptVRES->Load)( ptVRES->pTarget,
                                         ptVRES,
@@ -176,15 +178,57 @@ static arm_2d_err_t __load_virtual_resource(const arm_2d_tile_t *ptRootTile,
         &&  (ptVRES->tTile.tColourInfo.u3ColourSZ < 3)){
         size_t nPixelPerByte = 1 << (3 - ptVRES->tTile.tColourInfo.u3ColourSZ);
         ptParam->nOffset &= (nPixelPerByte - 1);
-        ptParam->tValidRegion.tLocation = (arm_2d_location_t){ptParam->nOffset,0};
-        ptParam->iStride = ptParam->tValidRegion.tSize.iWidth + ptParam->nOffset;
+        ptParam->tValidRegion.tLocation 
+            = (arm_2d_location_t){ptParam->nOffset,0};
+        ptParam->iStride = ptParam->tValidRegion.tSize.iWidth 
+                         + ptParam->nOffset;
     } else {
         ptParam->nOffset = 0;
         ptParam->tValidRegion.tLocation = (arm_2d_location_t){0,0};
         ptParam->iStride = ptParam->tValidRegion.tSize.iWidth;
     }
     
+    return ARM_2D_ERR_NONE;
+}
+
+
+static arm_2d_err_t __load_background_virtual_resource(
+                                            const arm_2d_tile_t *ptRootTile,
+                                            __arm_2d_tile_param_t *ptSourceParam,
+                                            __arm_2d_tile_param_t *ptTargetParam)
+{
+    assert(NULL != ptTargetParam);
+
+    if (NULL == ptRootTile || NULL == ptSourceParam) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    if (!ptRootTile->tInfo.bIsRoot) {
+        return ARM_2D_ERR_NONE;
+    }
     
+    if (!ptRootTile->tInfo.bVirtualResource) {
+        return ARM_2D_ERR_NONE;
+    }
+    
+    /* a virtual resource must be marked as root tile */
+    arm_2d_vres_t *ptVRES = (arm_2d_vres_t *)ptRootTile;
+
+    if (NULL == ptVRES->Load) {
+        return ARM_2D_ERR_MISSING_PARAM;
+    }
+
+    /* set buffer */
+    ptVRES->tTile.nAddress = (uintptr_t)ptTargetParam->pBuffer;
+
+    /* set VRES extension*/
+    ptVRES->tTile.tInfo.u3ExtensionID = ARM_2D_TILE_EXTENSION_VRES;
+    ptVRES->tTile.Extension.VRES.iTargetStride = ptTargetParam->iStride;
+
+    /* load virtual resource */
+    (void)(ptVRES->Load)(   ptVRES->pTarget,
+                            ptVRES,
+                           &ptSourceParam->tValidRegion);
 
     return ARM_2D_ERR_NONE;
 }
@@ -211,11 +255,13 @@ static void __depose_virtual_resource(const arm_2d_tile_t *ptSourceTile)
     /* a virtual resource must be marked as root tile */
     arm_2d_vres_t *ptRes = (arm_2d_vres_t *)ptSourceTile;
 
+    if (ptRes->tTile.tInfo.u3ExtensionID == ARM_2D_TILE_EXTENSION_VRES) {
+        return ;
+    }
+
     intptr_t nAddress = ptRes->tTile.nAddress;
     ptRes->tTile.nAddress = (intptr_t)NULL;
 
-    
-    
     if (NULL == ptRes->Depose) {
         return ;
     }
@@ -1435,7 +1481,16 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
             }
 
             /* load virtual resource if any */
-            do {
+            if (wMode == ARM_2D_CP_MODE_COPY && OP_CORE.ptOp->Info.chOpIndex == __ARM_2D_OP_IDX_COPY_ONLY) {
+                /* virtual resource background loading mode*/
+                arm_2d_err_t tErr = 
+                    __load_background_virtual_resource(ptSource,&tSourceTileParam, &tTargetTileParam);
+                __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+                return arm_fsm_rt_cpl;
+            } else {
                 arm_2d_err_t tErr = 
                     __load_virtual_resource(ptSource, &tSourceTileParam);
                 if (tErr != ARM_2D_ERR_NONE) {
@@ -1451,7 +1506,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 if (tErr != ARM_2D_ERR_NONE) {
                     return (arm_fsm_rt_t)tErr;
                 }
-            } while(0);
+            }
 
             if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
                ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){

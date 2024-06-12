@@ -412,11 +412,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_virtual_resource_handler)
 
             ARM_2D_OP_WAIT_ASYNC();
 
+        #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ > 1
             /* draw a child tile of the virtual resource */
             arm_2d_tile_copy(   &c_tChildImage,         /* source tile */
                                 ptTile,                 /* target frame buffer */
                                 &__centre_region, 
                                 ARM_2D_CP_MODE_XY_MIRROR);
+        #endif
         }
         
         arm_2d_size_t tCharSize = ARM_2D_FONT_VRES_A4_DIGITS_ONLY
@@ -433,6 +435,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_virtual_resource_handler)
                                             255 - 32);
         }
 
+    #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ > 1
         /* draw A4 fonts that stored as a virtual resource */
         arm_2d_align_centre(__canvas, 
                             tCharSize.iWidth * 8, 
@@ -444,7 +447,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_virtual_resource_handler)
             arm_lcd_text_set_colour(GLCD_COLOR_DARK_GREY, GLCD_COLOR_WHITE);
             arm_lcd_puts("0123456789ABCDEF");
         }
-
+    #endif
+    
         /* display info */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);

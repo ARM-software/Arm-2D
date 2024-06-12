@@ -218,11 +218,13 @@ extern "C" {
 
 // <o>Maximum number of Virtual Resources used per API
 //     <0=>     NO Virtual Resource
-//     <1=>     1 Per API
-//     <2=>     2 Per API
-//     <3=>     3 Per API
+//     <1=>     Background Loading Mode
+//     <2=>     1 Per API
+//     <3=>     2 Per API
+//     <4=>     3 Per API
 // <i> Introduce a helper service for loading virtual resources.
 // <i> This feature is disabled by default.
+// <1> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__
 #   define __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__                   0
 #endif
