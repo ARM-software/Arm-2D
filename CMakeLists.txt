@@ -154,6 +154,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/RadialGradient.c
             examples/common/asset/GlassBall.c
             examples/common/asset/HallowOutCircleMask.c
+            examples/common/asset/Fire8x4.c
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls
