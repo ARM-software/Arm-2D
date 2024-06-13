@@ -324,6 +324,9 @@
 
             <file category="sourceC"     name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.c"   attr="template"  select="Scene Template: Bubble Charging"   version="1.0.1" />
             <file category="header"      name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.h"   attr="template"  select="Scene Template: Bubble Charging"   version="1.0.1" />
+
+            <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.c"   attr="template"  select="Scene Template: Animate Background"   version="1.0.0" />
+            <file category="header"      name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.h"   attr="template"  select="Scene Template: Animate Background"   version="1.0.0" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_PFB
@@ -360,11 +363,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="3.0.0" condition="Arm-2D-Helper" maxInstances="8">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="3.1.0" condition="Arm-2D-Helper" maxInstances="8">
           <description>The Display Adapter.</description>
           <files>
-            <file category="sourceC"     name="Helper/template/arm_2d_disp_adapter.c" attr="config" version="3.0.0" />
-            <file category="header"      name="Helper/template/arm_2d_disp_adapter.h" attr="config" version="3.0.0" />
+            <file category="sourceC"     name="Helper/template/arm_2d_disp_adapter.c" attr="config" version="3.1.0" />
+            <file category="header"      name="Helper/template/arm_2d_disp_adapter.h" attr="config" version="3.1.0" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%

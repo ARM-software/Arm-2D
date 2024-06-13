@@ -101,7 +101,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
-extern const uint8_t c_bmpHelium[];
+extern const COLOUR_INT c_bmpHelium[];
 extern const arm_2d_tile_t c_tileHelium;
 extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
 extern const uint8_t c_bmpDigitsFontA4Alpha[];

@@ -903,6 +903,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
         uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
         int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        int16_t iSourceWidth = ptRegion->tSize.iWidth;
 
         /* calculate offset */
         pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
@@ -912,7 +913,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
                                             pObj, 
                                             (void *)pDes, 
                                             (uintptr_t)pSrc, 
-                                            nPixelSize * iSourceStride);
+                                            nPixelSize * iSourceWidth);
             
             pDes += iTargetStride * nPixelSize;
             pSrc += iSourceStride * nPixelSize;
@@ -971,6 +972,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
         uintptr_t pDes = (uintptr_t)pBuffer;
         int16_t iTargetStride = ptRegion->tSize.iWidth;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        int16_t iSourceWidth = ptRegion->tSize.iWidth;
 
         /* calculate offset */
         pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
@@ -980,7 +982,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
                                             pObj, 
                                             (void *)pDes, 
                                             (uintptr_t)pSrc, 
-                                            nPixelSize * iSourceStride);
+                                            nPixelSize * iSourceWidth);
             
             pDes += iTargetStride * nPixelSize;
             pSrc += iSourceStride * nPixelSize;
