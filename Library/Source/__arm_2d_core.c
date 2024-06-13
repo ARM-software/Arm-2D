@@ -230,7 +230,7 @@ static arm_2d_err_t __load_background_virtual_resource(
                             ptVRES,
                            &ptSourceParam->tValidRegion);
 
-    return ARM_2D_ERR_NONE;
+    return ARM_2D_RT_TRUE;
 }
 
 static void __depose_virtual_resource(const arm_2d_tile_t *ptSourceTile)
@@ -1485,11 +1485,14 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 /* virtual resource background loading mode*/
                 arm_2d_err_t tErr = 
                     __load_background_virtual_resource(ptSource,&tSourceTileParam, &tTargetTileParam);
-                __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+                if (tErr == ARM_2D_RT_TRUE) {
+                    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+                    return arm_fsm_rt_cpl;
+                }
                 if (tErr != ARM_2D_ERR_NONE) {
+                    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
                     return (arm_fsm_rt_t)tErr;
                 }
-                return arm_fsm_rt_cpl;
             } else {
                 arm_2d_err_t tErr = 
                     __load_virtual_resource(ptSource, &tSourceTileParam);
