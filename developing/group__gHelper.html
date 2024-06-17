@@ -678,6 +678,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3a0ec59f6970df21e551b1583aad9495"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">__arm_2d_list_core_is_list_moving</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga3a0ec59f6970df21e551b1583aad9495"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether the list is moving its items  <a href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">More...</a><br /></td></tr>
 <tr class="separator:ga3a0ec59f6970df21e551b1583aad9495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbee080339b39fee392f9567a39d5165"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__list__item__t">arm_2d_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gadbee080339b39fee392f9567a39d5165">__arm_2d_list_core_get_item</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a> *fnIterator, <a class="el" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b">arm_2d_list_iterator_dir_t</a> tDirection, uint16_t hwID, bool bIgnoreStatusCheck)</td></tr>
+<tr class="memdesc:gadbee080339b39fee392f9567a39d5165"><td class="mdescLeft">&#160;</td><td class="mdescRight">get list item with a specified direction instruction  <a href="group__gHelper.html#gadbee080339b39fee392f9567a39d5165">More...</a><br /></td></tr>
+<tr class="separator:gadbee080339b39fee392f9567a39d5165"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14181b777abd2c6af671699f9bfd8f99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">arm_2d_helper_pfb_init</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__cfg__t">arm_2d_helper_pfb_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:ga14181b777abd2c6af671699f9bfd8f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize pfb helper service  <a href="group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99">More...</a><br /></td></tr>
 <tr class="separator:ga14181b777abd2c6af671699f9bfd8f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1852,6 +1855,13 @@ hwSwitchingPeriodInMs</td>
 bDisableRingMode: 1</td>
 <td class="fielddoc">
 <p >whether disable ring mode </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac2f489b8f7e0e3c6f75bb3a00b4bf862" name="ac2f489b8f7e0e3c6f75bb3a00b4bf862"></a>uint16_t</td>
+<td class="fieldname">
+bDisableStatusCheck: 1</td>
+<td class="fielddoc">
+<p >whether disable the item status </p>
 </td></tr>
 </table>
 
@@ -7541,6 +7551,65 @@ false the list has no change. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>true the list is moving </dd>
 <dd>
 false the list has no change. </dd></dl>
+
+</div>
+</div>
+<a id="gadbee080339b39fee392f9567a39d5165" name="gadbee080339b39fee392f9567a39d5165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadbee080339b39fee392f9567a39d5165">&#9670;&nbsp;</a></span>__arm_2d_list_core_get_item()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__list__item__t">arm_2d_list_item_t</a> * __arm_2d_list_core_get_item </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a> *&#160;</td>
+          <td class="paramname"><em>fnIterator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b">arm_2d_list_iterator_dir_t</a>&#160;</td>
+          <td class="paramname"><em>tDirection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>hwID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bIgnoreStatusCheck</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get list item with a specified direction instruction </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fnIterator</td><td>a list iterator </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tDirection</td><td>the direction instruction </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hwID</td><td>the item ID (when required by the direction instruction) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bIgnoreStatusCheck</td><td>whether ignore the status checking </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_list_item_t* </dd></dl>
 
 </div>
 </div>
