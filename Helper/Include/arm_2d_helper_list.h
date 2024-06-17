@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        10. May 2024
- * $Revision:    V.1.1.4
+ * $Date:        17. June 2024
+ * $Revision:    V.1.1.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -56,7 +56,6 @@ extern "C" {
 #   define  __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
-
 
 /*! 
  *  \addtogroup Deprecated
@@ -221,7 +220,8 @@ typedef struct __arm_2d_list_core_cfg_t {
     uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
 
     uint16_t bDisableRingMode               : 1;                                /*!< whether disable ring mode */
-    
+    uint16_t bDisableStatusCheck            : 1;                                /*!< whether disable the item status */
+
 } __arm_2d_list_core_cfg_t;
 
 /*!
@@ -439,6 +439,25 @@ bool __arm_2d_list_core_need_redraw(__arm_2d_list_core_t *ptThis, bool bAutorese
 extern
 ARM_NONNULL(1)
 bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis);
+
+extern
+ARM_NONNULL(1,2)
+/*!
+ * \brief get list item with a specified direction instruction
+ * 
+ * \param[in] ptThis the target list core object
+ * \param[in] fnIterator a list iterator
+ * \param[in] tDirection the direction instruction
+ * \param[in] hwID the item ID (when required by the direction instruction)
+ * \param[in] bIgnoreStatusCheck whether ignore the status checking
+ * \return arm_2d_list_item_t* 
+ */
+arm_2d_list_item_t *__arm_2d_list_core_get_item(
+                        __arm_2d_list_core_t *ptThis,
+                        __arm_2d_list_item_iterator *fnIterator,
+                        arm_2d_list_iterator_dir_t tDirection,
+                        uint16_t hwID,
+                        bool bIgnoreStatusCheck);
 
 /*! @} */
 
