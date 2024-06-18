@@ -1706,7 +1706,7 @@ extern "C" {
                     int16_t iTempY = __layout_assistant__.tLayout.tLocation.iY  \
                                    + (__top) + (__bottom);                      \
                     /* is end of the line */                                    \
-                    __arm_2d_layout_wrap_horizontal(iTempY,                     \
+                    __arm_2d_layout_wrap_vertical(iTempY,                       \
                                                     &__layout_assistant__);     \
                                                                                 \
                     __item_region.tSize.iWidth = (__width);                     \
@@ -1753,7 +1753,7 @@ extern "C" {
                                     ARM_2D_SAFE_NAME(iWidth));                  \
                                                                                 \
                     /* is end of the line */                                    \
-                    __arm_2d_layout_wrap_horizontal(                            \
+                    __arm_2d_layout_wrap_vertical(                              \
                                     __layout_assistant__.tLayout.tLocation.iY,  \
                                     &__layout_assistant__);                     \
                                                                                 \

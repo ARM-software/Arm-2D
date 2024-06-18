@@ -1221,7 +1221,7 @@ void __arm_2d_layout_wrap_vertical( int16_t iTempY,
 {
     assert(NULL != ptLayout);
     
-    if (ptLayout->tAlignTable.Horizontal.sAdvance > 0) {
+    if (ptLayout->tAlignTable.Vertical.sAdvance > 0) {
         /* top down */
         if (!(    iTempY                                              
             >=  (   ptLayout->tArea.tLocation.iY
