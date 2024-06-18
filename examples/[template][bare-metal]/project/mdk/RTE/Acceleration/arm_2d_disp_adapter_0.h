@@ -184,7 +184,7 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
 #endif
 
 // <o>Navigation Layer Mode
@@ -194,7 +194,7 @@ extern "C" {
 // <i> Configure the default navigation layer of this display adapter. 
 // <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
-#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                              1
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                              0
 #endif
 
 // <q> Enable Console
@@ -226,7 +226,7 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   1
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service

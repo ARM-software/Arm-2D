@@ -340,7 +340,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -469,6 +469,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1356,7 +1361,7 @@
               <MiscControls></MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,ITERATION_CNT=10</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1484,6 +1489,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2041,7 +2051,7 @@
       <TargetName>V2M-MPS2-CM33</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2371,7 +2381,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2500,6 +2510,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2985,7 +3000,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>V2M-MPS3-CM55</TargetName>
+      <TargetName>V2M-MPS3-CM55_Deprecated</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
@@ -3318,7 +3333,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3447,6 +3462,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3935,7 +3955,7 @@
       <TargetName>V2M-MPS2-CM0+</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -4265,7 +4285,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;..\mdk</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4394,6 +4414,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5281,7 +5306,7 @@
               <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5410,6 +5435,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6297,7 +6327,7 @@
               <MiscControls>-Wno-nonportable-include-path</MiscControls>
               <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=28</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6426,6 +6456,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7244,7 +7279,7 @@
               <MiscControls>-Wno-padded -Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7373,6 +7408,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8260,7 +8300,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8389,6 +8429,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9207,7 +9252,7 @@
               <MiscControls>-Omax -Wno-invalid-utf8</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9336,6 +9381,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9893,7 +9943,7 @@
       <TargetName>AN552_Cortex-M55</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -10223,7 +10273,7 @@
               <MiscControls>-Wno-padded -mcpu=cortex-m55+cdecp0 -Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\..\Acceleration\Arm\ACI;..\..\..\common\scenes\bubble_charging</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\..\Acceleration\Arm\ACI;..\..\..\common\scenes\bubble_charging;.</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10352,6 +10402,11 @@
               <FileName>arm_2d_scene_bubble_charging.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10877,7 +10932,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10893,7 +10948,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10909,7 +10964,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10925,7 +10980,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10941,7 +10996,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10957,7 +11012,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10973,7 +11028,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -10989,7 +11044,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11005,7 +11060,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11021,7 +11076,23 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-Generic" Cvendor="ARM" Cversion="1.4.3" condition="Arm-2D-Benchmark-Generic">
+        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552_Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11037,7 +11108,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11053,11 +11124,11 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Helper" maxInstances="8">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-Helper" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11069,7 +11140,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11085,7 +11156,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11101,7 +11172,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11117,7 +11188,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11133,7 +11204,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11149,7 +11220,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11165,7 +11236,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11225,7 +11296,7 @@
               <Optim>5</Optim>
             </c>
           </targetInfo>
-          <targetInfo name="V2M-MPS3-CM55">
+          <targetInfo name="V2M-MPS3-CM55_Deprecated">
             <c>
               <MiscControls>-w</MiscControls>
               <Optim>5</Optim>
@@ -11277,7 +11348,7 @@
       <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM55 CMSIS">
         <package name="Cortex_DFP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="1.0.0"/>
         <targetInfos>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM85 CMSIS">
@@ -11302,7 +11373,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11387,7 +11458,7 @@
               <MiscControls>-w</MiscControls>
             </c>
           </targetInfo>
-          <targetInfo name="V2M-MPS3-CM55">
+          <targetInfo name="V2M-MPS3-CM55_Deprecated">
             <c>
               <MiscControls>-w</MiscControls>
             </c>
@@ -11411,7 +11482,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
@@ -11584,7 +11655,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11602,13 +11673,13 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.0.0">
+      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11620,13 +11691,13 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.0.0">
+      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Helper" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-Helper" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11638,7 +11709,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11728,7 +11799,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11746,7 +11817,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11764,7 +11835,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11782,7 +11853,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11800,7 +11871,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11818,7 +11889,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11836,7 +11907,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11854,7 +11925,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11872,7 +11943,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11890,7 +11961,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11908,7 +11979,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11926,7 +11997,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11944,7 +12015,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11962,7 +12033,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11980,7 +12051,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -11998,7 +12069,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12016,7 +12087,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12034,7 +12105,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12052,7 +12123,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12070,7 +12141,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12088,7 +12159,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12106,7 +12177,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12124,7 +12195,7 @@
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
@@ -12187,7 +12258,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM55 CMSIS" isDefaultVariant="1"/>
         <package name="Cortex_DFP" schemaVersion="1.7.33" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
         <targetInfos>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
         </targetInfos>
       </file>
       <file attr="config" category="header" name="template\RTE_Device.h">
@@ -12201,7 +12272,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM55 CMSIS" isDefaultVariant="1"/>
         <package name="Cortex_DFP" schemaVersion="1.7.33" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
         <targetInfos>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
         </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="Device\ARMCM55\Source\system_ARMCM55.c" version="1.0.0">
@@ -12209,7 +12280,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM55 CMSIS" isDefaultVariant="1"/>
         <package name="Cortex_DFP" schemaVersion="1.7.33" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
         <targetInfos>
-          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC6" name="Device\ARMCM85\Config\ARMCM85_ac6.sct" version="1.0.0">

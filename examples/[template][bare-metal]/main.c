@@ -36,6 +36,7 @@
 #include "arm_2d_scene_histogram.h"
 #include "arm_2d_scene_fan.h"
 #include "arm_2d_scene_bubble_charging.h"
+#include "arm_2d_scene_animate_background.h"
 
 #include "arm_2d_demos.h"
 
@@ -243,6 +244,11 @@ void scene_bubble_charging_loader(void)
 }
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+void scene_animate_background_loader(void) 
+{
+    arm_2d_scene_animate_background_init(&DISP0_ADAPTER);
+}
+
 void scene_virtual_resource_loader(void) 
 {
     arm_2d_scene_virtual_resource_init(&DISP0_ADAPTER);
@@ -269,11 +275,14 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_meter_loader,
     scene_fitness_loader,
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    scene_animate_background_loader,
     scene_virtual_resource_loader,
 #endif
 
 #else
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+    scene_animate_background_loader,
     scene_virtual_resource_loader,
 #endif
     scene_bubble_charging_loader,
