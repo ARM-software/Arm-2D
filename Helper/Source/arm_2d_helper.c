@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        04. April 2024
- * $Revision:    V.1.7.8
+ * $Date:        18. June 2024
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -80,8 +80,6 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-/*============================ GLOBAL VARIABLES ==============================*/
-
 static struct {
     bool bInitialized;
     uint32_t wMSUnit;
@@ -95,6 +93,69 @@ static struct {
 } s_tHelper = {
     .wMSUnit = 1,
 };
+
+/*============================ GLOBAL VARIABLES ==============================*/
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN = {
+    .Horizontal = {
+        .sWidth = 0,
+        .sLeft = 1,
+        .sRight = 0,
+        .sAdvance = 1,
+    },
+    .Vertical = {
+        .sHeight = 0,
+        .sTop = 1,
+        .sBottom = 0,
+        .sAdvance = 1,
+    },
+};
+
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_TO_DOWN = {
+    .Horizontal = {
+        .sWidth = -1,
+        .sLeft = 0,
+        .sRight = -1,
+        .sAdvance = -1,
+    },
+    .Vertical = {
+        .sHeight = 0,
+        .sTop = 1,
+        .sBottom = 0,
+        .sAdvance = 1,
+    },
+};
+
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_BOTTOM_UP = {
+    .Horizontal = {
+        .sWidth = 0,
+        .sLeft = 1,
+        .sRight = 0,
+        .sAdvance = 1,
+    },
+    .Vertical = {
+        .sHeight = -1,
+        .sTop = 0,
+        .sBottom = -1,
+        .sAdvance = -1,
+    },
+};
+
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP = {
+    .Horizontal = {
+        .sWidth = -1,
+        .sLeft = 0,
+        .sRight = -1,
+        .sAdvance = -1,
+    },
+    .Vertical = {
+        .sHeight = -1,
+        .sTop = 0,
+        .sBottom = -1,
+        .sAdvance = -1,
+    },
+};
+
+
 
 /*============================ PROTOTYPES ====================================*/
 

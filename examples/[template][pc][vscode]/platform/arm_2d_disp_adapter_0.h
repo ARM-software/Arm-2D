@@ -203,7 +203,7 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   1
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service

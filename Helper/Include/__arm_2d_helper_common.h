@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        12. June 2024
- * $Revision:    V.1.5.1
+ * $Date:        18. June 2024
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1008,9 +1008,9 @@ extern "C" {
             do {                                                                \
                 if (__bool_debug) {                                             \
                     __layout_assistant__.ptDebug = &__arm_2d_reserve_canvas__;  \
-                    __layout_assistant__.hwLevel =                              \
+                    __layout_assistant__.chLevel =                              \
                         __arm_2d_reserve_canvas__.wLevel++;                     \
-                    __layout_assistant__.hwInternalLevel = 0;                   \
+                    __layout_assistant__.chInternalLevel = 0;                   \
                 }                                                               \
             } while(0)
 
@@ -1022,7 +1022,7 @@ extern "C" {
                                         __RGB32(0x40, 0x40, 0x00),              \
                                         __RGB32(0xFF, 0xFF, 0x00),              \
                                         4,                                      \
-                                        __layout_assistant__.hwLevel));         \
+                                        __layout_assistant__.chLevel));         \
                     arm_2d_helper_draw_box(                                     \
                         (__layout_assistant__.ptDebug->ptTile),                 \
                         &__layout_assistant__.tArea,                            \
@@ -1034,8 +1034,30 @@ extern "C" {
 
 #endif
 
+#define ARM_2D_LAYOUT_ALIGN_DEFAULT                                             \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN
+
+#define ARM_2D_LAYOUT_ALIGN_FORWARD                                             \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN
+#define ARM_2D_LAYOUT_ALIGN_REVERSE                                             \
+            ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP
+
+#define ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT                                       \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN
+#define ARM_2D_LAYOUT_ALIGN_TOP_TO_DOWN                                         \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN
+
+#define ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT                                       \
+            ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_TO_DOWN
+
+#define ARM_2D_LAYOUT_ALIGN_BOTTOM_UP                                           \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_BOTTOM_UP
+
 #define arm_2d_layout1(__region)                                                \
-        arm_using(  __arm_2d_layout_t __layout_assistant__ = {0},               \
+        arm_using(  __arm_2d_layout_t __layout_assistant__ = {                  \
+                            .tAlignTable                                        \
+                                = ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN \
+                        },                                                      \
                     {                                                           \
                         __layout_assistant__.tLayout.tLocation                  \
                             = (__region).tLocation;                             \
@@ -1047,11 +1069,39 @@ extern "C" {
                 )
 
 #define arm_2d_layout2(__region, __bool_debug)                                  \
+        arm_using(  __arm_2d_layout_t __layout_assistant__ = {                  \
+                            .tAlignTable                                        \
+                                = ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN \
+                        },                                                      \
+                    {                                                           \
+                        __layout_assistant__.tLayout.tLocation                  \
+                            = (__region).tLocation;                             \
+                        __layout_assistant__.tArea = (__region);                \
+                        __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug);            \
+                    },                                                          \
+                    {                                                           \
+                        ARM_2D_OP_WAIT_ASYNC();                                 \
+                        __ARM_2D_LAYOUT_DEBUG_END__();                          \
+                    }                                                           \
+                )
+
+#define arm_2d_layout3(__region, __align, __bool_debug)                         \
             arm_using(  __arm_2d_layout_t __layout_assistant__ = {0},           \
                         {                                                       \
+                            __layout_assistant__.tAlignTable                    \
+                                = ARM_2D_LAYOUT_ALIGN_##__align;                \
                             __layout_assistant__.tLayout.tLocation              \
                                 = (__region).tLocation;                         \
                             __layout_assistant__.tArea = (__region);            \
+                                                                                \
+                            __layout_assistant__.tLayout.tLocation.iX -=        \
+                                __layout_assistant__.tArea.tSize.iWidth *       \
+                                __layout_assistant__.tAlignTable                \
+                                    .Horizontal.sWidth;                         \
+                            __layout_assistant__.tLayout.tLocation.iY -=        \
+                                __layout_assistant__.tArea.tSize.iHeight *      \
+                                __layout_assistant__.tAlignTable                \
+                                    .Vertical.sHeight;                          \
                             __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug);        \
                         },                                                      \
                         {                                                       \
@@ -1071,14 +1121,14 @@ extern "C" {
 #   define __ARM_2D_LAYOUT_ITEM_DEBUG_END__()
 #   define __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__()                                 \
                 if (NULL != __layout_assistant__.ptDebug) {                     \
-                    uint32_t hwLevel = __layout_assistant__.hwInternalLevel++ ; \
-                    hwLevel &= 0x7;                                             \
+                    uint32_t chLevel = __layout_assistant__.chInternalLevel++ ; \
+                    chLevel &= 0x7;                                             \
                     COLOUR_INT tColor = arm_2d_pixel_from_brga8888(             \
                                     __arm_2d_helper_colour_slider(              \
                                         __RGB32(0x00, 0x40, 0x00),              \
                                         __RGB32(0xFF, 0x80, 0x00),              \
                                         8,                                      \
-                                        hwLevel));                              \
+                                        chLevel));                              \
                     arm_2d_fill_colour_with_opacity(                            \
                         (__layout_assistant__.ptDebug->ptTile),                 \
                         &__item_region,                                         \
@@ -1121,13 +1171,33 @@ extern "C" {
                     __item_region.tSize.iHeight = (__height);                   \
                     __item_region.tLocation =                                   \
                         __layout_assistant__.tLayout.tLocation;                 \
-                    __item_region.tLocation.iX += (__left);                     \
-                    __item_region.tLocation.iY += (__top);                      \
+                                                                                \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__left)                                            \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;  \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__right)                                           \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight; \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__item_region.tSize.iWidth)                        \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth; \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__top)                                             \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;     \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__bottom)                                          \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;  \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__item_region.tSize.iHeight)                       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;  \
+                                                                                \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
-                    __layout_assistant__.tLayout.tLocation.iX +=                \
-                        (__width) + (__left) + (__right);                       \
+                    __layout_assistant__.tLayout.tLocation.iX                   \
+                        += ((__width) + (__left) + (__right))                   \
+                         * __layout_assistant__.tAlignTable.Horizontal.sAdvance;\
+                                                                                \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
                     __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
@@ -1141,6 +1211,7 @@ extern "C" {
                     ARM_2D_OP_WAIT_ASYNC();                                     \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
+
 
 
 /*!
@@ -1190,8 +1261,26 @@ extern "C" {
                         = MAX(0, __item_region.tSize.iHeight);                  \
                     __item_region.tLocation =                                   \
                         __layout_assistant__.tLayout.tLocation;                 \
-                    __item_region.tLocation.iX += (__left);                     \
-                    __item_region.tLocation.iY += (__top);                      \
+                                                                                \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__left)                                            \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;  \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__right)                                           \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight; \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__item_region.tSize.iWidth)                        \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth; \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__top)                                             \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;     \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__bottom)                                          \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;  \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__item_region.tSize.iHeight)                       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;  \
+                                                                                \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
@@ -1204,7 +1293,8 @@ extern "C" {
                                     __layout_assistant__.tLayout.tSize.iWidth,  \
                                     ARM_2D_SAFE_NAME(iWidth));                  \
                     __layout_assistant__.tLayout.tLocation.iX                   \
-                        += ARM_2D_SAFE_NAME(iWidth);                            \
+                        += ARM_2D_SAFE_NAME(iWidth)                             \
+                         * __layout_assistant__.tAlignTable.Horizontal.sAdvance;  \
                     ARM_2D_OP_WAIT_ASYNC();                                     \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
@@ -1290,15 +1380,36 @@ extern "C" {
                     __item_region.tSize.iHeight = (__height);                   \
                     __item_region.tLocation =                                   \
                         __layout_assistant__.tLayout.tLocation;                 \
-                    __item_region.tLocation.iX += (__left);                     \
-                    __item_region.tLocation.iY += (__top);                      \
+                                                                                \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__left)                                            \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;    \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__right)                                           \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight;   \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__item_region.tSize.iWidth)                        \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth;   \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__top)                                             \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;       \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__bottom)                                          \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;    \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__item_region.tSize.iHeight)                       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;  \
+                                                                                \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
-                    __layout_assistant__.tLayout.tLocation.iY +=                \
-                        (__height) + (__top) + (__bottom);                      \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
+                                                                                \
+                    __layout_assistant__.tLayout.tLocation.iY                   \
+                        += ARM_2D_SAFE_NAME(iHeight)                            \
+                         * __layout_assistant__.tAlignTable.Vertical.sAdvance;    \
+                                                                                \
                     __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
                                 __layout_assistant__.tLayout.tSize.iHeight,     \
                                 ARM_2D_SAFE_NAME(iHeight));                     \
@@ -1358,18 +1469,40 @@ extern "C" {
                     __item_region.tSize.iHeight = MAX((__height), 0);           \
                     __item_region.tLocation =                                   \
                         __layout_assistant__.tLayout.tLocation;                 \
-                    __item_region.tLocation.iX += (__left);                     \
-                    __item_region.tLocation.iY += (__top);                      \
+                                                                                \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__left)                                            \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;    \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__right)                                           \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight;   \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__item_region.tSize.iWidth)                        \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth;   \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__top)                                             \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;       \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__bottom)                                          \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;    \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__item_region.tSize.iHeight)                       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;    \
+                                                                                \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                                 =  MAX((__height), 0) + (__top) + (__bottom);   \
+                                                                                \
+                    __layout_assistant__.tLayout.tLocation.iY                   \
+                        += ARM_2D_SAFE_NAME(iHeight)                            \
+                         * __layout_assistant__.tAlignTable.Vertical.sAdvance;    \
+                                                                                \
                     __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
                                     __layout_assistant__.tLayout.tSize.iHeight, \
                                     ARM_2D_SAFE_NAME(iHeight));                 \
-                    __layout_assistant__.tLayout.tLocation.iY                   \
-                        += ARM_2D_SAFE_NAME(iHeight);                           \
+                                                                                \
                     __layout_assistant__.tLayout.tSize.iWidth =                 \
                         MAX(__layout_assistant__.tArea.tSize.iWidth,            \
                             __layout_assistant__.tLayout.tSize.iWidth);         \
@@ -2416,12 +2549,35 @@ typedef struct __arm_2d_layout_debug_t {
     uint32_t wLevel;
 } __arm_2d_layout_debug_t;
 
+typedef struct __arm_2d_layout_align_tab_t {
+    union {
+        struct {
+            int8_t sWidth   : 2;
+            int8_t sLeft    : 2;
+            int8_t sRight   : 2;
+            int8_t sAdvance : 2;
+        };
+        uint8_t chScheme;
+    } Horizontal;
+
+    union {
+        struct {
+            int8_t sHeight  : 2;
+            int8_t sTop     : 2;
+            int8_t sBottom  : 2;
+            int8_t sAdvance : 2;
+        };
+        uint8_t chScheme;
+    } Vertical;
+} __arm_2d_layout_align_tab_t;
+
 typedef struct __arm_2d_layout_t {
     __arm_2d_layout_debug_t *ptDebug;
     arm_2d_region_t tLayout;
     arm_2d_region_t tArea;
-    uint16_t hwLevel;
-    uint16_t hwInternalLevel;
+    uint8_t chLevel;
+    uint8_t chInternalLevel;
+    __arm_2d_layout_align_tab_t tAlignTable;
 } __arm_2d_layout_t;
 
 /*!
@@ -2446,6 +2602,19 @@ typedef struct arm_2d_helper_draw_evt_t {
 } arm_2d_helper_draw_evt_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern 
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN; 
+
+extern
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_TO_DOWN;
+
+extern
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_BOTTOM_UP;
+
+extern
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP;
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
 

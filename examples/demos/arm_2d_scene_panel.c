@@ -242,7 +242,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
     arm_2d_canvas(ptTile, __canvas) {
         arm_2d_align_centre(__canvas, 240, 128) {
 
-            arm_2d_layout(__centre_region, true) {
+            arm_2d_layout(__centre_region, REVERSE, true) {
 
                 __item_line_horizontal(60,80) {
                     progress_wheel_show(&this.tWheel,
