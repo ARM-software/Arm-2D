@@ -1383,19 +1383,19 @@ extern "C" {
                                                                                 \
                     __item_region.tLocation.iX                                  \
                         +=  (__left)                                            \
-                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;    \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;  \
                     __item_region.tLocation.iX                                  \
                         +=  (__right)                                           \
-                        *   __layout_assistant__.tAlignTable.Horizontal.sRight;   \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight; \
                     __item_region.tLocation.iX                                  \
                         +=  (__item_region.tSize.iWidth)                        \
-                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth;   \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth; \
                     __item_region.tLocation.iY                                  \
                         +=  (__top)                                             \
-                        *   __layout_assistant__.tAlignTable.Vertical.sTop;       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;     \
                     __item_region.tLocation.iY                                  \
                         +=  (__bottom)                                          \
-                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;    \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;  \
                     __item_region.tLocation.iY                                  \
                         +=  (__item_region.tSize.iHeight)                       \
                         *   __layout_assistant__.tAlignTable.Vertical.sHeight;  \
@@ -1408,7 +1408,7 @@ extern "C" {
                                                                                 \
                     __layout_assistant__.tLayout.tLocation.iY                   \
                         += ARM_2D_SAFE_NAME(iHeight)                            \
-                         * __layout_assistant__.tAlignTable.Vertical.sAdvance;    \
+                         * __layout_assistant__.tAlignTable.Vertical.sAdvance;  \
                                                                                 \
                     __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
                                 __layout_assistant__.tLayout.tSize.iHeight,     \
@@ -1472,22 +1472,22 @@ extern "C" {
                                                                                 \
                     __item_region.tLocation.iX                                  \
                         +=  (__left)                                            \
-                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;    \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;  \
                     __item_region.tLocation.iX                                  \
                         +=  (__right)                                           \
-                        *   __layout_assistant__.tAlignTable.Horizontal.sRight;   \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight; \
                     __item_region.tLocation.iX                                  \
                         +=  (__item_region.tSize.iWidth)                        \
-                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth;   \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth; \
                     __item_region.tLocation.iY                                  \
                         +=  (__top)                                             \
-                        *   __layout_assistant__.tAlignTable.Vertical.sTop;       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;     \
                     __item_region.tLocation.iY                                  \
                         +=  (__bottom)                                          \
-                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;    \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;  \
                     __item_region.tLocation.iY                                  \
                         +=  (__item_region.tSize.iHeight)                       \
-                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;    \
+                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;  \
                                                                                 \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
@@ -1497,7 +1497,7 @@ extern "C" {
                                                                                 \
                     __layout_assistant__.tLayout.tLocation.iY                   \
                         += ARM_2D_SAFE_NAME(iHeight)                            \
-                         * __layout_assistant__.tAlignTable.Vertical.sAdvance;    \
+                         * __layout_assistant__.tAlignTable.Vertical.sAdvance;  \
                                                                                 \
                     __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
                                     __layout_assistant__.tLayout.tSize.iHeight, \
