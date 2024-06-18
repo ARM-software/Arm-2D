@@ -1181,6 +1181,39 @@ void arm_2d_helper_fill_tile_colour(const arm_2d_tile_t *ptTile,
     ARM_2D_OP_WAIT_ASYNC();
 }
 
+ARM_NONNULL(2)
+void __arm_2d_layout_wrap_horizontal(   int16_t iTempX, 
+                                        __arm_2d_layout_t *ptLayout)
+{
+    assert(NULL != ptLayout);
+    
+    if (ptLayout->tAlignTable.Horizontal.sAdvance > 0) {
+        /* left to right */
+        if (!(    iTempX                                              
+            >=  (   ptLayout->tArea.tLocation.iX
+                +   ptLayout->tArea.tSize.iWidth))) {
+            return ;
+        }
+    } else {
+        /* right to left */
+        if (!(iTempX <= ptLayout->tArea.tLocation.iX)) {
+            return ;
+        }
+    }
+
+    /* move to the next line */
+    ptLayout->tLayout.tLocation.iY 
+        += ptLayout->tLayout.tSize.iHeight
+         * ptLayout->tAlignTable.Vertical.sAdvance;
+
+    /* reset the max line height */
+    ptLayout->tLayout.tSize.iHeight = 0;
+    /* start from the left */
+    ptLayout->tLayout.tLocation.iX = ptLayout->tArea.tLocation.iX 
+                                   - (  ptLayout->tArea.tSize.iWidth 
+                                     *  ptLayout->tAlignTable.Horizontal.sWidth);
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif defined(__IS_COMPILER_GCC__)

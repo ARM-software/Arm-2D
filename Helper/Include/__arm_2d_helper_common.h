@@ -1294,7 +1294,7 @@ extern "C" {
                                     ARM_2D_SAFE_NAME(iWidth));                  \
                     __layout_assistant__.tLayout.tLocation.iX                   \
                         += ARM_2D_SAFE_NAME(iWidth)                             \
-                         * __layout_assistant__.tAlignTable.Horizontal.sAdvance;  \
+                         * __layout_assistant__.tAlignTable.Horizontal.sAdvance;\
                     ARM_2D_OP_WAIT_ASYNC();                                     \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
@@ -1584,52 +1584,57 @@ extern "C" {
                     int16_t iTempX = __layout_assistant__.tLayout.tLocation.iX  \
                                    + (__left) + (__width);                      \
                     /* is end of the line */                                    \
-                    if (    iTempX                                              \
-                       >=   (   __layout_assistant__.tArea.tLocation.iX         \
-                            +   __layout_assistant__.tArea.tSize.iWidth)) {     \
-                        /* move to the next line */                             \
-                        __layout_assistant__.tLayout.tLocation.iY +=            \
-                            __layout_assistant__.tLayout.tSize.iHeight;         \
-                        /* reset the max line height */                         \
-                        __layout_assistant__.tLayout.tSize.iHeight = 0;         \
-                        /* start from the left */                               \
-                        __layout_assistant__.tLayout.tLocation.iX               \
-                            = __layout_assistant__.tArea.tLocation.iX;          \
-                    }                                                           \
+                    __arm_2d_layout_wrap_horizontal(iTempX,                     \
+                                                    &__layout_assistant__);     \
+                                                                                \
                     __item_region.tSize.iWidth = (__width);                     \
                     __item_region.tSize.iHeight = (__height);                   \
                     __item_region.tLocation =                                   \
                         __layout_assistant__.tLayout.tLocation;                 \
-                    __item_region.tLocation.iX += (__left);                     \
-                    __item_region.tLocation.iY += (__top);                      \
+                                                                                \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__left)                                            \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sLeft;  \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__right)                                           \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sRight; \
+                    __item_region.tLocation.iX                                  \
+                        +=  (__item_region.tSize.iWidth)                        \
+                        *   __layout_assistant__.tAlignTable.Horizontal.sWidth; \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__top)                                             \
+                        *   __layout_assistant__.tAlignTable.Vertical.sTop;     \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__bottom)                                          \
+                        *   __layout_assistant__.tAlignTable.Vertical.sBottom;  \
+                    __item_region.tLocation.iY                                  \
+                        +=  (__item_region.tSize.iHeight)                       \
+                        *   __layout_assistant__.tAlignTable.Vertical.sHeight;  \
+                                                                                \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_BEGIN__();                       \
                 },                                                              \
                 {                                                               \
-                    __layout_assistant__.tLayout.tLocation.iX +=                \
-                        (__width) + (__left) + (__right);                       \
                     int16_t ARM_2D_SAFE_NAME(iHeight)                           \
                         = (__height) + (__top) + (__bottom);                    \
                     __layout_assistant__.tLayout.tSize.iHeight = MAX(           \
                                     __layout_assistant__.tLayout.tSize.iHeight, \
                                     ARM_2D_SAFE_NAME(iHeight));                 \
+                                                                                \
                     int16_t ARM_2D_SAFE_NAME(iWidth)                            \
                         = (__width) + (__left) + (__right);                     \
+                    __layout_assistant__.tLayout.tLocation.iX                   \
+                        += ARM_2D_SAFE_NAME(iWidth)                             \
+                         * __layout_assistant__.tAlignTable.Horizontal.sAdvance;\
+                                                                                \
                     __layout_assistant__.tLayout.tSize.iWidth = MAX(            \
                                     __layout_assistant__.tLayout.tSize.iWidth,  \
                                     ARM_2D_SAFE_NAME(iWidth));                  \
+                                                                                \
                     /* is end of the line */                                    \
-                    if (    __layout_assistant__.tLayout.tLocation.iX           \
-                       >=   (   __layout_assistant__.tArea.tLocation.iX         \
-                            +   __layout_assistant__.tArea.tSize.iWidth)) {     \
-                        /* move to the next line */                             \
-                        __layout_assistant__.tLayout.tLocation.iY +=            \
-                            __layout_assistant__.tLayout.tSize.iHeight;         \
-                        /* reset the max line height */                         \
-                        __layout_assistant__.tLayout.tSize.iHeight = 0;         \
-                        /* start from the left */                               \
-                        __layout_assistant__.tLayout.tLocation.iX               \
-                            = __layout_assistant__.tArea.tLocation.iX;          \
-                    }                                                           \
+                    __arm_2d_layout_wrap_horizontal(                            \
+                                    __layout_assistant__.tLayout.tLocation.iX,  \
+                                    &__layout_assistant__);                     \
+                                                                                \
                     ARM_2D_OP_WAIT_ASYNC();                                     \
                     __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
@@ -2630,6 +2635,11 @@ uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1,
                         ?   chAlpha1 
                         :   ((uint16_t)chAlpha1 * (uint16_t)chAlpha2 >> 8)));
 }
+
+ARM_NONNULL(2)
+extern
+void __arm_2d_layout_wrap_horizontal(   int16_t iTempX, 
+                                        __arm_2d_layout_t *ptLayout);
 
 /*! @} */
 
