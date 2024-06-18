@@ -95,7 +95,7 @@ static struct {
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
-const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN = {
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN = {
     .Horizontal = {
         .sWidth = 0,
         .sLeft = 1,
@@ -110,7 +110,7 @@ const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_TO_DOWN 
     },
 };
 
-const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_TO_DOWN = {
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_DOWN = {
     .Horizontal = {
         .sWidth = -1,
         .sLeft = 0,
@@ -1208,10 +1208,44 @@ void __arm_2d_layout_wrap_horizontal(   int16_t iTempX,
 
     /* reset the max line height */
     ptLayout->tLayout.tSize.iHeight = 0;
-    /* start from the left */
+
     ptLayout->tLayout.tLocation.iX = ptLayout->tArea.tLocation.iX 
                                    - (  ptLayout->tArea.tSize.iWidth 
                                      *  ptLayout->tAlignTable.Horizontal.sWidth);
+}
+
+
+ARM_NONNULL(2)
+void __arm_2d_layout_wrap_vertical( int16_t iTempY, 
+                                    __arm_2d_layout_t *ptLayout)
+{
+    assert(NULL != ptLayout);
+    
+    if (ptLayout->tAlignTable.Horizontal.sAdvance > 0) {
+        /* top down */
+        if (!(    iTempY                                              
+            >=  (   ptLayout->tArea.tLocation.iY
+                +   ptLayout->tArea.tSize.iHeight))) {
+            return ;
+        }
+    } else {
+        /* bottom up */
+        if (!(iTempY <= ptLayout->tArea.tLocation.iY)) {
+            return ;
+        }
+    }
+
+    /* move to the next line */
+    ptLayout->tLayout.tLocation.iX 
+        += ptLayout->tLayout.tSize.iWidth
+         * ptLayout->tAlignTable.Horizontal.sAdvance;
+
+    /* reset the max line width */
+    ptLayout->tLayout.tSize.iWidth = 0;
+
+    ptLayout->tLayout.tLocation.iY = ptLayout->tArea.tLocation.iY 
+                                   - (  ptLayout->tArea.tSize.iHeight 
+                                     *  ptLayout->tAlignTable.Vertical.sHeight);
 }
 
 #if defined(__clang__)
