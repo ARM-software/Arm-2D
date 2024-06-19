@@ -219,12 +219,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #endif
 
 #else
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-    scene_animate_background_loader,
-    scene_virtual_resource_loader,
-#endif
-    //scene_basics_loader,
-    //scene_fan_loader,
+    scene_panel_loader,
 #endif
 
 

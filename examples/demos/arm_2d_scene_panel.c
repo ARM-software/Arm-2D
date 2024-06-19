@@ -288,7 +288,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
                      *     [0]
                      */
                 
-                    arm_2d_layout(__item_region, REVERSE, true) {
+                    arm_2d_layout(__item_region, true) {
                         __item_horizontal(28,28,2,2,2,2) {
                             draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_WHITE, 128, bIsNewFrame);
                         }
