@@ -1111,6 +1111,31 @@ extern "C" {
                         }                                                       \
                     )
 
+
+/*!
+ * \brief prepare for layout
+ * \param[in] __region the target region for layout
+ * \param[in] __alignment the alignment requirement for layout, the valid mode is
+ *            DEFAULT, FORWARD, REVERSE, LEFT_TO_RIGHT, RIGHT_TO_LEFT, TOP_DOWN 
+ *            and BOTTOM_UP
+ * \param[in] __is_debug whether enable the layout debug mode
+ * \param ... parameter list 
+ * 
+ * \note prototype 1:
+ *          arm_2d_layout(__region) {
+ *              ...
+ *          }
+ * 
+ * \note prototype 2:
+ *          arm_2d_layout(__region, __is_debug) {
+ *              ...
+ *          }
+ *
+ * \note prototype 3:
+ *          arm_2d_layout(__region, __alignment, __is_debug) {
+ *              ...
+ *          }
+ */
 #define arm_2d_layout(...)                                                      \
         ARM_CONNECT2(arm_2d_layout, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
@@ -1237,7 +1262,7 @@ extern "C" {
  *
  * \note prototype 4:
  *          __item_line_horizontal(__width, __height, 
-                                 __left, __right, __top, __bottom) {
+ *                               __left, __right, __top, __bottom) {
  *              code body that can use __item_region
  *          }
  */
