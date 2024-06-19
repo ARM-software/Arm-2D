@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        18. June 2024
- * $Revision:    V.1.6.0
+ * $Date:        19. June 2024
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1086,10 +1086,11 @@ extern "C" {
                 )
 
 #define arm_2d_layout3(__region, __align, __bool_debug)                         \
-            arm_using(  __arm_2d_layout_t __layout_assistant__ = {0},           \
+            arm_using(  __arm_2d_layout_t __layout_assistant__ = {              \
+                            .tAlignTable                                        \
+                                = ARM_2D_LAYOUT_ALIGN_##__align                 \
+                        },                                                      \
                         {                                                       \
-                            __layout_assistant__.tAlignTable                    \
-                                = ARM_2D_LAYOUT_ALIGN_##__align;                \
                             __layout_assistant__.tLayout.tLocation              \
                                 = (__region).tLocation;                         \
                             __layout_assistant__.tArea = (__region);            \
@@ -2587,7 +2588,7 @@ typedef struct __arm_2d_layout_t {
     arm_2d_region_t tArea;
     uint8_t chLevel;
     uint8_t chInternalLevel;
-    __arm_2d_layout_align_tab_t tAlignTable;
+    const __arm_2d_layout_align_tab_t tAlignTable;
 } __arm_2d_layout_t;
 
 /*!
@@ -2612,20 +2613,73 @@ typedef struct arm_2d_helper_draw_evt_t {
 } arm_2d_helper_draw_evt_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
-
-extern 
-const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN; 
-
-extern
-const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_DOWN;
-
-extern
-const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_BOTTOM_UP;
-
-extern
-const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP;
-
 /*============================ LOCAL VARIABLES ===============================*/
+
+static
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN = {
+    .Horizontal = {
+        .sWidth = 0,
+        .sLeft = 1,
+        .sRight = 0,
+        .sAdvance = 1,
+    },
+    .Vertical = {
+        .sHeight = 0,
+        .sTop = 1,
+        .sBottom = 0,
+        .sAdvance = 1,
+    },
+};
+
+static
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_TOP_DOWN = {
+    .Horizontal = {
+        .sWidth = -1,
+        .sLeft = 0,
+        .sRight = -1,
+        .sAdvance = -1,
+    },
+    .Vertical = {
+        .sHeight = 0,
+        .sTop = 1,
+        .sBottom = 0,
+        .sAdvance = 1,
+    },
+};
+
+static
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_BOTTOM_UP = {
+    .Horizontal = {
+        .sWidth = 0,
+        .sLeft = 1,
+        .sRight = 0,
+        .sAdvance = 1,
+    },
+    .Vertical = {
+        .sHeight = -1,
+        .sTop = 0,
+        .sBottom = -1,
+        .sAdvance = -1,
+    },
+};
+
+static
+const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP = {
+    .Horizontal = {
+        .sWidth = -1,
+        .sLeft = 0,
+        .sRight = -1,
+        .sAdvance = -1,
+    },
+    .Vertical = {
+        .sHeight = -1,
+        .sTop = 0,
+        .sBottom = -1,
+        .sAdvance = -1,
+    },
+};
+
+
 /*============================ PROTOTYPES ====================================*/
 
 __STATIC_INLINE
