@@ -19,12 +19,9 @@
 #ifndef __ARM_2D_DISP_ADAPTER%Instance%_H__
 #define __ARM_2D_DISP_ADAPTER%Instance%_H__
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%
-
-#include "arm_2d_helper_scene.h"
-#include "__common.h"
 
 #ifdef   __cplusplus
 extern "C" {

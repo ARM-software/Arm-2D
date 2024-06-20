@@ -31,8 +31,6 @@
 
 #ifdef RTE_Acceleration_Arm_2D_Scene%Instance%
 
-#include "arm_2d_helper_scene.h"
-
 #ifdef   __cplusplus
 extern "C" {
 #endif

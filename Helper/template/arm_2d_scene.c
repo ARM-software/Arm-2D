@@ -18,16 +18,12 @@
 
 /*============================ INCLUDES ======================================*/
 
-#if defined(_RTE_)
-#   include "RTE_Components.h"
-#endif
+#define __USER_SCENE%Instance%_IMPLEMENT__
+#include "arm_2d_scene_%Instance%.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #ifdef RTE_Acceleration_Arm_2D_Scene%Instance%
-
-#define __USER_SCENE%Instance%_IMPLEMENT__
-#include "arm_2d_scene_%Instance%.h"
 
 #include <stdlib.h>
 #include <string.h>

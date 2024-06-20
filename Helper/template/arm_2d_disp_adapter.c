@@ -18,14 +18,12 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#include "arm_2d_disp_adapter_%Instance%.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "arm_2d_helper.h"
-#include "arm_2d_disp_adapter_%Instance%.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

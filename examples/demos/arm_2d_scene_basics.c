@@ -18,12 +18,10 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
-
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
-
 #define __USER_SCENE_BASICS_IMPLEMENT__
 #include "arm_2d_scene_basics.h"
+
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include <stdlib.h>
 #include <string.h>

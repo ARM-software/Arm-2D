@@ -21,11 +21,13 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d_helper.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#include "arm_2d_helper_scene.h"
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {
