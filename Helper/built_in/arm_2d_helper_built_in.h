@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2024 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,6 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 #include "busy_wheel.h"
+#include "console_box.h"
 
 #ifdef   __cplusplus
 extern "C" {

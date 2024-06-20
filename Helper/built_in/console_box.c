@@ -17,14 +17,13 @@
  */
 
 /*============================ INCLUDES ======================================*/
+
 #define __CONSOLE_BOX_IMPLEMENT__   1
+#include "console_box.h"
 
 #define __ARM_2D_HELPER_INHERIT__   1
-#include "./arm_2d_example_controls.h"
-#include "./__common.h"
-#include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include "console_box.h"
+
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>

@@ -36,7 +36,6 @@
 #include "./list_view.h"
 #include "./battery_gasgauge.h"
 #include "./dynamic_nebula.h"
-#include "./console_box.h"
 #include "./histogram.h"
 
 #ifdef   __cplusplus

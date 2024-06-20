@@ -69,8 +69,10 @@ if (ARM2D_HELPER)
             Helper/asset/WhiteDotSmall.c
             Helper/asset/cmsis_logo.c
 
-            Helper/built_in/busy_wheel.c
             Helper/built_in/arm_2d_helper_built_in.c
+            Helper/built_in/busy_wheel.c
+            Helper/built_in/console_box.c
+            
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Helper_PFB
@@ -117,7 +119,6 @@ if (ARM2D_CONTROLS)
             examples/common/controls/list_view.c
             examples/common/controls/battery_gasgauge.c
             examples/common/controls/dynamic_nebula.c
-            examples/common/controls/console_box.c
             examples/common/controls/histogram.c
             
             examples/common/asset/WhiteDotMiddle.c

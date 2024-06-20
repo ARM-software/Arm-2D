@@ -20,8 +20,8 @@
 #define __CONSOLE_BOX_H__
 
 /*============================ INCLUDES ======================================*/
-#include "arm_2d.h"
-#include "./__common.h"
+
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -49,6 +49,7 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+typedef struct arm_2d_font_t arm_2d_font_t;
 
 typedef struct console_box_cfg_t {
     arm_2d_size_t tBoxSize;
