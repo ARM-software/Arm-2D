@@ -63,6 +63,8 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_pfb.c
             Helper/Source/arm_2d_helper_scene.c
             Helper/Source/arm_2d_helper_list.c
+            helper/asset/WhiteDotSmall.c
+            helper/asset/cmsis_logo.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Helper_PFB
@@ -111,13 +113,11 @@ if (ARM2D_CONTROLS)
             examples/common/controls/console_box.c
             examples/common/controls/histogram.c
             
-            examples/common/asset/WhiteDotSmall.c
             examples/common/asset/WhiteDotMiddle.c
             examples/common/asset/WhiteDotBig.c
             examples/common/asset/SpinWheel.c
             examples/common/asset/blue_slashes.c
             examples/common/asset/wave.c
-            examples/common/asset/cmsis_logo.c
             examples/common/asset/GreenCircle.c
             examples/common/asset/QuaterArcSmall.c
             examples/common/asset/QuaterArcMiddle.c

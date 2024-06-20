@@ -49,6 +49,9 @@ PACK_DELETE_FILES="
   examples/common/asset/*.png
   examples/common/asset/*.PNG
   examples/common/asset/*.jpg
+  Helper/asset/*.png
+  Helper/asset/*.PNG
+  Helper/asset/*.jpg
 "
 
 # Specify patches to be applied

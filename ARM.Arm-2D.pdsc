@@ -302,6 +302,10 @@
             
             <file category="sourceC"     name="Helper/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.1" />
             
+            <!-- asset -->
+            <file category="sourceC"     name="helper/asset/WhiteDotSmall.c" />
+            <file category="sourceC"     name="helper/asset/cmsis_logo.c" />
+
             <!-- scene template -->
             <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="1.2.9" />
             <file category="sourceC"     name="examples/common/asset/MeterPanel.c"                  attr="template"  select="Scene Template: Meter"   version="1.2.9" />
@@ -424,13 +428,11 @@
             <file category="sourceC"     name="examples/common/controls/histogram.c" />
 
             <!-- assets -->
-            <file category="sourceC"     name="examples/common/asset/WhiteDotSmall.c" />
             <file category="sourceC"     name="examples/common/asset/WhiteDotMiddle.c" />
             <file category="sourceC"     name="examples/common/asset/WhiteDotBig.c" />
             <file category="sourceC"     name="examples/common/asset/SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/blue_slashes.c" />
             <file category="sourceC"     name="examples/common/asset/wave.c" />
-            <file category="sourceC"     name="examples/common/asset/cmsis_logo.c" />
             <file category="sourceC"     name="examples/common/asset/GreenCircle.c" />
             <file category="sourceC"     name="examples/common/asset/QuaterArcSmall.c" />
             <file category="sourceC"     name="examples/common/asset/QuaterArcMiddle.c" />
