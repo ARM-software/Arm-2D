@@ -417,7 +417,7 @@
             <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />
             <file category="header"      name="Helper/Include/arm_extra_lcd_printf.h" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_font.c" />
-            <file category="sourceC"     name="Helper/asset/GLCD_Fonts.c"      />
+            <file category="sourceC"     name="Helper/asset/GLCD_Fonts.c" />
           </files>
           <RTE_Components_h>
 
@@ -431,7 +431,6 @@
             <!-- example control source files -->
             <file category="include"     name="examples/common/controls/" />
             <file category="sourceC"     name="examples/common/controls/controls.c" />
-
             <file category="sourceC"     name="examples/common/controls/spinning_wheel.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_drill.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_flowing.c" />
