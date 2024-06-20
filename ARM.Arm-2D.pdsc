@@ -303,8 +303,8 @@
             <file category="sourceC"     name="Helper/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.1" />
             
             <!-- asset -->
-            <file category="sourceC"     name="helper/asset/WhiteDotSmall.c" />
-            <file category="sourceC"     name="helper/asset/cmsis_logo.c" />
+            <file category="sourceC"     name="Helper/asset/WhiteDotSmall.c" />
+            <file category="sourceC"     name="Helper/asset/cmsis_logo.c" />
 
             <!-- scene template -->
             <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="1.2.9" />
@@ -394,13 +394,13 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.3.1" condition="Arm-2D-PFB">
           <description>An example module to print ASCII strings to target string.</description>
           <files>
-            <file category="header"      name="helper/Include/arm_2d_helper_font.h" />
-            <file category="header"      name="helper/Include/arm_extra_lcd_printf.h" />
-            <file category="sourceC"     name="helper/Source/arm_2d_helper_font.c" />
-            <file category="sourceC"     name="helper/controls/GLCD_Fonts.c"      />
-            <file category="sourceC"     name="helper/asset/DigitsFont.c"         />
-            <file category="sourceC"     name="helper/asset/alarm_clock_font32.c" />
-            <file category="sourceC"     name="helper/asset/alarm_clock_font64.c" />
+            <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />
+            <file category="header"      name="Helper/Include/arm_extra_lcd_printf.h" />
+            <file category="sourceC"     name="Helper/Source/arm_2d_helper_font.c" />
+            <file category="sourceC"     name="Helper/controls/GLCD_Fonts.c"      />
+            <file category="sourceC"     name="Helper/asset/DigitsFont.c"         />
+            <file category="sourceC"     name="Helper/asset/alarm_clock_font32.c" />
+            <file category="sourceC"     name="Helper/asset/alarm_clock_font64.c" />
           </files>
           <RTE_Components_h>
 
