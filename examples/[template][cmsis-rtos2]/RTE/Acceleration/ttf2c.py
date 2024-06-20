@@ -38,8 +38,6 @@ c_head_string="""
 
 #include "arm_2d_helper.h"
 
-#include "arm_extra_lcd_printf.h"
-
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"

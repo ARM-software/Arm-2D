@@ -39,10 +39,6 @@
 #include "./console_box.h"
 #include "./histogram.h"
 
-#if defined(__RTE_ACCELERATION_ARM_2D_EXTRA_LCD_PRINTF__)
-#   include "./arm_extra_lcd_printf.h"b
-#endif
-
 #ifdef   __cplusplus
 extern "C" {
 #endif

@@ -7,7 +7,6 @@
 
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include "arm_extra_lcd_printf.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

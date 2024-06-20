@@ -48,7 +48,8 @@
 			"battery_gasgauge.h": "c",
 			"arm_2d_demos.h": "c",
 			"__common.h": "c",
-			"arm_2d_helper_font.h": "c"
+			"arm_2d_helper_font.h": "c",
+			"stdint.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

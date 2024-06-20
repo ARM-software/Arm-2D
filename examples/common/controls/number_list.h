@@ -22,7 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "arm_2d_helper_list.h"
-#include "arm_extra_lcd_printf.h"
+
 #include "./__common.h"
 
 #ifdef   __cplusplus

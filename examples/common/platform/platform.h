@@ -28,7 +28,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 //#include "Device.h"                     // Keil::Board Support:V2M-MPS2:Common
 #include "RTE_Components.h"             // Component selection
@@ -43,7 +43,6 @@
 #endif
 
 #include "../controls/arm_extra_controls.h"
-#include "../controls/arm_extra_lcd_printf.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

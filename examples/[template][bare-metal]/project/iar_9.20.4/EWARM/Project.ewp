@@ -1204,9 +1204,6 @@
                     <name>$PROJ_DIR$\..\..\..\..\common\controls\arm_extra_controls.h</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\common\controls\arm_extra_lcd_printf.h</name>
-                </file>
-                <file>
                     <name>$PROJ_DIR$\..\..\..\..\common\controls\busy_wheel.c</name>
                 </file>
                 <file>

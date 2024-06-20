@@ -41,10 +41,6 @@
 #   include "perf_counter.h"
 #endif
 
-#if __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
-#   include "arm_extra_lcd_printf.h"
-#endif
-
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
