@@ -24,15 +24,10 @@
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#include "arm_2d.h"
-
 #ifdef RTE_Acceleration_Arm_2D_Scene%Instance%
 
 #define __USER_SCENE%Instance%_IMPLEMENT__
 #include "arm_2d_scene_%Instance%.h"
-
-#include "arm_2d_helper.h"
-#include "arm_2d_example_controls.h"
 
 #include <stdlib.h>
 #include <string.h>

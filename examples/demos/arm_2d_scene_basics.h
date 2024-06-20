@@ -21,7 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 

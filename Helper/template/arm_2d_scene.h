@@ -27,7 +27,7 @@
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Scene%Instance%
 

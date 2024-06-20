@@ -25,9 +25,6 @@
 #define __USER_SCENE_BASICS_IMPLEMENT__
 #include "arm_2d_scene_basics.h"
 
-#include "arm_2d_helper.h"
-#include "arm_2d_example_controls.h"
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -95,6 +92,21 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask2;
 
 extern const arm_2d_tile_t c_tileBackground;
 extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
+
+extern
+struct {
+    implement(arm_2d_user_font_t);
+
+    arm_2d_char_idx_t tNumbers;
+    arm_2d_char_idx_t tABCDEF;
+    arm_2d_char_idx_t tMinor;
+    arm_2d_char_idx_t tPlus;
+    arm_2d_char_idx_t tDot;
+    arm_2d_char_idx_t tE;
+    arm_2d_char_idx_t tBlank;
+}   ARM_2D_FONT_A2_DIGITS_ONLY,
+    ARM_2D_FONT_A4_DIGITS_ONLY,
+    ARM_2D_FONT_A8_DIGITS_ONLY;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
