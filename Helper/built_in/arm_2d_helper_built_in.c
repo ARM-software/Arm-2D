@@ -17,9 +17,8 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "./arm_2d_example_controls.h"
+#include "../Include/arm_2d_helper.h"
 
-#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -34,6 +33,14 @@
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-braces"
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa089,Pe188,Pe174
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-value"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -44,17 +51,16 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-void arm_extra_controls_init(void)
-{
-    arm_2d_helper_init();
 
-    spinning_wheel_init();
-    progress_bar_drill_init();
-    progress_bar_flowing_init();
-    progress_bar_simple_init();
+void arm_2d_helper_built_in_init(void)
+{
+    busy_wheel_init();
 }
+
 
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic pop
 #endif

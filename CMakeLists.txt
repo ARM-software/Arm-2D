@@ -56,7 +56,9 @@ target_sources(ARM2D PRIVATE
 
 
 if (ARM2D_HELPER)
-	target_include_directories(ARM2D PUBLIC Helper/Include/)
+	target_include_directories(ARM2D PUBLIC 
+                                Helper/Include/
+                                Helper/built_in/)
 
 	target_sources(ARM2D PRIVATE 
 		    Helper/Source/arm_2d_helper.c
@@ -66,6 +68,9 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_shape.c
             Helper/asset/WhiteDotSmall.c
             Helper/asset/cmsis_logo.c
+
+            Helper/built_in/busy_wheel.c
+            Helper/built_in/arm_2d_helper_built_in.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Helper_PFB
@@ -102,7 +107,7 @@ if (ARM2D_CONTROLS)
 	target_include_directories(ARM2D PUBLIC examples/common/controls/)
 	target_sources(ARM2D PRIVATE 
             examples/common/controls/controls.c
-            examples/common/controls/busy_wheel.c
+            
             examples/common/controls/spinning_wheel.c
             examples/common/controls/progress_bar_drill.c
             examples/common/controls/progress_bar_flowing.c

@@ -16,31 +16,15 @@
  * limitations under the License.
  */
 
-
-
-#ifndef __ARM_2D_EXAMPLE_CONTROLS_H__
-#define __ARM_2D_EXAMPLE_CONTROLS_H__
+#ifndef __ARM_2D_HELPER_BUILT_IN_H__
+#define __ARM_2D_HELPER_BUILT_IN_H__
 
 /*============================ INCLUDES ======================================*/
-#include "arm_2d.h"
-#include "./__common.h"
-
-#include "./spinning_wheel.h"
-#include "./progress_bar_drill.h"
-#include "./progress_bar_flowing.h"
-#include "./progress_bar_simple.h"
-#include "./number_list.h"
-#include "./progress_wheel.h"
-#include "./list_view.h"
-#include "./battery_gasgauge.h"
-#include "./dynamic_nebula.h"
-#include "./console_box.h"
-#include "./histogram.h"
+#include "busy_wheel.h"
 
 #ifdef   __cplusplus
 extern "C" {
 #endif
-
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -48,7 +32,7 @@ extern "C" {
 /*============================ PROTOTYPES ====================================*/
 
 extern
-void arm_extra_controls_init(void);
+void arm_2d_helper_built_in_init(void);
 
 #ifdef   __cplusplus
 }

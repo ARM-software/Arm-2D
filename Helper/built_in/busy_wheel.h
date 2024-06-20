@@ -20,7 +20,7 @@
 #define __BUSY_WHEEL_H__
 
 /*============================ INCLUDES ======================================*/
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {

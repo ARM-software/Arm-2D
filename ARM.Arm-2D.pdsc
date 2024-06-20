@@ -306,6 +306,7 @@
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
+            <file category="include"     name="Helper/built_in/" />
             <file category="include"     name="examples/demos/" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_pfb.c" />
@@ -319,6 +320,10 @@
             <!-- asset -->
             <file category="sourceC"     name="Helper/asset/WhiteDotSmall.c" />
             <file category="sourceC"     name="Helper/asset/cmsis_logo.c" />
+
+            <!-- built-in controls -->>
+            <file category="sourceC"     name="Helper/built_in/arm_2d_helper_built_in.c" />
+            <file category="sourceC"     name="Helper/built_in/busy_wheel.c" />
 
             <!-- scene template -->
             <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="1.2.9" />
@@ -425,7 +430,7 @@
             <!-- example control source files -->
             <file category="include"     name="examples/common/controls/" />
             <file category="sourceC"     name="examples/common/controls/controls.c" />
-            <file category="sourceC"     name="examples/common/controls/busy_wheel.c" />
+
             <file category="sourceC"     name="examples/common/controls/spinning_wheel.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_drill.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_flowing.c" />

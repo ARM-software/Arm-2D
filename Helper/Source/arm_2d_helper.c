@@ -127,6 +127,9 @@ void arm_2d_helper_init(void)
     
     arm_2d_helper_rtos_init();
 #endif
+
+    arm_2d_helper_built_in_init();
+
 }
 
 /* NOTE: for non-arm architecture, you have to implement those functions.

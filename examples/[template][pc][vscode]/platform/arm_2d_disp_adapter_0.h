@@ -184,13 +184,13 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
 // <q>Disable the navigation layer
 // <i> Remove the navigation layer for this display adapter. NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_DISABLE_NAVIGATION_LAYER__
-#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  1
+#   define __DISP0_CFG_DISABLE_NAVIGATION_LAYER__                  0
 #endif
 
 // <o>Maximum number of Virtual Resources used per API

@@ -17,12 +17,9 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#include "./busy_wheel.h"
-#include "./__common.h"
-#include "arm_2d.h"
+#include "busy_wheel.h"
 #include <math.h>
 #include <assert.h>
-#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
