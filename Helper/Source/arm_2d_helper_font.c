@@ -26,7 +26,7 @@
 
 #include "arm_extra_lcd_printf.h"
 #include "arm_2d.h"
-#include "./__common.h"
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push

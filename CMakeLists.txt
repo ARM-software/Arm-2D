@@ -88,8 +88,13 @@ endif()
 if (ARM2D_LCD_PRINTF)
 	target_include_directories(ARM2D PUBLIC examples/common/controls/)
 
-	target_sources(ARM2D PRIVATE examples/common/controls/lcd_printf.c
-            examples/common/controls/GLCD_Fonts.c)
+	target_sources(ARM2D PRIVATE 
+            helper/Source/arm_2d_helper_font.c
+            helper/controls/GLCD_Fonts.c
+            helper/asset/DigitsFont.c
+            helper/asset/alarm_clock_font32.c
+            helper/asset/alarm_clock_font64.c
+            )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Extra_LCD_printf__
             )

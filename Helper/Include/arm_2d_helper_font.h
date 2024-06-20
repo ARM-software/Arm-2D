@@ -16,14 +16,12 @@
  * limitations under the License.
  */
 
-#ifndef __LCD_PRINTF_H__
-#define __LCD_PRINTF_H__
+#ifndef __ARM_2D_HELPER_FONT_H__
+#define __ARM_2D_HELPER_FONT_H__
 
 /*============================ INCLUDES ======================================*/
 #include <stdint.h>
-#include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include "__common.h"
 
 #ifdef __cplusplus
 extern "C" {
