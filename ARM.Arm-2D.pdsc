@@ -321,7 +321,7 @@
             <file category="sourceC"     name="Helper/asset/WhiteDotSmall.c" />
             <file category="sourceC"     name="Helper/asset/cmsis_logo.c" />
 
-            <!-- built-in controls -->>
+            <!-- built-in controls -->
             <file category="sourceC"     name="Helper/built_in/arm_2d_helper_built_in.c" />
             <file category="sourceC"     name="Helper/built_in/busy_wheel.c" />
             <file category="sourceC"     name="Helper/built_in/console_box.c" />
