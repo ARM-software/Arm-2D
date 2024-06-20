@@ -64,8 +64,8 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_scene.c
             Helper/Source/arm_2d_helper_list.c
             Helper/Source/arm_2d_helper_shape.c
-            helper/asset/WhiteDotSmall.c
-            helper/asset/cmsis_logo.c
+            Helper/asset/WhiteDotSmall.c
+            Helper/asset/cmsis_logo.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Helper_PFB
@@ -90,11 +90,8 @@ if (ARM2D_LCD_PRINTF)
 	target_include_directories(ARM2D PUBLIC examples/common/controls/)
 
 	target_sources(ARM2D PRIVATE 
-            helper/Source/arm_2d_helper_font.c
-            helper/controls/GLCD_Fonts.c
-            helper/asset/DigitsFont.c
-            helper/asset/alarm_clock_font32.c
-            helper/asset/alarm_clock_font64.c
+            Helper/Source/arm_2d_helper_font.c
+            Helper/asset/GLCD_Fonts.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Extra_LCD_printf__
@@ -160,6 +157,9 @@ if (ARM2D_CONTROLS)
             examples/common/asset/GlassBall.c
             examples/common/asset/HallowOutCircleMask.c
             examples/common/asset/Fire8x4.c
+            examples/common/asset/DigitsFont.c
+            examples/common/asset/alarm_clock_font32.c
+            examples/common/asset/alarm_clock_font64.c
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls
