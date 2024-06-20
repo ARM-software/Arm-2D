@@ -201,14 +201,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:struct____arm__2d__fifo__reader__pointer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__byte__fifo__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a></td></tr>
 <tr class="separator:structarm__2d__byte__fifo__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structarm__2d__char__descriptor__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a></td></tr>
-<tr class="separator:structarm__2d__char__descriptor__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structarm__2d__font__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a></td></tr>
-<tr class="separator:structarm__2d__font__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structarm__2d__char__idx__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__char__idx__t">arm_2d_char_idx_t</a></td></tr>
-<tr class="separator:structarm__2d__char__idx__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structarm__2d__user__font__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__user__font__t">arm_2d_user_font_t</a></td></tr>
-<tr class="separator:structarm__2d__user__font__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct____arm__2d__helper__scene__switch__t_8Feature"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature">__arm_2d_helper_scene_switch_t.Feature</a></td></tr>
 <tr class="separator:struct____arm__2d__helper__scene__switch__t_8Feature"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scene__t_8____unnamed140____"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__t_8____unnamed140____">arm_2d_scene_t.__unnamed140__</a></td></tr>
@@ -439,12 +431,6 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga4134cd0ed302d130720a15281e6cd56a"><td class="memItemLeft" align="right" valign="top">typedef bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga4134cd0ed302d130720a15281e6cd56a">arm_2d_helper_before_flushing_handler_t</a>(void *pTarget, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch)</td></tr>
 <tr class="memdesc:ga4134cd0ed302d130720a15281e6cd56a"><td class="mdescLeft">&#160;</td><td class="mdescRight">before-flushing event handler  <a href="group__gHelper.html#ga4134cd0ed302d130720a15281e6cd56a">More...</a><br /></td></tr>
 <tr class="separator:ga4134cd0ed302d130720a15281e6cd56a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga49e77f06aee5ad164db5e469be408548"><td class="memItemLeft" align="right" valign="top"><a id="ga49e77f06aee5ad164db5e469be408548" name="ga49e77f06aee5ad164db5e469be408548"></a>
-typedef <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_font_get_char_descriptor_handler_t</b>(const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, uint8_t *pchCharCode)</td></tr>
-<tr class="separator:ga49e77f06aee5ad164db5e469be408548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga472d71aba76f0257a919891dacc1b061"><td class="memItemLeft" align="right" valign="top"><a id="ga472d71aba76f0257a919891dacc1b061" name="ga472d71aba76f0257a919891dacc1b061"></a>
-typedef <a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_font_draw_char_handler_t</b>(const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptileChar, COLOUR_INT tForeColour, uint_fast8_t chOpacity, float fScale)</td></tr>
-<tr class="separator:ga472d71aba76f0257a919891dacc1b061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -982,18 +968,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf07a91ddd548e926e5737db7800c16a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">arm_2d_helper_swap_rgb16</a> (uint16_t *phwBuffer, uint32_t wCount)</td></tr>
 <tr class="memdesc:gaf07a91ddd548e926e5737db7800c16a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap the high and low bytes for each rgb16 pixel  <a href="group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9">More...</a><br /></td></tr>
 <tr class="separator:gaf07a91ddd548e926e5737db7800c16a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafef8afe9b381edc7b307ef22b66afae4"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">arm_2d_helper_get_utf8_byte_valid_length</a> (const uint8_t *pchChar)</td></tr>
-<tr class="memdesc:gafef8afe9b381edc7b307ef22b66afae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">More...</a><br /></td></tr>
-<tr class="separator:gafef8afe9b381edc7b307ef22b66afae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7553bfdcdafa1d4ddfa3e0bff5322fc7"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">arm_2d_helper_get_utf8_byte_length</a> (const uint8_t *pchChar)</td></tr>
-<tr class="memdesc:ga7553bfdcdafa1d4ddfa3e0bff5322fc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the code length based on the first byte of a given UTF8 char  <a href="group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">More...</a><br /></td></tr>
-<tr class="separator:ga7553bfdcdafa1d4ddfa3e0bff5322fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0400f80284319e9ae66d5316a52ee0b7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7">arm_2d_helper_utf8_to_unicode</a> (const uint8_t *pchUTF8)</td></tr>
-<tr class="memdesc:ga0400f80284319e9ae66d5316a52ee0b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert an UTF8 char into unicode char  <a href="group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7">More...</a><br /></td></tr>
-<tr class="separator:ga0400f80284319e9ae66d5316a52ee0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace860649e7b7172cf6aa155abc51434d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">arm_2d_helper_get_char_descriptor</a> (const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, uint8_t *pchCharCode)</td></tr>
-<tr class="memdesc:gace860649e7b7172cf6aa155abc51434d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get char descriptor  <a href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">More...</a><br /></td></tr>
-<tr class="separator:gace860649e7b7172cf6aa155abc51434d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad463890671cef394edd5dbc33e34a3bc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad463890671cef394edd5dbc33e34a3bc">arm_2d_helper_fill_tile_colour</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#unionarm__2d__color__info__t">arm_2d_color_info_t</a> tColourFormat, <a class="el" href="group__gKernel.html#unionarm__2d__colour__t">arm_2d_colour_t</a> tColour)</td></tr>
 <tr class="memdesc:gad463890671cef394edd5dbc33e34a3bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">fill the target tile with a specified colour  <a href="group__gHelper.html#gad463890671cef394edd5dbc33e34a3bc">More...</a><br /></td></tr>
 <tr class="separator:gad463890671cef394edd5dbc33e34a3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2716,165 +2690,6 @@ hwDataAvailable</td>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div>
-</div>
-</div>
-<a name="structarm__2d__char__descriptor__t" id="structarm__2d__char__descriptor__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__char__descriptor__t">&#9670;&nbsp;</a></span>arm_2d_char_descriptor_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct arm_2d_char_descriptor_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a70e596b6edfcf604ddecadd66823c801" name="a70e596b6edfcf604ddecadd66823c801"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
-<td class="fieldname">
-tileChar</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a79a8cfbc73a62e6efa8b386e7dfa2f11" name="a79a8cfbc73a62e6efa8b386e7dfa2f11"></a>int16_t</td>
-<td class="fieldname">
-iAdvance</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a151f25911719bdaca8626031d997b037" name="a151f25911719bdaca8626031d997b037"></a>int16_t</td>
-<td class="fieldname">
-iBearingX</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a033c5ec6796c47dc4f577a605ef13ff3" name="a033c5ec6796c47dc4f577a605ef13ff3"></a>int16_t</td>
-<td class="fieldname">
-iBearingY</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a58985697b5870897c10b18b31a11b96f" name="a58985697b5870897c10b18b31a11b96f"></a>int8_t</td>
-<td class="fieldname">
-chCodeLength</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="structarm__2d__font__t" id="structarm__2d__font__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__font__t">&#9670;&nbsp;</a></span>arm_2d_font_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct arm_2d_font_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="ae07010510993d88c1649c772a6e7fd76" name="ae07010510993d88c1649c772a6e7fd76"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
-<td class="fieldname">
-tileFont</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a9a6cdac387af2ac61607310fa1eb722e" name="a9a6cdac387af2ac61607310fa1eb722e"></a><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a></td>
-<td class="fieldname">
-tCharSize</td>
-<td class="fielddoc">
-CharSize. </td></tr>
-<tr><td class="fieldtype">
-<a id="afd82638ab5387c6ebcdb2fbf59d3a40e" name="afd82638ab5387c6ebcdb2fbf59d3a40e"></a>uint32_t</td>
-<td class="fieldname">
-nCount</td>
-<td class="fielddoc">
-Character count. </td></tr>
-<tr><td class="fieldtype">
-<a id="a6479b43d02147602a806b8bee6f7c962" name="a6479b43d02147602a806b8bee6f7c962"></a>arm_2d_font_get_char_descriptor_handler_t *</td>
-<td class="fieldname">
-fnGetCharDescriptor</td>
-<td class="fielddoc">
-On-Get-Char-Descriptor event handler. </td></tr>
-<tr><td class="fieldtype">
-<a id="a3b841cb917873c6ef064a945ce09060d" name="a3b841cb917873c6ef064a945ce09060d"></a>arm_2d_font_draw_char_handler_t *</td>
-<td class="fieldname">
-fnDrawChar</td>
-<td class="fielddoc">
-On-Draw-Char event handler. </td></tr>
-</table>
-
-</div>
-</div>
-<a name="structarm__2d__char__idx__t" id="structarm__2d__char__idx__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__char__idx__t">&#9670;&nbsp;</a></span>arm_2d_char_idx_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct arm_2d_char_idx_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a114e9d22d095987a75fe096fa94835b4" name="a114e9d22d095987a75fe096fa94835b4"></a>uint8_t</td>
-<td class="fieldname">
-chStartCode[4]</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a8199f29b429a56e33e3f5df34a2f5063" name="a8199f29b429a56e33e3f5df34a2f5063"></a>uint16_t</td>
-<td class="fieldname">
-hwCount</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a5cba2d7b23165d12da801af59c6e1a73" name="a5cba2d7b23165d12da801af59c6e1a73"></a>uint16_t</td>
-<td class="fieldname">
-hwOffset</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
-<a name="structarm__2d__user__font__t" id="structarm__2d__user__font__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__user__font__t">&#9670;&nbsp;</a></span>arm_2d_user_font_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct arm_2d_user_font_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
-<tr class="memitem:a7eae15f74eedfe7be51e765944a14931"><td class="memItemLeft" align="right" valign="top"><a id="a7eae15f74eedfe7be51e765944a14931" name="a7eae15f74eedfe7be51e765944a14931"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>implement</b> (<a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a>)</td></tr>
-<tr class="separator:a7eae15f74eedfe7be51e765944a14931"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a6daf768d1b186e90e35225b0e4fa8f1e"><td class="memItemLeft" align="right" valign="top"><a id="a6daf768d1b186e90e35225b0e4fa8f1e" name="a6daf768d1b186e90e35225b0e4fa8f1e"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>hwCount</b></td></tr>
-<tr class="separator:a6daf768d1b186e90e35225b0e4fa8f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67b56f5ab4d3811bf782e70d53129707"><td class="memItemLeft" align="right" valign="top"><a id="a67b56f5ab4d3811bf782e70d53129707" name="a67b56f5ab4d3811bf782e70d53129707"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>hwDefaultCharIndex</b></td></tr>
-<tr class="separator:a67b56f5ab4d3811bf782e70d53129707"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af85b0e6fbbe65e52e6fc9d6e755fb342"><td class="memItemLeft" align="right" valign="top"><a id="af85b0e6fbbe65e52e6fc9d6e755fb342" name="af85b0e6fbbe65e52e6fc9d6e755fb342"></a>
-<a class="el" href="group__gHelper.html#structarm__2d__char__idx__t">arm_2d_char_idx_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tLookUpTable</b> []</td></tr>
-<tr class="separator:af85b0e6fbbe65e52e6fc9d6e755fb342"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
 </div>
 </div>
 <a name="struct____arm__2d__helper__scene__switch__t_8Feature" id="struct____arm__2d__helper__scene__switch__t_8Feature"></a>
@@ -6044,9 +5859,9 @@ fOP</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *__NAME(                                   \</div>
-<div class="line">                                        <span class="keyword">const</span> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont,            \</div>
-<div class="line">                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, \</div>
+<b>Value:</b><div class="fragment"><div class="line">            arm_2d_char_descriptor_t *__NAME(                                   \</div>
+<div class="line">                                        <span class="keyword">const</span> arm_2d_font_t *ptFont,            \</div>
+<div class="line">                                        arm_2d_char_descriptor_t *ptDescriptor, \</div>
 <div class="line">                                        uint8_t *pchCharCode)</div>
 </div><!-- fragment -->
 </div>
@@ -11444,144 +11259,6 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="gafef8afe9b381edc7b307ef22b66afae4" name="gafef8afe9b381edc7b307ef22b66afae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafef8afe9b381edc7b307ef22b66afae4">&#9670;&nbsp;</a></span>arm_2d_helper_get_utf8_byte_valid_length()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int8_t arm_2d_helper_get_utf8_byte_valid_length </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>pchChar</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>return a valid code length of a given UTF8 char </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>the start address of an UTF8 char </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">-1</td><td>this isn't a legal UTF8 char </td></tr>
-    <tr><td class="paramname">&gt;0</td><td>the UTF8 char length </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga7553bfdcdafa1d4ddfa3e0bff5322fc7" name="ga7553bfdcdafa1d4ddfa3e0bff5322fc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">&#9670;&nbsp;</a></span>arm_2d_helper_get_utf8_byte_length()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int8_t arm_2d_helper_get_utf8_byte_length </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>pchChar</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>return the code length based on the first byte of a given UTF8 char </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>the start address of an UTF8 char </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">-1</td><td>this isn't a legal UTF8 char </td></tr>
-    <tr><td class="paramname">&gt;0</td><td>the UTF8 char length </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga0400f80284319e9ae66d5316a52ee0b7" name="ga0400f80284319e9ae66d5316a52ee0b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0400f80284319e9ae66d5316a52ee0b7">&#9670;&nbsp;</a></span>arm_2d_helper_utf8_to_unicode()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t arm_2d_helper_utf8_to_unicode </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>pchUTF8</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>convert an UTF8 char into unicode char </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pchUTF8</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>uint32_t generated unicode </dd></dl>
-
-</div>
-</div>
-<a id="gace860649e7b7172cf6aa155abc51434d" name="gace860649e7b7172cf6aa155abc51434d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gace860649e7b7172cf6aa155abc51434d">&#9670;&nbsp;</a></span>arm_2d_helper_get_char_descriptor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> * arm_2d_helper_get_char_descriptor </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *&#160;</td>
-          <td class="paramname"><em>ptFont</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *&#160;</td>
-          <td class="paramname"><em>ptDescriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pchCharCode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>get char descriptor </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptFont</td><td>the target font </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptDescriptor</td><td>a buffer to store a char descriptor </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pchCharCode</td><td>an UTF8 Char </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> * the descriptor </dd></dl>
 
 </div>
 </div>

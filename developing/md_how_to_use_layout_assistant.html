@@ -470,7 +470,7 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">        arm_2d_align_centre(__button_canvas, tTextSize) {</div>
 <div class="line"> </div>
 <div class="line">            arm_lcd_text_set_target_framebuffer((<a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *)&amp;__button);</div>
-<div class="line">            arm_lcd_text_set_font((<a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *)&amp;ARM_2D_FONT_A4_DIGITS_ONLY);</div>
+<div class="line">            arm_lcd_text_set_font((arm_2d_font_t *)&amp;ARM_2D_FONT_A4_DIGITS_ONLY);</div>
 <div class="line">            arm_lcd_text_set_draw_region(&amp;__centre_region);</div>
 <div class="line">            arm_lcd_text_set_colour(tColour, GLCD_COLOR_WHITE);</div>
 <div class="line">            arm_lcd_text_set_opacity(chOpacity);</div>
