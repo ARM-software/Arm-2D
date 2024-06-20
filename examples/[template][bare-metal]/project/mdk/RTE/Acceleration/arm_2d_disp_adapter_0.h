@@ -19,12 +19,9 @@
 #ifndef __ARM_2D_DISP_ADAPTER0_H__
 #define __ARM_2D_DISP_ADAPTER0_H__
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
-
-#include "arm_2d_helper_scene.h"
-#include "__common.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -184,7 +181,7 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
 // <o>Navigation Layer Mode
@@ -194,7 +191,7 @@ extern "C" {
 // <i> Configure the default navigation layer of this display adapter. 
 // <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
-#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                              0
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                              1
 #endif
 
 // <q> Enable Console

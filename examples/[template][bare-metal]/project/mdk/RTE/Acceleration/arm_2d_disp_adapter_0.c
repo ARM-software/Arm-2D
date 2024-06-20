@@ -18,15 +18,12 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#include "arm_2d_disp_adapter_0.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "arm_2d_helper.h"
-#include "arm_2d_example_controls.h"
-#include "arm_2d_disp_adapter_0.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -865,7 +862,14 @@ void disp_adapter0_init(void)
 {
     __user_scene_player_init();
 
+    arm_2d_helper_init();
+
+#if defined(RTE_Acceleration_Arm_2D_Extra_Controls)
+    extern
+    void arm_extra_controls_init(void);
+
     arm_extra_controls_init();
+#endif
 
     disp_adapter0_navigator_init();
 

@@ -18,15 +18,12 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#include "arm_2d_disp_adapter_0.h"
 
 #ifdef RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "arm_2d_helper.h"
-#include "arm_2d_example_controls.h"
-#include "arm_2d_disp_adapter_0.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -865,7 +862,14 @@ void disp_adapter0_init(void)
 {
     __user_scene_player_init();
 
+    arm_2d_helper_init();
+
+#if defined(RTE_Acceleration_Arm_2D_Extra_Controls)
+    extern
+    void arm_extra_controls_init(void);
+
     arm_extra_controls_init();
+#endif
 
     disp_adapter0_navigator_init();
 
@@ -983,6 +987,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
         uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
         int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        int16_t iSourceWidth = ptRegion->tSize.iWidth;
 
         /* calculate offset */
         pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
@@ -992,7 +997,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
                                             pObj, 
                                             (void *)pDes, 
                                             (uintptr_t)pSrc, 
-                                            nPixelSize * iSourceStride);
+                                            nPixelSize * iSourceWidth);
             
             pDes += iTargetStride * nPixelSize;
             pSrc += iSourceStride * nPixelSize;
@@ -1050,6 +1055,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
         uintptr_t pDes = (uintptr_t)pBuffer;
         int16_t iTargetStride = ptRegion->tSize.iWidth;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        int16_t iSourceWidth = ptRegion->tSize.iWidth;
 
         /* calculate offset */
         pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
@@ -1059,7 +1065,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
                                             pObj, 
                                             (void *)pDes, 
                                             (uintptr_t)pSrc, 
-                                            nPixelSize * iSourceStride);
+                                            nPixelSize * iSourceWidth);
             
             pDes += iTargetStride * nPixelSize;
             pSrc += iSourceStride * nPixelSize;
