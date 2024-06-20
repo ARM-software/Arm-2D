@@ -397,7 +397,7 @@
             <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />
             <file category="header"      name="Helper/Include/arm_extra_lcd_printf.h" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_font.c" />
-            <file category="sourceC"     name="Helper/controls/GLCD_Fonts.c"      />
+            <file category="sourceC"     name="Helper/asset/GLCD_Fonts.c"      />
             <file category="sourceC"     name="Helper/asset/DigitsFont.c"         />
             <file category="sourceC"     name="Helper/asset/alarm_clock_font32.c" />
             <file category="sourceC"     name="Helper/asset/alarm_clock_font64.c" />
