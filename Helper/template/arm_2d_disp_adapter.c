@@ -862,7 +862,14 @@ void disp_adapter%Instance%_init(void)
 {
     __user_scene_player_init();
 
+    arm_2d_helper_init();
+
+#if defined(RTE_Acceleration_Arm_2D_Extra_Controls)
+    extern
+    void arm_extra_controls_init(void);
+
     arm_extra_controls_init();
+#endif
 
     disp_adapter%Instance%_navigator_init();
 
