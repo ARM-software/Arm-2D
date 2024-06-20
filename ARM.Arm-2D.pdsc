@@ -85,12 +85,13 @@
             <description>Require Arm-2D Core Service</description>
             <require Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core"/>
         </condition>
-        
-        <condition id="Arm-2D-EXTRA">
+
+        <condition id="Arm-2D-Controls">
             <description>Require Arm-2D Core Service</description>
             <require condition="Arm-2D-CORE"/>
             <require Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending"/>
             <require Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform"/>
+            <require Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter"/>
         </condition>
         
         <condition id="Arm-2D-PFB">
@@ -135,6 +136,12 @@
         <condition id="Arm-2D-Scene">
             <description>The dependency of the scene</description>
             <require condition="Arm-2D-Displayer-Adapter"/>
+            <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" />
+        </condition>
+
+        <condition id="Arm-2D-Demos">
+            <description>The dependency of the scene</description>
+            <require condition="Arm-2D-Helper"/>
             <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" />
         </condition>
         
@@ -425,7 +432,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.7.7" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.7.7" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -522,7 +529,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for some basic operations.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_basics.c" attr="config" version="1.0.1" />
@@ -533,7 +540,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cversion="1.0.2" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cversion="1.0.2" condition="Arm-2D-Demos">
           <description>A demo for how to use the dirty region helper service.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_atom.c" attr="config" version="1.0.2" />
@@ -544,7 +551,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cversion="1.0.2" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cversion="1.0.2" condition="Arm-2D-Demos">
           <description>A complex demo for evaluating the system performance under the heavy load.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_audiomark.c" attr="config" version="1.0.2" />
@@ -555,7 +562,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for how to create a floating window of a text console.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_console_window.c" attr="config" version="1.0.1" />
@@ -566,7 +573,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for the battery gas gauge.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_gas_gauge.c" attr="config" version="1.0.1" />
@@ -577,7 +584,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for the listview </description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_listview.c" attr="config" version="1.0.1" />
@@ -588,7 +595,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.0.2" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.0.2" condition="Arm-2D-Demos">
           <description>A demo for typical controls on a panel </description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_panel.c" attr="config" version="1.0.2" />
@@ -599,7 +606,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for progress indication and gif </description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_progress_status.c" attr="config" version="1.0.1" />
@@ -610,7 +617,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cversion="1.0.0" condition="Arm-2D-Demos">
           <description>A demo for how to use virtual resources </description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_virtual_resource.c" attr="config" version="1.0.0" />
@@ -621,7 +628,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for menu </description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_menu.c" attr="config" version="1.0.1" />
