@@ -66,8 +66,8 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_scene.c
             Helper/Source/arm_2d_helper_list.c
             Helper/Source/arm_2d_helper_shape.c
-            Helper/asset/WhiteDotSmall.c
-            Helper/asset/cmsis_logo.c
+            Helper/Source/WhiteDotSmall.c
+            Helper/Source/cmsis_logo.c
 
             Helper/built_in/arm_2d_helper_built_in.c
             Helper/built_in/busy_wheel.c
@@ -98,7 +98,7 @@ if (ARM2D_LCD_PRINTF)
 
 	target_sources(ARM2D PRIVATE 
             Helper/Source/arm_2d_helper_font.c
-            Helper/asset/GLCD_Fonts.c
+            Helper/Source/GLCD_Fonts.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Extra_LCD_printf__

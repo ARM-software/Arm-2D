@@ -646,7 +646,7 @@ void __arm_2d_helper_layout_debug_print_label(const arm_2d_tile_t *ptTile,
 /*! @} */
 
 /*============================ INCLUDES ======================================*/
-#include "../built_in/arm_2d_helper_built_in.h"
+#include "arm_2d_helper_built_in.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

@@ -318,13 +318,13 @@
             <file category="sourceC"     name="Helper/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.1" />
 
             <!-- asset -->
-            <file category="sourceC"     name="Helper/asset/WhiteDotSmall.c" />
-            <file category="sourceC"     name="Helper/asset/cmsis_logo.c" />
+            <file category="sourceC"     name="Helper/Source/WhiteDotSmall.c" />
+            <file category="sourceC"     name="Helper/Source/cmsis_logo.c" />
 
             <!-- built-in controls -->
-            <file category="sourceC"     name="Helper/built_in/arm_2d_helper_built_in.c" />
-            <file category="sourceC"     name="Helper/built_in/busy_wheel.c" />
-            <file category="sourceC"     name="Helper/built_in/console_box.c" />
+            <file category="sourceC"     name="Helper/Source/arm_2d_helper_built_in.c" />
+            <file category="sourceC"     name="Helper/Source/busy_wheel.c" />
+            <file category="sourceC"     name="Helper/Source/console_box.c" />
 
             <!-- scene template -->
             <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="1.2.9" />
@@ -417,7 +417,7 @@
             <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />
             <file category="header"      name="Helper/Include/arm_extra_lcd_printf.h" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_font.c" />
-            <file category="sourceC"     name="Helper/asset/GLCD_Fonts.c" />
+            <file category="sourceC"     name="Helper/Source/GLCD_Fonts.c" />
           </files>
           <RTE_Components_h>
 
