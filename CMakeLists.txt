@@ -63,6 +63,7 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_pfb.c
             Helper/Source/arm_2d_helper_scene.c
             Helper/Source/arm_2d_helper_list.c
+            Helper/Source/arm_2d_helper_shape.c
             helper/asset/WhiteDotSmall.c
             helper/asset/cmsis_logo.c
             )
@@ -105,7 +106,6 @@ if (ARM2D_CONTROLS)
 	target_sources(ARM2D PRIVATE 
             examples/common/controls/controls.c
             examples/common/controls/busy_wheel.c
-            examples/common/controls/shape_round_corner_box.c
             examples/common/controls/spinning_wheel.c
             examples/common/controls/progress_bar_drill.c
             examples/common/controls/progress_bar_flowing.c

@@ -16,8 +16,19 @@
  * limitations under the License.
  */
 
-#ifndef __SHAPE_ROUND_CORNER_BOX_H__
-#define __SHAPE_ROUND_CORNER_BOX_H__
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        #include "arm_2d_helper_shape.h"
+ * Description:  the helper service header file for drawing simple shapes
+ *
+ * $Date:        20. June 2024
+ * $Revision:    V.1.12.0
+ *
+ * Target Processor:  Cortex-M cores
+ * -------------------------------------------------------------------- */
+
+#ifndef __ARM_2D_HELPER_SHAPE_H__
+#define __ARM_2D_HELPER_SHAPE_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"

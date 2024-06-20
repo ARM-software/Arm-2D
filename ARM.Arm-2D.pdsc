@@ -289,7 +289,7 @@
         </component>
 
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="1.12.1" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.0.0" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -298,10 +298,11 @@
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_pfb.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_scene.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_list.c" />
+            <file category="sourceC"     name="Helper/Source/arm_2d_helper_shape.c" />
             <file category="doc"         name="documentation/html/group__gHelper.html"/>
             
             <file category="sourceC"     name="Helper/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.1" />
-            
+
             <!-- asset -->
             <file category="sourceC"     name="Helper/asset/WhiteDotSmall.c" />
             <file category="sourceC"     name="Helper/asset/cmsis_logo.c" />
@@ -391,7 +392,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.3.1" condition="Arm-2D-PFB">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.4.0" condition="Arm-2D-PFB">
           <description>An example module to print ASCII strings to target string.</description>
           <files>
             <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />
@@ -415,7 +416,6 @@
             <file category="include"     name="examples/common/controls/" />
             <file category="sourceC"     name="examples/common/controls/controls.c" />
             <file category="sourceC"     name="examples/common/controls/busy_wheel.c" />
-            <file category="sourceC"     name="examples/common/controls/shape_round_corner_box.c" />
             <file category="sourceC"     name="examples/common/controls/spinning_wheel.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_drill.c" />
             <file category="sourceC"     name="examples/common/controls/progress_bar_flowing.c" />

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        19. June 2024
- * $Revision:    V.1.8.1
+ * $Date:        20. June 2024
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -974,123 +974,6 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
         uint32_t wTemp = *pwBuffer;
         (*(uint16_t *)pwBuffer) = (uint16_t)__REV16(wTemp);
     }
-}
-
-
-ARM_NONNULL(1)
-int8_t arm_2d_helper_get_utf8_byte_valid_length(const uint8_t *pchChar)
-{
-
-    switch(__CLZ( ~((uint32_t)pchChar[0] << 24) )) {
-        case 0:                                     /* BYTE0: 0xxx-xxxx */
-            return 1;
-        case 1:
-            break;
-        case 2:                                     /* BYTE0: 110x-xxxx */
-            if ((pchChar[1] & 0xC0) == 0x80) {      /* BYTE1: 10xx-xxxx */
-                return 2;
-            }
-            break;
-        case 3:                                     /* BYTE0: 1110-xxxx */
-            if  (((pchChar[1] & 0xC0) == 0x80)      /* BYTE1: 10xx-xxxx */
-            &&   ((pchChar[2] & 0xC0) == 0x80)) {   /* BYTE2: 10xx-xxxx */
-                return 3;
-            }
-            break;
-        case 4:
-            if  (((pchChar[1] & 0xC0) == 0x80)      /* BYTE1: 10xx-xxxx */
-            &&   ((pchChar[2] & 0xC0) == 0x80)      /* BYTE2: 10xx-xxxx */
-            &&   ((pchChar[3] & 0xC0) == 0x80)) {   /* BYTE3: 10xx-xxxx */
-                return 4;
-            }
-            break;
-        default:
-            break;
-    }
-
-    return -1;
-}
-
-#define __UTF8_TO_UNICODE1(__B0)           ((uint16_t)(__B0))
-
-#define __UTF8_TO_UNICODE2(__B0, __B1)                                          \
-            (   ((uint16_t)(((__B0) & 0x1F) << 6))                              \
-            |   ((uint16_t)((__B1) & 0x3F)))
-
-#define __UTF8_TO_UNICODE3(__B0, __B1, __B2)                                    \
-            (   ((uint16_t)(((__B0) & 0x0F) << 12))                             \
-            |   ((uint16_t)(((__B1) & 0x3F) << 6))                              \
-            |   ((uint16_t)((__B2) & 0x3F)))
-
-#define __UTF8_TO_UNICODE4(__B0, __B1, __B2, __B3)                              \
-            (   ((uint32_t)(((__B0) & 0x07) << 18))                             \
-            |   ((uint32_t)(((__B1) & 0x3F) << 12))                             \
-            |   ((uint32_t)(((__B2) & 0x3F) << 6))                              \
-            |   ((uint32_t)((__B3) & 0x3F)))
-
-#define __UTF8_TO_UNICODE(...)                                                  \
-            ARM_CONNECT2(__UTF8_TO_UNICODE,                                     \
-                         __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
-
-ARM_NONNULL(1)
-uint32_t arm_2d_helper_utf8_to_unicode(const uint8_t *pchUTF8)
-{
-    uint32_t wUTF16 = 0;
-
-    switch(arm_2d_helper_get_utf8_byte_valid_length(pchUTF8)) {
-        default:
-        case 0:
-            break;
-        case 1:
-            wUTF16 = __UTF8_TO_UNICODE(pchUTF8[0]);
-            break;
-        case 2:
-            wUTF16 = __UTF8_TO_UNICODE(pchUTF8[0], pchUTF8[1]);
-            break;
-        case 3:
-            wUTF16 = __UTF8_TO_UNICODE(pchUTF8[0], pchUTF8[1], pchUTF8[2]);
-            break;
-        case 4:
-            wUTF16 = __UTF8_TO_UNICODE(pchUTF8[0], pchUTF8[1], pchUTF8[2], pchUTF8[3]);
-            break;
-    }
-
-    return wUTF16;
-}
-
-ARM_NONNULL(1)
-int8_t arm_2d_helper_get_utf8_byte_length(const uint8_t *pchChar)
-{
-    switch(__CLZ( ~((uint32_t)pchChar[0] << 24) )) {
-        case 0:
-            return 1;
-        case 1:
-            break;
-        case 2:
-            return 2;
-        case 3:
-            return 3;
-        case 4:
-            return 4;
-        default:
-            break;
-    }
-
-    return -1;
-}
-
-ARM_NONNULL(1,2,3)
-arm_2d_char_descriptor_t *
-arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont, 
-                                    arm_2d_char_descriptor_t *ptDescriptor, 
-                                    uint8_t *pchCharCode)
-{
-    assert(NULL != pchCharCode);
-
-    return ARM_2D_INVOKE(ptFont->fnGetCharDescriptor,
-                ARM_2D_PARAM(   ptFont,
-                                ptDescriptor,
-                                pchCharCode));
 }
 
 

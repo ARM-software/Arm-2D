@@ -25,7 +25,6 @@
 #include "arm_2d.h"
 #include "./__common.h"
 #include "./busy_wheel.h"
-#include "./shape_round_corner_box.h"
 #include "./spinning_wheel.h"
 #include "./progress_bar_drill.h"
 #include "./progress_bar_flowing.h"

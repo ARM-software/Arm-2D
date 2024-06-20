@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        19. June 2024
- * $Revision:    V.1.8.1
+ * $Date:        20. June 2024
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -37,6 +37,8 @@
 #include "./arm_2d_helper_scene.h"
 #include "./arm_2d_disp_adapters.h"
 #include "./arm_2d_helper_list.h"
+#include "./arm_2d_helper_shape.h"
+#include "./arm_2d_helper_font.h"
 //#include "./arm_2d_helper_map.h"
 
 #include <stdlib.h>
@@ -272,53 +274,6 @@ ARM_PROTECTED (
     struct __arm_2d_fifo_reader_pointer tPeek;
 )
 } arm_2d_byte_fifo_t;
-
-typedef struct {
-    arm_2d_tile_t tileChar;
-    int16_t iAdvance;
-    int16_t iBearingX;
-    int16_t iBearingY;
-    int8_t chCodeLength;
-    int8_t          : 8;
-} arm_2d_char_descriptor_t;
-
-typedef struct arm_2d_font_t arm_2d_font_t;
-
-typedef arm_2d_char_descriptor_t *arm_2d_font_get_char_descriptor_handler_t(
-                                        const arm_2d_font_t *ptFont, 
-                                        arm_2d_char_descriptor_t *ptDescriptor,
-                                        uint8_t *pchCharCode);
-
-typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
-                                            const arm_2d_tile_t *ptTile,
-                                            const arm_2d_region_t *ptRegion,
-                                            arm_2d_tile_t *ptileChar,
-                                            COLOUR_INT tForeColour,
-                                            uint_fast8_t chOpacity,
-                                            float fScale);
-
-/* Font definitions */
-struct arm_2d_font_t {
-    arm_2d_tile_t tileFont;
-    arm_2d_size_t tCharSize;                                                    //!< CharSize
-    uint32_t nCount;                                                            //!< Character count
-
-    arm_2d_font_get_char_descriptor_handler_t *fnGetCharDescriptor;             //!< On-Get-Char-Descriptor event handler
-    arm_2d_font_draw_char_handler_t           *fnDrawChar;                      //!< On-Draw-Char event handler
-};
-
-typedef struct arm_2d_char_idx_t {
-    uint8_t chStartCode[4];
-    uint16_t hwCount;
-    uint16_t hwOffset;
-} arm_2d_char_idx_t;
-
-typedef struct arm_2d_user_font_t {
-    implement(arm_2d_font_t);
-    uint16_t hwCount;
-    uint16_t hwDefaultCharIndex;
-    arm_2d_char_idx_t tLookUpTable[];
-} arm_2d_user_font_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -663,48 +618,6 @@ void arm_2d_byte_fifo_reset_peeked(arm_2d_byte_fifo_t *ptThis);
  */
 extern
 void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount);
-
-/*!
- * \brief return a valid code length of a given UTF8 char
- * \param[in] pchChar the start address of an UTF8 char
- * \retval -1 this isn't a legal UTF8 char
- * \retval >0 the UTF8 char length
- */
-ARM_NONNULL(1)
-int8_t arm_2d_helper_get_utf8_byte_valid_length(const uint8_t *pchChar);
-
-/*!
- * \brief return the code length based on the first byte of a given UTF8 char
- * \param[in] pchChar the start address of an UTF8 char
- * \retval -1 this isn't a legal UTF8 char
- * \retval >0 the UTF8 char length
- */
-ARM_NONNULL(1)
-int8_t arm_2d_helper_get_utf8_byte_length(const uint8_t *pchChar);
-
-
-/*!
- * \brief convert an UTF8 char into unicode char
- * 
- * \param[in] pchUTF8 
- * \return uint32_t generated unicode
- */
-ARM_NONNULL(1)
-extern
-uint32_t arm_2d_helper_utf8_to_unicode(const uint8_t *pchUTF8);
-
-/*!
- * \brief get char descriptor
- * \param[in] ptFont the target font
- * \param[in] ptDescriptor a buffer to store a char descriptor
- * \param[in] pchCharCode an UTF8 Char
- * \return arm_2d_char_descriptor_t * the descriptor
- */
-ARM_NONNULL(1,2,3)
-arm_2d_char_descriptor_t *
-arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont, 
-                                    arm_2d_char_descriptor_t *ptDescriptor, 
-                                    uint8_t *pchCharCode);
 
 extern
 ARM_NONNULL(1)
