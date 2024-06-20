@@ -25,7 +25,6 @@
 #include <stdarg.h>
 
 #include "arm_extra_lcd_printf.h"
-#include "arm_2d.h"
 #include "arm_2d_helper.h"
 
 #if defined(__clang__)
