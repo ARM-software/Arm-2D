@@ -313,7 +313,6 @@
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
-            <file category="include"     name="Helper/built_in/" />
             <file category="include"     name="examples/demos/" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_pfb.c" />
