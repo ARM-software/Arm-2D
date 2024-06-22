@@ -878,7 +878,7 @@ void disp_adapter0_init(void)
     if (!__DISP0_CFG_DISABLE_DEFAULT_SCENE__) {
     #if 0
         /*! define dirty regions */
-        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, const static)
+        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
             /* a region for the busy wheel */
             ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
