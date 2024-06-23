@@ -149,7 +149,7 @@ extern "C" {
 // <o>Number of iterations <0-2000>
 // <i> run number of iterations before calculate the FPS.
 #ifndef __DISP0_CFG_ITERATION_CNT__
-#   define __DISP0_CFG_ITERATION_CNT__                             30
+#   define __DISP0_CFG_ITERATION_CNT__                              30
 #endif
 
 // <o>FPS Calculation Mode
@@ -157,7 +157,7 @@ extern "C" {
 //     <1=>     Real FPS
 // <i> Decide the meaning of the real time FPS display
 #ifndef __DISP0_CFG_FPS_CACULATION_MODE__
-#   define __DISP0_CFG_FPS_CACULATION_MODE__                       0
+#   define __DISP0_CFG_FPS_CACULATION_MODE__                        1
 #endif
 
 // <q> Enable Console

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        16. May 2024
- * $Revision:    V.1.6.8
+ * $Date:        23. June 2024
+ * $Revision:    V.1.6.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -229,6 +229,12 @@ void arm_2d_scene_player_append_scenes( arm_2d_scene_player_t *ptThis,
                                    this.SceneFIFO.ptTail,
                                    ptScene);
         }
+
+        if (ptScene->bUseDirtyRegionHelper) {
+            arm_2d_helper_dirty_region_init(&ptScene->tDirtyRegionHelper,
+                                            &ptScene->ptDirtyRegion);
+        }
+
     } while(--hwCount);
 }
 
@@ -1744,12 +1750,6 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
             if (!ptScene->bLoaded) {
                 ptScene->bLoaded = true;
-
-                if (ptScene->bUseDirtyRegionHelper) {
-                    arm_2d_helper_dirty_region_init(&ptScene->tDirtyRegionHelper,
-                                                    &ptScene->ptDirtyRegion);
-                }
-
                 ARM_2D_INVOKE_RT_VOID(ptScene->fnOnLoad, ptScene);
             }
 
@@ -1938,12 +1938,6 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 if (NULL != this.SceneFIFO.ptHead->ptNext) {
                     if (!this.SceneFIFO.ptHead->ptNext->bLoaded) {
                         this.SceneFIFO.ptHead->ptNext->bLoaded = true;
-
-                        if (this.SceneFIFO.ptHead->ptNext->bUseDirtyRegionHelper) {
-                            arm_2d_helper_dirty_region_init(
-                                &this.SceneFIFO.ptHead->ptNext->tDirtyRegionHelper,
-                                &this.SceneFIFO.ptHead->ptNext->ptDirtyRegion);
-                        }
 
                         ARM_2D_INVOKE_RT_VOID(this.SceneFIFO.ptHead->ptNext->fnOnLoad, this.SceneFIFO.ptHead->ptNext);
                     }
