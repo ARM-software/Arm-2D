@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        arm_2d_utils.h</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for Arm-2D Library</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        12. April 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.3</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        26. June 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.4</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
@@ -1362,62 +1362,65 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span><span class="comment">/* un-define macros */</span></div>
 <div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span><span class="preprocessor">#undef ARM_PRIVATE</span></div>
 <div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span><span class="preprocessor">#undef ARM_PROTECTED</span></div>
-<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span> </div>
-<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span><span class="comment">/* redefine macros */</span></div>
-<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
-<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span><span class="preprocessor">        struct  {                                                               \</span></div>
-<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
-<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span><span class="preprocessor">        };</span></div>
-<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span> </div>
-<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
-<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span><span class="preprocessor">        struct  {                                                               \</span></div>
-<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
-<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span><span class="preprocessor">        };</span></div>
-<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span> </div>
-<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span><span class="preprocessor">#elif defined(__ARM_2D_IMPL__) || defined(__IS_COMPILER_IAR__)</span></div>
-<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span> </div>
-<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
-<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span><span class="preprocessor">        struct  {                                                               \</span></div>
-<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
-<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span><span class="preprocessor">        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
-<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span> </div>
-<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
-<div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span><span class="preprocessor">        struct  {                                                               \</span></div>
-<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
-<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span><span class="preprocessor">        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
-<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span> </div>
-<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span><span class="preprocessor">#elif defined(__ARM_2D_INHERIT__)</span></div>
-<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span> </div>
-<div class="line"><a id="l01283" name="l01283"></a><span class="lineno"> 1283</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
-<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span><span class="preprocessor">        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \</span></div>
-<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span><span class="preprocessor">                [sizeof(struct {__VA_ARGS__})]                                  \</span></div>
-<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span><span class="preprocessor">                __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
-<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span> </div>
-<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
-<div class="line"><a id="l01289" name="l01289"></a><span class="lineno"> 1289</span><span class="preprocessor">        struct  {                                                               \</span></div>
-<div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
-<div class="line"><a id="l01291" name="l01291"></a><span class="lineno"> 1291</span><span class="preprocessor">        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
-<div class="line"><a id="l01292" name="l01292"></a><span class="lineno"> 1292</span> </div>
-<div class="line"><a id="l01293" name="l01293"></a><span class="lineno"> 1293</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l01294" name="l01294"></a><span class="lineno"> 1294</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
-<div class="line"><a id="l01295" name="l01295"></a><span class="lineno"> 1295</span><span class="preprocessor">        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \</span></div>
-<div class="line"><a id="l01296" name="l01296"></a><span class="lineno"> 1296</span><span class="preprocessor">                [sizeof(struct {__VA_ARGS__})]                                  \</span></div>
-<div class="line"><a id="l01297" name="l01297"></a><span class="lineno"> 1297</span><span class="preprocessor">                __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
-<div class="line"><a id="l01298" name="l01298"></a><span class="lineno"> 1298</span> </div>
-<div class="line"><a id="l01299" name="l01299"></a><span class="lineno"> 1299</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
-<div class="line"><a id="l01300" name="l01300"></a><span class="lineno"> 1300</span><span class="preprocessor">        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \</span></div>
-<div class="line"><a id="l01301" name="l01301"></a><span class="lineno"> 1301</span><span class="preprocessor">                [sizeof(struct {__VA_ARGS__})]                                  \</span></div>
-<div class="line"><a id="l01302" name="l01302"></a><span class="lineno"> 1302</span><span class="preprocessor">                __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
-<div class="line"><a id="l01303" name="l01303"></a><span class="lineno"> 1303</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l01304" name="l01304"></a><span class="lineno"> 1304</span> </div>
-<div class="line"><a id="l01305" name="l01305"></a><span class="lineno"> 1305</span> </div>
-<div class="line"><a id="l01306" name="l01306"></a><span class="lineno"> 1306</span> </div>
+<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span><span class="preprocessor">#undef ARM_PUBLIC</span></div>
+<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span> </div>
+<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span><span class="preprocessor">#define ARM_PUBLIC(...)    struct {__VA_ARGS__};</span></div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span> </div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span><span class="comment">/* redefine macros */</span></div>
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
+<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span><span class="preprocessor">        struct  {                                                               \</span></div>
+<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
+<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span><span class="preprocessor">        };</span></div>
+<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span> </div>
+<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
+<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span><span class="preprocessor">        struct  {                                                               \</span></div>
+<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
+<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span><span class="preprocessor">        };</span></div>
+<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span> </div>
+<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span><span class="preprocessor">#elif defined(__ARM_2D_IMPL__) || defined(__IS_COMPILER_IAR__)</span></div>
+<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span> </div>
+<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
+<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span><span class="preprocessor">        struct  {                                                               \</span></div>
+<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
+<div class="line"><a id="l01277" name="l01277"></a><span class="lineno"> 1277</span><span class="preprocessor">        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
+<div class="line"><a id="l01278" name="l01278"></a><span class="lineno"> 1278</span> </div>
+<div class="line"><a id="l01279" name="l01279"></a><span class="lineno"> 1279</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
+<div class="line"><a id="l01280" name="l01280"></a><span class="lineno"> 1280</span><span class="preprocessor">        struct  {                                                               \</span></div>
+<div class="line"><a id="l01281" name="l01281"></a><span class="lineno"> 1281</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
+<div class="line"><a id="l01282" name="l01282"></a><span class="lineno"> 1282</span><span class="preprocessor">        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
+<div class="line"><a id="l01283" name="l01283"></a><span class="lineno"> 1283</span> </div>
+<div class="line"><a id="l01284" name="l01284"></a><span class="lineno"> 1284</span><span class="preprocessor">#elif defined(__ARM_2D_INHERIT__)</span></div>
+<div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span> </div>
+<div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
+<div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span><span class="preprocessor">        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \</span></div>
+<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span><span class="preprocessor">                [sizeof(struct {__VA_ARGS__})]                                  \</span></div>
+<div class="line"><a id="l01289" name="l01289"></a><span class="lineno"> 1289</span><span class="preprocessor">                __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
+<div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span> </div>
+<div class="line"><a id="l01291" name="l01291"></a><span class="lineno"> 1291</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
+<div class="line"><a id="l01292" name="l01292"></a><span class="lineno"> 1292</span><span class="preprocessor">        struct  {                                                               \</span></div>
+<div class="line"><a id="l01293" name="l01293"></a><span class="lineno"> 1293</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
+<div class="line"><a id="l01294" name="l01294"></a><span class="lineno"> 1294</span><span class="preprocessor">        } __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
+<div class="line"><a id="l01295" name="l01295"></a><span class="lineno"> 1295</span> </div>
+<div class="line"><a id="l01296" name="l01296"></a><span class="lineno"> 1296</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l01297" name="l01297"></a><span class="lineno"> 1297</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
+<div class="line"><a id="l01298" name="l01298"></a><span class="lineno"> 1298</span><span class="preprocessor">        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \</span></div>
+<div class="line"><a id="l01299" name="l01299"></a><span class="lineno"> 1299</span><span class="preprocessor">                [sizeof(struct {__VA_ARGS__})]                                  \</span></div>
+<div class="line"><a id="l01300" name="l01300"></a><span class="lineno"> 1300</span><span class="preprocessor">                __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
+<div class="line"><a id="l01301" name="l01301"></a><span class="lineno"> 1301</span> </div>
+<div class="line"><a id="l01302" name="l01302"></a><span class="lineno"> 1302</span><span class="preprocessor">#   define ARM_PROTECTED(...)                                                   \</span></div>
+<div class="line"><a id="l01303" name="l01303"></a><span class="lineno"> 1303</span><span class="preprocessor">        uint8_t ARM_CONNECT3(chMask,__LINE__,__COUNTER__)                       \</span></div>
+<div class="line"><a id="l01304" name="l01304"></a><span class="lineno"> 1304</span><span class="preprocessor">                [sizeof(struct {__VA_ARGS__})]                                  \</span></div>
+<div class="line"><a id="l01305" name="l01305"></a><span class="lineno"> 1305</span><span class="preprocessor">                __ALIGNED(__alignof__(struct {__VA_ARGS__}));</span></div>
+<div class="line"><a id="l01306" name="l01306"></a><span class="lineno"> 1306</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l01307" name="l01307"></a><span class="lineno"> 1307</span> </div>
-<div class="line"><a id="l01308" name="l01308"></a><span class="lineno"> 1308</span><span class="comment">/* post un-define macros */</span></div>
+<div class="line"><a id="l01308" name="l01308"></a><span class="lineno"> 1308</span> </div>
 <div class="line"><a id="l01309" name="l01309"></a><span class="lineno"> 1309</span> </div>
-<div class="line"><a id="l01310" name="l01310"></a><span class="lineno"> 1310</span><span class="preprocessor">#undef __ARM_2D_IMPL__</span></div>
-<div class="line"><a id="l01311" name="l01311"></a><span class="lineno"> 1311</span><span class="preprocessor">#undef __ARM_2D_INHERIT__</span></div>
+<div class="line"><a id="l01310" name="l01310"></a><span class="lineno"> 1310</span> </div>
+<div class="line"><a id="l01311" name="l01311"></a><span class="lineno"> 1311</span><span class="comment">/* post un-define macros */</span></div>
+<div class="line"><a id="l01312" name="l01312"></a><span class="lineno"> 1312</span> </div>
+<div class="line"><a id="l01313" name="l01313"></a><span class="lineno"> 1313</span><span class="preprocessor">#undef __ARM_2D_IMPL__</span></div>
+<div class="line"><a id="l01314" name="l01314"></a><span class="lineno"> 1314</span><span class="preprocessor">#undef __ARM_2D_INHERIT__</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
