@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        12. April 2024
- * $Revision:    V.1.4.3
+ * $Date:        26. June 2024
+ * $Revision:    V.1.4.4
  *
  * -------------------------------------------------------------------- */
 
@@ -1253,6 +1253,9 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
 /* un-define macros */
 #undef ARM_PRIVATE
 #undef ARM_PROTECTED
+#undef ARM_PUBLIC
+
+#define ARM_PUBLIC(...)    struct {__VA_ARGS__};
 
 /* redefine macros */
 #if defined(__cplusplus)
