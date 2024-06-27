@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        23. June 2024
- * $Revision:    V.1.6.9
+ * $Date:        27. June 2024
+ * $Revision:    V.1.6.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -355,9 +355,9 @@ struct arm_2d_scene_player_t {
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
 
-            uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond
-            int16_t iTouchOffset;                                               //!< the coordinate offset for manual switching mode, used in erasing, sliding etc.
-            int16_t iFullLength;
+            arm_2d_location_t tTouchPointer;                                    //!< the coordinate offset for manual switching mode, used in erasing, sliding etc.
+            int16_t iFullLength;                                                //!< the full length of the axis of switching
+            uint16_t hwPeriod;                                                  //!< the switching should finish in specified millisecond                                              
             int64_t lTimeStamp;
         }Switch;
         
@@ -515,8 +515,8 @@ uint16_t arm_2d_scene_player_get_switching_cfg(arm_2d_scene_player_t *ptThis);
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_scene_player_set_auto_switching_period(  arm_2d_scene_player_t *ptThis,
-                                                int_fast16_t iMS);
+void arm_2d_scene_player_set_auto_switching_period( arm_2d_scene_player_t *ptThis,
+                                                    int_fast16_t iMS);
 
 extern
 ARM_NONNULL(1)
@@ -524,10 +524,10 @@ ARM_NONNULL(1)
  * \brief use manual switch mode and set the offset
  * 
  * \param[in] ptThis the target scene player
- * \param[in] iTouchOffset the touch offset
+ * \param[in] tPointer the touch pointer location
  */
 void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *ptThis,
-                                                        int16_t iTouchOffset);
+                                                        arm_2d_location_t tPointer);
 
 extern
 ARM_NONNULL(1)

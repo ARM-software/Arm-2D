@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        23. June 2024
- * $Revision:    V.1.6.9
+ * $Date:        27. June 2024
+ * $Revision:    V.1.6.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -392,15 +392,15 @@ void arm_2d_scene_player_set_auto_switching_period( arm_2d_scene_player_t *ptThi
 
 ARM_NONNULL(1)
 void arm_2d_scene_player_set_manual_switching_offset(   arm_2d_scene_player_t *ptThis,
-                                                        int16_t iTouchOffset)
+                                                        arm_2d_location_t tPointer)
 {
     assert(NULL != ptThis);
 
-    if (iTouchOffset < 0) {
+    if (tPointer.iX < 0 || tPointer.iY < 0) {
         return ;
     } else {
         this.Runtime.bManualSwitchReq = true;
-        this.Switch.iTouchOffset = iTouchOffset;
+        this.Switch.tTouchPointer = tPointer;
     }
 
     do {
@@ -613,7 +613,7 @@ static void __fade_on_change_switch_status(arm_2d_scene_player_t *ptThis)
     if (this.Runtime.bManualSwitch && this.Runtime.bFinishManualSwitchReq) {
 
         int16_t iFullLength = this.Switch.iFullLength;
-        int16_t iTouchOffset = MIN(this.Switch.iTouchOffset, iFullLength);
+        int16_t iTouchOffset = iFullLength - MIN(this.Switch.tTouchPointer.iX, iFullLength);
         int16_t iZoneWidth = (iFullLength >> 3);
         int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
         uint16_t hwKeepPeriod = MIN(this.Switch.hwPeriod / 3, 500);
@@ -836,7 +836,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
             uint_fast16_t hwOpacity = 0;
             
             int16_t iFullLength = this.Switch.iFullLength;
-            int16_t iTouchOffset = MIN(this.Switch.iTouchOffset, iFullLength);
+            int16_t iTouchOffset = iFullLength - MIN(this.Switch.tTouchPointer.iX, iFullLength);
             int16_t iZoneWidth = (iFullLength >> 3);
             int_fast8_t chStage = iTouchOffset / iZoneWidth;
             switch (chStage) {

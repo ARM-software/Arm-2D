@@ -326,7 +326,7 @@ int app_2d_main_thread (void *argument)
 
                     if (VT_mouse_get_location(&tPointerLocation)) {
                         /* mouse down */
-                        arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, (__DISP0_CFG_SCEEN_WIDTH__ -  tPointerLocation.iX));
+                        arm_2d_scene_player_set_manual_switching_offset(&DISP0_ADAPTER, tPointerLocation);
                         s_tLastLocation = tPointerLocation;
                         s_bTouchDown = true;
                     } else {
