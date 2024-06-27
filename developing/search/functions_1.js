@@ -111,7 +111,7 @@ var searchData=
   ['arm_5f2d_5fscene_5fplayer_5fis_5fswitching_108',['arm_2d_scene_player_is_switching',['../group__gHelper.html#ga82d3305f400ad8e20bcc401e814496fa',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fremove_5fdirty_5fregions_109',['arm_2d_scene_player_remove_dirty_regions',['../group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fset_5fauto_5fswitching_5fperiod_110',['arm_2d_scene_player_set_auto_switching_period',['../group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed',1,'arm_2d_helper_scene.h']]],
-  ['arm_5f2d_5fscene_5fplayer_5fset_5fmanual_5fswitching_5foffset_111',['arm_2d_scene_player_set_manual_switching_offset',['../group__gHelper.html#gac046b888b37d576c5f492ff6e05474d1',1,'arm_2d_helper_scene.h']]],
+  ['arm_5f2d_5fscene_5fplayer_5fset_5fmanual_5fswitching_5foffset_111',['arm_2d_scene_player_set_manual_switching_offset',['../group__gHelper.html#ga76773fcd050f4d4e199b0a45ad801b8b',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fshow_5fnavigation_5flayer_112',['arm_2d_scene_player_show_navigation_layer',['../group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5fswitch_5fto_5fnext_5fscene_113',['arm_2d_scene_player_switch_to_next_scene',['../group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8',1,'arm_2d_helper_scene.h']]],
   ['arm_5f2d_5fscene_5fplayer_5ftask_114',['arm_2d_scene_player_task',['../group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7',1,'arm_2d_helper_scene.h']]],

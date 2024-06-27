@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_scene.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the scene service</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        23. June 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.6.9</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        27. June 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.6.10</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -464,9 +464,9 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            };</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>            <a class="code hl_union" href="group__gHelper.html#union____arm__2d__helper__scene__switch__t" title="an internal data structure for scene switching">__arm_2d_helper_scene_switch_t</a> tConfig;                             <span class="comment">//!&lt; the switching configuration</span></div>
 <div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> </div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            uint16_t hwPeriod;                                                  <span class="comment">//!&lt; the switching should finish in specified millisecond</span></div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno"><a class="line" href="group__gHelper.html#ac918e21e92cea99a1c8e8419ffac5313">  359</a></span>            int16_t iTouchOffset;                                               <span class="comment">//!&lt; the coordinate offset for manual switching mode, used in erasing, sliding etc.</span></div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            int16_t iFullLength;</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> tTouchPointer;                                    <span class="comment">//!&lt; the coordinate offset for manual switching mode, used in erasing, sliding etc.</span></div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            int16_t iFullLength;                                                <span class="comment">//!&lt; the full length of the axis of switching</span></div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno"><a class="line" href="group__gHelper.html#ac918e21e92cea99a1c8e8419ffac5313">  360</a></span>            uint16_t hwPeriod;                                                  <span class="comment">//!&lt; the switching should finish in specified millisecond                                              </span></div>
 <div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>            int64_t lTimeStamp;</div>
 <div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        }Switch;</div>
 <div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        </div>
@@ -624,8 +624,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>extern</div>
 <div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00518" name="l00518"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed">  518</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed" title="configure the scene switching period in auto-switching">arm_2d_scene_player_set_auto_switching_period</a>(  <a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis,</div>
-<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>                                                int_fast16_t iMS);</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed">  518</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed" title="configure the scene switching period in auto-switching">arm_2d_scene_player_set_auto_switching_period</a>( <a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis,</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>                                                    int_fast16_t iMS);</div>
 <div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span> </div>
 <div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>extern</div>
 <div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>ARM_NONNULL(1)<span class="comment"></span></div>
@@ -633,10 +633,10 @@ $(document).ready(function(){initNavTree('arm__2d__helper__scene_8h_source.html'
 <div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span><span class="comment"> * \brief use manual switch mode and set the offset</span></div>
 <div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span><span class="comment"> * </span></div>
 <div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="comment"> * \param[in] ptThis the target scene player</span></div>
-<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span><span class="comment"> * \param[in] iTouchOffset the touch offset</span></div>
+<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span><span class="comment"> * \param[in] tPointer the touch pointer location</span></div>
 <div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00529" name="l00529"></a><span class="lineno"><a class="line" href="group__gHelper.html#gac046b888b37d576c5f492ff6e05474d1">  529</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#gac046b888b37d576c5f492ff6e05474d1" title="use manual switch mode and set the offset">arm_2d_scene_player_set_manual_switching_offset</a>(   <a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis,</div>
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>                                                        int16_t iTouchOffset);</div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga76773fcd050f4d4e199b0a45ad801b8b">  529</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga76773fcd050f4d4e199b0a45ad801b8b" title="use manual switch mode and set the offset">arm_2d_scene_player_set_manual_switching_offset</a>(   <a class="code hl_struct" href="group__gHelper.html#structarm__2d__scene__player__t" title="a class to manage scenes">arm_2d_scene_player_t</a> *ptThis,</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>                                                        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> tPointer);</div>
 <div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span> </div>
 <div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>extern</div>
 <div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>ARM_NONNULL(1)<span class="comment"></span></div>

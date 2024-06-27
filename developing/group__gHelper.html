@@ -604,9 +604,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga53cf2760941ceb985e072a6bada356ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed">arm_2d_scene_player_set_auto_switching_period</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, int_fast16_t iMS)</td></tr>
 <tr class="memdesc:ga53cf2760941ceb985e072a6bada356ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">configure the scene switching period in auto-switching  <a href="group__gHelper.html#ga53cf2760941ceb985e072a6bada356ed">More...</a><br /></td></tr>
 <tr class="separator:ga53cf2760941ceb985e072a6bada356ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac046b888b37d576c5f492ff6e05474d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac046b888b37d576c5f492ff6e05474d1">arm_2d_scene_player_set_manual_switching_offset</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, int16_t iTouchOffset)</td></tr>
-<tr class="memdesc:gac046b888b37d576c5f492ff6e05474d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">use manual switch mode and set the offset  <a href="group__gHelper.html#gac046b888b37d576c5f492ff6e05474d1">More...</a><br /></td></tr>
-<tr class="separator:gac046b888b37d576c5f492ff6e05474d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76773fcd050f4d4e199b0a45ad801b8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga76773fcd050f4d4e199b0a45ad801b8b">arm_2d_scene_player_set_manual_switching_offset</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tPointer)</td></tr>
+<tr class="memdesc:ga76773fcd050f4d4e199b0a45ad801b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">use manual switch mode and set the offset  <a href="group__gHelper.html#ga76773fcd050f4d4e199b0a45ad801b8b">More...</a><br /></td></tr>
+<tr class="separator:ga76773fcd050f4d4e199b0a45ad801b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga12a569273738562047fa8646acb36df2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga12a569273738562047fa8646acb36df2">arm_2d_scene_player_finish_manual_switching</a> (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis, bool bMoveToPreviousScene, int_fast16_t iInMS)</td></tr>
 <tr class="memdesc:ga12a569273738562047fa8646acb36df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">end the manual switching and finish the left part in a specific period (ms)  <a href="group__gHelper.html#ga12a569273738562047fa8646acb36df2">More...</a><br /></td></tr>
 <tr class="separator:ga12a569273738562047fa8646acb36df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1486,7 +1486,8 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the switching should finish in specified millisecond the coordinate offset for manual switching mode, used in erasing, sliding etc. </p>
+the switching mode <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime FSM state FSM state opacity of the cover the colour of the cover FSM state scene window a temp tile erase offset FSM state scene window slide offset FSM state scene window slide offset the switching configuration the coordinate offset for manual switching mode, used in erasing, sliding etc. the full length of the axis of switching the switching should finish in specified millisecond <br  />
+ </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a id="ad1b190c32469c249fbf11bfea134234c" name="ad1b190c32469c249fbf11bfea134234c"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147____">arm_2d_scene_player_t.__unnamed147__</a></td>
@@ -3133,21 +3134,21 @@ tConfig</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ab5e2e1863a670fa0664263610dad503d" name="ab5e2e1863a670fa0664263610dad503d"></a>uint16_t</td>
+<a id="a1ea51e98a89112ff44642855a324a93e" name="a1ea51e98a89112ff44642855a324a93e"></a><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a></td>
 <td class="fieldname">
-hwPeriod</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a9254846d24542783071ec637c756b8b5" name="a9254846d24542783071ec637c756b8b5"></a>int16_t</td>
-<td class="fieldname">
-iTouchOffset</td>
+tTouchPointer</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
 <a id="a2f03fc674e2cefad1b6b22b30a68f6e1" name="a2f03fc674e2cefad1b6b22b30a68f6e1"></a>int16_t</td>
 <td class="fieldname">
 iFullLength</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ab5e2e1863a670fa0664263610dad503d" name="ab5e2e1863a670fa0664263610dad503d"></a>uint16_t</td>
+<td class="fieldname">
+hwPeriod</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -6582,8 +6583,8 @@ false the scene player stays in tge current scene. </dd></dl>
 
 </div>
 </div>
-<a id="gac046b888b37d576c5f492ff6e05474d1" name="gac046b888b37d576c5f492ff6e05474d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac046b888b37d576c5f492ff6e05474d1">&#9670;&nbsp;</a></span>arm_2d_scene_player_set_manual_switching_offset()</h2>
+<a id="ga76773fcd050f4d4e199b0a45ad801b8b" name="ga76773fcd050f4d4e199b0a45ad801b8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga76773fcd050f4d4e199b0a45ad801b8b">&#9670;&nbsp;</a></span>arm_2d_scene_player_set_manual_switching_offset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -6597,8 +6598,8 @@ false the scene player stays in tge current scene. </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>iTouchOffset</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td>
+          <td class="paramname"><em>tPointer</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -6612,7 +6613,7 @@ false the scene player stays in tge current scene. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iTouchOffset</td><td>the touch offset </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tPointer</td><td>the touch pointer location </td></tr>
   </table>
   </dd>
 </dl>
