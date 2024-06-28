@@ -948,6 +948,36 @@ void __disp_adapter0_free(void *pMem)
     }
 }
 
+__WEAK 
+void __disp_adapter0_vres_asset_2dcopy( uintptr_t pObj,
+                                        arm_2d_vres_t *ptVRES,
+                                        arm_2d_region_t *ptRegion,
+                                        uintptr_t pSrc,
+                                        uintptr_t pDes,
+                                        int16_t iTargetStride,
+                                        int16_t iSourceStride,
+                                        int16_t iPixelSize)
+{
+    assert(NULL != ptRegion);
+    assert(NULL != ptVRES);
+
+    int16_t iSourceWidth = ptRegion->tSize.iWidth;
+    int16_t iSourceHeight = ptRegion->tSize.iHeight;
+
+    /* calculate offset */
+    pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * iPixelSize;
+    
+    for (int_fast16_t y = 0; y < iSourceHeight; y++) {
+        __disp_adapter0_vres_read_memory( 
+                                        pObj, 
+                                        (void *)pDes, 
+                                        (uintptr_t)pSrc, 
+                                        iPixelSize * iSourceWidth);
+        
+        pDes += iTargetStride * iPixelSize;
+        pSrc += iSourceStride * iPixelSize;
+    }
+}
 
 
 intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj, 
@@ -987,21 +1017,15 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
         uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
         int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
-        int16_t iSourceWidth = ptRegion->tSize.iWidth;
-
-        /* calculate offset */
-        pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
-        
-        for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
-            __disp_adapter0_vres_read_memory( 
-                                            pObj, 
-                                            (void *)pDes, 
-                                            (uintptr_t)pSrc, 
-                                            nPixelSize * iSourceWidth);
-            
-            pDes += iTargetStride * nPixelSize;
-            pSrc += iSourceStride * nPixelSize;
-        }
+    
+        __disp_adapter0_vres_asset_2dcopy(  pObj, 
+                                            ptVRES, 
+                                            ptRegion, 
+                                            pSrc, 
+                                            pDes, 
+                                            iTargetStride, 
+                                            iSourceStride, 
+                                            nPixelSize);
 
         return ptVRES->tTile.nAddress;
     } while(0);
@@ -1055,21 +1079,16 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
         uintptr_t pDes = (uintptr_t)pBuffer;
         int16_t iTargetStride = ptRegion->tSize.iWidth;
         int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
-        int16_t iSourceWidth = ptRegion->tSize.iWidth;
 
-        /* calculate offset */
-        pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * nPixelSize;
-        
-        for (int_fast16_t y = 0; y < ptRegion->tSize.iHeight; y++) {
-            __disp_adapter0_vres_read_memory( 
-                                            pObj, 
-                                            (void *)pDes, 
-                                            (uintptr_t)pSrc, 
-                                            nPixelSize * iSourceWidth);
-            
-            pDes += iTargetStride * nPixelSize;
-            pSrc += iSourceStride * nPixelSize;
-        }
+        __disp_adapter0_vres_asset_2dcopy(  pObj, 
+                                            ptVRES, 
+                                            ptRegion, 
+                                            pSrc, 
+                                            pDes, 
+                                            iTargetStride, 
+                                            iSourceStride, 
+                                            nPixelSize);
+
     } while(0);
     
     return (intptr_t)pBuffer;
