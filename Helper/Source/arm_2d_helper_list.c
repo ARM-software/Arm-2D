@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        17. June 2024
- * $Revision:    V.1.1.5
+ * $Date:        1. July 2024
+ * $Revision:    V.1.1.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -488,21 +488,13 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             return ARM_2D_ERR_NOT_AVAILABLE;
         }
        
-        arm_2d_list_item_t *ptItem = NULL;
-        
-    #if 0
-        ptItem = ARM_2D_INVOKE(fnIterator, 
-                    ARM_2D_PARAM(
-                        ptThis, 
-                        __ARM_2D_LIST_GET_CURRENT, 0));
-    #else
-        ptItem = __arm_2d_list_core_get_item(   
+        arm_2d_list_item_t *ptItem = __arm_2d_list_core_get_item(   
                                         ptThis, 
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_CURRENT, 
                                         0, 
                                         this.tCFG.bDisableStatusCheck);
-    #endif
+
         if (NULL == ptItem) {
             return ARM_2D_ERR_NOT_AVAILABLE;
         }
@@ -510,20 +502,14 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
         uint16_t hwSaveID = ptItem->hwID;
         
         do {
-        #if 0
-            ptItem = ARM_2D_INVOKE(fnIterator, 
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                            this.Runtime.hwSelection));
-        #else
+
             ptItem = __arm_2d_list_core_get_item(   
                                         ptThis, 
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER, 
                                         this.Runtime.hwSelection, 
                                         this.tCFG.bDisableStatusCheck);
-        #endif
+
             if (NULL == ptItem) {
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
@@ -542,39 +528,26 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     
                     /* next */
                     arm_2d_list_item_t *ptItemNew = 
-                #if 0
-                    ARM_2D_INVOKE(  fnIterator,
-                                    ARM_2D_PARAM(
-                                        ptThis, 
-                                        __ARM_2D_LIST_GET_NEXT,
-                                        this.Runtime.hwSelection));
-                #else
-                    ptItem = __arm_2d_list_core_get_item(   
+
+                    __arm_2d_list_core_get_item(   
                                         ptThis, 
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_NEXT, 
                                         this.Runtime.hwSelection, 
                                         this.tCFG.bDisableStatusCheck);
-                #endif
+
                     if (NULL == ptItemNew) {
                         if (this.tCFG.bDisableRingMode) {
                             break;
                         } else {
-                        #if 0
-                            /* just in case the iterator doesn't support ring mode */
-                            ptItem = ARM_2D_INVOKE(fnIterator, 
-                                        ARM_2D_PARAM(
-                                            ptThis, 
-                                            __ARM_2D_LIST_GET_FIRST_ITEM,
-                                            this.Runtime.hwSelection));
-                        #else
+
                             ptItem = __arm_2d_list_core_get_item(   
                                             ptThis, 
                                             fnIterator,  
                                             __ARM_2D_LIST_GET_FIRST_ITEM, 
                                             this.Runtime.hwSelection, 
                                             this.tCFG.bDisableStatusCheck);
-                        #endif
+
                             assert(NULL != ptItem);
                             
                             if (NULL == ptItem) {
@@ -600,39 +573,26 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     nOffsetChange += ptItem->Padding.chPrevious;
                     
                     arm_2d_list_item_t *ptItemNew =
-                    #if 0
-                        ARM_2D_INVOKE(  fnIterator, 
-                                        ARM_2D_PARAM(
-                                            ptThis, 
-                                            __ARM_2D_LIST_GET_PREVIOUS,
-                                            this.Runtime.hwSelection));
-                    #else
-                        ptItem = __arm_2d_list_core_get_item(   
+
+                        __arm_2d_list_core_get_item(   
                                         ptThis, 
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_PREVIOUS, 
                                         this.Runtime.hwSelection, 
                                         this.tCFG.bDisableStatusCheck);
-                    #endif
+
                     if (NULL == ptItemNew) {
                         if (this.tCFG.bDisableRingMode) {
                             break;
                         } else {
-                        #if 0
-                            /* just in case the iterator doesn't support ring mode */
-                            ptItem = ARM_2D_INVOKE(fnIterator, 
-                                        ARM_2D_PARAM(
-                                            ptThis, 
-                                            __ARM_2D_LIST_GET_LAST_ITEM,
-                                            this.Runtime.hwSelection));
-                        #else
+
                             ptItem = __arm_2d_list_core_get_item(   
                                         ptThis, 
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_LAST_ITEM, 
                                         this.Runtime.hwSelection, 
                                         this.tCFG.bDisableStatusCheck);
-                        #endif
+
                             assert(NULL != ptItem);
                             
                             if (NULL == ptItem) {
