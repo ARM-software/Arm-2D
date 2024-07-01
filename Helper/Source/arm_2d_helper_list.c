@@ -2250,7 +2250,7 @@ ARM_PT_BEGIN(this.chState)
                 }
                 nTempOffset += iItemActualHeight;
                 nCount++;
-            } while(0);
+            } while(true);
             
             uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
             
