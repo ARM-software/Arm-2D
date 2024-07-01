@@ -539,7 +539,7 @@ user_scene_listview_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *pt
             .hwItemSizeInByte = sizeof(my_list_item_t),
             
             .bIgnoreBackground = true,
-            .bDisableRingMode = true,
+            //.bDisableRingMode = true,
         };
         
         list_view_init(&this.tListView, &tCFG);
