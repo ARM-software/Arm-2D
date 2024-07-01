@@ -493,14 +493,15 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_CURRENT, 
                                         0, 
-                                        this.tCFG.bDisableStatusCheck);
+                                        this.tCFG.bDisableStatusCheck,
+                                        false);
 
         if (NULL == ptItem) {
             return ARM_2D_ERR_NOT_AVAILABLE;
         }
         
         uint16_t hwSaveID = ptItem->hwID;
-        
+        int16_t iMovedSteps = 0;
         do {
 
             ptItem = __arm_2d_list_core_get_item(   
@@ -508,11 +509,13 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER, 
                                         this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck);
+                                        this.tCFG.bDisableStatusCheck,
+                                        false);
 
             if (NULL == ptItem) {
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
+            
 
             if (iSteps > 0) {
 
@@ -534,7 +537,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_NEXT, 
                                         this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck);
+                                        this.tCFG.bDisableStatusCheck,
+                                        false);
 
                     if (NULL == ptItemNew) {
                         if (this.tCFG.bDisableRingMode) {
@@ -546,7 +550,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                                             fnIterator,  
                                             __ARM_2D_LIST_GET_FIRST_ITEM, 
                                             this.Runtime.hwSelection, 
-                                            this.tCFG.bDisableStatusCheck);
+                                            this.tCFG.bDisableStatusCheck,
+                                            false);
 
                             assert(NULL != ptItem);
                             
@@ -558,6 +563,9 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     } else {
                         ptItem = ptItemNew;
                     }
+
+                    iMovedSteps++;
+
                 } while(--iSteps);
 
             } else {
@@ -579,7 +587,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_PREVIOUS, 
                                         this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck);
+                                        this.tCFG.bDisableStatusCheck,
+                                        false);
 
                     if (NULL == ptItemNew) {
                         if (this.tCFG.bDisableRingMode) {
@@ -591,7 +600,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                                         fnIterator,  
                                         __ARM_2D_LIST_GET_LAST_ITEM, 
                                         this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck);
+                                        this.tCFG.bDisableStatusCheck,
+                                        false);
 
                             assert(NULL != ptItem);
                             
@@ -603,11 +613,18 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     } else {
                         ptItem = ptItemNew;
                     }
+
+                    iMovedSteps++;
+
                 } while(++iSteps);
             }
 
             hwTargetID = ptItem->hwID;
         } while(0);
+
+        if (0 == iMovedSteps) {
+            return ARM_2D_ERR_OUT_OF_REGION;
+        }
 
 
         /* calculate compensation for iStartOffset */
@@ -707,13 +724,16 @@ bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis)
  * Region Calculator                                                          *
  *----------------------------------------------------------------------------*/
 
+
+
 ARM_NONNULL(1,2)
 arm_2d_list_item_t *__arm_2d_list_core_get_item(
                         __arm_2d_list_core_t *ptThis,
                         __arm_2d_list_item_iterator *fnIterator,
                         arm_2d_list_iterator_dir_t tDirection,
                         uint16_t hwID,
-                        bool bIgnoreStatusCheck)
+                        bool bIgnoreStatusCheck,
+                        bool bForceRingMode)
 {
     assert(NULL != ptThis);
     assert(NULL != fnIterator);
@@ -733,7 +753,7 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
     }
 
     if (NULL == ptItem) {
-        if (this.tCFG.bDisableRingMode) {
+        if (this.tCFG.bDisableRingMode && !bForceRingMode) {
             return NULL;
         } else {
             if (tDirection == __ARM_2D_LIST_GET_NEXT) {
@@ -774,7 +794,7 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
                         0));
                 
                 if (NULL == ptItem) {
-                    if (this.tCFG.bDisableRingMode) {
+                    if (this.tCFG.bDisableRingMode && !bForceRingMode) {
                         return NULL;
                     } else {
                         /* just in case the iterator won't support ring mode */
@@ -797,7 +817,7 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
                         0));
                 
                 if (NULL == ptItem) {
-                    if (this.tCFG.bDisableRingMode) {
+                    if (this.tCFG.bDisableRingMode && !bForceRingMode) {
                         return NULL;
                     } else {
                         /* just in case the iterator won't support ring mode */
@@ -834,6 +854,7 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
                             0,
+                            false,
                             false);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -868,6 +889,7 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
+                            false,
                             false);
                             
         if (NULL == ptItem) {
@@ -893,6 +915,7 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
                                 fnIterator, 
                                 __ARM_2D_LIST_GET_NEXT,
                                 0,
+                                false,
                                 false);
 
             if (NULL == ptItem) {
@@ -931,7 +954,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER,
                             0,
-                            true);
+                            true,
+                            false);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             return false;
@@ -963,7 +987,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
-                            true);
+                            true,
+                            false);
                             
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -988,7 +1013,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
                                 fnIterator, 
                                 __ARM_2D_LIST_GET_NEXT,
                                 0,
-                                true);
+                                true,
+                                false);
 
             if (NULL == ptItem) {
                 break;
@@ -1007,7 +1033,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
-                            true);
+                            true,
+                            false);
                             
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -1063,6 +1090,7 @@ ARM_PT_BEGIN(this.chState)
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
+                            false,
                             false);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -1108,6 +1136,7 @@ ARM_PT_BEGIN(this.chState)
                                 fnIterator, 
                                 __ARM_2D_LIST_GET_NEXT,
                                 0,
+                                false,
                                 false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
@@ -1135,6 +1164,7 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_NEXT,
                     0,
+                    false,
                     false);
 
             if (NULL == ptItem) {
@@ -1162,6 +1192,7 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwTopVisibleItemID,
+                    false,
                     false);
 
         assert(NULL != ptItem);
@@ -1216,6 +1247,7 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_NEXT,
                         0,
+                        false,
                         false);
 
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
@@ -1227,6 +1259,7 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwBottomVisibleItemID,
+                    false,
                     false);
         assert(NULL != ptItem);
         
@@ -1274,6 +1307,7 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_PREVIOUS,
                         0,
+                        false,
                         false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
@@ -1326,14 +1360,199 @@ ARM_PT_BEGIN(this.chState)
         nOffset -= this.tCFG.nTotalLength;
     }
 
-    /* find the first and last visible items */
-    do {
+    /* no ring mode */
+    if (this.tCFG.bDisableRingMode) {
+        
         /* move to the first item */
         ptItem = __arm_2d_list_core_get_item(   
                             ptThis, 
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
+                            false,
+                            false);
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+        
+        /* move the nOffset to the top invisible area */
+        do {
+            int32_t nStartX = nOffset 
+                            +   this.iStartOffset 
+                            +   ptItem->Padding.chPrevious;
+                    
+            if (nStartX <= 0) {
+                break;
+            } 
+            nOffset -= this.tCFG.nTotalLength;
+        } while(true);
+        
+        /* get the inital offset */
+        this.nOffset = nOffset;
+
+        int32_t nTempOffset = nOffset;
+        
+        /* find the centre most item */
+        int32_t nCentreLocation = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
+        int32_t nMinimalDistance = nCentreLocation;
+
+        struct {
+            int32_t nOffset;
+            arm_2d_list_item_t *ptItem;
+        } tTopMost, tBottomMost, tCentreMost = {
+            .nOffset = 0,
+            .ptItem = NULL,
+        };
+
+        while(NULL != ptItem) {
+            int32_t nX1 = nTempOffset 
+                            +   this.iStartOffset 
+                            +   ptItem->Padding.chPrevious;
+        
+            int32_t nDistance = nCentreLocation - nX1;
+            
+            if (ABS(nDistance) <= nMinimalDistance) {
+                nMinimalDistance = nDistance;
+                tCentreMost.ptItem = ptItem;
+                tCentreMost.nOffset = nTempOffset;
+            }
+
+            if (nDistance < 0) {
+                /* cross the centre */
+                break;
+            }
+            
+            /* update nTempOffset */
+            nTempOffset += ptItem->tSize.iWidth 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+            
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0,
+                                false,
+                                true);  /* force to use ring mode */
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+        }
+
+        /* with centre most item, we start to find the bottom most item*/
+        tBottomMost = tCentreMost;
+        nTempOffset = tBottomMost.nOffset;
+
+        /* move to the centre most item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    tCentreMost.ptItem->hwID,
+                    false,
+                    false);
+        assert(NULL != ptItem);
+
+        do {
+            /* update nTempOffset */
+            nTempOffset += ptItem->tSize.iWidth 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_NEXT,
+                    0,
+                    false,
+                    false);
+
+            if (NULL == ptItem) {
+                /* end of the list */
+                break;
+            }
+            
+            int32_t nX1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+            
+            if (nX1 >= this.Runtime.tileList.tRegion.tSize.iWidth) {
+                /* this item is not visible */
+                break;
+            }
+
+            tBottomMost.nOffset = nTempOffset;
+            tBottomMost.ptItem = ptItem;
+
+        } while(true);
+        this.CalMidAligned.iBottomVisibleOffset = (int16_t)tBottomMost.nOffset;
+        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.ptItem->hwID;
+
+        /* move to the centre most item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    tCentreMost.ptItem->hwID,
+                    false,
+                    false);
+        assert(NULL != ptItem);
+
+        /* with centre most item, we start to find the top most item*/
+        tTopMost = tCentreMost;
+        nTempOffset = tTopMost.nOffset;
+        do {
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_PREVIOUS,
+                    0,
+                    false,
+                    false);
+
+            if (NULL == ptItem) {
+                /* end of the list */
+                break;
+            }
+
+            /* update nTempOffset */
+            nTempOffset -= ptItem->tSize.iWidth 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            int32_t nX1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+            int32_t nX2 = nX1 + ptItem->tSize.iWidth - 1;
+
+            if (nX2 <= 0) {
+                /* this item is not visible */
+                break;
+            }
+
+            tTopMost.nOffset = nTempOffset;
+            tTopMost.ptItem = ptItem;
+
+        } while(true);
+        this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.hwTopVisibleItemID = tTopMost.ptItem->hwID;
+
+    } else {
+        /* find the first and last visible items */
+        
+
+        /* move to the first item */
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0,
+                            false,
                             false);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -1370,8 +1589,8 @@ ARM_PT_BEGIN(this.chState)
             
             /* update nTempOffset */
             nTempOffset += ptItem->tSize.iWidth 
-                         + ptItem->Padding.chPrevious
-                         + ptItem->Padding.chNext;
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
             
             /* move to the next */
             ptItem = __arm_2d_list_core_get_item(   
@@ -1379,7 +1598,8 @@ ARM_PT_BEGIN(this.chState)
                                 fnIterator, 
                                 __ARM_2D_LIST_GET_NEXT,
                                 0,
-                                false);
+                                false,
+                                true);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
                 ARM_PT_RETURN(NULL)
@@ -1397,8 +1617,8 @@ ARM_PT_BEGIN(this.chState)
             
             /* update nTempOffset */
             nTempOffset += ptItem->tSize.iWidth 
-                         + ptItem->Padding.chPrevious
-                         + ptItem->Padding.chNext;
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
 
             /* move to the next */
             ptItem = __arm_2d_list_core_get_item(   
@@ -1406,6 +1626,7 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_NEXT,
                     0,
+                    false,
                     false);
 
             if (NULL == ptItem) {
@@ -1414,16 +1635,16 @@ ARM_PT_BEGIN(this.chState)
             }
             
             int32_t nX1 = nTempOffset 
-                            +   this.iStartOffset 
-                            +   ptItem->Padding.chPrevious;
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
             
             if (nX1 >= this.Runtime.tileList.tRegion.tSize.iWidth) {
                 /* this item is not visible */
                 break;
             }
         } while(true);
-    } while(0);
 
+    }
 
     /* start draw items */
     do {
@@ -1433,6 +1654,7 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwTopVisibleItemID,
+                    false,
                     false);
 
         assert(NULL != ptItem);
@@ -1443,7 +1665,7 @@ ARM_PT_BEGIN(this.chState)
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
             = this.CalMidAligned.iTopVisiableOffset 
             + this.iStartOffset 
-            +   ptItem->Padding.chPrevious;
+            + ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
         
         //! calculate distance and opacity
@@ -1487,6 +1709,7 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_NEXT,
                         0,
+                        false,
                         false);
 
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
@@ -1498,6 +1721,7 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwBottomVisibleItemID,
+                    false,
                     false);
         assert(NULL != ptItem);
         
@@ -1545,6 +1769,7 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_PREVIOUS,
                         0,
+                        false,
                         false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
@@ -1606,7 +1831,8 @@ ARM_PT_BEGIN(this.chState)
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
-                            true);
+                            true,
+                            false);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
@@ -1662,7 +1888,8 @@ ARM_PT_BEGIN(this.chState)
                                 fnIterator, 
                                 __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                                 hwTempID,
-                                true);
+                                true,
+                                false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
                 ARM_PT_RETURN(NULL)
@@ -1690,7 +1917,8 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_NEXT,
                     0,
-                    true);
+                    true,
+                    false);
 
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
@@ -1717,7 +1945,8 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwTopVisibleItemID,
-                    true);
+                    true,
+                    false);
 
         assert(NULL != ptItem);
         
@@ -1771,7 +2000,8 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_NEXT,
                         0,
-                        true);
+                        true,
+                        false);
 
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
@@ -1782,7 +2012,8 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwBottomVisibleItemID,
-                    true);
+                    true,
+                    false);
         assert(NULL != ptItem);
         
         /* prepare working area */
@@ -1829,7 +2060,8 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_PREVIOUS,
                         0,
-                        true);
+                        true,
+                        false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
                 ARM_PT_RETURN(NULL)
@@ -1892,7 +2124,8 @@ ARM_PT_BEGIN(this.chState)
                             fnIterator, 
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
-                            true);
+                            true,
+                            false);
         if (NULL == ptItem) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
@@ -1948,7 +2181,8 @@ ARM_PT_BEGIN(this.chState)
                                 fnIterator, 
                                 __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                                 hwTempID,
-                                true);
+                                true,
+                                false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
                 ARM_PT_RETURN(NULL)
@@ -1976,7 +2210,8 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_NEXT,
                     0,
-                    true);
+                    true,
+                    false);
 
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
@@ -2003,7 +2238,8 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwTopVisibleItemID,
-                    true);
+                    true,
+                    false);
 
         assert(NULL != ptItem);
         
@@ -2057,7 +2293,8 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_NEXT,
                         0,
-                        true);
+                        true,
+                        false);
 
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
@@ -2068,7 +2305,8 @@ ARM_PT_BEGIN(this.chState)
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
                     this.CalMidAligned.hwBottomVisibleItemID,
-                    true);
+                    true,
+                    false);
         assert(NULL != ptItem);
         
         /* prepare working area */
@@ -2115,7 +2353,8 @@ ARM_PT_BEGIN(this.chState)
                         fnIterator, 
                         __ARM_2D_LIST_GET_PREVIOUS,
                         0,
-                        true);
+                        true,
+                        false);
             if (NULL == ptItem) {
                 /* no valid item, return NULL */
                 ARM_PT_RETURN(NULL)

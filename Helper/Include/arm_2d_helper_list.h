@@ -450,6 +450,7 @@ ARM_NONNULL(1,2)
  * \param[in] tDirection the direction instruction
  * \param[in] hwID the item ID (when required by the direction instruction)
  * \param[in] bIgnoreStatusCheck whether ignore the status checking
+ * \param[in] bForceRingMode whether force to enable ring mode anyway
  * \return arm_2d_list_item_t* 
  */
 arm_2d_list_item_t *__arm_2d_list_core_get_item(
@@ -457,7 +458,8 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
                         __arm_2d_list_item_iterator *fnIterator,
                         arm_2d_list_iterator_dir_t tDirection,
                         uint16_t hwID,
-                        bool bIgnoreStatusCheck);
+                        bool bIgnoreStatusCheck,
+                        bool bForceRingMode);
 
 /*! @} */
 
