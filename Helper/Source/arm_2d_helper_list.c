@@ -988,7 +988,7 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
                             __ARM_2D_LIST_GET_FIRST_ITEM,
                             0,
                             true,
-                            false);
+                            true);
                             
         if (NULL == ptItem) {
             /* no valid item, return NULL */
@@ -1042,10 +1042,14 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
         }
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
             this.tCFG.nTotalLength = this.tCFG.hwItemCount 
-                                   * ptItem->tSize.iWidth;
+                                   *    (   ptItem->tSize.iWidth
+                                        +   ptItem->Padding.chPrevious
+                                        +   ptItem->Padding.chNext);
         } else {
             this.tCFG.nTotalLength = this.tCFG.hwItemCount 
-                                   * ptItem->tSize.iHeight;
+                                   *    (   ptItem->tSize.iHeight
+                                        +   ptItem->Padding.chPrevious
+                                        +   ptItem->Padding.chNext);
         }
     }
 
@@ -2116,8 +2120,197 @@ ARM_PT_BEGIN(this.chState)
         nOffset -= this.tCFG.nTotalLength;
     }
 
-    /* find the first and last visible items */
-    do {
+    /* no ring mode */
+    if (this.tCFG.bDisableRingMode) {
+        
+        /* move to the first item */
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0,
+                            true,
+                            false);
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+        
+        /* move the nOffset to the top invisible area */
+        do {
+            int32_t nStartX = nOffset 
+                            +   this.iStartOffset 
+                            +   ptItem->Padding.chPrevious;
+                    
+            if (nStartX <= 0) {
+                break;
+            } 
+            nOffset -= this.tCFG.nTotalLength;
+        } while(true);
+        
+        /* get the inital offset */
+        this.nOffset = nOffset;
+
+        int32_t nTempOffset = nOffset;
+
+        /* find the centre most item */
+        int32_t nCentreLocation = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
+        int32_t nMinimalDistance = nCentreLocation;
+
+        struct {
+            int32_t nOffset;
+            arm_2d_list_item_t *ptItem;
+        } tTopMost, tBottomMost, tCentreMost = {
+            .nOffset = 0,
+            .ptItem = NULL,
+        };
+
+        int16_t iItemActualWidth = ptItem->tSize.iWidth 
+                         + ptItem->Padding.chPrevious
+                         + ptItem->Padding.chNext;
+        while(NULL != ptItem) {
+            int32_t nX1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+        
+            int32_t nDistance = nCentreLocation - nX1;
+            
+            if (ABS(nDistance) <= nMinimalDistance) {
+                nMinimalDistance = nDistance;
+                tCentreMost.ptItem = ptItem;
+                tCentreMost.nOffset = nTempOffset;
+            }
+
+            if (nDistance < 0) {
+                /* cross the centre */
+                break;
+            }
+            
+
+            /* update nTempOffset */
+
+            nTempOffset += ptItem->tSize.iWidth 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0,
+                                true,
+                                true);  /* force to use ring mode */
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+        }
+
+        /* with centre most item, we start to find the bottom most item*/
+        tBottomMost = tCentreMost;
+        nTempOffset = tBottomMost.nOffset;
+
+        /* move to the centre most item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    tCentreMost.ptItem->hwID,
+                    true,
+                    false);
+        assert(NULL != ptItem);
+
+        do {
+            /* update nTempOffset */
+            nTempOffset += ptItem->tSize.iWidth 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_NEXT,
+                    0,
+                    true,
+                    false);
+
+            if (NULL == ptItem) {
+                /* end of the list */
+                break;
+            }
+            
+            int32_t nX1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+            
+            if (nX1 >= this.Runtime.tileList.tRegion.tSize.iWidth) {
+                /* this item is not visible */
+                break;
+            }
+
+            tBottomMost.nOffset = nTempOffset;
+            tBottomMost.ptItem = ptItem;
+
+        } while(true);
+        this.CalMidAligned.iBottomVisibleOffset = (int16_t)tBottomMost.nOffset;
+        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.ptItem->hwID;
+
+        /* move to the centre most item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    tCentreMost.ptItem->hwID,
+                    true,
+                    false);
+        assert(NULL != ptItem);
+
+        /* with centre most item, we start to find the top most item*/
+        tTopMost = tCentreMost;
+        nTempOffset = tTopMost.nOffset;
+        do {
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_PREVIOUS,
+                    0,
+                    true,
+                    false);
+
+            if (NULL == ptItem) {
+                /* end of the list */
+                break;
+            }
+
+            /* update nTempOffset */
+            nTempOffset -= ptItem->tSize.iWidth 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            int32_t nX1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+            int32_t nX2 = nX1 + ptItem->tSize.iWidth - 1;
+
+            if (nX2 <= 0) {
+                /* this item is not visible */
+                break;
+            }
+
+            tTopMost.nOffset = nTempOffset;
+            tTopMost.ptItem = ptItem;
+
+        } while(true);
+        this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.hwTopVisibleItemID = tTopMost.ptItem->hwID;
+
+    } else {
+
+        /* find the first and last visible items */
+
         /* move to the first item */
         ptItem = __arm_2d_list_core_get_item(   
                             ptThis, 
@@ -2157,7 +2350,7 @@ ARM_PT_BEGIN(this.chState)
             int32_t nCount = nLength / iItemActualWidth;
             
             nTempOffset += nCount * iItemActualWidth;
-            
+
             do {
                 int32_t nX1 = nTempOffset 
                                 +   this.iStartOffset 
@@ -2170,10 +2363,9 @@ ARM_PT_BEGIN(this.chState)
                 }
                 nTempOffset += iItemActualWidth;
                 nCount++;
-            } while(0);
+            } while(true);
             
             uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
-            
             
             /* move to the next */
             ptItem = __arm_2d_list_core_get_item(   
@@ -2227,7 +2419,7 @@ ARM_PT_BEGIN(this.chState)
                 break;
             }
         } while(true);
-    } while(0);
+    }
 
 
     /* start draw items */
