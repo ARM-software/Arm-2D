@@ -559,26 +559,28 @@ $(document).ready(function(){initNavTree('arm__2d__helper__list_8h_source.html',
 <div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span><span class="comment"> * \param[in] tDirection the direction instruction</span></div>
 <div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span><span class="comment"> * \param[in] hwID the item ID (when required by the direction instruction)</span></div>
 <div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span><span class="comment"> * \param[in] bIgnoreStatusCheck whether ignore the status checking</span></div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span><span class="comment"> * \return arm_2d_list_item_t* </span></div>
-<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00455" name="l00455"></a><span class="lineno"><a class="line" href="group__gHelper.html#gadbee080339b39fee392f9567a39d5165">  455</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__list__item__t" title="the list core item class">arm_2d_list_item_t</a> *<a class="code hl_function" href="group__gHelper.html#gadbee080339b39fee392f9567a39d5165" title="get list item with a specified direction instruction">__arm_2d_list_core_get_item</a>(</div>
-<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>                        <a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis,</div>
-<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>                        <a class="code hl_typedef" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c" title="the list core interator prototype">__arm_2d_list_item_iterator</a> *fnIterator,</div>
-<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>                        <a class="code hl_enumeration" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b" title="intructions for how to move the list core item iterator">arm_2d_list_iterator_dir_t</a> tDirection,</div>
-<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>                        uint16_t hwID,</div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>                        <span class="keywordtype">bool</span> bIgnoreStatusCheck);</div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span><span class="comment"></span> </div>
-<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span> </div>
-<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span> </div>
-<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>}</div>
-<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span> </div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span><span class="comment"> * \param[in] bForceRingMode whether force to enable ring mode anyway</span></div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span><span class="comment"> * \return arm_2d_list_item_t* </span></div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f">  456</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__list__item__t" title="the list core item class">arm_2d_list_item_t</a> *<a class="code hl_function" href="group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f" title="get list item with a specified direction instruction">__arm_2d_list_core_get_item</a>(</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>                        <a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis,</div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>                        <a class="code hl_typedef" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c" title="the list core interator prototype">__arm_2d_list_item_iterator</a> *fnIterator,</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>                        <a class="code hl_enumeration" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b" title="intructions for how to move the list core item iterator">arm_2d_list_iterator_dir_t</a> tDirection,</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>                        uint16_t hwID,</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>                        <span class="keywordtype">bool</span> bIgnoreStatusCheck,</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>                        <span class="keywordtype">bool</span> bForceRingMode);</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span><span class="comment"></span> </div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span> </div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span> </div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>}</div>
 <div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span> </div>
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
