@@ -120,6 +120,8 @@ void list_view_init(list_view_t *ptThis,
             .nTotalLength = 0,
             .tListSize = ptCFG->tListSize,
             .ptItems = ptCFG->ptItems,
+            .bDisableRingMode = ptCFG->bDisableRingMode,
+            .bDisableStatusCheck = ptCFG->bDisableStatusCheck,
         };
 
         /* you can override the default implementations */

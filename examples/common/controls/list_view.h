@@ -66,9 +66,13 @@ typedef struct list_view_cfg_t {
     uint16_t hwItemSizeInByte;
 
     int16_t hwSwitchingPeriodInMs;
-    bool bIgnoreBackground;
+    uint8_t bIgnoreBackground;
+    uint8_t bDisableRingMode               : 1;                                /*!< whether disable ring mode */
+    uint8_t bDisableStatusCheck            : 1;                                /*!< whether disable the item status */
     uint8_t chOpacity;
+
     COLOUR_INT tBackgroundColour;
+
 } list_view_cfg_t;
 
 
