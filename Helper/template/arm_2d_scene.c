@@ -308,7 +308,9 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
              */
             .fnOnLoad       = &__on_scene%Instance%_load,
             .fnScene        = &__pfb_draw_scene%Instance%_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+
+            /* if you want to use predefined dirty region list, please uncomment the following code */
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene%Instance%_background_start,
