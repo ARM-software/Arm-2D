@@ -39,7 +39,7 @@
 #include "./arm_2d_helper_list.h"
 #include "./arm_2d_helper_shape.h"
 #include "./arm_2d_helper_font.h"
-
+#include "./arm_2d_helper_control.h"
 
 //#include "./arm_2d_helper_map.h"
 

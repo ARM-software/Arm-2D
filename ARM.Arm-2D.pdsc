@@ -260,8 +260,8 @@
             <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.2.0"/>
             
             <!-- the template for scenes -->
-            <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c" attr="template"  select="User Scene Template"   version="1.3.1" />
-            <file category="header"      name="Helper/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.3.1" />
+            <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c" attr="template"  select="User Scene Template"   version="1.3.2" />
+            <file category="header"      name="Helper/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.3.2" />
 
             <!-- the template for user defined OPCODEs -->
             <file category="sourceC"     name="Library/template/arm_2d_user_opcode_template_i_cp_src.c" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.0.0" />
@@ -318,7 +318,7 @@
         </component>
 
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.0.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.1.0" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -328,6 +328,7 @@
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_scene.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_list.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_shape.c" />
+            <file category="sourceC"     name="Helper/Source/arm_2d_helper_control.c" />
             <file category="doc"         name="documentation/html/group__gHelper.html"/>
             
             <file category="sourceC"     name="Helper/template/arm_2d_helper_rtos_user.c"  attr="template"  select="User RTOS Support Template"   version="1.0.1" />
@@ -414,11 +415,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.3.1" condition="Arm-2D-Scene" maxInstances="1000">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Scene" Cversion="1.3.2" condition="Arm-2D-Scene" maxInstances="1000">
           <description>A template for scene</description>
           <files>
-            <file category="sourceC"     name="Helper/template/arm_2d_scene.c" attr="config" version="1.3.1" />
-            <file category="header"      name="Helper/template/arm_2d_scene.h" attr="config" version="1.3.1" />
+            <file category="sourceC"     name="Helper/template/arm_2d_scene.c" attr="config" version="1.3.2" />
+            <file category="header"      name="Helper/template/arm_2d_scene.h" attr="config" version="1.3.2" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Scene%Instance%

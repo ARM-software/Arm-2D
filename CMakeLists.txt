@@ -66,6 +66,8 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_scene.c
             Helper/Source/arm_2d_helper_list.c
             Helper/Source/arm_2d_helper_shape.c
+            Helper/Source/arm_2d_helper_control.c
+
             Helper/Source/WhiteDotSmall.c
             Helper/Source/cmsis_logo.c
 
