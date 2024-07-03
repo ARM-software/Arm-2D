@@ -110,7 +110,7 @@ struct arm_2d_control_enumerator_t {
         } Preorder;
         struct {
             uint8_t chPTState;
-        } DFS;
+        } Postorder;
     };
 
 };
@@ -124,7 +124,7 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL;
 
 extern 
 const  arm_2d_control_enumeration_policy_t
-ARM_2D_CONTROL_ENUMERATION_POLICY_DEPTH_FIRST_TRAVERSAL;
+ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL;
 
 /*============================ PROTOTYPES ====================================*/
 

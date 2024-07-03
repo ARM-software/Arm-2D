@@ -72,12 +72,12 @@ static arm_2d_err_t __arm_2d_enum_policy_preorder_depose (
 static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
-static arm_2d_err_t __arm_2d_enum_policy_dfs_init(
+static arm_2d_err_t __arm_2d_enum_policy_postorder_init(
                                             arm_2d_control_enumerator_t *ptThis, 
                                             const arm_2d_control_node_t *ptRoot);
-static arm_2d_err_t __arm_2d_enum_policy_dfs_depose (
+static arm_2d_err_t __arm_2d_enum_policy_postorder_depose (
                                             arm_2d_control_enumerator_t *ptThis);
-static arm_2d_control_node_t *__arm_2d_enum_policy_dfs_get_next_node(
+static arm_2d_control_node_t *__arm_2d_enum_policy_postorder_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -90,10 +90,10 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL = {
 };
 
 const  arm_2d_control_enumeration_policy_t
-ARM_2D_CONTROL_ENUMERATION_POLICY_DEPTH_FIRST_TRAVERSAL = {
-    .fnInit         = &__arm_2d_enum_policy_dfs_init,
-    .fnDepose       = &__arm_2d_enum_policy_dfs_depose,
-    .fnGetNextNode  = &__arm_2d_enum_policy_dfs_get_next_node,
+ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL = {
+    .fnInit         = &__arm_2d_enum_policy_postorder_init,
+    .fnDepose       = &__arm_2d_enum_policy_postorder_depose,
+    .fnGetNextNode  = &__arm_2d_enum_policy_postorder_get_next_node,
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -270,10 +270,10 @@ static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
 
 
 /*----------------------------------------------------------------------------*
- * Depth First Traversal                                                      *
+ * Postorder Traversal                                                        *
  *----------------------------------------------------------------------------*/
 
-static arm_2d_err_t __arm_2d_enum_policy_dfs_init(
+static arm_2d_err_t __arm_2d_enum_policy_postorder_init(
                                             arm_2d_control_enumerator_t *ptThis, 
                                             const arm_2d_control_node_t *ptRoot)
 {
@@ -282,14 +282,14 @@ static arm_2d_err_t __arm_2d_enum_policy_dfs_init(
 
     this.ptCurrent = NULL;
     this.ptRoot = (arm_2d_control_node_t *)ptRoot;
-    this.DFS.chPTState = 0;
+    this.Postorder.chPTState = 0;
     this.ptCurrent = this.ptRoot;
 
     return ARM_2D_ERR_NONE;
 }
 
 
-static arm_2d_err_t __arm_2d_enum_policy_dfs_depose (
+static arm_2d_err_t __arm_2d_enum_policy_postorder_depose (
                                             arm_2d_control_enumerator_t *ptThis)
 {
     assert(NULL != ptThis);
@@ -298,14 +298,14 @@ static arm_2d_err_t __arm_2d_enum_policy_dfs_depose (
     return ARM_2D_ERR_NONE;
 }
 
-static arm_2d_control_node_t *__arm_2d_enum_policy_dfs_get_next_node(
+static arm_2d_control_node_t *__arm_2d_enum_policy_postorder_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis)
 {
     assert(NULL != ptThis);
 
     arm_2d_control_node_t *ptNode = this.ptCurrent;
 
-ARM_PT_BEGIN(this.DFS.chPTState)
+ARM_PT_BEGIN(this.Postorder.chPTState)
 
     while(NULL != ptNode) {
         if (NULL != ptNode->ptChildList) {
