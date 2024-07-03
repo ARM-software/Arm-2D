@@ -195,9 +195,11 @@ static arm_2d_err_t __arm_2d_enum_policy_preorder_init(
     assert(NULL != ptRoot);
 
     this.ptCurrent = NULL;
-    this.ptRoot = ptRoot;
+    this.ptRoot = (arm_2d_control_node_t *)ptRoot;
     this.Preorder.bFirstNode = true;
     this.ptCurrent = this.ptRoot;
+
+    return ARM_2D_ERR_NONE;
 }
 
 
@@ -207,6 +209,8 @@ static arm_2d_err_t __arm_2d_enum_policy_preorder_depose (
     assert(NULL != ptThis);
 
     ARM_2D_UNUSED(ptThis);
+
+    return ARM_2D_ERR_NONE;
 }
 
 static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
