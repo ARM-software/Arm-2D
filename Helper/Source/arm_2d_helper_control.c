@@ -22,7 +22,7 @@
  * Description:  the helper service source code for control management
  *
  * $Date:        3. July 2024
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -72,6 +72,14 @@ static arm_2d_err_t __arm_2d_enum_policy_preorder_depose (
 static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
+static arm_2d_err_t __arm_2d_enum_policy_dfs_init(
+                                            arm_2d_control_enumerator_t *ptThis, 
+                                            const arm_2d_control_node_t *ptRoot);
+static arm_2d_err_t __arm_2d_enum_policy_dfs_depose (
+                                            arm_2d_control_enumerator_t *ptThis);
+static arm_2d_control_node_t *__arm_2d_enum_policy_dfs_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis);
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const  arm_2d_control_enumeration_policy_t
@@ -79,6 +87,13 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL = {
     .fnInit         = &__arm_2d_enum_policy_preorder_init,
     .fnDepose       = &__arm_2d_enum_policy_preorder_depose,
     .fnGetNextNode  = &__arm_2d_enum_policy_preorder_get_next_node,
+};
+
+const  arm_2d_control_enumeration_policy_t
+ARM_2D_CONTROL_ENUMERATION_POLICY_DEPTH_FIRST_TRAVERSAL = {
+    .fnInit         = &__arm_2d_enum_policy_dfs_init,
+    .fnDepose       = &__arm_2d_enum_policy_dfs_depose,
+    .fnGetNextNode  = &__arm_2d_enum_policy_dfs_get_next_node,
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -248,6 +263,79 @@ static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
         } while(true);
 
     } while(0);
+
+    return this.ptCurrent;
+
+}
+
+
+/*----------------------------------------------------------------------------*
+ * Depth First Traversal                                                      *
+ *----------------------------------------------------------------------------*/
+
+static arm_2d_err_t __arm_2d_enum_policy_dfs_init(
+                                            arm_2d_control_enumerator_t *ptThis, 
+                                            const arm_2d_control_node_t *ptRoot)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptRoot);
+
+    this.ptCurrent = NULL;
+    this.ptRoot = (arm_2d_control_node_t *)ptRoot;
+    this.DFS.chPTState = 0;
+    this.ptCurrent = this.ptRoot;
+
+    return ARM_2D_ERR_NONE;
+}
+
+
+static arm_2d_err_t __arm_2d_enum_policy_dfs_depose (
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+    ARM_2D_UNUSED(ptThis);
+
+    return ARM_2D_ERR_NONE;
+}
+
+static arm_2d_control_node_t *__arm_2d_enum_policy_dfs_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_2d_control_node_t *ptNode = this.ptCurrent;
+
+ARM_PT_BEGIN(this.DFS.chPTState)
+
+    while(NULL != ptNode) {
+        if (NULL != ptNode->ptChildList) {
+            ptNode = ptNode->ptChildList;
+            continue;
+        }
+
+        this.ptCurrent = ptNode;
+        ARM_PT_YIELD(ptNode);               /* create an entry and visit a leaf node */
+
+        if (NULL != ptNode->ptNext) {
+            ptNode = ptNode->ptNext;        /* move to the next peer node */
+            continue;
+        }
+
+        /* reach the end of a child-list */
+        if (NULL != ptNode->ptParent) {
+            ptNode = ptNode->ptParent;
+
+            /* it is time to visit the parent node */
+            this.ptCurrent = ptNode;
+            ARM_PT_GOTO_PREV_ENTRY(ptNode);
+        }
+
+        /* return to the root node */
+        this.ptCurrent = NULL;
+        ARM_PT_YIELD(ptNode);               /* visit the root node */
+    }
+
+ARM_PT_END()
 
     return this.ptCurrent;
 

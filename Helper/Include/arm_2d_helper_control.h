@@ -22,7 +22,7 @@
  * Description:  the helper service header file for control management
  *
  * $Date:        3. July 2024
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -104,10 +104,13 @@ struct arm_2d_control_enumerator_t {
     arm_2d_control_node_t *ptRoot;
     arm_2d_control_node_t *ptCurrent;
     union {
+        uint32_t                : 32;
         struct {
-            uint32_t    bFirstNode  : 1;
-
+            bool    bFirstNode;
         } Preorder;
+        struct {
+            uint8_t chPTState;
+        } DFS;
     };
 
 };
@@ -117,6 +120,11 @@ struct arm_2d_control_enumerator_t {
 extern 
 const  arm_2d_control_enumeration_policy_t
 ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL;
+
+
+extern 
+const  arm_2d_control_enumeration_policy_t
+ARM_2D_CONTROL_ENUMERATION_POLICY_DEPTH_FIRST_TRAVERSAL;
 
 /*============================ PROTOTYPES ====================================*/
 
