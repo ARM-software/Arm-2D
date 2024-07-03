@@ -51,8 +51,10 @@ extern "C" {
 
 /* OOC header, please DO NOT modify  */
 #ifdef __USER_SCENE_<NAME>_IMPLEMENT__
-#   undef __USER_SCENE_<NAME>_IMPLEMENT__
 #   define __ARM_2D_IMPL__
+#endif
+#ifdef __USER_SCENE_<NAME>_INHERIT__
+#   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
@@ -102,6 +104,9 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic pop
 #endif
+
+#undef __USER_SCENE_<NAME>_IMPLEMENT__
+#undef __USER_SCENE_<NAME>_INHERIT__
 
 #ifdef   __cplusplus
 }
