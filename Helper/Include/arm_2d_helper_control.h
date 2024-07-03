@@ -103,6 +103,13 @@ struct arm_2d_control_enumerator_t {
     const arm_2d_control_enumeration_policy_t *ptPolicy;
     arm_2d_control_node_t *ptRoot;
     arm_2d_control_node_t *ptCurrent;
+    union {
+        struct {
+            uint32_t    bFirstNode  : 1;
+
+        } Preorder;
+    };
+
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/

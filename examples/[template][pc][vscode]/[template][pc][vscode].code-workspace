@@ -50,7 +50,8 @@
 			"__common.h": "c",
 			"arm_2d_helper_font.h": "c",
 			"stdint.h": "c",
-			"arm_2d_helper_built_in.h": "c"
+			"arm_2d_helper_built_in.h": "c",
+			"__node_handle": "c"
 		},
 		"cSpell.words": [
 			"cccn"

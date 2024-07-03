@@ -60,10 +60,71 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+
+static arm_2d_err_t __arm_2d_enum_policy_preorder_init(
+                                            arm_2d_control_enumerator_t *ptThis, 
+                                            const arm_2d_control_node_t *ptRoot);
+static arm_2d_err_t __arm_2d_enum_policy_preorder_depose (
+                                            arm_2d_control_enumerator_t *ptThis);
+static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis);
+
+/*============================ GLOBAL VARIABLES ==============================*/
+
+const  arm_2d_control_enumeration_policy_t
+ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL = {
+    .fnInit         = &__arm_2d_enum_policy_preorder_init,
+    .fnDepose       = &__arm_2d_enum_policy_preorder_depose,
+    .fnGetNextNode  = &__arm_2d_enum_policy_preorder_get_next_node,
+};
+
 /*============================ IMPLEMENTATION ================================*/
+
+ARM_NONNULL(1)
+arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
+                                                arm_2d_control_node_t *ptRoot, 
+                                                arm_2d_location_t tLocation)
+{
+    arm_2d_control_node_t *ptNode = NULL;
+    arm_2d_control_node_t *ptContainer = NULL;
+
+    ptNode = ptRoot;
+
+    if (NULL == ptNode) {
+        return NULL;
+    }
+
+    do {
+        if (!arm_2d_is_point_inside_region(&ptNode->tRegion, &tLocation)) {
+            /* out of region */
+            if (NULL == ptNode->ptNext) {
+                /* no more peers */
+                return ptContainer;
+            }
+
+            /* try next peer */
+            ptNode = ptNode->ptNext;
+            continue;
+        } else if (NULL == ptNode->ptChildList) {
+            /* it is the one */
+            break;
+        } else {
+            /* it is a container */
+            ptContainer = ptNode;
+            ptNode = ptNode->ptChildList;
+
+            /* search the child nodes */
+            continue;
+        }
+
+    } while(true);
+
+    return ptNode;
+}
+
 
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_control_enum_init(
@@ -122,49 +183,71 @@ arm_2d_err_t arm_2d_helper_control_enum_depose(
 
 }
 
+/*----------------------------------------------------------------------------*
+ * Preorder traversal                                                         *
+ *----------------------------------------------------------------------------*/
 
-ARM_NONNULL(1)
-arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
-                                                arm_2d_control_node_t *ptRoot, 
-                                                arm_2d_location_t tLocation)
+static arm_2d_err_t __arm_2d_enum_policy_preorder_init(
+                                            arm_2d_control_enumerator_t *ptThis, 
+                                            const arm_2d_control_node_t *ptRoot)
 {
-    arm_2d_control_node_t *ptNode = NULL;
-    arm_2d_control_node_t *ptContainer = NULL;
+    assert(NULL != ptThis);
+    assert(NULL != ptRoot);
 
-    ptNode = ptRoot;
-
-    if (NULL == ptNode) {
-        return NULL;
-    }
-
-    do {
-        if (!arm_2d_is_point_inside_region(&ptNode->tRegion, &tLocation)) {
-            /* out of region */
-            if (NULL == ptNode->ptNext) {
-                /* no more peers */
-                return ptContainer;
-            }
-
-            /* try next peer */
-            ptNode = ptNode->ptNext;
-            continue;
-        } else if (NULL == ptNode->ptChildList) {
-            /* it is the one */
-            break;
-        } else {
-            /* it is a container */
-            ptContainer = ptNode;
-            ptNode = ptNode->ptChildList;
-
-            /* search the child nodes */
-            continue;
-        }
-
-    } while(true);
-
-    return ptNode;
+    this.ptCurrent = NULL;
+    this.ptRoot = ptRoot;
+    this.Preorder.bFirstNode = true;
+    this.ptCurrent = this.ptRoot;
 }
 
+
+static arm_2d_err_t __arm_2d_enum_policy_preorder_depose (
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    ARM_2D_UNUSED(ptThis);
+}
+
+static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (this.Preorder.bFirstNode) {
+        this.Preorder.bFirstNode = false;
+        return this.ptCurrent;
+    }
+
+    arm_2d_control_node_t *ptNode = this.ptCurrent;
+
+    do {
+        if (NULL != ptNode->ptChildList) {
+            this.ptCurrent = ptNode->ptChildList;
+            break;
+        }
+
+        do {
+            if (ptNode->ptNext == NULL) {
+                if (NULL == ptNode->ptParent) {
+                    /* root node: finish visiting */ 
+                    this.ptCurrent = NULL;
+                    return NULL;
+                }
+                /* go back to parent */
+                ptNode = ptNode->ptParent;
+                continue;
+            } else {
+                this.ptCurrent = ptNode->ptNext;
+                break;
+            }
+        } while(true);
+
+    } while(0);
+
+    return this.ptCurrent;
+
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
