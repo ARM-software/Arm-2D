@@ -241,6 +241,10 @@ static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
     arm_2d_control_node_t *ptNode = this.ptCurrent;
 
     do {
+        if (NULL == ptNode) {
+            break;
+        }
+
         if (NULL != ptNode->ptChildList) {
             this.ptCurrent = ptNode->ptChildList;
             break;
@@ -248,10 +252,11 @@ static arm_2d_control_node_t *__arm_2d_enum_policy_preorder_get_next_node(
 
         do {
             if (ptNode->ptNext == NULL) {
-                if (NULL == ptNode->ptParent) {
-                    /* root node: finish visiting */ 
+                if (    (NULL == ptNode->ptParent)
+                   ||   (ptNode == this.ptRoot)) {
+                    /* return back to the root node: finish visiting */ 
                     this.ptCurrent = NULL;
-                    return NULL;
+                    break;
                 }
                 /* go back to parent */
                 ptNode = ptNode->ptParent;
@@ -322,7 +327,8 @@ ARM_PT_BEGIN(this.Postorder.chPTState)
         }
 
         /* reach the end of a child-list */
-        if (NULL != ptNode->ptParent) {
+        if (    (NULL != ptNode->ptParent) 
+           &&   (ptNode != this.ptRoot)) {
             ptNode = ptNode->ptParent;
 
             /* it is time to visit the parent node */
@@ -333,6 +339,7 @@ ARM_PT_BEGIN(this.Postorder.chPTState)
         /* return to the root node */
         this.ptCurrent = NULL;
         ARM_PT_YIELD(ptNode);               /* visit the root node */
+        break;
     }
 
 ARM_PT_END()

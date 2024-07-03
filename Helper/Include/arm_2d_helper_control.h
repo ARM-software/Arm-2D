@@ -117,11 +117,26 @@ struct arm_2d_control_enumerator_t {
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
+/*!
+ * \brief The Preorder traversal is suitable for the following operations in the
+ *        control (element tree) management
+ *        - Element-Tree-Refresh Event Handling
+ *        - Element-Tree-Construction Event Handling
+ *        - Element-Tree-Onload Event Handling
+ */
 extern 
 const  arm_2d_control_enumeration_policy_t
 ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL;
 
 
+/*!
+ * \brief The Postorder traversal is suitable for the following operations in the
+ *        control (element tree) management:
+ *        - Element-Tree-Updating Event Handling (Including Resize etc.)
+ *        - Element-Tree-Destruction Event Handling
+ *        - Element-Tree-OnDepose Event Handling
+ *
+ */
 extern 
 const  arm_2d_control_enumeration_policy_t
 ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL;
