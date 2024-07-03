@@ -1138,15 +1138,15 @@ ARM_PT_BEGIN(this.chState)
         
             int32_t nDistance = nCentreLocation - nY1;
             
-            if (ABS(nDistance) <= nMinimalDistance) {
-                nMinimalDistance = nDistance;
-                tCentreMost.ptItem = ptItem;
-                tCentreMost.nOffset = nTempOffset;
-            }
-
             if (nDistance < 0) {
                 /* cross the centre */
                 break;
+            }
+
+            if (nDistance < nMinimalDistance) {
+                nMinimalDistance = nDistance;
+                tCentreMost.ptItem = ptItem;
+                tCentreMost.nOffset = nTempOffset;
             }
             
             /* update nTempOffset */
@@ -1599,17 +1599,17 @@ ARM_PT_BEGIN(this.chState)
         
             int32_t nDistance = nCentreLocation - nX1;
             
-            if (ABS(nDistance) <= nMinimalDistance) {
+            if (nDistance < 0) {
+                /* cross the centre */
+                break;
+            }
+
+            if (nDistance < nMinimalDistance) {
                 nMinimalDistance = nDistance;
                 tCentreMost.ptItem = ptItem;
                 tCentreMost.nOffset = nTempOffset;
             }
 
-            if (nDistance < 0) {
-                /* cross the centre */
-                break;
-            }
-            
             /* update nTempOffset */
             nTempOffset += ptItem->tSize.iWidth 
                         + ptItem->Padding.chPrevious
@@ -2065,15 +2065,15 @@ ARM_PT_BEGIN(this.chState)
         
             int32_t nDistance = nCentreLocation - nY1;
             
-            if (ABS(nDistance) <= nMinimalDistance) {
-                nMinimalDistance = nDistance;
-                tCentreMost.ptItem = ptItem;
-                tCentreMost.nOffset = nTempOffset;
-            }
-
             if (nDistance < 0) {
                 /* cross the centre */
                 break;
+            }
+
+            if (nDistance < nMinimalDistance) {
+                nMinimalDistance = nDistance;
+                tCentreMost.ptItem = ptItem;
+                tCentreMost.nOffset = nTempOffset;
             }
 
             /* update nTempOffset */
@@ -2544,17 +2544,16 @@ ARM_PT_BEGIN(this.chState)
         
             int32_t nDistance = nCentreLocation - nX1;
             
-            if (ABS(nDistance) <= nMinimalDistance) {
-                nMinimalDistance = nDistance;
-                tCentreMost.ptItem = ptItem;
-                tCentreMost.nOffset = nTempOffset;
-            }
-
             if (nDistance < 0) {
                 /* cross the centre */
                 break;
             }
-            
+
+            if (nDistance < nMinimalDistance) {
+                nMinimalDistance = nDistance;
+                tCentreMost.ptItem = ptItem;
+                tCentreMost.nOffset = nTempOffset;
+            }
 
             /* update nTempOffset */
 
