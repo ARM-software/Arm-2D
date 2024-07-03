@@ -49,6 +49,31 @@ extern "C" {
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define ARM_CONTROL_ENUMERATE(__ROOT, __ITEM_NAME, __POLICY )                   \
+    for (                                                                       \
+        arm_2d_control_enumerator_t ARM_2D_SAFE_NAME(tEnum),                    \
+        *ARM_2D_SAFE_NAME(ptPointer) = NULL;                                    \
+        (({                                                                     \
+            arm_2d_helper_control_enum_init(                                    \
+                        &ARM_2D_SAFE_NAME(tEnum),                               \
+                        &(ARM_2D_CONTROL_ENUMERATION_POLICY_##__POLICY),        \
+                        ptRoot);                                                \
+            ARM_2D_SAFE_NAME(ptPointer)++;                                      \
+        }) == NULL);                                                            \
+        ({                                                                      \
+            arm_2d_helper_control_enum_depose(&ARM_2D_SAFE_NAME(tEnum));        \
+        })) for (                                                               \
+            arm_2d_control_node_t *(__ITEM_NAME) = NULL;                        \
+            (NULL != ((__ITEM_NAME) = arm_2d_helper_control_enum_get_next_node( \
+                                                    &ARM_2D_SAFE_NAME(tEnum)))  \
+            );                                                                  \
+        )
+
+#define arm_control_enumerate           ARM_CONTROL_ENUMERATE
+#define arm_ctrl_enum                   ARM_CONTROL_ENUMERATE
+#define ARM_CTRL_ENUM                   ARM_CONTROL_ENUMERATE
+
 /*============================ TYPES =========================================*/
 
 typedef struct arm_2d_control_node_t arm_2d_control_node_t;
@@ -64,15 +89,55 @@ ARM_PROTECTED(
     arm_2d_region_t tRegion;
 };
 
+typedef struct arm_2d_control_enumerator_t arm_2d_control_enumerator_t;
+
+typedef struct arm_2d_control_enumeration_policy_t {
+    arm_2d_err_t            (*fnInit)           (arm_2d_control_enumerator_t *ptThis, 
+                                                 const arm_2d_control_node_t *ptRoot);
+    arm_2d_err_t            (*fnDepose)         (arm_2d_control_enumerator_t *ptThis);
+    arm_2d_control_node_t * (*fnGetNextNode)    (arm_2d_control_enumerator_t *ptThis);
+} arm_2d_control_enumeration_policy_t;
+
+
+struct arm_2d_control_enumerator_t {
+    const arm_2d_control_enumeration_policy_t *ptPolicy;
+    arm_2d_control_node_t *ptRoot;
+    arm_2d_control_node_t *ptCurrent;
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern 
+const  arm_2d_control_enumeration_policy_t
+ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL;
+
 /*============================ PROTOTYPES ====================================*/
+
+ARM_NONNULL(1,2)
+extern
+arm_2d_err_t arm_2d_helper_control_enum_init(
+                            arm_2d_control_enumerator_t *ptThis,
+                            const arm_2d_control_enumeration_policy_t *ptPolicy,
+                            const arm_2d_control_node_t *ptRoot);
+
+ARM_NONNULL(1)
+extern
+arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis);
+
+
+ARM_NONNULL(1)
+extern
+arm_2d_err_t arm_2d_helper_control_enum_depose(
+                                            arm_2d_control_enumerator_t *ptThis);
+
+
 
 ARM_NONNULL(1)
 extern
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
                                                 arm_2d_location_t tLocation);
-
 
 #undef __ARM_2D_HELPER_CONTROL_IMPLEMENT__
 #undef __ARM_2D_HELPER_CONTROL_INHERIT__

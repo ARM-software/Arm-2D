@@ -54,12 +54,74 @@
 #endif
 
 /*============================ MACROS ========================================*/
+
+#undef this
+#define this (*ptThis)
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
+
+ARM_NONNULL(1,2)
+arm_2d_err_t arm_2d_helper_control_enum_init(
+                            arm_2d_control_enumerator_t *ptThis,
+                            const arm_2d_control_enumeration_policy_t *ptPolicy,
+                            const arm_2d_control_node_t *ptRoot)
+{
+
+
+
+    ARM_CONTROL_ENUMERATE(  ptRoot, ptItem, PREORDER_TRAVERSAL) {
+        ARM_2D_UNUSED(ptItem);
+    }
+
+
+    assert(NULL != ptThis);
+    assert(NULL != ptPolicy);
+
+    if (NULL == ptRoot) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    memset(ptThis, 0, sizeof(*ptThis));
+    this.ptPolicy = ptPolicy;
+    
+    return ARM_2D_INVOKE(   this.ptPolicy->fnInit, 
+                            ARM_2D_PARAM(
+                                ptThis, ptRoot
+                            ));
+}
+
+ARM_NONNULL(1)
+arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+    assert(NULL != this.ptPolicy);
+
+    return  ARM_2D_INVOKE(  this.ptPolicy->fnGetNextNode, 
+                            ARM_2D_PARAM(
+                                ptThis
+                            ));
+}
+
+ARM_NONNULL(1)
+arm_2d_err_t arm_2d_helper_control_enum_depose(
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+    assert(NULL != this.ptPolicy);
+
+    return  ARM_2D_INVOKE(  this.ptPolicy->fnDepose, 
+                            ARM_2D_PARAM(
+                                ptThis
+                            ));
+
+}
+
 
 ARM_NONNULL(1)
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
