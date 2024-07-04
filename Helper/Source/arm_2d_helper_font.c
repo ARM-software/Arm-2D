@@ -480,22 +480,20 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
                                     s_tLCDTextControl.tColour.tForeground,
                                     chOpacity,
                                     s_tLCDTextControl.fScale);
-    } else {
-    #if 0
+    } else if (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode) {
         arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
                             s_tLCDTextControl.ptTargetFB, 
                             &tDrawRegion,
                             s_tLCDTextControl.wMode,
                             s_tLCDTextControl.tColour.tForeground,
                             s_tLCDTextControl.tColour.tBackground);
-    #else
+    } else {
         arm_2d_fill_colour_with_a1_mask_and_opacity(
                 s_tLCDTextControl.ptTargetFB, 
                 &tDrawRegion,
                 &tCharDescriptor.tileChar, 
                 (__arm_2d_color_t){ s_tLCDTextControl.tColour.tForeground},
                 chOpacity);
-    #endif
     }
 
     arm_2d_op_wait_async(NULL);
