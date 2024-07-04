@@ -427,7 +427,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.4.0" condition="Arm-2D-Printf">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.5.0" condition="Arm-2D-Printf">
           <description>A helper service for fonts and LCD printf.</description>
           <files>
             <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />

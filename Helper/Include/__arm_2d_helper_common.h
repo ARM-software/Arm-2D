@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        19. June 2024
- * $Revision:    V.1.6.1
+ * $Date:        4. July 2024
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -228,6 +228,8 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_a1_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_gray8_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a1_mask                                      \
+                arm_2d_gray8_fill_colour_with_a1_mask
 #   define arm_2d_fill_colour_with_a2_mask                                      \
                 arm_2d_gray8_fill_colour_with_a2_mask
 #   define arm_2d_fill_colour_with_a4_mask                                      \
@@ -422,6 +424,8 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_a1_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_rgb565_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a1_mask                                      \
+                arm_2d_rgb565_fill_colour_with_a1_mask
 #   define arm_2d_fill_colour_with_a2_mask                                      \
                 arm_2d_rgb565_fill_colour_with_a2_mask
 #   define arm_2d_fill_colour_with_a4_mask                                      \
@@ -615,6 +619,8 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_a1_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_cccn888_fill_colour_with_a2_mask_and_opacity
+#   define arm_2d_fill_colour_with_a1_mask                                      \
+                arm_2d_cccn888_fill_colour_with_a1_mask
 #   define arm_2d_fill_colour_with_a2_mask                                      \
                 arm_2d_cccn888_fill_colour_with_a2_mask
 #   define arm_2d_fill_colour_with_a4_mask                                      \

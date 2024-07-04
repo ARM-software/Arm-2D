@@ -22,7 +22,7 @@
  * Description:  header files for internal users or professional developers
  *
  * $Date:        4. July 2024
- * $Revision:    V.1.5.1
+ * $Revision:    V.1.5.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -396,6 +396,7 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_OPACITY,
 
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A1_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
@@ -1314,6 +1315,18 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_colour_filling(__arm_2d_sub_task_t *ptTask);
 
 extern 
 arm_fsm_rt_t __arm_2d_rgb32_sw_colour_filling(__arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a1_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a1_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a1_mask(
+                                        __arm_2d_sub_task_t *ptTask);
 
 extern 
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a2_mask(
