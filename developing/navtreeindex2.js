@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3":[11,7,168],
+"group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d":[11,7,210],
+"group__gHelper.html#ga242f73f69f914f4546bdd2549622c306":[11,7,157],
 "group__gHelper.html#ga244fcde0c53f1d123ac5a6c2fa2b2ff2":[11,7,161],
 "group__gHelper.html#ga263f3e14194ec8fa2fc491efbe20344b":[11,7,125],
 "group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af":[11,7,91],
@@ -246,8 +249,5 @@ var NAVTREEINDEX2 =
 "group__gHelper.html#union____arm__2d__helper__scene__switch__t":[11,7,0],
 "group__gHelper.html#unionarm__2d__helper__dirty__region__item__t_8____unnamed182_____8____unnamed184____":[11,7,61],
 "group__gHelper.html#unionarm__2d__helper__dirty__region__item__t_8____unnamed182_____8____unnamed184_____8____unnamed186_____8____unnamed188____":[11,7,63],
-"group__gHelper.html#unionarm__2d__list__item__t_8____unnamed159____":[11,7,45],
-"group__gHelper.html#unionarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153____":[11,7,39],
-"group__gKernel.html":[11,0],
-"group__gKernel.html#a00b36e47c8ccbf0a0b27b35bbae417b9":[11,0,46,2]
+"group__gHelper.html#unionarm__2d__list__item__t_8____unnamed159____":[11,7,45]
 };
