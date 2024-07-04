@@ -389,6 +389,7 @@ var group__gKernel =
     [ "ARM_2D_M_COLOUR_MONOCHROME", "group__gKernel.html#gaace1cbc49fbfa9917f9b4b4a83168d8d", null ],
     [ "ARM_2D_M_COLOUR_BIN", "group__gKernel.html#gabc698466fbc7f554c722ac8c6c886a47", null ],
     [ "ARM_2D_M_COLOUR_1BIT", "group__gKernel.html#ga9185b910da18b59c277e5f6b118429e1", null ],
+    [ "ARM_2D_M_COLOUR_MASK_A1", "group__gKernel.html#ga5861061d37d0788d7be6f1c69888547e", null ],
     [ "ARM_2D_M_COLOUR_MASK_A2", "group__gKernel.html#ga44a9aef2f2e7ef3930ea67bc5dd22018", null ],
     [ "ARM_2D_M_COLOUR_MASK_A4", "group__gKernel.html#ga7ad429ad90a0c226dc31f9d540ace6fa", null ],
     [ "ARM_2D_M_COLOUR_8BIT", "group__gKernel.html#ga782059d2a4f872ecf6f57f2f7e2db0d7", null ],
