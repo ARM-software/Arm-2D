@@ -860,8 +860,6 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a1_mask_and_opacity(
         return arm_fsm_rt_on_going;
     }
 
-    //memset(ptThis, 0, sizeof(*ptThis));
-
     OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_A1_MASK_AND_OPACITY_GRAY8;
 
     this.Target.ptTile = ptTarget;
@@ -899,8 +897,6 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a1_mask_and_opacity(
         return arm_fsm_rt_on_going;
     }
 
-    //memset(ptThis, 0, sizeof(*ptThis));
-
     OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_A1_MASK_AND_OPACITY_RGB565;
 
     this.Target.ptTile = ptTarget;
@@ -936,8 +932,6 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a1_mask_and_opacity(
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
-
-    //memset(ptThis, 0, sizeof(*ptThis));
 
     OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_A1_MASK_AND_OPACITY_CCCN888;
 
@@ -1054,7 +1048,6 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity(
 {
     assert(NULL != ptTarget);
     assert(NULL != ptAlpha);
-
     
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
 
@@ -1066,8 +1059,6 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity(
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
-
-    //memset(ptThis, 0, sizeof(*ptThis));
 
     OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY_GRAY8;
 
@@ -1106,8 +1097,6 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity(
         return arm_fsm_rt_on_going;
     }
 
-    //memset(ptThis, 0, sizeof(*ptThis));
-
     OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY_RGB565;
 
     this.Target.ptTile = ptTarget;
@@ -1143,8 +1132,6 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity(
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
-
-    //memset(ptThis, 0, sizeof(*ptThis));
 
     OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY_CCCN888;
 
