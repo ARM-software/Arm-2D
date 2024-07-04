@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        12. June 2024
- * $Revision:    V.1.2.10
+ * $Date:        4. July 2024
+ * $Revision:    V.1.2.11
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -414,6 +414,7 @@ enum {
     ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,
 
+    ARM_2D_COLOUR_MASK_A1     =   ARM_2D_M_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_MASK_A2     =   ARM_2D_M_COLOUR_SZ_2BIT_msk,
     ARM_2D_COLOUR_MASK_A4     =   ARM_2D_M_COLOUR_SZ_4BIT_msk,
 
@@ -464,6 +465,7 @@ enum {
 #define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bit colour format (alias)
 #define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bin colour format (alias)
 
+#define ARM_2D_M_COLOUR_MASK_A1     ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bit alpha mask
 #define ARM_2D_M_COLOUR_MASK_A2     ARM_2D_M_COLOUR_SZ_2BIT_msk                 //!< macro for the 2bit alpha mask
 #define ARM_2D_M_COLOUR_MASK_A4     ARM_2D_M_COLOUR_SZ_4BIT_msk                 //!< macro for the 4bit alpha mask
 

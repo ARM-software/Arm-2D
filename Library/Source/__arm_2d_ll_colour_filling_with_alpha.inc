@@ -22,8 +22,8 @@
  * Title:        __arm_2d_alpha_blending.inc
  * Description:  c code template for drawing pattern
  *
- * $Date:        04. April 2023
- * $Revision:    V.1.0.0
+ * $Date:        04. July 2024
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -249,6 +249,69 @@ void __ARM_2D_FUNC(colour_filling_mask)(
                             __API_INT_TYPE Colour);
 #endif
 
+#ifndef __PATCH_COLOUR_FILLING_A1_MASK_OPACITY
+__WEAK
+void __ARM_2D_FUNC(colour_filling_a1_mask_opacity)(
+                            __API_INT_TYPE *__RESTRICT pTargetBase,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour,
+                            uint_fast16_t hwOpacity)
+{
+    //! get in byte offset
+    nAlphaOffset &= 0x07;
+    iAlphaStride = (iAlphaStride + 7) & ~0x07;
+    iAlphaStride >>= 3;
+
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint8_t *__RESTRICT pchMask = pchAlpha;
+        int32_t nOffset = nAlphaOffset;
+        uint8_t chBitMask = 0x01 << nOffset;
+        __API_INT_TYPE * __RESTRICT pTarget = pTargetBase;
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+            uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset);
+            uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity);
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 2) * 2;
+#endif
+
+            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+
+            chBitMask <<= 1;
+            nOffset += 1;
+            if (!chBitMask) {
+                chBitMask = 0x01;
+                nOffset = 0;
+                pchMask++;
+            }
+        }
+
+        pchAlpha += iAlphaStride;
+        pTargetBase += iTargetStride;
+    }
+}
+#else
+extern
+void __ARM_2D_FUNC(colour_filling_a1_mask_opacity)(
+                            __API_INT_TYPE *__RESTRICT pTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            int32_t nAlphaOffset,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            __API_INT_TYPE Colour,
+                            uint_fast16_t hwOpacity);
+#endif
 
 #ifndef __PATCH_COLOUR_FILLING_A2_MASK_OPACITY
 __WEAK

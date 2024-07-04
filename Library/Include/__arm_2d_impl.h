@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        29. April 2024
- * $Revision:    V.1.5.0
+ * $Date:        4. July 2024
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -320,10 +320,11 @@ typedef struct __arm_2d_point_adj_alpha_t{
  * \brief private enum for mask validation 
  */
 enum {
-    __ARM_2D_MASK_ALLOW_8in32 = _BV(0),     //!< allow 8in32 mode
+    __ARM_2D_MASK_ALLOW_A1    = _BV(0),     //!< allow A1
     __ARM_2D_MASK_ALLOW_A2    = _BV(1),     //!< allow A2
     __ARM_2D_MASK_ALLOW_A4    = _BV(2),     //!< allow A4
     __ARM_2D_MASK_ALLOW_A8    = _BV(3),     //!< allow A8
+    __ARM_2D_MASK_ALLOW_8in32 = _BV(4),     //!< allow 8in32 mode
 };
 
 
@@ -407,6 +408,7 @@ enum {
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_REPEAT,
     
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A1_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A4_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
@@ -1347,6 +1349,18 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask(
 
 extern 
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a1_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_a1_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_a1_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern 

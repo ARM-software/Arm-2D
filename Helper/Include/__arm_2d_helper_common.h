@@ -224,6 +224,8 @@ extern "C" {
                 arm_2dp_gray8_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
                 arm_2dp_gray8_tile_rotation_with_src_mask
+#   define arm_2d_fill_colour_with_a1_mask_and_opacity                          \
+                arm_2d_gray8_fill_colour_with_a1_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_gray8_fill_colour_with_a2_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask                                      \
@@ -416,6 +418,8 @@ extern "C" {
                 arm_2dp_rgb565_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
                 arm_2dp_rgb565_tile_rotation_with_src_mask
+#   define arm_2d_fill_colour_with_a1_mask_and_opacity                          \
+                arm_2d_rgb565_fill_colour_with_a1_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_rgb565_fill_colour_with_a2_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask                                      \
@@ -607,6 +611,8 @@ extern "C" {
                 arm_2dp_cccn888_tile_rotation_with_src_mask_and_opacity
 #   define arm_2dp_tile_rotation_with_src_mask                                  \
                 arm_2dp_cccn888_tile_rotation_with_src_mask
+#   define arm_2d_fill_colour_with_a1_mask_and_opacity                          \
+                arm_2d_cccn888_fill_colour_with_a1_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask_and_opacity                          \
                 arm_2d_cccn888_fill_colour_with_a2_mask_and_opacity
 #   define arm_2d_fill_colour_with_a2_mask                                      \
