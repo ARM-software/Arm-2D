@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.c"
  * Description:  the helper service source code for control management
  *
- * $Date:        3. July 2024
- * $Revision:    V.0.6.0
+ * $Date:        4. July 2024
+ * $Revision:    V.0.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -80,6 +80,14 @@ static arm_2d_err_t __arm_2d_enum_policy_postorder_depose (
 static arm_2d_control_node_t *__arm_2d_enum_policy_postorder_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
+static arm_2d_err_t __arm_2d_enum_policy_bottom_up_init(
+                                            arm_2d_control_enumerator_t *ptThis, 
+                                            const arm_2d_control_node_t *ptRoot);
+static arm_2d_err_t __arm_2d_enum_policy_bottom_up_depose (
+                                            arm_2d_control_enumerator_t *ptThis);
+static arm_2d_control_node_t *__arm_2d_enum_policy_bottom_up_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis);
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const  arm_2d_control_enumeration_policy_t
@@ -96,6 +104,12 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL = {
     .fnGetNextNode  = &__arm_2d_enum_policy_postorder_get_next_node,
 };
 
+const  arm_2d_control_enumeration_policy_t
+ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL = {
+    .fnInit         = &__arm_2d_enum_policy_bottom_up_init,
+    .fnDepose       = &__arm_2d_enum_policy_bottom_up_depose,
+    .fnGetNextNode  = &__arm_2d_enum_policy_bottom_up_get_next_node,
+};
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1)
@@ -343,6 +357,64 @@ ARM_PT_BEGIN(this.Postorder.chPTState)
     }
 
 ARM_PT_END()
+
+    return this.ptCurrent;
+
+}
+
+/*----------------------------------------------------------------------------*
+ * Bottom Up traversal                                                        *
+ *----------------------------------------------------------------------------*/
+
+static arm_2d_err_t __arm_2d_enum_policy_bottom_up_init(
+                                            arm_2d_control_enumerator_t *ptThis, 
+                                            const arm_2d_control_node_t *ptRoot)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptRoot);
+
+    this.ptCurrent = NULL;
+    this.ptRoot = (arm_2d_control_node_t *)ptRoot;
+    this.BottomUp.bFirstNode = true;
+    this.ptCurrent = this.ptRoot;
+
+    return ARM_2D_ERR_NONE;
+}
+
+
+static arm_2d_err_t __arm_2d_enum_policy_bottom_up_depose (
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+    ARM_2D_UNUSED(ptThis);
+
+    return ARM_2D_ERR_NONE;
+}
+
+static arm_2d_control_node_t *__arm_2d_enum_policy_bottom_up_get_next_node(
+                                            arm_2d_control_enumerator_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    arm_2d_control_node_t *ptNode = this.ptCurrent;
+
+    if (NULL == ptNode) {
+        return NULL;
+    }
+
+    /* handle the first node */
+    if (this.Preorder.bFirstNode) {
+        this.Preorder.bFirstNode = false;
+        return ptNode;
+    }
+
+    if (NULL == ptNode->ptParent) {
+        /* reach the top */
+        this.ptCurrent = NULL;
+    } else {
+        /* return the parent */
+        this.ptCurrent = ptNode->ptParent;
+    }
 
     return this.ptCurrent;
 

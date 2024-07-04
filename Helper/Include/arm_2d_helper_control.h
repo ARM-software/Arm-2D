@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.h"
  * Description:  the helper service header file for control management
  *
- * $Date:        3. July 2024
- * $Revision:    V.0.6.0
+ * $Date:        4. July 2024
+ * $Revision:    V.0.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -109,6 +109,9 @@ struct arm_2d_control_enumerator_t {
             bool    bFirstNode;
         } Preorder;
         struct {
+            bool    bFirstNode;
+        } BottomUp;
+        struct {
             uint8_t chPTState;
         } Postorder;
     };
@@ -140,6 +143,15 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL;
 extern 
 const  arm_2d_control_enumeration_policy_t
 ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL;
+
+/*!
+ * \brief The Bottom-Up traversal is suitable for the normal message handling in
+ *        the control (element tree) management.
+ * 
+ */
+extern 
+const  arm_2d_control_enumeration_policy_t
+ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL;
 
 /*============================ PROTOTYPES ====================================*/
 
