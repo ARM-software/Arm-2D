@@ -412,39 +412,37 @@ def main(argv):
             # 1-bit Alpha channel
             if args.a1 or args.format == 'all':
 
-                def extractMSB(bitsArr):
-                    return bitsArr[::8]
-
-                def RevBitPerByte(bitArr):
-                    if len(bitArr) % 8 != 0:
-                        padding = 8 - (len(bitArr) % 8)
-                        bitArr = np.concatenate([bitArr, np.zeros(padding, dtype=np.uint8)])
-                    bitArr = bitArr.reshape(-1, 8)
-                    packedBytes = np.packbits(bitArr, axis=1)
-                    return packedBytes.flatten()
+                def RevBitPairPerByte(byteArr):
+                    return ((byteArr & 0x01) << 7) | ((byteArr & 0x80) >> 7) | ((byteArr & 0x40) >> 5) | ((byteArr & 0x02) << 5) | \
+                        ((byteArr & 0x04) << 3) | ((byteArr & 0x20) >> 3) | ((byteArr & 0x10) >> 1) | ((byteArr & 0x08) << 1)
 
                 print('ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmp%sA1Alpha")' % (arr_name), file=o)
                 print('static const uint8_t c_bmp%sA1Alpha[%d*%d] = {' % (arr_name, (row+7)//8, col), file=o)
                 cnt = 0
                 alpha = data[...,3].astype(np.uint8)
                 for eachRow in alpha:
-                    lineWidth = 0
+                    lineWidth=0
                     print("/* -%d- */" % (cnt), file=o)
 
-                    bitsArr = np.unpackbits(eachRow)
-                    msbBits = extractMSB(bitsArr)
-                    packedBytes = RevBitPerByte(msbBits)
+                    bitsArr = np.unpackbits(eachRow.astype(np.uint8))
+
+                    # generate indexes for MSB bit every byte
+                    idx = np.arange(0, np.size(bitsArr), 8)
+                    idx = np.reshape(idx, (1,-1))
+
+                    # extraction + endianness conversion
+                    msbBits = bitsArr[idx] & 0x80 >> 7
+                    packedBytes = RevBitPairPerByte(np.packbits(msbBits))
 
                     for elt in packedBytes:
                         if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA-1):
-                            print("0x%02x," % (elt), file=o)
+                            print("0x%02x," %(elt) ,file=o)
                         else:
-                            print("0x%02x" % (elt), end=", ", file=o)
-                        lineWidth += 1
-                    cnt += 1
-                    print('', file=o)
-                print('};\r\n', file=o)
-
+                            print("0x%02x" %(elt), end =", ",file=o)
+                        lineWidth+=1
+                    cnt+=1
+                    print('',file=o)
+                print('};\n', file=o)
 
             # 2-bit Alpha channel
             if args.a2 or args.format == 'all':
