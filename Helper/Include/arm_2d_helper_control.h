@@ -58,7 +58,7 @@ extern "C" {
             arm_2d_helper_control_enum_init(                                    \
                         &ARM_2D_SAFE_NAME(tEnum),                               \
                         &(ARM_2D_CONTROL_ENUMERATION_POLICY_##__POLICY),        \
-                        ptRoot);                                                \
+                        (__ROOT));                                              \
             ARM_2D_SAFE_NAME(ptPointer)++;                                      \
         }) == NULL);                                                            \
         ({                                                                      \
