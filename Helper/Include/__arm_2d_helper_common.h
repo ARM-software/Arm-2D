@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        4. July 2024
- * $Revision:    V.1.6.2
+ * $Date:        5. July 2024
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1351,10 +1351,11 @@ extern "C" {
  */
 #define ____item_line_dock_horizontal0()                                        \
             ____item_line_dock_horizontal5(                                     \
-                                ( __layout_assistant__.tArea.tLocation.iX       \
-                                + __layout_assistant__.tArea.tSize.iWidth       \
-                                - __layout_assistant__.tLayout.tLocation.iX),   \
-                                0, 0, 0, 0)
+                    ( __layout_assistant__.tArea.tLocation.iX                   \
+                    + __layout_assistant__.tArea.tSize.iWidth                   \
+                    * (__layout_assistant__.tAlignTable.Horizontal.sWidth + 1)  \
+                    - __layout_assistant__.tLayout.tLocation.iX),               \
+                    0, 0, 0, 0)
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
@@ -1562,10 +1563,11 @@ extern "C" {
  */
 #define ____item_line_dock_vertical0()                                          \
             ____item_line_dock_vertical5(                                       \
-                                ( __layout_assistant__.tArea.tLocation.iY       \
-                                + __layout_assistant__.tArea.tSize.iHeight      \
-                                - __layout_assistant__.tLayout.tLocation.iY),   \
-                                0, 0, 0, 0)
+                    ( __layout_assistant__.tArea.tLocation.iY                   \
+                    + __layout_assistant__.tArea.tSize.iHeight                  \
+                    * (__layout_assistant__.tAlignTable.Horizontal.sHeight + 1) \
+                    - __layout_assistant__.tLayout.tLocation.iY),               \
+                    0, 0, 0, 0)
 
 /*!
  * \brief generate a arm_2d_region (i.e. __item_region) to dock a specific 
