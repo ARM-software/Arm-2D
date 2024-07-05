@@ -22,7 +22,7 @@
  * Description:  the helper service source code for control management
  *
  * $Date:        4. July 2024
- * $Revision:    V.0.7.0
+ * $Revision:    V.0.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

@@ -22,7 +22,7 @@
  * Description:  the helper service header file for control management
  *
  * $Date:        4. July 2024
- * $Revision:    V.0.7.0
+ * $Revision:    V.0.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -73,6 +73,8 @@ extern "C" {
 #define arm_control_enumerate           ARM_CONTROL_ENUMERATE
 #define arm_ctrl_enum                   ARM_CONTROL_ENUMERATE
 #define ARM_CTRL_ENUM                   ARM_CONTROL_ENUMERATE
+#define arm_ctrl_foreach                ARM_CONTROL_ENUMERATE
+#define ARM_CTRL_FOREACH                ARM_CONTROL_ENUMERATE
 
 /*============================ TYPES =========================================*/
 
