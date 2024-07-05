@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        1. July 2024
- * $Revision:    V.1.1.6
+ * $Date:        5. July 2024
+ * $Revision:    V.1.1.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -518,52 +518,35 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             
 
             if (iSteps > 0) {
-
-                do {
-                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-                        nOffsetChange -= ptItem->tSize.iWidth;
-                    } else {
-                        nOffsetChange -= ptItem->tSize.iHeight;
-                    }
-                    
-                    nOffsetChange -= ptItem->Padding.chNext;
-                    nOffsetChange -= ptItem->Padding.chPrevious;
-                    
+                do { 
                     /* next */
-                    arm_2d_list_item_t *ptItemNew = 
-
-                    __arm_2d_list_core_get_item(   
-                                        ptThis, 
-                                        fnIterator,  
-                                        __ARM_2D_LIST_GET_NEXT, 
-                                        this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck,
-                                        false);
+                    arm_2d_list_item_t *ptItemNew = __arm_2d_list_core_get_item(
+                                                ptThis, 
+                                                fnIterator,  
+                                                __ARM_2D_LIST_GET_NEXT, 
+                                                this.Runtime.hwSelection, 
+                                                this.tCFG.bDisableStatusCheck,
+                                                false);
 
                     if (NULL == ptItemNew) {
                         if (this.tCFG.bDisableRingMode) {
                             break;
                         } else {
-
-                            ptItem = __arm_2d_list_core_get_item(   
-                                            ptThis, 
-                                            fnIterator,  
-                                            __ARM_2D_LIST_GET_FIRST_ITEM, 
-                                            this.Runtime.hwSelection, 
-                                            this.tCFG.bDisableStatusCheck,
-                                            false);
-
-                            assert(NULL != ptItem);
-                            
-                            if (NULL == ptItem) {
-                                /* this shouldn't happen */
-                                return ARM_2D_ERR_NOT_AVAILABLE;
-                            }
+                            /* this shouldn't happen */
+                            return ARM_2D_ERR_NOT_AVAILABLE;
                         }
+                    } 
+                    
+                    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                        nOffsetChange -= ptItem->tSize.iWidth;
                     } else {
-                        ptItem = ptItemNew;
+                        nOffsetChange -= ptItem->tSize.iHeight;
                     }
+                
+                    nOffsetChange -= ptItem->Padding.chNext;
+                    nOffsetChange -= ptItem->Padding.chPrevious;
 
+                    ptItem = ptItemNew;                    
                     iMovedSteps++;
 
                 } while(--iSteps);
@@ -571,6 +554,23 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             } else {
 
                 do {
+                    arm_2d_list_item_t *ptItemNew = __arm_2d_list_core_get_item(
+                                                ptThis, 
+                                                fnIterator,  
+                                                __ARM_2D_LIST_GET_PREVIOUS, 
+                                                this.Runtime.hwSelection, 
+                                                this.tCFG.bDisableStatusCheck,
+                                                false);
+
+                    if (NULL == ptItemNew) {
+                        if (this.tCFG.bDisableRingMode) {
+                            break;
+                        } else {
+                            /* this shouldn't happen */
+                            return ARM_2D_ERR_NOT_AVAILABLE;
+                        }
+                    } 
+
                     if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
                         nOffsetChange += ptItem->tSize.iHeight;
                     } else {
@@ -579,40 +579,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
                     
                     nOffsetChange += ptItem->Padding.chNext;
                     nOffsetChange += ptItem->Padding.chPrevious;
-                    
-                    arm_2d_list_item_t *ptItemNew =
 
-                        __arm_2d_list_core_get_item(   
-                                        ptThis, 
-                                        fnIterator,  
-                                        __ARM_2D_LIST_GET_PREVIOUS, 
-                                        this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck,
-                                        false);
-
-                    if (NULL == ptItemNew) {
-                        if (this.tCFG.bDisableRingMode) {
-                            break;
-                        } else {
-
-                            ptItem = __arm_2d_list_core_get_item(   
-                                        ptThis, 
-                                        fnIterator,  
-                                        __ARM_2D_LIST_GET_LAST_ITEM, 
-                                        this.Runtime.hwSelection, 
-                                        this.tCFG.bDisableStatusCheck,
-                                        false);
-
-                            assert(NULL != ptItem);
-                            
-                            if (NULL == ptItem) {
-                                /* this shouldn't happen */
-                                return ARM_2D_ERR_NOT_AVAILABLE;
-                            }
-                        }
-                    } else {
-                        ptItem = ptItemNew;
-                    }
+                    ptItem = ptItemNew;
 
                     iMovedSteps++;
 
