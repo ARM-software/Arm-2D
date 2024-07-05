@@ -162,13 +162,6 @@ arm_2d_err_t arm_2d_helper_control_enum_init(
                             const arm_2d_control_node_t *ptRoot)
 {
 
-
-
-    ARM_CONTROL_ENUMERATE(  ptRoot, ptItem, PREORDER_TRAVERSAL) {
-        ARM_2D_UNUSED(ptItem);
-    }
-
-
     assert(NULL != ptThis);
     assert(NULL != ptPolicy);
 
