@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        3. May 2024
- * $Revision:    V.1.11.1
+ * $Date:        6. July 2024
+ * $Revision:    V.1.11.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4570,6 +4570,10 @@ void arm_2d_helper_dirty_region_transform_update(
     ARM_2D_UNUSED(bIsNewFrame);
 
     arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
+    if (NULL == ptTarget) {
+        return ;
+    }
+
     assert(NULL != ptTarget->ptParent);
 
     if (NULL != ptCanvas) {
@@ -4731,6 +4735,10 @@ void arm_2d_helper_transform_update_dirty_regions(
     ARM_2D_UNUSED(bIsNewFrame);
 
     arm_2d_tile_t *ptTarget = (arm_2d_tile_t *)this.ptTransformOP->Target.ptTile;
+    if (NULL == ptTarget) {
+        return ;
+    }
+
     assert(NULL != ptTarget->ptParent);
 
     if (NULL != ptCanvas) {
