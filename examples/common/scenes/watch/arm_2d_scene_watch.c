@@ -111,7 +111,7 @@ static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    // initialize second pointer
+    // initialize clock pointers
     arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
         arm_2d_helper_dirty_region_transform_init(
                                     &ptItem->tHelper,
