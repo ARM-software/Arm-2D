@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        5. July 2024
- * $Revision:    V.1.6.3
+ * $Date:        6. July 2024
+ * $Revision:    V.1.6.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1565,7 +1565,7 @@ extern "C" {
             ____item_line_dock_vertical5(                                       \
                     ( __layout_assistant__.tArea.tLocation.iY                   \
                     + __layout_assistant__.tArea.tSize.iHeight                  \
-                    * (__layout_assistant__.tAlignTable.Horizontal.sHeight + 1) \
+                    * (__layout_assistant__.tAlignTable.Vertical.sHeight + 1) \
                     - __layout_assistant__.tLayout.tLocation.iY),               \
                     0, 0, 0, 0)
 
