@@ -1109,11 +1109,11 @@ static void __erase_on_change_switch_status(arm_2d_scene_player_t *ptThis)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Erase.iOffset = 0;
+                    this.Switch.iOffset = 0;
                     this.Switch.chState = ERASE;
                     break;
                 case ERASE:
-                    nElapsedTime = this.Switch.Erase.iOffset * this.Switch.hwPeriod / iFullLength;
+                    nElapsedTime = this.Switch.iOffset * this.Switch.hwPeriod / iFullLength;
                     this.Switch.lTimeStamp 
                         = lTimeStamp 
                         - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
@@ -1126,11 +1126,11 @@ static void __erase_on_change_switch_status(arm_2d_scene_player_t *ptThis)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Erase.iOffset = iFullLength;
+                    this.Switch.iOffset = iFullLength;
                     this.Switch.chState = ERASE;
                     break;
                 case ERASE:
-                    nElapsedTime = (iFullLength - this.Switch.Erase.iOffset) * this.Switch.hwPeriod / iFullLength;
+                    nElapsedTime = (iFullLength - this.Switch.iOffset) * this.Switch.hwPeriod / iFullLength;
                     this.Switch.lTimeStamp 
                         = lTimeStamp 
                         - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
@@ -1278,11 +1278,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 
             switch (this.Switch.chState) {
                 case START:
-                    this.Switch.Erase.iOffset = 0;
+                    this.Switch.iOffset = 0;
                     this.Switch.chState++;
                     //break;
                 case ERASE:
-                    this.Switch.Erase.iOffset = iTouchOffset;
+                    this.Switch.iOffset = iTouchOffset;
                     break;
             }
 
@@ -1292,18 +1292,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Erase.iOffset = 0;
+                    this.Switch.iOffset = 0;
 
                     this.Switch.chState++;
                     //break;
                 case ERASE:
                     nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                     
-                    this.Switch.Erase.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                    this.Switch.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
                             / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod));
-                    this.Switch.Erase.iOffset = MIN(iTargetDistance, this.Switch.Erase.iOffset);
+                    this.Switch.iOffset = MIN(iTargetDistance, this.Switch.iOffset);
 
-                    if (this.Switch.Erase.iOffset >= iTargetDistance) {
+                    if (this.Switch.iOffset >= iTargetDistance) {
                         this.Runtime.bSwitchCPL = true;
                         SCENE_SWITCH_RESET_FSM();
                     }
@@ -1313,19 +1313,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Erase.iOffset = iTargetDistance;
+                    this.Switch.iOffset = iTargetDistance;
 
                     this.Switch.chState++;
                     //break;
                 case ERASE:
                     nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                     
-                    this.Switch.Erase.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                    this.Switch.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
                             / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod));
-                    this.Switch.Erase.iOffset = iTargetDistance - MIN(iTargetDistance, this.Switch.Erase.iOffset);
-                    this.Switch.Erase.iOffset = MAX(0, this.Switch.Erase.iOffset);
+                    this.Switch.iOffset = iTargetDistance - MIN(iTargetDistance, this.Switch.iOffset);
+                    this.Switch.iOffset = MAX(0, this.Switch.iOffset);
 
-                    if (this.Switch.Erase.iOffset <= 0) {
+                    if (this.Switch.iOffset <= 0) {
                         this.Runtime.bSwitchCPL = true;
                         SCENE_SWITCH_RESET_FSM();
                     }
@@ -1334,7 +1334,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
         }
     }
 
-    iOffset = this.Switch.Erase.iOffset;
+    iOffset = this.Switch.iOffset;
     
     /* handle default background */
     do {
@@ -1635,11 +1635,11 @@ static void __slide_on_change_switch_status(arm_2d_scene_player_t *ptThis)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Slide.iOffset = 0;
+                    this.Switch.iOffset = 0;
                     this.Switch.chState = SLIDE;
                     break;
                 case SLIDE:
-                    nElapsedTime = this.Switch.Slide.iOffset * this.Switch.hwPeriod / iFullLength;
+                    nElapsedTime = this.Switch.iOffset * this.Switch.hwPeriod / iFullLength;
                     this.Switch.lTimeStamp 
                         = lTimeStamp 
                         - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
@@ -1652,11 +1652,11 @@ static void __slide_on_change_switch_status(arm_2d_scene_player_t *ptThis)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Slide.iOffset = iFullLength;
+                    this.Switch.iOffset = iFullLength;
                     this.Switch.chState = SLIDE;
                     break;
                 case SLIDE:
-                    nElapsedTime = (iFullLength - this.Switch.Slide.iOffset) * this.Switch.hwPeriod / iFullLength;
+                    nElapsedTime = (iFullLength - this.Switch.iOffset) * this.Switch.hwPeriod / iFullLength;
                     this.Switch.lTimeStamp 
                         = lTimeStamp 
                         - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
@@ -1760,11 +1760,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 
             switch (this.Switch.chState) {
                 case START:
-                    this.Switch.Slide.iOffset = 0;
+                    this.Switch.iOffset = 0;
                     this.Switch.chState++;
                     //break;
                 case SLIDE:
-                    this.Switch.Slide.iOffset = iTouchOffset;
+                    this.Switch.iOffset = iTouchOffset;
                     break;
             }
 
@@ -1773,19 +1773,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Slide.iOffset = 0;
+                    this.Switch.iOffset = 0;
 
                     this.Switch.chState++;
                     //break;
                 case SLIDE:
                     nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                     
-                    this.Switch.Slide.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                    this.Switch.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
                             / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod));
-                    this.Switch.Slide.iOffset = MIN(iTargetDistance, this.Switch.Slide.iOffset);
-                    this.Switch.Slide.iOffset = MAX(0, this.Switch.Slide.iOffset);
+                    this.Switch.iOffset = MIN(iTargetDistance, this.Switch.iOffset);
+                    this.Switch.iOffset = MAX(0, this.Switch.iOffset);
 
-                    if (this.Switch.Slide.iOffset >= iTargetDistance) {
+                    if (this.Switch.iOffset >= iTargetDistance) {
                         this.Runtime.bSwitchCPL = true;
                         SCENE_SWITCH_RESET_FSM();
                     }
@@ -1795,20 +1795,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.Slide.iOffset = iTargetDistance;
+                    this.Switch.iOffset = iTargetDistance;
 
                     this.Switch.chState++;
                     //break;
                 case SLIDE:
                     nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
                     
-                    this.Switch.Slide.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                    this.Switch.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
                             / arm_2d_helper_convert_ms_to_ticks( 
                                     this.Switch.hwPeriod));
-                    this.Switch.Slide.iOffset = iTargetDistance - MIN(iTargetDistance, this.Switch.Slide.iOffset);
-                    this.Switch.Slide.iOffset = MAX(0, this.Switch.Slide.iOffset);
+                    this.Switch.iOffset = iTargetDistance - MIN(iTargetDistance, this.Switch.iOffset);
+                    this.Switch.iOffset = MAX(0, this.Switch.iOffset);
 
-                    if (this.Switch.Slide.iOffset <= 0) {
+                    if (this.Switch.iOffset <= 0) {
                         this.Runtime.bSwitchCPL = true;
                         SCENE_SWITCH_RESET_FSM();
                     }
@@ -1877,21 +1877,21 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
-                tWindow.tLocation.iX = -this.Switch.Slide.iOffset;
+                tWindow.tLocation.iX = -this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
                                                         false);
                 break;
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
-                tWindow.tLocation.iX = this.Switch.Slide.iOffset;
+                tWindow.tLocation.iX = this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
                                                         false);
                 break;
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
-                tWindow.tLocation.iY = -this.Switch.Slide.iOffset;
+                tWindow.tLocation.iY = -this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
@@ -1899,7 +1899,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
-                tWindow.tLocation.iY = this.Switch.Slide.iOffset;
+                tWindow.tLocation.iY = this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
@@ -1935,7 +1935,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         
         switch(this.Switch.tConfig.Feature.chMode) {
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT:
-                tWindow.tLocation.iX = iTargetDistance - this.Switch.Slide.iOffset;
+                tWindow.tLocation.iX = iTargetDistance - this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
@@ -1943,7 +1943,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT:
-                tWindow.tLocation.iX = -(iTargetDistance - this.Switch.Slide.iOffset);
+                tWindow.tLocation.iX = -(iTargetDistance - this.Switch.iOffset);
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
@@ -1951,7 +1951,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP:
-                tWindow.tLocation.iY = iTargetDistance - this.Switch.Slide.iOffset;
+                tWindow.tLocation.iY = iTargetDistance - this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 
@@ -1959,7 +1959,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
                 break;
 
             case ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN:
-                tWindow.tLocation.iY = -(iTargetDistance - this.Switch.Slide.iOffset);
+                tWindow.tLocation.iY = -(iTargetDistance - this.Switch.iOffset);
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
                                                         &this.Switch.Slide.tSceneWindow, 

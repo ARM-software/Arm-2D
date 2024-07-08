@@ -329,29 +329,23 @@ struct arm_2d_scene_player_t {
         
         struct {
             arm_2d_scene_switch_mode_t *ptMode;                                 //!< the switching mode
+            uint8_t chState;                                                    //!< FSM state
+            int16_t iOffset;                                            //!< erase offset
             union {
-                uint8_t chState;                                                //!< FSM state
                 struct {
-                    uint8_t chState;                                            //!< FSM state
                     uint8_t chOpacity;                                          //!< opacity of the cover
                     bool bIsFadeBlack;                                          //!< the colour of the cover
                 } Fade;
                 struct {
-                    uint8_t chState;                                            //!< FSM state
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
                     arm_2d_tile_t tTemp;                                        //!< a temp tile
-                    int16_t iOffset;                                            //!< erase offset
                 } Erase;
                 struct {
-                    uint8_t chState;                                            //!< FSM state
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
                     arm_2d_tile_t tTemp;                                        //!< a temp tile
-                    int16_t iOffset;                                            //!< erase offset
                 } Fly;
                 struct {
-                    uint8_t chState;                                            //!< FSM state
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
-                    int16_t iOffset;                                            //!< slide offset
                 } Slide;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
