@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        27. June 2024
- * $Revision:    V.1.6.10
+ * $Date:        8. July 2024
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -335,23 +335,24 @@ struct arm_2d_scene_player_t {
                     uint8_t chState;                                            //!< FSM state
                     uint8_t chOpacity;                                          //!< opacity of the cover
                     bool bIsFadeBlack;                                          //!< the colour of the cover
-                }Fade;
+                } Fade;
                 struct {
                     uint8_t chState;                                            //!< FSM state
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
                     arm_2d_tile_t tTemp;                                        //!< a temp tile
                     int16_t iOffset;                                            //!< erase offset
-                }Erase;
+                } Erase;
+                struct {
+                    uint8_t chState;                                            //!< FSM state
+                    arm_2d_tile_t tSceneWindow;                                 //!< scene window
+                    arm_2d_tile_t tTemp;                                        //!< a temp tile
+                    int16_t iOffset;                                            //!< erase offset
+                } Fly;
                 struct {
                     uint8_t chState;                                            //!< FSM state
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
                     int16_t iOffset;                                            //!< slide offset
-                }Slide;
-                struct {
-                    uint8_t chState;                                            //!< FSM state
-                    arm_2d_tile_t tSceneWindow;                                 //!< scene window
-                    int16_t iOffset;                                            //!< slide offset
-                }Fly;
+                } Slide;
             };
             __arm_2d_helper_scene_switch_t tConfig;                             //!< the switching configuration
 
