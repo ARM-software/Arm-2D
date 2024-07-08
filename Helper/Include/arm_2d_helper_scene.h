@@ -465,27 +465,6 @@ ARM_NONNULL(1)
 void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis);
 
 /*!
- * \brief check whether scene player is switching scenes
- * 
- * \param[in] ptThis the target scene player
- * \return true the scene player is switching scenes
- * \return false the scene player stays in tge current scene.
- */
-extern
-ARM_NONNULL(1)
-bool arm_2d_scene_player_is_switching(arm_2d_scene_player_t *ptThis);
-
-/*!
- * \brief get the scene player switching status
- * 
- * \param[in] ptThis the target scene player
- * \return arm_2d_scene_player_switch_status_t the switching status
- */
-extern
-ARM_NONNULL(1)
-arm_2d_scene_player_switch_status_t
-arm_2d_scene_player_get_switching_status(arm_2d_scene_player_t *ptThis);
-/*!
  * \brief configure the scene switching mode
  *
  * \param[in] ptThis the target scene player
@@ -544,6 +523,28 @@ ARM_NONNULL(1)
 arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_t *ptThis, 
                                                             bool bMoveToPreviousScene,
                                                             int_fast16_t iInMS);
+
+/*!
+ * \brief check whether scene player is switching scenes
+ * 
+ * \param[in] ptThis the target scene player
+ * \return true the scene player is switching scenes
+ * \return false the scene player stays in tge current scene.
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_scene_player_is_switching(arm_2d_scene_player_t *ptThis);
+
+/*!
+ * \brief get the scene player switching status
+ * 
+ * \param[in] ptThis the target scene player
+ * \return arm_2d_scene_player_switch_status_t the switching status
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_scene_player_switch_status_t
+arm_2d_scene_player_get_switching_status(arm_2d_scene_player_t *ptThis);
 
 /*!
  * \brief register / update the evtOnDrawNavigation event handler. You can use 

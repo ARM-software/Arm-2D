@@ -308,9 +308,9 @@ int app_2d_main_thread (void *argument)
             before_scene_switching_handler);
 
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN);
-    //arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
-    arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, -1);
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
+    //arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, -1);
 
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
@@ -337,7 +337,7 @@ int app_2d_main_thread (void *argument)
                         if (s_bTouchDown) {
                             /* touch up */
                             arm_2d_scene_player_finish_manual_switching(&DISP0_ADAPTER, 
-                                                                        true,
+                                                                        false,
                                                                         500);
                             s_tLastLocation.iX = 0;
                             s_tLastLocation.iY = 0;
