@@ -146,8 +146,8 @@ var group__gHelper =
     [ "arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__", "group__gHelper.html#unionarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153____", null ],
     [ "arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Fade", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fade", null ],
     [ "arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Erase", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Erase", null ],
-    [ "arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Slide", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Slide", null ],
     [ "arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Fly", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly", null ],
+    [ "arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Slide", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Slide", null ],
     [ "arm_2d_scene_player_t.__unnamed147__.Events", "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Events", null ],
     [ "arm_2d_list_item_t.__unnamed159__", "group__gHelper.html#unionarm__2d__list__item__t_8____unnamed159____", [
       [ "hwAttribute", "group__gHelper.html#af3a87c9aafaaf4dd80597bed4c9d8e32", null ]
