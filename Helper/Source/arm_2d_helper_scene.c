@@ -76,6 +76,9 @@
 #   define __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__          200
 #endif
 
+#define __slide_on_change_switch_status __default_on_change_switch_status
+#define __erase_on_change_switch_status __default_on_change_switch_status
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -92,14 +95,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade);
 
 static
 ARM_NONNULL(1)
-void __slide_on_change_switch_status(arm_2d_scene_player_t *ptThis);
+void __default_on_change_switch_status(arm_2d_scene_player_t *ptThis);
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide);
-
-static
-ARM_NONNULL(1)
-void __erase_on_change_switch_status(arm_2d_scene_player_t *ptThis);
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase);
@@ -1073,11 +1072,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1)
-static void __erase_on_change_switch_status(arm_2d_scene_player_t *ptThis)
+static void __default_on_change_switch_status(arm_2d_scene_player_t *ptThis)
 {
     enum {
         START = 0,
-        ERASE,
+        MOVE, 
+        ERASE = MOVE,
+        SLIDE = MOVE,
+        FLY = MOVE,
     };
 
     assert(NULL != ptThis);
@@ -1103,16 +1105,15 @@ static void __erase_on_change_switch_status(arm_2d_scene_player_t *ptThis)
         int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
         int32_t nElapsedTime = 0;
 
-
         if (!this.Runtime.bCancelSwitchReq) {
 
             switch (this.Switch.chState) {
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
                     this.Switch.iOffset = 0;
-                    this.Switch.chState = ERASE;
+                    this.Switch.chState = MOVE;
                     break;
-                case ERASE:
+                case MOVE:
                     nElapsedTime = this.Switch.iOffset * this.Switch.hwPeriod / iFullLength;
                     this.Switch.lTimeStamp 
                         = lTimeStamp 
@@ -1127,9 +1128,9 @@ static void __erase_on_change_switch_status(arm_2d_scene_player_t *ptThis)
                 case START:
                     this.Switch.lTimeStamp = lTimeStamp;
                     this.Switch.iOffset = iFullLength;
-                    this.Switch.chState = ERASE;
+                    this.Switch.chState = MOVE;
                     break;
-                case ERASE:
+                case MOVE:
                     nElapsedTime = (iFullLength - this.Switch.iOffset) * this.Switch.hwPeriod / iFullLength;
                     this.Switch.lTimeStamp 
                         = lTimeStamp 
@@ -1597,79 +1598,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 /*----------------------------------------------------------------------------*
  * Switch Mode: Slide                                                         *
  *----------------------------------------------------------------------------*/
-
-ARM_NONNULL(1)
-static void __slide_on_change_switch_status(arm_2d_scene_player_t *ptThis)
-{
-    enum {
-        START = 0,
-        SLIDE,
-    };
-
-    assert(NULL != ptThis);
-
-    if (this.Runtime.bManualSwitchReq == this.Runtime.bManualSwitch) {
-        if (!this.Runtime.bManualSwitch) {
-            /* auto switch, no change */
-            return ;
-        }
-
-        if (this.Runtime.bFinishManualSwitch == this.Runtime.bFinishManualSwitchReq) {
-            if (this.Runtime.bCancelSwitch == this.Runtime.bCancelSwitchReq) {
-                /* no switch mode changed */
-                return ;
-            }
-        }
-    }
-
-    if (this.Runtime.bManualSwitch && this.Runtime.bFinishManualSwitchReq) {
-
-        int16_t iFullLength = this.Switch.iFullLength;
-
-        int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
-        int32_t nElapsedTime = 0;
-
-
-        if (!this.Runtime.bCancelSwitchReq) {
-
-            switch (this.Switch.chState) {
-                case START:
-                    this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.iOffset = 0;
-                    this.Switch.chState = SLIDE;
-                    break;
-                case SLIDE:
-                    nElapsedTime = this.Switch.iOffset * this.Switch.hwPeriod / iFullLength;
-                    this.Switch.lTimeStamp 
-                        = lTimeStamp 
-                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
-                    break;
-
-                default:
-                    break;
-            }
-        } else {
-            switch (this.Switch.chState) {
-                case START:
-                    this.Switch.lTimeStamp = lTimeStamp;
-                    this.Switch.iOffset = iFullLength;
-                    this.Switch.chState = SLIDE;
-                    break;
-                case SLIDE:
-                    nElapsedTime = (iFullLength - this.Switch.iOffset) * this.Switch.hwPeriod / iFullLength;
-                    this.Switch.lTimeStamp 
-                        = lTimeStamp 
-                        - arm_2d_helper_convert_ms_to_ticks(nElapsedTime);
-                    break;
-
-                default:
-                    break;
-            }
-        
-        }
-    }
-}
-
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
