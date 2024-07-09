@@ -424,8 +424,13 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur( __arm_2d_sub_t
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits | upper}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
 
-    arm_2d_region_t tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,

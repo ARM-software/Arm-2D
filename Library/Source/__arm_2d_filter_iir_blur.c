@@ -361,8 +361,13 @@ arm_fsm_rt_t __arm_2d_gray8_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
 
-    arm_2d_region_t tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,
@@ -712,8 +717,13 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
 
-    arm_2d_region_t tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,
@@ -1055,8 +1065,13 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
 
-    arm_2d_region_t tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,

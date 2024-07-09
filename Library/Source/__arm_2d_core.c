@@ -1700,9 +1700,9 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process( arm_2d_op_core_t *ptOP)
     
     if (NULL == this.Target.ptRegion) {
         //! use target region instead
-        this.Target.ptRegion = &(this.Target.ptTile->tRegion);
+        //this.Target.ptRegion = &(this.Target.ptTile->tRegion);
         
-        tTargetRegion.tSize = (*this.Target.ptRegion).tSize;
+        tTargetRegion.tSize = this.Target.ptTile->tRegion.tSize;
     } else {
 
         tTargetRegion = *this.Target.ptRegion;

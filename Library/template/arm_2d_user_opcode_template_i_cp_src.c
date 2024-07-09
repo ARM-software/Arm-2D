@@ -131,7 +131,13 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_<user opcode template>( __arm_2d_sub_task_t *pt
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-    arm_2d_region_t tTargetRegion = *(((arm_2d_op_t *)ptThis)->Target.ptRegion);
+    arm_2d_region_t tTargetRegion = {0};
+    
+    if (NULL == ((arm_2d_op_t *)ptThis)->Target.ptRegion) {
+        tTargetRegion = ((arm_2d_op_t *)ptThis)->Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *(((arm_2d_op_t *)ptThis)->Target.ptRegion);
+    }
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( ((arm_2d_op_t *)ptThis)->Target.ptTile,

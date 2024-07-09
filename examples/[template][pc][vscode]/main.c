@@ -197,29 +197,28 @@ static scene_loader_t * const c_SceneLoaders[] = {
 
 #if 1
     scene_basics_loader,
-    scene_gas_gauge_loader,
-    scene_fan_loader,
     scene_progress_status_loader,
+    scene_fan_loader,
     scene_console_window_loader,
     scene_meter_loader,
     scene_alarm_clock_loader,
     scene_atom_loader,
     scene_histogram_loader,
     scene_bubble_charging_loader,
-    //scene_gas_gauge_loader,
+    scene_gas_gauge_loader,
     scene_listview_loader,
     scene_menu_loader,
-
     scene_panel_loader,
     scene_fitness_loader,
     scene_audiomark_loader,
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     scene_virtual_resource_loader,
-    scene_animate_background_loader,
+    //scene_animate_background_loader,
 #endif
 
 #else
-    scene_basics_loader,
+    scene_bubble_charging_loader,
+    //scene_basics_loader,
 #endif
 
 
@@ -304,12 +303,15 @@ int app_2d_main_thread (void *argument)
             &DISP0_ADAPTER,
             before_scene_switching_handler);
 
+#if 1
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT,
-                                            ARM_2D_SCENE_SWITCH_CFG_BG_BLUR
-                                            );
-    //arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+    arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
+#else
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT);
     arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, -1);
+#endif
 
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
