@@ -2225,12 +2225,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
             this.Runtime.bCallNewSceneFrameCPL = true;
             this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
 
-            uint8_t chOpacity = this.Switch.iOffset * 255 / this.Switch.iFullLength;
+            uint8_t chRatio = this.Switch.iOffset * 255 / this.Switch.iFullLength;
 
             arm_2d_fill_colour_with_opacity(ptTile, 
                                             NULL, 
                                             (__arm_2d_color_t){ptScene->tCanvas.wColour},
-                                            chOpacity);
+                                            chRatio);
 
             __draw_scene_default( ptThis, 
                                 ptScene, 

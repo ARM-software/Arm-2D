@@ -165,6 +165,8 @@ typedef enum {
     __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_msk       = 3 << 12,                   //!< For internal user only
     __ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos       = 12,                        //!< For internal user only
 
+    ARM_2D_SCENE_SWITCH_CFG_BG_BLUR                = _BV(14),                   //!< blurring the background when possible
+
 } arm_2d_scene_player_switch_mode_t;
 
 /*!
@@ -192,7 +194,8 @@ typedef union __arm_2d_helper_scene_switch_t {
         uint8_t bIgnoreNewSceneBG       : 1;                                    //!< when set, ignore the background of the new scene
         uint8_t bIgnoreNewScene         : 1;                                    //!< when set, ignore the new scene
         uint8_t u2DefaultBG             : 2;                                    //!< the default background
-        uint8_t                         : 2;
+        uint8_t bBlurBG                 : 1;                                    //!< when set, enable blurring when possible
+        uint8_t                         : 1;
     } Feature;
     uint16_t hwSetting;                                                         //!< the setting value
 
