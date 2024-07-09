@@ -325,6 +325,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                 }
 
                 __item_line_dock_vertical() {
+                    arm_lcd_text_set_target_framebuffer(ptTile);
                     arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
                     arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
