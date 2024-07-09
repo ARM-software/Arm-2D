@@ -227,8 +227,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Erase"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Erase">arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Erase</a></td></tr>
 <tr class="separator:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Erase"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly">arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Fly</a></td></tr>
-<tr class="separator:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn">arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.FlyIn</a></td></tr>
+<tr class="separator:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Slide"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Slide">arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Slide</a></td></tr>
 <tr class="separator:structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Slide"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__scene__player__t_8____unnamed147_____8Events"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Events">arm_2d_scene_player_t.__unnamed147__.Events</a></td></tr>
@@ -458,6 +458,14 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb">ARM_2D_SCENE_SWITCH_CFG_ERASE_UP</a>
 , <br />
 &#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a4eb1e0e932f8b010938f9db92569eea1">ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3af499ef6240904df37eefa6d0ee0fb8c7">ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT</a> = 12
+, <br />
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ab3b48accb05d148567d193a912561338">ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ac5c2bb9f1f266608b1c08b2a08dd2a86">ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP</a>
+, <br />
+&#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ae7ac1952f86f70a380f67b470f32770d">ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM</a>
 , <br />
 &#160;&#160;<a class="el" href="group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a65ffe6ddd0d38fabf60f2ddbc60bfc55">__ARM_2D_SCENE_SWITCH_CFG_VALID</a>
 , <br />
@@ -1010,6 +1018,18 @@ Variables</h2></td></tr>
 <tr class="memitem:gabfd152c75dca5beb6f64d5cb8e659a3e"><td class="memItemLeft" align="right" valign="top"><a id="gabfd152c75dca5beb6f64d5cb8e659a3e" name="gabfd152c75dca5beb6f64d5cb8e659a3e"></a>
 <a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN</b></td></tr>
 <tr class="separator:gabfd152c75dca5beb6f64d5cb8e659a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33e11a17bbd4f7e2dce329ee22ba37fd"><td class="memItemLeft" align="right" valign="top"><a id="ga33e11a17bbd4f7e2dce329ee22ba37fd" name="ga33e11a17bbd4f7e2dce329ee22ba37fd"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_LEFT</b></td></tr>
+<tr class="separator:ga33e11a17bbd4f7e2dce329ee22ba37fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfad9e1b3b018999d4615c73c0dd0d64"><td class="memItemLeft" align="right" valign="top"><a id="gabfad9e1b3b018999d4615c73c0dd0d64" name="gabfad9e1b3b018999d4615c73c0dd0d64"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT</b></td></tr>
+<tr class="separator:gabfad9e1b3b018999d4615c73c0dd0d64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga074f5243cbb0b7bfb0a4755f3a46eeb0"><td class="memItemLeft" align="right" valign="top"><a id="ga074f5243cbb0b7bfb0a4755f3a46eeb0" name="ga074f5243cbb0b7bfb0a4755f3a46eeb0"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_UP</b></td></tr>
+<tr class="separator:ga074f5243cbb0b7bfb0a4755f3a46eeb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12df04c375498311514f27fb6d347493"><td class="memItemLeft" align="right" valign="top"><a id="ga12df04c375498311514f27fb6d347493" name="ga12df04c375498311514f27fb6d347493"></a>
+<a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_DOWN</b></td></tr>
+<tr class="separator:ga12df04c375498311514f27fb6d347493"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab5dba585d0d04b6e9ab0aa523f307599"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab5dba585d0d04b6e9ab0aa523f307599">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL</a></td></tr>
 <tr class="memdesc:gab5dba585d0d04b6e9ab0aa523f307599"><td class="mdescLeft">&#160;</td><td class="mdescRight">a list calculator for vertical lists, which puts selected item in the centre of the target list  <a href="group__gHelper.html#gab5dba585d0d04b6e9ab0aa523f307599">More...</a><br /></td></tr>
 <tr class="separator:gab5dba585d0d04b6e9ab0aa523f307599"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1486,7 +1506,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-scene window <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime the switching mode FSM state erase offset opacity of the cover the colour of the cover scene window a temp tile scene window a temp tile the switching configuration the coordinate offset for manual switching mode, used in erasing, sliding etc. the full length of the axis of switching the switching should finish in specified millisecond <br  />
+scene window <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime the switching mode FSM state erase offset opacity of the cover the colour of the cover scene window a temp tile scene window the switching configuration the coordinate offset for manual switching mode, used in erasing, sliding etc. the full length of the axis of switching the switching should finish in specified millisecond <br  />
  </p>
 </td></tr>
 <tr><td class="fieldtype">
@@ -3199,9 +3219,9 @@ Erase</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="aac51deb7d2c3f9663a6df72c7c9b2b51" name="aac51deb7d2c3f9663a6df72c7c9b2b51"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly">arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Fly</a></td>
+<a id="a76e1f51fe2c58f3530140df59f88eae3" name="a76e1f51fe2c58f3530140df59f88eae3"></a>struct <a class="el" href="group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn">arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.FlyIn</a></td>
 <td class="fieldname">
-Fly</td>
+FlyIn</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -3272,14 +3292,14 @@ tTemp</td>
 
 </div>
 </div>
-<a name="structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly" id="structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Fly">&#9670;&nbsp;</a></span>arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Fly</h2>
+<a name="structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn" id="structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn">&#9670;&nbsp;</a></span>arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.FlyIn</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.Fly</td>
+          <td class="memname">struct arm_2d_scene_player_t.__unnamed147__.Switch.__unnamed153__.FlyIn</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -3289,12 +3309,6 @@ tTemp</td>
 <a id="a898ef4be8488949f29e79cf8af99fb68" name="a898ef4be8488949f29e79cf8af99fb68"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
 <td class="fieldname">
 tSceneWindow</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a id="a5035a42a1554995cc16b215a28ba2a86" name="a5035a42a1554995cc16b215a28ba2a86"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
-<td class="fieldname">
-tTemp</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -6087,6 +6101,14 @@ false the new content is stored in ptOrigin </dd></dl>
 <tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb" name="ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb"></a>ARM_2D_SCENE_SWITCH_CFG_ERASE_UP&#160;</td><td class="fielddoc"><p >erase to the top </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a4eb1e0e932f8b010938f9db92569eea1" name="ggab79c6ab3540af636c218dc40fa065ac3a4eb1e0e932f8b010938f9db92569eea1"></a>ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN&#160;</td><td class="fielddoc"><p >erase to the bottom </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3af499ef6240904df37eefa6d0ee0fb8c7" name="ggab79c6ab3540af636c218dc40fa065ac3af499ef6240904df37eefa6d0ee0fb8c7"></a>ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT&#160;</td><td class="fielddoc"><p >fly in from left </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ab3b48accb05d148567d193a912561338" name="ggab79c6ab3540af636c218dc40fa065ac3ab3b48accb05d148567d193a912561338"></a>ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT&#160;</td><td class="fielddoc"><p >fly in from right </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ac5c2bb9f1f266608b1c08b2a08dd2a86" name="ggab79c6ab3540af636c218dc40fa065ac3ac5c2bb9f1f266608b1c08b2a08dd2a86"></a>ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP&#160;</td><td class="fielddoc"><p >fly in from top </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3ae7ac1952f86f70a380f67b470f32770d" name="ggab79c6ab3540af636c218dc40fa065ac3ae7ac1952f86f70a380f67b470f32770d"></a>ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM&#160;</td><td class="fielddoc"><p >fly in from bottom </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggab79c6ab3540af636c218dc40fa065ac3a65ffe6ddd0d38fabf60f2ddbc60bfc55" name="ggab79c6ab3540af636c218dc40fa065ac3a65ffe6ddd0d38fabf60f2ddbc60bfc55"></a>__ARM_2D_SCENE_SWITCH_CFG_VALID&#160;</td><td class="fielddoc"><p >For internal user only. </p>
 </td></tr>
