@@ -2002,28 +2002,28 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
 
         /* calculate iTouchOffset */
         switch(this.Switch.tConfig.Feature.chMode) {
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
                 if (this.Switch.tTouchPointer.iX < 0) {
                     iTouchOffset = 0;
                 } else {
                     iTouchOffset = this.Switch.iFullLength - this.Switch.tTouchPointer.iX;
                 }
                 break;
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
                 if (this.Switch.tTouchPointer.iX < 0) {
                     iTouchOffset = 0;
                 } else {
                     iTouchOffset = this.Switch.tTouchPointer.iX;
                 }
                 break;
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
                 if (this.Switch.tTouchPointer.iY < 0) {
                     iTouchOffset = 0;
                 } else {
                     iTouchOffset = this.Switch.iFullLength - this.Switch.tTouchPointer.iY;
                 }
                 break;
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
                 if (this.Switch.tTouchPointer.iY < 0) {
                     iTouchOffset = 0;
                 } else {
@@ -2182,7 +2182,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
         };
         
         switch(this.Switch.tConfig.Feature.chMode) {
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
                 tWindow.tLocation.iX = iTargetDistance - this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
@@ -2190,7 +2190,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
                                                         false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
                 tWindow.tLocation.iX = -(iTargetDistance - this.Switch.iOffset);
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
@@ -2198,7 +2198,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
                                                         false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
                 tWindow.tLocation.iY = iTargetDistance - this.Switch.iOffset;
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 
@@ -2206,7 +2206,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
                                                         false);
                 break;
 
-            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
                 tWindow.tLocation.iY = -(iTargetDistance - this.Switch.iOffset);
                 ptWindow = arm_2d_tile_generate_child(  ptTile, 
                                                         &tWindow, 

@@ -308,7 +308,7 @@ int app_2d_main_thread (void *argument)
             before_scene_switching_handler);
 
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT);
+                                            ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT);
     //arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
     arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, -1);
 

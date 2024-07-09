@@ -416,10 +416,10 @@ extern
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT;
 
 extern
-arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_UP;
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_TOP;
 
 extern
-arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_DOWN;
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_BOTTOM;
 
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
