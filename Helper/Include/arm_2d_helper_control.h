@@ -47,7 +47,6 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
-
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 #define ARM_CONTROL_ENUMERATE(__ROOT, __ITEM_NAME, __POLICY )                   \
@@ -100,7 +99,6 @@ typedef struct arm_2d_control_enumeration_policy_t {
     arm_2d_control_node_t * (*fnGetNextNode)    (arm_2d_control_enumerator_t *ptThis);
 } arm_2d_control_enumeration_policy_t;
 
-
 struct arm_2d_control_enumerator_t {
     const arm_2d_control_enumeration_policy_t *ptPolicy;
     arm_2d_control_node_t *ptRoot;
@@ -117,7 +115,6 @@ struct arm_2d_control_enumerator_t {
             uint8_t chPTState;
         } Postorder;
     };
-
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -132,7 +129,6 @@ struct arm_2d_control_enumerator_t {
 extern 
 const  arm_2d_control_enumeration_policy_t
 ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL;
-
 
 /*!
  * \brief The Postorder traversal is suitable for the following operations in the
@@ -169,13 +165,10 @@ extern
 arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
-
 ARM_NONNULL(1)
 extern
 arm_2d_err_t arm_2d_helper_control_enum_depose(
                                             arm_2d_control_enumerator_t *ptThis);
-
-
 
 ARM_NONNULL(1)
 extern
