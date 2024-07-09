@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        12. June 2024
- * $Revision:    V.1.2.1
+ * $Date:        9. July 2024
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -124,6 +124,10 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
                 arm_2d_size_t tSize = ptTarget->tRegion.tSize;
                 if (NULL != ptRegion) {
                     tSize = ptRegion->tSize;
+                }
+
+                if (NULL != (void *)(this.tScratchMemory.pBuffer)) {
+                    break;
                 }
 
                 if (NULL == arm_2d_scratch_memory_new(  
@@ -439,6 +443,10 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
                 arm_2d_size_t tSize = ptTarget->tRegion.tSize;
                 if (NULL != ptRegion) {
                     tSize = ptRegion->tSize;
+                }
+
+                if (NULL != (void *)(this.tScratchMemory.pBuffer)) {
+                    break;
                 }
 
                 if (NULL == arm_2d_scratch_memory_new(  
@@ -786,6 +794,10 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
                 arm_2d_size_t tSize = ptTarget->tRegion.tSize;
                 if (NULL != ptRegion) {
                     tSize = ptRegion->tSize;
+                }
+
+                if (NULL != (void *)(this.tScratchMemory.pBuffer)) {
+                    break;
                 }
 
                 if (NULL == arm_2d_scratch_memory_new(  
