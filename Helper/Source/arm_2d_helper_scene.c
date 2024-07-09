@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        8. July 2024
- * $Revision:    V.1.7.0
+ * $Date:        9. July 2024
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -76,8 +76,9 @@
 #   define __ARM_2D_CFG_HELPER_SWITCH_MIN_PERIOD__          200
 #endif
 
-#define __slide_on_change_switch_status __default_on_change_switch_status
-#define __erase_on_change_switch_status __default_on_change_switch_status
+#define __slide_on_change_switch_status     __default_on_change_switch_status
+#define __erase_on_change_switch_status     __default_on_change_switch_status
+#define __fly_in_on_change_switch_status    __default_on_change_switch_status
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -102,6 +103,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide);
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase);
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in);
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -175,6 +179,30 @@ arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_erase,
     .fnOnRequestChangeSwitchingStatus = &__erase_on_change_switch_status,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_LEFT = {
+    .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT,
+    .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
+    .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT = {
+    .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT,
+    .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
+    .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_TOP = {
+    .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP,
+    .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
+    .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+};
+
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_BOTTOM = {
+    .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM,
+    .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
+    .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
 };
 
 
@@ -484,9 +512,6 @@ arm_2d_err_t arm_2d_scene_player_finish_manual_switching(   arm_2d_scene_player_
 
     return ARM_2D_ERR_NONE;
 }
-
-
-
 
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_on_draw_navigation_event_handler(
@@ -1067,19 +1092,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fade)
     return arm_fsm_rt_cpl;
 }
 
-/*----------------------------------------------------------------------------*
- * Switch Mode: Erase                                                         *
- *----------------------------------------------------------------------------*/
+
 
 ARM_NONNULL(1)
 static void __default_on_change_switch_status(arm_2d_scene_player_t *ptThis)
 {
     enum {
-        START = 0,
+        START   = 0,
         MOVE, 
-        ERASE = MOVE,
-        SLIDE = MOVE,
-        FLY = MOVE,
+        ERASE   = MOVE,
+        SLIDE   = MOVE,
+        FLY_IN  = MOVE,
     };
 
     assert(NULL != ptThis);
@@ -1145,13 +1168,18 @@ static void __default_on_change_switch_status(arm_2d_scene_player_t *ptThis)
     }
 }
 
+/*----------------------------------------------------------------------------*
+ * Switch Mode: Erase                                                         *
+ *----------------------------------------------------------------------------*/
+
 static 
-void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
+void __draw_scene_default(arm_2d_scene_player_t *ptThis,
                         arm_2d_scene_t *ptScene,
                         const arm_2d_tile_t *ptTile,
                         bool bIsNewFrame,
                         bool bIgnoreBG,
-                        bool bIgnoreScene)
+                        bool bIgnoreScene,
+                        bool bIgnoreCavas)
 {
     ARM_2D_UNUSED(ptThis);
     bool bCanvasFilled = false;
@@ -1166,11 +1194,12 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
             ARM_2D_INVOKE_RT_VOID( ptScene->fnOnBGStart, ptScene);
         }
 
-        /* fill canvas */
-        arm_2d_helper_fill_tile_colour( ptTile, 
-                                        ptTile->tInfo.tColourInfo,
-                                        ptScene->tCanvas);
-
+        if (!bIgnoreCavas) {
+            /* fill canvas */
+            arm_2d_helper_fill_tile_colour( ptTile, 
+                                            ptTile->tInfo.tColourInfo,
+                                            ptScene->tCanvas);
+        }
         ARM_2D_INVOKE( ptScene->fnBackground, ptScene, ptTile, bIsNewFrame);
     }
     if (!bIgnoreScene) {
@@ -1178,7 +1207,7 @@ void __draw_erase_scene(arm_2d_scene_player_t *ptThis,
             ARM_2D_INVOKE_RT_VOID( ptScene->fnOnFrameStart, ptScene);
         }
 
-        if (!bCanvasFilled) {
+        if (!bCanvasFilled && !bIgnoreCavas) {
             /* fill canvas */
             arm_2d_helper_fill_tile_colour( ptTile, 
                                             ptTile->tInfo.tColourInfo,
@@ -1476,12 +1505,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             this.Runtime.bCallOldSceneFrameCPL = true;
             this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
 
-            __draw_erase_scene( ptThis, 
+            __draw_scene_default( ptThis, 
                                 ptScene, 
                                 &this.Switch.Erase.tSceneWindow, 
                                 bIsNewFrame,
                                 this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
-                                this.Switch.tConfig.Feature.bIgnoreOldScene);
+                                this.Switch.tConfig.Feature.bIgnoreOldScene,
+                                false);
         }
 
 
@@ -1579,12 +1609,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
             this.Runtime.bCallNewSceneFrameCPL = true;
             this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
 
-            __draw_erase_scene( ptThis, 
+            __draw_scene_default( ptThis, 
                                 ptScene, 
                                 &this.Switch.Erase.tSceneWindow, 
                                 bIsNewFrame,
                                 this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
-                                this.Switch.tConfig.Feature.bIgnoreNewScene);
+                                this.Switch.tConfig.Feature.bIgnoreNewScene,
+                                false);
         }
 
     } while(0);
@@ -1846,12 +1877,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             this.Runtime.bCallOldSceneFrameCPL = true;
             this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
 
-            __draw_erase_scene( ptThis, 
+            __draw_scene_default( ptThis, 
                                 ptScene, 
                                 &this.Switch.Slide.tSceneWindow, 
                                 bIsNewFrame,
                                 this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
-                                this.Switch.tConfig.Feature.bIgnoreOldScene);
+                                this.Switch.tConfig.Feature.bIgnoreOldScene,
+                                false);
         }
 
         /* generate new tile for new scene */
@@ -1905,12 +1937,308 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
             this.Runtime.bCallNewSceneFrameCPL = true;
             this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
 
-            __draw_erase_scene( ptThis, 
+            __draw_scene_default( ptThis, 
                                 ptScene, 
                                 &this.Switch.Slide.tSceneWindow, 
                                 bIsNewFrame,
                                 this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
-                                this.Switch.tConfig.Feature.bIgnoreNewScene);
+                                this.Switch.tConfig.Feature.bIgnoreNewScene,
+                                false);
+        }
+        
+    } while(0);
+
+    arm_2d_op_wait_async(NULL);
+
+    return arm_fsm_rt_cpl;
+}
+
+
+/*----------------------------------------------------------------------------*
+ * Switch Mode: Fly In                                                         *
+ *----------------------------------------------------------------------------*/
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
+{
+    enum {
+        START = 0,
+        SLIDE,
+    };
+
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    arm_2d_scene_t *ptScene = NULL;
+    
+    int16_t iTargetDistance = 0;
+    
+    switch(this.Switch.tConfig.Feature.chMode) {
+        case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
+        case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
+            iTargetDistance = ptTile->tRegion.tSize.iWidth;
+            break;
+        case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
+        case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
+            iTargetDistance = ptTile->tRegion.tSize.iHeight;
+            break;
+        default:
+            assert(false);      /* this should not happen */
+    }
+
+    this.Runtime.bCallOldSceneFrameCPL = false;
+    this.Runtime.bCallNewSceneFrameCPL = false;
+
+    this.Runtime.bCallOldSceneBGCPL = false;
+    this.Runtime.bCallNewSceneBGCPL = false;
+    
+    /* internal statemachine */
+    if (bIsNewFrame) {
+        int32_t nElapsed;
+        int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+
+        int16_t iTouchOffset = 0;
+
+        /* update full length */
+        this.Switch.iFullLength = iTargetDistance;
+
+        /* calculate iTouchOffset */
+        switch(this.Switch.tConfig.Feature.chMode) {
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
+                if (this.Switch.tTouchPointer.iX < 0) {
+                    iTouchOffset = 0;
+                } else {
+                    iTouchOffset = this.Switch.iFullLength - this.Switch.tTouchPointer.iX;
+                }
+                break;
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
+                if (this.Switch.tTouchPointer.iX < 0) {
+                    iTouchOffset = 0;
+                } else {
+                    iTouchOffset = this.Switch.tTouchPointer.iX;
+                }
+                break;
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
+                if (this.Switch.tTouchPointer.iY < 0) {
+                    iTouchOffset = 0;
+                } else {
+                    iTouchOffset = this.Switch.iFullLength - this.Switch.tTouchPointer.iY;
+                }
+                break;
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
+                if (this.Switch.tTouchPointer.iY < 0) {
+                    iTouchOffset = 0;
+                } else {
+                    iTouchOffset = this.Switch.tTouchPointer.iY;
+                }
+                break;
+            default:
+                assert(false);      /* this should not happen */
+        }
+
+        iTouchOffset = MIN(this.Switch.iFullLength, iTouchOffset);
+        iTouchOffset = MAX(0, iTouchOffset);
+
+        this.Runtime.bManualSwitch = this.Runtime.bManualSwitchReq;
+        this.Runtime.bFinishManualSwitch = this.Runtime.bFinishManualSwitchReq;
+        this.Runtime.bCancelSwitch = this.Runtime.bCancelSwitchReq;
+
+        arm_2d_scene_player_switch_status_t tStatus = arm_2d_scene_player_get_switching_status(ptThis);
+
+        if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL == tStatus) {
+
+            switch (this.Switch.chState) {
+                case START:
+                    this.Switch.iOffset = 0;
+                    this.Switch.chState++;
+                    //break;
+                case SLIDE:
+                    this.Switch.iOffset = iTouchOffset;
+                    break;
+            }
+
+        } else if ( (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_AUTO_CPL == tStatus)
+                ||  (ARM_2D_SCENE_SWITCH_STATUS_AUTO == tStatus)) {
+            switch (this.Switch.chState) {
+                case START:
+                    this.Switch.lTimeStamp = lTimeStamp;
+                    this.Switch.iOffset = 0;
+
+                    this.Switch.chState++;
+                    //break;
+                case SLIDE:
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    
+                    this.Switch.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                            / arm_2d_helper_convert_ms_to_ticks(this.Switch.hwPeriod));
+                    this.Switch.iOffset = MIN(iTargetDistance, this.Switch.iOffset);
+                    this.Switch.iOffset = MAX(0, this.Switch.iOffset);
+
+                    if (this.Switch.iOffset >= iTargetDistance) {
+                        this.Runtime.bSwitchCPL = true;
+                        SCENE_SWITCH_RESET_FSM();
+                    }
+                    break;
+            }
+        } else if (ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL == tStatus) {
+            switch (this.Switch.chState) {
+                case START:
+                    this.Switch.lTimeStamp = lTimeStamp;
+                    this.Switch.iOffset = iTargetDistance;
+
+                    this.Switch.chState++;
+                    //break;
+                case SLIDE:
+                    nElapsed = (int32_t)( lTimeStamp - this.Switch.lTimeStamp);
+                    
+                    this.Switch.iOffset = ((int64_t)iTargetDistance * (int64_t)nElapsed 
+                            / arm_2d_helper_convert_ms_to_ticks( 
+                                    this.Switch.hwPeriod));
+                    this.Switch.iOffset = iTargetDistance - MIN(iTargetDistance, this.Switch.iOffset);
+                    this.Switch.iOffset = MAX(0, this.Switch.iOffset);
+
+                    if (this.Switch.iOffset <= 0) {
+                        this.Runtime.bSwitchCPL = true;
+                        SCENE_SWITCH_RESET_FSM();
+                    }
+                    break;
+            }
+        }
+    }
+
+    /* handle default background */
+    do {
+        bool bIgnoreBG;
+        bool bIgnoreScene;
+        bool bDrawDefaultBG = false;
+        
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead;
+
+        if (NULL != ptScene) {
+            bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+            bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreOldScene;
+            bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
+            bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
+            
+            if (bIgnoreBG && bIgnoreScene) {
+                bDrawDefaultBG = true;
+            }
+        } else {
+            bDrawDefaultBG = true;
+        }
+
+        if (NULL != this.SceneFIFO.ptHead) {
+            /* draw the new scene background */
+            ptScene = this.SceneFIFO.ptHead->ptNext;
+            
+            if (NULL != ptScene) {
+                bIgnoreBG = this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+                bIgnoreScene = this.Switch.tConfig.Feature.bIgnoreNewScene;
+                bIgnoreBG = ptScene->bOnSwitchingIgnoreBG || bIgnoreBG;
+                bIgnoreScene = ptScene->bOnSwitchingIgnoreScene || bIgnoreScene;
+
+                if (bIgnoreBG && bIgnoreScene) {
+                    bDrawDefaultBG = true;
+                }
+            } else {
+                bDrawDefaultBG = true;
+            }
+        } else {
+            bDrawDefaultBG = true;
+        }
+
+        if (bDrawDefaultBG) {
+            __pfb_draw_scene_mode_default_background(pTarget, ptTile, bIsNewFrame);
+        }
+    } while(0);
+
+    do {
+        arm_2d_tile_t *ptWindow = NULL;
+        if (NULL == this.SceneFIFO.ptHead) {
+            break;
+        }
+
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead;
+
+        this.Runtime.bCallOldSceneFrameCPL = true;
+        this.Runtime.bCallOldSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreOldSceneBG;
+
+        __draw_scene_default( ptThis, 
+                            ptScene, 
+                            //&this.Switch.FlyIn.tSceneWindow, 
+                            ptTile,
+                            bIsNewFrame,
+                            this.Switch.tConfig.Feature.bIgnoreOldSceneBG,
+                            this.Switch.tConfig.Feature.bIgnoreOldScene,
+                            false);
+
+        /* generate new tile for new scene */
+        if (NULL == ptScene->ptNext) {
+            break;
+        }
+        
+        arm_2d_region_t tWindow = {
+            .tSize = ptTile->tRegion.tSize,
+        };
+        
+        switch(this.Switch.tConfig.Feature.chMode) {
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT:
+                tWindow.tLocation.iX = iTargetDistance - this.Switch.iOffset;
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.FlyIn.tSceneWindow, 
+                                                        false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT:
+                tWindow.tLocation.iX = -(iTargetDistance - this.Switch.iOffset);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.FlyIn.tSceneWindow, 
+                                                        false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP:
+                tWindow.tLocation.iY = iTargetDistance - this.Switch.iOffset;
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.FlyIn.tSceneWindow, 
+                                                        false);
+                break;
+
+            case ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM:
+                tWindow.tLocation.iY = -(iTargetDistance - this.Switch.iOffset);
+                ptWindow = arm_2d_tile_generate_child(  ptTile, 
+                                                        &tWindow, 
+                                                        &this.Switch.FlyIn.tSceneWindow, 
+                                                        false);
+                break;
+            default:
+                assert(false);      /* this should not happen */
+        }
+
+        /* draw the old scene background */
+        ptScene = this.SceneFIFO.ptHead->ptNext;
+        
+        if (ptWindow) {
+
+            this.Runtime.bCallNewSceneFrameCPL = true;
+            this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
+
+            uint8_t chOpacity = this.Switch.iOffset * 255 / this.Switch.iFullLength;
+
+            arm_2d_fill_colour_with_opacity(ptTile, 
+                                            NULL, 
+                                            (__arm_2d_color_t){ptScene->tCanvas.wColour},
+                                            chOpacity);
+
+            __draw_scene_default( ptThis, 
+                                ptScene, 
+                                &this.Switch.FlyIn.tSceneWindow, 
+                                bIsNewFrame,
+                                this.Switch.tConfig.Feature.bIgnoreNewSceneBG,
+                                this.Switch.tConfig.Feature.bIgnoreNewScene,
+                                true);
         }
         
     } while(0);

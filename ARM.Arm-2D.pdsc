@@ -318,7 +318,7 @@
         </component>
 
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.1.2" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.1.3" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />

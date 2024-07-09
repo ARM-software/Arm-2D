@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        8. July 2024
- * $Revision:    V.1.7.0
+ * $Date:        9. July 2024
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -131,18 +131,22 @@ extern "C" {
 typedef enum {
 
     /* valid switching visual effects begin */
-    ARM_2D_SCENE_SWITCH_CFG_NONE           = 0,                                 //!< no switching visual effect
-    ARM_2D_SCENE_SWITCH_CFG_USER           = 1,                                 //!< user defined switching visual effect
-    ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE     = 2,                                 //!< fade in fade out (white)
-    ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK     = 3,                                 //!< fade in fade out (black)
-    ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT     = 4,                                 //!< slide left
+    ARM_2D_SCENE_SWITCH_CFG_NONE                = 0,                            //!< no switching visual effect
+    ARM_2D_SCENE_SWITCH_CFG_USER                = 1,                            //!< user defined switching visual effect
+    ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE          = 2,                            //!< fade in fade out (white)
+    ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK          = 3,                            //!< fade in fade out (black)
+    ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT          = 4,                            //!< slide left
     ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT,                                        //!< slide right
     ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP,                                           //!< slide up
     ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN,                                         //!< slide down
-    ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT     = 8,                                 //!< erase to the right
+    ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT          = 8,                            //!< erase to the right
     ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT,                                        //!< erase to the left
     ARM_2D_SCENE_SWITCH_CFG_ERASE_UP,                                           //!< erase to the top
     ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN,                                         //!< erase to the bottom
+    ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT    = 12,                           //!< fly in from left
+    ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT,                                  //!< fly in from right
+    ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP,                                    //!< fly in from top
+    ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM,                                 //!< fly in from bottom
 
     /* valid switching visual effects end */
     __ARM_2D_SCENE_SWITCH_CFG_VALID,                                            //!< For internal user only
@@ -342,8 +346,7 @@ struct arm_2d_scene_player_t {
                 } Erase;
                 struct {
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
-                    arm_2d_tile_t tTemp;                                        //!< a temp tile
-                } Fly;
+                } FlyIn;
                 struct {
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
                 } Slide;
@@ -402,6 +405,18 @@ arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_UP;
 
 extern
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_LEFT;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_UP;
+
+extern
+arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_DOWN;
 
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ PROTOTYPES ====================================*/
