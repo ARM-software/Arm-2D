@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        9. July 2024
- * $Revision:    V.1.8.0
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -105,6 +105,10 @@ static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase);
 
 static
+ARM_NONNULL(1)
+void __fly_in_on_switch_complete(arm_2d_scene_player_t *ptThis);
+
+static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in);
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -113,96 +117,112 @@ arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_NONE = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_NONE,
     .fnSwitchDrawer =                   NULL,
     .fnOnRequestChangeSwitchingStatus = NULL,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_USER = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_USER,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_user,
     .fnOnRequestChangeSwitchingStatus = NULL,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FADE_WHITE,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fade,
     .fnOnRequestChangeSwitchingStatus = &__fade_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FADE_BLACK,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fade,
     .fnOnRequestChangeSwitchingStatus = &__fade_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_SLIDE_LEFT,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_slide,
     .fnOnRequestChangeSwitchingStatus = &__slide_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_SLIDE_RIGHT,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_slide,
     .fnOnRequestChangeSwitchingStatus = &__slide_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_UP = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_SLIDE_UP,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_slide,
     .fnOnRequestChangeSwitchingStatus = &__slide_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_DOWN = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_SLIDE_DOWN,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_slide,
     .fnOnRequestChangeSwitchingStatus = &__slide_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_LEFT = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_ERASE_LEFT,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_erase,
     .fnOnRequestChangeSwitchingStatus = &__erase_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_RIGHT = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_ERASE_RIGHT,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_erase,
     .fnOnRequestChangeSwitchingStatus = &__erase_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_UP = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_ERASE_UP,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_erase,
     .fnOnRequestChangeSwitchingStatus = &__erase_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_ERASE_DOWN = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_ERASE_DOWN,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_erase,
     .fnOnRequestChangeSwitchingStatus = &__erase_on_change_switch_status,
+    .fnOnSwitchComplete =               NULL,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_LEFT = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_LEFT,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
     .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+    .fnOnSwitchComplete =               &__fly_in_on_switch_complete,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_RIGHT,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
     .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+    .fnOnSwitchComplete =               &__fly_in_on_switch_complete,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_TOP = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_TOP,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
     .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+    .fnOnSwitchComplete =               &__fly_in_on_switch_complete,
 };
 
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_BOTTOM = {
     .chEffects =                        ARM_2D_SCENE_SWITCH_CFG_FLY_IN_FROM_BOTTOM,
     .fnSwitchDrawer =                   &__pfb_draw_scene_mode_fly_in,
     .fnOnRequestChangeSwitchingStatus = &__fly_in_on_change_switch_status,
+    .fnOnSwitchComplete =               &__fly_in_on_switch_complete,
 };
 
 
@@ -1955,8 +1975,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
 
 
 /*----------------------------------------------------------------------------*
- * Switch Mode: Fly In                                                         *
+ * Switch Mode: Fly In                                                        *
  *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1)
+void __fly_in_on_switch_complete(arm_2d_scene_player_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (this.Switch.tConfig.Feature.bBlurBG) {
+        arm_2dp_filter_iir_blur_depose(&this.Switch.FlyIn.tBlurOP);
+
+        ARM_2D_OP_DEPOSE(this.Switch.FlyIn.tBlurOP);
+    }
+}
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
@@ -1994,6 +2026,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
     if (bIsNewFrame) {
         int32_t nElapsed;
         int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+
+        /* initialize Blur OP */
+        if (this.Switch.tConfig.Feature.bBlurBG && (START == this.Switch.chState)) {
+            ARM_2D_OP_INIT(this.Switch.FlyIn.tBlurOP);
+        }
 
         int16_t iTouchOffset = 0;
 
@@ -2225,13 +2262,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
             this.Runtime.bCallNewSceneFrameCPL = true;
             this.Runtime.bCallNewSceneBGCPL = !this.Switch.tConfig.Feature.bIgnoreNewSceneBG;
 
-            uint8_t chRatio = this.Switch.iOffset * 255 / this.Switch.iFullLength;
+            if (this.Switch.tConfig.Feature.bBlurBG) {
 
-            arm_2d_fill_colour_with_opacity(ptTile, 
-                                            NULL, 
-                                            (__arm_2d_color_t){ptScene->tCanvas.wColour},
-                                            chRatio);
+                uint8_t chOpacity = this.Switch.iOffset * 64 / this.Switch.iFullLength;
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                                NULL, 
+                                                (__arm_2d_color_t){ptScene->tCanvas.wColour},
+                                                chOpacity);
 
+                uint8_t chBlurDegree = this.Switch.iOffset * (255 - 16) / this.Switch.iFullLength;
+                arm_2dp_filter_iir_blur(&this.Switch.FlyIn.tBlurOP,
+                                        ptTile,
+                                        NULL,
+                                        chBlurDegree);
+
+            } else {
+                uint8_t chOpacity = this.Switch.iOffset * 255 / this.Switch.iFullLength;
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                                NULL, 
+                                                (__arm_2d_color_t){ptScene->tCanvas.wColour},
+                                                chOpacity);
+            }
             __draw_scene_default( ptThis, 
                                 ptScene, 
                                 &this.Switch.FlyIn.tSceneWindow, 

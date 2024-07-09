@@ -22,7 +22,7 @@
  * Description:  Public header file for the scene service
  *
  * $Date:        9. July 2024
- * $Revision:    V.1.8.0
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -211,6 +211,7 @@ typedef const struct {
     arm_2d_helper_draw_handler_t    *fnSwitchDrawer;                            //!< switching algorithm
 
     void (*fnOnRequestChangeSwitchingStatus)(arm_2d_scene_player_t *ptThis);    //!< on request change-switch-status event handler
+    void (*fnOnSwitchComplete)              (arm_2d_scene_player_t *ptThis);    //!< on request switch complete event handler
 } arm_2d_scene_switch_mode_t;
 
 /*!
@@ -349,6 +350,7 @@ struct arm_2d_scene_player_t {
                 } Erase;
                 struct {
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
+                    arm_2d_filter_iir_blur_descriptor_t tBlurOP;                //!< for blur
                 } FlyIn;
                 struct {
                     arm_2d_tile_t tSceneWindow;                                 //!< scene window
