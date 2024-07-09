@@ -6,7 +6,8 @@ var group__gHelper =
     [ "arm_2d_scene_switch_mode_t", "group__gHelper.html#structarm__2d__scene__switch__mode__t", [
       [ "chEffects", "group__gHelper.html#a8d98fc5df986d9a2db7ccd4df5b41ddf", null ],
       [ "fnSwitchDrawer", "group__gHelper.html#abb828a64c4ccfbd867ffd5461824968a", null ],
-      [ "fnOnRequestChangeSwitchingStatus", "group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9", null ]
+      [ "fnOnRequestChangeSwitchingStatus", "group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9", null ],
+      [ "fnOnSwitchComplete", "group__gHelper.html#acbe3bbcbc19140d4c4dcb46c885d712f", null ]
     ] ],
     [ "arm_2d_scene_t", "group__gHelper.html#structarm__2d__scene__t", [
       [ "ptPlayer", "group__gHelper.html#a02317320d49833d7d6f3fc959d95e5f5", null ],

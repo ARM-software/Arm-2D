@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__gHelper.html#ga19e155f79a803e4574359d04597846e1":[11,7,127],
 "group__gHelper.html#ga22a1338673baaec12c475e371d7593be":[11,7,206],
 "group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3":[11,7,168],
 "group__gHelper.html#ga23bfad9d8e31302b44dd096a57f9571d":[11,7,210],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8FlyIn":[11,7,42],
 "group__gHelper.html#structarm__2d__scene__player__t_8____unnamed147_____8Switch_8____unnamed153_____8Slide":[11,7,43],
 "group__gHelper.html#structarm__2d__scene__switch__mode__t":[11,7,1],
-"group__gHelper.html#structarm__2d__scene__t":[11,7,2],
-"group__gHelper.html#structarm__2d__scene__t_8____unnamed140____":[11,7,31]
+"group__gHelper.html#structarm__2d__scene__t":[11,7,2]
 };

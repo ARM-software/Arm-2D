@@ -1104,6 +1104,9 @@ the setting value </td></tr>
 <tr class="memitem:a269e2461a84bb2081c6ddc25357974a9"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9">fnOnRequestChangeSwitchingStatus</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
 <tr class="memdesc:a269e2461a84bb2081c6ddc25357974a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">on request change-switch-status event handler  <a href="group__gHelper.html#a269e2461a84bb2081c6ddc25357974a9">More...</a><br /></td></tr>
 <tr class="separator:a269e2461a84bb2081c6ddc25357974a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe3bbcbc19140d4c4dcb46c885d712f"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#acbe3bbcbc19140d4c4dcb46c885d712f">fnOnSwitchComplete</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td></tr>
+<tr class="memdesc:acbe3bbcbc19140d4c4dcb46c885d712f"><td class="mdescLeft">&#160;</td><td class="mdescRight">on request switch complete event handler  <a href="group__gHelper.html#acbe3bbcbc19140d4c4dcb46c885d712f">More...</a><br /></td></tr>
+<tr class="separator:acbe3bbcbc19140d4c4dcb46c885d712f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a id="a8d98fc5df986d9a2db7ccd4df5b41ddf" name="a8d98fc5df986d9a2db7ccd4df5b41ddf"></a>
@@ -1151,6 +1154,22 @@ the setting value </td></tr>
 </div><div class="memdoc">
 
 <p>on request change-switch-status event handler </p>
+
+</div>
+</div>
+<a id="acbe3bbcbc19140d4c4dcb46c885d712f" name="acbe3bbcbc19140d4c4dcb46c885d712f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe3bbcbc19140d4c4dcb46c885d712f">&#9670;&nbsp;</a></span>fnOnSwitchComplete</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* arm_2d_scene_switch_mode_t::fnOnSwitchComplete) (<a class="el" href="group__gHelper.html#structarm__2d__scene__player__t">arm_2d_scene_player_t</a> *ptThis)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>on request switch complete event handler </p>
 
 </div>
 </div>
@@ -1508,7 +1527,7 @@ inherit from <a class="el" href="group__gHelper.html#structarm__2d__helper__pfb_
 <td class="fieldname">
 Benchmark</td>
 <td class="fielddoc">
-scene window <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime the switching mode FSM state erase offset opacity of the cover the colour of the cover scene window a temp tile scene window the switching configuration the coordinate offset for manual switching mode, used in erasing, sliding etc. the full length of the axis of switching the switching should finish in specified millisecond <br  />
+scene window <p >points to the head of the FIFO points to the tail of the FIFO Scene FIFO a flag to request switching-to-the next-scene a flag to request using manual switching a flag to request cancel a manual switching a flag to request finishing a manual switching manual switching cancel a manual switching finish a manual switching indication of scene switching completion update the background of the current scene call the old scene frame complete event handler call the new scene frame complete event handler call the old scene Background complete event handler call the new scene Background complete event handler the state of the FSM used by runtime. scene player runtime the switching mode FSM state erase offset opacity of the cover the colour of the cover scene window a temp tile scene window for blur the switching configuration the coordinate offset for manual switching mode, used in erasing, sliding etc. the full length of the axis of switching the switching should finish in specified millisecond <br  />
  </p>
 </td></tr>
 <tr><td class="fieldtype">
@@ -3317,6 +3336,12 @@ tTemp</td>
 <a id="a898ef4be8488949f29e79cf8af99fb68" name="a898ef4be8488949f29e79cf8af99fb68"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
 <td class="fieldname">
 tSceneWindow</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a86a35216030bf3f186352d79f9f718ca" name="a86a35216030bf3f186352d79f9f718ca"></a><a class="el" href="group__gFilter.html#structarm__2d__filter__iir__blur__descriptor__t">arm_2d_filter_iir_blur_descriptor_t</a></td>
+<td class="fieldname">
+tBlurOP</td>
 <td class="fielddoc">
 </td></tr>
 </table>
