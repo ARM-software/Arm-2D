@@ -129,7 +129,8 @@ var group__gHelper =
       [ "bIgnoreOldScene", "group__gHelper.html#a28bde530bc229b73e7327109ca751c3b", null ],
       [ "bIgnoreNewSceneBG", "group__gHelper.html#a31bfffcfb36db42f038df1a618ce79d1", null ],
       [ "bIgnoreNewScene", "group__gHelper.html#a0d79e6b6fd0828d4792ccd87b5c78bd1", null ],
-      [ "u2DefaultBG", "group__gHelper.html#afebb53e17c0600849d68596f532ed3fe", null ]
+      [ "u2DefaultBG", "group__gHelper.html#afebb53e17c0600849d68596f532ed3fe", null ],
+      [ "bBlurBG", "group__gHelper.html#aea4043e718a616929d8bf6edae54ce2b", null ]
     ] ],
     [ "arm_2d_scene_t.__unnamed140__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed140____", null ],
     [ "arm_2d_scene_t.__unnamed140__.__unnamed144__", "group__gHelper.html#structarm__2d__scene__t_8____unnamed140_____8____unnamed144____", null ],
@@ -259,7 +260,8 @@ var group__gHelper =
       [ "__ARM_2D_SCENE_SWTICH_CFG_IGNORE_msk", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a0d93b57a7030f8827689be0fef49667a", null ],
       [ "__ARM_2D_SCENE_SWTICH_CFG_IGNORE_pos", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a43a6f5b4d42a489e7c56a843c5c5ae30", null ],
       [ "__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_msk", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3aa02b4e4dcf8da01bb5efc0988d485197", null ],
-      [ "__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad756321ec6360e1cd88ccaa9cc941b44", null ]
+      [ "__ARM_2D_SCENE_SWTICH_CFG_DEFAULT_BG_pos", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad756321ec6360e1cd88ccaa9cc941b44", null ],
+      [ "ARM_2D_SCENE_SWITCH_CFG_BG_BLUR", "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a9fdadfcd1760116f28c178c439e575bc", null ]
     ] ],
     [ "arm_2d_scene_player_switch_status_t", "group__gHelper.html#ga37fc2d9f259e9fd0f5f0957393ceddbb", [
       [ "ARM_2D_SCENE_SWITCH_STATUS_AUTO", "group__gHelper.html#gga37fc2d9f259e9fd0f5f0957393ceddbba044217b3ba6b7b06a3e2d3b2739dbe94", null ],
