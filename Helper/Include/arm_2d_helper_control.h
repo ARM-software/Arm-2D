@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.h"
  * Description:  the helper service header file for control management
  *
- * $Date:        4. July 2024
- * $Revision:    V.0.7.1
+ * $Date:        11. July 2024
+ * $Revision:    V.0.7.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -49,6 +49,22 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+/*!
+ * \brief a helper macro to enumerate nodes in the target element tree with a 
+ *        given traversal policy
+ * \param[in] __ROOT the root node of the target element tree
+ * \param __ITEM_NAME the pointer variable name represents the current node
+ * \param[in] a traversal policy. Please ignore the prefix 
+ *            ARM_2D_CONTROL_ENUMERATION_POLICY_xxxxx
+ * 
+ * \example  enumerate each nodes in ptRoot using preorder traversal policy:
+ *           arm_ctrl_foreach(ptRoot, ptItem, PREORDER_TRAVERSAL) {
+ *               ...
+ *               ptItem->tRegion.xxxx ...
+ *               ptItem->xxxx ...
+ *               ...
+ *           }   
+ */
 #define ARM_CONTROL_ENUMERATE(__ROOT, __ITEM_NAME, __POLICY )                   \
     for (                                                                       \
         arm_2d_control_enumerator_t ARM_2D_SAFE_NAME(tEnum),                    \
@@ -153,6 +169,15 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL;
 
 /*============================ PROTOTYPES ====================================*/
 
+/*!
+ * \brief Initialize a enumerator for the target element tree with a given  
+ *        traversal policy.
+ * 
+ * \param[in] ptThis an arm_2d_control_enumerator_t object
+ * \param[in] ptPolicy the policy
+ * \param[in] ptRoot the root of the target element tree
+ * \return arm_2d_err_t 
+ */
 ARM_NONNULL(1,2)
 extern
 arm_2d_err_t arm_2d_helper_control_enum_init(
@@ -160,11 +185,23 @@ arm_2d_err_t arm_2d_helper_control_enum_init(
                             const arm_2d_control_enumeration_policy_t *ptPolicy,
                             const arm_2d_control_node_t *ptRoot);
 
+/*!
+ * \brief get the next node of the target enumerator
+ * 
+ * \param[in] ptThis the target enumerator
+ * \return arm_2d_control_node_t* the next node
+ */
 ARM_NONNULL(1)
 extern
 arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
+/*!
+ * \brief depose (de-initialize) a given enumerator
+ * 
+ * \param[in] ptThis the target enumerator
+ * \return arm_2d_err_t the operation result
+ */
 ARM_NONNULL(1)
 extern
 arm_2d_err_t arm_2d_helper_control_enum_depose(
@@ -172,6 +209,13 @@ arm_2d_err_t arm_2d_helper_control_enum_depose(
 
 ARM_NONNULL(1)
 extern
+/*!
+ * \brief find the top node on the screen with a given touch location. 
+ * 
+ * \param[in] ptRoot the root of the target element tree
+ * \param[in] tLocation the touch coordinate
+ * \return arm_2d_control_node_t* the target node
+ */
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
                                                 arm_2d_location_t tLocation);
