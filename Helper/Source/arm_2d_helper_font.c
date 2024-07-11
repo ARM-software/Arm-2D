@@ -567,7 +567,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char)
 {
-    return arm_2d_fill_colour_with_a2_mask_and_opacity(
+    return arm_2d_fill_colour_with_a4_mask_and_opacity(
                                             ptTile,
                                             ptRegion,
                                             ptileChar,
