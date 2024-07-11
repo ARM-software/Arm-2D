@@ -345,7 +345,7 @@ ARM_PT_BEGIN(this.Postorder.chPTState)
 
         /* return to the root node */
         this.ptCurrent = NULL;
-        ARM_PT_YIELD(ptNode);               /* visit the root node */
+        ptNode = NULL;
         break;
     }
 
