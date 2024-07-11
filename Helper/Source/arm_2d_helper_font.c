@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        4. July 2024
- * $Revision:    V.2.5.0
+ * $Date:        11. July 2024
+ * $Revision:    V.2.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -284,7 +284,7 @@ static void __arm_lcd_text_update_char_buffer(void)
     
     size_t tBufferSize = ptFont->tCharSize.iHeight * ptFont->tCharSize.iWidth;
 
-    if (NULL != s_tLCDTextControl.tCharBuffer.pBuffer) {
+    if (NULL != (void *)(s_tLCDTextControl.tCharBuffer.pBuffer)) {
         if (s_tLCDTextControl.tCharBuffer.u24SizeInByte >= tBufferSize) {
             return ;
         }
@@ -409,31 +409,6 @@ ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER(
     return ptDescriptor;
 }
 
-#if 0
-static 
-arm_2d_char_descriptor_t *__arm_lcd_get_char_descriptor(const arm_2d_font_t *ptFont, 
-                                                        arm_2d_char_descriptor_t *ptDescriptor, 
-                                                        uint8_t *pchCharCode)
-{
-    assert(NULL != pchCharCode);
-
-    if (NULL == arm_2d_helper_get_char_descriptor(ptFont, ptDescriptor, pchCharCode)) {
-        assert(false);
-        return NULL;
-    }
-
-    /* NOTE: when the FONT mask insn't ARM_2D_COLOUR_8BIT, the scaling behaviour is unpredicted */
-    if (s_tLCDTextControl.fScale > 0.0f) {
-        ptDescriptor->iAdvance = (int16_t)((float)ptDescriptor->iAdvance * s_tLCDTextControl.fScale);
-        /* NOTE: No need to adjust bearings in the following way. */
-        //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
-        //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
-    }
-
-    return ptDescriptor;
-}
-#endif
-
 static
 int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_descriptor_t *ptDescriptor, uint8_t *pchChar)
 {
@@ -507,6 +482,7 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         s_tLCDTextControl.ptFont->fnDrawChar(   
                                     s_tLCDTextControl.ptTargetFB,
                                     &tDrawRegion,
+                                    s_tLCDTextControl.ptFont,
                                     &tCharDescriptor.tileChar,
                                     s_tLCDTextControl.tColour.tForeground,
                                     chOpacity,
@@ -531,6 +507,48 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 
     return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, &tCharDescriptor, NULL);
 }
+
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
+{
+    
+
+    if (fScale == 0.0f) {
+        if (chOpacity == 255) {
+            return arm_2d_fill_colour_with_mask(
+                                            ptTile,
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour});
+        }
+
+        return arm_2d_fill_colour_with_mask_and_opacity(
+                                            ptTile,
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
+    } else {
+        
+        arm_2d_location_t c_tCentre = {
+
+        };
+        arm_2d_location_t tTargetCenter = ptRegion->tLocation;
+        tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
+        tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
+
+        return arm_2d_fill_colour_with_mask_opacity_and_transform(
+                                                ptileChar,
+                                                ptTile,
+                                                NULL,
+                                                c_tCentre,
+                                                0.0f,
+                                                fScale,
+                                                tForeColour,
+                                                chOpacity,
+                                                &tTargetCenter);
+    }
+}
+
 
 static void __arm_lcd_draw_region_line_wrapping(arm_2d_size_t *ptCharSize, 
                                                 arm_2d_size_t *ptDrawRegionSize)

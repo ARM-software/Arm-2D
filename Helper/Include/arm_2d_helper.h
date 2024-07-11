@@ -211,20 +211,6 @@ extern "C" {
         .hwPeriodPerFrame = (__period),                                         \
     }
 
-#define IMPL_FONT_DRAW_CHAR(__NAME)                                             \
-            arm_fsm_rt_t __NAME(const arm_2d_tile_t *ptTile,                    \
-                                const arm_2d_region_t *ptRegion,                \
-                                arm_2d_tile_t *ptileChar,                       \
-                                COLOUR_INT tForeColour,                         \
-                                uint_fast8_t chOpacity,                         \
-                                float fScale)
-
-#define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
-            arm_2d_char_descriptor_t *__NAME(                                   \
-                                        const arm_2d_font_t *ptFont,            \
-                                        arm_2d_char_descriptor_t *ptDescriptor, \
-                                        uint8_t *pchCharCode)
-
 /*============================ TYPES =========================================*/
 
 /*!

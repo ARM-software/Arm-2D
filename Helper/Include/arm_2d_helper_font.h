@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        4. July 2024
- * $Revision:    V.2.5.0
+ * $Date:        11. July 2024
+ * $Revision:    V.2.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -137,6 +137,21 @@ extern "C" {
                                 (__STR),                                        \
                                 (const arm_2d_font_t *)(NULL, ##__VA_ARGS__))
 
+#define IMPL_FONT_DRAW_CHAR(__NAME)                                             \
+            arm_fsm_rt_t __NAME(const arm_2d_tile_t *ptTile,                    \
+                                const arm_2d_region_t *ptRegion,                \
+                                const arm_2d_font_t *ptFont,                    \
+                                arm_2d_tile_t *ptileChar,                       \
+                                COLOUR_INT tForeColour,                         \
+                                uint_fast8_t chOpacity,                         \
+                                float fScale)
+
+#define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
+            arm_2d_char_descriptor_t *__NAME(                                   \
+                                        const arm_2d_font_t *ptFont,            \
+                                        arm_2d_char_descriptor_t *ptDescriptor, \
+                                        uint8_t *pchCharCode)
+
 /*============================ TYPES =========================================*/
 
 typedef struct {
@@ -158,6 +173,7 @@ typedef arm_2d_char_descriptor_t *arm_2d_font_get_char_descriptor_handler_t(
 typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
                                             const arm_2d_tile_t *ptTile,
                                             const arm_2d_region_t *ptRegion,
+                                            const arm_2d_font_t *ptFont,
                                             arm_2d_tile_t *ptileChar,
                                             COLOUR_INT tForeColour,
                                             uint_fast8_t chOpacity,
