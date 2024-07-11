@@ -77,6 +77,13 @@ extern "C" {
 #endif
 // </h>
 
+// <q>Support Scaling for A1, A2 and A4 fonts
+// <i> Note that enabling this feature will reduces performance when using A1, A2 and A4 fonts when using scaling.
+#ifndef __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+#   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        1
+#endif
+// </h>
+
 // <h>Log and Debug
 // =======================
 // <q>Enable Log

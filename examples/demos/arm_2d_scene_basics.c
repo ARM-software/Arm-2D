@@ -285,7 +285,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                 .use_as__arm_2d_font_t
                                                     .tCharSize.iHeight) {
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    
+                    #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+                    #else
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
+                    #endif
+
                         arm_lcd_text_set_draw_region(&__vertical_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
                         arm_lcd_text_location(0,0);

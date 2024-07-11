@@ -358,7 +358,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.2.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.3.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")

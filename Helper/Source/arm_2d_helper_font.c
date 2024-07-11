@@ -505,14 +505,6 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
 {
     if (fScale == 0.0f) {
-        if (chOpacity == 255) {
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-        }
-
         return arm_2d_fill_colour_with_mask_and_opacity(
                                             ptTile,
                                             ptRegion,
@@ -545,34 +537,160 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)
 {
-    return arm_2d_fill_colour_with_a1_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
+#if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+    if (fScale != 0.0f) {
+
+        arm_2d_tile_t tTempA8CharTile = {
+            .tRegion = {
+                .tSize = ptFont->tCharSize,
+            },
+            .tInfo = {
+                .bIsRoot = true,
+                .bHasEnforcedColour = true,
+                .tColourInfo = {
+                    .chScheme = ARM_2D_COLOUR_8BIT,
+                },
+            },
+            .nAddress = s_tLCDTextControl.tCharBuffer.pBuffer,
+        };
+
+        memset( (uint8_t *)tTempA8CharTile.nAddress, 
+                0, 
+                s_tLCDTextControl.tCharBuffer.u24SizeInByte);
+
+        arm_2d_gray8_fill_colour_with_a1_mask(&tTempA8CharTile, NULL, ptileChar, 
+                                             (arm_2d_color_gray8_t) {0xFF});
+
+        arm_2d_region_t tCharRegion = {
+            .tSize = ptileChar->tRegion.tSize,
+        };
+        arm_2d_tile_t tTempCharTile;
+        arm_2d_tile_generate_child(&tTempA8CharTile, &tCharRegion, &tTempCharTile, false);
+
+        return __arm_2d_lcd_text_default_a8_font_draw_char( ptTile,
+                                                            ptRegion,
+                                                            ptFont,
+                                                            &tTempCharTile,
+                                                            tForeColour,
+                                                            chOpacity,
+                                                            fScale);
+
+    } else 
+#endif
+    {
+        return arm_2d_fill_colour_with_a1_mask_and_opacity(
+                                                ptTile,
+                                                ptRegion,
+                                                ptileChar,
+                                                (__arm_2d_color_t){tForeColour},
+                                                chOpacity);
+    }
 
 }
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
 {
-    return arm_2d_fill_colour_with_a2_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
+#if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+    if (fScale != 0.0f) {
+
+        arm_2d_tile_t tTempA8CharTile = {
+            .tRegion = {
+                .tSize = ptFont->tCharSize,
+            },
+            .tInfo = {
+                .bIsRoot = true,
+                .bHasEnforcedColour = true,
+                .tColourInfo = {
+                    .chScheme = ARM_2D_COLOUR_8BIT,
+                },
+            },
+            .nAddress = s_tLCDTextControl.tCharBuffer.pBuffer,
+        };
+
+        memset( (uint8_t *)tTempA8CharTile.nAddress, 
+                0, 
+                s_tLCDTextControl.tCharBuffer.u24SizeInByte);
+
+        arm_2d_gray8_fill_colour_with_a2_mask(&tTempA8CharTile, NULL, ptileChar, 
+                                             (arm_2d_color_gray8_t) {0xFF});
+
+        arm_2d_region_t tCharRegion = {
+            .tSize = ptileChar->tRegion.tSize,
+        };
+        arm_2d_tile_t tTempCharTile;
+        arm_2d_tile_generate_child(&tTempA8CharTile, &tCharRegion, &tTempCharTile, false);
+
+        return __arm_2d_lcd_text_default_a8_font_draw_char( ptTile,
+                                                            ptRegion,
+                                                            ptFont,
+                                                            &tTempCharTile,
+                                                            tForeColour,
+                                                            chOpacity,
+                                                            fScale);
+
+    } else 
+#endif
+    {
+        return arm_2d_fill_colour_with_a2_mask_and_opacity(
+                                                ptTile,
+                                                ptRegion,
+                                                ptileChar,
+                                                (__arm_2d_color_t){tForeColour},
+                                                chOpacity);
+    }
 
 }
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char)
 {
-    return arm_2d_fill_colour_with_a4_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
+#if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+    if (fScale != 0.0f) {
+
+        arm_2d_tile_t tTempA8CharTile = {
+            .tRegion = {
+                .tSize = ptFont->tCharSize,
+            },
+            .tInfo = {
+                .bIsRoot = true,
+                .bHasEnforcedColour = true,
+                .tColourInfo = {
+                    .chScheme = ARM_2D_COLOUR_8BIT,
+                },
+            },
+            .nAddress = s_tLCDTextControl.tCharBuffer.pBuffer,
+        };
+
+        memset( (uint8_t *)tTempA8CharTile.nAddress, 
+                0, 
+                s_tLCDTextControl.tCharBuffer.u24SizeInByte);
+
+        arm_2d_gray8_fill_colour_with_a4_mask(&tTempA8CharTile, NULL, ptileChar, 
+                                             (arm_2d_color_gray8_t) {0xFF});
+
+        arm_2d_region_t tCharRegion = {
+            .tSize = ptileChar->tRegion.tSize,
+        };
+        arm_2d_tile_t tTempCharTile;
+        arm_2d_tile_generate_child(&tTempA8CharTile, &tCharRegion, &tTempCharTile, false);
+
+        return __arm_2d_lcd_text_default_a8_font_draw_char( ptTile,
+                                                            ptRegion,
+                                                            ptFont,
+                                                            &tTempCharTile,
+                                                            tForeColour,
+                                                            chOpacity,
+                                                            fScale);
+
+    } else 
+#endif
+    {
+        return arm_2d_fill_colour_with_a4_mask_and_opacity(
+                                                ptTile,
+                                                ptRegion,
+                                                ptileChar,
+                                                (__arm_2d_color_t){tForeColour},
+                                                chOpacity);
+    }
 
 }
 
