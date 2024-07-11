@@ -96,61 +96,6 @@ static const arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
 
 #define __UTF8_FONT_SIZE_{5}__
 
-static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
-{{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static const arm_2d_location_t c_tCentre = {{7,8}};
-
-    if (fScale == 0.0f) {{
-        if (chOpacity == 255) {{
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){{tForeColour}});
-        }}
-
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){{tForeColour}},
-                                            chOpacity);
-    }}
-
-    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
-    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
-    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
-
-    return arm_2d_fill_colour_with_mask_opacity_and_transform(
-                                            ptileChar,
-                                            ptTile,
-                                            NULL,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity,
-                                            &tTargetCenter);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a{5}_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){{tForeColour}},
-                                        chOpacity);
-#endif
-
-}}
-
 
 
 static
@@ -213,7 +158,7 @@ struct {{
             }},
             .nCount =  {3},                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a{5}_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a{5}_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a{5}_font_draw_char,
         }},
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
@@ -413,7 +358,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.6)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.2.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")

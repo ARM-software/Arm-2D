@@ -346,6 +346,18 @@ arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont);
 extern
 arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t *ptFont);
 
+extern
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char);
+
+extern
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char);
+
+extern
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char);
+
+extern
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_GCC__

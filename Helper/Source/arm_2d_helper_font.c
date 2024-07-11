@@ -451,24 +451,25 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
 int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
 {
     arm_2d_char_descriptor_t tCharDescriptor;
-    
+    const arm_2d_font_t *ptFont = s_tLCDTextControl.ptFont;
+
     int8_t chCodeLength = arm_2d_helper_get_utf8_byte_valid_length(*ppchCharCode);
     if (chCodeLength <= 0) {
         chCodeLength = 1;
     }
 
-    if (NULL == arm_2d_helper_get_char_descriptor(  s_tLCDTextControl.ptFont, 
+    if (NULL == arm_2d_helper_get_char_descriptor(  ptFont, 
                                                     &tCharDescriptor,
                                                     *ppchCharCode)){
         (*ppchCharCode) += chCodeLength;
 
-        return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, NULL, NULL);
+        return __arm_lcd_get_char_advance(ptFont, NULL, NULL);
     }
 
     //(*ppchCharCode) += tCharDescriptor.chCodeLength;
     (*ppchCharCode) += chCodeLength;
 
-    arm_2d_size_t tBBoxSize = s_tLCDTextControl.ptFont->tCharSize;
+    arm_2d_size_t tBBoxSize = ptFont->tCharSize;
 
     arm_2d_region_t tDrawRegion = {
         .tLocation = {
@@ -478,40 +479,31 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         .tSize = tCharDescriptor.tileChar.tRegion.tSize,
     };
 
-    if (NULL != s_tLCDTextControl.ptFont->fnDrawChar) {
-        s_tLCDTextControl.ptFont->fnDrawChar(   
-                                    s_tLCDTextControl.ptTargetFB,
-                                    &tDrawRegion,
-                                    s_tLCDTextControl.ptFont,
-                                    &tCharDescriptor.tileChar,
-                                    s_tLCDTextControl.tColour.tForeground,
-                                    chOpacity,
-                                    s_tLCDTextControl.fScale);
-    } else if (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode) {
+    if (    (ptFont->tileFont.tColourInfo.chScheme == ARM_2D_COLOUR_BIN)
+        &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)) {
         arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
                             s_tLCDTextControl.ptTargetFB, 
                             &tDrawRegion,
                             s_tLCDTextControl.wMode,
                             s_tLCDTextControl.tColour.tForeground,
                             s_tLCDTextControl.tColour.tBackground);
-    } else {
-        arm_2d_fill_colour_with_a1_mask_and_opacity(
-                s_tLCDTextControl.ptTargetFB, 
-                &tDrawRegion,
-                &tCharDescriptor.tileChar, 
-                (__arm_2d_color_t){ s_tLCDTextControl.tColour.tForeground},
-                chOpacity);
-    }
+    } else if (NULL != ptFont->fnDrawChar) {
+        ptFont->fnDrawChar( s_tLCDTextControl.ptTargetFB,
+                            &tDrawRegion,
+                            ptFont,
+                            &tCharDescriptor.tileChar,
+                            s_tLCDTextControl.tColour.tForeground,
+                            chOpacity,
+                            s_tLCDTextControl.fScale);
+    } 
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, &tCharDescriptor, NULL);
 }
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
 {
-    
-
     if (fScale == 0.0f) {
         if (chOpacity == 255) {
             return arm_2d_fill_colour_with_mask(
@@ -528,10 +520,12 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
                                             (__arm_2d_color_t){tForeColour},
                                             chOpacity);
     } else {
-        
+        arm_2d_size_t tCharSize = ptFont->tCharSize;
         arm_2d_location_t c_tCentre = {
-
+            .iX = tCharSize.iWidth >> 1,
+            .iY = tCharSize.iHeight >> 1,
         };
+
         arm_2d_location_t tTargetCenter = ptRegion->tLocation;
         tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
         tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
@@ -547,6 +541,39 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
                                                 chOpacity,
                                                 &tTargetCenter);
     }
+}
+
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)
+{
+    return arm_2d_fill_colour_with_a1_mask_and_opacity(
+                                            ptTile,
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
+
+}
+
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
+{
+    return arm_2d_fill_colour_with_a2_mask_and_opacity(
+                                            ptTile,
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
+
+}
+
+IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char)
+{
+    return arm_2d_fill_colour_with_a2_mask_and_opacity(
+                                            ptTile,
+                                            ptRegion,
+                                            ptileChar,
+                                            (__arm_2d_color_t){tForeColour},
+                                            chOpacity);
+
 }
 
 

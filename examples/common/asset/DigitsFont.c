@@ -2120,17 +2120,6 @@ const arm_2d_tile_t c_tileDigitsFontA4Mask = {
 };
 
 
-
-
-static 
-IMPL_FONT_DRAW_CHAR(__digit_font_a2_draw_char);
-                                        
-static 
-IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char);
-
-static 
-IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char);
-
 static 
 arm_2d_char_descriptor_t *
 __digit_font_get_char_descriptor(const arm_2d_font_t *ptFont, 
@@ -2165,7 +2154,7 @@ struct {
             },
             .nCount =  20,                             //!< Character count
             .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
-            .fnDrawChar = &__digit_font_a2_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a2_font_draw_char,
         },
         .hwCount = 7,
         .hwDefaultCharIndex = 6, /* tBlank */
@@ -2241,7 +2230,7 @@ struct {
             },
             .nCount =  20,                             //!< Character count
             .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
-            .fnDrawChar = &__digit_font_a4_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a4_font_draw_char,
         },
         .hwCount = 7,
         .hwDefaultCharIndex = 6, /* tBlank */
@@ -2318,7 +2307,7 @@ struct {
             },
             .nCount =  20,                             //!< Character count
             .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
-            .fnDrawChar = &__digit_font_a8_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a8_font_draw_char,
         },
         .hwCount = 7,
         .hwDefaultCharIndex = 6, /* tBlank */
@@ -2371,67 +2360,6 @@ struct {
 #undef this
 #define this (*ptThis)
 
-static
-IMPL_FONT_DRAW_CHAR(__digit_font_a2_draw_char)
-{
-    ARM_2D_UNUSED(fScale);
-    return arm_2d_fill_colour_with_a2_mask_and_opacity( 
-                                            ptTile, 
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-}
-
-static
-IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
-{
-    ARM_2D_UNUSED(fScale);
-    return arm_2d_fill_colour_with_a4_mask_and_opacity( 
-                                            ptTile, 
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-}
-
-static
-IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char)
-{
-    static const arm_2d_location_t c_tCentre = {7,8};
-
-    if (fScale == 0.0f) {
-        if (chOpacity == 255) {
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-        }
-
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-    }
-
-    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
-    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
-    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
-
-    return arm_2d_fill_colour_with_mask_opacity_and_transform(
-                                            ptileChar,
-                                            ptTile,
-                                            NULL,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity,
-                                            &tTargetCenter);
-}
 
 static
 IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor)

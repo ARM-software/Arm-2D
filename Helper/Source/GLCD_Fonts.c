@@ -750,6 +750,7 @@ const arm_2d_a1_font_t ARM_2D_FONT_6x8 = {
         },
         .nCount =  112,                             //!< Character count
         .fnGetCharDescriptor = &ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER,
+        .fnDrawChar = &__arm_2d_lcd_text_default_a1_font_draw_char,
     },
     .nOffset = 32,                          //!< Character offset
 };
@@ -779,6 +780,7 @@ const arm_2d_a1_font_t ARM_2D_FONT_16x24 = {
         },
         .nCount =  112,                             //!< Character count
         .fnGetCharDescriptor = &ARM_2D_A1_FONT_GET_CHAR_DESCRIPTOR_HANDLER,
+        .fnDrawChar = &__arm_2d_lcd_text_default_a1_font_draw_char,
     },
     .nOffset = 32,                                  //!< Character offset
 };

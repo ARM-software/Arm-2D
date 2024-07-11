@@ -166,66 +166,6 @@ static const arm_2d_tile_t c_tileUTF8UserFontA1Mask = {
 #define __UTF8_FONT_SIZE_1__
 
 static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a1_draw_char)
-{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
-    static const arm_2d_location_t c_tCentre = {7,8};
-
-    if (fScale == 0.0f) {
-        if (chOpacity == 255) {
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-        }
-
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-    }
-
-    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
-    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
-    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
-
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
-                                            ptileChar,
-                                            ptTile,
-                                            NULL,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity,
-                                            &tTargetCenter);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a1_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){tForeColour},
-                                        chOpacity);
-#endif
-
-}
-
-
-
-static
 IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a1_font_get_char_descriptor)
 {
     assert(NULL != ptFont);
@@ -286,7 +226,7 @@ struct {
             },
             .nCount =  14,                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a1_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a1_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a1_font_draw_char,
         },
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
@@ -461,65 +401,6 @@ static const arm_2d_tile_t c_tileUTF8UserFontA2Mask = {
 
 #define __UTF8_FONT_SIZE_2__
 
-static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a2_draw_char)
-{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
-    static const arm_2d_location_t c_tCentre = {7,8};
-
-    if (fScale == 0.0f) {
-        if (chOpacity == 255) {
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-        }
-
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-    }
-
-    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
-    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
-    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
-
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
-                                            ptileChar,
-                                            ptTile,
-                                            NULL,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity,
-                                            &tTargetCenter);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a2_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){tForeColour},
-                                        chOpacity);
-#endif
-
-}
-
-
 
 static
 IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a2_font_get_char_descriptor)
@@ -582,7 +463,7 @@ struct {
             },
             .nCount =  14,                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a2_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a2_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a2_font_draw_char,
         },
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
@@ -824,65 +705,6 @@ static const arm_2d_tile_t c_tileUTF8UserFontA4Mask = {
 
 #define __UTF8_FONT_SIZE_4__
 
-static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a4_draw_char)
-{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
-    static const arm_2d_location_t c_tCentre = {7,8};
-
-    if (fScale == 0.0f) {
-        if (chOpacity == 255) {
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-        }
-
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-    }
-
-    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
-    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
-    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
-
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
-                                            ptileChar,
-                                            ptTile,
-                                            NULL,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity,
-                                            &tTargetCenter);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a4_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){tForeColour},
-                                        chOpacity);
-#endif
-
-}
-
-
 
 static
 IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
@@ -945,7 +767,7 @@ struct {
             },
             .nCount =  14,                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a4_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a4_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a4_font_draw_char,
         },
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
@@ -1302,65 +1124,6 @@ static const arm_2d_tile_t c_tileUTF8UserFontA8Mask = {
     .pchBuffer = (uint8_t *)c_bmpUTF8UserA8Font,
 };
 
-#define __UTF8_FONT_SIZE_8__
-
-static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a8_draw_char)
-{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static const arm_2d_location_t c_tCentre = {7,8};
-
-    if (fScale == 0.0f) {
-        if (chOpacity == 255) {
-            return arm_2d_fill_colour_with_mask(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour});
-        }
-
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            chOpacity);
-    }
-
-    arm_2d_location_t tTargetCenter = ptRegion->tLocation;
-    tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
-    tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
-
-    return arm_2d_fill_colour_with_mask_opacity_and_transform(
-                                            ptileChar,
-                                            ptTile,
-                                            NULL,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity,
-                                            &tTargetCenter);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a8_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){tForeColour},
-                                        chOpacity);
-#endif
-
-}
-
-
-
 static
 IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a8_font_get_char_descriptor)
 {
@@ -1422,7 +1185,7 @@ struct {
             },
             .nCount =  14,                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a8_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a8_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a8_font_draw_char,
         },
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
