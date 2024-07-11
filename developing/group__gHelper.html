@@ -400,10 +400,6 @@ Macros</h2></td></tr>
 <tr class="memitem:gaaa9f4d36caf6a8a5b456a9bd8122169b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b">impl_film</a>( __sprites_tile,  __width,  __height,  __column,  __frame_count,  __period)</td></tr>
 <tr class="memdesc:gaaa9f4d36caf6a8a5b456a9bd8122169b"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize/implement a given film (arm_2d_helper_file_t) object at compile-time.  <a href="group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b">More...</a><br /></td></tr>
 <tr class="separator:gaaa9f4d36caf6a8a5b456a9bd8122169b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2511f9d8c509fa71256224814b5d32ee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2511f9d8c509fa71256224814b5d32ee">IMPL_FONT_DRAW_CHAR</a>(__NAME)</td></tr>
-<tr class="separator:ga2511f9d8c509fa71256224814b5d32ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58a31b55c0185234154880f5984a834c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga58a31b55c0185234154880f5984a834c">IMPL_FONT_GET_CHAR_DESCRIPTOR</a>(__NAME)</td></tr>
-<tr class="separator:ga58a31b55c0185234154880f5984a834c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -5836,52 +5832,6 @@ fOP</td>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>__period is used as a reference for applications. The helper service doesn't use it at all. </dd></dl>
 
-</div>
-</div>
-<a id="ga2511f9d8c509fa71256224814b5d32ee" name="ga2511f9d8c509fa71256224814b5d32ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2511f9d8c509fa71256224814b5d32ee">&#9670;&nbsp;</a></span>IMPL_FONT_DRAW_CHAR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IMPL_FONT_DRAW_CHAR</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">__NAME</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> __NAME(<span class="keyword">const</span> <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTile,                    \</div>
-<div class="line">                                <span class="keyword">const</span> <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,                \</div>
-<div class="line">                                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptileChar,                       \</div>
-<div class="line">                                COLOUR_INT tForeColour,                         \</div>
-<div class="line">                                uint_fast8_t chOpacity,                         \</div>
-<div class="line">                                <span class="keywordtype">float</span> fScale)</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="ga58a31b55c0185234154880f5984a834c" name="ga58a31b55c0185234154880f5984a834c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga58a31b55c0185234154880f5984a834c">&#9670;&nbsp;</a></span>IMPL_FONT_GET_CHAR_DESCRIPTOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IMPL_FONT_GET_CHAR_DESCRIPTOR</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">__NAME</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            arm_2d_char_descriptor_t *__NAME(                                   \</div>
-<div class="line">                                        <span class="keyword">const</span> arm_2d_font_t *ptFont,            \</div>
-<div class="line">                                        arm_2d_char_descriptor_t *ptDescriptor, \</div>
-<div class="line">                                        uint8_t *pchCharCode)</div>
-</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
