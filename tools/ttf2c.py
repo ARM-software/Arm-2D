@@ -100,8 +100,6 @@ static
 IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
 {{
 #if defined(__UTF8_FONT_SIZE_8__)
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
     static const arm_2d_location_t c_tCentre = {{7,8}};
 
     if (fScale == 0.0f) {{
@@ -125,8 +123,7 @@ IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
     tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
     tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
 
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
+    return arm_2d_fill_colour_with_mask_opacity_and_transform(
                                             ptileChar,
                                             ptTile,
                                             NULL,
@@ -169,7 +166,6 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
 
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
-
 
     /* use the white space as the default char */
     __ttf_char_descriptor_t *ptUTF8Char =
@@ -417,7 +413,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.5)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.6)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")

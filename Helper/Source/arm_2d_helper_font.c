@@ -91,6 +91,8 @@ static struct {
     uint32_t  bForceAllCharUseSameWidth : 1;
     uint32_t                            : 31;
 
+    arm_2d_scratch_mem_t tCharBuffer;
+
     const arm_2d_font_t *ptFont;
 } s_tLCDTextControl = {
     .tScreen = {
@@ -270,10 +272,39 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity)
     s_tLCDTextControl.chOpacity = chOpacity;
 }
 
+static void __arm_lcd_text_update_char_buffer(void)
+{
+    const arm_2d_font_t *ptFont = s_tLCDTextControl.ptFont;
+    if (ARM_2D_COLOUR_MASK_A8 == ptFont->tileFont.tInfo.tColourInfo.chScheme) {
+        /* free memory */
+        arm_2d_scratch_memory_free(&s_tLCDTextControl.tCharBuffer);
+        return ;
+    }
+
+    
+    size_t tBufferSize = ptFont->tCharSize.iHeight * ptFont->tCharSize.iWidth;
+
+    if (NULL != s_tLCDTextControl.tCharBuffer.pBuffer) {
+        if (s_tLCDTextControl.tCharBuffer.u24SizeInByte >= tBufferSize) {
+            return ;
+        }
+
+        arm_2d_scratch_memory_free(&s_tLCDTextControl.tCharBuffer);
+    }
+
+    arm_2d_scratch_memory_new(&s_tLCDTextControl.tCharBuffer,
+                              1,
+                              tBufferSize,
+                              4,
+                              ARM_2D_MEM_TYPE_FAST);
+}
+
 void arm_lcd_text_set_scale(float fScale)
 {
     if ((fScale != 0.0f) && ABS(fScale - 1.0f) > 0.01f) {
         s_tLCDTextControl.fScale = ABS(fScale);
+
+        __arm_lcd_text_update_char_buffer();
     } else {
         s_tLCDTextControl.fScale = 0.0f;
     }

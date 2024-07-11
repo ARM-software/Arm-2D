@@ -2398,8 +2398,6 @@ IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
 static
 IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char)
 {
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
     static const arm_2d_location_t c_tCentre = {7,8};
 
     if (fScale == 0.0f) {
@@ -2423,8 +2421,7 @@ IMPL_FONT_DRAW_CHAR(__digit_font_a8_draw_char)
     tTargetCenter.iX += ptRegion->tSize.iWidth >> 1;
     tTargetCenter.iY += ptRegion->tSize.iHeight >> 1;
 
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
+    return arm_2d_fill_colour_with_mask_opacity_and_transform(
                                             ptileChar,
                                             ptTile,
                                             NULL,
