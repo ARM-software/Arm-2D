@@ -4900,10 +4900,9 @@ bool arm_2d_helper_pfb_is_region_active(const arm_2d_tile_t *ptTarget,
             break;
         }
         if (!ptScreen->tInfo.Extension.PFB.bIsNewFrame) {
-            break;
-        }
-        if (!(bConsiderDryRun && ptScreen->tInfo.Extension.PFB.bIsDryRun)) {
-            break;
+            if (!(bConsiderDryRun && ptScreen->tInfo.Extension.PFB.bIsDryRun)) {
+                break;
+            }
         }
 
         bResult = true;
