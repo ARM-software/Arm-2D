@@ -2187,19 +2187,39 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 #define C8BIT_TRGT_LOAD_STRIDE(base, stride, pred)      vldrbq_gather_offset_z_u16(base, stride, pred);
 #define C8BIT_SCAL_OPACITY_NONE(transp, opac, pred)     transp
 #define C8BIT_SCAL_OPACITY(transp, opac, pred)          (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
+/* no high part extraction for A1 mask */
+#define C8BIT_SCAL_OPACITY_A1(transp, opac, pred)       (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
+
 
 #define RGB565_TRGT_LOAD(base, stride)                  vldrbq_u16(base)
 #define RGB565_TRGT_LOAD_STRIDE(base, stride)           vldrbq_gather_offset_u16(base, stride);
 #define RGB565_SCAL_OPACITY_NONE(transp, opac)          transp
 #define RGB565_SCAL_OPACITY(transp, opac)               (uint16x8_t) vmulhq((uint8x16_t) transp, opac)
+#define RGB565_SCAL_OPACITY_A1(transp, opac)            (uint16x8_t) vmulq((uint8x16_t) transp, opac)
 
 #define CCCN888_TRGT_LOAD(base, stride, pred)           vldrbq_z_u16(base, pred)
 #define CCCN888_TRGT_LOAD_STRIDE(base, stride, pred)    vldrbq_gather_offset_z_u16(base, stride, pred);
 #define CCCN888_SCAL_OPACITY_NONE(transp, opac, pred)   transp
 #define CCCN888_SCAL_OPACITY(transp, opac, pred)        (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
+#define CCCN888_SCAL_OPACITY_A1(transp, opac, pred)     (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
 
 
-/* 2 and 4-bit alpha expansions helper tables */
+/* 1, 2 and 4-bit alpha expansions helper tables */
+static uint8_t A1_expand_offs[8*2]= {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    };
+
+static uint8_t A1_masks[8*2]= {
+    0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80,
+    0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+    };
+
+static int8_t A1_masks_shifts[8*2]= {
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
+    };
+
 static uint8_t A2_expand_offs[4*3]= {
     0, 0, 0, 0,
     1, 1, 1, 1,
@@ -2238,6 +2258,19 @@ static int8_t A4_masks_shifts[4*3]= {
     };
 
 
+/* 1-bit alpha expansion in a 8x16-bit vector */
+/* ((gather_load(alpha, curA1Off) & curA1Masks) >> curA1MasksShift)  */
+#define C8BIT_TRGT_LOAD_A1(base, stride, pred)  \
+    vshlq_x_u16( \
+        vandq_x(vldrbq_gather_offset_z_u16(base, curA1Offs, pred), curA1Masks, pred),\
+        curA1MasksShift, pred)
+
+#define RGB565_TRGT_LOAD_A1(base, stride)  \
+        vshlq_u16( \
+            vandq(vldrbq_gather_offset_u16(base, curA1Offs), curA1Masks),\
+            curA1MasksShift)
+
+
 /* 2-bit alpha expansion in a 8x16-bit vector */
 /* ((gather_load(alpha, curA2Off) & curA2Masks) >> curA2MasksShift) * 85 */
 #define C8BIT_TRGT_LOAD_A2(base, stride, pred)  \
@@ -2255,6 +2288,7 @@ static int8_t A4_masks_shifts[4*3]= {
         85)
 
 #define CCCN888_TRGT_LOAD_A2(base, stride, pred)  C8BIT_TRGT_LOAD_A2(base, stride, pred)
+#define CCCN888_TRGT_LOAD_A1(base, stride, pred)  C8BIT_TRGT_LOAD_A1(base, stride, pred)
 
 
 /* 4-bit alpha expansion in a 8x16-bit vector */
@@ -2419,6 +2453,51 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask)(uint8_t * __RESTRIC
 #endif
             :"q0", "q1", "q2", "q3", "memory");
 #endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a1_mask_opacity)(uint8_t * __RESTRICT pTarget,
+                                                               int16_t iTargetStride,
+                                                               uint8_t * __RESTRICT pchAlpha,
+                                                               int16_t iAlphaStride,
+                                                               int32_t nAlphaOffset,
+                                                               arm_2d_size_t *
+                                                               __RESTRICT ptCopySize,
+                                                               uint8_t Colour,
+                                                               uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+
+    nAlphaOffset &= 0x07;
+    iAlphaStride = (iAlphaStride + 7) & ~0x07;
+    iAlphaStride >>= 3;
+
+    uint16x8_t      v256 = vdupq_n_u16(256);
+
+    /* 1-bit alpha relative byte location offsets */
+    uint16x8_t      curA1Offs = vldrbq_u16(A1_expand_offs + nAlphaOffset);
+    /* 1-bit alpha byte masks */
+    uint16x8_t      curA1Masks = vldrbq_u16(A1_masks + nAlphaOffset);
+    /* 1-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA1MasksShift =
+        vnegq_s16(vldrbq_s16(A1_masks_shifts + nAlphaOffset));
+
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTarget8 = pTarget;
+
+
+        C8BIT_COLOUR_FILLING_MASK_INNER_MVE(C8BIT_TRGT_LOAD_A1, _,
+                                        /* advance alpha ptr by a quarter of byte */
+                                        C8BIT_SCAL_OPACITY_A1, vOpacity, 1 / 8, 254);
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
     }
@@ -3260,6 +3339,42 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTR
         pTarget += (iTargetStride);
     }
 #endif
+}
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_a1_mask_opacity)(uint16_t * __RESTRICT pTarget,
+                                                    int16_t iTargetStride,
+                                                    uint8_t * __RESTRICT pchAlpha,
+                                                    int16_t iAlphaStride,
+                                                    int32_t nAlphaOffset,
+                                                    arm_2d_size_t * __RESTRICT ptCopySize,
+                                                    uint16_t Colour,
+                                                    uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+    __arm_2d_color_fast_rgb_t tSrcPix;
+
+    nAlphaOffset &= 0x07;
+    iAlphaStride = (iAlphaStride + 7) & ~0x07;
+    iAlphaStride >>= 3;
+
+    /* 1-bit alpha relative byte location offsets */
+    uint16x8_t      curA1Offs = vldrbq_u16(A1_expand_offs + nAlphaOffset);
+    /* 1-bit alpha byte masks */
+    uint16x8_t      curA1Masks = vldrbq_u16(A1_masks + nAlphaOffset);
+    /* 1-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA1MasksShift =
+        vnegq_s16(vldrbq_s16(A1_masks_shifts + nAlphaOffset));
+
+
+    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
+
+
+    RGB565_COLOUR_FILLING_MASK_MVE( RGB565_TRGT_LOAD_A1, _,
+                                    RGB565_SCAL_OPACITY_A1, vOpacity, pchAlpha, 1/8, 254);
 }
 
 __OVERRIDE_WEAK
@@ -4408,6 +4523,55 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask)(uint32_t * __REST
             :"q0", "q1", "q2", "q3", "memory", "cc");
 
 #endif
+        pchAlpha += (iAlphaStride);
+        pTarget += (iTargetStride);
+    }
+}
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a1_mask_opacity)(uint32_t * __RESTRICT pTarget,
+                                                             int16_t iTargetStride,
+                                                             uint8_t * __RESTRICT pchAlpha,
+                                                             int16_t iAlphaStride,
+                                                             int32_t nAlphaOffset,
+                                                             arm_2d_size_t * __RESTRICT ptCopySize,
+                                                             uint32_t Colour,
+                                                             uint_fast16_t hwOpacity)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
+    uint8x16_t      vOpacity = vdupq_n_u8(hwOpacity);
+    uint16_t        c0, c1, c2;
+
+    nAlphaOffset &= 0x07;
+    iAlphaStride = (iAlphaStride + 7) & ~0x07;
+    iAlphaStride >>= 3;
+
+
+    /* 1-bit alpha relative byte location offsets */
+    uint16x8_t      curA1Offs = vldrbq_u16(A1_expand_offs + nAlphaOffset);
+    /* 1-bit alpha byte masks */
+    uint16x8_t      curA1Masks = vldrbq_u16(A1_masks + nAlphaOffset);
+    /* 1-bit alpha byte shift, negated to be used with vector-based vector left shift */
+    int16x8_t       curA1MasksShift =
+        vnegq_s16(vldrbq_s16(A1_masks_shifts + nAlphaOffset));
+
+    c0 = Colour & 0xff;
+    c1 = (Colour >> 8) & 0xff;
+    c2 = (Colour >> 16) & 0xff;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        const uint8_t * pAlpha = pchAlpha;
+        uint8_t *       pTargetCh0 = (uint8_t*)pTarget;
+        uint8_t *       pTargetCh1 = pTargetCh0 + 1;
+        uint8_t *       pTargetCh2 = pTargetCh0 + 2;
+
+
+        CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A1, _,
+                                        CCCN888_SCAL_OPACITY_A1, vOpacity, 1/8, 254);
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
     }
