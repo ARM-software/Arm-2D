@@ -173,6 +173,31 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 }};
 """
 
+tail1BitAlpha="""
+
+
+extern const arm_2d_tile_t c_tile{0}A1Mask;
+
+ARM_SECTION(\"arm2d.tile.c_tile{0}A1Mask\")
+const arm_2d_tile_t c_tile{0}A1Mask = {{
+    .tRegion = {{
+        .tSize = {{
+            .iWidth = {1},
+            .iHeight = {2},
+        }},
+    }},
+    .tInfo = {{
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {{
+            .chScheme = ARM_2D_COLOUR_MASK_A1,
+        }},
+    }},
+    .pchBuffer = (uint8_t *)c_bmp{0}A1Alpha,
+}};
+"""
+
+
 tail2BitAlpha="""
 
 
@@ -259,7 +284,7 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.2)')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.4)')
 
     parser.add_argument('-i', nargs='?', type = str,  required=False, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
@@ -268,6 +293,7 @@ def main(argv):
     parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, all)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
+    parser.add_argument('--a1', action='store_true', help="Generate 1bit alpha-mask")
     parser.add_argument('--a2', action='store_true', help="Generate 2bit alpha-mask")
     parser.add_argument('--a4', action='store_true', help="Generate 4bit alpha-mask")
 
@@ -381,7 +407,42 @@ def main(argv):
                     lineWidth+=1
                 cnt+=1
                 print('',file=o)
-            print('};', file=o)
+            print('};\r\n', file=o)
+
+            # 1-bit Alpha channel
+            if args.a1 or args.format == 'all':
+
+                def RevBitPairPerByte(byteArr):
+                    return ((byteArr & 0x01) << 7) | ((byteArr & 0x80) >> 7) | ((byteArr & 0x40) >> 5) | ((byteArr & 0x02) << 5) | \
+                        ((byteArr & 0x04) << 3) | ((byteArr & 0x20) >> 3) | ((byteArr & 0x10) >> 1) | ((byteArr & 0x08) << 1)
+
+                print('ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmp%sA1Alpha")' % (arr_name), file=o)
+                print('static const uint8_t c_bmp%sA1Alpha[%d*%d] = {' % (arr_name, (row+7)//8, col), file=o)
+                cnt = 0
+                alpha = data[...,3].astype(np.uint8)
+                for eachRow in alpha:
+                    lineWidth=0
+                    print("/* -%d- */" % (cnt), file=o)
+
+                    bitsArr = np.unpackbits(eachRow.astype(np.uint8))
+
+                    # generate indexes for MSB bit every byte
+                    idx = np.arange(0, np.size(bitsArr), 8)
+                    idx = np.reshape(idx, (1,-1))
+
+                    # extraction + endianness conversion
+                    msbBits = bitsArr[idx] & 0x80 >> 7
+                    packedBytes = RevBitPairPerByte(np.packbits(msbBits))
+
+                    for elt in packedBytes:
+                        if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA-1):
+                            print("0x%02x," %(elt) ,file=o)
+                        else:
+                            print("0x%02x" %(elt), end =", ",file=o)
+                        lineWidth+=1
+                    cnt+=1
+                    print('',file=o)
+                print('};\n', file=o)
 
             # 2-bit Alpha channel
             if args.a2 or args.format == 'all':
@@ -415,7 +476,7 @@ def main(argv):
                         lineWidth+=1
                     cnt+=1
                     print('',file=o)
-                print('};', file=o)
+                print('};\r\n', file=o)
 
             # 4-bit Alpha channel
             if args.a4 or args.format == 'all':
@@ -451,7 +512,7 @@ def main(argv):
                         lineWidth+=1
                     cnt+=1
                     print('',file=o)
-                print('};', file=o)
+                print('};\r\n', file=o)
 
 
         # Gray8 channel array
@@ -571,6 +632,9 @@ def main(argv):
 
         if mode == "RGBA":
             print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
+
+            if args.a1 or args.format == 'all':
+                print(tail1BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
             if args.a2 or args.format == 'all':
                 print(tail2BitAlpha.format(arr_name, str(row), str(col)), file=o)

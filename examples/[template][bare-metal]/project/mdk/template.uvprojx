@@ -1031,7 +1031,7 @@
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::.\ArmCompilerforEmbedded6.22</pCCUsed>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -7072,7 +7072,7 @@
             <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
+            <Capability>1</Capability>
             <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -7253,7 +7253,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>5</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -7413,6 +7413,57 @@
               <FileName>arm_2d_scene_animate_background.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
           </Files>
         </Group>
@@ -10920,7 +10971,7 @@
       </api>
     </apis>
     <components>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -10936,7 +10987,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -10952,7 +11003,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -10968,7 +11019,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -10984,7 +11035,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11000,7 +11051,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11016,7 +11067,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11032,7 +11083,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11048,7 +11099,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11064,7 +11115,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.7" condition="Arm-2D-Controls">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11080,7 +11131,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-Generic" Cvendor="ARM" Cversion="1.4.3" condition="Arm-2D-Benchmark-Generic">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.6.0" condition="Arm-2D-Printf">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11096,7 +11147,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="1.7.7" condition="Arm-2D-EXTRA">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.2.4" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11112,39 +11163,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.1" condition="Arm-2D-CORE">
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-AN556"/>
-          <targetInfo name="AN552_Cortex-M55"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.2.2" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
-        <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-AN556"/>
-          <targetInfo name="AN552_Cortex-M55"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="1.12.1" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="2.1.3" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11659,7 +11678,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.3.6">
+      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.3.7">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.7" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
@@ -11677,9 +11696,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.2.2">
+      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.2.4">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.2.2" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.2.4" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11695,9 +11714,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.2.2">
+      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.2.4">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.2.2" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.2.4" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11859,7 +11878,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_basics.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_basics.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11877,7 +11896,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_basics.h" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_basics.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12110,42 +12129,18 @@
         </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_virtual_resource.c" version="1.0.0">
-        <instance index="0">RTE\Acceleration\arm_2d_scene_virtual_resource.c</instance>
+        <instance index="0" removed="1">RTE\Acceleration\arm_2d_scene_virtual_resource.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-AN556"/>
-          <targetInfo name="AN552_Cortex-M55"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_virtual_resource.h" version="1.0.0">
-        <instance index="0">RTE\Acceleration\arm_2d_scene_virtual_resource.h</instance>
+        <instance index="0" removed="1">RTE\Acceleration\arm_2d_scene_virtual_resource.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-AN556"/>
-          <targetInfo name="AN552_Cortex-M55"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
-      <file attr="config" category="utility" name="tools\img2c.py" version="1.2.2">
+      <file attr="config" category="utility" name="tools\img2c.py" version="1.2.4">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.7" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
@@ -12163,7 +12158,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="utility" name="tools\ttf2c.py" version="1.2.0">
+      <file attr="config" category="utility" name="tools\ttf2c.py" version="1.3.0">
         <instance index="0">RTE\Acceleration\ttf2c.py</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.1.7" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>

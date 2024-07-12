@@ -8,7 +8,7 @@
 #
 # *************************************************************************************************
 #
-# * Copyright (C) 2023 ARM Limited or its affiliates. All rights reserved.
+# * Copyright (C) 2024 ARM Limited or its affiliates. All rights reserved.
 # *
 # * SPDX-License-Identifier: Apache-2.0
 # *
@@ -50,8 +50,13 @@ c_head_string="""
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+#   pragma clang diagnostic ignored "-Wpadded"
+#   pragma clang diagnostic ignored "-Wunused-parameter"
+#   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wsign-conversion"
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+#   pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress=1296
 #endif
@@ -72,7 +77,7 @@ c_body_string="""
 
 
 ARM_SECTION(\"arm2d.tile.c_tileUTF8UserFontA{5}Mask\")
-static arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
+static const arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -91,51 +96,6 @@ static arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
 
 #define __UTF8_FONT_SIZE_{5}__
 
-static
-IMPL_FONT_DRAW_CHAR(__utf8_font_a{5}_draw_char)
-{{
-#if defined(__UTF8_FONT_SIZE_8__)
-    static arm_2d_op_fill_cl_msk_opa_trans_t s_tOP;
-    const bool bIsNewFrame = true;
-    static const arm_2d_location_t c_tCentre = {{7,8}};
-
-    if (0.0f == fScale || ABS(fScale - 1.0f) < 0.01f) {{
-        return arm_2d_fill_colour_with_mask_and_opacity(
-                                            ptTile,
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){{tForeColour}},
-                                            chOpacity);
-    }}
-
-    return arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &s_tOP,
-                                            ptileChar,
-                                            ptTile,
-                                            ptRegion,
-                                            c_tCentre,
-                                            0.0f,
-                                            fScale,
-                                            tForeColour,
-                                            chOpacity);
-#elif defined(__UTF8_FONT_SIZE_1__)
-    return arm_2d_draw_pattern(    ptileChar,
-                            ptTile,
-                            ptRegion,
-                            ARM_2D_DRW_PATN_MODE_COPY,
-                            tForeColour,
-                            GLCD_COLOR_BLACK);
-#else
-    return arm_2d_fill_colour_with_a{5}_mask_and_opacity(
-                                        ptTile,
-                                        ptRegion,
-                                        ptileChar,
-                                        (__arm_2d_color_t){{tForeColour}},
-                                        chOpacity);
-#endif
-
-}}
-
 
 
 static
@@ -151,7 +111,6 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
 
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
-
 
     /* use the white space as the default char */
     __ttf_char_descriptor_t *ptUTF8Char =
@@ -178,7 +137,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     return ptDescriptor;
 }}
 
-
+const
 struct {{
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
@@ -199,7 +158,7 @@ struct {{
             }},
             .nCount =  {3},                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a{5}_font_get_char_descriptor,
-            .fnDrawChar = &__utf8_font_a{5}_draw_char,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a{5}_font_draw_char,
         }},
         .hwCount = 1,
         .hwDefaultCharIndex = 1, /* tBlank */
@@ -353,7 +312,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
     with open(output_file, "a") as f:
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
                 .format(font_bit_size), file=f)
 
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
@@ -372,19 +331,21 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
                 .format(font_bit_size), file=f)
 
         last_index = 0;
         last_advance = 0;
+        last_height = 0;
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
             utf8_c_array = utf8_to_c_array(utf8_encoding)
             last_index = index
             last_advance = advance_width
+            last_height = height;
             f.write(f"    {{ {round(index / char_max_width)}, {{ {width}, {height}, }}, {advance_width}, {bearing_x}, {bearing_y}, {len(utf8_encoding)}, {utf8_c_array} }},\n")
 
-        last_index += char_max_width * char_max_height
-        f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {last_advance}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
+        last_index += char_max_width * last_height
+        f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {char_max_width}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
 
         f.write("};\n")
 
@@ -397,7 +358,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.1.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.3.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
