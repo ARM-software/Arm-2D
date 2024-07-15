@@ -88,13 +88,6 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-extern const arm_2d_tile_t c_tileQuaterArcMask;
-extern const arm_2d_tile_t c_tileBigWhiteDotMask;
-extern const arm_2d_tile_t c_tileWhiteDotMiddleMask;
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileGlassBallMask;
 extern const arm_2d_tile_t c_tileHallowOutCircleMask;
@@ -110,7 +103,6 @@ struct {
 /*============================ LOCAL VARIABLES ===============================*/
 
 static arm_2d_size_t c_tChargingArea = {0};
-static const arm_2d_tile_t *s_ptileQuaterArcMask = &c_tileQuaterArcMask;
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -219,7 +211,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
     arm_2d_canvas(ptTile, __charging_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
 
-
+    #if !__BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
         arm_2d_align_centre(__charging_canvas, c_tileHallowOutCircleMask.tRegion.tSize) {
 
             draw_liquid_wave(   ptTile, &
@@ -239,6 +231,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
             ARM_2D_OP_WAIT_ASYNC();
 
         }
+    #endif
 
         /* show nebula */
         dynamic_nebula_show(&this.tNebula, 
@@ -253,6 +246,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
                                 &__charging_canvas,
                                 255 - 16);
 
+    #if !__BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
         arm_2d_align_centre(__charging_canvas, c_tileGlassBallMask.tRegion.tSize) {
 
             arm_2d_fill_colour_with_mask_and_opacity(
@@ -282,6 +276,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
             arm_lcd_text_set_colour(__RGB(0, 128, 0), GLCD_COLOR_BLACK);
             arm_lcd_printf("%%");
         }
+    #endif
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -300,10 +295,12 @@ void __draw_bubble_handler( void *pObj,
 {
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)pObj;
 
-    iDistance -= s_ptileQuaterArcMask->tRegion.tSize.iWidth;
-
+#if !__BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
+    iDistance -= c_tileGlassBallMask.tRegion.tSize.iWidth >> 1;
+#endif
 
     arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
+
     tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
     tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
 
@@ -329,9 +326,7 @@ user_scene_bubble_charging_t *__arm_2d_scene_bubble_charging_init(   arm_2d_scen
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-    c_tChargingArea = s_ptileQuaterArcMask->tRegion.tSize;
-    c_tChargingArea.iWidth *= 4;
-    c_tChargingArea.iHeight *= 4;
+    c_tChargingArea = c_tileGlassBallMask.tRegion.tSize;
 
     /* get the screen region */
     arm_2d_region_t tScreen
@@ -382,9 +377,13 @@ user_scene_bubble_charging_t *__arm_2d_scene_bubble_charging_init(   arm_2d_scen
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.5f,
+            .fSpeed = 0.3f,
             .iRadius = iRadius,
-            .iVisibleRingWidth = iRadius - s_ptileQuaterArcMask->tRegion.tSize.iWidth,
+        #if __BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
+            .iVisibleRingWidth = iRadius,
+        #else
+            .iVisibleRingWidth = iRadius - (c_tChargingArea.iWidth >> 1),
+        #endif
             .hwParticleCount = dimof(this.tParticles),
             .ptParticles = this.tParticles,
 

@@ -59,6 +59,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef __BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
+#   define __BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__              0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
