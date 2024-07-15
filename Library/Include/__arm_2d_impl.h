@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        4. July 2024
- * $Revision:    V.1.5.2
+ * $Date:        15. July 2024
+ * $Revision:    V.1.5.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -698,6 +698,15 @@ const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset,
                                             arm_2d_tile_t **ppFirstDerivedChild);
+extern
+ARM_NONNULL(1,2)
+const arm_2d_tile_t * __arm_2d_tile_region_caculator( 
+                                            const arm_2d_tile_t *ptTile,
+                                            __arm_2d_tile_param_t *ptOut,
+                                            uint_fast8_t *pchPixelLenInBit,
+                                            bool bAllowEnforcedColour,
+                                            uint32_t wMode,
+                                            bool bUseAsTarget);
 
 /*----------------------------------------------------------------------------*
  * Default Software Implementations                                           *

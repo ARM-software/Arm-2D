@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        4. July 2024
- * $Revision:    V.1.8.1
+ * $Date:        15. July 2024
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -620,7 +620,7 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
  *----------------------------------------------------------------------------*/
 
 ARM_NONNULL(1,2)
-static const arm_2d_tile_t * __arm_2d_tile_region_caculator( 
+const arm_2d_tile_t * __arm_2d_tile_region_caculator( 
                                             const arm_2d_tile_t *ptTile,
                                             __arm_2d_tile_param_t *ptOut,
                                             uint_fast8_t *pchPixelLenInBit,

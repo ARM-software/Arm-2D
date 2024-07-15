@@ -21,13 +21,15 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        11. July 2024
- * $Revision:    V.2.5.1
+ * $Date:        15. July 2024
+ * $Revision:    V.2.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
 /*============================ INCLUDES ======================================*/
+
+#define __ARM_2D_IMPL__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,6 +38,7 @@
 #include <stdarg.h>
 
 #include "arm_2d_helper.h"
+#include "__arm_2d_impl.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -558,8 +561,32 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)
                 0, 
                 s_tLCDTextControl.tCharBuffer.u24SizeInByte);
 
+    #if 0
         arm_2d_gray8_fill_colour_with_a1_mask(&tTempA8CharTile, NULL, ptileChar, 
                                              (arm_2d_color_gray8_t) {0xFF});
+    #else
+        do {
+            __arm_2d_tile_param_t tSourceTileParam;
+            uint_fast8_t chSourcePixelLenInBit;
+            __arm_2d_tile_region_caculator( 
+                                ptileChar, 
+                                &tSourceTileParam,
+                                &chSourcePixelLenInBit,
+                                true,
+                                0,
+                                false); 
+
+            __arm_2d_impl_c8bit_draw_pattern_fg_only(
+                (uint8_t  *)tSourceTileParam.pBuffer,
+                tSourceTileParam.nOffset,
+                tSourceTileParam.iStride,
+                (uint8_t  *)tTempA8CharTile.pchBuffer,
+                ptFont->tCharSize.iWidth,
+                &tSourceTileParam.tValidRegion.tSize,
+                0xFF);
+
+        } while(0);
+    #endif
 
         arm_2d_region_t tCharRegion = {
             .tSize = ptileChar->tRegion.tSize,
@@ -611,8 +638,32 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
                 0, 
                 s_tLCDTextControl.tCharBuffer.u24SizeInByte);
 
+    #if 0
         arm_2d_gray8_fill_colour_with_a2_mask(&tTempA8CharTile, NULL, ptileChar, 
                                              (arm_2d_color_gray8_t) {0xFF});
+    #else
+        do {
+            __arm_2d_tile_param_t tSourceTileParam;
+            uint_fast8_t chSourcePixelLenInBit;
+            __arm_2d_tile_region_caculator( 
+                                ptileChar, 
+                                &tSourceTileParam,
+                                &chSourcePixelLenInBit,
+                                true,
+                                0,
+                                false); 
+
+            __arm_2d_impl_gray8_colour_filling_a2_mask(
+                (uint8_t  *)tTempA8CharTile.pchBuffer,
+                ptFont->tCharSize.iWidth,
+                (uint8_t  *)tSourceTileParam.pBuffer,
+                tSourceTileParam.iStride,
+                tSourceTileParam.nOffset,
+                &tSourceTileParam.tValidRegion.tSize,
+                0xFF);
+
+        } while(0);
+    #endif
 
         arm_2d_region_t tCharRegion = {
             .tSize = ptileChar->tRegion.tSize,
@@ -664,8 +715,32 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char)
                 0, 
                 s_tLCDTextControl.tCharBuffer.u24SizeInByte);
 
+    #if 0
         arm_2d_gray8_fill_colour_with_a4_mask(&tTempA8CharTile, NULL, ptileChar, 
                                              (arm_2d_color_gray8_t) {0xFF});
+    #else
+        do {
+            __arm_2d_tile_param_t tSourceTileParam;
+            uint_fast8_t chSourcePixelLenInBit;
+            __arm_2d_tile_region_caculator( 
+                                ptileChar, 
+                                &tSourceTileParam,
+                                &chSourcePixelLenInBit,
+                                true,
+                                0,
+                                false); 
+
+            __arm_2d_impl_gray8_colour_filling_a4_mask(
+                (uint8_t  *)tTempA8CharTile.pchBuffer,
+                ptFont->tCharSize.iWidth,
+                (uint8_t  *)tSourceTileParam.pBuffer,
+                tSourceTileParam.iStride,
+                tSourceTileParam.nOffset,
+                &tSourceTileParam.tValidRegion.tSize,
+                0xFF);
+
+        } while(0);
+    #endif
 
         arm_2d_region_t tCharRegion = {
             .tSize = ptileChar->tRegion.tSize,
