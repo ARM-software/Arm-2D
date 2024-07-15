@@ -295,6 +295,8 @@ void __draw_bubble_handler( void *pObj,
 {
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)pObj;
 
+    ARM_2D_UNUSED(ptDN);
+
 #if !__BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
     iDistance -= c_tileGlassBallMask.tRegion.tSize.iWidth >> 1;
 #endif

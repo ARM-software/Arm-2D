@@ -2023,9 +2023,11 @@ ARM_PT_BEGIN(this.chState)
             .ptItem = NULL,
         };
 
+    #if 0
         int16_t iItemActualWidth = ptItem->tSize.iHeight 
                          + ptItem->Padding.chPrevious
                          + ptItem->Padding.chNext;
+    #endif
         while(NULL != ptItem) {
             int32_t nY1 = nTempOffset 
                         + this.iStartOffset 
@@ -2501,10 +2503,11 @@ ARM_PT_BEGIN(this.chState)
             .nOffset = 0,
             .ptItem = NULL,
         };
-
+    #if 0
         int16_t iItemActualWidth = ptItem->tSize.iWidth 
                          + ptItem->Padding.chPrevious
                          + ptItem->Padding.chNext;
+    #endif
         while(NULL != ptItem) {
             int32_t nX1 = nTempOffset 
                         + this.iStartOffset 

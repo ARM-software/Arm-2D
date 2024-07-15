@@ -200,6 +200,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a1_font_get_char_descriptor)
     assert(NULL != pchCharCode);
 
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
 
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
 
@@ -502,6 +503,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a2_font_get_char_descriptor)
     assert(NULL != pchCharCode);
 
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
 
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
 
@@ -933,6 +935,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
     assert(NULL != pchCharCode);
 
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
 
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
 
@@ -1608,6 +1611,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a8_font_get_char_descriptor)
     assert(NULL != pchCharCode);
 
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
 
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
 
