@@ -63,7 +63,7 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define c_tileBackground         c_tileBackgroundSmallGRAY8;
+#   define c_tileBackground         c_tileBackgroundSmallGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
