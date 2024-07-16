@@ -160,7 +160,7 @@ static void __on_scene_basics_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -182,6 +182,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
+
+        arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient(
+                                            ptTile, 
+                                            &__top_canvas, 
+                                            (__arm_2d_color_t){GLCD_COLOR_GREEN},
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                0, 0,
+                                                128, 128
+                                            });
 
     #if 0
         arm_2d_align_centre(__top_canvas, c_tileBackground.tRegion.tSize) {
@@ -266,7 +275,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
                                             GLCD_COLOR_WHITE, 
-                                            255,
+                                            128,
                                             bIsNewFrame);
                     
                     arm_2d_op_wait_async(NULL);

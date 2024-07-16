@@ -58,6 +58,19 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __COLOUR,       /*   target colour     */   \
+                                    ...)            /*   sample points     */   \
+            arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(                \
+                                                        NULL,                   \
+                                                        (__TARGET_ADDR),        \
+                                                        (__REGION_ADDR),        \
+                                                        (__COLOUR),             \
+                                                        __VA_ARGS__)
+
 /*============================ TYPES =========================================*/
 
 typedef union arm_2d_alpha_samples_4pts_t {
