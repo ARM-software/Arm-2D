@@ -22,7 +22,7 @@
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *
  * $Date:        16. July 2024
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.8.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -90,16 +90,23 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8BIT' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+    ] 
+%}
+
 /*
  * the Frontend API
  */
 
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(  
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_4pts_alpha_gradient(  
                             arm_2d_fill_cl_4p_al_grd_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
-                            arm_2d_color_rgb565_t tColour,
+                            arm_2d_color_{{colour_name | lower}}_t tColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints)
 {
     assert(NULL != ptTarget);
@@ -110,7 +117,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(
         return arm_fsm_rt_on_going;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_{{colour_name | upper}};
 
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
@@ -123,12 +130,12 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
-                            uint16_t *__RESTRICT phwTarget,
+void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_4pts_alpha_gradient(
+                            {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
-                            uint16_t hwColour,
+                            {{colour_int}} {{colour_int_prefix}}Colour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints)
 {
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
@@ -202,7 +209,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
             q16XRatio = (q16OpacityRight - q16OpacityLeft) / iWidth;
         } while(0);
 
-        uint16_t *phwTargetLine = phwTarget;
+        {{colour_int}} * __RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
             /* calclulate opacity */
@@ -214,21 +221,21 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
             hwAlpha -= (hwAlpha == 1);
 #endif
 
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwAlpha);
+            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}TargetLine++, hwAlpha);
         }
 
-        phwTarget += iTargetStride;
+        p{{colour_int_prefix}}Target += iTargetStride;
     }
 }
 
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_4pts_alpha_gradient( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_fill_cl_4p_al_grd_t, ptTask->ptOP);
 
-    assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits | upper}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
 
     if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
@@ -242,12 +249,12 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient( __arm_2
                                         tTargetRegion.tLocation,
                                         true);
 
-    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient( 
+    __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_4pts_alpha_gradient( 
                         ptTask->Param.tTileProcess.pBuffer,
                         ptTask->Param.tTileProcess.iStride,
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
-                        this.hwColour,
+                        this.{{colour_int_prefix}}Colour,
                         this.tSamplePoints);
 
     return arm_fsm_rt_cpl;
@@ -257,18 +264,18 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient( __arm_2
  * OPCODE Low Level Implementation Entries
  */
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565,
-                __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient);      /* Default SW Implementation */
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_{{colour_name | upper}},
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_4pts_alpha_gradient);      /* Default SW Implementation */
 
 
 /*
  * OPCODE
  */
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_{{colour_name | upper}} = {
     .Info = {
         .Colour = {
-            .chScheme   = ARM_2D_COLOUR_RGB565,
+            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
         },
         .Param = {
             .bHasSource     = false,
@@ -277,11 +284,12 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565 =
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT,
         
         .LowLevelIO = {
-            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565),
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_{{colour_name | upper}}),
         },
     },
 };
 
+{%- endfor %}
 
 #ifdef   __cplusplus
 }

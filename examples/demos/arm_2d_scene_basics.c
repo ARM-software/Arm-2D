@@ -182,7 +182,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-
+    
         arm_2d_fill_colour_with_4pts_alpha_gradient(
                                             ptTile, 
                                             &__top_canvas, 
