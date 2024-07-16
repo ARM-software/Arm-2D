@@ -269,7 +269,7 @@ extern "C" {
 #   define arm_2d_fill_colour_with_vertical_line_mask_and_opacity               \
                 arm_2d_gray8_fill_colour_with_vertical_line_mask_and_opacity
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
-                arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient
+                arm_2d_gray8_fill_colour_with_4pts_alpha_gradient
 
 #   define arm_2d_draw_point        arm_2d_gray8_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
@@ -467,7 +467,7 @@ extern "C" {
 #   define arm_2d_fill_colour_with_vertical_line_mask_and_opacity               \
                 arm_2d_rgb565_fill_colour_with_vertical_line_mask_and_opacity
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
-                arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient
+                arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient
 
 #   define arm_2d_draw_point        arm_2d_rgb565_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
@@ -664,7 +664,7 @@ extern "C" {
 #   define arm_2d_fill_colour_with_vertical_line_mask_and_opacity               \
                 arm_2d_cccn888_fill_colour_with_vertical_line_mask_and_opacity
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
-                arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient
+                arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient
 
 #   define arm_2d_draw_point        arm_2d_cccn888_draw_point
 #else
