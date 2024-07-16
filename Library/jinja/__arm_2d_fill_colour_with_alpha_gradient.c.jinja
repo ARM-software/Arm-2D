@@ -95,35 +95,41 @@ extern "C" {
  */
 
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_alpha_gradient(  
-                            arm_2d_fill_cl_alpha_grd_t *ptOP,
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
-                            const arm_2d_region_t *ptRegion)
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_rgb565_t tColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints)
 {
     assert(NULL != ptTarget);
 
-    ARM_2D_IMPL(arm_2d_fill_cl_alpha_grd_t, ptOP);
+    ARM_2D_IMPL(arm_2d_fill_cl_4p_al_grd_t, ptOP);
 
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565;
 
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
-    
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_rgb565_fill_colour_with_alpha_gradient(
+void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
-                            arm_2d_region_t *ptTargetRegionOnVirtualScreen)
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint16_t hwColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints)
 {
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -161,18 +167,66 @@ void __arm_2d_impl_rgb565_fill_colour_with_alpha_gradient(
                   contains a valid buffer.
      */
     
-    uint16_t *phwPixel = phwTarget;
+    int32_t q16YRatioLeft, q16YRatioRight;
+
+    /* calculate Y Ratios */
+    do {
+        int16_t iHeight = ptTargetRegionOnVirtualScreen->tSize.iHeight;
+
+        q16YRatioLeft = (((int32_t)(   tSamplePoints.chBottomLeft 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                      / iHeight;
+
+        q16YRatioRight = (((int32_t)(   tSamplePoints.chBottomRight 
+                                    -   tSamplePoints.chTopRight)) << 16) 
+                       / iHeight;
+    } while(0);
 
 
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
+        /* calculate the end points of the current row */
+        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16) 
+                               + (y + tOffset.iY) * q16YRatioLeft;
+
+
+        int32_t q16OpacityRight = (((int32_t)tSamplePoints.chTopRight) << 16) 
+                               + (y + tOffset.iY) * q16YRatioRight;
+
+
+        int32_t q16XRatio;
+        /* calculate X Ratios */
+        do {
+            int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+            q16XRatio = (q16OpacityRight - q16OpacityLeft) / iWidth;
+        } while(0);
+
+        uint16_t *phwTargetLine = phwTarget;
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            /* calclulate opacity */
+            int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
+
+
+            uint16_t hwAlpha = 256 - (nOpacity >> 16);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+
+            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwAlpha);
+        }
+
+        phwTarget += iTargetStride;
+    }
 }
 
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient( __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_fill_cl_alpha_grd_t, ptTask->ptOP);
+    ARM_2D_IMPL(arm_2d_fill_cl_4p_al_grd_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
@@ -188,11 +242,13 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient( __arm_2d_sub
                                         tTargetRegion.tLocation,
                                         true);
 
-    __arm_2d_impl_rgb565_fill_colour_with_alpha_gradient( 
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient( 
                         ptTask->Param.tTileProcess.pBuffer,
                         ptTask->Param.tTileProcess.iStride,
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
-                        &tTargetRegion);
+                        &tTargetRegion,
+                        this.hwColour,
+                        this.tSamplePoints);
 
     return arm_fsm_rt_cpl;
 }
@@ -201,15 +257,15 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient( __arm_2d_sub
  * OPCODE Low Level Implementation Entries
  */
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565,
-                __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient);      /* Default SW Implementation */
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565,
+                __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient);      /* Default SW Implementation */
 
 
 /*
  * OPCODE
  */
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -218,10 +274,10 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565 = {
             .bHasSource     = false,
             .bHasTarget     = true,
         },
-        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_ALPHA_GRADIENT,
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT,
         
         .LowLevelIO = {
-            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565),
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565),
         },
     },
 };

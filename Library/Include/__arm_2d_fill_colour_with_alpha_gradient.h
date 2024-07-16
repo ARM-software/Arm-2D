@@ -60,18 +60,74 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-typedef struct arm_2d_fill_cl_alpha_grd_t arm_2d_fill_cl_alpha_grd_t;
+typedef union arm_2d_alpha_samples_4pts_t {
+    struct {
+        uint8_t chTopLeft;
+        uint8_t chTopRight;
+        uint8_t chBottomLeft;
+        uint8_t chBottomRight;
+    };
+    uint8_t chAlpha[4];
+} arm_2d_alpha_samples_4pts_t;
 
-struct arm_2d_fill_cl_alpha_grd_t {
+typedef union arm_2d_alpha_samples_3pts_t {
+    struct {
+        uint8_t chTopLeft;
+        uint8_t chTopRight;
+        uint8_t chBottomLeft;
+    };
+    uint8_t chAlpha[3];
+} arm_2d_alpha_samples_3pts_t;
+
+typedef union arm_2d_alpha_samples_2pts_t {
+    struct {
+        uint8_t chLeft;
+        uint8_t chRight;
+    };
+    struct {
+        uint8_t chTop;
+        uint8_t chBottom;
+    };
+    uint8_t chAlpha[2];
+} arm_2d_alpha_samples_2pts_t;
+
+typedef struct arm_2d_fill_cl_4p_al_grd_t arm_2d_fill_cl_4p_al_grd_t;
+
+struct arm_2d_fill_cl_4p_al_grd_t {
 ARM_PRIVATE(
-    implement(arm_2d_op_t);                         /* inherit from base class arm_2d_op_cp_t*/
-    
+    implement(arm_2d_op_t);                     /* inherit from base class arm_2d_op_cp_t*/
+
+    union {
+        uint8_t  chColour;                      //!< 8bit colour
+        uint16_t hwColour;                      //!< 16bit colour
+        uint32_t wColour;                       //!< 32bit colour
+    };
+
+    arm_2d_alpha_samples_4pts_t tSamplePoints;
 )
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+/*!
+ * \brief fill the target region with a given colour and an alpha gradient that
+ *        is defined by 4 corner sample points. 
+ * \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] tColour the target colour
+ *  \param[in] tSamplePoints the 4 corner sample points.
+ *  \return arm_fsm_rt_t the operations result
+ */
+extern
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_rgb565_t tColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
 
 
 /*! @} */
