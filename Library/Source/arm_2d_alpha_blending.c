@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        17. May 2024
- * $Revision:    V.1.7.0
+ * $Date:        16 July 2024
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -30,7 +30,6 @@
 
 /*============================ INCLUDES ======================================*/
 #define __ARM_2D_IMPL__
-
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
@@ -72,9 +71,6 @@ extern "C" {
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
-
-
-
 
 /*----------------------------------------------------------------------------*
  * Accelerable Low Level APIs                                                 *
@@ -3656,6 +3652,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_tile_copy_with_source_mask_and_opacity.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_alpha_gradient.c"
 
 #ifdef   __cplusplus
 }
