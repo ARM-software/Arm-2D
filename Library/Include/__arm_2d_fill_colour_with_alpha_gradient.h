@@ -59,12 +59,12 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient(                     \
+#define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient(                      \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient(                \
+            arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient(                 \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
@@ -83,12 +83,12 @@ extern "C" {
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
-#define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient(                     \
+#define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient(                    \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient(                \
+            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient(               \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
