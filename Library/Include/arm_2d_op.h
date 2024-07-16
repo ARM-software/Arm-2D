@@ -391,6 +391,24 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACI
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACITY_CCCN888;
 
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_AND_OPACITY_CCCN888;
+
 /*----------------------------------------------------------------------------*
  * Alpha Blending and Masks                                                   *
  *----------------------------------------------------------------------------*/

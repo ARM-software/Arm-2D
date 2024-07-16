@@ -59,6 +59,16 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+typedef struct arm_2d_fill_cl_alpha_grd_t arm_2d_fill_cl_alpha_grd_t;
+
+struct arm_2d_fill_cl_alpha_grd_t {
+ARM_PRIVATE(
+    implement(arm_2d_op_t);                         /* inherit from base class arm_2d_op_cp_t*/
+    
+)
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 

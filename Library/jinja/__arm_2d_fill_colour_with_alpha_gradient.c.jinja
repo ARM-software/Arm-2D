@@ -90,6 +90,142 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+/*
+ * the Frontend API
+ */
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_alpha_gradient(  
+                            arm_2d_fill_cl_alpha_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_alpha_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILTER_IIR_BLUR_RGB565;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+    
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+/* default low level implementation */
+__WEAK
+void __arm_2d_impl_rgb565_fill_colour_with_alpha_gradient(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen)
+{
+    int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+
+    /* calculate the offset between the target region and the valid region */
+    arm_2d_location_t tOffset = {
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
+    };
+
+    /*
+         Virtual Screen
+         +--------------------------------------------------------------+
+         |                                                              |
+         |        Target Region                                         |
+         |       +-------------------------------------------+          |
+         |       |                                           |          |
+         |       |                  +-------------------+    |          |
+         |       |                  | Valid Region      |    |          |
+         |       |                  |                   |    |          |
+         |       |                  +-------------------+    |          |     
+         |       |                                           |          |
+         |       |                                           |          |     
+         |       +-------------------------------------------+          |
+         +--------------------------------------------------------------+     
+     
+         NOTE: 1. Both the Target Region and the Valid Region are relative
+                  regions of the virtual Screen in this function.
+               2. The Valid region is always inside the Target Region.
+               3. tOffset is the relative location between the Valid Region
+                  and the Target Region.
+               4. The Valid Region marks the location and size of the current
+                  working buffer on the virtual screen. Only the valid region
+                  contains a valid buffer.
+     */
+    
+    uint16_t *phwPixel = phwTarget;
+
+
+
+}
+
+/*
+ * The backend entry
+ */
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient( __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_fill_cl_alpha_grd_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
+
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
+
+    tTargetRegion.tLocation 
+        = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,
+                                        tTargetRegion.tLocation,
+                                        true);
+
+    __arm_2d_impl_rgb565_fill_colour_with_alpha_gradient( 
+                        ptTask->Param.tTileProcess.pBuffer,
+                        ptTask->Param.tTileProcess.iStride,
+                        &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
+                        &tTargetRegion);
+
+    return arm_fsm_rt_cpl;
+}
+
+/*
+ * OPCODE Low Level Implementation Entries
+ */
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565,
+                __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient);      /* Default SW Implementation */
+
+
+/*
+ * OPCODE
+ */
+
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = false,
+            .bHasTarget     = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_ALPHA_GRADIENT,
+        
+        .LowLevelIO = {
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_ALPHA_GRADIENT_RGB565),
+        },
+    },
+};
+
 
 #ifdef   __cplusplus
 }

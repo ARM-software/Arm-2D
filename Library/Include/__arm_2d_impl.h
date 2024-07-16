@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        15. July 2024
- * $Revision:    V.1.5.3
+ * $Date:        16. July 2024
+ * $Revision:    V.1.5.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -430,6 +430,12 @@ enum {
 
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_VERTICAL_LINE_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_VERTICAL_LINE_MASK_AND_OPACITY,
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_ALPHA_GRADIENT,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_ALPHA_GRADIENT_AND_OPACITY,
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_ALPHA_GRADIENT_AND_SOURCE_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_ALPHA_GRADIENT_SOURCE_MASK_AND_OPACITY,
 
     __ARM_2D_OP_IDX_DRAW_POINT,
     __ARM_2D_OP_IDX_DRAW_PATTERN,
@@ -1599,6 +1605,29 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_repeat_colour_filling_with_vertical_line_mask_an
 
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_repeat_colour_filling_with_vertical_line_mask_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_alpha_gradient( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_alpha_gradient( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_alpha_gradient_and_opacity( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_alpha_gradient_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_alpha_gradient_and_opacity( 
                                                 __arm_2d_sub_task_t *ptTask);
 
 extern
