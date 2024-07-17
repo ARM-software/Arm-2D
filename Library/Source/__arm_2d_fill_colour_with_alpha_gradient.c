@@ -465,9 +465,8 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
                                    -   tSamplePoints.chTopLeft)) << 16) 
-                 / iWidth;
+                  / iWidth;
     } while(0);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -478,14 +477,13 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
         uint8_t * __RESTRICT pchTargetLine = pchTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            /* calclulate opacity */
+            /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
 
             uint16_t hwAlpha = 256 - (nOpacity >> 16);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-
             __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwAlpha);
         }
 
@@ -922,9 +920,8 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
                                    -   tSamplePoints.chTopLeft)) << 16) 
-                 / iWidth;
+                  / iWidth;
     } while(0);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -935,14 +932,13 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
         uint16_t * __RESTRICT phwTargetLine = phwTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            /* calclulate opacity */
+            /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
 
             uint16_t hwAlpha = 256 - (nOpacity >> 16);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-
             __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwAlpha);
         }
 
@@ -1379,9 +1375,8 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
                                    -   tSamplePoints.chTopLeft)) << 16) 
-                 / iWidth;
+                  / iWidth;
     } while(0);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -1392,14 +1387,13 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
         uint32_t * __RESTRICT pwTargetLine = pwTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            /* calclulate opacity */
+            /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
 
             uint16_t hwAlpha = 256 - (nOpacity >> 16);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
         }
 

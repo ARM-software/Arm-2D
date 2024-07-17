@@ -473,9 +473,8 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_3pts_alpha_gradient(
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
                                    -   tSamplePoints.chTopLeft)) << 16) 
-                 / iWidth;
+                  / iWidth;
     } while(0);
-
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -486,14 +485,13 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_3pts_alpha_gradient(
         {{colour_int}} * __RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            /* calclulate opacity */
+            /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
 
             uint16_t hwAlpha = 256 - (nOpacity >> 16);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
-
             __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}TargetLine++, hwAlpha);
         }
 
