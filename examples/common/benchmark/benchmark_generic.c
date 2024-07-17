@@ -86,14 +86,16 @@
 
 /*============================ TYPES =========================================*/
 typedef struct arm_2d_layer_t {
-    const arm_2d_tile_t    *ptTile;
-    arm_2d_region_t         tRegion;
-    uint32_t                wMode;
-    uint8_t                 chOpacity;
-    uint8_t                 bIsIrregular        : 1;
-    uint8_t                 bIsRoundedCorner    : 1; 
-    uint8_t                                     : 6;
-    COLOUR_INT              tKeyColour;
+    const arm_2d_tile_t         *ptTile;
+    arm_2d_region_t             tRegion;
+    uint32_t                    wMode;
+    uint8_t                     chOpacity;
+    uint8_t                     bIsIrregular        : 1;
+    uint8_t                     bIsRoundedCorner    : 1;
+    uint8_t                     bIsAlphaGradient    : 1; 
+    uint8_t                                     : 5;
+    COLOUR_INT                  tKeyColour;
+    arm_2d_alpha_samples_4pts_t tSamplePoints;
 } arm_2d_layer_t;
 
 typedef struct floating_range_t {
@@ -109,6 +111,7 @@ enum {
 #endif
     BENCHMARK_LAYER_RED_OPA,
     BENCHMARK_LAYER_ICON,
+    BENCHMARK_LAYER_ALPHA_GRADIENT,
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -197,6 +200,17 @@ static arm_2d_layer_t s_ptRefreshLayers[] = {
         arm_2d_layer(&c_tilePictureSun, 255, 0, 0, 
                     .bIsIrregular = true, 
                     .tKeyColour = GLCD_COLOR_WHITE),
+
+    [BENCHMARK_LAYER_ALPHA_GRADIENT] = 
+        arm_2d_layer(   NULL, 255, 0, 0, 
+                        .tRegion.tSize.iWidth = __GLCD_CFG_SCEEN_WIDTH__ >> 1, 
+                        .tRegion.tSize.iHeight = __GLCD_CFG_SCEEN_HEIGHT__ >> 2,
+                        .bIsAlphaGradient = true,
+                        .tSamplePoints = {
+                            128, 64,
+                            0, 255
+                        },
+                    ),
 };
 
 static floating_range_t s_ptFloatingBoxes[] = {
@@ -223,6 +237,12 @@ static floating_range_t s_ptFloatingBoxes[] = {
         .tRegion = {{-100, -100}, {__GLCD_CFG_SCEEN_WIDTH__+200, __GLCD_CFG_SCEEN_HEIGHT__+200}},
         .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_ICON],
         .tOffset = {5, 5},
+    },
+
+    [BENCHMARK_LAYER_ALPHA_GRADIENT] = {
+        .tRegion = {{0, 0}, {__GLCD_CFG_SCEEN_WIDTH__, __GLCD_CFG_SCEEN_HEIGHT__}},
+        .ptLayer = &s_ptRefreshLayers[BENCHMARK_LAYER_ALPHA_GRADIENT],
+        .tOffset = {-1, 5},
     },
 };
 
@@ -774,6 +794,13 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                         (__arm_2d_color_t){GLCD_COLOR_RED},
                         s_ptRefreshLayers[BENCHMARK_LAYER_RED_OPA].chOpacity);
     
+    arm_2d_fill_colour_with_4pts_alpha_gradient_and_opacity(   
+                        ptTile, 
+                        &s_ptRefreshLayers[BENCHMARK_LAYER_ALPHA_GRADIENT].tRegion,
+                        (__arm_2d_color_t){GLCD_COLOR_ORANGE},
+                        s_ptRefreshLayers[BENCHMARK_LAYER_ALPHA_GRADIENT].chOpacity,
+                        s_ptRefreshLayers[BENCHMARK_LAYER_ALPHA_GRADIENT].tSamplePoints);
+
     
     if (NULL != arm_2d_tile_generate_child( ptTile, 
                                 (arm_2d_region_t []){
