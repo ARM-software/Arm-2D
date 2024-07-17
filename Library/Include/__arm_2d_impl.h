@@ -22,7 +22,7 @@
  * Description:  header files for internal users or professional developers
  *
  * $Date:        17. July 2024
- * $Revision:    V.1.5.5
+ * $Revision:    V.1.5.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -436,6 +436,9 @@ enum {
 
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_3PTS_ALPHA_GRADIENT,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_3PTS_ALPHA_GRADIENT_AND_SOURCE_MASK,
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_AND_SOURCE_MASK,
 
     __ARM_2D_OP_IDX_DRAW_POINT,
     __ARM_2D_OP_IDX_DRAW_PATTERN,
@@ -1628,6 +1631,18 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_3pts_alpha_gradient(
 
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_3pts_alpha_gradient( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_vertical_alpha_gradient( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_vertical_alpha_gradient( 
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_alpha_gradient( 
                                                 __arm_2d_sub_task_t *ptTask);
 
 extern
