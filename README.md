@@ -81,7 +81,6 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 - [Table of Content](#table-of-content)
 - [Features](#features)
   - [In this version (ver1.1.7-dev)](#in-this-version-ver117-dev)
-  - [Experimental Features](#experimental-features)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -307,6 +306,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - Transform
   - Mirroring
   - Masking
+  - Colour-Filling (with alpha gradient)
 - **Simulate a typical application scenario with sufficient complexity**
   - Background with Texture Tiling (switching mirroring modes every 4 second)
   - Foreground picture
