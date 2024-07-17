@@ -23,7 +23,7 @@
  *               interface header files 
  *
  * $Date:        17. July 2024
- * $Revision:    V.1.6.7
+ * $Revision:    V.1.6.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -417,6 +417,15 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_RGB5
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_CCCN888;
 
 /*----------------------------------------------------------------------------*
  * Alpha Blending and Masks                                                   *

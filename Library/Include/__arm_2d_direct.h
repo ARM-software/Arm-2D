@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        4. July 2024
- * $Revision:    V.1.4.3
+ * $Date:        17. July 2024
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -10608,6 +10608,102 @@ void __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacity(
 
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
+
+void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint16_t hwColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
+
+void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint32_t wColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
+
+void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chColour,
+                            arm_2d_alpha_samples_3pts_t tSamplePoints);
+
+void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint16_t hwColour,
+                            arm_2d_alpha_samples_3pts_t tSamplePoints);
+
+void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint32_t wColour,
+                            arm_2d_alpha_samples_3pts_t tSamplePoints);
+
+void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints);
+
+void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint16_t hwColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints);
+
+void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint32_t wColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints);
+
+void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints);
+
+void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint16_t hwColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints);
+
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint32_t wColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

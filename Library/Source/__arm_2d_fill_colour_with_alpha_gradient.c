@@ -22,7 +22,7 @@
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *
  * $Date:        16. July 2024
- * $Revision:    V.0.8.2
+ * $Revision:    V.0.9.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -760,6 +760,215 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_GRAY
 };
 
 /*---------------------------------------------------------------------------*
+ * Colour Filling with Horizontal Alpha Gradient                             *
+ *---------------------------------------------------------------------------*/
+
+/*
+ * the Frontend API
+ */
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient(  
+                            arm_2d_fill_cl_2p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_gray8_t tColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_GRAY8;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_2p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_gray8_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_GRAY8;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    /* pre-process opacity */
+    if (chOpacity < 255) {
+        arm_foreach(uint8_t, this.tSamplePoints.chAlpha, pchAlpha) {
+            *pchAlpha = __alpha_mix(*pchAlpha, chOpacity);
+        }
+    }
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+
+/* default low level implementation */
+__WEAK
+void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint8_t chColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+
+    /* calculate the offset between the target region and the valid region */
+    arm_2d_location_t tOffset = {
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
+    };
+
+    /*
+         Virtual Screen
+         +--------------------------------------------------------------+
+         |                                                              |
+         |        Target Region                                         |
+         |       +-------------------------------------------+          |
+         |       |                                           |          |
+         |       |                  +-------------------+    |          |
+         |       |                  | Valid Region      |    |          |
+         |       |                  |                   |    |          |
+         |       |                  +-------------------+    |          |     
+         |       |                                           |          |
+         |       |                                           |          |     
+         |       +-------------------------------------------+          |
+         +--------------------------------------------------------------+     
+     
+         NOTE: 1. Both the Target Region and the Valid Region are relative
+                  regions of the virtual Screen in this function.
+               2. The Valid region is always inside the Target Region.
+               3. tOffset is the relative location between the Valid Region
+                  and the Target Region.
+               4. The Valid Region marks the location and size of the current
+                  working buffer on the virtual screen. Only the valid region
+                  contains a valid buffer.
+     */
+    
+    int32_t q16XRatio;
+
+    /* calculate X Ratios */
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chRight 
+                               -   tSamplePoints.chLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+    int32_t q16OpacityLeft = (int32_t)(tSamplePoints.chLeft) << 16;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint8_t * __RESTRICT pchTargetLine = pchTarget;
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            /* calculate opacity */
+            int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
+
+            uint16_t hwAlpha = 256 - (nOpacity >> 16);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwAlpha);
+        }
+
+        pchTarget += iTargetStride;
+    }
+}
+
+/*
+ * The backend entry
+ */
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_horizontal_alpha_gradient( __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
+
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
+
+    tTargetRegion.tLocation 
+        = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,
+                                        tTargetRegion.tLocation,
+                                        true);
+
+    __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient( 
+                        ptTask->Param.tTileProcess.pBuffer,
+                        ptTask->Param.tTileProcess.iStride,
+                        &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
+                        &tTargetRegion,
+                        this.chColour,
+                        this.tSamplePoints);
+
+    return arm_fsm_rt_cpl;
+}
+
+/*
+ * OPCODE Low Level Implementation Entries
+ */
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_GRAY8,
+                __arm_2d_gray8_sw_colour_filling_with_horizontal_alpha_gradient);      /* Default SW Implementation */
+
+
+/*
+ * OPCODE
+ */
+
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_GRAY8 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_GRAY8,
+        },
+        .Param = {
+            .bHasSource     = false,
+            .bHasTarget     = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT,
+        
+        .LowLevelIO = {
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_GRAY8),
+        },
+    },
+};
+
+/*---------------------------------------------------------------------------*
  * Colour Filling with 4 sample points Alpha Gradient                        *
  *---------------------------------------------------------------------------*/
 
@@ -1422,6 +1631,215 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_RGB5
 };
 
 /*---------------------------------------------------------------------------*
+ * Colour Filling with Horizontal Alpha Gradient                             *
+ *---------------------------------------------------------------------------*/
+
+/*
+ * the Frontend API
+ */
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_alpha_gradient(  
+                            arm_2d_fill_cl_2p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_rgb565_t tColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_RGB565;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_horizontal_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_2p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_rgb565_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_RGB565;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    /* pre-process opacity */
+    if (chOpacity < 255) {
+        arm_foreach(uint8_t, this.tSamplePoints.chAlpha, pchAlpha) {
+            *pchAlpha = __alpha_mix(*pchAlpha, chOpacity);
+        }
+    }
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+
+/* default low level implementation */
+__WEAK
+void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint16_t hwColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+
+    /* calculate the offset between the target region and the valid region */
+    arm_2d_location_t tOffset = {
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
+    };
+
+    /*
+         Virtual Screen
+         +--------------------------------------------------------------+
+         |                                                              |
+         |        Target Region                                         |
+         |       +-------------------------------------------+          |
+         |       |                                           |          |
+         |       |                  +-------------------+    |          |
+         |       |                  | Valid Region      |    |          |
+         |       |                  |                   |    |          |
+         |       |                  +-------------------+    |          |     
+         |       |                                           |          |
+         |       |                                           |          |     
+         |       +-------------------------------------------+          |
+         +--------------------------------------------------------------+     
+     
+         NOTE: 1. Both the Target Region and the Valid Region are relative
+                  regions of the virtual Screen in this function.
+               2. The Valid region is always inside the Target Region.
+               3. tOffset is the relative location between the Valid Region
+                  and the Target Region.
+               4. The Valid Region marks the location and size of the current
+                  working buffer on the virtual screen. Only the valid region
+                  contains a valid buffer.
+     */
+    
+    int32_t q16XRatio;
+
+    /* calculate X Ratios */
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chRight 
+                               -   tSamplePoints.chLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+    int32_t q16OpacityLeft = (int32_t)(tSamplePoints.chLeft) << 16;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint16_t * __RESTRICT phwTargetLine = phwTarget;
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            /* calculate opacity */
+            int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
+
+            uint16_t hwAlpha = 256 - (nOpacity >> 16);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwAlpha);
+        }
+
+        phwTarget += iTargetStride;
+    }
+}
+
+/*
+ * The backend entry
+ */
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_horizontal_alpha_gradient( __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
+
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
+
+    tTargetRegion.tLocation 
+        = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,
+                                        tTargetRegion.tLocation,
+                                        true);
+
+    __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient( 
+                        ptTask->Param.tTileProcess.pBuffer,
+                        ptTask->Param.tTileProcess.iStride,
+                        &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
+                        &tTargetRegion,
+                        this.hwColour,
+                        this.tSamplePoints);
+
+    return arm_fsm_rt_cpl;
+}
+
+/*
+ * OPCODE Low Level Implementation Entries
+ */
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_RGB565,
+                __arm_2d_rgb565_sw_colour_filling_with_horizontal_alpha_gradient);      /* Default SW Implementation */
+
+
+/*
+ * OPCODE
+ */
+
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_RGB565 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_RGB565,
+        },
+        .Param = {
+            .bHasSource     = false,
+            .bHasTarget     = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT,
+        
+        .LowLevelIO = {
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_RGB565),
+        },
+    },
+};
+
+/*---------------------------------------------------------------------------*
  * Colour Filling with 4 sample points Alpha Gradient                        *
  *---------------------------------------------------------------------------*/
 
@@ -2079,6 +2497,215 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_CCCN
         
         .LowLevelIO = {
             .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_CCCN888),
+        },
+    },
+};
+
+/*---------------------------------------------------------------------------*
+ * Colour Filling with Horizontal Alpha Gradient                             *
+ *---------------------------------------------------------------------------*/
+
+/*
+ * the Frontend API
+ */
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient(  
+                            arm_2d_fill_cl_2p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_cccn888_t tColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_CCCN888;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_2p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_cccn888_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_CCCN888;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    /* pre-process opacity */
+    if (chOpacity < 255) {
+        arm_foreach(uint8_t, this.tSamplePoints.chAlpha, pchAlpha) {
+            *pchAlpha = __alpha_mix(*pchAlpha, chOpacity);
+        }
+    }
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+
+/* default low level implementation */
+__WEAK
+void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                            arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                            uint32_t wColour,
+                            arm_2d_alpha_samples_2pts_t tSamplePoints)
+{
+    int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+
+    /* calculate the offset between the target region and the valid region */
+    arm_2d_location_t tOffset = {
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
+    };
+
+    /*
+         Virtual Screen
+         +--------------------------------------------------------------+
+         |                                                              |
+         |        Target Region                                         |
+         |       +-------------------------------------------+          |
+         |       |                                           |          |
+         |       |                  +-------------------+    |          |
+         |       |                  | Valid Region      |    |          |
+         |       |                  |                   |    |          |
+         |       |                  +-------------------+    |          |     
+         |       |                                           |          |
+         |       |                                           |          |     
+         |       +-------------------------------------------+          |
+         +--------------------------------------------------------------+     
+     
+         NOTE: 1. Both the Target Region and the Valid Region are relative
+                  regions of the virtual Screen in this function.
+               2. The Valid region is always inside the Target Region.
+               3. tOffset is the relative location between the Valid Region
+                  and the Target Region.
+               4. The Valid Region marks the location and size of the current
+                  working buffer on the virtual screen. Only the valid region
+                  contains a valid buffer.
+     */
+    
+    int32_t q16XRatio;
+
+    /* calculate X Ratios */
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chRight 
+                               -   tSamplePoints.chLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+    int32_t q16OpacityLeft = (int32_t)(tSamplePoints.chLeft) << 16;
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint32_t * __RESTRICT pwTargetLine = pwTarget;
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            /* calculate opacity */
+            int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
+
+            uint16_t hwAlpha = 256 - (nOpacity >> 16);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
+            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
+        }
+
+        pwTarget += iTargetStride;
+    }
+}
+
+/*
+ * The backend entry
+ */
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_alpha_gradient( __arm_2d_sub_task_t *ptTask)
+{
+    ARM_2D_IMPL(arm_2d_fill_cl_2p_al_grd_t, ptTask->ptOP);
+
+    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    arm_2d_region_t tTargetRegion = {0};
+
+    if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
+        tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
+    } else {
+        tTargetRegion = *this.use_as__arm_2d_op_t.Target.ptRegion;
+    }
+
+    tTargetRegion.tLocation 
+        = arm_2d_get_absolute_location( this.use_as__arm_2d_op_t.Target.ptTile,
+                                        tTargetRegion.tLocation,
+                                        true);
+
+    __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient( 
+                        ptTask->Param.tTileProcess.pBuffer,
+                        ptTask->Param.tTileProcess.iStride,
+                        &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
+                        &tTargetRegion,
+                        this.wColour,
+                        this.tSamplePoints);
+
+    return arm_fsm_rt_cpl;
+}
+
+/*
+ * OPCODE Low Level Implementation Entries
+ */
+__WEAK
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_CCCN888,
+                __arm_2d_cccn888_sw_colour_filling_with_horizontal_alpha_gradient);      /* Default SW Implementation */
+
+
+/*
+ * OPCODE
+ */
+
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_CCCN888 = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_CCCN888,
+        },
+        .Param = {
+            .bHasSource     = false,
+            .bHasTarget     = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT,
+        
+        .LowLevelIO = {
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_HORIZONTAL_ALPHA_GRADIENT_CCCN888),
         },
     },
 };
