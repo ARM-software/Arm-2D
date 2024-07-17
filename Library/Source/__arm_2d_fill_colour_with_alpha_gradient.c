@@ -22,7 +22,7 @@
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *
  * $Date:        16. July 2024
- * $Revision:    V.0.8.0
+ * $Revision:    V.0.8.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -90,6 +90,13 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+#define __alpha_mix(__alpha1, __alpha2)                                         \
+        (uint8_t)(  ((__alpha1) == 255)                                         \
+                    ?   (__alpha2)                                              \
+                    :   (   ((__alpha2) == 255)                                 \
+                        ?   (__alpha1)                                          \
+                        :   ((uint16_t)(__alpha1) * (uint16_t)(__alpha2) >> 8)))
+
 /*
  * the Frontend API
  */
@@ -120,6 +127,42 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient(
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_gray8_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_4p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_GRAY8;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    /* pre-process opacity */
+    if (chOpacity < 255) {
+        arm_foreach(uint8_t, this.tSamplePoints.chAlpha, pchAlpha) {
+            *pchAlpha = __alpha_mix(*pchAlpha, chOpacity);
+        }
+    }
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
 
 /* default low level implementation */
 __WEAK
@@ -313,6 +356,42 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_rgb565_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_4p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    /* pre-process opacity */
+    if (chOpacity < 255) {
+        arm_foreach(uint8_t, this.tSamplePoints.chAlpha, pchAlpha) {
+            *pchAlpha = __alpha_mix(*pchAlpha, chOpacity);
+        }
+    }
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+
 /* default low level implementation */
 __WEAK
 void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
@@ -504,6 +583,42 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient(
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_cccn888_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_fill_cl_4p_al_grd_t, ptOP);
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_CCCN888;
+
+    OPCODE.Target.ptTile = ptTarget;
+    OPCODE.Target.ptRegion = ptRegion;
+
+    this.hwColour = tColour.tValue;
+    this.tSamplePoints = tSamplePoints;
+
+    /* pre-process opacity */
+    if (chOpacity < 255) {
+        arm_foreach(uint8_t, this.tSamplePoints.chAlpha, pchAlpha) {
+            *pchAlpha = __alpha_mix(*pchAlpha, chOpacity);
+        }
+    }
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
 
 /* default low level implementation */
 __WEAK

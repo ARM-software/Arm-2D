@@ -22,7 +22,7 @@
  * Description:  The header file of APIs for colour-filling-with-alpha-gradient
  *
  * $Date:        16. July 2024
- * $Revision:    V.0.8.0
+ * $Revision:    V.0.8.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -59,16 +59,30 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient(                      \
+#define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient(                     \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient(                 \
+            arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient(                \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
                                                         (__COLOUR),             \
+                                                        __VA_ARGS__)
+
+#define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient_and_opacity(         \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __COLOUR,       /*   target colour     */   \
+                                    __OPACITY,      /*   opacity           */   \
+                                    ...)            /*   sample points     */   \
+            arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_and_opacity(    \
+                                                        NULL,                   \
+                                                        (__TARGET_ADDR),        \
+                                                        (__REGION_ADDR),        \
+                                                        (__COLOUR),             \
+                                                        (__OPACITY),            \
                                                         __VA_ARGS__)
 
 #define arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient(                     \
@@ -83,16 +97,44 @@ extern "C" {
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
-#define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient(                    \
+#define arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient_and_opacity(         \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __COLOUR,       /*   target colour     */   \
+                                    __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient(               \
+            arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient_and_opacity(    \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
                                                         (__COLOUR),             \
+                                                        (__OPACITY),            \
+                                                        __VA_ARGS__)
+
+#define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __COLOUR,       /*   target colour     */   \
+                                    ...)            /*   sample points     */   \
+            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient(                \
+                                                        NULL,                   \
+                                                        (__TARGET_ADDR),        \
+                                                        (__REGION_ADDR),        \
+                                                        (__COLOUR),             \
+                                                        __VA_ARGS__)
+
+#define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient_and_opacity(         \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __COLOUR,       /*   target colour     */   \
+                                    __OPACITY,      /*   opacity           */   \
+                                    ...)            /*   sample points     */   \
+            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_opacity(    \
+                                                        NULL,                   \
+                                                        (__TARGET_ADDR),        \
+                                                        (__REGION_ADDR),        \
+                                                        (__COLOUR),             \
+                                                        (__OPACITY),            \
                                                         __VA_ARGS__)
 
 /*============================ TYPES =========================================*/
@@ -167,6 +209,27 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient(
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
 /*!
+ * \brief fill the target region with a given colour, an alpha gradient (that
+ *        is defined by 4 corner sample points) and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] tColour the target colour
+ *  \param[in] chOpacity the opacity ratio
+ *  \param[in] tSamplePoints the 4 corner sample points.
+ *  \return arm_fsm_rt_t the operations result
+ */
+extern
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_gray8_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
+
+/*!
  * \brief fill the target region with a given colour and an alpha gradient that
  *        is defined by 4 corner sample points. 
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -186,6 +249,27 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient(
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
 /*!
+ * \brief fill the target region with a given colour, an alpha gradient (that
+ *        is defined by 4 corner sample points) and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] tColour the target colour
+ *  \param[in] chOpacity the opacity ratio
+ *  \param[in] tSamplePoints the 4 corner sample points.
+ *  \return arm_fsm_rt_t the operations result
+ */
+extern
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_rgb565_t tColour,
+                            uint8_t chOpacity,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
+
+/*!
  * \brief fill the target region with a given colour and an alpha gradient that
  *        is defined by 4 corner sample points. 
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -202,6 +286,27 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient(
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
                             arm_2d_color_cccn888_t tColour,
+                            arm_2d_alpha_samples_4pts_t tSamplePoints);
+
+/*!
+ * \brief fill the target region with a given colour, an alpha gradient (that
+ *        is defined by 4 corner sample points) and an opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] tColour the target colour
+ *  \param[in] chOpacity the opacity ratio
+ *  \param[in] tSamplePoints the 4 corner sample points.
+ *  \return arm_fsm_rt_t the operations result
+ */
+extern
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_opacity(  
+                            arm_2d_fill_cl_4p_al_grd_t *ptOP,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            arm_2d_color_cccn888_t tColour,
+                            uint8_t chOpacity,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
 /*! @} */
