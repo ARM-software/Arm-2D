@@ -270,6 +270,8 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_vertical_line_mask_and_opacity
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
                 arm_2d_gray8_fill_colour_with_4pts_alpha_gradient
+#   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
+                arm_2d_gray8_fill_colour_with_4pts_alpha_gradient
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient_and_opacity              \
                 arm_2d_gray8_fill_colour_with_4pts_alpha_gradient_and_opacity
 
@@ -468,6 +470,8 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_vertical_line_mask
 #   define arm_2d_fill_colour_with_vertical_line_mask_and_opacity               \
                 arm_2d_rgb565_fill_colour_with_vertical_line_mask_and_opacity
+#   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
+                arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient_and_opacity              \
                 arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient_and_opacity
 
@@ -665,6 +669,8 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_vertical_line_mask
 #   define arm_2d_fill_colour_with_vertical_line_mask_and_opacity               \
                 arm_2d_cccn888_fill_colour_with_vertical_line_mask_and_opacity
+#   define arm_2d_fill_colour_with_4pts_alpha_gradient                          \
+                arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient
 #   define arm_2d_fill_colour_with_4pts_alpha_gradient_and_opacity              \
                 arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient_and_opacity
 
