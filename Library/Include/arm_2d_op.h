@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        4. July 2024
- * $Revision:    V.1.6.5
+ * $Date:        17. July 2024
+ * $Revision:    V.1.6.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -399,6 +399,15 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_RGB565;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_4PTS_ALPHA_GRADIENT_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_3PTS_ALPHA_GRADIENT_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_3PTS_ALPHA_GRADIENT_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_3PTS_ALPHA_GRADIENT_CCCN888;
 
 /*----------------------------------------------------------------------------*
  * Alpha Blending and Masks                                                   *
