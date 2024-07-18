@@ -37,6 +37,11 @@
 extern "C" {
 #endif
 
+/*!
+ * \addtogroup gHelper 8 Helper Services
+ * @{
+ */
+
 /*============================ MACROS ========================================*/
 /* OOC header, please DO NOT modify  */
 #ifdef __ARM_2D_HELPER_CONTROL_IMPLEMENT__
@@ -222,6 +227,8 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
 
 #undef __ARM_2D_HELPER_CONTROL_IMPLEMENT__
 #undef __ARM_2D_HELPER_CONTROL_INHERIT__
+
+/*! @} */
 
 #ifdef   __cplusplus
 }

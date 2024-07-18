@@ -53,6 +53,11 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
+/*!
+ * \addtogroup gHelper 8 Helper Services
+ * @{
+ */
+
 /*============================ MACROS ========================================*/
 #ifndef __GLCD_CFG_COLOUR_DEPTH__
 #   warning Please specify the colour depth by defining the macro __GLCD_CFG_COLOUR_DEPTH__, default value 16 is used for now
@@ -357,6 +362,8 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char);
 
 extern
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char);
+
+/*! @} */
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
