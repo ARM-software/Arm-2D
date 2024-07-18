@@ -902,6 +902,9 @@ INPUT                  = ../README.md \
                          ../Helper/Include/arm_2d_helper_scene.h \
                          ../Helper/Include/arm_2d_helper_list.h \
                          ../Helper/Include/arm_2d_helper_pfb.h \
+                         ../Helper/Include/arm_2d_helper_control.h \
+                         ../Helper/Include/arm_2d_helper_font.h \
+                         ../Helper/Include/arm_2d_helper_shape.h \
                          ../Helper/Include/arm_2d_helper.h
 
 # This tag can be used to specify the character encoding of the source files
