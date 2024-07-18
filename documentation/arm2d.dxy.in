@@ -896,6 +896,7 @@ INPUT                  = ../README.md \
                          ../Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h \
                          ../Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h \
                          ../Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h \
+                         ../Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h \
                          ../Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h \
                          ../Library/Include/arm_2d.h \
                          ../Helper/Include/arm_2d_helper_scene.h \
