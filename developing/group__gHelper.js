@@ -208,7 +208,7 @@ var group__gHelper =
     [ "arm_2d_helper_transform_t.__unnamed222__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed222____", null ],
     [ "arm_2d_helper_transform_t.__unnamed222__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed222_____8Angle", null ],
     [ "arm_2d_helper_transform_t.__unnamed222__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed222_____8Scale", null ],
-    [ "arm_2d_helper_pi_slider_t.__unnamed226__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed226____", null ],
+    [ "arm_2d_helper_pi_slider_t.__unnamed231__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed231____", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
     [ "arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b", null ],
