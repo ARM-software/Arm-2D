@@ -115,9 +115,9 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
 
     /* use the white space as the default char */
     __ttf_char_descriptor_t *ptUTF8Char =
-        (__ttf_char_descriptor_t *)&c_tUTF8LookUpTableA{5}[dimof(c_tUTF8LookUpTableA{5})-1];
+        (__ttf_char_descriptor_t *)&c_tUTF8{0}LookUpTableA{5}[dimof(c_tUTF8{0}LookUpTableA{5})-1];
 
-    arm_foreach(__ttf_char_descriptor_t, c_tUTF8LookUpTableA{5}, ptChar) {{
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8{0}LookUpTableA{5}, ptChar) {{
         if (0 == strncmp(   (char *)pchCharCode,
                             (char *)ptChar->chUTF8,
                             ptChar->chCodeLength)) {{
@@ -333,8 +333,8 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
-                .format(font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
+                .format(name, font_bit_size), file=f)
 
         last_index = 0;
         last_advance = 0;
