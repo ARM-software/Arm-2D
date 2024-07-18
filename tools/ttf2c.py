@@ -313,7 +313,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
     with open(output_file, "a") as f:
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nstatic const uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
                 .format(font_bit_size), file=f)
 
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
@@ -332,7 +332,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nstatic const __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
                 .format(font_bit_size), file=f)
 
         last_index = 0;
