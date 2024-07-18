@@ -113,6 +113,21 @@ var group__gHelper =
     [ "arm_2d_helper_dirty_region_t", "group__gHelper.html#structarm__2d__helper__dirty__region__t", null ],
     [ "arm_2d_helper_dirty_region_transform_t", "group__gHelper.html#structarm__2d__helper__dirty__region__transform__t", null ],
     [ "arm_2d_helper_transform_t", "group__gHelper.html#structarm__2d__helper__transform__t", null ],
+    [ "arm_2d_control_node_t", "group__gHelper.html#structarm__2d__control__node__t", null ],
+    [ "arm_2d_control_enumeration_policy_t", "group__gHelper.html#structarm__2d__control__enumeration__policy__t", null ],
+    [ "arm_2d_control_enumerator_t", "group__gHelper.html#structarm__2d__control__enumerator__t", null ],
+    [ "arm_2d_char_descriptor_t", "group__gHelper.html#structarm__2d__char__descriptor__t", null ],
+    [ "arm_2d_font_t", "group__gHelper.html#structarm__2d__font__t", [
+      [ "tCharSize", "group__gHelper.html#a9a6cdac387af2ac61607310fa1eb722e", null ],
+      [ "nCount", "group__gHelper.html#afd82638ab5387c6ebcdb2fbf59d3a40e", null ],
+      [ "fnGetCharDescriptor", "group__gHelper.html#a6479b43d02147602a806b8bee6f7c962", null ],
+      [ "fnDrawChar", "group__gHelper.html#a3b841cb917873c6ef064a945ce09060d", null ]
+    ] ],
+    [ "arm_2d_char_idx_t", "group__gHelper.html#structarm__2d__char__idx__t", null ],
+    [ "arm_2d_user_font_t", "group__gHelper.html#structarm__2d__user__font__t", null ],
+    [ "arm_2d_a1_font_t", "group__gHelper.html#structarm__2d__a1__font__t", [
+      [ "nOffset", "group__gHelper.html#a9e34e85ada15f34bb61e481d8961cc3a", null ]
+    ] ],
     [ "arm_2d_helper_film_t", "group__gHelper.html#structarm__2d__helper__film__t", [
       [ "implement", "group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37", null ],
       [ "hwColumn", "group__gHelper.html#ad9581b76e350696b5460e8e79239ec37", null ],
@@ -208,6 +223,10 @@ var group__gHelper =
     [ "arm_2d_helper_transform_t.__unnamed222__", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed222____", null ],
     [ "arm_2d_helper_transform_t.__unnamed222__.Angle", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed222_____8Angle", null ],
     [ "arm_2d_helper_transform_t.__unnamed222__.Scale", "group__gHelper.html#structarm__2d__helper__transform__t_8____unnamed222_____8Scale", null ],
+    [ "arm_2d_control_enumerator_t.__unnamed226__", "group__gHelper.html#unionarm__2d__control__enumerator__t_8____unnamed226____", null ],
+    [ "arm_2d_control_enumerator_t.__unnamed226__.Preorder", "group__gHelper.html#structarm__2d__control__enumerator__t_8____unnamed226_____8Preorder", null ],
+    [ "arm_2d_control_enumerator_t.__unnamed226__.BottomUp", "group__gHelper.html#structarm__2d__control__enumerator__t_8____unnamed226_____8BottomUp", null ],
+    [ "arm_2d_control_enumerator_t.__unnamed226__.Postorder", "group__gHelper.html#structarm__2d__control__enumerator__t_8____unnamed226_____8Postorder", null ],
     [ "arm_2d_helper_pi_slider_t.__unnamed231__", "group__gHelper.html#structarm__2d__helper__pi__slider__t_8____unnamed231____", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
@@ -389,6 +408,18 @@ var group__gHelper =
     [ "arm_2d_helper_dirty_region_transform_suspend_update", "group__gHelper.html#gaf26d6a881ae45e9cf0bfdc727b909b74", null ],
     [ "arm_2d_helper_dirty_region_transform_update_value", "group__gHelper.html#ga02e340b75ffc3917b92501ee58a415e0", null ],
     [ "arm_2d_helper_dirty_region_transform_update", "group__gHelper.html#ga8e9c4420dbd24f6cb9d05a3957eb725e", null ],
+    [ "arm_2d_helper_control_enum_init", "group__gHelper.html#ga5c85d8060c0b4e2535a7628c9d4f7edf", null ],
+    [ "arm_2d_helper_control_enum_get_next_node", "group__gHelper.html#ga0bbda22fc8a0997d53f4e6ac1313735b", null ],
+    [ "arm_2d_helper_control_enum_depose", "group__gHelper.html#ga1313404b1471f4dd485f4160178e10e7", null ],
+    [ "arm_2d_helper_control_find_node_with_location", "group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac", null ],
+    [ "arm_2d_helper_get_utf8_byte_valid_length", "group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4", null ],
+    [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7", null ],
+    [ "arm_2d_helper_utf8_to_unicode", "group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7", null ],
+    [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ],
+    [ "arm_lcd_text_init", "group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9", null ],
+    [ "lcd_draw_char", "group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7", null ],
+    [ "arm_lcd_text_force_char_use_same_width", "group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a", null ],
+    [ "arm_lcd_text_set_display_mode", "group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
@@ -424,5 +455,8 @@ var group__gHelper =
     [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL", "group__gHelper.html#ga181cf77611f1311782f7a4826504cc7e", null ],
     [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL", "group__gHelper.html#ga069605cacc9a8b1412f81f7266fc517e", null ],
     [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL", "group__gHelper.html#gaa630be50222997f2ad230c49fa98e9a7", null ],
-    [ "ARM_2D_LIST_ITERATOR_ARRAY", "group__gHelper.html#gaca10c08e0da40d9b8917fcaba134c07d", null ]
+    [ "ARM_2D_LIST_ITERATOR_ARRAY", "group__gHelper.html#gaca10c08e0da40d9b8917fcaba134c07d", null ],
+    [ "ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL", "group__gHelper.html#ga9afb4b9ea690f720217cf505d889eece", null ],
+    [ "ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL", "group__gHelper.html#ga14b8f1abf7eaf3e5c039a04e359f5d77", null ],
+    [ "ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL", "group__gHelper.html#ga93a9b5374f15782eb11d93f2930a0281", null ]
 ];
