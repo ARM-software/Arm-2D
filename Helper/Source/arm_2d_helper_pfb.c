@@ -4189,6 +4189,7 @@ void arm_2d_helper_dirty_region_add_items(
         ptItem->ptHelper = ptThis;
         ptItem->ptNext = *ppList;
         ptItem->u16Key = 0xCAFE;        /* add key for security */
+        ptItem->bIgnore = true;
 
         *ppList = ptItem;
 
