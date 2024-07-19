@@ -639,6 +639,13 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
             tBottomRight.fY = MAX(tBottomRight.fY, tPoint.fY);
         } while(0);
 
+        /* expand */
+        tTopLeft.fX -= 1.0f;
+        tTopLeft.fY -= 1.0f;
+
+        tBottomRight.fX += 1.0f;
+        tBottomRight.fY += 1.0f;
+
         //! calculate the region
         ptTransform->tDummySourceOffset = (arm_2d_location_t){
                                             (int16_t)(tTopLeft.fX + 0.5f), 

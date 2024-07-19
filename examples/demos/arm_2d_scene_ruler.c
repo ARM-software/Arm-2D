@@ -123,8 +123,8 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
 
 
     arm_foreach(arm_2d_helper_dirty_region_item_t, this.tNumberDirtyRegion, ptItem) {
-        ptItem->tRegionPatch.tLocation.iY = -4;
-        ptItem->tRegionPatch.tSize.iHeight = 8;
+        ptItem->tRegionPatch.tLocation.iY = -1;
+        ptItem->tRegionPatch.tSize.iHeight = 2;
     }
 
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
