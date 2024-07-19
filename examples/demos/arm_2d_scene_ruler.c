@@ -401,7 +401,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
     arm_2d_canvas(ptTile, __top_container) {
 
         arm_lcd_text_set_scale(fRatio + 0.3f);
-        arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A8_DIGITS_ONLY);
+        arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
 
         arm_2d_align_centre(__top_container, tTextSize) {
 
@@ -416,7 +416,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
             } while(0);
 
             arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
             arm_lcd_text_set_draw_region(&__centre_region);
             arm_lcd_text_set_colour(tColour, GLCD_COLOR_BLACK);
             arm_lcd_text_location(0,0);
