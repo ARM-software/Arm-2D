@@ -550,11 +550,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cversion="1.0.2" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Atom" Cversion="1.0.3" condition="Arm-2D-Demos">
           <description>A demo for how to use the dirty region helper service.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_atom.c" attr="config" version="1.0.2" />
-            <file category="header"      name="examples/demos/arm_2d_scene_atom.h" attr="config" version="1.0.2" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_atom.c" attr="config" version="1.0.3" />
+            <file category="header"      name="examples/demos/arm_2d_scene_atom.h" attr="config" version="1.0.3" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Atom

@@ -126,6 +126,14 @@ static void __on_scene_atom_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
+    arm_2d_helper_dirty_region_remove_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                         &this.Electronic[0].tDirtyRegionItem,
+                                         1);
+
+    arm_2d_helper_dirty_region_remove_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                         &this.Electronic[1].tDirtyRegionItem,
+                                         1);
+
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
