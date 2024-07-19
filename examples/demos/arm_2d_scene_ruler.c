@@ -375,7 +375,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
     int16_t iHalfLength = tListSize.iHeight >> 1;
     int16_t iRadius = tListSize.iHeight;
 
-    float fRatio = (float)(iHalfLength - ptParam->hwRatio) / (float)iHalfLength;
+    float fRatio = ((float)(iHalfLength - ptParam->hwRatio) / (float)iHalfLength);
 
     COLOUR_INT_TYPE tColour =  arm_2d_pixel_from_brga8888( 
                                             __arm_2d_helper_colour_slider(
@@ -398,7 +398,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
                 fYOffset = (float)iRadius - sqrtf((float)(iRadius * iRadius) - (float)(fYOffset * fYOffset));
 
                 __centre_region.tLocation.iX -= (int16_t) fYOffset + ((1.0f - fRatio) * (float)tTextSize.iWidth);
-                __centre_region.tLocation.iX += 20;
+                __centre_region.tLocation.iX += 15;
                 __centre_region.tLocation.iY += 3;
             } while(0);
 
@@ -508,7 +508,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
         number_list_init(&this.tNumberList, &tCFG);
     } while(0);
 
-    numer_list_move_selection(&this.tNumberList, 54, 0);
+    numer_list_move_selection(&this.tNumberList, 50, 0);
 
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         ARM_2D_OP_INIT(ptMarking->tOP);
