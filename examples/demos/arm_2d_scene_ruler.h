@@ -95,9 +95,15 @@ ARM_PRIVATE(
 
     number_list_t tNumberList;
     float fAngle;
-    uint16_t hwStepLeftToMove;
-    
+
     __ruler_meter_marking_t tMarkings[11];
+
+    arm_2d_helper_dirty_region_item_t tNumberDirtyRegion[8];
+    uint16_t hwLastID;
+    uint8_t chLastNumberDirtyRegionIndex;
+
+    uint8_t chStepLeftToMove;
+
 )
     /* place your public member here */
     

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        11. July 2024
- * $Revision:    V.2.5.1
+ * $Date:        19. July 2024
+ * $Revision:    V.2.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -283,6 +283,12 @@ void arm_lcd_puts(const char *str);
 
 extern 
 void arm_lcd_text_location(uint8_t chY, uint8_t chX);
+
+extern
+void arm_lcd_text_reset_display_region_tracking(void);
+
+extern
+arm_2d_region_t *arm_lcd_text_get_last_display_region(void);
 
 /*!
  * \brief draw a char to a given location in the draw region

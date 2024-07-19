@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        15. July 2024
- * $Revision:    V.2.6.0
+ * $Date:        19. July 2024
+ * $Revision:    V.2.6.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -37,8 +37,10 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-#include "arm_2d_helper.h"
+#include "arm_2d.h"
 #include "__arm_2d_impl.h"
+
+#include "arm_2d_helper.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -95,6 +97,7 @@ static struct {
     uint32_t                            : 31;
 
     arm_2d_scratch_mem_t tCharBuffer;
+    arm_2d_region_t tTextRegion;
 
     const arm_2d_font_t *ptFont;
 } s_tLCDTextControl = {
@@ -246,6 +249,16 @@ void arm_lcd_text_init(arm_2d_region_t *ptScreen)
 {
     assert(NULL != ptScreen);
     s_tLCDTextControl.tScreen = *ptScreen;
+}
+
+void arm_lcd_text_reset_display_region_tracking(void)
+{
+    memset(&s_tLCDTextControl.tTextRegion, 0, sizeof(arm_2d_region_t));
+}
+
+arm_2d_region_t *arm_lcd_text_get_last_display_region(void)
+{
+    return &s_tLCDTextControl.tTextRegion;
 }
 
 
@@ -480,6 +493,10 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         .tSize = tCharDescriptor.tileChar.tRegion.tSize,
     };
 
+    arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
+                                        &tDrawRegion,
+                                        &s_tLCDTextControl.tTextRegion);
+
     if (    (ptFont->tileFont.tColourInfo.chScheme == ARM_2D_COLOUR_BIN)
         &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)) {
         arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
@@ -496,6 +513,14 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
                             s_tLCDTextControl.tColour.tForeground,
                             chOpacity,
                             s_tLCDTextControl.fScale);
+
+        if (s_tLCDTextControl.fScale > 0.0f) {
+            ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, NULL);
+
+            arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
+                                                this.Target.ptRegion,
+                                                &s_tLCDTextControl.tTextRegion);
+        }
     } 
 
     ARM_2D_OP_WAIT_ASYNC();
@@ -847,6 +872,12 @@ void arm_lcd_putchar(const char *str)
     }
 
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
+
+    if (s_tLCDTextControl.fScale > 0.0f) {
+        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+    }
+
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 
     if (*str) {
@@ -891,6 +922,12 @@ void arm_lcd_puts(const char *str)
     }
 
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
+
+    if (s_tLCDTextControl.fScale > 0.0f) {
+        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+    }
+
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 
     while(*str) {

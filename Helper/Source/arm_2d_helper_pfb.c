@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        6. July 2024
+ * $Date:        19. July 2024
  * $Revision:    V.1.11.2
  *
  * Target Processor:  Cortex-M cores
@@ -4319,7 +4319,7 @@ void arm_2d_helper_dirty_region_update_item(
 
             if (!arm_2d_region_intersect(   &tNewRegion, 
                                             &tTargetRegion,
-                                            &tTargetRegion)) {
+                                            &tNewRegion)) {
                 this.bIgnore = true;
                 break;
             }

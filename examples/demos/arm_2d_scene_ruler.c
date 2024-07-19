@@ -116,6 +116,11 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_dirty_region_add_items(
+                        &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                        this.tNumberDirtyRegion,
+                        dimof(this.tNumberDirtyRegion));
+
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         /* initialize transform helper */
         arm_2d_helper_dirty_region_transform_init(
@@ -126,6 +131,8 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
                                     0.1f);
                                     
     }
+
+
 
 }
 
@@ -143,6 +150,11 @@ static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         ARM_2D_OP_DEPOSE(ptMarking->tOP);
     }
+
+    arm_2d_helper_dirty_region_remove_items(
+                            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                            this.tNumberDirtyRegion,
+                            dimof(this.tNumberDirtyRegion));
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -183,7 +195,7 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(2000, &this.lTimestamp[1])) {
         numer_list_move_selection(&this.tNumberList, nStepsToMove, hwMoveSpeedInMs * hwABSSteps);
         this.lTimestamp[2] = 0;
-        this.hwStepLeftToMove = hwABSSteps * 2;
+        this.chStepLeftToMove = hwABSSteps * 2;
     }
 
     do {
@@ -195,8 +207,8 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
                                             &nResult,
                                             &this.lTimestamp[2]
                                             )) {
-            if (this.hwStepLeftToMove > 0) {
-                if (--this.hwStepLeftToMove) {
+            if (this.chStepLeftToMove > 0) {
+                if (--this.chStepLeftToMove) {
                     this.lTimestamp[2] = 0;
                 }
             }
@@ -269,64 +281,64 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
 
         arm_2d_align_centre(__top_canvas, 76, 284 ) {
 
-            /* draw meter markings */
-            do {
-                arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
+            arm_2d_container(ptTile, __ruler, &__centre_region) {
 
-                    arm_2d_location_t tRulerCentre = {
-                        .iX = __centre_region.tLocation.iX - 284 + c_tileClockMarkingMask.tRegion.tSize.iHeight,
-                        .iY = __centre_region.tLocation.iY + 284 / 2,
-                    };
+                /* draw meter markings */
+                do {
+                    arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
 
-                    /* draw pointer */
-                    arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                        &ptMarking->tOP,
-                                        &c_tileClockMarkingMask,
-                                        ptTile,
-                                        &__centre_region,
-                                        tMarkingCentre,
-                                        ptMarking->tHelper.fAngle,
-                                        0.80f,
-                                        GLCD_COLOR_WHITE,
-                                        128,
-                                        &tRulerCentre);
-                    
-                    arm_2d_helper_dirty_region_transform_update(
-                                                    &ptMarking->tHelper,
-                                                    &__centre_region,
-                                                    bIsNewFrame);
+                        arm_2d_location_t tRulerCentre = {
+                            .iX = __ruler_canvas.tLocation.iX - 284 + c_tileClockMarkingMask.tRegion.tSize.iHeight,
+                            .iY = __ruler_canvas.tLocation.iY + 284 / 2,
+                        };
+
+                        /* draw pointer */
+                        arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                            &ptMarking->tOP,
+                                            &c_tileClockMarkingMask,
+                                            &__ruler,
+                                            &__ruler_canvas,
+                                            tMarkingCentre,
+                                            ptMarking->tHelper.fAngle,
+                                            0.80f,
+                                            GLCD_COLOR_WHITE,
+                                            128,
+                                            &tRulerCentre);
+                        
+                        arm_2d_helper_dirty_region_transform_update(
+                                                        &ptMarking->tHelper,
+                                                        &__ruler_canvas,
+                                                        bIsNewFrame);
 
 
-                    ARM_2D_OP_WAIT_ASYNC(&ptMarking->tOP);
+                        ARM_2D_OP_WAIT_ASYNC(&ptMarking->tOP);
+                    }
+                } while(0);
+
+
+                while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList, 
+                                                            &__ruler,
+                                                            &__ruler_canvas,
+                                                            bIsNewFrame));
+            
+
+                /* draw shadow */
+                arm_2d_dock_top(__ruler_canvas, 60) {
+                    arm_2d_fill_colour_with_vertical_alpha_gradient(
+                        &__ruler,
+                        &__top_region,
+                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                        (arm_2d_alpha_samples_2pts_t) {128, 0,});
                 }
-            } while(0);
 
-
-
-
-            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList, 
-                                                        ptTile, 
-                                                        &__centre_region, 
-                                                        bIsNewFrame));
-        
-
-            /* draw shadow */
-            arm_2d_dock_top(__centre_region, 60) {
-                arm_2d_fill_colour_with_vertical_alpha_gradient(
-                    ptTile,
-                    &__top_region,
-                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                    (arm_2d_alpha_samples_2pts_t) {128, 0,});
+                arm_2d_dock_bottom(__ruler_canvas, 60) {
+                    arm_2d_fill_colour_with_vertical_alpha_gradient(
+                        &__ruler,
+                        &__bottom_region,
+                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                        (arm_2d_alpha_samples_2pts_t) {0, 128,});
+                }
             }
-
-            arm_2d_dock_bottom(__centre_region, 60) {
-                arm_2d_fill_colour_with_vertical_alpha_gradient(
-                    ptTile,
-                    &__bottom_region,
-                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                    (arm_2d_alpha_samples_2pts_t) {0, 128,});
-            }
-
         }
 
         /* draw border only when necessary */
@@ -384,7 +396,6 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
                                                 iHalfLength,
                                                 ptParam->hwRatio));
 
-
     arm_2d_canvas(ptTile, __top_container) {
 
         arm_lcd_text_set_scale(fRatio + 0.3f);
@@ -409,8 +420,30 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
             arm_lcd_text_location(0,0);
             
             arm_lcd_text_set_scale(fRatio + 0.3f);
+
+            arm_lcd_text_reset_display_region_tracking();
             arm_lcd_printf("%02d", ptItem->hwID);
 
+        #if 1
+            //! update dirty regions
+            do {
+                if (!arm_2d_helper_pfb_is_region_active(ptTile, &__centre_region, true)) {
+                    break;
+                }
+                
+                user_scene_ruler_t *ptScene = (user_scene_ruler_t *)ptItem->pTarget;
+
+                arm_2d_helper_dirty_region_item_t *ptDirtyRegionItem 
+                    = &ptScene->tNumberDirtyRegion[ptItem->hwID & 0x07];
+
+                arm_2d_helper_dirty_region_update_item( &ptScene->use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                                        ptDirtyRegionItem,
+                                                        (arm_2d_tile_t *)ptTile,
+                                                        NULL,
+                                                        arm_lcd_text_get_last_display_region());
+
+            } while(0);
+        #endif
             ARM_2D_OP_WAIT_ASYNC();
         }
     }
@@ -502,7 +535,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
             .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
             .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
 
-            .bUseDirtyRegion = true,
+            .bUseDirtyRegion = false,
             .ptTargetScene = &this.use_as__arm_2d_scene_t,
         };
         number_list_init(&this.tNumberList, &tCFG);

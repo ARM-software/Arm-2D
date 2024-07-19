@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        6. July 2024
- * $Revision:    V.1.11.2
+ * $Date:        19. July 2024
+ * $Revision:    V.1.11.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -768,7 +768,7 @@ typedef struct arm_2d_helper_dirty_region_t  arm_2d_helper_dirty_region_t;
 
 struct arm_2d_helper_dirty_region_item_t{
 
-ARM_PRIVATE(
+//ARM_PRIVATE(
     arm_2d_helper_dirty_region_item_t *ptNext;
     arm_2d_helper_dirty_region_t *ptHelper;
 
@@ -791,14 +791,14 @@ ARM_PRIVATE(
     uint8_t chUpdateLifeCycle;                  /* a life cycle counter used to avoid repeated update operations in the same frame.*/
 
     uint16_t u16Key;
-)
+//)
     arm_2d_region_t tRegionPatch;
 
 };
 
 struct arm_2d_helper_dirty_region_t  {
 
-ARM_PRIVATE(
+//ARM_PRIVATE(
     arm_2d_region_list_item_t tDirtyRegion;
     arm_2d_region_list_item_t **ppDirtyRegionList;
 
@@ -808,7 +808,7 @@ ARM_PRIVATE(
     uint8_t chUpdateLifeCycle;
     uint8_t                     : 8;
     uint16_t                    : 16;
-)
+//)
 
     arm_2d_helper_dirty_region_item_t tDefaultItem;
 

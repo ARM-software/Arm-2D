@@ -243,6 +243,9 @@ static arm_2d_list_item_t *__arm_2d_number_list_iterator(
     /* update item id : pretend that this is a different list core item */
     this.tTempItem.hwID = (uint16_t)nIterationIndex;
 
+    /* target scene */
+    this.tTempItem.pTarget = (uintptr_t)this.tNumListCFG.ptTargetScene;
+
     return &this.tTempItem;
 }
 
