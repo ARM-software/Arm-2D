@@ -18,8 +18,8 @@
 
 /*============================ INCLUDES ======================================*/
 
-#define __USER_SCENE_<NAME>_IMPLEMENT__
-#include "arm_2d_scene_<name>.h"
+#define __USER_SCENE_RULER_IMPLEMENT__
+#include "arm_2d_scene_ruler.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
@@ -113,16 +113,16 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 /*============================ IMPLEMENTATION ================================*/
 
-static void __on_scene_<name>_load(arm_2d_scene_t *ptScene)
+static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
     ptScene->ptPlayer = NULL;
@@ -137,34 +137,39 @@ static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene <name>                                                                    *
+ * Scene ruler                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene_<name>_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_ruler_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_<name>_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_ruler_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene_<name>_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
+        numer_list_move_selection(&this.tNumberList, 1, 300);
+    }
+
+    number_list_on_frame_start(&this.tNumberList);
 }
 
-static void __on_scene_<name>_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_ruler_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 #if 0
@@ -175,21 +180,21 @@ static void __on_scene_<name>_frame_complete(arm_2d_scene_t *ptScene)
 #endif
 }
 
-static void __before_scene_<name>_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_ruler_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(ptTile);
     ARM_2D_PARAM(bIsNewFrame);
 
-    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)pTarget;
+    user_scene_ruler_t *ptThis = (user_scene_ruler_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     ARM_2D_UNUSED(tScreenSize);
@@ -199,46 +204,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
-                                    255,
-                                    bIsNewFrame);
-            
-            ARM_2D_OP_WAIT_ASYNC();
-            
+        arm_2d_align_centre(__top_canvas, 76, 284 ) {
+            while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList, 
+                                                        ptTile, 
+                                                        &__centre_region, 
+                                                        bIsNewFrame));
+        
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
+                                        GLCD_COLOR_WHITE, 
                                         (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
+                                            {64, 64, 255-64, 255-64},
                                         (arm_2d_corner_opacity_t)
                                             {0, 128, 128, 128});
-                                    
+            
+
         }
 
-
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
-        }
-    #else
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
-    #endif
 
         /* draw text at the top-left corner */
 
@@ -247,7 +229,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene <name>");
+        arm_lcd_puts("Scene ruler");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -256,9 +238,72 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
     return arm_fsm_rt_cpl;
 }
 
+static 
+arm_fsm_rt_t __ruler_number_list_draw_list_item( 
+                                      arm_2d_list_item_t *ptItem,
+                                      const arm_2d_tile_t *ptTile,
+                                      bool bIsNewFrame,
+                                      arm_2d_list_item_param_t *ptParam)
+{
+    number_list_t *ptThis = (number_list_t *)ptItem->ptListView;
+    ARM_2D_UNUSED(ptItem);
+    ARM_2D_UNUSED(bIsNewFrame);
+    ARM_2D_UNUSED(ptTile);
+    ARM_2D_UNUSED(ptParam);
+
+    int16_t iRadius = (int16_t)(284.0f *1.0f);
+
+    arm_2d_size_t tListSize = __arm_2d_list_core_get_list_size(&this.use_as____arm_2d_list_core_t);
+
+    int16_t iHalfLength = tListSize.iHeight >> 1;
+
+    float fRatio = 0.4f+(float)(iHalfLength - ptParam->hwRatio) / (float)iHalfLength;
+
+    COLOUR_INT_TYPE tColour =  arm_2d_pixel_from_brga8888( 
+                                            __arm_2d_helper_colour_slider(
+                                                __RGB32(0xFF, 0x80, 0), 
+                                                __RGB32(0x80, 0x40, 0),
+                                                iHalfLength,
+                                                ptParam->hwRatio));
+
+
+    arm_2d_canvas(ptTile, __top_container) {
+
+        arm_lcd_text_set_scale(fRatio);
+        arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
+                    
+        arm_2d_align_centre(__top_container, tTextSize) {
+
+            /* adjust item position around a curve*/
+            do {
+                float fYOffset =  (float)ptParam->hwRatio;
+                fYOffset = (float)iRadius - sqrtf((float)(iRadius * iRadius) - (float)(fYOffset * fYOffset));
+
+                __centre_region.tLocation.iX -= (int16_t) fYOffset;
+                __centre_region.tLocation.iX += 20;
+            } while(0);
+
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
+            arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_colour(tColour, GLCD_COLOR_BLACK);
+            arm_lcd_text_location(0,0);
+            
+            //arm_lcd_text_set_opacity(chOpacity);
+            arm_lcd_text_set_scale(fRatio);
+            arm_lcd_printf("%02d", ptItem->hwID);
+            //arm_lcd_text_set_opacity(chOpacity);
+
+            ARM_2D_OP_WAIT_ASYNC();
+        }
+    }
+    
+    return arm_fsm_rt_cpl;
+}
+
 ARM_NONNULL(1)
-user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_<name>_t *ptThis)
+user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_ruler_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -282,9 +327,9 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
                                                         = tScreen.tSize.iWidth;
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_<name>_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_<name>_t),
-                                                        __alignof__(user_scene_<name>_t),
+        ptThis = (user_scene_ruler_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_ruler_t),
+                                                        __alignof__(user_scene_ruler_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -294,39 +339,69 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
         bUserAllocated = true;
     }
 
-    memset(ptThis, 0, sizeof(user_scene_<name>_t));
+    memset(ptThis, 0, sizeof(user_scene_ruler_t));
 
-    *ptThis = (user_scene_<name>_t){
+    *ptThis = (user_scene_ruler_t){
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_WHITE}, 
+            .tCanvas = {GLCD_COLOR_BLACK}, 
 
             /* Please uncommon the callbacks if you need them
              */
-            .fnOnLoad       = &__on_scene_<name>_load,
-            .fnScene        = &__pfb_draw_scene_<name>_handler,
+            .fnOnLoad       = &__on_scene_ruler_load,
+            .fnScene        = &__pfb_draw_scene_ruler_handler,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
-            //.fnOnBGStart    = &__on_scene_<name>_background_start,
-            //.fnOnBGComplete = &__on_scene_<name>_background_complete,
-            .fnOnFrameStart = &__on_scene_<name>_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_<name>_switching_out,
-            .fnOnFrameCPL   = &__on_scene_<name>_frame_complete,
-            .fnDepose       = &__on_scene_<name>_depose,
+            //.fnOnBGStart    = &__on_scene_ruler_background_start,
+            //.fnOnBGComplete = &__on_scene_ruler_background_complete,
+            .fnOnFrameStart = &__on_scene_ruler_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
+            .fnOnFrameCPL   = &__on_scene_ruler_frame_complete,
+            .fnDepose       = &__on_scene_ruler_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
-    /* ------------   initialize members of user_scene_<name>_t begin ---------------*/
+    /* ------------   initialize members of user_scene_ruler_t begin ---------------*/
 
+    /* initialize number list */
+    do {
+        number_list_cfg_t tCFG = {
+            .hwCount = 100,
+            .nStart = 0,
+            .iDelta = 1,
+            .tFontColour = GLCD_COLOR_WHITE,
+            //.tBackgroundColour = GLCD_COLOR_BLACK,
+            .bIgnoreBackground = true,
 
-    /* ------------   initialize members of user_scene_<name>_t end   ---------------*/
+            .tListSize = {
+                .iHeight = 284,
+                .iWidth = 76,
+            },
+
+            .tItemSize = {
+                .iWidth = 76,
+                .iHeight = 76,
+            },
+
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+            .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
+
+            .bUseDirtyRegion = true,
+            .ptTargetScene = &this.use_as__arm_2d_scene_t,
+        };
+        number_list_init(&this.tNumberList, &tCFG);
+    } while(0);
+
+    numer_list_move_selection(&this.tNumberList, 54, 0);
+
+    /* ------------   initialize members of user_scene_ruler_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

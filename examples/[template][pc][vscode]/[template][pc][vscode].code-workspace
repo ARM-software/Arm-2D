@@ -52,7 +52,9 @@
 			"stdint.h": "c",
 			"arm_2d_helper_built_in.h": "c",
 			"__node_handle": "c",
-			"__arm_2d_tile_copy_with_source_mask_and_opacity.h": "c"
+			"__arm_2d_tile_copy_with_source_mask_and_opacity.h": "c",
+			"arm_2d_scene_progress_status.h": "c",
+			"arm_2d_scene_virtual_resource.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"
