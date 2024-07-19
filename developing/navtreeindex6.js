@@ -1,7 +1,5 @@
 var NAVTREEINDEX6 =
 {
-"md_introduction.html#autotoc_md102":[5,2,1],
-"md_introduction.html#autotoc_md103":[5,2,2],
 "md_introduction.html#autotoc_md104":[5,2,3],
 "md_introduction.html#autotoc_md105":[5,2,4],
 "md_introduction.html#autotoc_md106":[5,2,5],

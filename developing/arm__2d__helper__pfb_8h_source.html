@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_pfb.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the PFB helper service </span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        6. July 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.11.2</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        19. July 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.11.3</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -877,15 +877,15 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span> </div>
 <div class="line"><a id="l00769" name="l00769"></a><span class="lineno"><a class="line" href="group__gHelper.html">  769</a></span><span class="keyword">struct </span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a>{</div>
 <div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span> </div>
-<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>ARM_PRIVATE(</div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span><span class="comment">//ARM_PRIVATE(</span></div>
 <div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptNext;</div>
 <div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptHelper;</div>
 <div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span> </div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>    <span class="keyword">union </span>{</div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno"><a class="line" href="group__gHelper.html">  775</a></span>    <span class="keyword">union </span>{</div>
 <div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>        <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> tRegions[2];</div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span>        <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno"><a class="line" href="group__gHelper.html">  777</a></span>        <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> tNewRegion;</div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>            <span class="keyword">union </span>{</div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno"><a class="line" href="group__gHelper.html">  779</a></span>            <span class="keyword">union </span>{</div>
 <div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> tOldRegion;</div>
 <div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> tEnclosureArea;</div>
 <div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>            };</div>
@@ -900,14 +900,14 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span>    uint8_t chUpdateLifeCycle;                  <span class="comment">/* a life cycle counter used to avoid repeated update operations in the same frame.*/</span></div>
 <div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span> </div>
 <div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>    uint16_t u16Key;</div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno"><a class="line" href="group__gHelper.html">  794</a></span>)</div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span><span class="comment">//)</span></div>
 <div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> tRegionPatch;</div>
 <div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span> </div>
 <div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>};</div>
 <div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span> </div>
 <div class="line"><a id="l00799" name="l00799"></a><span class="lineno"><a class="line" href="group__gHelper.html">  799</a></span><span class="keyword">struct </span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a>  {</div>
 <div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span> </div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>ARM_PRIVATE(</div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span><span class="comment">//ARM_PRIVATE(</span></div>
 <div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> tDirtyRegion;</div>
 <div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__region__list__item__t" title="the node of a region list">arm_2d_region_list_item_t</a> **ppDirtyRegionList;</div>
 <div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span> </div>
@@ -917,7 +917,7 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>    uint8_t chUpdateLifeCycle;</div>
 <div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>    uint8_t                     : 8;</div>
 <div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>    uint16_t                    : 16;</div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno"><a class="line" href="group__gHelper.html">  811</a></span>)</div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span><span class="comment">//)</span></div>
 <div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span> </div>
 <div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>    <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> tDefaultItem;</div>
 <div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span> </div>
