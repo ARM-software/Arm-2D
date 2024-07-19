@@ -438,8 +438,6 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
         iAdvance = ptDescriptor->iAdvance;
     } while(0);
 
-
-    /* NOTE: when the FONT mask insn't ARM_2D_COLOUR_8BIT, the scaling behaviour is unpredicted */
     if (s_tLCDTextControl.fScale > 0.0f) {
         iAdvance = (int16_t)((float)iAdvance * s_tLCDTextControl.fScale);
         /* NOTE: No need to adjust bearings in the following way. */
@@ -789,6 +787,12 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
         ptFont = s_tLCDTextControl.ptFont;
     }
     arm_2d_size_t tCharSize = ptFont->tCharSize;
+
+    if (s_tLCDTextControl.fScale > 0.0f) {
+        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+    }
+
     arm_2d_region_t tDrawBox = {
         .tSize.iHeight = tCharSize.iHeight,
     };
