@@ -178,7 +178,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
         arm_2d_region_t tInnerRegion = {
             .tSize = { 
                 .iWidth = c_tileWaveLineMask.tRegion.tSize.iWidth,
-                .iHeight = MASK_HEIGHT,
+                .iHeight = iHeight,
             },
             .tLocation = {
                 .iX = - c_tileWaveLineMask.tRegion.tSize.iWidth + s_iOffset,
