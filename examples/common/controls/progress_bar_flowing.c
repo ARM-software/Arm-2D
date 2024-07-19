@@ -83,6 +83,10 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
 {
     static int16_t s_iOffset = 0;
  
+    if (-1 == (intptr_t)ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
+    }
+
     assert(NULL != ptTarget);
     if (iProgress > 1000) {
         iProgress = 0;

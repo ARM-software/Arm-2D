@@ -100,9 +100,15 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
     static uint8_t s_chOffset = 0;
 
     assert(NULL != ptTarget);
+
+    if (-1 == (intptr_t)ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
+    }
+
     if (iProgress > 1000) {
         iProgress = 0;
     }
+
     int_fast16_t iWidth = 0;
     arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize,};
     if (NULL == ptRegion) {

@@ -106,6 +106,10 @@ void <control_name>_show( user_<control_name>_t *ptThis,
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)
 {
+    if (-1 == (intptr_t)ptTile) {
+        ptTile = arm_2d_get_default_frame_buffer();
+    }
+
     assert(NULL!= ptThis);
 
     if (bIsNewFrame) {
