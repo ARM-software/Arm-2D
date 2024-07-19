@@ -726,6 +726,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gafbb273b7f7267d70f2fc3b6ccb1b7685"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafbb273b7f7267d70f2fc3b6ccb1b7685">__arm_2d_list_core_init</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gHelper.html#struct____arm__2d__list__core__cfg__t">__arm_2d_list_core_cfg_t</a> *ptCFG)</td></tr>
 <tr class="memdesc:gafbb273b7f7267d70f2fc3b6ccb1b7685"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize a target list core object  <a href="group__gHelper.html#gafbb273b7f7267d70f2fc3b6ccb1b7685">More...</a><br /></td></tr>
 <tr class="separator:gafbb273b7f7267d70f2fc3b6ccb1b7685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22d1f893b9a2e01301c8be1c0cfd87f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga22d1f893b9a2e01301c8be1c0cfd87f2">__arm_2d_list_core_get_list_size</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga22d1f893b9a2e01301c8be1c0cfd87f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the size of the target list  <a href="group__gHelper.html#ga22d1f893b9a2e01301c8be1c0cfd87f2">More...</a><br /></td></tr>
+<tr class="separator:ga22d1f893b9a2e01301c8be1c0cfd87f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8b5edc78d3535a1795bff6c024685ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa8b5edc78d3535a1795bff6c024685ac">__arm_2d_list_core_show</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, bool bIsNewFrame)</td></tr>
 <tr class="memdesc:gaa8b5edc78d3535a1795bff6c024685ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">show a given list core  <a href="group__gHelper.html#gaa8b5edc78d3535a1795bff6c024685ac">More...</a><br /></td></tr>
 <tr class="separator:gaa8b5edc78d3535a1795bff6c024685ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7866,6 +7869,33 @@ false the scene player stays in tge current scene. </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="ga22d1f893b9a2e01301c8be1c0cfd87f2" name="ga22d1f893b9a2e01301c8be1c0cfd87f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga22d1f893b9a2e01301c8be1c0cfd87f2">&#9670;&nbsp;</a></span>__arm_2d_list_core_get_list_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> __arm_2d_list_core_get_list_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the size of the target list </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> the list size </dd></dl>
 
 </div>
 </div>

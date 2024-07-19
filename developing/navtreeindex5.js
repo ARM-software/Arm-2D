@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"group__gKernel.html#structarm__2d__op__src__orig__t_8Source":[11,0,84],
 "group__gKernel.html#structarm__2d__op__src__orig__t_8Target":[11,0,83],
 "group__gKernel.html#structarm__2d__op__src__t":[11,0,31],
 "group__gKernel.html#structarm__2d__op__src__t_8Source":[11,0,76],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "md_how_to_use_layout_assistant.html#autotoc_md124":[6,2,1,1],
 "md_introduction.html":[5],
 "md_introduction.html#autotoc_md100":[5,2],
-"md_introduction.html#autotoc_md101":[5,2,0],
-"md_introduction.html#autotoc_md102":[5,2,1]
+"md_introduction.html#autotoc_md101":[5,2,0]
 };
