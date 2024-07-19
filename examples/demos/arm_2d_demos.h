@@ -32,6 +32,7 @@
 #include "./arm_2d_scene_progress_status.h"
 #include "./arm_2d_scene_menu.h"
 #include "./arm_2d_scene_virtual_resource.h"
+#include "./arm_2d_scene_ruler.h"
 
 #ifdef   __cplusplus
 extern "C" {
