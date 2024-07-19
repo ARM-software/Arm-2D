@@ -121,7 +121,7 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
                         this.tNumberDirtyRegion,
                         dimof(this.tNumberDirtyRegion));
 
-#if 0
+#if 1
     arm_foreach(arm_2d_helper_dirty_region_item_t, this.tNumberDirtyRegion, ptItem) {
         ptItem->tRegionPatch.tLocation.iY = -4;
         ptItem->tRegionPatch.tSize.iHeight = 8;
@@ -193,6 +193,7 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     int16_t nStepsToMove = 1; 
     uint16_t hwMoveSpeedInMs = 300;
 
+
     /* ---------- plesae do NOT modify code below unless you 100% sure ----- */
     uint16_t hwABSSteps = ABS(nStepsToMove);
 
@@ -237,6 +238,8 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     number_list_on_frame_start(&this.tNumberList);
 
     /* ---------- plesae do NOT modify code above unless you 100% sure ----- */
+
+
 }
 
 static void __on_scene_ruler_frame_complete(arm_2d_scene_t *ptScene)
@@ -321,7 +324,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                                                             &__ruler_canvas,
                                                             bIsNewFrame));
             
-
                 /* draw shadow */
                 arm_2d_dock_top(__ruler_canvas, 60) {
                     arm_2d_fill_colour_with_vertical_alpha_gradient(
