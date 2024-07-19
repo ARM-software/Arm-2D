@@ -120,12 +120,13 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
                         &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
                         this.tNumberDirtyRegion,
                         dimof(this.tNumberDirtyRegion));
-    
+
+#if 0
     arm_foreach(arm_2d_helper_dirty_region_item_t, this.tNumberDirtyRegion, ptItem) {
         ptItem->tRegionPatch.tLocation.iY = -4;
         ptItem->tRegionPatch.tSize.iHeight = 8;
     }
-
+#endif
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         /* initialize transform helper */
         arm_2d_helper_dirty_region_transform_init(
@@ -398,8 +399,8 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
     arm_2d_canvas(ptTile, __top_container) {
 
         arm_lcd_text_set_scale(fRatio + 0.3f);
-        arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
-                    
+        arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A8_DIGITS_ONLY);
+
         arm_2d_align_centre(__top_container, tTextSize) {
 
             /* adjust item position around a curve*/
@@ -439,7 +440,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
                 arm_2d_helper_dirty_region_update_item( &ptScene->use_as__arm_2d_scene_t.tDirtyRegionHelper,
                                                         ptDirtyRegionItem,
                                                         (arm_2d_tile_t *)ptTile,
-                                                        &__top_container,
+                                                        NULL,
                                                         ptTextRegion);
 
             } while(0);
@@ -519,8 +520,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
             .hwCount = 100,
             .nStart = 0,
             .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            //.tBackgroundColour = GLCD_COLOR_BLACK,
+
             .bIgnoreBackground = true,
 
             .tListSize = {
@@ -533,7 +533,6 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
                 .iHeight = 54,
             },
 
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
             .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
 
             .bUseDirtyRegion = false,

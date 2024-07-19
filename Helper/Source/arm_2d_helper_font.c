@@ -493,9 +493,14 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         .tSize = tCharDescriptor.tileChar.tRegion.tSize,
     };
 
-    arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
-                                        &tDrawRegion,
-                                        &s_tLCDTextControl.tTextRegion);
+    if (    (s_tLCDTextControl.tTextRegion.tSize.iHeight > 0)
+       &&   (s_tLCDTextControl.tTextRegion.tSize.iWidth > 0)) {
+        arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
+                                            &tDrawRegion,
+                                            &s_tLCDTextControl.tTextRegion);
+    } else {
+        s_tLCDTextControl.tTextRegion = tDrawRegion;
+    }
 
     if (    (ptFont->tileFont.tColourInfo.chScheme == ARM_2D_COLOUR_BIN)
         &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)) {
@@ -538,7 +543,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
                                             (__arm_2d_color_t){tForeColour},
                                             chOpacity);
     } else {
-        arm_2d_size_t tCharSize = ptFont->tCharSize;
+        arm_2d_size_t tCharSize =  ptileChar->tRegion.tSize;
         arm_2d_location_t c_tCentre = {
             .iX = tCharSize.iWidth >> 1,
             .iY = tCharSize.iHeight >> 1,
@@ -814,8 +819,8 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
     arm_2d_size_t tCharSize = ptFont->tCharSize;
 
     if (s_tLCDTextControl.fScale > 0.0f) {
-        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
-        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
+        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
     }
 
     arm_2d_region_t tDrawBox = {
@@ -874,8 +879,8 @@ void arm_lcd_putchar(const char *str)
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
 
     if (s_tLCDTextControl.fScale > 0.0f) {
-        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
-        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
+        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
     }
 
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
@@ -924,8 +929,8 @@ void arm_lcd_puts(const char *str)
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
 
     if (s_tLCDTextControl.fScale > 0.0f) {
-        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
-        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale;
+        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
+        tCharSize.iWidth = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
     }
 
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
