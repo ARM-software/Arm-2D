@@ -329,17 +329,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
 
         }
 
-        arm_2d_align_centre(__top_canvas, 76+4, 284+4 ) {
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_WHITE, 
-                                        (arm_2d_border_opacity_t)
-                                            {64, 64, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
+        /* draw border only when necessary */
+        if (tScreenSize.iWidth > 76 && tScreenSize.iHeight > 284) {
+            arm_2d_align_centre(__top_canvas, 76+4, 284+4 ) {
+                draw_round_corner_border(   ptTile, 
+                                            &__centre_region, 
+                                            GLCD_COLOR_WHITE, 
+                                            (arm_2d_border_opacity_t)
+                                                {64, 64, 255-64, 255-64},
+                                            (arm_2d_corner_opacity_t)
+                                                {0, 128, 128, 128});
+            }
         }
-
-
         /* draw text at the top-left corner */
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
