@@ -118,8 +118,6 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
         iProgress = 0;
     }
 
-
-
     arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize,};
     if (NULL == ptRegion) {
         ptRegion = &tTargetRegion;
@@ -142,7 +140,8 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
     // draw a white box
     arm_2d_helper_draw_box(ptTarget, &tBarRegion, 1, GLCD_COLOR_WHITE, 255 - 64);
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
+
     // draw semispheres
     do {
         arm_2d_region_t tSemisphere = {
@@ -160,7 +159,7 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
                                         (__arm_2d_color_t) {GLCD_COLOR_WHITE},
                                         255 - 64);
 
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
 
         tSemisphere.tLocation.iX = tBarRegion.tLocation.iX + tBarRegion.tSize.iWidth;
 
@@ -171,7 +170,7 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
                                         &c_tileSemisphereRight,
                                         (__arm_2d_color_t) {GLCD_COLOR_WHITE},
                                         255 - 64);
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     } while(0);
     
     // draw inner bar
@@ -185,7 +184,7 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
                                     (__arm_2d_color_t) {GLCD_COLOR_BLACK},
                                     64);
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     // calculate the width of the inner stripe 
     tBarRegion.tSize.iWidth = tBarRegion.tSize.iWidth * (int16_t)iProgress / 1000;
     
@@ -194,7 +193,7 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
                                 &tBarRegion, 
                                 (__arm_2d_color_t) {GLCD_COLOR_WHITE},
                                 255 - 64);
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 #if defined(__clang__)

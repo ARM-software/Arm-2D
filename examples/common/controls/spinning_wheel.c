@@ -134,7 +134,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                                 GLCD_COLOR_WHITE,
                                                 254);
 
-                ARM_2D_OP_WAIT_ASYNC(&s_tMaskRotateCB[0].use_as__arm_2d_op_core_t);
+                ARM_2D_OP_WAIT_ASYNC(&s_tMaskRotateCB[0]);
             }
         } while(0);
     }
@@ -223,7 +223,7 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                                             128
                                         );
 
-            ARM_2D_OP_WAIT_ASYNC(&s_tMaskRotateCB[1].use_as__arm_2d_op_core_t);
+            ARM_2D_OP_WAIT_ASYNC(&s_tMaskRotateCB[1]);
         }
     }
 }

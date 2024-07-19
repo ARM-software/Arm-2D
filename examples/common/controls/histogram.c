@@ -355,22 +355,7 @@ void histogram_show(histogram_t *ptThis,
                             = &this.tCFG.Bin.ptItems[this.DirtyRegion.hwCurrentBin++];
 
                         if (ptItem->iCurrentValue != ptItem->iLastValue) {
-                        #if 0
-                            /* we would like to ignore current bin */
-                            if (this.DirtyRegion.hwCurrentBin >= this.tCFG.Bin.hwCount) {
-                                /* encounter the final bin */
-                                arm_2d_dynamic_dirty_region_change_user_region_index_only(
-                                    &this.DirtyRegion.tDirtyRegionItem,
-                                    HISTOGRAM_DR_DONE
-                                );
-                                break;
-                            }
-                            continue;
-                        
-                        } else {
-                        #endif
                             
-
                             int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth;
 
                             arm_2d_location_t tBaseLine = {

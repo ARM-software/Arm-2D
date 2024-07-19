@@ -98,7 +98,7 @@ IMPL_ON_DRAW_EVT(__arm_2d_number_list_draw_background)
                                 this.tNumListCFG.chOpacity);
         }
     }
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     
     return arm_fsm_rt_cpl;
 }

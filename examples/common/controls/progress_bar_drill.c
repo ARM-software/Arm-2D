@@ -152,7 +152,7 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
     //! draw a white box
     arm_2d_fill_colour(ptTarget, &tBarRegion, __RGB(0xa5, 0xc6, 0xef));
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     
     //! pave inter texture
     tBarRegion.tSize.iHeight-=2;
@@ -181,7 +181,7 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
                             &tileInnerSlot, 
                             &tInnerRegion);
 
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
 
     } while(0);
 
@@ -192,7 +192,7 @@ void __progress_bar_drill_show( const arm_2d_tile_t *ptTarget,
         
         //! draw the inner stripe
         arm_2d_fill_colour(ptTarget, &tBarRegion, tBarColour);
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     }
     
 }

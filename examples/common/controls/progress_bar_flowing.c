@@ -148,7 +148,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
                         //__RGB(0xa5, 0xc6, 0xef)/*0xA63D*/
                         tBoarderColour);
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     
     //! pave inter texture
     tBarRegion.tSize.iHeight-=2;
@@ -158,7 +158,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     
     arm_2d_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_WHITE);
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     if (iProgress > 0) {
         //! calculate the width of the inner stripe 
@@ -171,7 +171,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
                         //__RGB(0x94, 0xd2, 0x52) /*0x968A */
                         tBarColour
                         );
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     //! draw wave
     do {
         
@@ -194,7 +194,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
                                                         &c_tileWaveLineMask,
                                                         (__arm_2d_color_t) {tPitchColour});
         
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
 
     } while(0);
     
