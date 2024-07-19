@@ -260,10 +260,14 @@ void number_list_init(  number_list_t *ptThis,
 
     int16_t iItemHeight = ptCFG->chPrviousePadding + ptCFG->chNextPadding;
 
-    if (NULL != ptCFG->ptFont) {
-        iItemHeight += ptCFG->ptFont->tCharSize.iHeight;
+    if (0 == ptCFG->tItemSize.iHeight) {
+        if (NULL != ptCFG->ptFont) {
+            iItemHeight += ptCFG->ptFont->tCharSize.iHeight;
+        } else {
+            iItemHeight += 8;
+        }
     } else {
-        iItemHeight += 8;
+        iItemHeight += ptCFG->tItemSize.iHeight;
     }
 
     /* call base class contructor */
