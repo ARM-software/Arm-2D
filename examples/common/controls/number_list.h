@@ -68,6 +68,7 @@ typedef struct number_list_cfg_t {
     bool bIgnoreBackground;
     uint8_t chOpacity;
 
+    arm_2d_draw_list_item_handler_t *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
     arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
     arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
     arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */

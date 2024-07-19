@@ -326,8 +326,11 @@ void number_list_init(  number_list_t *ptThis,
     this.tTempItem.Padding.chNext = ptCFG->chNextPadding;
     this.tTempItem.tSize = ptCFG->tItemSize;
 
-    this.tTempItem.fnOnDrawItem = &__arm_2d_number_list_draw_list_core_item;
-    
+    if (NULL != ptCFG->fnOnDrawListItem ) {
+        this.tTempItem.fnOnDrawItem = ptCFG->fnOnDrawListItem;
+    } else {
+        this.tTempItem.fnOnDrawItem = &__arm_2d_number_list_draw_list_core_item;
+    }
     /* request updating StartOffset */
     //this.use_as____arm_2d_list_core_t.CalMidAligned.bListHeightChanged = true;
 
