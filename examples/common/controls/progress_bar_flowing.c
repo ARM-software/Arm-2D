@@ -89,22 +89,25 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     }
  
     int_fast16_t iWidth = 0;
+    int_fast16_t iHeight;
     arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize,};
     if (NULL == ptRegion) {
         ptRegion = &tTargetRegion;
         iWidth = ptRegion->tSize.iWidth * 3 >> 3;         //!< 3/8 Width
+        iHeight = MASK_HEIGHT;
     } else {
         iWidth = ptRegion->tSize.iWidth;
+        iHeight = ptRegion->tSize.iHeight;
     }
 
     arm_2d_region_t tBarRegion = {
         .tLocation = {
            .iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth - (int16_t)iWidth) / 2,
-           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - MASK_HEIGHT) / (int16_t)2,
+           .iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight - (int16_t)iHeight) / (int16_t)2,
         },
         .tSize = {
             .iWidth = (int16_t)iWidth,
-            .iHeight = MASK_HEIGHT,
+            .iHeight = (int16_t)iHeight,
         },
     };
 
