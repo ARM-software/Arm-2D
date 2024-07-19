@@ -67,13 +67,13 @@ extern "C" {
                                         (true))
 
 #define progress_bar_drill_show1(       __progress)                             \
-            progress_bar_drill_show4(   ((const arm_2d_tile_t *ptTarget)(-1))), \
+            progress_bar_drill_show4(   ((const arm_2d_tile_t *)(-1))),         \
                                         NULL,                                   \
                                         (int_fast16_t)(__progress),             \
                                         (true))
 
 #define progress_bar_drill_show0()                                              \
-            progress_bar_drill_show4(   ((const arm_2d_tile_t *ptTarget)(-1))), \
+            progress_bar_drill_show4(   ((const arm_2d_tile_t *)(-1))),         \
                                         NULL,                                   \
                                         (-1),                                   \
                                         (true))
