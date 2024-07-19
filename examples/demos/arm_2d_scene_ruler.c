@@ -121,12 +121,12 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
                         this.tNumberDirtyRegion,
                         dimof(this.tNumberDirtyRegion));
 
-#if 1
+
     arm_foreach(arm_2d_helper_dirty_region_item_t, this.tNumberDirtyRegion, ptItem) {
         ptItem->tRegionPatch.tLocation.iY = -4;
         ptItem->tRegionPatch.tSize.iHeight = 8;
     }
-#endif
+
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         /* initialize transform helper */
         arm_2d_helper_dirty_region_transform_init(
@@ -249,7 +249,7 @@ static void __on_scene_ruler_frame_complete(arm_2d_scene_t *ptScene)
 
     /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-       //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+       arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 
 }
