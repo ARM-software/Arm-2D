@@ -4423,6 +4423,8 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
                     break;
                 }
 
+                this.ptCurrent->bIgnore = true;
+
                 if (this.ptCurrent->bOnlyUpdateMinimalEnclosure) {
                     /* we only update the minimal enclosure region */
                     __arm_2d_dynamic_dirty_region_update(

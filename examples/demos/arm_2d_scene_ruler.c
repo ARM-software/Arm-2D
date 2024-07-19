@@ -133,7 +133,6 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
     }
 
 
-
 }
 
 static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
@@ -302,12 +301,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                                             GLCD_COLOR_WHITE,
                                             128,
                                             &tRulerCentre);
-                        
+
                         arm_2d_helper_dirty_region_transform_update(
                                                         &ptMarking->tHelper,
                                                         &__ruler_canvas,
                                                         bIsNewFrame);
-
 
                         ARM_2D_OP_WAIT_ASYNC(&ptMarking->tOP);
                     }
@@ -422,8 +420,8 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
             arm_lcd_text_reset_display_region_tracking();
             arm_lcd_printf("%02d", ptItem->hwID);
 
-        #if 1
             //! update dirty regions
+
             do {
                 if (!arm_2d_helper_pfb_is_region_active(ptTile, &__centre_region, true)) {
                     break;
@@ -434,14 +432,16 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
                 arm_2d_helper_dirty_region_item_t *ptDirtyRegionItem 
                     = &ptScene->tNumberDirtyRegion[ptItem->hwID & 0x07];
 
+                arm_2d_region_t *ptTextRegion = arm_lcd_text_get_last_display_region();
                 arm_2d_helper_dirty_region_update_item( &ptScene->use_as__arm_2d_scene_t.tDirtyRegionHelper,
                                                         ptDirtyRegionItem,
                                                         (arm_2d_tile_t *)ptTile,
-                                                        NULL,
-                                                        arm_lcd_text_get_last_display_region());
+                                                        &__top_container,
+                                                        ptTextRegion);
 
             } while(0);
-        #endif
+
+
             ARM_2D_OP_WAIT_ASYNC();
         }
     }
