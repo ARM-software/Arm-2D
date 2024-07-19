@@ -262,6 +262,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
 
         arm_2d_align_centre(__charging_canvas, tStringSize) {
 
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
             arm_lcd_text_set_draw_region(&__centre_region);
             arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
             arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
