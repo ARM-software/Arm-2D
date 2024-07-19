@@ -277,8 +277,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
             .iY = 284 + 60,
         };
 
-        
-
         arm_2d_align_centre(__top_canvas, 76, 284 ) {
 
             arm_2d_container(ptTile, __ruler, &__centre_region) {
