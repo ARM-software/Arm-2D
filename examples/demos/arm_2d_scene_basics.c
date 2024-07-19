@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "arm_2d_example_controls.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -91,20 +92,6 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask2;
 extern const arm_2d_tile_t c_tileBackground;
 extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
 
-extern
-struct {
-    implement(arm_2d_user_font_t);
-
-    arm_2d_char_idx_t tNumbers;
-    arm_2d_char_idx_t tABCDEF;
-    arm_2d_char_idx_t tMinor;
-    arm_2d_char_idx_t tPlus;
-    arm_2d_char_idx_t tDot;
-    arm_2d_char_idx_t tE;
-    arm_2d_char_idx_t tBlank;
-}   ARM_2D_FONT_A2_DIGITS_ONLY,
-    ARM_2D_FONT_A4_DIGITS_ONLY,
-    ARM_2D_FONT_A8_DIGITS_ONLY;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -183,13 +170,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
         
         /* following code is just a demo, you can remove them */
     
-        arm_2d_fill_colour_with_4pts_alpha_gradient(
+        arm_2d_fill_colour_with_3pts_alpha_gradient(
                                             ptTile, 
                                             &__top_canvas, 
                                             (__arm_2d_color_t){GLCD_COLOR_GREEN},
-                                            (arm_2d_alpha_samples_4pts_t) {
-                                                0, 0,
-                                                128, 128,
+                                            (arm_2d_alpha_samples_3pts_t) {
+                                                0, 255,
+                                                128,
                                             });
 
     #if 0

@@ -52,12 +52,12 @@ extern "C" {
                                         (int_fast16_t)(__progress))
 
 #define progress_bar_simple_show1(__progress)                                   \
-            progress_bar_simple_show3(   ((const arm_2d_tile_t *)(-1))),        \
+            progress_bar_simple_show3(   ((const arm_2d_tile_t *)(-1)),         \
                                         NULL,                                   \
                                         (int_fast16_t)(__progress))
 
 #define progress_bar_simple_show0()                                             \
-            progress_bar_simple_show3(   ((const arm_2d_tile_t *)(-1))),        \
+            progress_bar_simple_show3(   ((const arm_2d_tile_t *)(-1)),         \
                                         NULL,                                   \
                                         (-1))
 
