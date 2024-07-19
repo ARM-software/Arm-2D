@@ -74,6 +74,12 @@ extern "C" {
             __arm_2d_scene_ruler_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+typedef struct __ruler_meter_marking_t {
+    arm_2d_op_fill_cl_msk_opa_trans_t tOP;
+    arm_2d_helper_dirty_region_transform_t tHelper;
+} __ruler_meter_marking_t;
+
 /*!
  * \brief a user class for scene ruler
  */
@@ -84,10 +90,14 @@ struct user_scene_ruler_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[3];
     bool bUserAllocated;
 
     number_list_t tNumberList;
+    float fAngle;
+    uint16_t hwStepLeftToMove;
+    
+    __ruler_meter_marking_t tMarkings[11];
 )
     /* place your public member here */
     

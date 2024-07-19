@@ -80,10 +80,8 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+extern const arm_2d_tile_t c_tileClockMarkingMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -118,6 +116,17 @@ static void __on_scene_ruler_load(arm_2d_scene_t *ptScene)
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
+        /* initialize transform helper */
+        arm_2d_helper_dirty_region_transform_init(
+                                    &ptMarking->tHelper,
+                                    &ptScene->tDirtyRegionHelper,
+                                    (arm_2d_op_t *)&ptMarking->tOP,
+                                    ARM_2D_ANGLE(0.1f),
+                                    0.1f);
+                                    
+    }
+
 }
 
 static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
@@ -129,6 +138,10 @@ static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
+    }
+
+    arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
+        ARM_2D_OP_DEPOSE(ptMarking->tOP);
     }
 
     if (!this.bUserAllocated) {
@@ -160,11 +173,54 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
-        numer_list_move_selection(&this.tNumberList, 1, 300);
+    int16_t nStepsToMove = 1; 
+    uint16_t hwMoveSpeedInMs = 300;
+
+
+    /* ---------- plesae do NOT modify code below unless you 100% sure ----- */
+    uint16_t hwABSSteps = ABS(nStepsToMove);
+
+    if (arm_2d_helper_is_time_out(2000, &this.lTimestamp[1])) {
+        numer_list_move_selection(&this.tNumberList, nStepsToMove, hwMoveSpeedInMs * hwABSSteps);
+        this.lTimestamp[2] = 0;
+        this.hwStepLeftToMove = hwABSSteps * 2;
+    }
+
+    do {
+        int32_t nResult = 0;
+        int32_t nTo = (nStepsToMove < 0) ? -56 : 56;
+        if (arm_2d_helper_time_liner_slider(0, 
+                                            nTo, 
+                                            hwMoveSpeedInMs / 2,
+                                            &nResult,
+                                            &this.lTimestamp[2]
+                                            )) {
+            if (this.hwStepLeftToMove > 0) {
+                if (--this.hwStepLeftToMove) {
+                    this.lTimestamp[2] = 0;
+                }
+            }
+        }
+
+        this.fAngle = -(float)nResult / 10.0f;
+
+    } while(0);
+
+    for (int32_t n = 0; n < dimof(this.tMarkings); n++) {
+
+        /* update helper with new values*/
+        arm_2d_helper_dirty_region_transform_update_value(  
+            &this.tMarkings[n].tHelper, 
+            ARM_2D_ANGLE(this.fAngle + 90.0f - 5.5f * (dimof(this.tMarkings) / 2) + n * 5.6f), 
+            1.0f);
+
+        /* call helper's on-frame-start event handler */
+        arm_2d_helper_dirty_region_transform_on_frame_start(&this.tMarkings[n].tHelper);
     }
 
     number_list_on_frame_start(&this.tNumberList);
+
+    /* ---------- plesae do NOT modify code above unless you 100% sure ----- */
 }
 
 static void __on_scene_ruler_frame_complete(arm_2d_scene_t *ptScene)
@@ -204,12 +260,76 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
         
         /* following code is just a demo, you can remove them */
 
+        arm_2d_location_t tMarkingCentre = {
+            .iX = c_tileClockMarkingMask.tRegion.tSize.iWidth >> 1,
+            .iY = 284 + 60,
+        };
+
+        
+
         arm_2d_align_centre(__top_canvas, 76, 284 ) {
+
+            /* draw meter markings */
+            do {
+                arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
+
+                    arm_2d_location_t tRulerCentre = {
+                        .iX = __centre_region.tLocation.iX - 284 + c_tileClockMarkingMask.tRegion.tSize.iHeight,
+                        .iY = __centre_region.tLocation.iY + 284 / 2,
+                    };
+
+                    /* draw pointer */
+                    arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                        &ptMarking->tOP,
+                                        &c_tileClockMarkingMask,
+                                        ptTile,
+                                        &__centre_region,
+                                        tMarkingCentre,
+                                        ptMarking->tHelper.fAngle,
+                                        0.80f,
+                                        GLCD_COLOR_WHITE,
+                                        128,
+                                        &tRulerCentre);
+                    
+                    arm_2d_helper_dirty_region_transform_update(
+                                                    &ptMarking->tHelper,
+                                                    &__centre_region,
+                                                    bIsNewFrame);
+
+
+                    ARM_2D_OP_WAIT_ASYNC(&ptMarking->tOP);
+                }
+            } while(0);
+
+
+
+
             while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList, 
                                                         ptTile, 
                                                         &__centre_region, 
                                                         bIsNewFrame));
         
+
+            /* draw shadow */
+            arm_2d_dock_top(__centre_region, 60) {
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                    ptTile,
+                    &__top_region,
+                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                    (arm_2d_alpha_samples_2pts_t) {128, 0,});
+            }
+
+            arm_2d_dock_bottom(__centre_region, 60) {
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                    ptTile,
+                    &__bottom_region,
+                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                    (arm_2d_alpha_samples_2pts_t) {0, 128,});
+            }
+
+        }
+
+        arm_2d_align_centre(__top_canvas, 76+4, 284+4 ) {
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
                                         GLCD_COLOR_WHITE, 
@@ -217,8 +337,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                                             {64, 64, 255-64, 255-64},
                                         (arm_2d_corner_opacity_t)
                                             {0, 128, 128, 128});
-            
-
         }
 
 
@@ -251,13 +369,12 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    int16_t iRadius = (int16_t)(284.0f *1.0f);
-
     arm_2d_size_t tListSize = __arm_2d_list_core_get_list_size(&this.use_as____arm_2d_list_core_t);
 
     int16_t iHalfLength = tListSize.iHeight >> 1;
+    int16_t iRadius = tListSize.iHeight;
 
-    float fRatio = 0.4f+(float)(iHalfLength - ptParam->hwRatio) / (float)iHalfLength;
+    float fRatio = (float)(iHalfLength - ptParam->hwRatio) / (float)iHalfLength;
 
     COLOUR_INT_TYPE tColour =  arm_2d_pixel_from_brga8888( 
                                             __arm_2d_helper_colour_slider(
@@ -269,7 +386,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
 
     arm_2d_canvas(ptTile, __top_container) {
 
-        arm_lcd_text_set_scale(fRatio);
+        arm_lcd_text_set_scale(fRatio + 0.3f);
         arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
                     
         arm_2d_align_centre(__top_container, tTextSize) {
@@ -279,8 +396,9 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
                 float fYOffset =  (float)ptParam->hwRatio;
                 fYOffset = (float)iRadius - sqrtf((float)(iRadius * iRadius) - (float)(fYOffset * fYOffset));
 
-                __centre_region.tLocation.iX -= (int16_t) fYOffset;
+                __centre_region.tLocation.iX -= (int16_t) fYOffset + ((1.0f - fRatio) * (float)tTextSize.iWidth);
                 __centre_region.tLocation.iX += 20;
+                __centre_region.tLocation.iY += 3;
             } while(0);
 
             arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -289,10 +407,8 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
             arm_lcd_text_set_colour(tColour, GLCD_COLOR_BLACK);
             arm_lcd_text_location(0,0);
             
-            //arm_lcd_text_set_opacity(chOpacity);
-            arm_lcd_text_set_scale(fRatio);
+            arm_lcd_text_set_scale(fRatio + 0.3f);
             arm_lcd_printf("%02d", ptItem->hwID);
-            //arm_lcd_text_set_opacity(chOpacity);
 
             ARM_2D_OP_WAIT_ASYNC();
         }
@@ -314,14 +430,6 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
                                                         = tScreen.tSize.iWidth;
@@ -387,7 +495,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
 
             .tItemSize = {
                 .iWidth = 76,
-                .iHeight = 76,
+                .iHeight = 54,
             },
 
             .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
@@ -400,6 +508,10 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
     } while(0);
 
     numer_list_move_selection(&this.tNumberList, 54, 0);
+
+    arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
+        ARM_2D_OP_INIT(ptMarking->tOP);
+    }
 
     /* ------------   initialize members of user_scene_ruler_t end   ---------------*/
 

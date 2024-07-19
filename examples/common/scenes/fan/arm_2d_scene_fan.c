@@ -309,7 +309,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                                                         bIsNewFrame);
 
 
-                        arm_2d_op_wait_async((arm_2d_op_core_t *)&ptFanBlade->tOP);
+                        ARM_2D_OP_WAIT_ASYNC(&ptFanBlade->tOP);
                     }
 
 
