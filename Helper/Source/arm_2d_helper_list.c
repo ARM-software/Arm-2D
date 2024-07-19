@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        5. July 2024
- * $Revision:    V.1.1.7
+ * $Date:        19. July 2024
+ * $Revision:    V.1.1.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -114,6 +114,14 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
     this.Runtime.bIsRegCalInit = false;
 
     return ARM_2D_ERR_NONE;
+}
+
+
+ARM_NONNULL(1)
+arm_2d_size_t __arm_2d_list_core_get_list_size(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.tCFG.tListSize;
 }
 
 

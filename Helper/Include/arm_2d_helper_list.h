@@ -347,6 +347,16 @@ ARM_NONNULL(1,2)
 arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
                                         __arm_2d_list_core_cfg_t *ptCFG);
 
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief get the size of the target list
+ * 
+ * \param[in] ptThis the target list core object
+ * \return arm_2d_size_t the list size
+ */
+arm_2d_size_t __arm_2d_list_core_get_list_size(__arm_2d_list_core_t *ptThis);
+
 /*!
  * \brief show a given list core
  * \param[in] ptThis the target list core object
