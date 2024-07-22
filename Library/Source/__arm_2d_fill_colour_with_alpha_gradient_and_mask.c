@@ -291,7 +291,7 @@ void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(
             /* calclulate opacity */
             int32_t nOpacity = (q16OpacityLeft + (x + tOffset.iX) * q16XRatio) >> 16;
 
-            uint16_t hwAlpha = 256 - ((nOpacity * (*pchMaskLine++)) >> 16);
+            uint16_t hwAlpha = 256 - ((nOpacity * (*pchMaskLine++)) >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -394,7 +394,7 @@ void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
             /* calclulate opacity */
             int32_t nOpacity = (q16OpacityLeft + (x + tOffset.iX) * q16XRatio) >> 16;
 
-            uint16_t hwAlpha = 256 - (nOpacity * (*(uint8_t *)(pwMaskLine++)) >> 16);
+            uint16_t hwAlpha = 256 - (nOpacity * (*(uint8_t *)(pwMaskLine++)) >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -681,7 +681,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask(
             /* calclulate opacity */
             int32_t nOpacity = (q16OpacityLeft + (x + tOffset.iX) * q16XRatio) >> 16;
 
-            uint16_t hwAlpha = 256 - ((nOpacity * (*pchMaskLine++)) >> 16);
+            uint16_t hwAlpha = 256 - ((nOpacity * (*pchMaskLine++)) >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -784,7 +784,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
             /* calclulate opacity */
             int32_t nOpacity = (q16OpacityLeft + (x + tOffset.iX) * q16XRatio) >> 16;
 
-            uint16_t hwAlpha = 256 - (nOpacity * (*(uint8_t *)(pwMaskLine++)) >> 16);
+            uint16_t hwAlpha = 256 - (nOpacity * (*(uint8_t *)(pwMaskLine++)) >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -1071,7 +1071,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(
             /* calclulate opacity */
             int32_t nOpacity = (q16OpacityLeft + (x + tOffset.iX) * q16XRatio) >> 16;
 
-            uint16_t hwAlpha = 256 - ((nOpacity * (*pchMaskLine++)) >> 16);
+            uint16_t hwAlpha = 256 - ((nOpacity * (*pchMaskLine++)) >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -1174,7 +1174,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
             /* calclulate opacity */
             int32_t nOpacity = (q16OpacityLeft + (x + tOffset.iX) * q16XRatio) >> 16;
 
-            uint16_t hwAlpha = 256 - (nOpacity * (*(uint8_t *)(pwMaskLine++)) >> 16);
+            uint16_t hwAlpha = 256 - (nOpacity * (*(uint8_t *)(pwMaskLine++)) >> 8);
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
