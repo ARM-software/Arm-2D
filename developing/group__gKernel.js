@@ -48,6 +48,9 @@ var group__gKernel =
       [ "chTop", "group__gKernel.html#aa79ccc9d79898a4a2d42e7c22649db54", null ],
       [ "chBottom", "group__gKernel.html#a9fb2c56d725176124321d27460d17df5", null ]
     ] ],
+    [ "arm_2d_alpha_samples_4pts_t", "group__gKernel.html#unionarm__2d__alpha__samples__4pts__t", null ],
+    [ "arm_2d_alpha_samples_3pts_t", "group__gKernel.html#unionarm__2d__alpha__samples__3pts__t", null ],
+    [ "arm_2d_alpha_samples_2pts_t", "group__gKernel.html#unionarm__2d__alpha__samples__2pts__t", null ],
     [ "__arm_2d_mem_info_t", "group__gKernel.html#union____arm__2d__mem__info__t", [
       [ "Value", "group__gKernel.html#afaabe6b178692c0b57afa1bc65a8f701", null ]
     ] ],
@@ -72,7 +75,7 @@ var group__gKernel =
       [ "pTarget", "group__gKernel.html#afaf83f02ebbc3a7fecbdddfa3eaca8f6", null ]
     ] ],
     [ "__arm_2d_op_info_t", "group__gKernel.html#union____arm__2d__op__info__t", [
-      [ "Info", "group__gKernel.html#a059fe0446de0d98f67dec331f6643e94", null ],
+      [ "Info", "group__gKernel.html#a23bbfde8ab73550be5a8719f909d6729", null ],
       [ "wID", "group__gKernel.html#a7eaf57395ac174e3588fa638bd4fdac4", null ]
     ] ],
     [ "arm_2d_op_status_t", "group__gKernel.html#unionarm__2d__op__status__t", [
@@ -124,19 +127,23 @@ var group__gKernel =
       [ "pwBuffer", "group__gKernel.html#ada33927dfd1b467fd0ca5c1f41fe9cf1", null ],
       [ "nAddress", "group__gKernel.html#a60672198cd98a34cba84050872e49921", null ]
     ] ],
-    [ "__arm_2d_mem_info_t.__unnamed30__", "group__gKernel.html#struct____arm__2d__mem__info__t_8____unnamed30____", [
+    [ "arm_2d_alpha_samples_4pts_t.__unnamed30__", "group__gKernel.html#structarm__2d__alpha__samples__4pts__t_8____unnamed30____", null ],
+    [ "arm_2d_alpha_samples_3pts_t.__unnamed32__", "group__gKernel.html#structarm__2d__alpha__samples__3pts__t_8____unnamed32____", null ],
+    [ "arm_2d_alpha_samples_2pts_t.__unnamed34__", "group__gKernel.html#structarm__2d__alpha__samples__2pts__t_8____unnamed34____", null ],
+    [ "arm_2d_alpha_samples_2pts_t.__unnamed36__", "group__gKernel.html#structarm__2d__alpha__samples__2pts__t_8____unnamed36____", null ],
+    [ "__arm_2d_mem_info_t.__unnamed38__", "group__gKernel.html#struct____arm__2d__mem__info__t_8____unnamed38____", [
       [ "u24SizeInByte", "group__gKernel.html#a75e880fb524b7cffc852cd04e4dfe622", null ],
       [ "u2ItemSize", "group__gKernel.html#ab2186430e13e48786ab36b925c08e341", null ],
       [ "u2Align", "group__gKernel.html#a02a93e63bbb7831e443437701ee61935", null ],
       [ "u2Type", "group__gKernel.html#ac712e5a5e27efc804722be62a4f3ef9e", null ]
     ] ],
-    [ "arm_2d_scratch_mem_t.__unnamed32__", "group__gKernel.html#unionarm__2d__scratch__mem__t_8____unnamed32____", null ],
-    [ "arm_2d_scratch_mem_t.__unnamed32__.__unnamed34__", "group__gKernel.html#structarm__2d__scratch__mem__t_8____unnamed32_____8____unnamed34____", null ],
-    [ "__arm_2d_mem_t.__unnamed36__", "group__gKernel.html#union____arm__2d__mem__t_8____unnamed36____", [
+    [ "arm_2d_scratch_mem_t.__unnamed40__", "group__gKernel.html#unionarm__2d__scratch__mem__t_8____unnamed40____", null ],
+    [ "arm_2d_scratch_mem_t.__unnamed40__.__unnamed42__", "group__gKernel.html#structarm__2d__scratch__mem__t_8____unnamed40_____8____unnamed42____", null ],
+    [ "__arm_2d_mem_t.__unnamed44__", "group__gKernel.html#union____arm__2d__mem__t_8____unnamed44____", [
       [ "ptNext", "group__gKernel.html#a280a9f91f9dc54ebfa734ac5e72ac5fe", null ],
       [ "wSignature", "group__gKernel.html#a66be4b09ac357a42181e2f4cbb795ba3", null ]
     ] ],
-    [ "arm_2d_task_t.__unnamed38__", "group__gKernel.html#structarm__2d__task__t_8____unnamed38____", null ],
+    [ "arm_2d_task_t.__unnamed46__", "group__gKernel.html#structarm__2d__task__t_8____unnamed46____", null ],
     [ "__arm_2d_op_info_t.Info", "group__gKernel.html#struct____arm__2d__op__info__t_8Info", [
       [ "Colour", "group__gKernel.html#adfe6076e1d429c24edcbb2686bb39567", null ],
       [ "Param", "group__gKernel.html#ab7dccc7d9373cd4717256318909fcebe", null ],
@@ -148,7 +155,7 @@ var group__gKernel =
     [ "__arm_2d_op_info_t.Info.Param", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8Param", [
       [ "chValue", "group__gKernel.html#a14feacf4173e75400b4bf5d23be613f4", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.Param.__unnamed44__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed44____", [
+    [ "__arm_2d_op_info_t.Info.Param.__unnamed52__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed52____", [
       [ "bHasSource", "group__gKernel.html#a20300cbf0fd7048d6c53680add0bae93", null ],
       [ "bHasTarget", "group__gKernel.html#a953434e6f818bd41905c39ea14698e00", null ],
       [ "bHasSrcMask", "group__gKernel.html#a7c66e904cad6508e4945d09f2145413f", null ],
@@ -157,39 +164,39 @@ var group__gKernel =
       [ "bAllowEnforcedColour", "group__gKernel.html#afcec6e72ec1717659666cbeb104b1ab9", null ]
     ] ],
     [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex", null ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed46__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed46____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed54__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed54____", [
       [ "CopyLike", "group__gKernel.html#a70eb9faba18ebf32e1398d257acefc32", null ],
       [ "FillLike", "group__gKernel.html#a58e2f0256c99554dc01d5d236d9a2613", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed48__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed48____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed56__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed56____", [
       [ "CopyOrigLike", "group__gKernel.html#a7f612e916edb730626c520af4d82fe98", null ],
       [ "FillOrigLike", "group__gKernel.html#a0cc8932eca451a82e4e5247aa234fb9d", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed50__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed50____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed58__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed58____", [
       [ "TileProcessLike", "group__gKernel.html#a7978d3a17b01a1ab3f31acf1bd676a11", null ]
     ] ],
     [ "__arm_2d_op_info_t.Info.LowLevelIO", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelIO", [
       [ "IO", "group__gKernel.html#a831516650d9e1ad301d96668244c7093", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed52__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed52____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed60__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed60____", [
       [ "ptCopyLike", "group__gKernel.html#a78caf4b9fec0a9a010be0a037d635f1f", null ],
       [ "ptFillLike", "group__gKernel.html#acedb0e487366d8e124e77657cddf021d", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed54__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed54____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed62__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed62____", [
       [ "ptCopyOrigLike", "group__gKernel.html#a399c799507a0d599f40310af517ee752", null ],
       [ "ptFillOrigLike", "group__gKernel.html#af3203a6f198876164fe21b05540b51d0", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed56__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed56____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed64__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed64____", [
       [ "ptTileProcessLike", "group__gKernel.html#aa643d17e74108930c55010a2b86e8e1b", null ]
     ] ],
-    [ "arm_2d_op_status_t.__unnamed58__", "group__gKernel.html#structarm__2d__op__status__t_8____unnamed58____", [
+    [ "arm_2d_op_status_t.__unnamed66__", "group__gKernel.html#structarm__2d__op__status__t_8____unnamed66____", [
       [ "u4SubTaskCount", "group__gKernel.html#a8baeec3b7715b9505d90e374936e1901", null ],
       [ "bIsBusy", "group__gKernel.html#affd00185d2d6d71145d204cf976fd14f", null ],
       [ "bIOError", "group__gKernel.html#ad7551e58ef98ea1d20198afc88febadb", null ],
       [ "bOpCpl", "group__gKernel.html#a52ac3218410df3b2407283060212090f", null ]
     ] ],
-    [ "arm_2d_op_core_t.__unnamed60__", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed60____", null ],
-    [ "arm_2d_op_core_t.__unnamed60__.Preference", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed60_____8Preference", null ],
+    [ "arm_2d_op_core_t.__unnamed68__", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed68____", null ],
+    [ "arm_2d_op_core_t.__unnamed68__.Preference", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed68_____8Preference", null ],
     [ "arm_2d_op_t.Target", "group__gKernel.html#structarm__2d__op__t_8Target", [
       [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]

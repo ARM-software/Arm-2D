@@ -494,7 +494,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        uint32_t wColour;                       <span class="comment">//!&lt; 32bit colour</span></div>
 <div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>    };</div>
 <div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span> </div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>    arm_2d_alpha_samples_4pts_t tSamplePoints;</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints;</div>
 <div class="line"><a id="l00389" name="l00389"></a><span class="lineno"><a class="line" href="group__gAlpha.html">  389</a></span>)</div>
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>};</div>
 <div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> </div>
@@ -510,7 +510,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        uint32_t wColour;                       <span class="comment">//!&lt; 32bit colour</span></div>
 <div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>    };</div>
 <div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    arm_2d_alpha_samples_3pts_t tSamplePoints;</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints;</div>
 <div class="line"><a id="l00405" name="l00405"></a><span class="lineno"><a class="line" href="group__gAlpha.html">  405</a></span>)</div>
 <div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>};</div>
 <div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
@@ -526,7 +526,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>        uint32_t wColour;                       <span class="comment">//!&lt; 32bit colour</span></div>
 <div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>    };</div>
 <div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    arm_2d_alpha_samples_2pts_t tSamplePoints;</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints;</div>
 <div class="line"><a id="l00421" name="l00421"></a><span class="lineno"><a class="line" href="group__gAlpha.html">  421</a></span>)</div>
 <div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>};</div>
 <div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
@@ -550,7 +550,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
-<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>                            arm_2d_alpha_samples_4pts_t tSamplePoints);</div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span><span class="comment"></span> </div>
 <div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span><span class="comment"> * \brief fill the target region with a given colour, an alpha gradient (that</span></div>
@@ -571,7 +571,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>                            arm_2d_alpha_samples_4pts_t tSamplePoints);</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="comment"></span> </div>
 <div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span><span class="comment"> * \brief fill the target region with a given colour and an alpha gradient that</span></div>
@@ -590,7 +590,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00481" name="l00481"></a><span class="lineno">  481</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
-<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>                            arm_2d_alpha_samples_3pts_t tSamplePoints);</div>
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span><span class="comment"></span> </div>
 <div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span><span class="comment"> * \brief fill the target region with a given colour, an alpha gradient (that</span></div>
@@ -611,7 +611,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
 <div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>                            arm_2d_alpha_samples_3pts_t tSamplePoints);</div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span> </div>
 <div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span><span class="comment"></span> </div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span><span class="comment">/*!</span></div>
@@ -631,7 +631,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
-<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="comment"></span> </div>
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="comment"> * \brief fill the target region with a given colour, a vertical alpha gradient</span></div>
@@ -652,7 +652,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
 <div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span><span class="comment"></span> </div>
 <div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span><span class="comment"> * \brief fill the target region with a given colour and a horizontal alpha</span></div>
@@ -671,7 +671,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span><span class="comment"></span> </div>
 <div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span><span class="comment"> * \brief fill the target region with a given colour, a horizontal alpha</span></div>
@@ -692,7 +692,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>                            <a class="code hl_struct" href="group__gKernel.html#structarm__2d__color__gray8__t" title="the colour type for gray8 (8bit gray scale)">arm_2d_color_gray8_t</a> tColour,</div>
 <div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="comment"></span> </div>
 <div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span><span class="comment"> * \brief fill the target region with a given colour and an alpha gradient that</span></div>
@@ -711,7 +711,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>                            arm_2d_alpha_samples_4pts_t tSamplePoints);</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span><span class="comment"></span> </div>
 <div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span><span class="comment"> * \brief fill the target region with a given colour, an alpha gradient (that</span></div>
@@ -732,7 +732,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
 <div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>                            arm_2d_alpha_samples_4pts_t tSamplePoints);</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span><span class="comment"></span> </div>
 <div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span><span class="comment"> * \brief fill the target region with a given colour and an alpha gradient that</span></div>
@@ -751,7 +751,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                            arm_2d_alpha_samples_3pts_t tSamplePoints);</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span><span class="comment"></span> </div>
 <div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span><span class="comment"> * \brief fill the target region with a given colour, an alpha gradient (that</span></div>
@@ -772,7 +772,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
 <div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>                            arm_2d_alpha_samples_3pts_t tSamplePoints);</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span> </div>
 <div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span><span class="comment"></span> </div>
 <div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span><span class="comment">/*!</span></div>
@@ -792,7 +792,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="comment"></span> </div>
 <div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span><span class="comment"> * \brief fill the target region with a given colour, a vertical alpha gradient</span></div>
@@ -813,7 +813,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
 <div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span><span class="comment"></span> </div>
 <div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span><span class="comment"> * \brief fill the target region with a given colour and a horizontal alpha</span></div>
@@ -832,7 +832,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
-<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span><span class="comment"></span> </div>
 <div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span><span class="comment"> * \brief fill the target region with a given colour, a horizontal alpha</span></div>
@@ -853,7 +853,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tColour,</div>
 <div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span><span class="comment"></span> </div>
 <div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span><span class="comment"> * \brief fill the target region with a given colour and an alpha gradient that</span></div>
@@ -872,7 +872,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                            arm_2d_alpha_samples_4pts_t tSamplePoints);</div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="comment"></span> </div>
 <div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span><span class="comment"> * \brief fill the target region with a given colour, an alpha gradient (that</span></div>
@@ -893,7 +893,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
 <div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>                            arm_2d_alpha_samples_4pts_t tSamplePoints);</div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__4pts__t" title="type for 4 points alpha sample points">arm_2d_alpha_samples_4pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span><span class="comment"></span> </div>
 <div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span><span class="comment"> * \brief fill the target region with a given colour and an alpha gradient that</span></div>
@@ -912,7 +912,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>                            arm_2d_alpha_samples_3pts_t tSamplePoints);</div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span><span class="comment"></span> </div>
 <div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span><span class="comment"> * \brief fill the target region with a given colour, an alpha gradient (that</span></div>
@@ -933,7 +933,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
 <div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>                            arm_2d_alpha_samples_3pts_t tSamplePoints);</div>
+<div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__3pts__t" title="type for 3 points alpha sample points">arm_2d_alpha_samples_3pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span> </div>
 <div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span><span class="comment"></span> </div>
 <div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span><span class="comment">/*!</span></div>
@@ -953,7 +953,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
-<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span><span class="comment"></span> </div>
 <div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span><span class="comment"> * \brief fill the target region with a given colour, a vertical alpha gradient</span></div>
@@ -974,7 +974,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
 <div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span><span class="comment"></span> </div>
 <div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span><span class="comment"> * \brief fill the target region with a given colour and a horizontal alpha</span></div>
@@ -993,7 +993,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
 <div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
-<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00887" name="l00887"></a><span class="lineno">  887</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00888" name="l00888"></a><span class="lineno">  888</span><span class="comment"></span> </div>
 <div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span><span class="comment"> * \brief fill the target region with a given colour, a horizontal alpha</span></div>
@@ -1014,7 +1014,7 @@ $(document).ready(function(){initNavTree('____arm__2d__fill__colour__with__alpha
 <div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
 <div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__cccn888__t" title="the colour type for any 32bit colour formats which has an unused-alpha channel on its 3rd byte.">arm_2d_color_cccn888_t</a> tColour,</div>
 <div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>                            uint8_t chOpacity,</div>
-<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>                            arm_2d_alpha_samples_2pts_t tSamplePoints);</div>
+<div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>                            <a class="code hl_union" href="group__gKernel.html#unionarm__2d__alpha__samples__2pts__t" title="type for 2 points alpha sample points">arm_2d_alpha_samples_2pts_t</a> tSamplePoints);</div>
 <div class="line"><a id="l00909" name="l00909"></a><span class="lineno">  909</span><span class="comment"></span> </div>
 <div class="line"><a id="l00910" name="l00910"></a><span class="lineno">  910</span><span class="comment">/*! @} */</span></div>
 <div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span> </div>
