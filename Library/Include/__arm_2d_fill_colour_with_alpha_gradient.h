@@ -22,7 +22,7 @@
  * Description:  The header file of APIs for colour-filling-with-alpha-gradient
  *
  * $Date:        19. July 2024
- * $Revision:    V.0.9.1
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -129,7 +129,7 @@ extern "C" {
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient_and_opacity( \
+        arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient_and_opacity(     \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
@@ -233,7 +233,7 @@ extern "C" {
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_rgb565_fill_colour_with_vertical_alpha_gradient_and_opacity(\
+        arm_2dp_rgb565_fill_colour_with_vertical_alpha_gradient_and_opacity(    \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
@@ -372,37 +372,6 @@ extern "C" {
                                                         __VA_ARGS__)
 
 /*============================ TYPES =========================================*/
-
-typedef union arm_2d_alpha_samples_4pts_t {
-    struct {
-        uint8_t chTopLeft;
-        uint8_t chTopRight;
-        uint8_t chBottomLeft;
-        uint8_t chBottomRight;
-    };
-    uint8_t chAlpha[4];
-} arm_2d_alpha_samples_4pts_t;
-
-typedef union arm_2d_alpha_samples_3pts_t {
-    struct {
-        uint8_t chTopLeft;
-        uint8_t chTopRight;
-        uint8_t chBottomLeft;
-    };
-    uint8_t chAlpha[3];
-} arm_2d_alpha_samples_3pts_t;
-
-typedef union arm_2d_alpha_samples_2pts_t {
-    struct {
-        uint8_t chLeft;
-        uint8_t chRight;
-    };
-    struct {
-        uint8_t chTop;
-        uint8_t chBottom;
-    };
-    uint8_t chAlpha[2];
-} arm_2d_alpha_samples_2pts_t;
 
 typedef struct arm_2d_fill_cl_4p_al_grd_t arm_2d_fill_cl_4p_al_grd_t;
 

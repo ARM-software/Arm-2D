@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_alpha_gradient.c
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *
- * $Date:        19. July 2024
- * $Revision:    V.0.9.1
+ * $Date:        22. July 2024
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
