@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        16 July 2024
- * $Revision:    V.1.8.1
+ * $Date:        22 July 2024
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -3655,6 +3655,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_alpha_gradient.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_alpha_gradient_and_mask.c"
 
 #ifdef   __cplusplus
 }

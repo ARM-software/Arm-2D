@@ -680,6 +680,49 @@ typedef struct arm_2d_padding_t {
 } arm_2d_padding_t;
 
 /*!
+ * \brief type for 4 points alpha sample points
+ * 
+ */
+typedef union arm_2d_alpha_samples_4pts_t {
+    struct {
+        uint8_t chTopLeft;
+        uint8_t chTopRight;
+        uint8_t chBottomLeft;
+        uint8_t chBottomRight;
+    };
+    uint8_t chAlpha[4];
+} arm_2d_alpha_samples_4pts_t;
+
+/*!
+ * \brief type for 3 points alpha sample points
+ * 
+ */
+typedef union arm_2d_alpha_samples_3pts_t {
+    struct {
+        uint8_t chTopLeft;
+        uint8_t chTopRight;
+        uint8_t chBottomLeft;
+    };
+    uint8_t chAlpha[3];
+} arm_2d_alpha_samples_3pts_t;
+
+/*!
+ * \brief type for 2 points alpha sample points
+ * 
+ */
+typedef union arm_2d_alpha_samples_2pts_t {
+    struct {
+        uint8_t chLeft;
+        uint8_t chRight;
+    };
+    struct {
+        uint8_t chTop;
+        uint8_t chBottom;
+    };
+    uint8_t chAlpha[2];
+} arm_2d_alpha_samples_2pts_t;
+
+/*!
  * \brief the enumeration type for describing memory types
  *
  */

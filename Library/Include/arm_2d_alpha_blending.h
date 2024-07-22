@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        16 July 2024
- * $Revision:    V.1.8.1
+ * $Date:        22 July 2024
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4408,6 +4408,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_xy_mirror(
 #include "__arm_2d_fill_colour_with_horizontal_line_mask.h"
 #include "__arm_2d_fill_colour_with_vertical_line_mask.h"
 #include "__arm_2d_fill_colour_with_alpha_gradient.h"
+#include "__arm_2d_fill_colour_with_alpha_gradient_and_mask.h"
 #include "__arm_2d_tile_copy_with_source_mask_and_opacity.h"
 
 #if defined(__clang__)
