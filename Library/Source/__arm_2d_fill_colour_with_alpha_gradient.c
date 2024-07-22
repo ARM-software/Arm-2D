@@ -685,11 +685,13 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient(
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTop) << 16) 
                                + (y + tOffset.iY) * q16YRatio;
+        q16OpacityLeft >>= 16;
 
         uint8_t * __RESTRICT pchTargetLine = pchTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (q16OpacityLeft >> 16);
+            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -1558,11 +1560,13 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient(
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTop) << 16) 
                                + (y + tOffset.iY) * q16YRatio;
+        q16OpacityLeft >>= 16;
 
         uint16_t * __RESTRICT phwTargetLine = phwTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (q16OpacityLeft >> 16);
+            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
@@ -2431,11 +2435,13 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient(
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTop) << 16) 
                                + (y + tOffset.iY) * q16YRatio;
+        q16OpacityLeft >>= 16;
 
         uint32_t * __RESTRICT pwTargetLine = pwTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (q16OpacityLeft >> 16);
+            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif

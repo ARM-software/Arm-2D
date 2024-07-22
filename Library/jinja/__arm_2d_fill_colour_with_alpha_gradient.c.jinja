@@ -693,11 +693,13 @@ void __arm_2d_impl_{{colour_name | lower}}_fill_colour_with_vertical_alpha_gradi
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTop) << 16) 
                                + (y + tOffset.iY) * q16YRatio;
+        q16OpacityLeft >>= 16;
 
         {{colour_int}} * __RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (q16OpacityLeft >> 16);
+            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             hwAlpha -= (hwAlpha == 1);
 #endif
