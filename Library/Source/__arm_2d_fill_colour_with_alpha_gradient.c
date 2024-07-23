@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_alpha_gradient.c
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *
- * $Date:        22. July 2024
- * $Revision:    V.1.0.0
+ * $Date:        23. July 2024
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -478,7 +478,7 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
             /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
             nOpacity >>= 16;
-            nOpacity = (nOpacity > 255) * 255 + !(nOpacity > 255) * nOpacity;
+            nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
             nOpacity *= (nOpacity > 0);
 
             uint16_t hwAlpha = 256 - nOpacity;
@@ -1354,7 +1354,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
             /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
             nOpacity >>= 16;
-            nOpacity = (nOpacity > 255) * 255 + !(nOpacity > 255) * nOpacity;
+            nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
             nOpacity *= (nOpacity > 0);
 
             uint16_t hwAlpha = 256 - nOpacity;
@@ -2230,7 +2230,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
             /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
             nOpacity >>= 16;
-            nOpacity = (nOpacity > 255) * 255 + !(nOpacity > 255) * nOpacity;
+            nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
             nOpacity *= (nOpacity > 0);
 
             uint16_t hwAlpha = 256 - nOpacity;
