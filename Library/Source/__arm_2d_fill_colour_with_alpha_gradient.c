@@ -478,7 +478,8 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
             /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
             nOpacity >>= 16;
-            nOpacity = MIN(255, nOpacity);
+            nOpacity = (nOpacity > 255) * 255 + !(nOpacity > 255) * nOpacity;
+            nOpacity *= (nOpacity > 0);
 
             uint16_t hwAlpha = 256 - nOpacity;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1353,7 +1354,8 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
             /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
             nOpacity >>= 16;
-            nOpacity = MIN(255, nOpacity);
+            nOpacity = (nOpacity > 255) * 255 + !(nOpacity > 255) * nOpacity;
+            nOpacity *= (nOpacity > 0);
 
             uint16_t hwAlpha = 256 - nOpacity;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -2228,7 +2230,8 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
             /* calculate opacity */
             int32_t nOpacity = q16OpacityLeft + (x + tOffset.iX) * q16XRatio;
             nOpacity >>= 16;
-            nOpacity = MIN(255, nOpacity);
+            nOpacity = (nOpacity > 255) * 255 + !(nOpacity > 255) * nOpacity;
+            nOpacity *= (nOpacity > 0);
 
             uint16_t hwAlpha = 256 - nOpacity;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
