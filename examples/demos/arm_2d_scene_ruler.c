@@ -198,7 +198,7 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     uint16_t hwABSSteps = ABS(nStepsToMove);
 
     if (arm_2d_helper_is_time_out(2000, &this.lTimestamp[1])) {
-        numer_list_move_selection(&this.tNumberList, nStepsToMove, hwMoveSpeedInMs * hwABSSteps);
+        number_list_move_selection(&this.tNumberList, nStepsToMove, hwMoveSpeedInMs * hwABSSteps);
         this.lTimestamp[2] = 0;
         this.chStepLeftToMove = hwABSSteps * 2;
     }
@@ -543,7 +543,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
         number_list_init(&this.tNumberList, &tCFG);
     } while(0);
 
-    numer_list_move_selection(&this.tNumberList, 50, 0);
+    number_list_move_selection(&this.tNumberList, 50, 0);
 
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         ARM_2D_OP_INIT(ptMarking->tOP);

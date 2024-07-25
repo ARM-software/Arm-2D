@@ -165,15 +165,15 @@ static void __on_scene_fitness_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        numer_list_move_selection(&this.tNumberList[0], 100, 10000);
+        number_list_move_selection(&this.tNumberList[0], 100, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[1])) {
-        numer_list_move_selection(&this.tNumberList[1], 10, 10000);
+        number_list_move_selection(&this.tNumberList[1], 10, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[2])) {
-        numer_list_move_selection(&this.tNumberList[2], 1, 10000);
+        number_list_move_selection(&this.tNumberList[2], 1, 10000);
     }
 
     do {
@@ -448,9 +448,9 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
         number_list_init(&this.tNumberList[2], &tCFG);
     } while(0);
     
-    numer_list_move_selection(&this.tNumberList[0], 100,   10000);
-    numer_list_move_selection(&this.tNumberList[1], 10,    10000);
-    numer_list_move_selection(&this.tNumberList[2], 1,     10000);
+    number_list_move_selection(&this.tNumberList[0], 100,   10000);
+    number_list_move_selection(&this.tNumberList[1], 10,    10000);
+    number_list_move_selection(&this.tNumberList[2], 1,     10000);
 
 #if __FITNESS_CFG_NEBULA_ENABLE__
     do {

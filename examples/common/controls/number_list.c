@@ -155,7 +155,9 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
         arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
         
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    
+        arm_lcd_text_set_scale(0.0f);
+        arm_lcd_text_set_opacity(255);
+
         /* print numbers */
         __printf(ptThis,
                  &__top_container,
@@ -424,7 +426,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 
 
 ARM_NONNULL(1)
-void numer_list_move_selection( number_list_t *ptThis,
+void number_list_move_selection( number_list_t *ptThis,
                                 int16_t iSteps,
                                 int32_t nFinishInMs)
 {

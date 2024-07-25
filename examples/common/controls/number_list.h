@@ -131,7 +131,7 @@ arm_fsm_rt_t number_list_show(  number_list_t *ptThis,
 
 extern
 ARM_NONNULL(1)
-void numer_list_move_selection( number_list_t *ptThis,
+void number_list_move_selection( number_list_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs);
 

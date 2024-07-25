@@ -159,15 +159,15 @@ static void __on_scene2_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        numer_list_move_selection(&this.tNumberList[0], 100, 10000);
+        number_list_move_selection(&this.tNumberList[0], 100, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[1])) {
-        numer_list_move_selection(&this.tNumberList[1], 10, 10000);
+        number_list_move_selection(&this.tNumberList[1], 10, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[2])) {
-        numer_list_move_selection(&this.tNumberList[2], 1, 10000);
+        number_list_move_selection(&this.tNumberList[2], 1, 10000);
     }
     
     if (arm_2d_helper_is_time_out(10, &this.lTimestamp[3])) {
@@ -531,9 +531,9 @@ user_scene_2_t *__arm_2d_scene2_init(   arm_2d_scene_player_t *ptDispAdapter,
         number_list_init(&this.tNumberList[2], &tCFG);
     } while(0);
     
-    numer_list_move_selection(&this.tNumberList[0], 100,   10000);
-    numer_list_move_selection(&this.tNumberList[1], 10,    10000);
-    numer_list_move_selection(&this.tNumberList[2], 1,     10000);
+    number_list_move_selection(&this.tNumberList[0], 100,   10000);
+    number_list_move_selection(&this.tNumberList[1], 10,    10000);
+    number_list_move_selection(&this.tNumberList[2], 1,     10000);
 
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
