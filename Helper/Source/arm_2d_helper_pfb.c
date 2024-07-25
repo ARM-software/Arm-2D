@@ -1934,9 +1934,10 @@ label_iteration_begin_start:
                             DIRTY_REGION_OPTIMISATION, 
                             1, 
                             "Iteration Begin", 
-                            "No valid dirty region in the list, ignore this frame"
+                            "No valid dirty region in the list, this frame SHOULD BE ignored"
                         );
                         
+                    #if 1
                         /* free pfb */
                         arm_irq_safe {
                             __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
@@ -1949,6 +1950,7 @@ label_iteration_begin_start:
 
                         // out of lcd 
                         return (arm_2d_tile_t *)-1;
+                    #endif
                     }
                 }
             } else {
@@ -2113,20 +2115,34 @@ label_iteration_begin_start:
                         goto label_iteration_begin_start;
                     }
 
-                    /* free pfb */
-                    arm_irq_safe {
-                        __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
-                        this.Adapter.ptCurrent = NULL;
+                    if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+                        ARM_2D_LOG_INFO(
+                            HELPER_PFB, 
+                            1, 
+                            "Iteration Begin", 
+                            "No valid dirty region in the list, this frame SHOULD BE ignored, but as we are in dirty region debug mode, we will continue...";
+                        );
+
+                        this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
+                        this.Adapter.ptDirtyRegion = NULL;
+                        this.Adapter.bNoAdditionalDirtyRegionList = true;
+
+                    } else {
+                        /* free pfb */
+                        arm_irq_safe {
+                            __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
+                            this.Adapter.ptCurrent = NULL;
+                        }
+
+                        assert(false == this.Adapter.bIsDryRun);
+                        assert(this.Adapter.bFirstIteration);
+
+                        // out of lcd 
+                        return (arm_2d_tile_t *)-1;
+                        /*--------------------------------------------------------------*
+                        * the code segment for try next dirty region or end early: END *
+                        *--------------------------------------------------------------*/
                     }
-
-                    assert(false == this.Adapter.bIsDryRun);
-                    assert(this.Adapter.bFirstIteration);
-
-                    // out of lcd 
-                    return (arm_2d_tile_t *)-1;
-                    /*--------------------------------------------------------------*
-                     * the code segment for try next dirty region or end early: END *
-                     *--------------------------------------------------------------*/
                 }
 
             } else {
@@ -2265,112 +2281,123 @@ label_iteration_begin_start:
                                 &this.Adapter.tPFBTile, 
                                 false);
 
-    if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
-        bool bFirstIteration = this.Adapter.bFirstIteration;
-
-        /* check whether we need a dry run */
-        if (bFirstIteration && NULL != ptDirtyRegions) {
-            if (!this.Adapter.bIsDryRun) {
-                this.Adapter.bIsDryRun = true;
-
-                ARM_2D_LOG_INFO(
-                    HELPER_PFB, 
-                    1, 
-                    "Iteration Begin", 
-                    "--------------------Dry Run Begin--------------------"
-                );
-
-            } else {
-                /* starting the real drawing after the dry run */
-                this.Adapter.bIsDryRun = false;
-
-                /* NOTE: due to the dry run, it is not the first iteration of a frame 
-                *       but this flag is set to true when all dirty regions are visited, 
-                *       so we have to clear it manually.
-                */
-                this.Adapter.bFirstIteration = false;
-
-                ARM_2D_LOG_INFO(
-                    HELPER_PFB, 
-                    1, 
-                    "Iteration Begin", 
-                    "--------------------Dry Run End ---------------------\r\n"
-                );
-            }
+    do {
+        if (this.tCFG.FrameBuffer.bDebugDirtyRegions && this.Adapter.ptDirtyRegion == NULL) {
+            /*
+             * NOTE: In dirty region debug mode, even when there is no dirty region available,
+             *       we should also flush the whole screen for a clear debugging view.
+             */
+            this.Adapter.bIsDryRun = false;
+            break;
         }
 
-        if (this.Adapter.bIsDryRun) {
-            /* if the dirty region list isn't empty, to support the services that
-            * need a dry run to update dirty region (e.g. dynamic dirty regions
-            * and transform helper etc), we will do a dry run for the first 
-            * iteration. 
-            * 
-            * To achieve that, we need to modify the this.Adapter.tPFBTile to  
-            * ensure that there is no valid region between the root tile and
-            * the child tile, i.e draw nothing. 
-            */
-            this.Adapter.tPFBTile.tRegion.tLocation.iX
-                = ptPartialFrameBuffer->tRegion.tSize.iWidth;
-            
-            assert(NULL != this.Adapter.ptDirtyRegion);
-            if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
+        if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+            bool bFirstIteration = this.Adapter.bFirstIteration;
 
-                if (!(bFirstIteration && this.Adapter.bEncounterDynamicDirtyRegion)) {
-                    /* NOTE: we won't take the first dynamic dirty region into the 
-                     * consideration as there is no valid value 
-                     */
+            /* check whether we need a dry run */
+            if (bFirstIteration && NULL != ptDirtyRegions) {
+                if (!this.Adapter.bIsDryRun) {
+                    this.Adapter.bIsDryRun = true;
 
                     ARM_2D_LOG_INFO(
-                        DIRTY_REGION_OPTIMISATION, 
+                        HELPER_PFB, 
                         1, 
                         "Iteration Begin", 
-                        "Update dirty region working list with the new one [%p], dynamic? [%s]",
-                        this.Adapter.ptDirtyRegion,
-                        this.Adapter.bEncounterDynamicDirtyRegion ? "true" : "false"
+                        "--------------------Dry Run Begin--------------------"
                     );
 
-                    __arm_2d_helper_update_dirty_region_working_list(
-                                            ptThis, 
-                                            this.Adapter.ptDirtyRegion,
-                                            this.Adapter.bEncounterDynamicDirtyRegion);
                 } else {
+                    /* starting the real drawing after the dry run */
+                    this.Adapter.bIsDryRun = false;
+
+                    /* NOTE: due to the dry run, it is not the first iteration of a frame 
+                    *       but this flag is set to true when all dirty regions are visited, 
+                    *       so we have to clear it manually.
+                    */
+                    this.Adapter.bFirstIteration = false;
+
                     ARM_2D_LOG_INFO(
-                        DIRTY_REGION_OPTIMISATION, 
+                        HELPER_PFB, 
                         1, 
                         "Iteration Begin", 
-                        "As the dynamic dirty region is the first available one in the list, we will not add it to the working list in the first iteration."
+                        "--------------------Dry Run End ---------------------\r\n"
                     );
                 }
-                /* reset flag */
-                this.Adapter.bEncounterDynamicDirtyRegion = false;
             }
 
-        }
-    } else {
-        /* check whether we need a dry run */
-        if (this.Adapter.bFirstIteration && NULL != ptDirtyRegions) {
-            this.Adapter.bIsDryRun = true;
+            if (this.Adapter.bIsDryRun) {
+                /* if the dirty region list isn't empty, to support the services that
+                * need a dry run to update dirty region (e.g. dynamic dirty regions
+                * and transform helper etc), we will do a dry run for the first 
+                * iteration. 
+                * 
+                * To achieve that, we need to modify the this.Adapter.tPFBTile to  
+                * ensure that there is no valid region between the root tile and
+                * the child tile, i.e draw nothing. 
+                */
+                this.Adapter.tPFBTile.tRegion.tLocation.iX
+                    = ptPartialFrameBuffer->tRegion.tSize.iWidth;
+                
+                assert(NULL != this.Adapter.ptDirtyRegion);
+                if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
 
-            /* if the dirty region list isn't empty, to support the services that
-            * need a dry run to update dirty region (e.g. dynamic dirty regions
-            * and transform helper etc), we will do a dry run for the first 
-            * iteration. 
-            * 
-            * To achieve that, we need to modify the this.Adapter.tPFBTile to  
-            * ensure that there is no valid region between the root tile and
-            * the child tile, i.e draw nothing. 
-            */
-            this.Adapter.tPFBTile.tRegion.tLocation.iX
-                = ptPartialFrameBuffer->tRegion.tSize.iWidth;
-            
-            ARM_2D_LOG_INFO(
-                HELPER_PFB, 
-                0, 
-                "Iteration Begin", 
-                "Start Dry-run"
-            );
+                    if (!(bFirstIteration && this.Adapter.bEncounterDynamicDirtyRegion)) {
+                        /* NOTE: we won't take the first dynamic dirty region into the 
+                        * consideration as there is no valid value 
+                        */
+
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            1, 
+                            "Iteration Begin", 
+                            "Update dirty region working list with the new one [%p], dynamic? [%s]",
+                            this.Adapter.ptDirtyRegion,
+                            this.Adapter.bEncounterDynamicDirtyRegion ? "true" : "false"
+                        );
+
+                        __arm_2d_helper_update_dirty_region_working_list(
+                                                ptThis, 
+                                                this.Adapter.ptDirtyRegion,
+                                                this.Adapter.bEncounterDynamicDirtyRegion);
+                    } else {
+                        ARM_2D_LOG_INFO(
+                            DIRTY_REGION_OPTIMISATION, 
+                            1, 
+                            "Iteration Begin", 
+                            "As the dynamic dirty region is the first available one in the list, we will not add it to the working list in the first iteration."
+                        );
+                    }
+                    /* reset flag */
+                    this.Adapter.bEncounterDynamicDirtyRegion = false;
+                }
+
+            }
+        } else {
+            /* check whether we need a dry run */
+            if (this.Adapter.bFirstIteration && NULL != ptDirtyRegions) {
+                this.Adapter.bIsDryRun = true;
+
+                /* if the dirty region list isn't empty, to support the services that
+                * need a dry run to update dirty region (e.g. dynamic dirty regions
+                * and transform helper etc), we will do a dry run for the first 
+                * iteration. 
+                * 
+                * To achieve that, we need to modify the this.Adapter.tPFBTile to  
+                * ensure that there is no valid region between the root tile and
+                * the child tile, i.e draw nothing. 
+                */
+                this.Adapter.tPFBTile.tRegion.tLocation.iX
+                    = ptPartialFrameBuffer->tRegion.tSize.iWidth;
+                
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    0, 
+                    "Iteration Begin", 
+                    "Start Dry-run"
+                );
+            }
         }
-    }
+    } while(0);
 
     if (!this.tCFG.FrameBuffer.bDoNOTUpdateDefaultFrameBuffer) {
         // update default frame buffer

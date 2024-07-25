@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        9. July 2024
+ * $Date:        25. July 2024
  * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
@@ -2396,6 +2396,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             }
 
             this.Runtime.bUpdateBG = true;
+            this.Runtime.bFirstFrameAfterSwitch = true;
             this.Runtime.chState++;
             // fall-through
 
@@ -2498,6 +2499,13 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
         case POST_SCENE_CHECK:
             /* call the on-frame-complete event handler if present */
             ARM_2D_INVOKE_RT_VOID(ptScene->fnOnFrameCPL, ptScene);
+
+            if (this.Runtime.bFirstFrameAfterSwitch) {
+                this.Runtime.bFirstFrameAfterSwitch = false;
+
+                /* call after switch event handler */
+                ARM_2D_INVOKE_RT_VOID(ptScene->fnAfterSwitch, ptScene);
+            }
 
             if (this.Runtime.bNextSceneReq) {
                 /* call the before-scene-switch-out event handler if present */
