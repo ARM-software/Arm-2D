@@ -157,6 +157,14 @@ static void __on_scene_hollow_out_list_load(arm_2d_scene_t *ptScene)
 
 }
 
+static void __after_scene_hollow_out_list_switch(arm_2d_scene_t *ptScene)
+{
+    user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
+}
+
 static void __on_scene_hollow_out_list_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
@@ -191,6 +199,7 @@ static void __on_scene_hollow_out_list_background_complete(arm_2d_scene_t *ptSce
 
 }
 
+#include <stdio.h>
 
 static void __on_scene_hollow_out_list_frame_start(arm_2d_scene_t *ptScene)
 {
@@ -225,7 +234,6 @@ static void __on_scene_hollow_out_list_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
-
     number_list_on_frame_start(&this.tNumberList[0]);
     number_list_on_frame_start(&this.tNumberList[1]);
 
@@ -240,6 +248,7 @@ static void __on_scene_hollow_out_list_frame_complete(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+
 }
 
 static void __before_scene_hollow_out_list_switching_out(arm_2d_scene_t *ptScene)
@@ -444,6 +453,7 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
              */
             .fnOnLoad       = &__on_scene_hollow_out_list_load,
             .fnScene        = &__pfb_draw_scene_hollow_out_list_handler,
+            .fnAfterSwitch  = &__after_scene_hollow_out_list_switch,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,

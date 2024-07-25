@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        9. July 2024
- * $Revision:    V.1.8.1
+ * $Date:        25. July 2024
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -240,6 +240,7 @@ ARM_PRIVATE(
     arm_2d_helper_draw_handler_t    *fnScene;                                   //!< the function pointer for the scene
   
     void (*fnOnLoad)(arm_2d_scene_t *ptThis);                                   //!< on load event handler
+    void (*fnAfterSwitch)(arm_2d_scene_t *ptThis);                              //!< after scene switching event handler
     void (*fnOnBGStart)(arm_2d_scene_t *ptThis);                                //!< on-start-drawing-background event handler
     void (*fnOnBGComplete)(arm_2d_scene_t *ptThis);                             //!< on-complete-drawing-background event handler
     void (*fnOnFrameStart)(arm_2d_scene_t *ptThis);                             //!< on-frame-start event handler
@@ -322,7 +323,8 @@ struct arm_2d_scene_player_t {
             uint8_t bManualSwitch           : 1;                                //!< manual switching 
             uint8_t bCancelSwitch           : 1;                                //!< cancel a manual switching
             uint8_t bFinishManualSwitch     : 1;                                //!< finish a manual switching
-            uint8_t                         : 5;
+            uint8_t bFirstFrameAfterSwitch  : 1;                                
+            uint8_t                         : 4;
 
             uint8_t bSwitchCPL              : 1;                                //!< indication of scene switching completion
             uint8_t bUpdateBG               : 1;                                //!< update the background of the current scene
