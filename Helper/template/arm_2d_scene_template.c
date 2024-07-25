@@ -120,6 +120,13 @@ static void __on_scene_<name>_load(arm_2d_scene_t *ptScene)
 
 }
 
+static void __after_scene_<name>_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
 static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
@@ -306,6 +313,7 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
              */
             .fnOnLoad       = &__on_scene_<name>_load,
             .fnScene        = &__pfb_draw_scene_<name>_handler,
+            .fnAfterSwitch  = &__after_scene_<name>_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
