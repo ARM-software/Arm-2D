@@ -48,6 +48,9 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+/* a typo ...*/
+#define numer_list_move_selection number_list_move_selection
+
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
