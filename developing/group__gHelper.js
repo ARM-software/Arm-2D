@@ -16,6 +16,7 @@ var group__gHelper =
       [ "ptDirtyRegion", "group__gHelper.html#a14ff6b13dd709cab6c029631f073ccd4", null ],
       [ "fnScene", "group__gHelper.html#a11df8d98a8cddbc856d69808ded8c733", null ],
       [ "fnOnLoad", "group__gHelper.html#a9ea901bc70bcabda4c66c288e02d583a", null ],
+      [ "fnAfterSwitch", "group__gHelper.html#a645ab97b2ec086fbce2aabf5eafbbf5b", null ],
       [ "fnOnBGStart", "group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13", null ],
       [ "fnOnBGComplete", "group__gHelper.html#a9f48896229bd93381db449d8a09c8303", null ],
       [ "fnOnFrameStart", "group__gHelper.html#a9bb39993e5091bd87bd047df8bc35512", null ],

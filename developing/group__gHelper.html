@@ -1402,6 +1402,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>bLoaded</b>: 1</td
 <tr class="memitem:a9ea901bc70bcabda4c66c288e02d583a"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a9ea901bc70bcabda4c66c288e02d583a">fnOnLoad</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
 <tr class="memdesc:a9ea901bc70bcabda4c66c288e02d583a"><td class="mdescLeft">&#160;</td><td class="mdescRight">on load event handler  <a href="group__gHelper.html#a9ea901bc70bcabda4c66c288e02d583a">More...</a><br /></td></tr>
 <tr class="separator:a9ea901bc70bcabda4c66c288e02d583a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a645ab97b2ec086fbce2aabf5eafbbf5b"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#a645ab97b2ec086fbce2aabf5eafbbf5b">fnAfterSwitch</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
+<tr class="memdesc:a645ab97b2ec086fbce2aabf5eafbbf5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">after scene switching event handler  <a href="group__gHelper.html#a645ab97b2ec086fbce2aabf5eafbbf5b">More...</a><br /></td></tr>
+<tr class="separator:a645ab97b2ec086fbce2aabf5eafbbf5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8a3464ab829906cf0711c89624b2a13"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13">fnOnBGStart</a> )(<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ae8a3464ab829906cf0711c89624b2a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">on-start-drawing-background event handler  <a href="group__gHelper.html#ae8a3464ab829906cf0711c89624b2a13">More...</a><br /></td></tr>
 <tr class="separator:ae8a3464ab829906cf0711c89624b2a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1549,6 +1552,22 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>__pad1__</b>: 3</t
 </div><div class="memdoc">
 
 <p>on load event handler </p>
+
+</div>
+</div>
+<a id="a645ab97b2ec086fbce2aabf5eafbbf5b" name="a645ab97b2ec086fbce2aabf5eafbbf5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645ab97b2ec086fbce2aabf5eafbbf5b">&#9670;&nbsp;</a></span>fnAfterSwitch</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* arm_2d_scene_t::fnAfterSwitch) (<a class="el" href="group__gHelper.html#structarm__2d__scene__t">arm_2d_scene_t</a> *ptThis)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>after scene switching event handler </p>
 
 </div>
 </div>
@@ -3632,9 +3651,15 @@ bFinishManualSwitch: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
+<a id="a5006456a95bbfeb7cf37bc6839d62836" name="a5006456a95bbfeb7cf37bc6839d62836"></a>uint8_t</td>
+<td class="fieldname">
+bFirstFrameAfterSwitch: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint8_t</td>
 <td class="fieldname">
-__pad1__: 5</td>
+__pad1__: 4</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
