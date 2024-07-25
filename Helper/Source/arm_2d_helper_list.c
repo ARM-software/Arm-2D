@@ -437,6 +437,7 @@ void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis,
     arm_irq_safe {
         this.Runtime.MoveReq.iSteps = iSteps;
         this.Runtime.MoveReq.nFinishInMs = nFinishInMs;
+        this.Runtime.bIsMoving = true;
     }
 }
 
