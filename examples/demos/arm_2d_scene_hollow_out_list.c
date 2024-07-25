@@ -174,7 +174,7 @@ static void __on_scene_hollow_out_list_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene hollow_out_list                                                                    *
+ * Scene hollow_out_list                                                      *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_hollow_out_list_background_start(arm_2d_scene_t *ptScene)
@@ -236,12 +236,10 @@ static void __on_scene_hollow_out_list_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
-#endif
 }
 
 static void __before_scene_hollow_out_list_switching_out(arm_2d_scene_t *ptScene)
@@ -275,7 +273,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_hollow_out_list_handler)
 
         }
 
-
         arm_2d_align_centre(__top_canvas, 45, 45 ) {
 
             while(arm_fsm_rt_cpl != number_list_show(   &this.tNumberList[1], 
@@ -298,11 +295,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_hollow_out_list_handler)
                                                 128, 255,
                                             });
 
-
         }
 
-
-                /* draw border only when necessary */
+        /* draw border only when necessary */
         if (tScreenSize.iWidth > 76 && tScreenSize.iHeight > 284) {
             arm_2d_align_centre(__top_canvas, 76+8, 284+8 ) {
                 draw_round_corner_border(   ptTile, 
@@ -314,9 +309,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_hollow_out_list_handler)
                                                 {0, 128, 128, 128});
             }
         }
-
-
-
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
