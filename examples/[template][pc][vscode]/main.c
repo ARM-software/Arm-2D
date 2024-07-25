@@ -183,6 +183,11 @@ void scene_ruler_loader(void)
     arm_2d_scene_ruler_init(&DISP0_ADAPTER);
 }
 
+void scene_hollow_out_list_loader(void) 
+{
+    arm_2d_scene_hollow_out_list_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -214,6 +219,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_listview_loader,
     scene_menu_loader,
     scene_ruler_loader,
+    scene_hollow_out_list_loader,
     scene_panel_loader,
     scene_fitness_loader,
     scene_audiomark_loader,
@@ -224,6 +230,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 
 #else
     //scene_bubble_charging_loader,
+    scene_hollow_out_list_loader,
     //scene_ruler_loader,
     //scene_basics_loader,
     //scene_audiomark_loader,

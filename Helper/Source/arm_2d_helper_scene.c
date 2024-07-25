@@ -2503,7 +2503,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (this.Runtime.bFirstFrameAfterSwitch) {
                 this.Runtime.bFirstFrameAfterSwitch = false;
 
-                /* call after switch event handler */
+                /* call after-switching event handler */
                 ARM_2D_INVOKE_RT_VOID(ptScene->fnAfterSwitch, ptScene);
             }
 
