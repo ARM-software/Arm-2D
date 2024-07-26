@@ -4,7 +4,7 @@
 
 ## Overview
 
-**Arm-2D is an open-source project for 2.5D image processing on Cortex-M processors.**
+**Arm-2D is an open-source project for 2.5D image processing on Cortex processors.**
 
 - Initial target: IoT endpoint devices, white goods, hand-held devices and wearables, especially for devices with **resource-constrained** and **low power** requirements.
 - Initial focus: Graphical User Interface
@@ -110,22 +110,23 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - With or without Colour-Keying
   - Filling-Colour with an mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
-    - Supports A2, A4 and A8 masks
-    - **[new]** Supports horizontal and vertical line masks
-
+    - Supports **A1**(**new**), A2, A4 and A8 masks
+    - Supports horizontal and vertical line masks
+    - **[new]** Supports Alpha-Gradient in 4-points, 3-points, horizontal and vertical mode.
+  
 - **Image Copy (Tiling)**
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
-  - **[new]** Provides API variants that accepts **Opacity** as arguments.
-  - **[new]** Implicit colour conversion for **ARGB8888** (**ccca8888**)
+  - Provides API variants that accepts **Opacity** as arguments.
+  -  Implicit colour conversion for **ARGB8888** (**ccca8888**)
 
 - **Supported Colour formats**
 
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
   - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
-    - **[new]** Implicit colour conversion for **ARGB8888** (**ccca8888**)
+    - Implicit colour conversion for **ARGB8888** (**ccca8888**)
   - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
 
@@ -144,7 +145,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
     - Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.
-    - **[new]** Provides dirty region helper services for ease of use.
+    - Provides dirty region helper services for ease of use.
     
   - Supports swapping high and low bytes for RGB16 pixels
 
@@ -164,8 +165,8 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - **Filters**
 
-  - **[new]** Generic Anti-alias
-  - **[new]** Fast IIR-Blur
+  - Generic Anti-alias
+  - Fast IIR-Blur
 
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
@@ -196,7 +197,9 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
 
-    - **[new]** A dedicated layout debug mode
+    - A dedicated layout debug mode
+
+    - **[new]** Users can specify alignment in `arm_2d_layout()` macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.
 
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
 
@@ -212,10 +215,10 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - **Tools**
     - A `img2c.py` for generating arm-2d resources from user specified images
     - A `ttf2c.py` for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font
-    - **[new]** A `jinja2c.py` for code generation.
+    - A `jinja2c.py` for code generation.
   - **Demos**
     - Demos for various scenarios
-    - **[new]** An dedicated demo for Helium-ACI acceleration. 
+    - An dedicated demo for Helium-ACI acceleration. 
 
 - **Ready and Welcome 3rd party adoption**
 
@@ -227,6 +230,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - Stretch and Perspective Transform
 - Supports DMAC-350
+- **[new] ** NEON Acceleration
 
 ## 1 Introduction
 
@@ -267,7 +271,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 - Armv6-M processors: Cortex-M0/M0+/M1/SC000
 - Armv7-M processors: Cortex-M3/M4/M7/SC300
 - Armv8-M processors: Cortex-M23/M33/Star-MC1/M35P
-- Armv8.1-M processors: Cortex-M55/M85
+- Armv8.1-M processors: Cortex-M55/M85/M52
 
 **The library is designed with ACI (Arm Custom Instructions) in mind.** Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.
 
@@ -349,8 +353,6 @@ There is no public 2D image processing benchmark available for microcontrollers.
 ### 4.2 The Temporary Limitations
 
 - The library currently only provides default software algorithms in C and a **[Helium](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) based acceleration library**.
-- The provided example projects only run on [MPS2](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2), [MPS3](https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3), [FVP](https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software) and some 3rd party development platforms, e.g. **STM32F746G-Discovery**.
-  - Feel free to try the library on your own devices. The library depends on no specific peripheral.
 - Most of the example projects are created in MDK.
 
 ## 5 Folder Hierarchy
@@ -386,11 +388,11 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 ## 7 Feedback
 
-As mentioned before, this project aims to explore and demonstrate the possibilities of delivering modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us.
+Arm-2D aims to become the bridge across **Low-Cost and Resource Constraint Devices** and **High Performance Rich Embedded IoT Edge Devices**, and to provide an unified and user friendly programmers' model. We try our best to **enable you moving GUI application among Cortex-M, Cortex-R and Cortex-A platfoms freely and easily**. We expect that arm-2d could inspire more similar initiatives and engineering practices. 
 
-If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:
+Your thoughts and feedback are precious. If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:
 
-- The target industrial segments in which you want to introduce a GUI using Cortex-M processors
+- The target industrial segments in which you want to introduce a GUI using Cortex processors
 
 - The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.
 
@@ -410,4 +412,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-13 June 2024
+26 July 2024
