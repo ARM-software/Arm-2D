@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('md__home_runner_work_Arm_2D_Arm_2D_REA
 <div class="textblock"><p ><img src="https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases" alt="GitHub release (latest by date including pre-releases)" class="inline"/> <img src="https://img.shields.io/github/license/ARM-software/Arm-2D" alt="GitHub" class="inline"/></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Overview</h1>
-<p ><b>Arm-2D is an open-source project for 2.5D image processing on Cortex-M processors.</b></p>
+<p ><b>Arm-2D is an open-source project for 2.5D image processing on Cortex processors.</b></p>
 <ul>
 <li>Initial target: IoT endpoint devices, white goods, hand-held devices and wearables, especially for devices with <b>resource-constrained</b> and <b>low power</b> requirements.</li>
 <li>Initial focus: Graphical User Interface</li>
@@ -244,8 +244,9 @@ In this version (ver1.1.7-dev)</h2>
 <li>With or without Colour-Keying</li>
 <li>Filling-Colour with an mask and an optional opacity<ul>
 <li>For drawing anti-alias icons/texts in a specified colour</li>
-<li>Supports A2, A4 and A8 masks</li>
-<li><b>[new]</b> Supports horizontal and vertical line masks</li>
+<li>Supports <b>A1</b>(<b>new</b>), A2, A4 and A8 masks</li>
+<li>Supports horizontal and vertical line masks</li>
+<li><b>[new]</b> Supports Alpha-Gradient in 4-points, 3-points, horizontal and vertical mode.</li>
 </ul>
 </li>
 </ul>
@@ -254,15 +255,15 @@ In this version (ver1.1.7-dev)</h2>
 <li>With or without Colour-Keying</li>
 <li>Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring</li>
 <li>Supports <b>masks</b> on the source side and/or the target side</li>
-<li><b>[new]</b> Provides API variants that accepts <b>Opacity</b> as arguments.</li>
-<li><b>[new]</b> Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
+<li>Provides API variants that accepts <b>Opacity</b> as arguments.</li>
+<li>Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
 </ul>
 </li>
 <li><b>Supported Colour formats</b><ul>
 <li><b>GRAY8 (8-bit Grayscale)</b>, <b>RGB565</b> and <b>RGB888</b></li>
 <li>Generic <b>C8BIT (8bit colour)</b>, <b>RGB16</b> and <b>RGB32</b></li>
 <li>Converting colour formats among <b>GRAY8</b>, <b>RGB565</b> and <b>RGB888</b><ul>
-<li><b>[new]</b> Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
+<li>Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
 </ul>
 </li>
 <li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>e-ink displays</b> (the 2bits and 4bits colour formats)<ul>
@@ -294,7 +295,7 @@ In this version (ver1.1.7-dev)</h2>
 <li>Supports <b>Dirty Regions</b> for refreshing specified areas only<ul>
 <li>Provides a debug mode for dirty regions</li>
 <li>Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.</li>
-<li><b>[new]</b> Provides dirty region helper services for ease of use.</li>
+<li>Provides dirty region helper services for ease of use.</li>
 </ul>
 </li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
@@ -317,8 +318,8 @@ In this version (ver1.1.7-dev)</h2>
 </ul>
 <p ><b>Filters</b></p>
 <ul>
-<li><b>[new]</b> Generic Anti-alias</li>
-<li><b>[new]</b> Fast IIR-Blur</li>
+<li>Generic Anti-alias</li>
+<li>Fast IIR-Blur</li>
 </ul>
 <p ><b>An Unified and User-Friendly Programmers' Model</b></p><ul>
 <li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic Blocking-code</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
@@ -346,7 +347,8 @@ In this version (ver1.1.7-dev)</h2>
 <li>Docking, e.g. <code>arm_2d_dock_top</code>,<code>arm_2d_dock_right</code>, <code>arm_2d_dock_vertical</code>, <code>__item_line_dock_horizontal</code> etc.</li>
 <li>Line Stream Layout, e.g. <code>__item_line_horizontal</code> and <code>__item_line_vertical</code></li>
 <li>Stream Layout (with wrapping), e.g. <code>__item_horizontal</code> and <code>__item_vertical</code></li>
-<li><b>[new]</b> A dedicated layout debug mode</li>
+<li>A dedicated layout debug mode</li>
+<li><b>[new]</b> Users can specify alignment in <code>arm_2d_layout()</code> macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.</li>
 </ul>
 </li>
 <li>RTOS Helper Services for CMSIS-RTOS2 and RT-Thread</li>
@@ -367,12 +369,12 @@ In this version (ver1.1.7-dev)</h2>
 <li><b>Tools</b><ul>
 <li>A <code>img2c.py</code> for generating arm-2d resources from user specified images</li>
 <li>A <code>ttf2c.py</code> for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font</li>
-<li><b>[new]</b> A <code>jinja2c.py</code> for code generation.</li>
+<li>A <code>jinja2c.py</code> for code generation.</li>
 </ul>
 </li>
 <li><b>Demos</b><ul>
 <li>Demos for various scenarios</li>
-<li><b>[new]</b> An dedicated demo for Helium-ACI acceleration.</li>
+<li>An dedicated demo for Helium-ACI acceleration.</li>
 </ul>
 </li>
 </ul>
@@ -385,6 +387,7 @@ New Features Planned in the Future</h2>
 <ul>
 <li>Stretch and Perspective Transform</li>
 <li>Supports DMAC-350</li>
+<li>**[new] ** NEON Acceleration</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md8"></a>
 1 Introduction</h1>
@@ -413,7 +416,7 @@ New Features Planned in the Future</h2>
 <li>Armv6-M processors: Cortex-M0/M0+/M1/SC000</li>
 <li>Armv7-M processors: Cortex-M3/M4/M7/SC300</li>
 <li>Armv8-M processors: Cortex-M23/M33/Star-MC1/M35P</li>
-<li>Armv8.1-M processors: Cortex-M55/M85</li>
+<li>Armv8.1-M processors: Cortex-M55/M85/M52</li>
 </ul>
 <p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.</p>
 <p ><b>The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.</b> The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.</p>
@@ -508,10 +511,6 @@ New Features Planned in the Future</h2>
 4.2 The Temporary Limitations</h2>
 <ul>
 <li>The library currently only provides default software algorithms in C and a <b><a href="https://developer.arm.com/architectures/instruction-sets/simd-isas/helium">Helium</a> based acceleration library</b>.</li>
-<li>The provided example projects only run on <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps2">MPS2</a>, <a href="https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3">MPS3</a>, <a href="https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/cortex-m-platforms-software">FVP</a> and some 3rd party development platforms, e.g. <b>STM32F746G-Discovery</b>.<ul>
-<li>Feel free to try the library on your own devices. The library depends on no specific peripheral.</li>
-</ul>
-</li>
 <li>Most of the example projects are created in MDK.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md20"></a>
@@ -571,10 +570,10 @@ New Features Planned in the Future</h2>
 </table>
 <h1><a class="anchor" id="autotoc_md22"></a>
 7 Feedback</h1>
-<p >As mentioned before, this project aims to explore and demonstrate the possibilities of delivering modern GUI using low-cost and resource constraint micro-controllers. We expect that arm-2d could inspire more similar initiatives and engineering practices. Hence, your feedback and thoughts are precious to us.</p>
-<p >If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:</p>
+<p >Arm-2D aims to become the bridge across <b>Low-Cost and Resource Constraint Devices</b> and <b>High Performance Rich Embedded IoT Edge Devices</b>, and to provide an unified and user friendly programmers' model. We try our best to <b>enable you moving GUI application among Cortex-M, Cortex-R and Cortex-A platfoms freely and easily</b>. We expect that arm-2d could inspire more similar initiatives and engineering practices.</p>
+<p >Your thoughts and feedback are precious. If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:</p>
 <ul>
-<li>The target industrial segments in which you want to introduce a GUI using Cortex-M processors</li>
+<li>The target industrial segments in which you want to introduce a GUI using Cortex processors</li>
 <li>The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.</li>
 <li>The LCD resolution and target frame rate (FPS)</li>
 <li>Algorithms that you find most useful but missing</li>
@@ -588,7 +587,7 @@ New Features Planned in the Future</h2>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >13 June 2024 </p>
+<p >26 July 2024 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
