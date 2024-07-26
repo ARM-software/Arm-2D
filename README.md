@@ -236,15 +236,15 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 ### 1.1 The Background
 
-With more and more smart IoT edge devices introduced to our daily lives, people who are used to the smart-phone-like graphic user interfaces (GUIs) want to have the similar modernized user experience even when using microcontroller-based products. This trend has been long observed and understood by Arm's eco-partners.
+With the increasing introduction of smart IoT edge devices into our daily lives, users accustomed to smartphone-like graphical user interfaces (GUIs) now expect a similar modernized experience, even when using microcontroller-based products. This trend has been long recognized and understood by Arm's ecosystem partners.
 
-As a result, many silicon vendors introduce dedicated hardware accelerators into their microcontroller products to help 2D image processing. Meanwhile, GUI service providers also update their product lines to target microcontroller based GUI applications. Many open-source embedded GUI stacks are hot on GitHub, e.g. [LVGL](https://lvgl.io/).
+Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to facilitate 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as [LVGL](https://lvgl.io/), are gaining popularity on GitHub.
 
-In fact, using GUI with microcontrollers isn't new at all. Still, until the recent rise of IoT and AI, people find that the simple and monotonous GUI is really unbearable. The pursuit of user experience similar to that of a smartphone has become a basic requirement for products.
+In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. The pursuit of a user experience comparable to that of a smartphone has become a fundamental requirement for many products.
 
-On the other hand, seemingly complicated GUIs are often implemented with simple 2D image-copy and -tiling. Even the translucent effect is not unaffordable for microcontrollers that often run under tens or hundreds of MHz.
+Interestingly, seemingly complex GUIs are often created using simple techniques like 2D image copying and tiling. Even translucent effects are achievable on microcontrollers running at tens or hundreds of MHz.
 
-Technologies used for 2D graphics have been matured as early as the era of 8-bit Gaming Console. Since 8-bit 6502 can achieve fancy graphics effects, why can't the most advanced Cortex-M processor of the day?
+Technologies for 2D graphics have been mature since the era of 8-bit gaming consoles. If an 8-bit 6502 processor could produce impressive graphics effects, there is no reason why the most advanced Cortex-M processors today cannot achieve even more.
 
 ### 1.2 The Problems in current solutions
 
@@ -388,24 +388,18 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 ## 7 Feedback
 
-Arm-2D aims to become the bridge across **Low-Cost and Resource Constraint Devices** and **High Performance Rich Embedded IoT Edge Devices**, and to provide an unified and user friendly programmers' model. We try our best to **enable you moving GUI application among Cortex-M, Cortex-R and Cortex-A platfoms freely and easily**. We expect that arm-2d could inspire more similar initiatives and engineering practices. 
+Arm-2D aims to bridge the gap between **low-cost, resource-constrained devices** and **high-performance, feature-rich embedded IoT edge devices** by providing **a unified and user-friendly programming model**. Our goal is to facilitate the seamless and easy migration of GUI applications across Cortex-M, Cortex-R, and Cortex-A platforms. We hope that Arm-2D will inspire more initiatives and engineering practices in this field.
 
-Your thoughts and feedback are precious. If you can spend some time and try the library, please feel free to leave your thoughts. It would be nice to cover the following perspectives:
+Your thoughts and feedback are invaluable to us. If you can spend some time trying out the library, please feel free to share your insights. It would be helpful to cover the following perspectives:
 
-- The target industrial segments in which you want to introduce a GUI using Cortex processors
-
-- The resources of your platform, such as the size of the RAM, ROM, system frequency, the average power consumption etc.
-
-- The LCD resolution and target frame rate (FPS)
-
-- Algorithms that you find most useful but missing
-
-- About the device
-
-  - Does it contain HW accelerators for 2D image processing?
+- The industrial segments where you plan to introduce a GUI using Cortex processors.
+- The resources of your platform, such as the size of the RAM, ROM, system frequency, and average power consumption.
+- The LCD resolution and target frame rate (FPS).
+- Algorithms that you find most useful but are currently missing.
+- Details about the device:
+  - Does it contain hardware accelerators for 2D image processing?
   - What is the feature set of this 2D accelerator?
-  - Does it include features that are currently missing in this library?
-
+  - Are there features in the 2D accelerator that are currently missing in this library?
 - Any other thoughts or suggestions?
 
 Thank you for your time.
