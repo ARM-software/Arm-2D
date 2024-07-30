@@ -34,6 +34,7 @@
 #include "./arm_2d_scene_virtual_resource.h"
 #include "./arm_2d_scene_ruler.h"
 #include "./arm_2d_scene_hollow_out_list.h"
+#include "./arm_2d_scene_transform.h"
 
 #ifdef   __cplusplus
 extern "C" {
