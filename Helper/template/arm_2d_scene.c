@@ -315,7 +315,7 @@ user_scene_%Instance%_t *__arm_2d_scene%Instance%_init(   arm_2d_scene_player_t 
              */
             .fnOnLoad       = &__on_scene%Instance%_load,
             .fnScene        = &__pfb_draw_scene%Instance%_handler,
-            .fnAfterSwitch  = &__after_scene%Instance%_switching,
+            //.fnAfterSwitch  = &__after_scene%Instance%_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
