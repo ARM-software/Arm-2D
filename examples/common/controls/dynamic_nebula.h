@@ -76,7 +76,8 @@ typedef struct dynamic_nebula_cfg_t {
     uint16_t    hwParticleCount;
 
     uint16_t    bMovingOutward      : 1;
-    uint16_t                        : 15;
+    uint16_t                        : 7;
+    uint16_t    u8FadeOutEdgeWidth  : 8;
 
     float       fSpeed;
 
@@ -95,6 +96,7 @@ ARM_PRIVATE(
     dynamic_nebula_cfg_t tCFG;
     int64_t lTimestamp[1];
     float fOpacityStep;
+    float fFadeOutOpacityStep;
 )
 };
 

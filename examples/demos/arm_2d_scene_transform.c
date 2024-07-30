@@ -340,6 +340,7 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
             .hwParticleCount = dimof(this.tParticles),
             .ptParticles = this.tParticles,
             .bMovingOutward = true,
+            .u8FadeOutEdgeWidth = 16,
 
             .evtOnDrawParticles = {
                 .fnHandler = &__draw_transform_object_handler,

@@ -87,7 +87,8 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
     dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
     //int16_t iInvisibleRadius = this.tCFG.iRadius - this.tCFG.iVisibleRingWidth;
 
-    this.fOpacityStep = 255.0f / (float)this.tCFG.iVisibleRingWidth;
+    this.fOpacityStep = 255.0f / (float)(this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth);
+    this.fFadeOutOpacityStep = 255.0f / (float)this.tCFG.u8FadeOutEdgeWidth;
 
     do {
         float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
@@ -178,7 +179,14 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     };
 
 
-                uint16_t hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+                uint16_t hwOpacity = 0;
+                float fFadeOutOffset =  ptParticle->fOffset - (this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth);
+                
+                if (fFadeOutOffset < 0) {
+                    hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+                } else {
+                    hwOpacity = 255 - ((uint16_t)((float)(fFadeOutOffset * this.fFadeOutOpacityStep) * chOpacity) >> 8);
+                }
 
                 if (NULL == this.tCFG.evtOnDrawParticles.fnHandler) {
                     if (arm_2d_is_point_inside_region(  &tValidRegionInRoot, 
