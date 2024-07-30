@@ -380,7 +380,7 @@ user_scene_bubble_charging_t *__arm_2d_scene_bubble_charging_init(   arm_2d_scen
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.3f,
+            .fSpeed = 0.6f,
             .iRadius = iRadius,
         #if __BUBBLE_CHARGING_CFG_BACKGROUND_ONLY__
             .iVisibleRingWidth = iRadius,

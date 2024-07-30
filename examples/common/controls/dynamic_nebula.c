@@ -139,16 +139,31 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
             do {
 
                 if (bIsNewFrame) {
-                    ptParticle->fOffset -= this.tCFG.fSpeed;
 
-                    if (ptParticle->fOffset <= 0.0f) {
-                        ptParticle->fOffset = (float)this.tCFG.iVisibleRingWidth;
+                    if (this.tCFG.bMovingOutward) {
+                        ptParticle->fOffset += this.tCFG.fSpeed;
 
-                        float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
-        
-                        ptParticle->fSin = arm_sin_f32(fAngle);
-                        ptParticle->fCos = arm_cos_f32(fAngle);
+                        if (ptParticle->fOffset >= (float)this.tCFG.iVisibleRingWidth) {
+                            ptParticle->fOffset = 0.0f;
+
+                            float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
+            
+                            ptParticle->fSin = arm_sin_f32(fAngle);
+                            ptParticle->fCos = arm_cos_f32(fAngle);
+                        }
+                    } else {
+                        ptParticle->fOffset -= this.tCFG.fSpeed;
+
+                        if (ptParticle->fOffset <= 0.0f) {
+                            ptParticle->fOffset = (float)this.tCFG.iVisibleRingWidth;
+
+                            float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
+            
+                            ptParticle->fSin = arm_sin_f32(fAngle);
+                            ptParticle->fCos = arm_cos_f32(fAngle);
+                        }
                     }
+
                 } else if (!bIsBeenDrawing) {
                     continue;
                 } 
@@ -187,19 +202,6 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                                                 (int16_t)fRadius
                                              ));
                     ARM_2D_OP_WAIT_ASYNC();
-                }
-
-                if (bIsNewFrame) {
-                    ptParticle->fOffset -= this.tCFG.fSpeed;
-
-                    if (ptParticle->fOffset <= 0.0f) {
-                        ptParticle->fOffset = (float)this.tCFG.iVisibleRingWidth;
-
-                        float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
-        
-                        ptParticle->fSin = arm_sin_f32(fAngle);
-                        ptParticle->fCos = arm_cos_f32(fAngle);
-                    }
                 }
 
                 ptParticle++;

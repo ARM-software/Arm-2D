@@ -88,7 +88,7 @@ ARM_PRIVATE(
     bool bUserAllocated;
 
     dynamic_nebula_t tNebula;
-    dynamic_nebula_particle_t tParticles[10];
+    dynamic_nebula_particle_t tParticles[8];
 
 )
     /* place your public member here */

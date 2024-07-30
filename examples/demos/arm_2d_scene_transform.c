@@ -334,11 +334,12 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.3f,
+            .fSpeed = 0.6f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius - 40,
             .hwParticleCount = dimof(this.tParticles),
             .ptParticles = this.tParticles,
+            .bMovingOutward = true,
 
             .evtOnDrawParticles = {
                 .fnHandler = &__draw_transform_object_handler,

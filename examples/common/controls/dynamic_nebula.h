@@ -71,12 +71,17 @@ typedef struct dynamic_nebula_on_draw_particle_evt_t {
 } dynamic_nebula_on_draw_particle_evt_t;
 
 typedef struct dynamic_nebula_cfg_t {
-    int16_t                     iRadius;
-    int16_t                     iVisibleRingWidth;
-    float                       fSpeed;
-    uint16_t                    hwParticleCount;
-    dynamic_nebula_particle_t  *ptParticles;
-    dynamic_nebula_on_draw_particle_evt_t evtOnDrawParticles;
+    int16_t     iRadius;
+    int16_t     iVisibleRingWidth;
+    uint16_t    hwParticleCount;
+
+    uint16_t    bMovingOutward      : 1;
+    uint16_t                        : 15;
+
+    float       fSpeed;
+
+    dynamic_nebula_particle_t               *ptParticles;
+    dynamic_nebula_on_draw_particle_evt_t   evtOnDrawParticles;
 } dynamic_nebula_cfg_t;
 
 /*!
