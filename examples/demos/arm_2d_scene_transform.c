@@ -61,17 +61,43 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileGear01             c_tileGear01GRAY8
+#   define c_tileGear02             c_tileGear02GRAY8
+#   define c_tilePointerSec         c_tilePointerSecGRAY8
+#   define c_tileBackground         c_tileBackgroundSmallGRAY8
+#   define c_tileWatchPanel         c_tileWatchPanelGRAY8
+#   define c_tileStar               c_tileStarGRAY8
+#   define c_tilePictureSun         c_tilePictureSunGRAY8
+#   define c_tileEarth              c_tileEarthGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileGear01             c_tileGear01RGB565
+#   define c_tileGear02             c_tileGear02RGB565
+#   define c_tilePointerSec         c_tilePointerSecRGB565
+#   define c_tileBackground         c_tileBackgroundSmallRGB565
+#   define c_tileWatchPanel         c_tileWatchPanelRGB565
+#   define c_tileStar               c_tileStarRGB565
+#   define c_tilePictureSun         c_tilePictureSunRGB565
+#   define c_tileEarth              c_tileEarthRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileGear01             c_tileGear01CCCA8888
+#   define c_tileGear02             c_tileGear02CCCA8888
+#   define c_tilePointerSec         c_tilePointerSecCCCA8888
+#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
+#   define c_tileWatchPanel         c_tileWatchPanelCCCA8888
+#   define c_tileStar               c_tileStarCCCA8888
+#   define c_tilePictureSun         c_tilePictureSunCCCA8888
+#   define c_tileEarth              c_tileEarthCCCN888
+
 #else
 #   error Unsupported colour depth!
 #endif
+
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
@@ -81,12 +107,28 @@
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
+extern const arm_2d_tile_t c_tileEarth;
+extern const arm_2d_tile_t c_tilePictureSun;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileGlassBallMask;
+
+extern
+const arm_2d_tile_t c_tileGear01;
+extern
+const arm_2d_tile_t c_tileGear02;
+extern
+const arm_2d_tile_t c_tilePointerSec;
+extern
+const arm_2d_tile_t c_tilePointerSecMask;
+ 
+extern const arm_2d_tile_t c_tileStar;
+extern const arm_2d_tile_t c_tileStarMask;
+extern const arm_2d_tile_t c_tileStarMask2;
+
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -343,6 +385,59 @@ void __draw_transform_object_handler( void *pObj,
             }
             break;
 
+        case TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY: {
+            arm_2d_location_t tCentre = {
+                    .iX = c_tileEarth.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileEarth.tRegion.tSize.iHeight >> 1,
+                };
+
+                arm_2dp_tile_transform_with_opacity(
+                        &ptTransObj->tOP.tTransOpa,
+                        &c_tileEarth,                                          //!< source tile
+                        ptTile,                                                     //!< target tile
+                        NULL,                                                       //!< target region
+                        tCentre,                                                    //!< pivot on source
+                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
+                        fScale,                                                     //!< scale
+                        GLCD_COLOR_WHITE,
+                        chOpacity,                                                  //!< opacity
+                        &tLocation);
+
+                arm_2d_helper_dirty_region_transform_update(
+                                                &ptTransObj->tHelper,
+                                                NULL,
+                                                bIsNewFrame);
+
+                ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
+            }
+            break;
+        
+        case TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY: {
+            arm_2d_location_t tCentre = {
+                    .iX = c_tileEarth.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileEarth.tRegion.tSize.iHeight >> 1,
+                };
+
+                arm_2dp_tile_transform_only_with_opacity(
+                        &ptTransObj->tOP.tTransOpa,
+                        &c_tileEarth,                                          //!< source tile
+                        ptTile,                                                     //!< target tile
+                        NULL,                                                       //!< target region
+                        tCentre,                                                    //!< pivot on source
+                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
+                        fScale,                                                     //!< scale
+                        chOpacity,                                                  //!< opacity
+                        &tLocation);
+
+                arm_2d_helper_dirty_region_transform_update(
+                                                &ptTransObj->tHelper,
+                                                NULL,
+                                                bIsNewFrame);
+
+                ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
+            }
+            break;
+
         default:
             arm_2d_fill_colour_with_mask_and_opacity(ptTile, 
                                     &tBubbleRegion, 
@@ -419,7 +514,7 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
             .fnOnFrameCPL   = &__on_scene_transform_frame_complete,
             .fnDepose       = &__on_scene_transform_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };

@@ -80,9 +80,7 @@ typedef struct __transform_obj_t {
     implement(dynamic_nebula_particle_t);
 
     union {
-        //arm_2d_op_trans_t                   tTrans;
         arm_2d_op_trans_opa_t               tTransOpa;
-        //arm_2d_op_trans_msk_t               tTransMask;
         arm_2d_op_trans_msk_opa_t           tTransMaskOpa;
         arm_2d_op_fill_cl_msk_opa_trans_t   tFillColorMaskOpa;             
     } tOP;
