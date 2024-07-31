@@ -86,11 +86,11 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
     int n = this.tCFG.hwParticleCount;
     dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
 
-    if (0 == this.tCFG.tParticleTypeSize) {
-        this.tCFG.tParticleTypeSize = sizeof(dynamic_nebula_particle_t);
+    if (0 == this.tCFG.hwParticleTypeSize) {
+        this.tCFG.hwParticleTypeSize = sizeof(dynamic_nebula_particle_t);
     }
 
-    this.fOpacityStep = 255.0f / (float)(this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth);
+    this.fOpacityStep = 255.0f / (float)(this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth - this.tCFG.iFullyVisibleRingWidth);
     this.fFadeOutOpacityStep = 255.0f / (float)this.tCFG.u8FadeOutEdgeWidth;
 
     do {
@@ -99,7 +99,7 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
         ptParticle->fSin = arm_sin_f32(fAngle);
         ptParticle->fCos = arm_cos_f32(fAngle);
         ptParticle->fOffset = (float)(rand() % this.tCFG.iVisibleRingWidth);
-        ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.tParticleTypeSize);
+        ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.hwParticleTypeSize);
     } while(--n);
 
 }
@@ -178,7 +178,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     }
 
                 } else if (!bIsBeenDrawing) {
-                    ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.tParticleTypeSize);
+                    ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.hwParticleTypeSize);
                     continue;
                 } 
 
@@ -196,7 +196,11 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                 float fFadeOutOffset =  ptParticle->fOffset - (this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth);
                 
                 if (fFadeOutOffset < 0) {
-                    hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+                    if (ptParticle->fOffset > (this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth - this.tCFG.iFullyVisibleRingWidth)) {
+                        hwOpacity = 255;
+                    } else {
+                        hwOpacity = (uint16_t)((float)(ptParticle->fOffset * this.fOpacityStep) * chOpacity) >> 8;
+                    } 
                 } else {
                     hwOpacity = 255 - ((uint16_t)((float)(fFadeOutOffset * this.fFadeOutOpacityStep) * chOpacity) >> 8);
                 }
@@ -226,7 +230,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     ARM_2D_OP_WAIT_ASYNC();
                 }
 
-                ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.tParticleTypeSize);
+                ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.hwParticleTypeSize);
             } while(--n);
 
             /* make sure the operation is complete */

@@ -529,10 +529,11 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
             .iVisibleRingWidth = iRadius,
             .hwParticleCount = dimof(this.tObjects),
             .ptParticles = (dynamic_nebula_particle_t *)this.tObjects,
-            .tParticleTypeSize = sizeof(__transform_obj_t),
+            .hwParticleTypeSize = sizeof(__transform_obj_t),
+            .iFullyVisibleRingWidth = iRadius >> 1,
 
             .bMovingOutward = true,
-            .u8FadeOutEdgeWidth = 16,
+            .u8FadeOutEdgeWidth = 8,
 
             .evtOnDrawParticles = {
                 .fnHandler = &__draw_transform_object_handler,

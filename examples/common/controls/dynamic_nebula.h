@@ -78,11 +78,11 @@ typedef struct dynamic_nebula_cfg_t {
     uint16_t    bMovingOutward      : 1;
     uint16_t                        : 7;
     uint16_t    u8FadeOutEdgeWidth  : 8;
-
+    int16_t     iFullyVisibleRingWidth;
+    uint16_t    hwParticleTypeSize;
 
     float       fSpeed;
 
-    size_t      tParticleTypeSize;
     dynamic_nebula_particle_t               *ptParticles;
     dynamic_nebula_on_draw_particle_evt_t   evtOnDrawParticles;
 } dynamic_nebula_cfg_t;
