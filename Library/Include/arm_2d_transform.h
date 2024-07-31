@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        17 May 2024
- * $Revision:    V.1.1.6
+ * $Date:        31 July 2024
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4434,6 +4434,9 @@ arm_fsm_rt_t arm_2dp_tile_transform( arm_2d_op_trans_t *ptOP,
                                      const arm_2d_location_t *ptTargetCentre);
 
 /*! @} */
+
+/*========================= POST INCLUDES ====================================*/
+#include "__arm_2d_tile_taa_transform.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

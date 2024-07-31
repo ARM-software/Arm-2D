@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        17 May 2024
- * $Revision:    V.1.1.6
+ * $Date:        31 July 2024
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2620,6 +2620,10 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CC
         },
     },
 };
+
+/*============================ INCLUDES ======================================*/
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_tile_taa_transform.c"
 
 
 #ifdef   __cplusplus
