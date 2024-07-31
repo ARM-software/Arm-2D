@@ -437,13 +437,7 @@ void __draw_transform_object_handler( void *pObj,
                 ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
             }
             break;
-
         default:
-            arm_2d_fill_colour_with_mask_and_opacity(ptTile, 
-                                    &tBubbleRegion, 
-                                    &c_tileRadialGradientMask, 
-                                    (__arm_2d_color_t){GLCD_COLOR_GREEN},
-                                    chOpacity);
             break;
     }
     
