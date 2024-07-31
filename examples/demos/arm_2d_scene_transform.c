@@ -189,12 +189,8 @@ static void __on_scene_transform_frame_start(arm_2d_scene_t *ptScene)
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-
     int32_t tAngle;
-    arm_2d_helper_time_cos_slider(0, 3600, 2000, 0, &tAngle, &this.lTimestamp[1]);
-
-
-
+    arm_2d_helper_time_cos_slider(0, 3600, 8000, 0, &tAngle, &this.lTimestamp[1]);
 
     arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
         arm_2d_helper_dirty_region_transform_update_value(&ptObjects->tHelper, ARM_2D_ANGLE((float)tAngle / 10.0f), 0.0f);
@@ -286,7 +282,7 @@ void __draw_transform_object_handler( void *pObj,
     tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
     tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
 
-    float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 1.5f;
+    float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 2.0f;
 
     switch(ptTransObj->emType) {
         case TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY: {
@@ -304,7 +300,7 @@ void __draw_transform_object_handler( void *pObj,
                                                 tCentre,
                                                 ptTransObj->tHelper.fAngle,
                                                 fScale,
-                                                GLCD_COLOR_WHITE,
+                                                GLCD_COLOR_NIXIE_TUBE,
                                                 chOpacity,
                                                 &tLocation);
                             
@@ -315,6 +311,35 @@ void __draw_transform_object_handler( void *pObj,
 
                 ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
 
+            }
+            break;
+        
+        case TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY: {
+
+                arm_2d_location_t tCentre = {
+                    .iX = c_tileGlassBallMask.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileGlassBallMask.tRegion.tSize.iHeight >> 1,
+                };
+
+                arm_2dp_tile_transform_with_src_mask_and_opacity(
+                        &ptTransObj->tOP.tTransMaskOpa,
+                        &c_tileCMSISLogo,                                           //!< source tile
+                        &c_tileCMSISLogoMask,                                       //!< source mask
+                        ptTile,                                                     //!< target tile
+                        NULL,                                                       //!< target region
+                        tCentre,                                                    //!< pivot on source
+                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
+                        fScale,                                                     //!< scale
+                        chOpacity,                                                  //!< opacity
+                        &tLocation
+                );
+
+                arm_2d_helper_dirty_region_transform_update(
+                                                &ptTransObj->tHelper,
+                                                NULL,
+                                                bIsNewFrame);
+
+                ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
             }
             break;
 
@@ -375,7 +400,7 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_BLACK}, 
+            .tCanvas = {GLCD_COLOR_WHITE}, 
 
             /* Please uncommon the callbacks if you need them
              */
@@ -404,7 +429,7 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.6f,
+            .fSpeed = 0.2f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius,
             .hwParticleCount = dimof(this.tObjects),
