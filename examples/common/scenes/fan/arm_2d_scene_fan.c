@@ -184,6 +184,8 @@ static void __on_scene_fan_depose(arm_2d_scene_t *ptScene)
 
     arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
         ARM_2D_OP_DEPOSE(ptFanBlade->tOP);
+
+        arm_2d_helper_dirty_region_transform_depose(&ptFanBlade->tHelper);
     }
 
     if (!this.bUserAllocated) {

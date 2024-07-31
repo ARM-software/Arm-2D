@@ -85,7 +85,10 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
     
     int n = this.tCFG.hwParticleCount;
     dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
-    //int16_t iInvisibleRadius = this.tCFG.iRadius - this.tCFG.iVisibleRingWidth;
+
+    if (0 == this.tCFG.tParticleTypeSize) {
+        this.tCFG.tParticleTypeSize = sizeof(dynamic_nebula_particle_t);
+    }
 
     this.fOpacityStep = 255.0f / (float)(this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth);
     this.fFadeOutOpacityStep = 255.0f / (float)this.tCFG.u8FadeOutEdgeWidth;
@@ -99,6 +102,14 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
         ptParticle++;
     } while(--n);
 
+}
+
+ARM_NONNULL(1)
+int16_t dynamic_nebula_get_radius(dynamic_nebula_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.tCFG.iRadius;
 }
 
 ARM_NONNULL(1)
@@ -167,7 +178,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     }
 
                 } else if (!bIsBeenDrawing) {
-                    ptParticle++;
+                    ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.tParticleTypeSize);
                     continue;
                 } 
 
@@ -215,7 +226,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     ARM_2D_OP_WAIT_ASYNC();
                 }
 
-                ptParticle++;
+                ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.tParticleTypeSize);
             } while(--n);
 
             /* make sure the operation is complete */

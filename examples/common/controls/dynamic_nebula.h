@@ -79,8 +79,10 @@ typedef struct dynamic_nebula_cfg_t {
     uint16_t                        : 7;
     uint16_t    u8FadeOutEdgeWidth  : 8;
 
+
     float       fSpeed;
 
+    size_t      tParticleTypeSize;
     dynamic_nebula_particle_t               *ptParticles;
     dynamic_nebula_on_draw_particle_evt_t   evtOnDrawParticles;
 } dynamic_nebula_cfg_t;
@@ -121,6 +123,9 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                             uint8_t chOpacity,
                             bool bIsNewFrame);
 
+extern
+ARM_NONNULL(1)
+int16_t dynamic_nebula_get_radius(dynamic_nebula_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
