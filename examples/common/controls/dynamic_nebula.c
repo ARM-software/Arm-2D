@@ -187,10 +187,9 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                 float fY = ptParticle->fSin * fRadius;
 
                 arm_2d_location_t tParicleLocation = {
-                        .iX = tCentre.iX + (int16_t)fX,
-                        .iY = tCentre.iY + (int16_t)fY,
-                    };
-
+                    .iX = tCentre.iX + (int16_t)fX,
+                    .iY = tCentre.iY + (int16_t)fY,
+                };
 
                 uint16_t hwOpacity = 0;
                 float fFadeOutOffset =  ptParticle->fOffset - (this.tCFG.iVisibleRingWidth - this.tCFG.u8FadeOutEdgeWidth);
@@ -204,6 +203,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                 } else {
                     hwOpacity = 255 - ((uint16_t)((float)(fFadeOutOffset * this.fFadeOutOpacityStep) * chOpacity) >> 8);
                 }
+                hwOpacity = MIN(hwOpacity, 255);
 
                 if (NULL == this.tCFG.evtOnDrawParticles.fnHandler) {
                     if (arm_2d_is_point_inside_region(  &tValidRegionInRoot, 
@@ -234,12 +234,12 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
             } while(--n);
 
             /* make sure the operation is complete */
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
         }
         
     }
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 #if defined(__clang__)
