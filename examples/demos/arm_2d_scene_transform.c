@@ -87,8 +87,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileGlassBallMask;
-extern const arm_2d_tile_t c_tileHallowOutCircleMask;
-extern const arm_2d_tile_t c_tileSinWaveMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -123,6 +122,15 @@ static void __on_scene_transform_load(arm_2d_scene_t *ptScene)
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
+        /* initialize transform helper */
+        arm_2d_helper_dirty_region_transform_init(
+                                    &ptObjects->tHelper,
+                                    &ptScene->tDirtyRegionHelper,
+                                    (arm_2d_op_t *)&ptObjects->tOP,
+                                    0.01f,
+                                    0.1f);
+    }
 }
 
 static void __after_scene_transform_switching(arm_2d_scene_t *ptScene)
@@ -141,6 +149,15 @@ static void __on_scene_transform_depose(arm_2d_scene_t *ptScene)
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
+    }
+
+    ARM_2D_OP_DEPOSE(this.tObjects[TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY].tOP.tFillColorMaskOpa);
+    ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY].tOP.tTransOpa);
+    ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY].tOP.tTransOpa);
+    ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY].tOP.tTransMaskOpa);
+
+    arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
+        arm_2d_helper_dirty_region_transform_depose(&ptObjects->tHelper);
     }
 
     if (!this.bUserAllocated) {
@@ -171,6 +188,20 @@ static void __on_scene_transform_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+
+    int32_t tAngle;
+    arm_2d_helper_time_cos_slider(0, 3600, 2000, 0, &tAngle, &this.lTimestamp[1]);
+
+
+
+
+    arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
+        arm_2d_helper_dirty_region_transform_update_value(&ptObjects->tHelper, ARM_2D_ANGLE((float)tAngle / 10.0f), 0.0f);
+
+        arm_2d_helper_dirty_region_transform_force_update(&ptObjects->tHelper);
+        arm_2d_helper_dirty_region_transform_on_frame_start(&ptObjects->tHelper);
+    }
 
 }
 
@@ -246,19 +277,58 @@ void __draw_transform_object_handler( void *pObj,
 {
     user_scene_transform_t *ptThis = (user_scene_transform_t *)pObj;
 
-    ARM_2D_UNUSED(ptDN);
+    __transform_obj_t *ptTransObj = (__transform_obj_t *) ptDN->ptCurrent;
+
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
 
     arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
 
     tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
     tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
 
+    float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 1.5f;
 
-    arm_2d_fill_colour_with_mask_and_opacity(ptTile, 
+    switch(ptTransObj->emType) {
+        case TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY: {
+
+                arm_2d_location_t tCentre = {
+                    .iX = c_tileGlassBallMask.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileGlassBallMask.tRegion.tSize.iHeight >> 1,
+                };
+
+                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                                &ptTransObj->tOP.tFillColorMaskOpa,
+                                                &c_tileGlassBallMask,
+                                                ptTile,
+                                                NULL,
+                                                tCentre,
+                                                ptTransObj->tHelper.fAngle,
+                                                fScale,
+                                                GLCD_COLOR_WHITE,
+                                                chOpacity,
+                                                &tLocation);
+                            
+                arm_2d_helper_dirty_region_transform_update(
+                                                &ptTransObj->tHelper,
+                                                NULL,
+                                                bIsNewFrame);
+
+                ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
+
+            }
+            break;
+
+        default:
+            arm_2d_fill_colour_with_mask_and_opacity(ptTile, 
                                     &tBubbleRegion, 
                                     &c_tileRadialGradientMask, 
                                     (__arm_2d_color_t){GLCD_COLOR_GREEN},
                                     chOpacity);
+            break;
+    }
+    
+
+    
 }
 
 ARM_NONNULL(1)
@@ -336,9 +406,11 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
         dynamic_nebula_cfg_t tCFG = {
             .fSpeed = 0.6f,
             .iRadius = iRadius,
-            .iVisibleRingWidth = iRadius - 40,
-            .hwParticleCount = dimof(this.tParticles),
-            .ptParticles = this.tParticles,
+            .iVisibleRingWidth = iRadius,
+            .hwParticleCount = dimof(this.tObjects),
+            .ptParticles = (dynamic_nebula_particle_t *)this.tObjects,
+            .tParticleTypeSize = sizeof(__transform_obj_t),
+
             .bMovingOutward = true,
             .u8FadeOutEdgeWidth = 16,
 
@@ -348,6 +420,19 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
             },
         };
         dynamic_nebula_init(&this.tNebula, &tCFG);
+
+        ARM_2D_OP_INIT(this.tObjects[TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY].tOP.tFillColorMaskOpa);
+        this.tObjects[TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY].emType = TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY;
+
+        ARM_2D_OP_INIT(this.tObjects[TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY].tOP.tTransOpa);
+        this.tObjects[TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY].emType = TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY;
+
+        ARM_2D_OP_INIT(this.tObjects[TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY].tOP.tTransOpa);
+        this.tObjects[TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY].emType = TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY;
+
+        ARM_2D_OP_INIT(this.tObjects[TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY].tOP.tTransMaskOpa);
+        this.tObjects[TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY].emType = TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY;
+        
     } while(0);
 
     /* ------------   initialize members of user_scene_transform_t end   ---------------*/

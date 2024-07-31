@@ -74,6 +74,30 @@ extern "C" {
             __arm_2d_scene_transform_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+
+typedef struct __transform_obj_t {
+    implement(dynamic_nebula_particle_t);
+
+    union {
+        //arm_2d_op_trans_t                   tTrans;
+        arm_2d_op_trans_opa_t               tTransOpa;
+        //arm_2d_op_trans_msk_t               tTransMask;
+        arm_2d_op_trans_msk_opa_t           tTransMaskOpa;
+        arm_2d_op_fill_cl_msk_opa_trans_t   tFillColorMaskOpa;             
+    } tOP;
+
+    arm_2d_helper_dirty_region_transform_t tHelper;
+
+    enum {
+        TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY = 0,
+        TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY,
+        TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY,
+        TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY,
+        __TRANSFORM_TYPE_COUNT,
+    } emType;
+} __transform_obj_t;
+
 /*!
  * \brief a user class for scene transform
  */
@@ -84,11 +108,11 @@ struct user_scene_transform_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
 
-    dynamic_nebula_t tNebula;
-    dynamic_nebula_particle_t tParticles[8];
+    dynamic_nebula_t    tNebula;
+    __transform_obj_t   tObjects[__TRANSFORM_TYPE_COUNT];
 
 )
     /* place your public member here */
