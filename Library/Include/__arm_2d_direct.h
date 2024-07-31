@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        22. July 2024
- * $Revision:    V.1.5.1
+ * $Date:        31. July 2024
+ * $Revision:    V.1.5.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -10944,6 +10944,21 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_chn_ma
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
+
+void __arm_2d_impl_gray8_taa_transform_with_opacity(
+                                         __arm_2d_param_copy_orig_t * ptParam,
+                                         __arm_2d_transform_info_t * ptInfo,
+                                         uint_fast16_t hwRatio);
+
+void __arm_2d_impl_rgb565_taa_transform_with_opacity(
+                                         __arm_2d_param_copy_orig_t * ptParam,
+                                         __arm_2d_transform_info_t * ptInfo,
+                                         uint_fast16_t hwRatio);
+
+void __arm_2d_impl_cccn888_taa_transform_with_opacity(
+                                         __arm_2d_param_copy_orig_t * ptParam,
+                                         __arm_2d_transform_info_t * ptInfo,
+                                         uint_fast16_t hwRatio);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

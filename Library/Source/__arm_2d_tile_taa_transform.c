@@ -182,6 +182,7 @@ void __arm_2d_impl_gray8_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
 
     hwRatio += (hwRatio == 255);
+    hwRatio = 256 - hwRatio;
 
     q31_t               invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];
@@ -354,6 +355,7 @@ void __arm_2d_impl_rgb565_taa_transform_with_opacity(__arm_2d_param_copy_orig_t 
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
 
     hwRatio += (hwRatio == 255);
+    hwRatio = 256 - hwRatio;
 
     q31_t               invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];
@@ -526,6 +528,7 @@ void __arm_2d_impl_cccn888_taa_transform_with_opacity(__arm_2d_param_copy_orig_t
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
 
     hwRatio += (hwRatio == 255);
+    hwRatio = 256 - hwRatio;
 
     q31_t               invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];

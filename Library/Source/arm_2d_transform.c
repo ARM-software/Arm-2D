@@ -1094,9 +1094,15 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying_and_opacity(__arm_2d
         __arm_2d_impl_gray8_transform(  &(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
     } else {
+    #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
+        __arm_2d_impl_gray8_taa_transform_with_opacity(  &(ptTask->Param.tCopyOrig),
+                                            &this.tTransform,
+                                            this.chOpacity);
+    #else
         __arm_2d_impl_gray8_transform_with_opacity(  &(ptTask->Param.tCopyOrig),
                                             &this.tTransform,
                                             this.chOpacity);
+    #endif
     }
 
     return arm_fsm_rt_cpl;
@@ -1114,9 +1120,15 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_colour_keying_and_opacity(__arm_2
         __arm_2d_impl_rgb565_transform( &(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
     } else {
+    #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
+        __arm_2d_impl_rgb565_taa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    #else
         __arm_2d_impl_rgb565_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
                                                 this.chOpacity);
+    #endif
     }
 
     return arm_fsm_rt_cpl;
@@ -1134,9 +1146,15 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity(__arm_
         __arm_2d_impl_cccn888_transform(&(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
     } else {
+    #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
+        __arm_2d_impl_cccn888_taa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    #else
         __arm_2d_impl_cccn888_transform_with_opacity(  &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
                                                 this.chOpacity);
+    #endif
     }
     return arm_fsm_rt_cpl;
 }
