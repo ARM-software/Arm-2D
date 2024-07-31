@@ -98,6 +98,7 @@ ARM_PRIVATE(
     float fOpacityStep;
     float fFadeOutOpacityStep;
 )
+    dynamic_nebula_particle_t *ptCurrent;
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/

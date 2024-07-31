@@ -137,10 +137,11 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
             dynamic_nebula_particle_t *ptParticle = this.tCFG.ptParticles;
             float fInvisibleRadius = (float)(this.tCFG.iRadius - this.tCFG.iVisibleRingWidth);
             bool bIsBeenDrawing = arm_2d_helper_pfb_is_region_being_drawing(&__control, &__centre_region, NULL);
+
             do {
+                this.ptCurrent = ptParticle;
 
                 if (bIsNewFrame) {
-
                     if (this.tCFG.bMovingOutward) {
                         ptParticle->fOffset += this.tCFG.fSpeed;
 
@@ -166,6 +167,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     }
 
                 } else if (!bIsBeenDrawing) {
+                    ptParticle++;
                     continue;
                 } 
 
@@ -200,6 +202,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                     }
                     
                 } else {
+                    
                     ARM_2D_INVOKE_RT_VOID(this.tCFG.evtOnDrawParticles.fnHandler,
                                              ARM_2D_PARAM(
                                                 this.tCFG.evtOnDrawParticles.pTarget,
