@@ -19,10 +19,11 @@
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
  * Title:        __arm_2d_tile_taa_transform.c
- * Description:  The source file of Triangle-Anti-Alias Tile Transform
- *               
+ * Description:  The source file of 2x SuperSampling Anti Alias Tile 
+ *               Transform
+ * 
  * $Date:        01. Aug 2024
- * $Revision:    V.0.2.0
+ * $Revision:    V.0.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -96,7 +97,7 @@ extern "C" {
 
 
 __STATIC_INLINE
-void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
+void __arm_2d_impl_gray8_2xssaa_get_pixel_colour_with_alpha(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
                                             uint8_t *pchOrigin,
@@ -115,25 +116,22 @@ void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 0
+#if 1
     uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
     uint8_t chPoint0 = *pchSample++;
     uint8_t chPoint1 = *pchSample;
-    uint8_t chPoint3 = *(pchSample + iOrigStride);
 
     __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint0, &chPoint1, hwAlphaX);
-    __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint1, &chPoint3, hwAlphaY);
 
-    if (chPoint3 != chMaskColour) {
-        __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint3, pchTarget, hwOpacity);
+    if (chPoint1 != chMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint1, pchTarget, hwOpacity);
     }
 #endif
 
-#if 1
+#if 0
     uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -167,7 +165,7 @@ void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
 }
 
 __WEAK
-void __arm_2d_impl_gray8_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *ptParam,
+void __arm_2d_impl_gray8_2xssaa_transform_with_opacity(__arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwRatio)
 {
@@ -251,7 +249,7 @@ void __arm_2d_impl_gray8_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *
                 continue;
             }
 
-            __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha (
+            __arm_2d_impl_gray8_2xssaa_get_pixel_colour_with_alpha (
                             &tPointFast,
                             &ptParam->tOrigin.
                             tValidRegion,
@@ -270,7 +268,7 @@ void __arm_2d_impl_gray8_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *
 
 
 __STATIC_INLINE
-void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
+void __arm_2d_impl_rgb565_2xssaa_get_pixel_colour_with_alpha(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
                                             uint16_t *phwOrigin,
@@ -289,25 +287,22 @@ void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 0
+#if 1
     uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
     uint16_t hwPoint0 = *phwSample++;
     uint16_t hwPoint1 = *phwSample;
-    uint16_t hwPoint3 = *(phwSample + iOrigStride);
 
     __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint0, &hwPoint1, hwAlphaX);
-    __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint1, &hwPoint3, hwAlphaY);
 
-    if (hwPoint3 != hwMaskColour) {
-        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint3, phwTarget, hwOpacity);
+    if (hwPoint1 != hwMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint1, phwTarget, hwOpacity);
     }
 #endif
 
-#if 1
+#if 0
     uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -341,7 +336,7 @@ void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
 }
 
 __WEAK
-void __arm_2d_impl_rgb565_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *ptParam,
+void __arm_2d_impl_rgb565_2xssaa_transform_with_opacity(__arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwRatio)
 {
@@ -425,7 +420,7 @@ void __arm_2d_impl_rgb565_taa_transform_with_opacity(__arm_2d_param_copy_orig_t 
                 continue;
             }
 
-            __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha (
+            __arm_2d_impl_rgb565_2xssaa_get_pixel_colour_with_alpha (
                             &tPointFast,
                             &ptParam->tOrigin.
                             tValidRegion,
@@ -444,7 +439,7 @@ void __arm_2d_impl_rgb565_taa_transform_with_opacity(__arm_2d_param_copy_orig_t 
 
 
 __STATIC_INLINE
-void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
+void __arm_2d_impl_cccn888_2xssaa_get_pixel_colour_with_alpha(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
                                             uint32_t *pwOrigin,
@@ -463,25 +458,22 @@ void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 0
+#if 1
     uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
     uint32_t wPoint0 = *pwSample++;
     uint32_t wPoint1 = *pwSample;
-    uint32_t wPoint3 = *(pwSample + iOrigStride);
 
     __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint0, &wPoint1, hwAlphaX);
-    __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint1, &wPoint3, hwAlphaY);
 
-    if (wPoint3 != wMaskColour) {
-        __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint3, pwTarget, hwOpacity);
+    if (wPoint1 != wMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint1, pwTarget, hwOpacity);
     }
 #endif
 
-#if 1
+#if 0
     uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -515,7 +507,7 @@ void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
 }
 
 __WEAK
-void __arm_2d_impl_cccn888_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *ptParam,
+void __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(__arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwRatio)
 {
@@ -599,7 +591,7 @@ void __arm_2d_impl_cccn888_taa_transform_with_opacity(__arm_2d_param_copy_orig_t
                 continue;
             }
 
-            __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha (
+            __arm_2d_impl_cccn888_2xssaa_get_pixel_colour_with_alpha (
                             &tPointFast,
                             &ptParam->tOrigin.
                             tValidRegion,

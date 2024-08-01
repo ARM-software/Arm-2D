@@ -47,8 +47,8 @@ extern "C" {
 
 // <o>Enable Anti-Alias support for all transform operations.
 //     <0=>     No Anti-Alias
-//     <1=>     Use 4-points-sampling Anti-Alias
-//     <2=>     Use Triangle-Sampling Anti-Alias
+//     <1=>     Use 4x Supersampling Anti-Alias (4xSSAA)
+//     <2=>     Use 2x Supersampling Anti-Alias (2xSSAA)
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__

@@ -19,10 +19,10 @@
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
  * Title:        __arm_2d_tile_taa_transform.h
- * Description:  The header file of APIs for Triangle-Anti-Alias Tile  
- *               Transform
+ * Description:  The header file of APIs for 2x Super Sampling Anti-Alias  
+ *               Tile Transform
  * $Date:        01. Aug 2024
- * $Revision:    V.0.2.0
+ * $Revision:    V.0.3.0
  *
  * Target Processor:  Cortex-M cores
  *

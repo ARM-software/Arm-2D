@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        31 July 2024
- * $Revision:    V.1.2.0
+ * $Date:        01 Aug 2024
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1095,7 +1095,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying_and_opacity(__arm_2d
                                         &this.tTransform);
     } else {
     #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
-        __arm_2d_impl_gray8_taa_transform_with_opacity(  &(ptTask->Param.tCopyOrig),
+        __arm_2d_impl_gray8_2xssaa_transform_with_opacity(  &(ptTask->Param.tCopyOrig),
                                             &this.tTransform,
                                             this.chOpacity);
     #else
@@ -1121,7 +1121,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_colour_keying_and_opacity(__arm_2
                                         &this.tTransform);
     } else {
     #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
-        __arm_2d_impl_rgb565_taa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
+        __arm_2d_impl_rgb565_2xssaa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
                                                 this.chOpacity);
     #else
@@ -1147,7 +1147,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity(__arm_
                                         &this.tTransform);
     } else {
     #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
-        __arm_2d_impl_cccn888_taa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
+        __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
                                                 this.chOpacity);
     #else
@@ -2641,7 +2641,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CC
 
 /*============================ INCLUDES ======================================*/
 #define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_tile_taa_transform.c"
+#include "__arm_2d_tile_2xssaa_transform.c"
 
 
 #ifdef   __cplusplus
