@@ -1129,8 +1129,7 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 
     uint16_t hwPixelAlpha = 0;
     //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        hwPixelAlpha = pchOrigin[   tPoint.iY * iOrigStride
-                                     +   tPoint.iX];
+        hwPixelAlpha = *(uint8_t *)&pwOrigin[ tPoint.iY * iOrigStride + tPoint.iX];
 
         hwPixelAlpha =  (hwPixelAlpha == 255) * hwOpacity
                      + !(hwPixelAlpha == 255) * (hwPixelAlpha * hwOpacity >> 8);
