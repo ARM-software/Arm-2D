@@ -115,6 +115,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileGlassBallMask;
+extern const arm_2d_tile_t c_tileGlassBallMask2;
 
 extern
 const arm_2d_tile_t c_tileGear01;
@@ -359,8 +360,8 @@ void __draw_transform_object_handler( void *pObj,
         case TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY: {
 
                 arm_2d_location_t tCentre = {
-                    .iX = c_tileGlassBallMask.tRegion.tSize.iWidth >> 1,
-                    .iY = c_tileGlassBallMask.tRegion.tSize.iHeight >> 1,
+                    .iX = c_tileCMSISLogo.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileCMSISLogo.tRegion.tSize.iHeight >> 1,
                 };
 
                 arm_2dp_tile_transform_with_src_mask_and_opacity(
