@@ -93,7 +93,7 @@ extern "C" {
 
 
 
-__WEAK
+__STATIC_INLINE
 void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
@@ -104,62 +104,64 @@ void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
                                             uint8_t chMaskColour,
                                             uint_fast16_t hwOpacity)
 {
-#if 0
-    arm_2d_location_t tOriginLocation = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
-    };
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_q16(ptFxPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    uint8_t chTempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        chTempPixel = (*pchTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            uint8_t chTemp = pchOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            if (chTemp != chMaskColour) {
-                bIsInside = true;
-                chTempPixel = chTemp;
-            }
-        }
-
-        __API_PIXEL_AVERAGE(chTempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        uint8_t chSourcPixel = __API_PIXEL_AVERAGE_RESULT();
-
-        __API_PIXEL_BLENDING( &chSourcPixel, pchTarget, hwOpacity);
-    }
-
-#endif
-
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        uint8_t chTemp = pchOrigin[   tPoint.iY * iOrigStride
-                                     +   tPoint.iX];
-        if (chTemp != chMaskColour) {
-            __ARM_2D_PIXEL_BLENDING_GRAY8( &chTemp, pchTarget, hwOpacity);
-        }
+
+    /*
+     * [P0][P1]
+     * [P2][P3]
+     */
+#if 1
+    uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint8_t chPoint0 = *pchSample;
+    uint8_t chPoint1 = *(pchSample + 1);
+    uint8_t chPoint2 = *(pchSample + iOrigStride);
+
+    __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint0, &chPoint1, hwAlphaX);
+    __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint1, &chPoint2, hwAlphaY);
+
+    if (chPoint2 != chMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint2, pchTarget, hwOpacity);
     }
+#endif
+
+#if 0
+    uint16_t *pwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint16_t hwPoint0 = *pwSample++;
+    uint16_t hwPoint1 = *pwSample;
+    pwSample += iOrigStride;
+    uint16_t hwPoint3 = *pwSample--;
+    uint16_t hwPoint2 = *pwSample;
+
+    
+    uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
+    uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
+    uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
+
+    __arm_2d_color_fast_rgb_t tPixel = {0};
+
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint0,  hwAlpha0);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint1,  hwAlpha1);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint2,  hwAlpha2);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint3,  hwAlpha3);
+
+
+    uint16_t hwPixelResult = __API_PIXEL_AVERAGE_RESULT_RGB565();
+    if (hwPixelResult != hwMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPixelResult, phwTarget, hwOpacity);
+    }
+#endif
 
 }
 
@@ -240,10 +242,10 @@ void __arm_2d_impl_gray8_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *
                 .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+            if (    (tOriginLocation.iX < 0)
+                ||  (tOriginLocation.iY < 0)
+                ||  (tOriginLocation.iX >= (ptParam->tOrigin.tValidRegion.tSize.iWidth - 1))
+                ||  (tOriginLocation.iY >= (ptParam->tOrigin.tValidRegion.tSize.iHeight - 1))) {
                 pchTargetBase++;
                 continue;
             }
@@ -266,7 +268,7 @@ void __arm_2d_impl_gray8_taa_transform_with_opacity(__arm_2d_param_copy_orig_t *
 
 
 
-__WEAK
+__STATIC_INLINE
 void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
@@ -277,62 +279,64 @@ void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
                                             uint16_t hwMaskColour,
                                             uint_fast16_t hwOpacity)
 {
-#if 0
-    arm_2d_location_t tOriginLocation = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
-    };
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_q16(ptFxPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    uint16_t hwTempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        hwTempPixel = (*phwTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            uint16_t hwTemp = phwOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            if (hwTemp != hwMaskColour) {
-                bIsInside = true;
-                hwTempPixel = hwTemp;
-            }
-        }
-
-        __API_PIXEL_AVERAGE(hwTempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        uint16_t hwSourcPixel = __API_PIXEL_AVERAGE_RESULT();
-
-        __API_PIXEL_BLENDING( &hwSourcPixel, phwTarget, hwOpacity);
-    }
-
-#endif
-
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        uint16_t hwTemp = phwOrigin[   tPoint.iY * iOrigStride
-                                     +   tPoint.iX];
-        if (hwTemp != hwMaskColour) {
-            __ARM_2D_PIXEL_BLENDING_RGB565( &hwTemp, phwTarget, hwOpacity);
-        }
+
+    /*
+     * [P0][P1]
+     * [P2][P3]
+     */
+#if 1
+    uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint16_t hwPoint0 = *phwSample;
+    uint16_t hwPoint1 = *(phwSample + 1);
+    uint16_t hwPoint2 = *(phwSample + iOrigStride);
+
+    __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint0, &hwPoint1, hwAlphaX);
+    __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint1, &hwPoint2, hwAlphaY);
+
+    if (hwPoint2 != hwMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint2, phwTarget, hwOpacity);
     }
+#endif
+
+#if 0
+    uint16_t *pwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint16_t hwPoint0 = *pwSample++;
+    uint16_t hwPoint1 = *pwSample;
+    pwSample += iOrigStride;
+    uint16_t hwPoint3 = *pwSample--;
+    uint16_t hwPoint2 = *pwSample;
+
+    
+    uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
+    uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
+    uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
+
+    __arm_2d_color_fast_rgb_t tPixel = {0};
+
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint0,  hwAlpha0);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint1,  hwAlpha1);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint2,  hwAlpha2);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint3,  hwAlpha3);
+
+
+    uint16_t hwPixelResult = __API_PIXEL_AVERAGE_RESULT_RGB565();
+    if (hwPixelResult != hwMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPixelResult, phwTarget, hwOpacity);
+    }
+#endif
 
 }
 
@@ -413,10 +417,10 @@ void __arm_2d_impl_rgb565_taa_transform_with_opacity(__arm_2d_param_copy_orig_t 
                 .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+            if (    (tOriginLocation.iX < 0)
+                ||  (tOriginLocation.iY < 0)
+                ||  (tOriginLocation.iX >= (ptParam->tOrigin.tValidRegion.tSize.iWidth - 1))
+                ||  (tOriginLocation.iY >= (ptParam->tOrigin.tValidRegion.tSize.iHeight - 1))) {
                 phwTargetBase++;
                 continue;
             }
@@ -439,7 +443,7 @@ void __arm_2d_impl_rgb565_taa_transform_with_opacity(__arm_2d_param_copy_orig_t 
 
 
 
-__WEAK
+__STATIC_INLINE
 void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
@@ -450,62 +454,64 @@ void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
                                             uint32_t wMaskColour,
                                             uint_fast16_t hwOpacity)
 {
-#if 0
-    arm_2d_location_t tOriginLocation = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
-    };
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_q16(ptFxPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    uint32_t wTempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        wTempPixel = (*pwTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            uint32_t wTemp = pwOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            if (wTemp != wMaskColour) {
-                bIsInside = true;
-                wTempPixel = wTemp;
-            }
-        }
-
-        __API_PIXEL_AVERAGE(wTempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        uint32_t wSourcPixel = __API_PIXEL_AVERAGE_RESULT();
-
-        __API_PIXEL_BLENDING( &wSourcPixel, pwTarget, hwOpacity);
-    }
-
-#endif
-
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        uint32_t wTemp = pwOrigin[   tPoint.iY * iOrigStride
-                                     +   tPoint.iX];
-        if (wTemp != wMaskColour) {
-            __ARM_2D_PIXEL_BLENDING_CCCN888( &wTemp, pwTarget, hwOpacity);
-        }
+
+    /*
+     * [P0][P1]
+     * [P2][P3]
+     */
+#if 1
+    uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint32_t wPoint0 = *pwSample;
+    uint32_t wPoint1 = *(pwSample + 1);
+    uint32_t wPoint2 = *(pwSample + iOrigStride);
+
+    __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint0, &wPoint1, hwAlphaX);
+    __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint1, &wPoint2, hwAlphaY);
+
+    if (wPoint2 != wMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint2, pwTarget, hwOpacity);
     }
+#endif
+
+#if 0
+    uint16_t *pwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint16_t hwPoint0 = *pwSample++;
+    uint16_t hwPoint1 = *pwSample;
+    pwSample += iOrigStride;
+    uint16_t hwPoint3 = *pwSample--;
+    uint16_t hwPoint2 = *pwSample;
+
+    
+    uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
+    uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
+    uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
+
+    __arm_2d_color_fast_rgb_t tPixel = {0};
+
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint0,  hwAlpha0);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint1,  hwAlpha1);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint2,  hwAlpha2);
+    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint3,  hwAlpha3);
+
+
+    uint16_t hwPixelResult = __API_PIXEL_AVERAGE_RESULT_RGB565();
+    if (hwPixelResult != hwMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPixelResult, phwTarget, hwOpacity);
+    }
+#endif
 
 }
 
@@ -586,10 +592,10 @@ void __arm_2d_impl_cccn888_taa_transform_with_opacity(__arm_2d_param_copy_orig_t
                 .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+            if (    (tOriginLocation.iX < 0)
+                ||  (tOriginLocation.iY < 0)
+                ||  (tOriginLocation.iX >= (ptParam->tOrigin.tValidRegion.tSize.iWidth - 1))
+                ||  (tOriginLocation.iY >= (ptParam->tOrigin.tValidRegion.tSize.iHeight - 1))) {
                 pwTargetBase++;
                 continue;
             }
