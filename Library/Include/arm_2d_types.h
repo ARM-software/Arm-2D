@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        4. July 2024
- * $Revision:    V.1.2.11
+ * $Date:        2. Aug 2024
+ * $Revision:    V.1.2.12
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -113,6 +113,17 @@ extern "C" {
 #   endif
 #endif
 
+#if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__
+#   define __va_list        va_list
+#endif
+
+#if defined(__IS_COMPILER_LLVM__) && __IS_COMPILER_LLVM__     
+#   define __va_list        va_list
+#endif
+
+#if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__     
+#   define __va_list        va_list
+#endif
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/

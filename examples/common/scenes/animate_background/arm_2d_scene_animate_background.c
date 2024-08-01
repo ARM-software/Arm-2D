@@ -22,9 +22,12 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d.h"
+#include "arm_2d_disp_adapters.h"
+
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 
 #define __USER_SCENE_ANIMATE_BACKGROUND_IMPLEMENT__
 #include "arm_2d_scene_animate_background.h"
@@ -324,6 +327,8 @@ user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#endif
+
 #endif
 
 #endif
