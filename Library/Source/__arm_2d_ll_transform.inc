@@ -471,7 +471,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(
 
 
 
-static
+__STATIC_INLINE
 void __ARM_2D_FUNC(transform_only_get_pixel_colour)(   arm_2d_point_fx_t  *ptFxPoint,
                                         arm_2d_region_t *ptOrigValidRegion,
                                         __API_INT_TYPE *pOrigin,
@@ -625,7 +625,7 @@ void __ARM_2D_FUNC(transform_only)( __arm_2d_param_copy_orig_t *ptParam,
 
 
 
-__WEAK
+__STATIC_INLINE
 void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
@@ -859,7 +859,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(
 #   include "__arm_2d_ll_meta_trans_with_masks.inc"
 #endif
 
-__WEAK
+__STATIC_INLINE
 void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
                                             uint8_t *pchOrigin,

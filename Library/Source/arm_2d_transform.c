@@ -22,7 +22,7 @@
  * Description:  APIs for tile transform
  *
  * $Date:        01 Aug 2024
- * $Revision:    V.1.2.1
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1911,7 +1911,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptOP);
     
     //! valid alpha mask tile
-    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 )) {
+    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 | __ARM_2D_MASK_ALLOW_8in32 )) {
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1950,7 +1950,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptOP);
 
     //! valid alpha mask tile
-    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 )) {
+    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 | __ARM_2D_MASK_ALLOW_8in32 )) {
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1988,7 +1988,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptOP);
 
     //! valid alpha mask tile
-    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 )) {
+    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 | __ARM_2D_MASK_ALLOW_8in32 )) {
         return ARM_2D_ERR_INVALID_PARAM;
     }
 

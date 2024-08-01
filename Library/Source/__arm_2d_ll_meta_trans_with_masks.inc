@@ -144,7 +144,7 @@ void __MTWM_FUNC(transform_with_mask)(
 
 
 
-static
+__STATIC_INLINE
 void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
                                         arm_2d_region_t *ptOrigValidRegion,
                                         __API_INT_TYPE *pOrigin,
@@ -291,7 +291,6 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
 #endif
 }
 
-__WEAK
 __WEAK
 void __MTWM_FUNC(transform_with_mask)(
                                     #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK      \
