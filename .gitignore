@@ -55,6 +55,6 @@ test/.clangd
 examples/\[template\]\[pc\]\[vscode\]/.vscode/settings.json
 *.db
 *.ttf
-RTE/RTE_Components.h
+RTE_Components.h
 *.clangd
 tools/inputstring.txt

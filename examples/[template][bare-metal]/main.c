@@ -243,6 +243,11 @@ void scene_bubble_charging_loader(void)
     arm_2d_scene_bubble_charging_init(&DISP0_ADAPTER);
 }
 
+void scene_transform_loader(void) 
+{
+    arm_2d_scene_transform_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -259,7 +264,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 0
+#if 1
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -285,7 +290,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_animate_background_loader,
     scene_virtual_resource_loader,
 #endif
-    scene_bubble_charging_loader,
+    //scene_bubble_charging_loader,
+    scene_transform_loader,
 #endif
 
 

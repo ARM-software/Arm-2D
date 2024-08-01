@@ -49,11 +49,15 @@ extern "C" {
 #   define __ARM_2D_HAS_ASYNC__                                     0
 #endif
 
-// <q>Enable anti-alias support for all tranform operations.
+
+// <o>Enable Anti-Alias support for all transform operations.
+//     <0=>     No Anti-Alias
+//     <1=>     Use 4-points-sampling Anti-Alias
+//     <2=>     Use Triangle-Sampling Anti-Alias
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      1
+#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      2
 #endif
 
 // <q>Enable support for accessing individual colour channels
@@ -82,7 +86,6 @@ extern "C" {
 #   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        1
 #endif
 // </h>
-
 
 // <h>Log and Debug
 // =======================

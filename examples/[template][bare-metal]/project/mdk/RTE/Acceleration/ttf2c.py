@@ -76,8 +76,8 @@ typedef struct {
 c_body_string="""
 
 
-ARM_SECTION(\"arm2d.tile.c_tileUTF8UserFontA{5}Mask\")
-static const arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
+ARM_SECTION(\"arm2d.tile.c_tileUTF8{0}A{5}Mask\")
+static const arm_2d_tile_t c_tileUTF8{0}A{5}Mask = {{
     .tRegion = {{
         .tSize = {{
             .iWidth = {1},
@@ -91,7 +91,7 @@ static const arm_2d_tile_t c_tileUTF8UserFontA{5}Mask = {{
             .chScheme = ARM_2D_COLOUR_{5}BIT,
         }},
     }},
-    .pchBuffer = (uint8_t *)c_bmpUTF8UserA{5}Font,
+    .pchBuffer = (uint8_t *)c_bmpUTF8{0}A{5}Font,
 }};
 
 #define __UTF8_FONT_SIZE_{5}__
@@ -106,6 +106,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     assert(NULL != pchCharCode);
 
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
+    ARM_2D_UNUSED(ptThis);
 
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
 
@@ -114,9 +115,9 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
 
     /* use the white space as the default char */
     __ttf_char_descriptor_t *ptUTF8Char =
-        (__ttf_char_descriptor_t *)&c_tUTF8LookUpTableA{5}[dimof(c_tUTF8LookUpTableA{5})-1];
+        (__ttf_char_descriptor_t *)&c_tUTF8{0}LookUpTableA{5}[dimof(c_tUTF8{0}LookUpTableA{5})-1];
 
-    arm_foreach(__ttf_char_descriptor_t, c_tUTF8LookUpTableA{5}, ptChar) {{
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8{0}LookUpTableA{5}, ptChar) {{
         if (0 == strncmp(   (char *)pchCharCode,
                             (char *)ptChar->chUTF8,
                             ptChar->chCodeLength)) {{
@@ -146,7 +147,7 @@ struct {{
     .use_as__arm_2d_user_font_t = {{
         .use_as__arm_2d_font_t = {{
             .tileFont = impl_child_tile(
-                c_tileUTF8UserFontA{5}Mask,
+                c_tileUTF8{0}A{5}Mask,
                 0,          /* x offset */
                 0,          /* y offset */
                 {1},        /* width */
@@ -312,8 +313,9 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
     with open(output_file, "a") as f:
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst uint8_t c_bmpUTF8UserA{0}Font[] = {{\n"
-                .format(font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst uint8_t c_bmpUTF8{0}A{1}Font[] = {{\n"
+                .format(name, font_bit_size), 
+                file=f)
 
         for char, data, width, height, index, advance_width, bearing_x, bearing_y, utf8_encoding in glyphs_data:
             utf8_c_array = utf8_to_c_array(utf8_encoding)
@@ -331,8 +333,8 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
-                .format(font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
+                .format(name, font_bit_size), file=f)
 
         last_index = 0;
         last_advance = 0;
@@ -358,7 +360,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.3.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.3.1)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
