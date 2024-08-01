@@ -859,9 +859,6 @@ void __ARM_2D_FUNC(transform_only_opacity)(
 #   include "__arm_2d_ll_meta_trans_with_masks.inc"
 #endif
 
-
-
-
 __WEAK
 void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,

@@ -191,7 +191,7 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
         //TempPixel = (*pTarget);
         uint16_t hwPixelAlpha = 0;
 
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
+        //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
 
             __API_INT_TYPE Temp = pOrigin[   tTemp.iY * iOrigStride
                                             +   tTemp.iX];
@@ -227,7 +227,7 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
                 __API_MTWM_PIXEL_AVERAGE(Temp, hwAlpha);
             }
     #endif
-        }
+        //}
 
         hwTransparency += hwAlpha - hwPixelAlpha;
     }
