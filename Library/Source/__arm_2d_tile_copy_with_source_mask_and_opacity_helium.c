@@ -535,7 +535,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask_
         : [pchTarget] "+l" (pchTarget),
           [pSource] "+r" (pSource), [pSrcMask] "+l" (pwSourceMaskLine),
           [loopCnt] "+r"(loopCnt),
-          [incr] "+r" (incr4)
+          [incr] "+Te" (incr4)
         : [hwRatio] "r" (hwOpacity),
           [cst255] "r" (255), [cst256] "r" (256),
           [cst32] "r" (32), [scratch] "r" (scratch)
@@ -811,7 +811,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask)(
         : [pchTarget] "+l" (pchTarget),
           [pSource] "+r" (pSource), [pSrcMask] "+l" (pwSourceMaskLine),
           [loopCnt] "+r"(loopCnt),
-          [incr] "+r" (incr4)
+          [incr] "+Te" (incr4)
         : [cst255] "r" (255), [cst256] "r" (256),
           [cst32] "r" (32), [scratch] "r" (scratch)
 
