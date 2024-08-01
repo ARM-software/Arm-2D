@@ -7,23 +7,19 @@ var group__gTransform =
     ] ],
     [ "arm_2d_op_trans_t", "group__gTransform.html#structarm__2d__op__trans__t", [
       [ "arm_2d_op_core_t", "group__gTransform.html#ab48735701a2bbe03784dd6a04cda9aff", null ],
-      [ "wMode", "group__gTransform.html#a977e788c145a76299dfd922d22ef12b8", null ],
       [ "tTransform", "group__gTransform.html#adb77b2696b68897ab5fdbb2ac188f5cd", null ]
     ] ],
     [ "arm_2d_op_trans_opa_t", "group__gTransform.html#structarm__2d__op__trans__opa__t", [
       [ "arm_2d_op_core_t", "group__gTransform.html#abe28664647ee93207c7635c7dbe30b07", null ],
-      [ "wMode", "group__gTransform.html#a024d819788cd6b997ae6e145652b2d78", null ],
       [ "tTransform", "group__gTransform.html#a1ee6a99fcab954c06cfdd8e6949c1399", null ],
       [ "chOpacity", "group__gTransform.html#a6df59c6a29a1887386f1d27b8e9ea2c2", null ]
     ] ],
     [ "arm_2d_op_trans_msk_t", "group__gTransform.html#structarm__2d__op__trans__msk__t", [
       [ "arm_2d_op_core_t", "group__gTransform.html#aa16cbe60069711ac86added9548e36c9", null ],
-      [ "wMode", "group__gTransform.html#a41e931299e26617001839060c7da95d6", null ],
       [ "tTransform", "group__gTransform.html#a2d7ad154879793fc0e49a058f7427c36", null ]
     ] ],
     [ "arm_2d_op_trans_msk_opa_t", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t", [
       [ "arm_2d_op_core_t", "group__gTransform.html#aa9c51b12afb322bc7527c892320b46d9", null ],
-      [ "wMode", "group__gTransform.html#a7057a08aef3cdf61c08be04a3301a6fc", null ],
       [ "tTransform", "group__gTransform.html#a65cef0e460684c19c92ffa545facb4ec", null ],
       [ "chOpacity", "group__gTransform.html#ae05fa59574b1ed1cc0d1d94c76f00623", null ]
     ] ],
@@ -41,6 +37,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_t.Source", "group__gTransform.html#structarm__2d__op__trans__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
+    [ "arm_2d_op_trans_t.__unnamed95__", "group__gTransform.html#unionarm__2d__op__trans__t_8____unnamed95____", null ],
+    [ "arm_2d_op_trans_t.__unnamed95__.__unnamed98__", "group__gTransform.html#structarm__2d__op__trans__t_8____unnamed95_____8____unnamed98____", null ],
     [ "arm_2d_op_trans_t.Origin", "group__gTransform.html#structarm__2d__op__trans__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
@@ -52,6 +50,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_opa_t.Source", "group__gTransform.html#structarm__2d__op__trans__opa__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
+    [ "arm_2d_op_trans_opa_t.__unnamed102__", "group__gTransform.html#unionarm__2d__op__trans__opa__t_8____unnamed102____", null ],
+    [ "arm_2d_op_trans_opa_t.__unnamed102__.__unnamed105__", "group__gTransform.html#structarm__2d__op__trans__opa__t_8____unnamed102_____8____unnamed105____", null ],
     [ "arm_2d_op_trans_opa_t.Origin", "group__gTransform.html#structarm__2d__op__trans__opa__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
@@ -63,6 +63,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_msk_t.Source", "group__gTransform.html#structarm__2d__op__trans__msk__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
+    [ "arm_2d_op_trans_msk_t.__unnamed109__", "group__gTransform.html#unionarm__2d__op__trans__msk__t_8____unnamed109____", null ],
+    [ "arm_2d_op_trans_msk_t.__unnamed109__.__unnamed113__", "group__gTransform.html#structarm__2d__op__trans__msk__t_8____unnamed109_____8____unnamed113____", null ],
     [ "arm_2d_op_trans_msk_t.Origin", "group__gTransform.html#structarm__2d__op__trans__msk__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
@@ -78,6 +80,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_msk_opa_t.Source", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
+    [ "arm_2d_op_trans_msk_opa_t.__unnamed117__", "group__gTransform.html#unionarm__2d__op__trans__msk__opa__t_8____unnamed117____", null ],
+    [ "arm_2d_op_trans_msk_opa_t.__unnamed117__.__unnamed121__", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8____unnamed117_____8____unnamed121____", null ],
     [ "arm_2d_op_trans_msk_opa_t.Origin", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
