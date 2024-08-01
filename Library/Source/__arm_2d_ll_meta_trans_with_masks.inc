@@ -276,22 +276,22 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
 
 #else
 
-    arm_2d_location_t tTemp;
+    arm_2d_location_t  tPoint = {
+        .iX = ptFxPoint->X >> 16,
+        .iY = ptFxPoint->Y >> 16,
+    };
 
-    tTemp.iX = ptFxPoint->X >> 16;
-    tTemp.iY = ptFxPoint->Y >> 16;
 
-    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-        __API_INT_TYPE Temp = pOrigin[   tTemp.iY * iOrigStride
-                                     +   tTemp.iX];
+    __API_INT_TYPE uPixelResult 
+        = pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
         #if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-            uint16_t hwPixelAlpha = pchOrigMask[tTemp.iY * iOrigMaskStride
-                                            +   tTemp.iX * 4];
+            uint16_t hwPixelAlpha 
+                = pwOrigMask[ tPoint.iY * iOrigMaskStride + tPoint.iX];
         #else
-            uint16_t hwPixelAlpha = pchOrigMask[tTemp.iY * iOrigMaskStride
-                                            +   tTemp.iX];
+            uint16_t hwPixelAlpha = pchOrigMask[tPoint.iY * iOrigMaskStride
+                                            +   tPoint.iX];
         #endif
 
         #if __API_MTWM_CFG_SUPPORT_OPACITY
@@ -303,18 +303,18 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
         hwPixelAlpha += (hwPixelAlpha == 255);
         #endif
 
-        __API_MTWM_PIXEL_BLENDING( &Temp, pTarget, hwPixelAlpha);
+        __API_MTWM_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #else
 
-        if (Temp != MaskColour) {
+        if (uPixelResult != MaskColour) {
         #if __API_MTWM_CFG_SUPPORT_OPACITY
-            __API_MTWM_PIXEL_BLENDING( &Temp, pTarget, hwOpacity);
+            __API_MTWM_PIXEL_BLENDING( &uPixelResult, pTarget, hwOpacity);
         #else
-            *pTarget = Temp;
+            *pTarget = uPixelResult;
         #endif
         }
     #endif
-    //}
+
 #endif
 }
 
