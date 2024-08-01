@@ -126,15 +126,15 @@ void __arm_2d_impl_{{colour_name | lower}}_taa_get_pixel_colour_with_alpha(
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
-    {{colour_int}} {{colour_int_prefix}}Point0 = *p{{colour_int_prefix}}Sample;
-    {{colour_int}} {{colour_int_prefix}}Point1 = *(p{{colour_int_prefix}}Sample + 1);
-    {{colour_int}} {{colour_int_prefix}}Point2 = *(p{{colour_int_prefix}}Sample + iOrigStride);
+    {{colour_int}} {{colour_int_prefix}}Point0 = *p{{colour_int_prefix}}Sample++;
+    {{colour_int}} {{colour_int_prefix}}Point1 = *p{{colour_int_prefix}}Sample;
+    {{colour_int}} {{colour_int_prefix}}Point3 = *(p{{colour_int_prefix}}Sample + iOrigStride);
 
     __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}( &{{colour_int_prefix}}Point0, &{{colour_int_prefix}}Point1, hwAlphaX);
-    __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}( &{{colour_int_prefix}}Point1, &{{colour_int_prefix}}Point2, hwAlphaY);
+    __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}( &{{colour_int_prefix}}Point1, &{{colour_int_prefix}}Point3, hwAlphaY);
 
-    if ({{colour_int_prefix}}Point2 != {{colour_int_prefix}}MaskColour) {
-        __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}( &{{colour_int_prefix}}Point2, p{{colour_int_prefix}}Target, hwOpacity);
+    if ({{colour_int_prefix}}Point3 != {{colour_int_prefix}}MaskColour) {
+        __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}( &{{colour_int_prefix}}Point3, p{{colour_int_prefix}}Target, hwOpacity);
     }
 #endif
 
