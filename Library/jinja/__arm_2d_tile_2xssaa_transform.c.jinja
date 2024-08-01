@@ -125,7 +125,7 @@ void __arm_2d_impl_{{colour_name | lower}}_2xssaa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+
     {{colour_int}} *p{{colour_int_prefix}}Sample = &p{{colour_int_prefix}}Origin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -138,9 +138,9 @@ void __arm_2d_impl_{{colour_name | lower}}_2xssaa_get_pixel_colour_with_alpha(
     if ({{colour_int_prefix}}Point1 != {{colour_int_prefix}}MaskColour) {
         __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}( &{{colour_int_prefix}}Point1, p{{colour_int_prefix}}Target, hwOpacity);
     }
-#endif
 
-#if 0
+
+#if 0 /* reference code */
     {{colour_int}} *p{{colour_int_prefix}}Sample = &p{{colour_int_prefix}}Origin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;

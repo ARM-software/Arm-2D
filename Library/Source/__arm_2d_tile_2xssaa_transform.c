@@ -116,7 +116,7 @@ void __arm_2d_impl_gray8_2xssaa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+
     uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -129,9 +129,9 @@ void __arm_2d_impl_gray8_2xssaa_get_pixel_colour_with_alpha(
     if (chPoint1 != chMaskColour) {
         __ARM_2D_PIXEL_BLENDING_GRAY8( &chPoint1, pchTarget, hwOpacity);
     }
-#endif
 
-#if 0
+
+#if 0 /* reference code */
     uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -287,7 +287,7 @@ void __arm_2d_impl_rgb565_2xssaa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+
     uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -300,9 +300,9 @@ void __arm_2d_impl_rgb565_2xssaa_get_pixel_colour_with_alpha(
     if (hwPoint1 != hwMaskColour) {
         __ARM_2D_PIXEL_BLENDING_RGB565( &hwPoint1, phwTarget, hwOpacity);
     }
-#endif
 
-#if 0
+
+#if 0 /* reference code */
     uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -458,7 +458,7 @@ void __arm_2d_impl_cccn888_2xssaa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+
     uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -471,9 +471,9 @@ void __arm_2d_impl_cccn888_2xssaa_get_pixel_colour_with_alpha(
     if (wPoint1 != wMaskColour) {
         __ARM_2D_PIXEL_BLENDING_CCCN888( &wPoint1, pwTarget, hwOpacity);
     }
-#endif
 
-#if 0
+
+#if 0 /* reference code */
     uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
