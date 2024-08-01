@@ -95,174 +95,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwRatio);
 
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 
-static
-void __ARM_2D_FUNC(get_pixel_colour)(   arm_2d_point_float_t *ptPoint,
-                                        arm_2d_region_t *ptOrigValidRegion,
-                                        __API_INT_TYPE *pOrigin,
-                                        int16_t iOrigStride,
-                                        //arm_2d_location_t *ptTargetPoint,
-                                        //arm_2d_region_t *ptTargetValidRegion,
-                                        __API_INT_TYPE *pTarget,
-                                        //int16_t iTargetSride,
-                                        __API_INT_TYPE MaskColour)
-{
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_fp(ptPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    __API_INT_TYPE TempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        TempPixel = (*pTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            __API_INT_TYPE OriginPixel = pOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            if (OriginPixel != MaskColour) {
-                bIsInside = true;
-                TempPixel = OriginPixel;
-            }
-        }
-
-        __API_PIXEL_AVERAGE(TempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        (*pTarget) = __API_PIXEL_AVERAGE_RESULT();
-    }
-
-#else
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tOriginLocation)) {
-        __API_INT_TYPE Temp = pOrigin[   tOriginLocation.iY * iOrigStride
-                                     +   tOriginLocation.iX];
-        if (Temp != MaskColour) {
-            *pTarget = Temp;
-        }
-    }
-#endif
-}
-
-__WEAK
-void __ARM_2D_FUNC(transform)( __arm_2d_param_copy_orig_t *ptParam,
-                            __arm_2d_transform_info_t *ptInfo)
-{
-    int_fast16_t iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
-    int_fast16_t iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
-
-    int_fast16_t iTargetStride = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
-    __API_INT_TYPE *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
-    int_fast16_t iOrigStride = ptParam->tOrigin.iStride;
-    __API_INT_TYPE      MaskColour = MASK_COLOR(__API_INT_TYPE_BIT_NUM);
-
-    float fAngle = -ptInfo->fAngle;
-    arm_2d_location_t tOffset = ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    float           invIWidth = iWidth > 1 ? 1.0f / (float) (iWidth - 1) : __LARGEINVF32;
-    arm_2d_rot_linear_regr_t regrCoefs[2];
-    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
-
-    /* get regression parameters over 1st and last column */
-    __arm_2d_transform_regression(
-        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
-        &SrcPt,
-        fAngle,
-        ptInfo->fScale,
-        &tOffset,
-        &(ptInfo->tCenter),
-        regrCoefs);
-
-    /* slopes between 1st and last cols */
-    float           slopeY, slopeX;
-
-    slopeY = (regrCoefs[1].interceptY - regrCoefs[0].interceptY) * invIWidth;
-    slopeX = (regrCoefs[1].interceptX - regrCoefs[0].interceptX) * invIWidth;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-        /* 1st column estimates (intercepts for regression in X direction */
-        float           colFirstY = regrCoefs[0].slopeY * y + regrCoefs[0].interceptY;
-        float           colFirstX = regrCoefs[0].slopeX * y + regrCoefs[0].interceptX;
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-            arm_2d_point_float_t tPoint;
-
-            /* linear interpolation thru first & last cols */
-            tPoint.fX = colFirstX + slopeX * x;
-            tPoint.fY = colFirstY + slopeY * x;
-
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPoint.fX > 0) {
-                tPoint.fX += __CALIB;
-            } else {
-                tPoint.fX -= __CALIB;
-            }
-            if (tPoint.fY > 0) {
-                tPoint.fY += __CALIB;
-            } else {
-                tPoint.fY -= __CALIB;
-            }
-        #endif
-
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
-    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
-    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-
-            arm_2d_location_t tOriginLocation = {
-                .iX = tPoint.fX - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = tPoint.fY - ptParam->tOrigin.tValidRegion.tLocation.iY,
-            };
-
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
-                pTargetBase++;
-                continue;
-            }
-#endif
-
-            __ARM_2D_FUNC(get_pixel_colour)(
-                                &tPoint,
-                                &ptParam->tOrigin.tValidRegion,
-                                ptParam->tOrigin.pBuffer,
-                                iOrigStride,
-
-                                pTargetBase,
-                                //iTargetStride,
-                                MaskColour
-                            );
-            pTargetBase++;
-        }
-        //phwSourceBase += (iSourceStride - iWidth);
-        pTargetBase += (iTargetStride - iWidth);
-    }
-}
-
-#else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
 static
 void __ARM_2D_FUNC(get_pixel_colour)(   arm_2d_point_fx_t  *ptFxPoint,
@@ -276,57 +109,52 @@ void __ARM_2D_FUNC(get_pixel_colour)(   arm_2d_point_fx_t  *ptFxPoint,
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                          \
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
 
-    arm_2d_location_t tOriginLocation = {
+
+    arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
 
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_q16(ptFxPoint);
+    __API_INT_TYPE *pSample = &pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    __API_INT_TYPE uPoint0 = *pSample++;
+    __API_INT_TYPE uPoint1 = *pSample;
+    pSample += iOrigStride;
+    __API_INT_TYPE uPoint3 = *pSample--;
+    __API_INT_TYPE uPoint2 = *pSample;
+
+    
+    uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
+    uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
+    uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
 
     __API_PIXEL_AVERAGE_INIT();
 
-    __API_INT_TYPE TempPixel;
-    bool bIsInside = false;
+    __API_PIXEL_AVERAGE(uPoint0,  hwAlpha0);
+    __API_PIXEL_AVERAGE(uPoint1,  hwAlpha1);
+    __API_PIXEL_AVERAGE(uPoint2,  hwAlpha2);
+    __API_PIXEL_AVERAGE(uPoint3,  hwAlpha3);
 
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        TempPixel = (*pTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            __API_INT_TYPE Temp = pOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            if (Temp != MaskColour) {
-                bIsInside = true;
-                TempPixel = Temp;
-            }
-        }
-
-        __API_PIXEL_AVERAGE(TempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        *pTarget = __API_PIXEL_AVERAGE_RESULT();
+    __API_INT_TYPE uPixelResult = __API_PIXEL_AVERAGE_RESULT();
+    if (uPixelResult != MaskColour) {
+        *pTarget = uPixelResult;
     }
 #else
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
+    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
         __API_INT_TYPE Temp = pOrigin[   tPoint.iY * iOrigStride
                                      +   tPoint.iX];
         if (Temp != MaskColour) {
             *pTarget = Temp;
         }
-    }
+    //}
 #endif
 }
 
@@ -394,24 +222,18 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
             }
         #endif
 
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
-    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
-    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-
             arm_2d_location_t tOriginLocation = {
                 .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
                 .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+            if (    (tOriginLocation.iX < 0)
+                ||  (tOriginLocation.iY < 0)
+                ||  (tOriginLocation.iX >= (ptParam->tOrigin.tValidRegion.tSize.iWidth - 1))
+                ||  (tOriginLocation.iY >= (ptParam->tOrigin.tValidRegion.tSize.iHeight - 1))) {
                 pTargetBase++;
                 continue;
             }
-#endif
 
             __ARM_2D_FUNC(get_pixel_colour)(
                                         &tPointFast,
@@ -429,84 +251,9 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
     }
 }
 
-#endif
 
 
 
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-static
-void __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
-                                            arm_2d_point_float_t *ptPoint,
-                                            arm_2d_region_t *ptOrigValidRegion,
-                                            __API_INT_TYPE *pOrigin,
-                                            int16_t iOrigStride,
-                                            __API_INT_TYPE *pTarget,
-                                            //int16_t iTargetSride,
-                                            __API_INT_TYPE MaskColour,
-                                            uint_fast16_t hwOpacity)
-{
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_fp(ptPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    __API_INT_TYPE TempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        TempPixel = (*pTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            __API_INT_TYPE OriginPixel = pOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            if (OriginPixel != MaskColour) {
-                bIsInside = true;
-                TempPixel = OriginPixel;
-            }
-        }
-
-        __API_PIXEL_AVERAGE(TempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        __API_INT_TYPE tSourcPixel = __API_PIXEL_AVERAGE_RESULT();
-
-        __API_PIXEL_BLENDING( &tSourcPixel, pTarget, hwOpacity);
-    }
-
-#else
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tOriginLocation)) {
-        __API_INT_TYPE Temp = pOrigin[   tOriginLocation.iY * iOrigStride
-                                     +   tOriginLocation.iX];
-        if (Temp != MaskColour) {
-            //Pixel = Temp;
-
-            __API_PIXEL_BLENDING( &Temp, pTarget, hwOpacity);
-        }
-    }
-#endif
-}
-#else
 __WEAK
 void __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
                                             arm_2d_point_fx_t  *ptFxPoint,
@@ -571,111 +318,8 @@ void __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
 
 #endif
 }
-#endif
 
 
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-__WEAK
-void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
-                                    __arm_2d_transform_info_t *ptInfo,
-                                    uint_fast16_t hwRatio)
-{
-    int_fast16_t        iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
-    int_fast16_t        iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
-
-    int_fast16_t        iTargetStride =
-        ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
-    __API_INT_TYPE     *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
-    __API_INT_TYPE     *pOrigin = ptParam->tOrigin.pBuffer;
-    int_fast16_t        iOrigStride = ptParam->tOrigin.iStride;
-    __API_INT_TYPE      MaskColour = MASK_COLOR(__API_INT_TYPE_BIT_NUM);
-    float               fAngle = -ptInfo->fAngle;
-    arm_2d_location_t   tOffset =
-        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-
-    hwRatio += (hwRatio == 255);
-
-    float               invIWidth = iWidth > 1 ? 1.0f / (float) (iWidth - 1) : __LARGEINVF32;
-    arm_2d_rot_linear_regr_t regrCoefs[2];
-    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
-
-    /* get regression parameters over 1st and last column */
-    __arm_2d_transform_regression(
-        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
-        &SrcPt,
-        fAngle,
-        ptInfo->fScale,
-        &tOffset,
-        &(ptInfo->tCenter),
-        regrCoefs);
-
-    /* slopes between 1st and last cols */
-    float           slopeY, slopeX;
-
-    slopeY = (regrCoefs[1].interceptY - regrCoefs[0].interceptY) * invIWidth;
-    slopeX = (regrCoefs[1].interceptX - regrCoefs[0].interceptX) * invIWidth;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-        /* 1st column estimates (intercepts for regression in X direction */
-        float           colFirstY = regrCoefs[0].slopeY * y + regrCoefs[0].interceptY;
-        float           colFirstX = regrCoefs[0].slopeX * y + regrCoefs[0].interceptX;
-
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-            arm_2d_point_float_t tPoint;
-
-            /* linear interpolation thru first & last cols */
-            tPoint.fX = colFirstX + slopeX * x;
-            tPoint.fY = colFirstY + slopeY * x;
-
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPoint.fX > 0) {
-                tPoint.fX += __CALIB;
-            } else {
-                tPoint.fX -= __CALIB;
-            }
-            if (tPoint.fY > 0) {
-                tPoint.fY += __CALIB;
-            } else {
-                tPoint.fY -= __CALIB;
-            }
-        #endif
-
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
-    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
-    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-
-            arm_2d_location_t tOriginLocation = {
-                .iX = tPoint.fX - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = tPoint.fY - ptParam->tOrigin.tValidRegion.tLocation.iY,
-            };
-
-            if (    (tOriginLocation.iX < 0)
-                ||  (tOriginLocation.iY < 0)
-                ||  (tOriginLocation.iX >= (ptParam->tOrigin.tValidRegion.tSize.iWidth - 1))
-                ||  (tOriginLocation.iY >= (ptParam->tOrigin.tValidRegion.tSize.iHeight - 1))) {
-                pTargetBase++;
-                continue;
-            }
-#endif
-
-            __ARM_2D_FUNC(get_pixel_colour_with_alpha) (
-                               &tPoint,
-                               &ptParam->tOrigin.
-                               tValidRegion,
-                               pOrigin,
-                               iOrigStride,
-                               pTargetBase,
-                               MaskColour,
-                               hwRatio);
-            pTargetBase++;
-        }
-        pTargetBase += (iTargetStride - iWidth);
-    }
-}
-
-#else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
 __WEAK
 void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
@@ -777,7 +421,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
     }
 }
 
-#endif /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
+
 #else
 
 
@@ -825,175 +469,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwRatio);
 
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 
-static
-void __ARM_2D_FUNC(transform_only_get_pixel_colour)(   
-                                        arm_2d_point_float_t *ptPoint,
-                                        arm_2d_region_t *ptOrigValidRegion,
-                                        __API_INT_TYPE *pOrigin,
-                                        int16_t iOrigStride,
-                                        //arm_2d_location_t *ptTargetPoint,
-                                        //arm_2d_region_t *ptTargetValidRegion,
-                                        __API_INT_TYPE *pTarget
-                                        //,int16_t iTargetSride
-                                        )
-{
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_fp(ptPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    __API_INT_TYPE TempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        TempPixel = (*pTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            __API_INT_TYPE OriginPixel = pOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            //if (OriginPixel != MaskColour) {
-                bIsInside = true;
-                TempPixel = OriginPixel;
-            //}
-        }
-
-        __API_PIXEL_AVERAGE(TempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        (*pTarget) = __API_PIXEL_AVERAGE_RESULT();
-    }
-
-#else
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tOriginLocation)) {
-        __API_INT_TYPE Temp = pOrigin[   tOriginLocation.iY * iOrigStride
-                                     +   tOriginLocation.iX];
-        //if (Temp != MaskColour) {
-            *pTarget = Temp;
-        //}
-    }
-#endif
-}
-
-__WEAK
-void __ARM_2D_FUNC(transform_only)( __arm_2d_param_copy_orig_t *ptParam,
-                                    __arm_2d_transform_info_t *ptInfo)
-{
-    int_fast16_t iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
-    int_fast16_t iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
-
-    int_fast16_t iTargetStride = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
-    __API_INT_TYPE *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
-    int_fast16_t iOrigStride = ptParam->tOrigin.iStride;
-    //__API_INT_TYPE      MaskColour = MASK_COLOR(__API_INT_TYPE_BIT_NUM);
-
-    float fAngle = -ptInfo->fAngle;
-    arm_2d_location_t tOffset = ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    float           invIWidth = iWidth > 1 ? 1.0f / (float) (iWidth - 1) : __LARGEINVF32;
-    arm_2d_rot_linear_regr_t regrCoefs[2];
-    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
-
-    /* get regression parameters over 1st and last column */
-    __arm_2d_transform_regression(
-        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
-        &SrcPt,
-        fAngle,
-        ptInfo->fScale,
-        &tOffset,
-        &(ptInfo->tCenter),
-        regrCoefs);
-
-    /* slopes between 1st and last cols */
-    float           slopeY, slopeX;
-
-    slopeY = (regrCoefs[1].interceptY - regrCoefs[0].interceptY) * invIWidth;
-    slopeX = (regrCoefs[1].interceptX - regrCoefs[0].interceptX) * invIWidth;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-        /* 1st column estimates (intercepts for regression in X direction */
-        float           colFirstY = regrCoefs[0].slopeY * y + regrCoefs[0].interceptY;
-        float           colFirstX = regrCoefs[0].slopeX * y + regrCoefs[0].interceptX;
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-            arm_2d_point_float_t tPoint;
-
-            /* linear interpolation thru first & last cols */
-            tPoint.fX = colFirstX + slopeX * x;
-            tPoint.fY = colFirstY + slopeY * x;
-
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPoint.fX > 0) {
-                tPoint.fX += __CALIB;
-            } else {
-                tPoint.fX -= __CALIB;
-            }
-            if (tPoint.fY > 0) {
-                tPoint.fY += __CALIB;
-            } else {
-                tPoint.fY -= __CALIB;
-            }
-        #endif
-
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
-    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
-    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-
-            arm_2d_location_t tOriginLocation = {
-                .iX = tPoint.fX - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = tPoint.fY - ptParam->tOrigin.tValidRegion.tLocation.iY,
-            };
-
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
-                pTargetBase++;
-                continue;
-            }
-#endif
-
-            __ARM_2D_FUNC(transform_only_get_pixel_colour)(
-                                &tPoint,
-                                &ptParam->tOrigin.tValidRegion,
-                                ptParam->tOrigin.pBuffer,
-                                iOrigStride,
-
-                                pTargetBase
-                                //iTargetStride,
-                                //MaskColour
-                            );
-            pTargetBase++;
-        }
-        //phwSourceBase += (iSourceStride - iWidth);
-        pTargetBase += (iTargetStride - iWidth);
-    }
-}
-
-#else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
 static
 void __ARM_2D_FUNC(transform_only_get_pixel_colour)(   arm_2d_point_fx_t  *ptFxPoint,
@@ -1135,10 +611,10 @@ void __ARM_2D_FUNC(transform_only)( __arm_2d_param_copy_orig_t *ptParam,
                 .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
+            if (    (tOriginLocation.iX < 0)
+                ||  (tOriginLocation.iY < 0)
+                ||  (tOriginLocation.iX >= (ptParam->tOrigin.tValidRegion.tSize.iWidth - 1))
+                ||  (tOriginLocation.iY >= (ptParam->tOrigin.tValidRegion.tSize.iHeight - 1))) {
                 pTargetBase++;
                 continue;
             }
@@ -1160,84 +636,8 @@ void __ARM_2D_FUNC(transform_only)( __arm_2d_param_copy_orig_t *ptParam,
     }
 }
 
-#endif
 
 
-
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-static
-void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
-                                            arm_2d_point_float_t *ptPoint,
-                                            arm_2d_region_t *ptOrigValidRegion,
-                                            __API_INT_TYPE *pOrigin,
-                                            int16_t iOrigStride,
-                                            __API_INT_TYPE *pTarget,
-                                            //int16_t iTargetSride,
-                                            //__API_INT_TYPE MaskColour,
-                                            uint_fast16_t hwOpacity)
-{
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_fp(ptPoint);
-
-    __API_PIXEL_AVERAGE_INIT();
-
-    __API_INT_TYPE TempPixel;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        TempPixel = (*pTarget);
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            __API_INT_TYPE OriginPixel = pOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-            //if (OriginPixel != MaskColour) {
-                bIsInside = true;
-                TempPixel = OriginPixel;
-            //}
-        }
-
-        __API_PIXEL_AVERAGE(TempPixel, hwAlpha);
-    }
-
-    if (bIsInside) {
-        __API_INT_TYPE tSourcPixel = __API_PIXEL_AVERAGE_RESULT();
-
-        __API_PIXEL_BLENDING( &tSourcPixel, pTarget, hwOpacity);
-    }
-
-#else
-    arm_2d_location_t tOriginLocation;
-
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tOriginLocation)) {
-        __API_INT_TYPE Temp = pOrigin[   tOriginLocation.iY * iOrigStride
-                                     +   tOriginLocation.iX];
-        //if (Temp != MaskColour) {
-            //Pixel = Temp;
-
-            __API_PIXEL_BLENDING( &Temp, pTarget, hwOpacity);
-        //}
-    }
-#endif
-}
-#else
 __WEAK
 void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
                                             arm_2d_point_fx_t  *ptFxPoint,
@@ -1299,122 +699,17 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
+    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
         __API_INT_TYPE Temp = pOrigin[   tPoint.iY * iOrigStride
                                      +   tPoint.iX];
         //if (Temp != MaskColour) {
             __API_PIXEL_BLENDING( &Temp, pTarget, hwOpacity);
         //}
-    }
+    //}
 
 #endif
 }
-#endif
 
-
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-__WEAK
-void __ARM_2D_FUNC(transform_only_opacity)(
-                                            __arm_2d_param_copy_orig_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,
-                                            uint_fast16_t hwRatio)
-{
-    int_fast16_t        iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
-    int_fast16_t        iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
-
-    int_fast16_t        iTargetStride =
-        ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
-    __API_INT_TYPE     *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
-    __API_INT_TYPE     *pOrigin = ptParam->tOrigin.pBuffer;
-    int_fast16_t        iOrigStride = ptParam->tOrigin.iStride;
-    //__API_INT_TYPE      MaskColour = MASK_COLOR(__API_INT_TYPE_BIT_NUM);
-    float               fAngle = -ptInfo->fAngle;
-    arm_2d_location_t   tOffset =
-        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-
-    hwRatio += (hwRatio == 255);
-
-    float               invIWidth = iWidth > 1 ? 1.0f / (float) (iWidth - 1) : __LARGEINVF32;
-    arm_2d_rot_linear_regr_t regrCoefs[2];
-    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
-
-    /* get regression parameters over 1st and last column */
-    __arm_2d_transform_regression(
-        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
-        &SrcPt,
-        fAngle,
-        ptInfo->fScale,
-        &tOffset,
-        &(ptInfo->tCenter),
-        regrCoefs);
-
-    /* slopes between 1st and last cols */
-    float           slopeY, slopeX;
-
-    slopeY = (regrCoefs[1].interceptY - regrCoefs[0].interceptY) * invIWidth;
-    slopeX = (regrCoefs[1].interceptX - regrCoefs[0].interceptX) * invIWidth;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-        /* 1st column estimates (intercepts for regression in X direction */
-        float           colFirstY = regrCoefs[0].slopeY * y + regrCoefs[0].interceptY;
-        float           colFirstX = regrCoefs[0].slopeX * y + regrCoefs[0].interceptX;
-
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-            arm_2d_point_float_t tPoint;
-
-            /* linear interpolation thru first & last cols */
-            tPoint.fX = colFirstX + slopeX * x;
-            tPoint.fY = colFirstY + slopeY * x;
-
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPoint.fX > 0) {
-                tPoint.fX += __CALIB;
-            } else {
-                tPoint.fX -= __CALIB;
-            }
-            if (tPoint.fY > 0) {
-                tPoint.fY += __CALIB;
-            } else {
-                tPoint.fY -= __CALIB;
-            }
-        #endif
-
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
-    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
-    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-
-            arm_2d_location_t tOriginLocation = {
-                .iX = tPoint.fX - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = tPoint.fY - ptParam->tOrigin.tValidRegion.tLocation.iY,
-            };
-
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
-                pTargetBase++;
-                continue;
-            }
-#endif
-
-            __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha) (
-                               &tPoint,
-                               &ptParam->tOrigin.
-                               tValidRegion,
-                               pOrigin,
-                               iOrigStride,
-                               pTargetBase,
-                               //MaskColour,
-                               hwRatio);
-            pTargetBase++;
-        }
-        pTargetBase += (iTargetStride - iWidth);
-    }
-}
-
-#else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
 __WEAK
 void __ARM_2D_FUNC(transform_only_opacity)(
@@ -1522,8 +817,6 @@ void __ARM_2D_FUNC(transform_only_opacity)(
     }
 }
 
-#endif /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
-
 
 /*----------------------------------------------------------------------------*
  * Transform with source mask                                                 *
@@ -1594,83 +887,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(
 
 
 
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-static
-void __ARM_2D_FUNC(get_alpha_with_opacity) (arm_2d_point_float_t *ptPoint,
-                                            arm_2d_region_t *ptOrigValidRegion,
-                                            uint8_t *pchOrigin,
-                                            int16_t iOrigStride,
-                                            __API_INT_TYPE *pTarget,
-                                            //int16_t iTargetSride,
-                                            __API_INT_TYPE MaskColour,
-                                            uint_fast16_t hwOpacity)
-{
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-    arm_2d_location_t tOriginLocation;
 
-    tOriginLocation.iX = ptPoint->fX;
-    tOriginLocation.iY = ptPoint->fY;
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_fp(ptPoint);
-
-    //__API_PIXEL_AVERAGE_INIT();
-    //uint16_t tPixel = 0;
-    uint32_t wTotalAlpha = 0;
-    uint16_t hwPixelAlpha;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        hwPixelAlpha = 0;
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            hwPixelAlpha = pchOrigin[tTemp.iY * iOrigStride + tTemp.iX];
-            bIsInside = true;
-        }
-
-        hwPixelAlpha = (hwPixelAlpha == 255) * (hwAlpha << 8) 
-                     + ((hwPixelAlpha != 255) * hwPixelAlpha * hwAlpha);
-
-        wTotalAlpha += hwPixelAlpha;
-        //__ARM_2D_PIXEL_AVERAGE_GRAY8(hwPixelAlpha, hwAlpha);
-    }
-
-    if (bIsInside && wTotalAlpha) {
-    //if (bIsInside) {
-        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                        + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
-        
-
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
-    }
-
-#else
-    arm_2d_location_t tPoint = {
-        .iX = ptPoint->fX,
-        .iY = ptPoint->fY,
-    };
-
-    uint16_t hwPixelAlpha = 0;
-    if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        hwPixelAlpha = pchOrigin[   tPoint.iY * iOrigStride
-                                     +   tPoint.iX];
-
-        hwPixelAlpha =  (hwPixelAlpha == 255) * hwOpacity
-                     + !(hwPixelAlpha == 255) * (hwPixelAlpha * hwOpacity >> 8);
-
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwPixelAlpha);
-    }
-#endif
-}
-#else
 __WEAK
 void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
@@ -1748,112 +965,7 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 
 #endif
 }
-#endif
 
-
-#if !__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-__WEAK
-void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(
-                                        __arm_2d_param_copy_orig_t *ptParam,
-                                        __arm_2d_transform_info_t *ptInfo,
-                                        uint_fast16_t hwRatio)
-{
-    int_fast16_t        iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
-    int_fast16_t        iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
-
-    int_fast16_t        iTargetStride =
-        ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
-    __API_INT_TYPE     *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
-    uint8_t             *pchOrigin = (uint8_t *)ptParam->tOrigin.pBuffer;
-    int_fast16_t        iOrigStride = ptParam->tOrigin.iStride;
-    __API_INT_TYPE      MaskColour = MASK_COLOR(__API_INT_TYPE_BIT_NUM);
-    float               fAngle = -ptInfo->fAngle;
-    arm_2d_location_t   tOffset =
-        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-
-    hwRatio += (hwRatio == 255);
-
-    float               invIWidth = iWidth > 1 ? 1.0f / (float) (iWidth - 1) : __LARGEINVF32;
-    arm_2d_rot_linear_regr_t regrCoefs[2];
-    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
-
-    /* get regression parameters over 1st and last column */
-    __arm_2d_transform_regression(
-        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
-        &SrcPt,
-        fAngle,
-        ptInfo->fScale,
-        &tOffset,
-        &(ptInfo->tCenter),
-        regrCoefs);
-
-    /* slopes between 1st and last cols */
-    float           slopeY, slopeX;
-
-    slopeY = (regrCoefs[1].interceptY - regrCoefs[0].interceptY) * invIWidth;
-    slopeX = (regrCoefs[1].interceptX - regrCoefs[0].interceptX) * invIWidth;
-
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-        /* 1st column estimates (intercepts for regression in X direction */
-        float           colFirstY = regrCoefs[0].slopeY * y + regrCoefs[0].interceptY;
-        float           colFirstX = regrCoefs[0].slopeX * y + regrCoefs[0].interceptX;
-
-
-        for (int_fast16_t x = 0; x < iWidth; x++) {
-            arm_2d_point_float_t tPoint;
-
-            /* linear interpolation thru first & last cols */
-            tPoint.fX = colFirstX + slopeX * x;
-            tPoint.fY = colFirstY + slopeY * x;
-
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPoint.fX > 0) {
-                tPoint.fX += __CALIB;
-            } else {
-                tPoint.fX -= __CALIB;
-            }
-            if (tPoint.fY > 0) {
-                tPoint.fY += __CALIB;
-            } else {
-                tPoint.fY -= __CALIB;
-            }
-        #endif
-
-#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                                     \
-    &&  defined(__ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__)   \
-    &&  __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
-
-            arm_2d_location_t tOriginLocation = {
-                .iX = tPoint.fX - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = tPoint.fY - ptParam->tOrigin.tValidRegion.tLocation.iY,
-            };
-
-            if (    (tOriginLocation.iX < -1)
-                ||  (tOriginLocation.iY < -1)
-                ||  (tOriginLocation.iX > ptParam->tOrigin.tValidRegion.tSize.iWidth)
-                ||  (tOriginLocation.iY > ptParam->tOrigin.tValidRegion.tSize.iHeight)) {
-                pTargetBase++;
-                continue;
-            }
-#endif
-
-            __ARM_2D_FUNC(get_alpha_with_opacity) (
-                               &tPoint,
-                               &ptParam->tOrigin.
-                               tValidRegion,
-                               pchOrigin,
-                               iOrigStride,
-                               pTargetBase,
-                               MaskColour,
-                               hwRatio);
-            pTargetBase++;
-        }
-        pTargetBase += (iTargetStride - iWidth);
-    }
-}
-
-#else /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
 
 __WEAK
 void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(
@@ -1960,13 +1072,6 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(
         pTargetBase += (iTargetStride - iWidth);
     }
 }
-
-#endif /* __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__ */
-
-
-
-
-
 
 
 #undef ____ARM_2D_FUNC
