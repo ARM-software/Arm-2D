@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the APIs for transform
  *
  * $Date:        01 Aug 2024
- * $Revision:    V.2.0.0
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3885,7 +3885,14 @@ typedef struct arm_2d_op_trans_t {
     struct {
         const arm_2d_tile_t     *ptTile;        //!< source tile
     }Source;
-    uint32_t wMode;                             //!< not used
+
+    union {
+        struct {
+            uint32_t                            : 31;
+            uint32_t  bInvalid                  : 1;
+        };
+        uint32_t  wMode;
+    };
     
     struct {
         const arm_2d_tile_t     *ptTile;        //!< the origin tile
@@ -3908,7 +3915,14 @@ typedef struct arm_2d_op_trans_opa_t {
     struct {
         const arm_2d_tile_t     *ptTile;        //!< source tile
     }Source;
-    uint32_t wMode;                             //!< not used
+
+    union {
+        struct {
+            uint32_t                            : 31;
+            uint32_t  bInvalid                  : 1;
+        };
+        uint32_t  wMode;
+    };
     
     struct {
         const arm_2d_tile_t     *ptTile;        //!< the origin tile
@@ -3937,7 +3951,15 @@ typedef struct arm_2d_op_trans_msk_t {
     struct {
         const arm_2d_tile_t     *ptTile;        //!< source tile
     }Source;
-    uint32_t wMode;                             //!< not used
+
+    union {
+        struct {
+            uint32_t                            : 31;
+            uint32_t  bInvalid                  : 1;
+        };
+        uint32_t  wMode;
+    };
+
     struct {
         const arm_2d_tile_t     *ptTile;        //!< the origin tile
         arm_2d_tile_t           tDummySource;   //!< the buffer for the source
@@ -3963,7 +3985,15 @@ typedef struct arm_2d_op_trans_msk_opa_t {
     struct {
         const arm_2d_tile_t     *ptTile;        //!< source tile
     }Source;
-    uint32_t wMode;                             //!< not used
+
+    union {
+        struct {
+            uint32_t                            : 31;
+            uint32_t  bInvalid                  : 1;
+        };
+        uint32_t  wMode;
+    };
+
     struct {
         const arm_2d_tile_t     *ptTile;        //!< the origin tile
         arm_2d_tile_t           tDummySource;   //!< the buffer for the source

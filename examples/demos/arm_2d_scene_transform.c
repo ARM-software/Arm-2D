@@ -110,6 +110,7 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileEarth;
 extern const arm_2d_tile_t c_tilePictureSun;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
+extern const arm_2d_tile_t c_tileCMSISLogoMask2;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
@@ -337,7 +338,7 @@ void __draw_transform_object_handler( void *pObj,
 
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                                 &ptTransObj->tOP.tFillColorMaskOpa,
-                                                &c_tileGlassBallMask,
+                                                &c_tileGlassBallMask2,
                                                 ptTile,
                                                 NULL,
                                                 tCentre,

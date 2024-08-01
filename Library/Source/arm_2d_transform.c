@@ -22,7 +22,7 @@
  * Description:  APIs for tile transform
  *
  * $Date:        01 Aug 2024
- * $Revision:    V.2.0.0
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1159,11 +1159,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity(__arm_
     return arm_fsm_rt_cpl;
 }
 
-
-
-
-
-
 ARM_NONNULL(2)
 arm_2d_err_t arm_2dp_gray8_tile_transform_only_with_opacity_prepare(
                                         arm_2d_op_trans_opa_t *ptOP,
@@ -1194,7 +1189,6 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_only_with_opacity_prepare(
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
                                                 &this.tTransform);
 }
-
 
 ARM_NONNULL(2)
 arm_2d_err_t arm_2dp_rgb565_tile_transform_only_with_opacity_prepare(
@@ -1333,6 +1327,10 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
         return arm_fsm_rt_on_going;
     }
 
+    if (this.bInvalid) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS;
+    }
+
     arm_2d_region_t tTargetRegion = {
         .tSize = ptTarget->tRegion.tSize
     };
@@ -1340,37 +1338,32 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
         ptRegion = &tTargetRegion;
     }
 
-    //if (NULL != ptRegion) {
-        __arm_2d_transform_info_t *ptTransform
-            = (__arm_2d_transform_info_t *)
-                (   (uintptr_t)ptThis
-                +   this.use_as__arm_2d_op_core_t.ptOp->Info.chInClassOffset);
+    __arm_2d_transform_info_t *ptTransform
+        = (__arm_2d_transform_info_t *)
+            (   (uintptr_t)ptThis
+            +   this.use_as__arm_2d_op_core_t.ptOp->Info.chInClassOffset);
 
 
-        this.Target.ptTile = arm_2d_tile_generate_child(
-                                                    ptTarget,
-                                                    ptRegion,
-                                                    &ptTransform->Target.tTile,
-                                                    false);
-        if (NULL == this.Target.ptTile) {
-            arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
-            if (ARM_2D_RUNTIME_FEATURE.TREAT_OUT_OF_RANGE_AS_COMPLETE) {
-                tResult = arm_fsm_rt_cpl;
-            }
-
-            return __arm_2d_op_depose((arm_2d_op_core_t *)ptThis, tResult);
+    this.Target.ptTile = arm_2d_tile_generate_child(
+                                                ptTarget,
+                                                ptRegion,
+                                                &ptTransform->Target.tTile,
+                                                false);
+    if (NULL == this.Target.ptTile) {
+        arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
+        if (ARM_2D_RUNTIME_FEATURE.TREAT_OUT_OF_RANGE_AS_COMPLETE) {
+            tResult = arm_fsm_rt_cpl;
         }
 
-        if (NULL != ptTargetCentre) {
-            tTargetCentre.iX = ptTargetCentre->iX - ptRegion->tLocation.iX;
-            tTargetCentre.iY = ptTargetCentre->iY - ptRegion->tLocation.iY;
+        return __arm_2d_op_depose((arm_2d_op_core_t *)ptThis, tResult);
+    }
 
-            ptTargetCentre = &tTargetCentre;
-        }
-    //} else {
-    //    this.Target.ptTile = ptTarget;
-    //    //this.Target.ptRegion = ptRegion;
-    //}
+    if (NULL != ptTargetCentre) {
+        tTargetCentre.iX = ptTargetCentre->iX - ptRegion->tLocation.iX;
+        tTargetCentre.iY = ptTargetCentre->iY - ptRegion->tLocation.iY;
+
+        ptTargetCentre = &tTargetCentre;
+    }
 
     this.Target.ptRegion = NULL;
 
@@ -1399,6 +1392,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
                                             NULL,
                                             0);
     if (tErr < 0) {
+        this.bInvalid = true;
         return tErr;
     }
 
@@ -1441,6 +1435,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
                                             NULL,
                                             0);
     if (tErr < 0) {
+        this.bInvalid = true;
         return tErr;
     }
 
@@ -1483,6 +1478,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
                                             NULL,
                                             0);
     if (tErr < 0) {
+        this.bInvalid = true;
         return tErr;
     }
 
@@ -1627,6 +1623,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
                                             NULL,
                                             0);
     if (tErr < 0) {
+        this.bInvalid = true;
         return tErr;
     }
 
@@ -1671,6 +1668,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
                                             NULL,
                                             0);
     if (tErr < 0) {
+        this.bInvalid = true;
         return tErr;
     }
 
@@ -1715,6 +1713,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
                                             NULL,
                                             0);
     if (tErr < 0) {
+        this.bInvalid = true;
         return tErr;
     }
 
@@ -1916,6 +1915,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
                                     |   __ARM_2D_MASK_ALLOW_8in32
 #endif
         )) {
+        this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1959,6 +1959,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
                                     |   __ARM_2D_MASK_ALLOW_8in32
 #endif
         )) {
+        this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -2001,6 +2002,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
                                     |   __ARM_2D_MASK_ALLOW_8in32
 #endif
         )) {
+        this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -2115,44 +2117,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
 /*----------------------------------------------------------------------------*
  * Accelerable Low Level APIs                                                 *
  *----------------------------------------------------------------------------*/
-
-
-/*----------------------------------------------------------------------------*
- * Draw a point whose cordinates is stored as float point.                    *
- *----------------------------------------------------------------------------*/
-
-#if 0
-static arm_2d_region_t *__arm_2d_calculate_region(  const arm_2d_point_float_t *ptLocation,
-                                                    arm_2d_region_t *ptRegion)
-{
-    assert(NULL != ptLocation);
-    assert(NULL != ptRegion);
-
-    /* +-----+-----+
-     * |  P0 |  P1 |
-     * +---- p ----+
-     * |  P2 |  -- |
-     * +-----+-----+
-     */
-
-    arm_2d_location_t tPoints[3];
-
-    tPoints[0].iX = (int16_t)ptLocation->fX;
-    tPoints[2].iX = (int16_t)ptLocation->fX;
-    tPoints[1].iX = (int16_t)(ptLocation->fX + 0.99f);
-    ptRegion->tSize.iWidth = tPoints[1].iX - tPoints[0].iX + 1;
-
-    tPoints[0].iY = (int16_t)ptLocation->fY;
-    tPoints[2].iY = (int16_t)ptLocation->fY;
-    tPoints[1].iY = (int16_t)(ptLocation->fY + 0.99f);
-    ptRegion->tSize.iHeight = tPoints[2].iY - tPoints[0].iY + 1;
-
-    ptRegion->tLocation = tPoints[0];
-
-    return ptRegion;
-}
-#endif
-
 
 
 /*----------------------------------------------------------------------------*
