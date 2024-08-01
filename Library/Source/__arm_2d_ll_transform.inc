@@ -882,16 +882,16 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         .iY = ptFxPoint->Y >> 16,
     };
 
-    uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
-
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
-    uint8_t chPoint0 = *pchSample++;
-    uint8_t chPoint1 = *pchSample;
-    pchSample += iOrigStride;
-    uint8_t chPoint3 = *pchSample--;
-    uint8_t chPoint2 = *pchSample;
+    uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint8_t chPixelAlpha0 = *pchAlphaSample++;
+    uint8_t chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    uint8_t chPixelAlpha3 = *pchAlphaSample--;
+    uint8_t chPixelAlpha2 = *pchAlphaSample;
 
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -902,23 +902,23 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     uint16_t hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint0,  hwAlpha0);
-    hwPixelAlpha = (chPoint0 == 255) * (hwAlpha0 << 8) 
-                    + (!(chPoint0 == 255) * chPoint0 * hwAlpha0);
+    hwPixelAlpha = (chPixelAlpha0 == 255) * (hwAlpha0 << 8) 
+                    + (!(chPixelAlpha0 == 255) * chPixelAlpha0 * hwAlpha0);
     wTotalAlpha += hwPixelAlpha;
     
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint1,  hwAlpha1);
-    hwPixelAlpha = (chPoint1 == 255) * (hwAlpha1 << 8) 
-                    + (!(chPoint1 == 255) * chPoint1 * hwAlpha1);
+    hwPixelAlpha = (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
+                    + (!(chPixelAlpha1 == 255) * chPixelAlpha1 * hwAlpha1);
     wTotalAlpha += hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint2,  hwAlpha2);
-    hwPixelAlpha = (chPoint2 == 255) * (hwAlpha2 << 8) 
-                    + (!(chPoint2 == 255) * chPoint2 * hwAlpha2);
+    hwPixelAlpha = (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
+                    + (!(chPixelAlpha2 == 255) * chPixelAlpha2 * hwAlpha2);
     wTotalAlpha += hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint3,  hwAlpha3);
-    hwPixelAlpha = (chPoint3 == 255) * (hwAlpha3 << 8) 
-                    + (!(chPoint3 == 255) * chPoint3 * hwAlpha3);
+    hwPixelAlpha = (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
+                    + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
     wTotalAlpha += hwPixelAlpha;
 
     if (wTotalAlpha) {
@@ -1072,16 +1072,16 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         .iY = ptFxPoint->Y >> 16,
     };
 
-    uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
-
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
-    uint8_t chPoint0 = *(uint8_t *)(pwSample++);
-    uint8_t chPoint1 = *(uint8_t *)pwSample;
-    pwSample += iOrigStride;
-    uint8_t chPoint3 = *(uint8_t *)(pwSample--);
-    uint8_t chPoint2 = *(uint8_t *)pwSample;
+    uint32_t *pwAlphaSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    uint8_t chPixelAlpha0 = *(uint8_t *)(pwAlphaSample++);
+    uint8_t chPixelAlpha1 = *(uint8_t *)pwAlphaSample;
+    pwAlphaSample += iOrigStride;
+    uint8_t chPixelAlpha3 = *(uint8_t *)(pwAlphaSample--);
+    uint8_t chPixelAlpha2 = *(uint8_t *)pwAlphaSample;
 
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -1092,23 +1092,23 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     uint16_t hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint0,  hwAlpha0);
-    hwPixelAlpha = (chPoint0 == 255) * (hwAlpha0 << 8) 
-                    + (!(chPoint0 == 255) * chPoint0 * hwAlpha0);
+    hwPixelAlpha = (chPixelAlpha0 == 255) * (hwAlpha0 << 8) 
+                    + (!(chPixelAlpha0 == 255) * chPixelAlpha0 * hwAlpha0);
     wTotalAlpha += hwPixelAlpha;
     
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint1,  hwAlpha1);
-    hwPixelAlpha = (chPoint1 == 255) * (hwAlpha1 << 8) 
-                    + (!(chPoint1 == 255) * chPoint1 * hwAlpha1);
+    hwPixelAlpha = (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
+                    + (!(chPixelAlpha1 == 255) * chPixelAlpha1 * hwAlpha1);
     wTotalAlpha += hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint2,  hwAlpha2);
-    hwPixelAlpha = (chPoint2 == 255) * (hwAlpha2 << 8) 
-                    + (!(chPoint2 == 255) * chPoint2 * hwAlpha2);
+    hwPixelAlpha = (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
+                    + (!(chPixelAlpha2 == 255) * chPixelAlpha2 * hwAlpha2);
     wTotalAlpha += hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint3,  hwAlpha3);
-    hwPixelAlpha = (chPoint3 == 255) * (hwAlpha3 << 8) 
-                    + (!(chPoint3 == 255) * chPoint3 * hwAlpha3);
+    hwPixelAlpha = (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
+                    + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
     wTotalAlpha += hwPixelAlpha;
 
     if (wTotalAlpha) {

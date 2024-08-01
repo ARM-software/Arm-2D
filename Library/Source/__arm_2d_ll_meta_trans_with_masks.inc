@@ -149,104 +149,131 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
                                         arm_2d_region_t *ptOrigValidRegion,
                                         __API_INT_TYPE *pOrigin,
                                         int16_t iOrigStride,
-                                    #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
+                            #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
+                            #   if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
+                                        uint32_t *pwOrigMask,
+                            #   else
                                         uint8_t *pchOrigMask,
+                            #   endif
                                         int16_t iOrigMaskStride,
-                                    #else
+                            #else
                                         __API_INT_TYPE MaskColour,
-                                    #endif
+                            #endif
                                     #if __API_MTWM_CFG_SUPPORT_OPACITY
                                         uint16_t hwOpacity,
                                     #endif
                                         __API_INT_TYPE *pTarget
-                                            )
+                                    )
 {
-#if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-    iOrigMaskStride *= 4;
-#endif
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
-    arm_2d_location_t tOriginLocation = {
+    arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
         .iY = ptFxPoint->Y >> 16,
     };
 
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_q16(ptFxPoint);
+    /*
+     * [0][1]
+     * [2][3]
+     */
+
+    /* anti-alias alpha table */
+    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+
+    uint16_t hwAlpha0 = ((256 - hwAlphaX) * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
+    uint16_t hwAlpha3 = 256 - hwAlpha0 - hwAlpha1 - hwAlpha2;
+
+#if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
+    /* mask */
+#   if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
+    uint32_t *pwAlphaSample = &pwOrigMask[tPoint.iY * iOrigMaskStride + tPoint.iX];
+
+    uint8_t chPixelAlpha0 = *(uint8_t *)(pwAlphaSample++);
+    uint8_t chPixelAlpha1 = *(uint8_t *)pwAlphaSample;
+    pwAlphaSample += iOrigMaskStride;
+    uint8_t chPixelAlpha3 = *(uint8_t *)(pwAlphaSample--);
+    uint8_t chPixelAlpha2 = *(uint8_t *)pwAlphaSample;
+#else
+    uint8_t *pchAlphaSample = &pchOrigMask[tPoint.iY * iOrigMaskStride + tPoint.iX];
+
+    uint8_t chPixelAlpha0 = *pchAlphaSample++;
+    uint8_t chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigMaskStride;
+    uint8_t chPixelAlpha3 = *pchAlphaSample--;
+    uint8_t chPixelAlpha2 = *pchAlphaSample;
+#endif
+
+    uint32_t wTotalAlpha = 0;
+    uint16_t hwTempAlpha;
+
+    hwTempAlpha = (chPixelAlpha0 == 255) * (hwAlpha0 << 8) 
+                    + (!(chPixelAlpha0 == 255) * chPixelAlpha0 * hwAlpha0);
+    wTotalAlpha += hwTempAlpha;
+    
+    hwTempAlpha = (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
+                    + (!(chPixelAlpha1 == 255) * chPixelAlpha1 * hwAlpha1);
+    wTotalAlpha += hwTempAlpha;
+
+    hwTempAlpha = (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
+                    + (!(chPixelAlpha2 == 255) * chPixelAlpha2 * hwAlpha2);
+    wTotalAlpha += hwTempAlpha;
+
+    hwTempAlpha = (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
+                    + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
+    wTotalAlpha += hwTempAlpha;
+
+    if (0 == wTotalAlpha) {
+        return ;
+    }
+#endif
+
+    /* RGB channel */
+    __API_INT_TYPE *pSample = &pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+    __API_INT_TYPE uPoint0 = *pSample++;
+    __API_INT_TYPE uPoint1 = *pSample;
+    pSample += iOrigStride;
+    __API_INT_TYPE uPoint3 = *pSample--;
+    __API_INT_TYPE uPoint2 = *pSample;
 
     __API_PIXEL_AVERAGE_INIT();
 
-    //__API_INT_TYPE TempPixel;
-    bool bIsInside = false;
-    uint16_t hwTransparency = 0;
+    __API_PIXEL_AVERAGE(uPoint0,  hwAlpha0);
+    __API_PIXEL_AVERAGE(uPoint1,  hwAlpha1);
+    __API_PIXEL_AVERAGE(uPoint2,  hwAlpha2);
+    __API_PIXEL_AVERAGE(uPoint3,  hwAlpha3);
 
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
+    __API_INT_TYPE uPixelResult = __API_PIXEL_AVERAGE_RESULT();
 
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        //TempPixel = (*pTarget);
-        uint16_t hwPixelAlpha = 0;
+#if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
+    #if __API_MTWM_CFG_SUPPORT_OPACITY
+        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
+                              + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
-        //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-
-            __API_INT_TYPE Temp = pOrigin[   tTemp.iY * iOrigStride
-                                            +   tTemp.iX];
-
-    #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
-
-        #if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-            hwPixelAlpha = pchOrigMask[tTemp.iY * iOrigMaskStride
-                                            +   tTemp.iX * 4];
-        #else
-            hwPixelAlpha = pchOrigMask[tTemp.iY * iOrigMaskStride
-                                            +   tTemp.iX];
-        #endif
-
-        #if __API_MTWM_CFG_SUPPORT_OPACITY
-            hwPixelAlpha = hwPixelAlpha * hwOpacity >> 8;
-            assert(hwOpacity != 255);
-        #endif
-
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwPixelAlpha += (hwPixelAlpha == 255);
-        #endif
-        
-            hwPixelAlpha = hwPixelAlpha * hwAlpha >> 8;
-            
-            __API_MTWM_PIXEL_AVERAGE(Temp, hwPixelAlpha);
-
-            bIsInside = true;
+        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #else
-            if (Temp != MaskColour) {
-                bIsInside = true;
-                hwPixelAlpha = hwAlpha;
-                __API_MTWM_PIXEL_AVERAGE(Temp, hwAlpha);
-            }
+        uint16_t hwPixelAlpha = wTotalAlpha >> 8;
+
+        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #endif
-        //}
-
-        hwTransparency += hwAlpha - hwPixelAlpha;
-    }
-
-#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
-    if (bIsInside && hwTransparency < 256) {
 #else
-    if (bIsInside) {
-#endif
-        __API_MTWM_PIXEL_AVERAGE(*pTarget, hwTransparency);
+    if (uPixelResult != MaskColour) {
 
-    #if __API_MTWM_CFG_SUPPORT_OPACITY && !__API_MTWM_CFG_SUPPORT_SOURCE_MASK
-        __API_INT_TYPE tSourcPixel = __API_PIXEL_AVERAGE_RESULT();
-        __API_MTWM_PIXEL_BLENDING( &tSourcPixel, pTarget, hwOpacity);
+    #if __API_MTWM_CFG_SUPPORT_OPACITY
+        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwOpacity);
     #else
-        *pTarget = __API_PIXEL_AVERAGE_RESULT();
+        *pTarget = uPixelResult;
     #endif
 
     }
+#endif
+
+
+
 #else
 
     arm_2d_location_t tTemp;
@@ -320,7 +347,11 @@ void __MTWM_FUNC(transform_with_mask)(
     int_fast16_t iOrigStride = ptParam->tOrigin.iStride;
 
 #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
-    uint8_t *pOriginMask = this.tOrigMask.pBuffer;
+#   if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
+    uint32_t *pwOriginMask = (uint32_t *)this.tOrigMask.pBuffer;
+#else
+    uint8_t *pchOriginMask = (uint8_t *)this.tOrigMask.pBuffer;
+#endif
     int_fast16_t iOrigMaskStride = this.tOrigMask.iStride;
 #else
     __API_INT_TYPE      MaskColour = MASK_COLOR(__API_MTWM_INT_TYPE_BIT_NUM);
@@ -401,12 +432,16 @@ void __MTWM_FUNC(transform_with_mask)(
                                         &ptParam->tOrigin.tValidRegion,
                                         pOrigin,
                                         iOrigStride,
-                                    #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
-                                        pOriginMask,
+                                #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
+                                #   if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
+                                        pwOriginMask,
+                                #   else 
+                                        pchOriginMask,
+                                #   endif
                                         iOrigMaskStride,
-                                    #else
+                                #else
                                         MaskColour,
-                                    #endif
+                                #endif
                                     #if __API_MTWM_CFG_SUPPORT_OPACITY
                                         hwOpacity,
                                     #endif
