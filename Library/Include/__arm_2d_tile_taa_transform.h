@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_taa_transform.h
  * Description:  The header file of APIs for Triangle-Anti-Alias Tile  
  *               Transform
- * $Date:        31. July 2024
- * $Revision:    V.0.1.0
+ * $Date:        01. Aug 2024
+ * $Revision:    V.0.2.0
  *
  * Target Processor:  Cortex-M cores
  *

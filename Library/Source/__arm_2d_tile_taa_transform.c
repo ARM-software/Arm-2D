@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_taa_transform.c
  * Description:  The source file of Triangle-Anti-Alias Tile Transform
  *               
- * $Date:        31. July 2024
- * $Revision:    V.0.1.0
+ * $Date:        01. Aug 2024
+ * $Revision:    V.0.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -81,7 +81,9 @@ extern "C" {
 
 #define OPCODE this.use_as__arm_2d_op_t
 
-
+#define __ARM_2D_PIXEL_AVERAGE_INIT_GRAY8       uint16_t tPixel = 0;
+#define __ARM_2D_PIXEL_AVERAGE_INIT_RGB565      __arm_2d_color_fast_rgb_t tPixel = {0};
+#define __ARM_2D_PIXEL_AVERAGE_INIT_CCCN888     __arm_2d_color_fast_rgb_t tPixel = {0}; uint32_t *pTarget = pwTarget;
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -113,7 +115,7 @@ void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+#if 0
     uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -131,17 +133,17 @@ void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
     }
 #endif
 
-#if 0
-    uint16_t *pwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+#if 1
+    uint8_t *pchSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
-    uint16_t hwPoint0 = *pwSample++;
-    uint16_t hwPoint1 = *pwSample;
-    pwSample += iOrigStride;
-    uint16_t hwPoint3 = *pwSample--;
-    uint16_t hwPoint2 = *pwSample;
+    uint8_t chPoint0 = *pchSample++;
+    uint8_t chPoint1 = *pchSample;
+    pchSample += iOrigStride;
+    uint8_t chPoint3 = *pchSample--;
+    uint8_t chPoint2 = *pchSample;
 
     
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
@@ -149,16 +151,16 @@ void __arm_2d_impl_gray8_taa_get_pixel_colour_with_alpha(
     uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
     uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
 
-    __arm_2d_color_fast_rgb_t tPixel = {0};
+    __ARM_2D_PIXEL_AVERAGE_INIT_GRAY8
 
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint0,  hwAlpha0);
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint1,  hwAlpha1);
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint2,  hwAlpha2);
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint3,  hwAlpha3);
+    __ARM_2D_PIXEL_AVERAGE_GRAY8(chPoint0,  hwAlpha0);
+    __ARM_2D_PIXEL_AVERAGE_GRAY8(chPoint1,  hwAlpha1);
+    __ARM_2D_PIXEL_AVERAGE_GRAY8(chPoint2,  hwAlpha2);
+    __ARM_2D_PIXEL_AVERAGE_GRAY8(chPoint3,  hwAlpha3);
 
-    uint16_t hwPixelResult = __API_PIXEL_AVERAGE_RESULT_RGB565();
-    if (hwPixelResult != hwMaskColour) {
-        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPixelResult, phwTarget, hwOpacity);
+    uint8_t chPixelResult = __API_PIXEL_AVERAGE_RESULT_GRAY8();
+    if (chPixelResult != chMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_GRAY8( &chPixelResult, pchTarget, hwOpacity);
     }
 #endif
 
@@ -287,7 +289,7 @@ void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+#if 0
     uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -305,17 +307,17 @@ void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
     }
 #endif
 
-#if 0
-    uint16_t *pwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+#if 1
+    uint16_t *phwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
-    uint16_t hwPoint0 = *pwSample++;
-    uint16_t hwPoint1 = *pwSample;
-    pwSample += iOrigStride;
-    uint16_t hwPoint3 = *pwSample--;
-    uint16_t hwPoint2 = *pwSample;
+    uint16_t hwPoint0 = *phwSample++;
+    uint16_t hwPoint1 = *phwSample;
+    phwSample += iOrigStride;
+    uint16_t hwPoint3 = *phwSample--;
+    uint16_t hwPoint2 = *phwSample;
 
     
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
@@ -323,7 +325,7 @@ void __arm_2d_impl_rgb565_taa_get_pixel_colour_with_alpha(
     uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
     uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
 
-    __arm_2d_color_fast_rgb_t tPixel = {0};
+    __ARM_2D_PIXEL_AVERAGE_INIT_RGB565
 
     __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint0,  hwAlpha0);
     __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint1,  hwAlpha1);
@@ -461,7 +463,7 @@ void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
      * [P0][P1]
      * [P2][P3]
      */
-#if 1
+#if 0
     uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
@@ -479,17 +481,17 @@ void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
     }
 #endif
 
-#if 0
-    uint16_t *pwSample = &phwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+#if 1
+    uint32_t *pwSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
     uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
 
-    uint16_t hwPoint0 = *pwSample++;
-    uint16_t hwPoint1 = *pwSample;
+    uint32_t wPoint0 = *pwSample++;
+    uint32_t wPoint1 = *pwSample;
     pwSample += iOrigStride;
-    uint16_t hwPoint3 = *pwSample--;
-    uint16_t hwPoint2 = *pwSample;
+    uint32_t wPoint3 = *pwSample--;
+    uint32_t wPoint2 = *pwSample;
 
     
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
@@ -497,16 +499,16 @@ void __arm_2d_impl_cccn888_taa_get_pixel_colour_with_alpha(
     uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
     uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
 
-    __arm_2d_color_fast_rgb_t tPixel = {0};
+    __ARM_2D_PIXEL_AVERAGE_INIT_CCCN888
 
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint0,  hwAlpha0);
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint1,  hwAlpha1);
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint2,  hwAlpha2);
-    __ARM_2D_PIXEL_AVERAGE_RGB565(hwPoint3,  hwAlpha3);
+    __ARM_2D_PIXEL_AVERAGE_CCCN888(wPoint0,  hwAlpha0);
+    __ARM_2D_PIXEL_AVERAGE_CCCN888(wPoint1,  hwAlpha1);
+    __ARM_2D_PIXEL_AVERAGE_CCCN888(wPoint2,  hwAlpha2);
+    __ARM_2D_PIXEL_AVERAGE_CCCN888(wPoint3,  hwAlpha3);
 
-    uint16_t hwPixelResult = __API_PIXEL_AVERAGE_RESULT_RGB565();
-    if (hwPixelResult != hwMaskColour) {
-        __ARM_2D_PIXEL_BLENDING_RGB565( &hwPixelResult, phwTarget, hwOpacity);
+    uint32_t wPixelResult = __API_PIXEL_AVERAGE_RESULT_CCCN888();
+    if (wPixelResult != wMaskColour) {
+        __ARM_2D_PIXEL_BLENDING_CCCN888( &wPixelResult, pwTarget, hwOpacity);
     }
 #endif
 
