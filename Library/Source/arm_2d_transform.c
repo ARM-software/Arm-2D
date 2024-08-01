@@ -1911,7 +1911,11 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptOP);
     
     //! valid alpha mask tile
-    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 | __ARM_2D_MASK_ALLOW_8in32 )) {
+    if (!__arm_2d_valid_mask(ptMask,    __ARM_2D_MASK_ALLOW_A8 
+#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                                    |   __ARM_2D_MASK_ALLOW_8in32
+#endif
+        )) {
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1950,7 +1954,11 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptOP);
 
     //! valid alpha mask tile
-    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 | __ARM_2D_MASK_ALLOW_8in32 )) {
+    if (!__arm_2d_valid_mask(ptMask,    __ARM_2D_MASK_ALLOW_A8 
+#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                                    |   __ARM_2D_MASK_ALLOW_8in32
+#endif
+        )) {
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -1988,7 +1996,11 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptOP);
 
     //! valid alpha mask tile
-    if (!__arm_2d_valid_mask(ptMask, __ARM_2D_MASK_ALLOW_A8 | __ARM_2D_MASK_ALLOW_8in32 )) {
+    if (!__arm_2d_valid_mask(ptMask,    __ARM_2D_MASK_ALLOW_A8 
+#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                                    |   __ARM_2D_MASK_ALLOW_8in32
+#endif
+        )) {
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
@@ -2020,11 +2032,23 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
-    __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(  
-                                        &(ptTask->Param.tCopyOrig),
-                                        &this.tTransform,
-                                        this.chOpacity);
+#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+    bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
+            ==  ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme);
 
+    if (bIsMaskChannel8In32) {
+        __arm_2d_impl_gray8_colour_filling_chn_mask_opacity_transform(  
+                                            &(ptTask->Param.tCopyOrig),
+                                            &this.tTransform,
+                                            this.chOpacity);
+    } else 
+#endif
+    {
+        __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(  
+                                            &(ptTask->Param.tCopyOrig),
+                                            &this.tTransform,
+                                            this.chOpacity);
+    }
 
     return arm_fsm_rt_cpl;
 }
@@ -2038,11 +2062,23 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform(
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
-    __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(   
+#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+    bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
+            ==  ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme);
+
+    if (bIsMaskChannel8In32) {
+        __arm_2d_impl_rgb565_colour_filling_chn_mask_opacity_transform(  
                                             &(ptTask->Param.tCopyOrig),
                                             &this.tTransform,
                                             this.chOpacity);
-
+    } else 
+#endif
+    {
+        __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(   
+                                                &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    }
     return arm_fsm_rt_cpl;
 }
 
@@ -2055,12 +2091,23 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
+#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+    bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
+            ==  ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme);
 
-    __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(  
-                                            &(ptTask->Param.tCopyOrig),
-                                            &this.tTransform,
-                                            this.chOpacity);
-
+    if (bIsMaskChannel8In32) {
+        __arm_2d_impl_cccn888_colour_filling_chn_mask_opacity_transform(  
+                                                &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    } else 
+#endif
+    {
+        __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(  
+                                                &(ptTask->Param.tCopyOrig),
+                                                &this.tTransform,
+                                                this.chOpacity);
+    }
     return arm_fsm_rt_cpl;
 }
 
