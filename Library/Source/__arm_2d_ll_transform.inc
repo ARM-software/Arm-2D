@@ -481,7 +481,7 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour)(   arm_2d_point_fx_t  *ptFxP
                                         )
 {
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                          \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
@@ -637,7 +637,7 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
                                             uint_fast16_t hwOpacity)
 {
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                          \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
@@ -870,54 +870,7 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
                                             uint_fast16_t hwOpacity)
 {
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                          \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-
-#if 0
-    arm_2d_location_t tOriginLocation = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
-    };
-
-    __arm_2d_point_adj_alpha_t tAdjacentArray
-        = __arm_2d_point_get_adjacent_alpha_q16(ptFxPoint);
-
-    //__API_PIXEL_AVERAGE_INIT();
-    //uint16_t tPixel = 0;
-    uint32_t wTotalAlpha = 0;
-    uint16_t hwPixelAlpha;
-    bool bIsInside = false;
-
-    for (int_fast8_t n = 0; n < 4; n++) {
-        uint16_t hwAlpha = tAdjacentArray.tMatrix[n].chAlpha;
-
-        arm_2d_location_t tTemp = {
-            .iX = tOriginLocation.iX + tAdjacentArray.tMatrix[n].tOffset.iX,
-            .iY = tOriginLocation.iY + tAdjacentArray.tMatrix[n].tOffset.iY,
-        };
-        hwPixelAlpha = 0;
-
-        if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tTemp)) {
-            hwPixelAlpha = pchOrigin[tTemp.iY * iOrigStride + tTemp.iX];
-            bIsInside = true;
-        }
-
-        hwPixelAlpha = (hwPixelAlpha == 255) * (hwAlpha << 8) 
-                     + ((hwPixelAlpha != 255) * hwPixelAlpha * hwAlpha);
-
-        wTotalAlpha += hwPixelAlpha;
-        //__ARM_2D_PIXEL_AVERAGE_GRAY8(hwPixelAlpha, hwAlpha);
-    }
-
-
-    if (bIsInside && wTotalAlpha) {
-    //if (bIsInside) {
-        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                        + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
-        
-
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
-    }
-#else
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
         .iX = ptFxPoint->X >> 16,
@@ -945,22 +898,22 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint0,  hwAlpha0);
     hwPixelAlpha = (chPoint0 == 255) * (hwAlpha0 << 8) 
-                    + ((chPoint0 != 255) * chPoint0 * hwAlpha0);
+                    + (!(chPoint0 == 255) * chPoint0 * hwAlpha0);
     wTotalAlpha += hwPixelAlpha;
     
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint1,  hwAlpha1);
     hwPixelAlpha = (chPoint1 == 255) * (hwAlpha1 << 8) 
-                    + ((chPoint1 != 255) * chPoint1 * hwAlpha1);
+                    + (!(chPoint1 == 255) * chPoint1 * hwAlpha1);
     wTotalAlpha += hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint2,  hwAlpha2);
     hwPixelAlpha = (chPoint2 == 255) * (hwAlpha2 << 8) 
-                    + ((chPoint2 != 255) * chPoint2 * hwAlpha2);
+                    + (!(chPoint2 == 255) * chPoint2 * hwAlpha2);
     wTotalAlpha += hwPixelAlpha;
 
     //__API_PIXEL_AVERAGE_GRAY8(hwPoint3,  hwAlpha3);
     hwPixelAlpha = (chPoint3 == 255) * (hwAlpha3 << 8) 
-                    + ((chPoint3 != 255) * chPoint3 * hwAlpha3);
+                    + (!(chPoint3 == 255) * chPoint3 * hwAlpha3);
     wTotalAlpha += hwPixelAlpha;
 
     if (wTotalAlpha) {
@@ -971,7 +924,6 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 
         __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
     }
-#endif
 
 #else
     

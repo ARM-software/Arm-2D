@@ -165,7 +165,7 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
     iOrigMaskStride *= 4;
 #endif
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
-    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t tOriginLocation = {
         .iX = ptFxPoint->X >> 16,
