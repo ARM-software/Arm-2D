@@ -234,7 +234,7 @@ static void __on_scene_transform_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     int32_t tAngle;
-    arm_2d_helper_time_cos_slider(0, 3600, 8000, 0, &tAngle, &this.lTimestamp[1]);
+    arm_2d_helper_time_cos_slider(0, 3600, 5000, 0, &tAngle, &this.lTimestamp[1]);
 
     arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
         arm_2d_helper_dirty_region_transform_update_value(&ptObjects->tHelper, ARM_2D_ANGLE((float)tAngle / 10.0f), 0.0f);
@@ -250,12 +250,12 @@ static void __on_scene_transform_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
+
     /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
-#endif
+
 }
 
 static void __before_scene_transform_switching_out(arm_2d_scene_t *ptScene)
@@ -338,7 +338,7 @@ void __draw_transform_object_handler( void *pObj,
 
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                                 &ptTransObj->tOP.tFillColorMaskOpa,
-                                                &c_tileGlassBallMask2,
+                                                &c_tileGlassBallMask,
                                                 ptTile,
                                                 NULL,
                                                 tCentre,
@@ -520,7 +520,7 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.2f,
+            .fSpeed = 0.6f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius,
             .hwParticleCount = dimof(this.tObjects),

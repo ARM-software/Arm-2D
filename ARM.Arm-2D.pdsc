@@ -365,8 +365,8 @@
             <file category="sourceC"     name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.c"   attr="template"  select="Scene Template: Bubble Charging"   version="1.1.0" />
             <file category="header"      name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.h"   attr="template"  select="Scene Template: Bubble Charging"   version="1.1.0" />
 
-            <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.c"   attr="template"  select="Scene Template: Animate Background"   version="1.0.0" />
-            <file category="header"      name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.h"   attr="template"  select="Scene Template: Animate Background"   version="1.0.0" />
+            <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.c"   attr="template"  select="Scene Template: Animate Background"   version="1.0.1" />
+            <file category="header"      name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.h"   attr="template"  select="Scene Template: Animate Background"   version="1.0.1" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_PFB
@@ -627,11 +627,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cversion="1.0.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for how to use virtual resources </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_virtual_resource.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_virtual_resource.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_virtual_resource.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_virtual_resource.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Virtual_Resources
@@ -672,11 +672,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cversion="1.0.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>A demo for transform operations  </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_transform.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_transform.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_transform.c" attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_transform.h" attr="config" version="1.0.1" />
             <file category="sourceC"      name="examples/demos/Earth.c" attr="config" version="1.0.0" />
           </files>
           <RTE_Components_h>

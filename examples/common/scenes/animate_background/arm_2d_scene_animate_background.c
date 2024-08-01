@@ -22,7 +22,7 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 
 #include "arm_2d.h"
 

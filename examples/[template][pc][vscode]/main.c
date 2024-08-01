@@ -227,6 +227,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_hollow_out_list_loader,
     scene_panel_loader,
     scene_fitness_loader,
+    scene_transform_loader,
     scene_audiomark_loader,
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     scene_virtual_resource_loader,
@@ -234,12 +235,10 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #endif
 
 #else
-    scene_transform_loader,
+    //scene_transform_loader,
     //scene_bubble_charging_loader,
-    //scene_hollow_out_list_loader,
-    //scene_ruler_loader,
     //scene_basics_loader,
-    //scene_audiomark_loader,
+
 #endif
 
 
