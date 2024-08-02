@@ -40,7 +40,6 @@ CC_INC  += ../../examples/common/scenes/animate_background
 CC_INC  += ../../examples/demos
 
 CC_DEF  := ARM_SECTION\(x\)=
-CC_DEF  += __va_list=va_list
 CC_DEF  += _RTE_=1
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
