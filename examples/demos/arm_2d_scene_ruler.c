@@ -197,7 +197,7 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     /* ---------- plesae do NOT modify code below unless you 100% sure ----- */
     uint16_t hwABSSteps = ABS(nStepsToMove);
 
-    if (arm_2d_helper_is_time_out(2000, &this.lTimestamp[1])) {
+    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
         number_list_move_selection(&this.tNumberList, nStepsToMove, hwMoveSpeedInMs * hwABSSteps);
         this.lTimestamp[2] = 0;
         this.chStepLeftToMove = hwABSSteps * 2;
