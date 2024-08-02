@@ -288,7 +288,7 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
     #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
         #if __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
             uint16_t hwPixelAlpha 
-                = pwOrigMask[ tPoint.iY * iOrigMaskStride + tPoint.iX];
+                = *(uint8_t *)&pwOrigMask[ tPoint.iY * iOrigMaskStride + tPoint.iX];
         #else
             uint16_t hwPixelAlpha = pchOrigMask[tPoint.iY * iOrigMaskStride
                                             +   tPoint.iX];
