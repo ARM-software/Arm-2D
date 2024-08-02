@@ -120,6 +120,10 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
 {
     arm_2d_control_node_t *ptNode = NULL;
     arm_2d_control_node_t *ptCandidate = NULL;
+    arm_2d_control_node_t *ptTheLastContainer = NULL;
+
+    /* tVisibleArea is an absolute region in the virtual screen */
+    arm_2d_region_t tVisibleArea = {0};
 
 
     if (NULL == ptHostTile) {
@@ -137,42 +141,85 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
         return NULL;
     }
 
+    /* this must be the root node */
+    assert(NULL == ptRoot->ptParent);
+
+    /* get the root node region which is a relative region of the host tile */
+    tVisibleArea = ptRoot->tRegion;
+
+    /* convert the tVisibleArea into the absolute region */
+    tVisibleArea.tLocation 
+            = arm_2d_get_absolute_location(ptHostTile, tVisibleArea.tLocation, true);
+    
+    if (tVisibleArea.tSize.iWidth <= 0 || tVisibleArea.tSize.iHeight <= 0) {
+        assert(false); /* The root node region should have a valid size */
+        tVisibleArea.tSize = ptHostTile->tRegion.tSize;
+    }
+
     do {
         arm_2d_region_t tControlRegion = ptNode->tRegion;
-        tControlRegion.tLocation 
-            = arm_2d_get_absolute_location(ptHostTile, tControlRegion.tLocation, true);
 
-        if (!arm_2d_is_point_inside_region(&tControlRegion, &tLocation)) {
+        /* the node address is an relative address inside the container */
+        tControlRegion.tLocation.iX += tVisibleArea.tLocation.iX;
+        tControlRegion.tLocation.iY += tVisibleArea.tLocation.iY;
 
-            /* out of region */
-            if (NULL == ptNode->ptNext) {
-                /* no more peers */
-                break;
-            }
+        bool bInsideControlRegion = false;
 
-            /* try next peer */
-            ptNode = ptNode->ptNext;
-            continue;
-        } else if (NULL == ptNode->ptChildList) {
+        /* we have to make sure the control's region is inside the visible area */
+        if (arm_2d_region_intersect(&tControlRegion, &tVisibleArea, &tControlRegion)) {
 
+            /* if it is inside the visible area, we check the touch point */
+            bInsideControlRegion = arm_2d_is_point_inside_region(&tControlRegion, &tLocation);
+        }
+
+        if (bInsideControlRegion) {
             /* update candidate */
             ptCandidate = ptNode;
+        }
 
-            /* try next peer */
+        if (NULL != ptNode->ptNext) {
+            /* There are more peers in the list, let's check them first */
             ptNode = ptNode->ptNext;
-            continue;
-
-        } else {
-
-            /* update candidate */
-            ptCandidate = ptNode;
-
-            /* it is a container */
-            ptNode = ptNode->ptChildList;
-
-            /* search the child nodes */
             continue;
         }
+
+        /* When we reach here, we have already visited all peers in the list */
+        if (NULL == ptCandidate) {
+            /* the touch point hits nothing, let's end the search and
+             * return NULL 
+             */
+            break;
+        }
+
+        if (ptCandidate == ptTheLastContainer) {
+            /* the only candidate is the container, i.e. the touch point hits 
+             * no controls in the container, let's return the container.
+             */
+            break;
+        }
+
+        if (NULL == ptCandidate->ptChildList) {
+            /* the touch point hits a leaf, let's return the candidate */
+            break;
+        }
+
+        /* When we reach here, the most recent candidate is a container, we 
+         * have to jump into it 
+         */
+        ptCandidate = ptNode;                   /* update candidate */
+        ptTheLastContainer = ptNode;            /* update the last container */
+
+        /* since we jump into a container, we have to update the visible 
+         * area to fit the container 
+         */
+        tVisibleArea.tLocation.iX += ptNode->tRegion.tLocation.iX;
+        tVisibleArea.tLocation.iY += ptNode->tRegion.tLocation.iY;
+
+        /* use the clipped size */
+        tVisibleArea.tSize = tControlRegion.tSize;
+
+        /* search the child nodes */
+        ptNode = ptNode->ptChildList;
 
     } while(true);
 
