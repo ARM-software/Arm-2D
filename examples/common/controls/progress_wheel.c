@@ -469,15 +469,15 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             arm_2d_location_t tPivot = tTargetCentre;
             if (this.iProgress < 250) {
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                tPivot.iY += 1;
+                tPivot.iY += 1 * !bNoScale;
             } else if (this.iProgress < 500) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
             } else if (this.iProgress < 750) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
             } else {
-                tPivot.iY += 1;
-                tPivot.iX += 1;
+                tPivot.iY += 1 * !bNoScale;
+                tPivot.iX += 1 * !bNoScale;
             }
 
             
