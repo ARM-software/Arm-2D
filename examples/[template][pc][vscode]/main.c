@@ -237,8 +237,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #else
     //scene_transform_loader,
     //scene_bubble_charging_loader,
-    //scene_basics_loader,
-
+    scene_basics_loader,
 #endif
 
 
