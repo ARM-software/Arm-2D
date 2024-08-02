@@ -362,7 +362,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             arm_2d_region_t tQuater = tRotationRegion;
             tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-
+            
             if (bNoScale) {
                 arm_2d_fill_colour_with_mask_x_mirror_and_opacity(
                     &__wheel,
@@ -371,6 +371,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     (__arm_2d_color_t){tWheelColour},
                     chOpacity);
             } else {
+                arm_2d_location_t tPivot = tTargetCentre;
+                tPivot.iY += 1;
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                                 &this.tOP[3],
                                                 ptileArcMask,
@@ -381,7 +383,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
-                                                &tTargetCentre);
+                                                &tPivot);
 
                 ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[3]);
             } while(0);
@@ -440,6 +442,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     (__arm_2d_color_t){tWheelColour},
                     chOpacity);
             } else {
+                arm_2d_location_t tPivot = tTargetCentre;
+                tPivot.iX += 1;
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                                 &this.tOP[2],
                                                 ptileArcMask,
@@ -450,7 +454,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
-                                                &tTargetCentre);
+                                                &tPivot);
                     
                 ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[2]);
             }
@@ -462,15 +466,22 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
             arm_2d_region_t tQuater = tRotationRegion;
 
+            arm_2d_location_t tPivot = tTargetCentre;
             if (this.iProgress < 250) {
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                tPivot.iY += 1;
             } else if (this.iProgress < 500) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
             } else if (this.iProgress < 750) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+            } else {
+                tPivot.iY += 1;
+                tPivot.iX += 1;
             }
 
+            
+            
             arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                             &this.tOP[0],
                                             ptileArcMask,
@@ -481,7 +492,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             this.fScale + 0.003f * bNoScale,
                                             tWheelColour,
                                             chOpacity,
-                                            &tTargetCentre);
+                                            &tPivot);
 
             ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[0]);
 
@@ -521,6 +532,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 ARM_2D_OP_WAIT_ASYNC();
 
             } else {
+                arm_2d_location_t tPivot = tTargetCentre;
+                tPivot.iY += 1;
+
                 arm_2dp_fill_colour_with_mask_opacity_and_transform(
                                                 &this.tOP[4],
                                                 ptileDotMask,
@@ -531,7 +545,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
-                                                &tTargetCentre);
+                                                &tPivot);
                 
                 ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[4]);
             }
