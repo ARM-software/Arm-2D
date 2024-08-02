@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.h"
  * Description:  the helper service header file for control management
  *
- * $Date:        11. July 2024
- * $Revision:    V.0.7.2
+ * $Date:        02. Aug 2024
+ * $Revision:    V.0.7.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -219,11 +219,13 @@ extern
  * 
  * \param[in] ptRoot the root of the target element tree
  * \param[in] tLocation the touch coordinate
+ * \param[in] ptHostTile the host tile that the control belonging to
  * \return arm_2d_control_node_t* the target node
  */
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
-                                                arm_2d_location_t tLocation);
+                                                arm_2d_location_t tLocation,
+                                                const arm_2d_tile_t *ptHostTile);
 
 #undef __ARM_2D_HELPER_CONTROL_IMPLEMENT__
 #undef __ARM_2D_HELPER_CONTROL_INHERIT__

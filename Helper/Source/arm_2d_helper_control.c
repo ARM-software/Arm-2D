@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.c"
  * Description:  the helper service source code for control management
  *
- * $Date:        11. July 2024
- * $Revision:    V.0.7.2
+ * $Date:        02. Aug 2024
+ * $Revision:    V.0.7.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -115,10 +115,20 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL = {
 ARM_NONNULL(1)
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
-                                                arm_2d_location_t tLocation)
+                                                arm_2d_location_t tLocation,
+                                                const arm_2d_tile_t *ptHostTile)
 {
     arm_2d_control_node_t *ptNode = NULL;
     arm_2d_control_node_t *ptContainer = NULL;
+
+    if (NULL == ptHostTile) {
+        ptHostTile = arm_2d_get_default_frame_buffer();
+
+        assert(NULL != ptHostTile);
+        if (NULL == ptHostTile) {
+            return NULL;
+        }
+    }
 
     ptNode = ptRoot;
 
@@ -127,7 +137,11 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
     }
 
     do {
-        if (!arm_2d_is_point_inside_region(&ptNode->tRegion, &tLocation)) {
+        arm_2d_region_t tControlRegion = ptNode->tRegion;
+        tControlRegion.tLocation 
+            = arm_2d_get_absolute_location(ptHostTile, tControlRegion.tLocation, true);
+
+        if (!arm_2d_is_point_inside_region(&tControlRegion, &tLocation)) {
             /* out of region */
             if (NULL == ptNode->ptNext) {
                 /* no more peers */
