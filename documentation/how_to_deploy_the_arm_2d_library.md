@@ -7,12 +7,16 @@ This document describes how to deploy the **Arm-2D** library to your existing MD
 - [1 How to get the Arm-2D](#1-how-to-get-the-arm-2d)
 - [2 How to Deploy Arm-2D](#2-how-to-deploy-arm-2d)
   - [2.1 Deploy Using CMSIS-Pack in MDK](#21-deploy-using-cmsis-pack-in-mdk)
+  - [2.2 Deploy Using CMake](#22-deploy-using-cmake)
+  - [2.3 Deploy Using Makefile](#23-deploy-using-makefile)
 - [3 Helper Services and Extras](#3-helper-services-and-extras)
   - [3.1 Preparation](#31-preparation)
   - [3.2 Add Display Adapter Service](#32-add-display-adapter-service)
-  - [3.3 Configue the Display Adapter Service](#33-configue-the-display-adapter-service)
+  - [3.3 Configure the Display Adapter Service](#33-configure-the-display-adapter-service)
   - [3.4 Implement the External Reference Timer](#34-implement-the-external-reference-timer)
   - [3.5 Verifying The Porting Result](#35-verifying-the-porting-result)
+  - [3.6 Asynchronous Flushing Mode](#36-asynchronous-flushing-mode)
+  - [3.7 Direct Mode (3FB Mode)](#37-direct-mode-3fb-mode)
 - [4 Example Projects](#4-example-projects)
 
 
