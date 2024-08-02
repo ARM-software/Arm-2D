@@ -975,9 +975,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1313404b1471f4dd485f4160178e10e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga1313404b1471f4dd485f4160178e10e7">arm_2d_helper_control_enum_depose</a> (<a class="el" href="group__gHelper.html#structarm__2d__control__enumerator__t">arm_2d_control_enumerator_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga1313404b1471f4dd485f4160178e10e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">depose (de-initialize) a given enumerator  <a href="group__gHelper.html#ga1313404b1471f4dd485f4160178e10e7">More...</a><br /></td></tr>
 <tr class="separator:ga1313404b1471f4dd485f4160178e10e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga005aacb155d4d4ef61a73410b4a747ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac">arm_2d_helper_control_find_node_with_location</a> (<a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptRoot, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tLocation)</td></tr>
-<tr class="memdesc:ga005aacb155d4d4ef61a73410b4a747ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">find the top node on the screen with a given touch location.  <a href="group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac">More...</a><br /></td></tr>
-<tr class="separator:ga005aacb155d4d4ef61a73410b4a747ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad83d1132074850984e06b5a326bad62b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad83d1132074850984e06b5a326bad62b">arm_2d_helper_control_find_node_with_location</a> (<a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptRoot, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tLocation, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptHostTile)</td></tr>
+<tr class="memdesc:gad83d1132074850984e06b5a326bad62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">find the top node on the screen with a given touch location.  <a href="group__gHelper.html#gad83d1132074850984e06b5a326bad62b">More...</a><br /></td></tr>
+<tr class="separator:gad83d1132074850984e06b5a326bad62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafef8afe9b381edc7b307ef22b66afae4"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">arm_2d_helper_get_utf8_byte_valid_length</a> (const uint8_t *pchChar)</td></tr>
 <tr class="memdesc:gafef8afe9b381edc7b307ef22b66afae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">More...</a><br /></td></tr>
 <tr class="separator:gafef8afe9b381edc7b307ef22b66afae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -11043,8 +11043,8 @@ sometimes, we want to force transform helper to update dirty regions even if bot
 
 </div>
 </div>
-<a id="ga005aacb155d4d4ef61a73410b4a747ac" name="ga005aacb155d4d4ef61a73410b4a747ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga005aacb155d4d4ef61a73410b4a747ac">&#9670;&nbsp;</a></span>arm_2d_helper_control_find_node_with_location()</h2>
+<a id="gad83d1132074850984e06b5a326bad62b" name="gad83d1132074850984e06b5a326bad62b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad83d1132074850984e06b5a326bad62b">&#9670;&nbsp;</a></span>arm_2d_helper_control_find_node_with_location()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -11059,7 +11059,13 @@ sometimes, we want to force transform helper to update dirty regions even if bot
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td>
-          <td class="paramname"><em>tLocation</em>&#160;</td>
+          <td class="paramname"><em>tLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptHostTile</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -11074,6 +11080,7 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptRoot</td><td>the root of the target element tree </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tLocation</td><td>the touch coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptHostTile</td><td>the host tile that the control belonging to </td></tr>
   </table>
   </dd>
 </dl>
