@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        15. July 2024
- * $Revision:    V.1.8.2
+ * $Date:        2 Aug 2024
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1803,7 +1803,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
         //! use target region instead
         //this.Target.ptRegion = &(this.Target.ptTile->tRegion);
         
-        tTargetCanvas.tSize = (*this.Target.ptRegion).tSize;
+        tTargetCanvas.tSize = this.Target.ptTile->tRegion.tSize;
     } else {
         tTargetCanvas = *this.Target.ptRegion;
     }
