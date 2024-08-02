@@ -121,6 +121,8 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
     arm_2d_control_node_t *ptNode = NULL;
     arm_2d_control_node_t *ptContainer = NULL;
 
+    bool bFoundANode = false;
+
     if (NULL == ptHostTile) {
         ptHostTile = arm_2d_get_default_frame_buffer();
 
@@ -144,6 +146,11 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
         if (!arm_2d_is_point_inside_region(&tControlRegion, &tLocation)) {
             /* out of region */
             if (NULL == ptNode->ptNext) {
+
+                if (!bFoundANode) {
+                    return NULL;
+                }
+
                 /* no more peers */
                 return ptContainer;
             }
@@ -152,9 +159,11 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
             ptNode = ptNode->ptNext;
             continue;
         } else if (NULL == ptNode->ptChildList) {
+            bFoundANode = true;
             /* it is the one */
             break;
         } else {
+            bFoundANode = true;
             /* it is a container */
             ptContainer = ptNode;
             ptNode = ptNode->ptChildList;
