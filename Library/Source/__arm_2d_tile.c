@@ -233,7 +233,9 @@ bool arm_2d_is_point_inside_region( const arm_2d_region_t *ptRegion,
     assert(ptPoint != NULL);
     
     do {
-        if          (ptPoint->iX < ptRegion->tLocation.iX) {
+        if          ((0 == ptRegion->tSize.iWidth) || (0 == ptRegion->tSize.iHeight)) {
+            break;
+        } else if   (ptPoint->iX < ptRegion->tLocation.iX) {
             break;
         } else if   (ptPoint->iY < ptRegion->tLocation.iY) {
             break;
