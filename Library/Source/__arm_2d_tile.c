@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        13. June 2024
- * $Revision:    V.1.4.6
+ * $Date:        03. Aug 2024
+ * $Revision:    V.1.4.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -126,6 +126,13 @@ bool arm_2d_region_intersect(   const arm_2d_region_t *ptRegionIn0,
 {
     assert(ptRegionIn0 != NULL);
     assert(ptRegionIn1 != NULL);
+
+    if (    (ptRegionIn0->tSize.iWidth == 0)
+        ||  (ptRegionIn0->tSize.iHeight == 0)
+        ||  (ptRegionIn1->tSize.iWidth == 0)
+        ||  (ptRegionIn1->tSize.iHeight == 0)) {
+        return false;
+    }
 
     do {
         arm_2d_location_t tLocationIn0End = {
