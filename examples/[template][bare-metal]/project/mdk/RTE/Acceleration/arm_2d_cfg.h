@@ -49,15 +49,14 @@ extern "C" {
 #   define __ARM_2D_HAS_ASYNC__                                     0
 #endif
 
-
 // <o>Enable Anti-Alias support for all transform operations.
 //     <0=>     No Anti-Alias
-//     <1=>     Use 4-points-sampling Anti-Alias
-//     <2=>     Use Triangle-Sampling Anti-Alias
+//     <1=>     Use 4x Supersampling Anti-Alias (4xSSAA)
+//     <2=>     Use 2x Supersampling Anti-Alias (2xSSAA)
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      2
+#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      1
 #endif
 
 // <q>Enable support for accessing individual colour channels
@@ -70,7 +69,7 @@ extern "C" {
 // <q>Enable ccca8888(ARGB8888) implicit conversion 
 // <i> This feature is disabled by default to save code size
 #ifndef __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-#   define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__      0
+#   define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__      1
 #endif
 
 // <q>Improve the Quality of IIR Blur

@@ -64,7 +64,7 @@
 /*============================ MACROS ========================================*/
 
 #ifndef LCD_TARGET_FPS
-#   define LCD_TARGET_FPS       30
+#   define LCD_TARGET_FPS       60
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -271,7 +271,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_console_window_loader,
     scene_alarm_clock_loader,
     scene_histogram_loader,
-    //scene_bubble_charging_loader,
+    scene_bubble_charging_loader,
     scene_gas_gauge_loader,
     scene_listview_loader,
     scene_menu_loader,
@@ -279,6 +279,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_panel_loader,
     scene_meter_loader,
     scene_fitness_loader,
+    scene_transform_loader,
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     scene_animate_background_loader,
     scene_virtual_resource_loader,
