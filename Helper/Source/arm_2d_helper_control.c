@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.c"
  * Description:  the helper service source code for control management
  *
- * $Date:        03. Aug 2024
- * $Revision:    V.0.7.4
+ * $Date:        08. Aug 2024
+ * $Revision:    V.0.7.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -146,7 +146,7 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
     do {
         arm_2d_region_t tControlRegion = ptNode->tRegion;
 
-        /* the node address is an relative address inside the container */
+        /* the node coordinate is an relative coordinate inside the container */
         tControlRegion.tLocation.iX += tVisibleArea.tLocation.iX;
         tControlRegion.tLocation.iY += tVisibleArea.tLocation.iY;
 
@@ -193,20 +193,23 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
         /* When we reach here, the most recent candidate is a container, we 
          * have to jump into it 
          */
-        ptCandidate = ptNode;                   /* update candidate */
-        ptTheLastContainer = ptNode;            /* update the last container */
+        ptTheLastContainer = ptCandidate;       /* update the last container */
 
-        /* since we jump into a container, we have to update the visible 
-         * area to fit the container 
-         */
-        tVisibleArea.tLocation.iX += ptNode->tRegion.tLocation.iX;
-        tVisibleArea.tLocation.iY += ptNode->tRegion.tLocation.iY;
+        /* read the candidate region */
+        tControlRegion = ptCandidate->tRegion;
 
-        /* use the clipped size */
-        tVisibleArea.tSize = tControlRegion.tSize;
+        /* the candidate coordinate is an relative coordinate inside the container */
+        tControlRegion.tLocation.iX += tVisibleArea.tLocation.iX;
+        tControlRegion.tLocation.iY += tVisibleArea.tLocation.iY;
+
+        /* update visible area */
+        if (!arm_2d_region_intersect(&tControlRegion, &tVisibleArea, &tVisibleArea)) {
+            /* this should not happen */
+            assert(false);
+        }
 
         /* search the child nodes */
-        ptNode = ptNode->ptChildList;
+        ptNode = ptCandidate->ptChildList;
 
     } while(true);
 
