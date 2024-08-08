@@ -18,7 +18,7 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        ___arm_2d_fill_colour_with_alpha_gradient_and_mask_helium.c
+ * Title:        __arm_2d_fill_colour_with_alpha_gradient_and_mask_helium.c
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *               -and-mask
  *
