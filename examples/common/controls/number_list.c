@@ -162,7 +162,7 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
         __printf(ptThis,
                  &__top_container,
                  this.tNumListCFG.pchFormatString,
-                 this.tNumListCFG.nStart + ptItem->hwID * this.tNumListCFG.iDelta);
+                 number_list_get_item_number(ptThis, ptItem->hwID));
     
         arm_lcd_text_set_target_framebuffer(NULL);
     }
@@ -435,11 +435,19 @@ void number_list_move_selection( number_list_t *ptThis,
                                     nFinishInMs);
 }
 
-extern
+
 ARM_NONNULL(1)
 uint16_t number_list_get_selected_item_id(number_list_t *ptThis)
 {
     return __arm_2d_list_core_get_selected_item_id(&this.use_as____arm_2d_list_core_t);
+}
+
+
+ARM_NONNULL(1)
+int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t iItemID)
+{
+    assert(NULL != ptThis);
+    return this.tNumListCFG.nStart + iItemID * this.tNumListCFG.iDelta;
 }
 
 #if defined(__clang__)

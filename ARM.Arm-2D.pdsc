@@ -441,7 +441,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.7.11" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.7.12" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -660,12 +660,12 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cversion="1.0.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cversion="1.0.1" condition="Arm-2D-Demos">
           <description>How to create a list with small reading windows.  </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_hollow_out_list.c" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_hollow_out_list.c" attr="config" version="1.0.1" />
             <file category="sourceC"     name="examples/demos/hollow_out_mask.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_hollow_out_list.h" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_hollow_out_list.h" attr="config" version="1.0.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Hollow_Out_List
