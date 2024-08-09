@@ -361,7 +361,6 @@ arm_fsm_rt_t __ruler_number_list_draw_central_list_item(
             
             arm_lcd_text_set_scale(1.5);
 
-            arm_lcd_text_reset_display_region_tracking();
             arm_lcd_printf("%02d", number_list_get_item_number(ptThis, ptItem->hwID));
             
             ARM_2D_OP_WAIT_ASYNC();
