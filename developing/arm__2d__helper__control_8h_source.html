@@ -292,8 +292,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__control_8h_source.htm
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="comment"> * \param[in] ptRoot the root of the target element tree</span></div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="comment"> * \return arm_2d_err_t </span></div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>ARM_NONNULL(1,2)</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>extern</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>ARM_NONNULL(1,2)</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga5c85d8060c0b4e2535a7628c9d4f7edf">  188</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> <a class="code hl_function" href="group__gHelper.html#ga5c85d8060c0b4e2535a7628c9d4f7edf" title="Initialize a enumerator for the target element tree with a given   traversal policy.">arm_2d_helper_control_enum_init</a>(</div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__enumerator__t">arm_2d_control_enumerator_t</a> *ptThis,</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                            const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__enumeration__policy__t">arm_2d_control_enumeration_policy_t</a> *ptPolicy,</div>
@@ -305,8 +305,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__control_8h_source.htm
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment"> * \param[in] ptThis the target enumerator</span></div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="comment"> * \return arm_2d_control_node_t* the next node</span></div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>extern</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>extern</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>ARM_NONNULL(1)</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga0bbda22fc8a0997d53f4e6ac1313735b">  201</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *<a class="code hl_function" href="group__gHelper.html#ga0bbda22fc8a0997d53f4e6ac1313735b" title="get the next node of the target enumerator">arm_2d_helper_control_enum_get_next_node</a>(</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__enumerator__t">arm_2d_control_enumerator_t</a> *ptThis);</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="comment"></span> </div>
@@ -316,35 +316,35 @@ $(document).ready(function(){initNavTree('arm__2d__helper__control_8h_source.htm
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="comment"> * \param[in] ptThis the target enumerator</span></div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="comment"> * \return arm_2d_err_t the operation result</span></div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>extern</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>extern</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>ARM_NONNULL(1)</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga1313404b1471f4dd485f4160178e10e7">  212</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> <a class="code hl_function" href="group__gHelper.html#ga1313404b1471f4dd485f4160178e10e7" title="depose (de-initialize) a given enumerator">arm_2d_helper_control_enum_depose</a>(</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                                            <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__enumerator__t">arm_2d_control_enumerator_t</a> *ptThis);</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>extern<span class="comment"></span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="comment"> * \brief find the top node on the screen with a given touch location. </span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="comment"> * \param[in] ptRoot the root of the target element tree</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="comment"> * \param[in] tLocation the touch coordinate</span></div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="comment"> * \return arm_2d_control_node_t* the target node</span></div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment"></span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="comment"> * \brief find the top node on the screen with a given touch location. </span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="comment"> * \param[in] ptRoot the root of the target element tree</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="comment"> * \param[in] tLocation the touch coordinate</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="comment"> * \return arm_2d_control_node_t* the target node</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>extern</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>ARM_NONNULL(1)</div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac">  224</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *<a class="code hl_function" href="group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac" title="find the top node on the screen with a given touch location.">arm_2d_helper_control_find_node_with_location</a>(</div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                                                <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptRoot, </div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                                                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> tLocation);</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>extern</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>ARM_NONNULL(1,2)<span class="comment"></span></div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="comment"> * \brief get the absolute region of a given target control in an element tree</span></div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="comment"> * \param[in] ptNode the target control in an element tree</span></div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="comment"> * \param[in] ptOutRegion the object buffer to hold the result</span></div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="comment"> * \param[in] bClip whether clip the control region during the calculation</span></div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment"> * \retval NULL the target control is out of the container area</span></div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment"> * \retval !NULL the ptOutRegion</span></div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="comment"></span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="comment"> * \brief get the absolute region of a given target control in an element tree</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="comment"> * \param[in] ptNode the target control in an element tree</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment"> * \param[in] ptOutRegion the object buffer to hold the result</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="comment"> * \param[in] bClip whether clip the control region during the calculation</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="comment"> * \retval NULL the target control is out of the container area</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="comment"> * \retval !NULL the ptOutRegion</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>extern</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>ARM_NONNULL(1,2)</div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8">  239</a></span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *<a class="code hl_function" href="group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8" title="get the absolute region of a given target control in an element tree">arm_2d_helper_control_get_absolute_region</a>(</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                                                <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptNode,</div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                                                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptOutRegion,</div>
