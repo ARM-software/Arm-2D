@@ -412,6 +412,7 @@ var group__gHelper =
     [ "arm_2d_helper_control_enum_get_next_node", "group__gHelper.html#ga0bbda22fc8a0997d53f4e6ac1313735b", null ],
     [ "arm_2d_helper_control_enum_depose", "group__gHelper.html#ga1313404b1471f4dd485f4160178e10e7", null ],
     [ "arm_2d_helper_control_find_node_with_location", "group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac", null ],
+    [ "arm_2d_helper_control_get_absolute_region", "group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8", null ],
     [ "arm_2d_helper_get_utf8_byte_valid_length", "group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4", null ],
     [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7", null ],
     [ "arm_2d_helper_utf8_to_unicode", "group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7", null ],

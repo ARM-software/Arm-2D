@@ -978,6 +978,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga005aacb155d4d4ef61a73410b4a747ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac">arm_2d_helper_control_find_node_with_location</a> (<a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptRoot, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tLocation)</td></tr>
 <tr class="memdesc:ga005aacb155d4d4ef61a73410b4a747ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">find the top node on the screen with a given touch location.  <a href="group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac">More...</a><br /></td></tr>
 <tr class="separator:ga005aacb155d4d4ef61a73410b4a747ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29e7743d6fb144033b12d5a1a408c6b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8">arm_2d_helper_control_get_absolute_region</a> (<a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptNode, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptOutRegion, bool bClip)</td></tr>
+<tr class="memdesc:ga29e7743d6fb144033b12d5a1a408c6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the absolute region of a given target control in an element tree  <a href="group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8">More...</a><br /></td></tr>
+<tr class="separator:ga29e7743d6fb144033b12d5a1a408c6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafef8afe9b381edc7b307ef22b66afae4"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">arm_2d_helper_get_utf8_byte_valid_length</a> (const uint8_t *pchChar)</td></tr>
 <tr class="memdesc:gafef8afe9b381edc7b307ef22b66afae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">More...</a><br /></td></tr>
 <tr class="separator:gafef8afe9b381edc7b307ef22b66afae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -11078,6 +11081,57 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_control_node_t* the target node </dd></dl>
+
+</div>
+</div>
+<a id="ga29e7743d6fb144033b12d5a1a408c6b8" name="ga29e7743d6fb144033b12d5a1a408c6b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga29e7743d6fb144033b12d5a1a408c6b8">&#9670;&nbsp;</a></span>arm_2d_helper_control_get_absolute_region()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> * arm_2d_helper_control_get_absolute_region </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *&#160;</td>
+          <td class="paramname"><em>ptNode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOutRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bClip</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the absolute region of a given target control in an element tree </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptNode</td><td>the target control in an element tree </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOutRegion</td><td>the object buffer to hold the result </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bClip</td><td>whether clip the control region during the calculation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NULL</td><td>the target control is out of the container area </td></tr>
+    <tr><td class="paramname">!NULL</td><td>the ptOutRegion </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
