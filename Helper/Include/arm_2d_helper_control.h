@@ -183,8 +183,8 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL;
  * \param[in] ptRoot the root of the target element tree
  * \return arm_2d_err_t 
  */
-ARM_NONNULL(1,2)
 extern
+ARM_NONNULL(1,2)
 arm_2d_err_t arm_2d_helper_control_enum_init(
                             arm_2d_control_enumerator_t *ptThis,
                             const arm_2d_control_enumeration_policy_t *ptPolicy,
@@ -196,8 +196,8 @@ arm_2d_err_t arm_2d_helper_control_enum_init(
  * \param[in] ptThis the target enumerator
  * \return arm_2d_control_node_t* the next node
  */
-ARM_NONNULL(1)
 extern
+ARM_NONNULL(1)
 arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis);
 
@@ -207,13 +207,11 @@ arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
  * \param[in] ptThis the target enumerator
  * \return arm_2d_err_t the operation result
  */
-ARM_NONNULL(1)
 extern
+ARM_NONNULL(1)
 arm_2d_err_t arm_2d_helper_control_enum_depose(
                                             arm_2d_control_enumerator_t *ptThis);
 
-ARM_NONNULL(1)
-extern
 /*!
  * \brief find the top node on the screen with a given touch location. 
  * 
@@ -221,12 +219,12 @@ extern
  * \param[in] tLocation the touch coordinate
  * \return arm_2d_control_node_t* the target node
  */
+extern
+ARM_NONNULL(1)
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
                                                 arm_2d_location_t tLocation);
 
-extern
-ARM_NONNULL(1,2)
 /*!
  * \brief get the absolute region of a given target control in an element tree
  * 
@@ -236,6 +234,8 @@ ARM_NONNULL(1,2)
  * \retval NULL the target control is out of the container area
  * \retval !NULL the ptOutRegion
  */
+extern
+ARM_NONNULL(1,2)
 arm_2d_region_t *arm_2d_helper_control_get_absolute_region(
                                                 arm_2d_control_node_t *ptNode,
                                                 arm_2d_region_t *ptOutRegion,
