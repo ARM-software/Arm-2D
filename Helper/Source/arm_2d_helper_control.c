@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.c"
  * Description:  the helper service source code for control management
  *
- * $Date:        08. Aug 2024
- * $Revision:    V.0.7.5
+ * $Date:        11. Aug 2024
+ * $Revision:    V.0.7.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -51,6 +51,7 @@
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #   pragma clang diagnostic ignored "-Winitializer-overrides"
+#   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -112,6 +113,46 @@ ARM_2D_CONTROL_ENUMERATION_POLICY_BOTTOM_UP_TRAVERSAL = {
 };
 /*============================ IMPLEMENTATION ================================*/
 
+ARM_NONNULL(1,2)
+arm_2d_region_t *arm_2d_helper_control_get_absolute_region(arm_2d_control_node_t *ptNode,
+                                                           arm_2d_region_t *ptOutRegion,
+                                                           bool bClip)
+{
+    if (NULL == ptNode || NULL == ptOutRegion) {
+        return NULL;
+    }
+
+    /* get the initial control relative region */
+    *ptOutRegion = ptNode->tRegion;
+
+    do {
+        arm_2d_control_node_t *ptParentNode = ptNode->ptParent;
+        if (NULL == ptParentNode) {
+            /* reach the root */
+            break;
+        }
+        /* clip with the parent canvas first */
+        arm_2d_region_t tParentCanvas = {
+            .tSize = ptParentNode->tRegion.tSize,
+        };
+
+        if (bClip) {
+            if (!arm_2d_region_intersect(ptOutRegion, &tParentCanvas, ptOutRegion)) {
+                /* out of container */
+                return NULL;
+            }
+        }
+
+        ptOutRegion->tLocation.iX += ptParentNode->tRegion.tLocation.iX;
+        ptOutRegion->tLocation.iY += ptParentNode->tRegion.tLocation.iY;
+
+        ptNode = ptParentNode;
+
+    } while(true);
+
+    return ptOutRegion;
+}
+
 ARM_NONNULL(1)
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
@@ -133,28 +174,11 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
     /* this must be the root node */
     assert(NULL == ptRoot->ptParent);
 
-    /* get the root node region which is a relative region of the host tile
-     * IMPORTANT: The region of the control root MUST be an absolute region
-     */
-    tVisibleArea = ptRoot->tRegion;
-    
-    if (tVisibleArea.tSize.iWidth <= 0 || tVisibleArea.tSize.iHeight <= 0) {
-        assert(false); /* The root node region should have a valid size */
-        return NULL;
-    }
-
     do {
-        arm_2d_region_t tControlRegion = ptNode->tRegion;
-
-        /* the node coordinate is an relative coordinate inside the container */
-        tControlRegion.tLocation.iX += tVisibleArea.tLocation.iX;
-        tControlRegion.tLocation.iY += tVisibleArea.tLocation.iY;
-
+        arm_2d_region_t tControlRegion;
         bool bInsideControlRegion = false;
 
-        /* we have to make sure the control's region is inside the visible area */
-        if (arm_2d_region_intersect(&tControlRegion, &tVisibleArea, &tControlRegion)) {
-
+        if (NULL != arm_2d_helper_control_get_absolute_region(ptNode, &tControlRegion, true)) {
             /* if it is inside the visible area, we check the touch point */
             bInsideControlRegion = arm_2d_is_point_inside_region(&tControlRegion, &tLocation);
         }
@@ -194,19 +218,6 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
          * have to jump into it 
          */
         ptTheLastContainer = ptCandidate;       /* update the last container */
-
-        /* read the candidate region */
-        tControlRegion = ptCandidate->tRegion;
-
-        /* the candidate coordinate is an relative coordinate inside the container */
-        tControlRegion.tLocation.iX += tVisibleArea.tLocation.iX;
-        tControlRegion.tLocation.iY += tVisibleArea.tLocation.iY;
-
-        /* update visible area */
-        if (!arm_2d_region_intersect(&tControlRegion, &tVisibleArea, &tVisibleArea)) {
-            /* this should not happen */
-            assert(false);
-        }
 
         /* search the child nodes */
         ptNode = ptCandidate->ptChildList;

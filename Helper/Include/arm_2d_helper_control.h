@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.h"
  * Description:  the helper service header file for control management
  *
- * $Date:        08. Aug 2024
- * $Revision:    V.0.7.5
+ * $Date:        11. Aug 2024
+ * $Revision:    V.0.7.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -224,6 +224,22 @@ extern
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
                                                 arm_2d_location_t tLocation);
+
+extern
+ARM_NONNULL(1,2)
+/*!
+ * \brief get the absolute region of a given target control in an element tree
+ * 
+ * \param[in] ptNode the target control in an element tree
+ * \param[in] ptOutRegion the object buffer to hold the result
+ * \param[in] bClip whether clip the control region during the calculation
+ * \retval NULL the target control is out of the container area
+ * \retval !NULL the ptOutRegion
+ */
+arm_2d_region_t *arm_2d_helper_control_get_absolute_region(
+                                                arm_2d_control_node_t *ptNode,
+                                                arm_2d_region_t *ptOutRegion,
+                                                bool bClip);
 
 #undef __ARM_2D_HELPER_CONTROL_IMPLEMENT__
 #undef __ARM_2D_HELPER_CONTROL_INHERIT__
