@@ -91,7 +91,7 @@ extern "C"
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask1)(
+void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask)(
     uint16_t *__RESTRICT phwTarget, int16_t iTargetStride, uint8_t *__RESTRICT pchMask,
     int16_t iMaskStride, arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
     arm_2d_region_t *ptTargetRegionOnVirtualScreen, uint16_t hwColour,
