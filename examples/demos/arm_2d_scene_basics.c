@@ -170,13 +170,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
         
         /* following code is just a demo, you can remove them */
     
-        arm_2d_fill_colour_with_3pts_alpha_gradient(
+        arm_2d_fill_colour_with_4pts_alpha_gradient(
                                             ptTile, 
                                             &__top_canvas, 
                                             (__arm_2d_color_t){GLCD_COLOR_GREEN},
-                                            (arm_2d_alpha_samples_3pts_t) {
-                                                0, 255,
-                                                128,
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                {0, 255,
+                                                128, 64},
                                             });
 
     #if 0
