@@ -162,9 +162,6 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
     arm_2d_control_node_t *ptCandidate = NULL;
     arm_2d_control_node_t *ptTheLastContainer = NULL;
 
-    /* tVisibleArea is an absolute region in the virtual screen */
-    arm_2d_region_t tVisibleArea = {0};
-
     ptNode = ptRoot;
 
     if (NULL == ptNode) {
