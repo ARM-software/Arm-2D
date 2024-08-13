@@ -148,8 +148,25 @@ typedef union {
 /*============================ PROTOTYPES ====================================*/
 
 /*----------------------------------------------------------------------------*
- * RGB565 channels extraction/packing                                         *
+ * Colour channels extraction/packing                                         *
  *----------------------------------------------------------------------------*/
+
+/*!
+ * \brief unpack a 8bit colour into a given __arm_2d_color_fast_rgb_t object
+ * \param[in] wColour the target brga888 colour
+ * \param[in] ptRGB a __arm_2d_color_fast_rgb_t object
+ */
+ARM_NONNULL(2)
+__STATIC_INLINE void __arm_2d_gray8_unpack( uint8_t chColor,
+                                            __arm_2d_color_fast_rgb_t * ptRGB)
+{
+    assert(NULL != ptRGB);
+
+    ptRGB->B = (uint16_t) chColor;
+    ptRGB->G = (uint16_t) chColor;
+    ptRGB->R = (uint16_t) chColor;
+    ptRGB->A = (uint16_t) 0xFF;
+}
 
 /*!
  * \brief unpack a rgb565 colour into a given __arm_2d_color_fast_rgb_t object
@@ -202,7 +219,7 @@ __STATIC_INLINE uint8_t __arm_2d_gray8_pack(__arm_2d_color_fast_rgb_t * ptRGB)
 {
     assert(NULL != ptRGB);
     
-    uint16_t tGrayScale = (ptRGB->R + ptRGB->G + ptRGB->B) / 3;
+    uint16_t tGrayScale = (ptRGB->R * 77 + ptRGB->G * 151 + ptRGB->B * 28) >> 8;
 
     return (uint8_t)(   (tGrayScale <= 255) * tGrayScale 
                     +   (tGrayScale > 255) * 255);
