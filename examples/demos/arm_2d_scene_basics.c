@@ -200,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     
                     arm_2d_op_wait_async(NULL);
 
-                #if 1
+                #if 0
                     /* draw the cmsis logo in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
                     #if 0
@@ -229,7 +229,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                 #else
                     /* draw the cmsis logo using mask in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
-                    #if 1
+                    #if 0
                         arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                             ptTile, 
                                                             &__centre_region, 
@@ -237,12 +237,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                             (__arm_2d_color_t){GLCD_COLOR_BLACK},
                                                             128);
                     #else
-                        arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
-                                                            ptTile, 
-                                                            &__centre_region, 
-                                                            &c_tileCMSISLogoMask2, 
-                                                            (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                            128);
+                        arm_2d_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(
+                                            ptTile, 
+                                            &__centre_region,
+                                            &c_tileCMSISLogoMask,
+                                            (__arm_2d_color_t){GLCD_COLOR_BLUE},
+                                            255,
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                {64, 0,
+                                                128, 255},
+                                            });
+                        
                     #endif
                     }
                 #endif
