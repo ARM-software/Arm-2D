@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__gHelper.html#ada5ebe34cc1e12b0d9ac77d0ba1e983b":[11,7,14,1],
 "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca":[11,7,19,0],
 "group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37":[11,7,33,0],
 "group__gHelper.html#adfd244e234641aff86db898b9a0120cf":[11,7,2,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "group__gHelper.html#struct____arm__2d__fifo__reader__pointer":[11,7,36],
 "group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature":[11,7,38],
 "group__gHelper.html#struct____arm__2d__list__core__cfg__t":[11,7,8],
-"group__gHelper.html#struct____arm__2d__list__core__t":[11,7,9],
-"group__gHelper.html#struct____arm__2d__list__work__area__t":[11,7,7]
+"group__gHelper.html#struct____arm__2d__list__core__t":[11,7,9]
 };
