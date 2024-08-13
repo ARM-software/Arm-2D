@@ -22,8 +22,8 @@
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *               -and-mask
  *
- * $Date:        23. July 2024
- * $Revision:    V.0.9.1
+ * $Date:        13. Aug 2024
+ * $Revision:    V.0.5.2
  *
  * Target Processor:  Cortex-M cores
  *

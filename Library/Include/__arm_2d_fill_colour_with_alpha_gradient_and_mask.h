@@ -22,8 +22,8 @@
  * Description:  The header file of APIs for colour-filling-with-alpha-gradient
  *               -and-mask
  *
- * $Date:        23. July 2024
- * $Revision:    V.0.5.1
+ * $Date:        13. Aug 2024
+ * $Revision:    V.0.5.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -63,18 +63,21 @@ extern "C" {
 #define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(             \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(        \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_gray8_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(     \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -82,6 +85,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -89,18 +93,21 @@ extern "C" {
 #define arm_2d_gray8_fill_colour_with_3pts_alpha_gradient_and_mask(             \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_gray8_fill_colour_with_3pts_alpha_gradient_and_mask(        \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_gray8_fill_colour_with_3pts_alpha_gradient_mask_and_opacity(     \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -108,6 +115,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -115,18 +123,21 @@ extern "C" {
 #define arm_2d_gray8_fill_colour_with_vertical_alpha_gradient_and_mask(         \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient_and_mask(    \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_gray8_fill_colour_with_vertical_alpha_gradient_mask_and_opacity( \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -134,6 +145,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -141,18 +153,21 @@ extern "C" {
 #define arm_2d_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask(       \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask(  \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_gray8_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity(\
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -160,6 +175,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -167,18 +183,21 @@ extern "C" {
 #define arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask(            \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask(       \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_rgb565_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(    \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -186,6 +205,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -193,18 +213,21 @@ extern "C" {
 #define arm_2d_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask(            \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask(       \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_rgb565_fill_colour_with_3pts_alpha_gradient_mask_and_opacity(    \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -212,6 +235,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -219,18 +243,21 @@ extern "C" {
 #define arm_2d_rgb565_fill_colour_with_vertical_alpha_gradient_and_mask(        \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_rgb565_fill_colour_with_vertical_alpha_gradient_and_mask(   \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_rgb565_fill_colour_with_vertical_alpha_gradient_mask_and_opacity(\
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -238,6 +265,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -245,18 +273,21 @@ extern "C" {
 #define arm_2d_rgb565_fill_colour_with_horizontal_alpha_gradient_and_mask(      \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_rgb565_fill_colour_with_horizontal_alpha_gradient_and_mask( \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_rgb565_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity(\
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -264,6 +295,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -271,18 +303,21 @@ extern "C" {
 #define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(           \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(       \
+            arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(      \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_cccn888_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -290,6 +325,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -297,18 +333,21 @@ extern "C" {
 #define arm_2d_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(           \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
-            arm_2dp_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(       \
+            arm_2dp_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(      \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_cccn888_fill_colour_with_3pts_alpha_gradient_mask_and_opacity(   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -316,6 +355,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -323,18 +363,21 @@ extern "C" {
 #define arm_2d_cccn888_fill_colour_with_vertical_alpha_gradient_and_mask(       \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_cccn888_fill_colour_with_vertical_alpha_gradient_and_mask(  \
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_cccn888_fill_colour_with_vertical_alpha_gradient_mask_and_opacity(\
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -342,6 +385,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
@@ -349,18 +393,21 @@ extern "C" {
 #define arm_2d_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask(     \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     ...)            /*   sample points     */   \
             arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask(\
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         __VA_ARGS__)
 
 #define arm_2d_cccn888_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity(\
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
+                                    __MASK_ADDR,    /*   source mask address */ \
                                     __COLOUR,       /*   target colour     */   \
                                     __OPACITY,      /*   opacity           */   \
                                     ...)            /*   sample points     */   \
@@ -368,6 +415,7 @@ extern "C" {
                                                         NULL,                   \
                                                         (__TARGET_ADDR),        \
                                                         (__REGION_ADDR),        \
+                                                        (__MASK_ADDR),          \
                                                         (__COLOUR),             \
                                                         (__OPACITY),            \
                                                         __VA_ARGS__)
