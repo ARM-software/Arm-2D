@@ -91,54 +91,66 @@ extern "C"
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask)(
-    uint16_t *__RESTRICT phwTarget, int16_t iTargetStride, uint8_t *__RESTRICT pchMask,
-    int16_t iMaskStride, arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
-    arm_2d_region_t *ptTargetRegionOnVirtualScreen, uint16_t hwColour,
-    arm_2d_alpha_samples_4pts_t tSamplePoints)
+void 
+__MVE_WRAPPER(
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask)(
+                        uint16_t *__RESTRICT phwTarget, 
+                        int16_t iTargetStride, 
+                        uint8_t *__RESTRICT pchMask,
+                        int16_t iMaskStride, 
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
+                        uint16_t hwColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
 
     /* calculate the offset between the target region and the valid region */
     arm_2d_location_t tOffset = {
-        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
-        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX 
+            - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY 
+            - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
     int32_t q16YRatioLeft, q16YRatioRight;
-
+    
     /* calculate Y Ratios */
-    do
-    {
+    do {
         int16_t iHeight = ptTargetRegionOnVirtualScreen->tSize.iHeight;
 
-        q16YRatioLeft =
-            (((int32_t)(tSamplePoints.chBottomLeft - tSamplePoints.chTopLeft)) << 16) / iHeight;
+        q16YRatioLeft = (   (   (int32_t)(tSamplePoints.chBottomLeft 
+                            -   tSamplePoints.chTopLeft)) 
+                            << 16)
+                        / iHeight;
 
-        q16YRatioRight =
-            (((int32_t)(tSamplePoints.chBottomRight - tSamplePoints.chTopRight)) << 16) / iHeight;
+        q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
+                                -   tSamplePoints.chTopRight)) 
+                                << 16) 
+                       / iHeight;
     } while (0);
 
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
-    int32_t TopDiff = (((int32_t)tSamplePoints.chTopRight - (int32_t)tSamplePoints.chTopLeft) << 16);
+    int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
+                        -   (int32_t)tSamplePoints.chTopLeft) 
+                      << 16);
 
-    for (int_fast16_t y = 0; y < iHeight; y++)
-    {
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
         /* calculate the end points of the current row */
-        int32_t q16OpacityLeft =
-            (((int32_t)tSamplePoints.chTopLeft) << 16) + (y + tOffset.iY) * q16YRatioLeft;
-
+        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
+                               + (y + tOffset.iY) * q16YRatioLeft;
 
         int32_t q16XRatio;
 
         /* calculate X Ratios */
-        int32_t num = (TopDiff + (y + tOffset.iY) * (q16YRatioRight - q16YRatioLeft));
+        int32_t num = (TopDiff + (y + tOffset.iY) 
+                    * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
 
 
@@ -150,10 +162,11 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
-        do
-        {
-            uint32x4_t vxe        = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio + q16OpacityLeft;
-            uint32x4_t vxo        = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio + q16OpacityLeft;
+        do {
+            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
+            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
 
             uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
@@ -161,16 +174,18 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and
             uint16x8_t vMask    = vldrbq_u16(pchMaskLine);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
 
-
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vhwAlpha = vpselq(vdupq_n_u16(256), vhwAlpha, vcmpeqq_n_u16(vhwAlpha, 255));
+            vhwAlpha = vpselq(  vdupq_n_u16(256), 
+                                vhwAlpha, 
+                                vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vld1q(phwTargetLine),
-                &ColorRGB, vhwAlpha),
-                vctp16q(blkCnt));
+                    __arm_2d_blend_rgb565(  vld1q(phwTargetLine),
+                                            &ColorRGB, 
+                                            vhwAlpha),
+                    vctp16q(blkCnt));
 
             vev += 8;
             vodd += 8;
@@ -187,19 +202,27 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask)(
-    uint16_t *__RESTRICT phwTarget, int16_t iTargetStride, uint32_t *__RESTRICT pwMask,
-    int16_t iMaskStride, arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
-    arm_2d_region_t *ptTargetRegionOnVirtualScreen, uint16_t hwColour,
-    arm_2d_alpha_samples_4pts_t tSamplePoints)
+void 
+__MVE_WRAPPER(
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask)(
+                        uint16_t *__RESTRICT phwTarget,
+                        int16_t iTargetStride,
+                        uint32_t *__RESTRICT pwMask,
+                        int16_t iMaskStride,
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                        uint16_t hwColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
 
     /* calculate the offset between the target region and the valid region */
     arm_2d_location_t tOffset = {
-        .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
-        .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX 
+            - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY 
+            - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
     __arm_2d_color_fast_rgb_t ColorRGB;
@@ -208,33 +231,37 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and
     int32_t q16YRatioLeft, q16YRatioRight;
 
     /* calculate Y Ratios */
-    do
-    {
+    do {
         int16_t iHeight = ptTargetRegionOnVirtualScreen->tSize.iHeight;
 
-        q16YRatioLeft =
-            (((int32_t)(tSamplePoints.chBottomLeft - tSamplePoints.chTopLeft)) << 16) / iHeight;
+        q16YRatioLeft = (   (   (int32_t)(tSamplePoints.chBottomLeft 
+                            -   tSamplePoints.chTopLeft)) 
+                            << 16) 
+                      / iHeight;
 
-        q16YRatioRight =
-            (((int32_t)(tSamplePoints.chBottomRight - tSamplePoints.chTopRight)) << 16) / iHeight;
+        q16YRatioRight = (  (   (int32_t)(tSamplePoints.chBottomRight 
+                            -   tSamplePoints.chTopRight)) 
+                            << 16) 
+                       / iHeight;
     } while (0);
 
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
-    int32_t TopDiff = (((int32_t)tSamplePoints.chTopRight - (int32_t)tSamplePoints.chTopLeft) << 16);
+    int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
+                        -   (int32_t)tSamplePoints.chTopLeft) 
+                        << 16);
 
-    for (int_fast16_t y = 0; y < iHeight; y++)
-    {
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
         /* calculate the end points of the current row */
-        int32_t q16OpacityLeft =
-            (((int32_t)tSamplePoints.chTopLeft) << 16) + (y + tOffset.iY) * q16YRatioLeft;
-
+        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16) 
+                               + (y + tOffset.iY) * q16YRatioLeft;
 
         int32_t q16XRatio;
 
         /* calculate X Ratios */
-        int32_t num = (TopDiff + (y + tOffset.iY) * (q16YRatioRight - q16YRatioLeft));
+        int32_t num = (TopDiff + (y + tOffset.iY) 
+                    * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
 
 
@@ -249,24 +276,31 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and
 
         do
         {
-            uint32x4_t vxe        = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio + q16OpacityLeft;
-            uint32x4_t vxo        = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio + q16OpacityLeft;
+            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
+                           
+            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
 
             uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
-            uint16x8_t vMask = vldrbq_gather_offset_u16(pchMaskLine, vStride4Offs);
+            uint16x8_t vMask = vldrbq_gather_offset_u16(pchMaskLine, 
+                                                        vStride4Offs);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vhwAlpha = vpselq(vdupq_n_u16(256), vhwAlpha, vcmpeqq_n_u16(vhwAlpha, 255));
+            vhwAlpha = vpselq(  vdupq_n_u16(256), 
+                                vhwAlpha, 
+                                vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vld1q(phwTargetLine),
-                &ColorRGB, vhwAlpha),
+                __arm_2d_blend_rgb565(  vld1q(phwTargetLine),
+                                        &ColorRGB, 
+                                        vhwAlpha),
                 vctp16q(blkCnt));
 
             vev += 8;
