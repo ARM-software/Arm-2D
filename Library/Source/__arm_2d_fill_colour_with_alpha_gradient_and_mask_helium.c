@@ -81,13 +81,235 @@ extern "C"
 /* /!\ Scratch memory dimenensions must be mutiple of for Helium */
 #define ROUND_UP_8(x) (((x) + 7) & ~7)
 
-    /*============================ MACROFIED FUNCTIONS ===========================*/
-    /*============================ TYPES =========================================*/
-    /*============================ GLOBAL VARIABLES ==============================*/
-    /*============================ PROTOTYPES ====================================*/
-    /*============================ LOCAL VARIABLES ===============================*/
-    /*============================ IMPLEMENTATION ================================*/
+/*============================ MACROFIED FUNCTIONS ===========================*/
+/*============================ TYPES =========================================*/
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+/*============================ LOCAL VARIABLES ===============================*/
+/*============================ IMPLEMENTATION ================================*/
 
+
+__OVERRIDE_WEAK
+void 
+__MVE_WRAPPER(
+    __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask)(
+                        uint8_t *__RESTRICT pchTarget, 
+                        int16_t iTargetStride, 
+                        uint8_t *__RESTRICT pchMask,
+                        int16_t iMaskStride, 
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
+                        uint8_t chColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+{
+    int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+    /* calculate the offset between the target region and the valid region */
+    arm_2d_location_t tOffset = {
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX 
+            - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY 
+            - ptTargetRegionOnVirtualScreen->tLocation.iY,
+    };
+
+    int32_t q16YRatioLeft, q16YRatioRight;
+    
+    /* calculate Y Ratios */
+    do {
+        int16_t iHeight = ptTargetRegionOnVirtualScreen->tSize.iHeight;
+
+        q16YRatioLeft = (   (   (int32_t)(tSamplePoints.chBottomLeft 
+                            -   tSamplePoints.chTopLeft)) 
+                            << 16)
+                        / iHeight;
+
+        q16YRatioRight =(   (   (int32_t)(tSamplePoints.chBottomRight 
+                                -   tSamplePoints.chTopRight)) 
+                            << 16) 
+                       / iHeight;
+    } while (0);
+
+
+    uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
+    int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
+                        -   (int32_t)tSamplePoints.chTopLeft) 
+                      << 16);
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        /* calculate the end points of the current row */
+        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
+                               + (y + tOffset.iY) * q16YRatioLeft;
+
+        int32_t q16XRatio;
+
+        /* calculate X Ratios */
+        int32_t num = (TopDiff + (y + tOffset.iY) 
+                    * (q16YRatioRight - q16YRatioLeft));
+        q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
+
+
+        int32_t blkCnt                     = iWidth;
+        /* even / odd generators for 32-bit widened Opacity computation */
+        /* This one will be narrowed in a 16-bit vector */
+        uint32x4_t vev                     = vidupq_n_u32(0, 2);
+        uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+        uint8_t *__RESTRICT pchMaskLine    = pchMask;
+        uint8_t *__RESTRICT pchTargetLine = pchTarget;
+
+        do {
+            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
+            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
+
+            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
+            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+
+            uint16x8_t vMask    = vldrbq_u16(pchMaskLine);
+            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            vhwAlpha = vpselq(  vdupq_n_u16(256), 
+                                vhwAlpha, 
+                                vcmpeqq_n_u16(vhwAlpha, 255));
+#endif
+            vhwAlpha = 256 - vhwAlpha;
+
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            vstrbq_p_u16(pchTargetLine,
+                    __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
+                                            chColour, 
+                                            vhwAlpha),
+                    tailPred);
+
+            vev += 8;
+            vodd += 8;
+
+            pchMaskLine += 8;
+            pchTargetLine += 8;
+            blkCnt -= 8;
+        } while (blkCnt > 0);
+
+        pchTarget += iTargetStride;
+        pchMask += iMaskStride;
+    }
+}
+
+
+__OVERRIDE_WEAK
+void 
+__MVE_WRAPPER(
+    __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_chn_mask)(
+                        uint8_t *__RESTRICT pchTarget,
+                        int16_t iTargetStride,
+                        uint32_t *__RESTRICT pwMask,
+                        int16_t iMaskStride,
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+                        uint8_t chColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+{
+    int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+    /* calculate the offset between the target region and the valid region */
+    arm_2d_location_t tOffset = {
+        .iX = ptValidRegionOnVirtualScreen->tLocation.iX 
+            - ptTargetRegionOnVirtualScreen->tLocation.iX,
+        .iY = ptValidRegionOnVirtualScreen->tLocation.iY 
+            - ptTargetRegionOnVirtualScreen->tLocation.iY,
+    };
+
+    int32_t q16YRatioLeft, q16YRatioRight;
+
+    /* calculate Y Ratios */
+    do {
+        int16_t iHeight = ptTargetRegionOnVirtualScreen->tSize.iHeight;
+
+        q16YRatioLeft = (   (   (int32_t)(tSamplePoints.chBottomLeft 
+                            -   tSamplePoints.chTopLeft)) 
+                            << 16) 
+                      / iHeight;
+
+        q16YRatioRight = (  (   (int32_t)(tSamplePoints.chBottomRight 
+                            -   tSamplePoints.chTopRight)) 
+                            << 16) 
+                       / iHeight;
+    } while (0);
+
+
+    uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
+    int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
+                        -   (int32_t)tSamplePoints.chTopLeft) 
+                        << 16);
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        /* calculate the end points of the current row */
+        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16) 
+                               + (y + tOffset.iY) * q16YRatioLeft;
+
+        int32_t q16XRatio;
+
+        /* calculate X Ratios */
+        int32_t num = (TopDiff + (y + tOffset.iY) 
+                    * (q16YRatioRight - q16YRatioLeft));
+        q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
+
+
+        int32_t blkCnt                     = iWidth;
+        /* even / odd generators for 32-bit widened Opacity computation */
+        /* This one will be narrowed in a 16-bit vector */
+        uint32x4_t vev                     = vidupq_n_u32(0, 2);
+        uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+        uint8_t  *__RESTRICT pchMaskLine = ( uint8_t *__RESTRICT)pwMask;
+        uint8_t *__RESTRICT pchTargetLine = pchTarget;
+        uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
+
+        do
+        {
+            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
+                           
+            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+                           + q16OpacityLeft;
+
+            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
+            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+
+            uint16x8_t vMask = vldrbq_gather_offset_u16(pchMaskLine, 
+                                                        vStride4Offs);
+            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            vhwAlpha = vpselq(  vdupq_n_u16(256), 
+                                vhwAlpha, 
+                                vcmpeqq_n_u16(vhwAlpha, 255));
+#endif
+            vhwAlpha = 256 - vhwAlpha;
+
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            vstrbq_p_u16(pchTargetLine,
+                    __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
+                                            chColour, 
+                                            vhwAlpha),
+                    tailPred);
+
+            vev += 8;
+            vodd += 8;
+
+            pchMaskLine += 8*4;
+            pchTargetLine += 8;
+            blkCnt -= 8;
+        } while (blkCnt > 0);
+
+        pchTarget += iTargetStride;
+        pwMask += iMaskStride;
+    }
+}
 
 
 __OVERRIDE_WEAK
