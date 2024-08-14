@@ -167,7 +167,8 @@ __MVE_WRAPPER(
             uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
-            uint16x8_t vMask    = vldrbq_u16(pchMaskLine);
+            mve_pred16_t tailPred = vctp16q(blkCnt);
+            uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -177,7 +178,7 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            
             vstrbq_p_u16(pchTargetLine,
                     __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
                                             chColour, 
@@ -279,8 +280,10 @@ __MVE_WRAPPER(
             uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
-            uint16x8_t vMask = vldrbq_gather_offset_u16(pchMaskLine, 
-                                                        vStride4Offs);
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            uint16x8_t vMask = vldrbq_gather_offset_z_u16(  pchMaskLine, 
+                                                            vStride4Offs,
+                                                            tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
 
 
@@ -291,7 +294,7 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            
             vstrbq_p_u16(pchTargetLine,
                     __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
                                             chColour, 
@@ -385,6 +388,8 @@ __MVE_WRAPPER(
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
+            
+        
             uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
                            + q16OpacityLeft;
             uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
@@ -393,7 +398,8 @@ __MVE_WRAPPER(
             uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
-            uint16x8_t vMask    = vldrbq_u16(pchMaskLine);
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -403,7 +409,7 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            
             vst1q_p(phwTargetLine,
                     __arm_2d_blend_rgb565(  vldrhq_z_u16(phwTargetLine, tailPred),
                                             &ColorRGB, 
@@ -508,8 +514,10 @@ __MVE_WRAPPER(
             uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
-            uint16x8_t vMask = vldrbq_gather_offset_u16(pchMaskLine, 
-                                                        vStride4Offs);
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, 
+                                                        vStride4Offs,
+                                                        tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
 
 
@@ -520,7 +528,7 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
+            
             vst1q_p(phwTargetLine,
                     __arm_2d_blend_rgb565(  vldrhq_z_u16(phwTargetLine, tailPred),
                                             &ColorRGB, 
