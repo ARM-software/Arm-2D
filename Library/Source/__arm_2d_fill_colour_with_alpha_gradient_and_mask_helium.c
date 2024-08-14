@@ -403,11 +403,12 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
             vst1q_p(phwTargetLine,
-                    __arm_2d_blend_rgb565(  vld1q(phwTargetLine),
+                    __arm_2d_blend_rgb565(  vldrhq_z_u16(phwTargetLine, tailPred),
                                             &ColorRGB, 
                                             vhwAlpha),
-                    vctp16q(blkCnt));
+                    tailPred);
 
             vev += 8;
             vodd += 8;
@@ -519,11 +520,12 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
+            mve_pred16_t    tailPred = vctp16q(blkCnt);
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(  vld1q(phwTargetLine),
-                                        &ColorRGB, 
-                                        vhwAlpha),
-                vctp16q(blkCnt));
+                    __arm_2d_blend_rgb565(  vldrhq_z_u16(phwTargetLine, tailPred),
+                                            &ColorRGB, 
+                                            vhwAlpha),
+                    tailPred);
 
             vev += 8;
             vodd += 8;
