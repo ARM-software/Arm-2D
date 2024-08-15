@@ -592,7 +592,8 @@ __MVE_WRAPPER(
             - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    uint16x8_t vColourRGB = vreinterpretq_u16(vdupq_n_u32(wColour));
+    static const uint16x8_t c_vColourOffset = { 0, 1, 2, 3, 0, 1, 2, 3 };
+    uint16x8_t vColourRGB = vldrbq_gather_offset_u16((uint8_t *)&wColour, c_vColourOffset);
     
     int32_t q16YRatioLeft, q16YRatioRight;
     
@@ -1077,7 +1078,8 @@ __MVE_WRAPPER(
             - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    uint16x8_t vColourRGB = vreinterpretq_u16(vdupq_n_u32(wColour));
+    static const uint16x8_t c_vColourOffset = { 0, 1, 2, 3, 0, 1, 2, 3 };
+    uint16x8_t vColourRGB = vldrbq_gather_offset_u16((uint8_t *)&wColour, c_vColourOffset);
     
     int32_t q16YRatioLeft, q16YRatioRight;
     
