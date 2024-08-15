@@ -23,7 +23,7 @@
  *               -and-mask
  *
  * $Date:        14. Aug 2024
- * $Revision:    V.1.1.0
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores with helium
  *
@@ -83,6 +83,14 @@ extern "C"
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
+
+{%- for sample_algorithm_name, sample_algorithm, sample_pts_num in [
+    ('4 sample points', '4pts', '4pts'),
+    ('3 sample points', '3pts', '3pts'),
+    ] 
+%}
+
+
 {%- for func_has_mask in [
     (true),
     (false),
@@ -90,20 +98,20 @@ extern "C"
 %}
 
 {% if func_has_mask %}
-/*---------------------------------------------------------------------------*
- * Colour Filling with 4 sample points Alpha Gradient and Mask               *
- *---------------------------------------------------------------------------*/
+/*
+ * Colour Filling with {{sample_algorithm_name}} Alpha Gradient and Mask
+ */
 {% else %}
-/*---------------------------------------------------------------------------*
- * Colour Filling with 4 sample points Alpha Gradient                        *
- *---------------------------------------------------------------------------*/
+/*
+ * Colour Filling with {{sample_algorithm_name}} Alpha Gradient
+ */
 {% endif %}
 
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
 {%- if func_has_mask %}
-    __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask)(
+    __arm_2d_impl_gray8_fill_colour_with_{{sample_algorithm}}_alpha_gradient_and_mask)(
                         uint8_t *__RESTRICT pchTarget, 
                         int16_t iTargetStride, 
                         uint8_t *__RESTRICT pchMask,
@@ -111,15 +119,15 @@ __MVE_WRAPPER(
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint8_t chColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {% else %}
-    __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient)(
+    __arm_2d_impl_gray8_fill_colour_with_{{sample_algorithm}}_alpha_gradient)(
                         uint8_t *__RESTRICT pchTarget, 
                         int16_t iTargetStride, 
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint8_t chColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {% endif -%}
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
@@ -143,12 +151,24 @@ __MVE_WRAPPER(
                             -   tSamplePoints.chTopLeft)) 
                             << 16)
                         / iHeight;
-
+    {% if sample_algorithm == '4pts' %}
         q16YRatioRight =(   (   (int32_t)(tSamplePoints.chBottomRight 
                                 -   tSamplePoints.chTopRight)) 
                             << 16) 
                        / iHeight;
+    {% endif %}
     } while (0);
+
+    {% if sample_algorithm == '3pts' %}
+    /* calculate X Ratios */
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+    {% endif %}
 
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
@@ -162,40 +182,56 @@ __MVE_WRAPPER(
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
 
+    {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
 
         /* calculate X Ratios */
         int32_t num = (TopDiff + (y + tOffset.iY) 
                     * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
-
+    {% endif %}
 
         int32_t blkCnt                     = iWidth;
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        uint32x4_t vev                     = vidupq_n_u32(0, 2);
-        uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+        int32x4_t vev                     = vidupq_n_u32(0, 2);
+        int32x4_t vodd                    = vidupq_n_u32(1, 2);
     {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
     {% endif %}
         uint8_t *__RESTRICT pchTargetLine = pchTarget;
 
         do {
-            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
-            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
 
-            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
-            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+            int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
+            vOpacity            = vqshrntq_n_s32(vOpacity, vxo, 16);
+        
+        {% if sample_algorithm == '3pts' %}
+            /* 
+             * Original Code: 
+             *      nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
+             *      nOpacity *= (nOpacity > 0);
+             */
+             vOpacity = vpselq( vdupq_n_s16(255), 
+                                vOpacity, 
+                                vcmpgeq_n_s16(vOpacity, 255));
+
+            vOpacity = vpselq(  vdupq_n_s16(0), 
+                                vOpacity, 
+                                vcmpltq_n_s16(vOpacity, 0));
+        {% endif %}
 
             mve_pred16_t tailPred = vctp16q(blkCnt);
 
         {% if func_has_mask %}
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         {% else %}
-            uint16x8_t vhwAlpha = vOpacity;
+            uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         {% endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -233,7 +269,7 @@ __MVE_WRAPPER(
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
-    __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_chn_mask)(
+    __arm_2d_impl_gray8_fill_colour_with_{{sample_algorithm}}_alpha_gradient_and_chn_mask)(
                         uint8_t *__RESTRICT pchTarget,
                         int16_t iTargetStride,
                         uint32_t *__RESTRICT pwMask,
@@ -241,7 +277,7 @@ __MVE_WRAPPER(
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                         uint8_t chColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -351,7 +387,7 @@ __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
 {%- if func_has_mask %}
-    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask)(
+    __arm_2d_impl_rgb565_fill_colour_with_{{sample_algorithm}}_alpha_gradient_and_mask)(
                         uint16_t *__RESTRICT phwTarget, 
                         int16_t iTargetStride, 
                         uint8_t *__RESTRICT pchMask,
@@ -359,15 +395,15 @@ __MVE_WRAPPER(
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint16_t hwColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {% else %}
-    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient)(
+    __arm_2d_impl_rgb565_fill_colour_with_{{sample_algorithm}}_alpha_gradient)(
                         uint16_t *__RESTRICT phwTarget, 
                         int16_t iTargetStride, 
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint16_t hwColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {% endif -%}
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
@@ -485,7 +521,7 @@ __MVE_WRAPPER(
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
-    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask)(
+    __arm_2d_impl_rgb565_fill_colour_with_{{sample_algorithm}}_alpha_gradient_and_chn_mask)(
                         uint16_t *__RESTRICT phwTarget,
                         int16_t iTargetStride,
                         uint32_t *__RESTRICT pwMask,
@@ -493,7 +529,7 @@ __MVE_WRAPPER(
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                         uint16_t hwColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -605,7 +641,7 @@ __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
 {%- if func_has_mask %}
-    __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask)(
+    __arm_2d_impl_cccn888_fill_colour_with_{{sample_algorithm}}_alpha_gradient_and_mask)(
                         uint32_t *__RESTRICT pwTarget, 
                         int16_t iTargetStride, 
                         uint8_t *__RESTRICT pchMask,
@@ -613,15 +649,15 @@ __MVE_WRAPPER(
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint32_t wColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {% else %}
-    __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient)(
+    __arm_2d_impl_cccn888_fill_colour_with_{{sample_algorithm}}_alpha_gradient)(
                         uint32_t *__RESTRICT pwTarget, 
                         int16_t iTargetStride, 
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint32_t wColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {% endif -%}
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
@@ -746,7 +782,7 @@ __MVE_WRAPPER(
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
-    __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_chn_mask)(
+    __arm_2d_impl_cccn888_fill_colour_with_{{sample_algorithm}}_alpha_gradient_and_chn_mask)(
                         uint32_t *__RESTRICT pwTarget, 
                         int16_t iTargetStride, 
                         uint32_t *__RESTRICT pwMask,
@@ -754,7 +790,7 @@ __MVE_WRAPPER(
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint32_t wColour,
-                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+                        arm_2d_alpha_samples_{{sample_pts_num}}_t tSamplePoints)
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -868,6 +904,8 @@ __MVE_WRAPPER(
     }
 }
 {% endif %}
+
+{%- endfor %}
 
 {%- endfor %}
 
