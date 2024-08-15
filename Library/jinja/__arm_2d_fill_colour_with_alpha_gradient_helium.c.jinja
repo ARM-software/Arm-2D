@@ -159,8 +159,9 @@ __MVE_WRAPPER(
     {% endif %}
     } while (0);
 
-    {% if sample_algorithm == '3pts' %}
+{% if sample_algorithm == '3pts' %}
     /* calculate X Ratios */
+    int32_t q16XRatio;
     do {
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
@@ -168,7 +169,7 @@ __MVE_WRAPPER(
                                    -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
-    {% endif %}
+{% endif %}
 
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
@@ -300,12 +301,25 @@ __MVE_WRAPPER(
                             -   tSamplePoints.chTopLeft)) 
                             << 16) 
                       / iHeight;
-
+    {% if sample_algorithm == '4pts' %}
         q16YRatioRight = (  (   (int32_t)(tSamplePoints.chBottomRight 
                             -   tSamplePoints.chTopRight)) 
                             << 16) 
                        / iHeight;
+    {% endif %}
     } while (0);
+
+{% if sample_algorithm == '3pts' %}
+    /* calculate X Ratios */
+    int32_t q16XRatio;
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+{% endif %}
 
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
@@ -319,40 +333,55 @@ __MVE_WRAPPER(
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16) 
                                + (y + tOffset.iY) * q16YRatioLeft;
 
+    {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
 
         /* calculate X Ratios */
         int32_t num = (TopDiff + (y + tOffset.iY) 
                     * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
-
+    {% endif %}
 
         int32_t blkCnt                     = iWidth;
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        uint32x4_t vev                     = vidupq_n_u32(0, 2);
-        uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+        int32x4_t vev                     = vidupq_n_u32(0, 2);
+        int32x4_t vodd                    = vidupq_n_u32(1, 2);
         uint8_t  *__RESTRICT pchMaskLine = ( uint8_t *__RESTRICT)pwMask;
         uint8_t *__RESTRICT pchTargetLine = pchTarget;
         uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
 
         do
         {
-            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
                            
-            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
 
-            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
-            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+            int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
+                      vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
+
+        {% if sample_algorithm == '3pts' %}
+            /* 
+             * Original Code: 
+             *      nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
+             *      nOpacity *= (nOpacity > 0);
+             */
+             vOpacity = vpselq( vdupq_n_s16(255), 
+                                vOpacity, 
+                                vcmpgeq_n_s16(vOpacity, 255));
+
+            vOpacity = vpselq(  vdupq_n_s16(0), 
+                                vOpacity, 
+                                vcmpltq_n_s16(vOpacity, 0));
+        {% endif %}
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(  pchMaskLine, 
                                                             vStride4Offs,
                                                             tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
-
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -430,13 +459,25 @@ __MVE_WRAPPER(
                             -   tSamplePoints.chTopLeft)) 
                             << 16)
                         / iHeight;
-
+    {% if sample_algorithm == '4pts' %}
         q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
                                 -   tSamplePoints.chTopRight)) 
                                 << 16) 
                        / iHeight;
+    {% endif %}
     } while (0);
 
+{% if sample_algorithm == '3pts' %}
+    /* calculate X Ratios */
+    int32_t q16XRatio;
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+{% endif %}
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
     int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
@@ -449,42 +490,56 @@ __MVE_WRAPPER(
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
 
+    {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
 
         /* calculate X Ratios */
         int32_t num = (TopDiff + (y + tOffset.iY) 
                     * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
-
+    {% endif %}
 
         int32_t blkCnt                     = iWidth;
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        uint32x4_t vev                     = vidupq_n_u32(0, 2);
-        uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+        int32x4_t vev                     = vidupq_n_u32(0, 2);
+        int32x4_t vodd                    = vidupq_n_u32(1, 2);
     {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
     {% endif %}
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
-            
-        
-            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
-            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
 
-            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
-            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+            int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
+                      vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
+
+        {% if sample_algorithm == '3pts' %}
+            /* 
+             * Original Code: 
+             *      nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
+             *      nOpacity *= (nOpacity > 0);
+             */
+             vOpacity = vpselq( vdupq_n_s16(255), 
+                                vOpacity, 
+                                vcmpgeq_n_s16(vOpacity, 255));
+
+            vOpacity = vpselq(  vdupq_n_s16(0), 
+                                vOpacity, 
+                                vcmpltq_n_s16(vOpacity, 0));
+        {% endif %}
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
         {% if func_has_mask %}
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         {% else %}
-            uint16x8_t vhwAlpha = vOpacity;
+            uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         {% endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -555,13 +610,25 @@ __MVE_WRAPPER(
                             -   tSamplePoints.chTopLeft)) 
                             << 16) 
                       / iHeight;
-
+    {% if sample_algorithm == '4pts' %}
         q16YRatioRight = (  (   (int32_t)(tSamplePoints.chBottomRight 
                             -   tSamplePoints.chTopRight)) 
                             << 16) 
                        / iHeight;
+    {% endif %}
     } while (0);
 
+{% if sample_algorithm == '3pts' %}
+    /* calculate X Ratios */
+    int32_t q16XRatio;
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+{% endif %}
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
     int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
@@ -574,39 +641,55 @@ __MVE_WRAPPER(
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16) 
                                + (y + tOffset.iY) * q16YRatioLeft;
 
+    {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
 
         /* calculate X Ratios */
         int32_t num = (TopDiff + (y + tOffset.iY) 
                     * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
-
+    {% endif %}
 
         int32_t blkCnt                     = iWidth;
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        uint32x4_t vev                     = vidupq_n_u32(0, 2);
-        uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+        int32x4_t vev                     = vidupq_n_u32(0, 2);
+        int32x4_t vodd                    = vidupq_n_u32(1, 2);
         uint8_t  *__RESTRICT pchMaskLine = ( uint8_t *__RESTRICT)pwMask;
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
         uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
 
         do
         {
-            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
                            
-            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
 
-            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
-            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+            int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
+                      vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
+
+        {% if sample_algorithm == '3pts' %}
+            /* 
+             * Original Code: 
+             *      nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
+             *      nOpacity *= (nOpacity > 0);
+             */
+            vOpacity = vpselq(  vdupq_n_s16(255), 
+                                vOpacity, 
+                                vcmpgeq_n_s16(vOpacity, 255));
+
+            vOpacity = vpselq(  vdupq_n_s16(0), 
+                                vOpacity, 
+                                vcmpltq_n_s16(vOpacity, 0));
+        {% endif %}
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, 
                                                         vStride4Offs,
                                                         tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -615,7 +698,6 @@ __MVE_WRAPPER(
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
             
             vst1q_p(phwTargetLine,
                     __arm_2d_blend_rgb565(  vldrhq_z_u16(phwTargetLine, tailPred),
@@ -684,13 +766,25 @@ __MVE_WRAPPER(
                             -   tSamplePoints.chTopLeft)) 
                             << 16)
                         / iHeight;
-
+    {% if sample_algorithm == '4pts' %}
         q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
                                 -   tSamplePoints.chTopRight)) 
                                 << 16) 
                        / iHeight;
+    {% endif %}
     } while (0);
 
+{% if sample_algorithm == '3pts' %}
+    /* calculate X Ratios */
+    int32_t q16XRatio;
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+{% endif %}
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
     int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
@@ -703,34 +797,49 @@ __MVE_WRAPPER(
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
 
+    {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
 
         /* calculate X Ratios */
         int32_t num = (TopDiff + (y + tOffset.iY) 
                     * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
-
+    {% endif %}
 
         int32_t blkCnt                     = iWidth;
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        uint32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
-        uint32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
+        int32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
+        int32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
     {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
     {% endif %}
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
-            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
-            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
 
-            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
-            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+            int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
+                      vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
 
-            
+        {% if sample_algorithm == '3pts' %}
+            /* 
+             * Original Code: 
+             *      nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
+             *      nOpacity *= (nOpacity > 0);
+             */
+             vOpacity = vpselq( vdupq_n_s16(255), 
+                                vOpacity, 
+                                vcmpgeq_n_s16(vOpacity, 255));
+
+            vOpacity = vpselq(  vdupq_n_s16(0), 
+                                vOpacity, 
+                                vcmpltq_n_s16(vOpacity, 0));
+        {% endif %}
+    
 
             mve_pred16_t    tailPred = vctp64q(blkCnt);
         
@@ -742,9 +851,9 @@ __MVE_WRAPPER(
              */
             static const uint16x8_t c_vOffset = { 0, 0, 0, 0, 1, 1, 1, 1 };
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
-            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         {% else %}
-            uint16x8_t vhwAlpha = vOpacity;
+            uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         {% endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -816,13 +925,25 @@ __MVE_WRAPPER(
                             -   tSamplePoints.chTopLeft)) 
                             << 16)
                         / iHeight;
-
+    {% if sample_algorithm == '4pts' %}
         q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
                                 -   tSamplePoints.chTopRight)) 
                                 << 16) 
                        / iHeight;
+    {% endif %}
     } while (0);
 
+{% if sample_algorithm == '3pts' %}
+    /* calculate X Ratios */
+    int32_t q16XRatio;
+    do {
+        int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
+
+        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
+                                   -   tSamplePoints.chTopLeft)) << 16) 
+                  / iWidth;
+    } while(0);
+{% endif %}
 
     uint32_t invWidth = 0xffffffffUL / (uint32_t)iWidth;
     int32_t TopDiff = ( (   (int32_t)tSamplePoints.chTopRight 
@@ -835,32 +956,46 @@ __MVE_WRAPPER(
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
 
+    {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
 
         /* calculate X Ratios */
         int32_t num = (TopDiff + (y + tOffset.iY) 
                     * (q16YRatioRight - q16YRatioLeft));
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
-
+    {% endif %}
 
         int32_t blkCnt                     = iWidth;
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        uint32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
-        uint32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
+        int32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
+        int32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
         uint8_t  *__RESTRICT pchMaskLine = (uint8_t *__RESTRICT)pwMask;
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
-            uint32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
-            uint32x4_t vxo = (vodd + (uint32_t)tOffset.iX) * (uint32_t)q16XRatio 
+            int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
 
-            uint16x8_t vOpacity = vqshrnbq_n_u32(vuninitializedq_u16(), vxe, 16);
-            vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
+            int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
+                      vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
 
-            
+        {% if sample_algorithm == '3pts' %}
+            /* 
+             * Original Code: 
+             *      nOpacity = (nOpacity >= 255) * 255 + !(nOpacity >= 255) * nOpacity;
+             *      nOpacity *= (nOpacity > 0);
+             */
+             vOpacity = vpselq( vdupq_n_s16(255), 
+                                vOpacity, 
+                                vcmpgeq_n_s16(vOpacity, 255));
+
+            vOpacity = vpselq(  vdupq_n_s16(0), 
+                                vOpacity, 
+                                vcmpltq_n_s16(vOpacity, 0));
+        {% endif %}
 
             mve_pred16_t    tailPred = vctp64q(blkCnt);
 
@@ -874,7 +1009,7 @@ __MVE_WRAPPER(
             
             
             //uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
