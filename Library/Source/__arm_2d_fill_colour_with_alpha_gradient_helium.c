@@ -156,7 +156,9 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+    
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    
         uint8_t *__RESTRICT pchTargetLine = pchTarget;
 
         do {
@@ -169,8 +171,11 @@ __MVE_WRAPPER(
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
             mve_pred16_t tailPred = vctp16q(blkCnt);
+
+        
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+        
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -179,7 +184,6 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            
             vstrbq_p_u16(pchTargetLine,
                     __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
                                             chColour, 
@@ -189,13 +193,18 @@ __MVE_WRAPPER(
             vev += 8;
             vodd += 8;
 
+        
             pchMaskLine += 8;
+        
+
             pchTargetLine += 8;
             blkCnt -= 8;
         } while (blkCnt > 0);
 
         pchTarget += iTargetStride;
+    
         pchMask += iMaskStride;
+    
     }
 }
 
@@ -386,7 +395,9 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+    
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
@@ -401,8 +412,11 @@ __MVE_WRAPPER(
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
+
+        
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+        
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -420,14 +434,17 @@ __MVE_WRAPPER(
 
             vev += 8;
             vodd += 8;
-
+        
             pchMaskLine += 8;
+        
             phwTargetLine += 8;
             blkCnt -= 8;
         } while (blkCnt > 0);
 
         phwTarget += iTargetStride;
+    
         pchMask += iMaskStride;
+    
     }
 }
 
@@ -619,7 +636,9 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
+    
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
@@ -634,6 +653,8 @@ __MVE_WRAPPER(
             
 
             mve_pred16_t    tailPred = vctp64q(blkCnt);
+        
+        
             /*
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
@@ -642,6 +663,7 @@ __MVE_WRAPPER(
             static const uint16x8_t c_vOffset = { 0, 0, 0, 0, 1, 1, 1, 1 };
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+        
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -660,14 +682,17 @@ __MVE_WRAPPER(
 
             vev += 2;
             vodd += 2;
-
+        
             pchMaskLine += 2;
+        
             pwTargetLine += 2;
             blkCnt -= 2;
         } while (blkCnt > 0);
 
         pwTarget += iTargetStride;
+    
         pchMask += iMaskStride;
+    
     }
 }
 
@@ -868,7 +893,7 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = vidupq_n_u32(1, 2);
-        uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    
         uint8_t *__RESTRICT pchTargetLine = pchTarget;
 
         do {
@@ -881,7 +906,10 @@ __MVE_WRAPPER(
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
             mve_pred16_t tailPred = vctp16q(blkCnt);
+
+        
             uint16x8_t vhwAlpha = vOpacity;
+        
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -890,7 +918,6 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            
             vstrbq_p_u16(pchTargetLine,
                     __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
                                             chColour, 
@@ -900,13 +927,14 @@ __MVE_WRAPPER(
             vev += 8;
             vodd += 8;
 
-            pchMaskLine += 8;
+        
+
             pchTargetLine += 8;
             blkCnt -= 8;
         } while (blkCnt > 0);
 
         pchTarget += iTargetStride;
-        pchMask += iMaskStride;
+    
     }
 }
 
@@ -981,7 +1009,7 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = vidupq_n_u32(1, 2);
-        uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
@@ -996,7 +1024,10 @@ __MVE_WRAPPER(
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
+
+        
             uint16x8_t vhwAlpha = vOpacity;
+        
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -1014,14 +1045,13 @@ __MVE_WRAPPER(
 
             vev += 8;
             vodd += 8;
-
-            pchMaskLine += 8;
+        
             phwTargetLine += 8;
             blkCnt -= 8;
         } while (blkCnt > 0);
 
         phwTarget += iTargetStride;
-        pchMask += iMaskStride;
+    
     }
 }
 
@@ -1094,7 +1124,7 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
-        uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
@@ -1109,7 +1139,10 @@ __MVE_WRAPPER(
             
 
             mve_pred16_t    tailPred = vctp64q(blkCnt);
+        
+        
             uint16x8_t vhwAlpha = vOpacity;
+        
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -1128,14 +1161,13 @@ __MVE_WRAPPER(
 
             vev += 2;
             vodd += 2;
-
-            pchMaskLine += 2;
+        
             pwTargetLine += 2;
             blkCnt -= 2;
         } while (blkCnt > 0);
 
         pwTarget += iTargetStride;
-        pchMask += iMaskStride;
+    
     }
 }
 

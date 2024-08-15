@@ -176,7 +176,9 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+    {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    {% endif %}
         uint8_t *__RESTRICT pchTargetLine = pchTarget;
 
         do {
@@ -190,12 +192,12 @@ __MVE_WRAPPER(
 
             mve_pred16_t tailPred = vctp16q(blkCnt);
 
-        {%- if func_has_mask %}
+        {% if func_has_mask %}
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
-        {%- else %}
+        {% else %}
             uint16x8_t vhwAlpha = vOpacity;
-        {%- endif %}
+        {% endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -204,7 +206,6 @@ __MVE_WRAPPER(
 #endif
             vhwAlpha = 256 - vhwAlpha;
 
-            
             vstrbq_p_u16(pchTargetLine,
                     __arm_2d_blend_gray8(   vldrbq_z_u16(pchTargetLine, tailPred),
                                             chColour, 
@@ -214,13 +215,18 @@ __MVE_WRAPPER(
             vev += 8;
             vodd += 8;
 
+        {% if func_has_mask %}
             pchMaskLine += 8;
+        {% endif %}
+
             pchTargetLine += 8;
             blkCnt -= 8;
         } while (blkCnt > 0);
 
         pchTarget += iTargetStride;
+    {% if func_has_mask %}
         pchMask += iMaskStride;
+    {% endif %}
     }
 }
 
@@ -422,7 +428,9 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = vidupq_n_u32(1, 2);
+    {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    {% endif %}
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
@@ -438,12 +446,12 @@ __MVE_WRAPPER(
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-        {%- if func_has_mask %}
+        {% if func_has_mask %}
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
-        {%- else %}
+        {% else %}
             uint16x8_t vhwAlpha = vOpacity;
-        {%- endif %}
+        {% endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -461,14 +469,17 @@ __MVE_WRAPPER(
 
             vev += 8;
             vodd += 8;
-
+        {% if func_has_mask %}
             pchMaskLine += 8;
+        {% endif %}
             phwTargetLine += 8;
             blkCnt -= 8;
         } while (blkCnt > 0);
 
         phwTarget += iTargetStride;
+    {% if func_has_mask %}
         pchMask += iMaskStride;
+    {% endif %}
     }
 }
 
@@ -671,7 +682,9 @@ __MVE_WRAPPER(
         /* This one will be narrowed in a 16-bit vector */
         uint32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
         uint32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
+    {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
+    {% endif %}
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
@@ -687,7 +700,7 @@ __MVE_WRAPPER(
 
             mve_pred16_t    tailPred = vctp64q(blkCnt);
         
-        {%- if func_has_mask %}
+        {% if func_has_mask %}
             /*
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
@@ -696,9 +709,9 @@ __MVE_WRAPPER(
             static const uint16x8_t c_vOffset = { 0, 0, 0, 0, 1, 1, 1, 1 };
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
-        {%- else %}
+        {% else %}
             uint16x8_t vhwAlpha = vOpacity;
-        {%- endif %}
+        {% endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -717,14 +730,17 @@ __MVE_WRAPPER(
 
             vev += 2;
             vodd += 2;
-
+        {% if func_has_mask %}
             pchMaskLine += 2;
+        {% endif %}
             pwTargetLine += 2;
             blkCnt -= 2;
         } while (blkCnt > 0);
 
         pwTarget += iTargetStride;
+    {% if func_has_mask %}
         pchMask += iMaskStride;
+    {% endif %}
     }
 }
 
