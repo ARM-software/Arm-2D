@@ -244,8 +244,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                             (__arm_2d_color_t){GLCD_COLOR_BLUE},
                                             255,
                                             (arm_2d_alpha_samples_4pts_t) {
-                                                {64, 0,
-                                                128, 255},
+                                                {255, 0,
+                                                128, 32},
                                             });
                         
                     #endif
