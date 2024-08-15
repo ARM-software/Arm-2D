@@ -834,7 +834,6 @@ __MVE_WRAPPER(
     __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient)(
                         uint8_t *__RESTRICT pchTarget, 
                         int16_t iTargetStride, 
-                        int16_t iMaskStride, 
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint8_t chColour,
@@ -947,7 +946,6 @@ __MVE_WRAPPER(
     __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient)(
                         uint16_t *__RESTRICT phwTarget, 
                         int16_t iTargetStride, 
-                        int16_t iMaskStride, 
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint16_t hwColour,
@@ -1063,7 +1061,6 @@ __MVE_WRAPPER(
     __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient)(
                         uint32_t *__RESTRICT pwTarget, 
                         int16_t iTargetStride, 
-                        int16_t iMaskStride, 
                         arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint32_t wColour,
