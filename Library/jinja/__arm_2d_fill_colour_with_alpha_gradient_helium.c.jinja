@@ -83,11 +83,26 @@ extern "C"
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
+{%- for func_has_mask in [
+    (true),
+    (false),
+    ] 
+%}
 
+{% if func_has_mask %}
+/*---------------------------------------------------------------------------*
+ * Colour Filling with 4 sample points Alpha Gradient and Mask               *
+ *---------------------------------------------------------------------------*/
+{% else %}
+/*---------------------------------------------------------------------------*
+ * Colour Filling with 4 sample points Alpha Gradient                        *
+ *---------------------------------------------------------------------------*/
+{% endif %}
 
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
+{%- if func_has_mask %}
     __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask)(
                         uint8_t *__RESTRICT pchTarget, 
                         int16_t iTargetStride, 
@@ -97,6 +112,16 @@ __MVE_WRAPPER(
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint8_t chColour,
                         arm_2d_alpha_samples_4pts_t tSamplePoints)
+{% else %}
+    __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient)(
+                        uint8_t *__RESTRICT pchTarget, 
+                        int16_t iTargetStride, 
+                        int16_t iMaskStride, 
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
+                        uint8_t chColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+{% endif -%}
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -164,8 +189,13 @@ __MVE_WRAPPER(
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
             mve_pred16_t tailPred = vctp16q(blkCnt);
+
+        {%- if func_has_mask %}
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+        {%- else %}
+            uint16x8_t vhwAlpha = vOpacity;
+        {%- endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -194,7 +224,7 @@ __MVE_WRAPPER(
     }
 }
 
-
+{% if func_has_mask %}
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
@@ -309,11 +339,13 @@ __MVE_WRAPPER(
         pwMask += iMaskStride;
     }
 }
+{% endif %}
 
 
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
+{%- if func_has_mask %}
     __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask)(
                         uint16_t *__RESTRICT phwTarget, 
                         int16_t iTargetStride, 
@@ -323,6 +355,16 @@ __MVE_WRAPPER(
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint16_t hwColour,
                         arm_2d_alpha_samples_4pts_t tSamplePoints)
+{% else %}
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient)(
+                        uint16_t *__RESTRICT phwTarget, 
+                        int16_t iTargetStride, 
+                        int16_t iMaskStride, 
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
+                        uint16_t hwColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+{% endif -%}
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -395,8 +437,13 @@ __MVE_WRAPPER(
             vOpacity            = vqshrntq_n_u32(vOpacity, vxo, 16);
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
+
+        {%- if func_has_mask %}
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+        {%- else %}
+            uint16x8_t vhwAlpha = vOpacity;
+        {%- endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -425,7 +472,7 @@ __MVE_WRAPPER(
     }
 }
 
-
+{% if func_has_mask %}
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
@@ -543,11 +590,12 @@ __MVE_WRAPPER(
         pwMask += iMaskStride;
     }
 }
-
+{% endif %}
 
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
+{%- if func_has_mask %}
     __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask)(
                         uint32_t *__RESTRICT pwTarget, 
                         int16_t iTargetStride, 
@@ -557,6 +605,16 @@ __MVE_WRAPPER(
                         arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
                         uint32_t wColour,
                         arm_2d_alpha_samples_4pts_t tSamplePoints)
+{% else %}
+    __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient)(
+                        uint32_t *__RESTRICT pwTarget, 
+                        int16_t iTargetStride, 
+                        int16_t iMaskStride, 
+                        arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+                        arm_2d_region_t *ptTargetRegionOnVirtualScreen, 
+                        uint32_t wColour,
+                        arm_2d_alpha_samples_4pts_t tSamplePoints)
+{% endif -%}
 {
     int_fast16_t iWidth  = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
@@ -628,7 +686,8 @@ __MVE_WRAPPER(
             
 
             mve_pred16_t    tailPred = vctp64q(blkCnt);
-            
+        
+        {%- if func_has_mask %}
             /*
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
@@ -636,10 +695,10 @@ __MVE_WRAPPER(
              */
             static const uint16x8_t c_vOffset = { 0, 0, 0, 0, 1, 1, 1, 1 };
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
-            
-            
-            //uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vOpacity) >> 8);
+        {%- else %}
+            uint16x8_t vhwAlpha = vOpacity;
+        {%- endif %}
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
@@ -669,6 +728,7 @@ __MVE_WRAPPER(
     }
 }
 
+{% if func_has_mask %}
 __OVERRIDE_WEAK
 void 
 __MVE_WRAPPER(
@@ -792,6 +852,9 @@ __MVE_WRAPPER(
         pwMask += iMaskStride;
     }
 }
+{% endif %}
+
+{%- endfor %}
 
 #ifdef __cplusplus
 }
