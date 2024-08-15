@@ -22,7 +22,7 @@
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *               -and-mask
  *
- * $Date:        13. Aug 2024
+ * $Date:        15. Aug 2024
  * $Revision:    V.0.5.2
  *
  * Target Processor:  Cortex-M cores
@@ -142,7 +142,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
     
     
@@ -186,7 +186,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_mask_and_opacity
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -531,7 +531,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_3pts_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -573,7 +573,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_3pts_alpha_gradient_mask_and_opacity
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -907,7 +907,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -949,7 +949,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient_mask_and_o
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -1254,7 +1254,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -1296,7 +1296,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient_mask_and_opa
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.chColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -3070,7 +3070,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
     
     
@@ -3114,7 +3114,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_mask_and_opaci
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -3459,7 +3459,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -3501,7 +3501,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_3pts_alpha_gradient_mask_and_opaci
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -3835,7 +3835,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -3877,7 +3877,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient_mask_and
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */
@@ -4182,7 +4182,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_vertical_alpha_gradient_and_mask(
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
@@ -4224,7 +4224,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_vertical_alpha_gradient_mask_and_o
     OPCODE.Source.ptTile = ptMask;
     OPCODE.wMode = 0;
 
-    this.hwColour = tColour.tValue;
+    this.wColour = tColour.tValue;
     this.tSamplePoints = tSamplePoints;
 
     /* pre-process opacity */

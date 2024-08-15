@@ -22,8 +22,8 @@
  * Description:  The header file of APIs for colour-filling-with-alpha-gradient
  *               -and-mask
  *
- * $Date:        13. Aug 2024
- * $Revision:    V.0.5.2
+ * $Date:        15. Aug 2024
+ * $Revision:    V.0.5.3
  *
  * Target Processor:  Cortex-M cores
  *
