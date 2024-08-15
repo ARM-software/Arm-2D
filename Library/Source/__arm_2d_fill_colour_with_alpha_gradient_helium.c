@@ -70,6 +70,7 @@ extern "C"
 #pragma clang diagnostic ignored "-Wswitch-enum"
 #pragma clang diagnostic ignored "-Wswitch"
 #pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#pragma clang diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #pragma diag_suppress 174, 177, 188, 68, 513, 144
 #elif defined(__IS_COMPILER_GCC__)
@@ -415,7 +416,7 @@ __MVE_WRAPPER(
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
-            int32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (int32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
             int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
@@ -1047,7 +1048,7 @@ __MVE_WRAPPER(
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
-            int32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (int32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
             int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
@@ -1562,7 +1563,7 @@ __MVE_WRAPPER(
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
-            int32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (int32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
             int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
@@ -2249,7 +2250,7 @@ __MVE_WRAPPER(
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
 
         do {
-            int32x4_t vxe = (vev + (uint32_t)tOffset.iX) * (int32_t)q16XRatio 
+            int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
             int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
