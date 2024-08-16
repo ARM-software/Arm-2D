@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_alpha_gradient.c
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *
- * $Date:        15. Aug 2024
- * $Revision:    V.1.0.2
+ * $Date:        16. Aug 2024
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -688,14 +688,14 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient(
                                + (y + tOffset.iY) * q16YRatio;
         q16OpacityLeft >>= 16;
 
+        uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+        hwAlpha -= (hwAlpha == 1);
+    #endif
+
         uint8_t * __RESTRICT pchTargetLine = pchTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
-#endif
             __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwAlpha);
         }
 
@@ -1564,14 +1564,14 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient(
                                + (y + tOffset.iY) * q16YRatio;
         q16OpacityLeft >>= 16;
 
+        uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+        hwAlpha -= (hwAlpha == 1);
+    #endif
+
         uint16_t * __RESTRICT phwTargetLine = phwTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
-#endif
             __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwAlpha);
         }
 
@@ -2440,14 +2440,14 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient(
                                + (y + tOffset.iY) * q16YRatio;
         q16OpacityLeft >>= 16;
 
+        uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+        hwAlpha -= (hwAlpha == 1);
+    #endif
+
         uint32_t * __RESTRICT pwTargetLine = pwTarget;
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwAlpha = 256 - (uint16_t)q16OpacityLeft;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
-#endif
             __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwAlpha);
         }
 

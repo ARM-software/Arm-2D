@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the Arm-2D structs
  *
  * $Date:        15. Aug 2024
- * $Revision:    V.1.2.13
+ * $Revision:    V.1.2.14
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -723,16 +723,19 @@ typedef union arm_2d_alpha_samples_3pts_t {
  */
 typedef union arm_2d_alpha_samples_2pts_t {
     struct {
-        uint8_t chLeft;
-        uint8_t chRight;
+        uint8_t chLeft;     /* chTopLeft    */
+        uint8_t chRight;    /* chTopRight   */
     };
     struct {
         uint8_t chTopLeft;
-        uint8_t chTopRight;
+        union {
+            uint8_t chTopRight;
+            uint8_t chBottomLeft;
+        };
     };
     struct {
-        uint8_t chTop;
-        uint8_t chBottom;
+        uint8_t chTop;      /* chTopLeft    */
+        uint8_t chBottom;   /* chBottomLeft */
     };
     uint8_t chAlpha[2];
 } arm_2d_alpha_samples_2pts_t;
