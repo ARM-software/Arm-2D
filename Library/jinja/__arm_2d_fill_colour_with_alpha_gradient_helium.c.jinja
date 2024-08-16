@@ -88,6 +88,7 @@ extern "C"
 {%- for sample_algorithm_name, sample_algorithm, sample_pts_num in [
     ('4 sample points', '4pts', '4pts'),
     ('3 sample points', '3pts', '3pts'),
+    ('Horizontal', 'horizontal', '2pts'),
     ] 
 %}
 
@@ -143,7 +144,8 @@ __MVE_WRAPPER(
     };
 
     int32_t q16YRatioLeft, q16YRatioRight;
-    
+
+{% if sample_algorithm != 'horizontal' %}
     /* calculate Y Ratios */
     do {
         int16_t iHeight = ptTargetRegionOnVirtualScreen->tSize.iHeight;
@@ -159,8 +161,11 @@ __MVE_WRAPPER(
                        / iHeight;
     {% endif %}
     } while (0);
+{% else %}
+    int32_t q16OpacityLeft = (int32_t)(tSamplePoints.chLeft) << 16;
+{% endif %}
 
-{% if sample_algorithm == '3pts' %}
+{% if sample_algorithm == '3pts' or sample_algorithm == 'horizontal' %}
     /* calculate X Ratios */
     int32_t q16XRatio;
     do {
@@ -180,9 +185,11 @@ __MVE_WRAPPER(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
+    {% if sample_algorithm != 'horizontal' %}
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
+    {% endif %}
 
     {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
@@ -210,7 +217,7 @@ __MVE_WRAPPER(
                            + q16OpacityLeft;
 
             int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
-            vOpacity            = vqshrntq_n_s32(vOpacity, vxo, 16);
+                      vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
         
         {% if sample_algorithm == '3pts' %}
             /* 
