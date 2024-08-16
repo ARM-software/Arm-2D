@@ -749,14 +749,14 @@ __MVE_WRAPPER(
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -1294,14 +1294,14 @@ __MVE_WRAPPER(
         
             uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -2045,14 +2045,14 @@ __MVE_WRAPPER(
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -2634,14 +2634,14 @@ __MVE_WRAPPER(
         
             uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -3250,14 +3250,14 @@ __MVE_WRAPPER(
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -3731,14 +3731,14 @@ __MVE_WRAPPER(
         
             uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -4314,14 +4314,14 @@ __MVE_WRAPPER(
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
         
-
+        
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
@@ -4773,14 +4773,7 @@ __MVE_WRAPPER(
             mve_pred16_t    tailPred = vctp64q(blkCnt);
         
         
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vhwAlpha = vpselq(  vdupq_n_u16(256), 
-                                vhwAlpha, 
-                                vcmpeqq_n_u16(vhwAlpha, 255));
-#endif
-            vhwAlpha = 256 - vhwAlpha;
-
+        
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 

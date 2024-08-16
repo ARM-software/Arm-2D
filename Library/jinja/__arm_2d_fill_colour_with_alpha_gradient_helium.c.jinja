@@ -979,14 +979,14 @@ __MVE_WRAPPER(
         {% elif sample_algorithm != 'vertical' %}
             uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         {% endif %}
-
+        {% if sample_algorithm != 'vertical' or func_has_mask %}
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-
+        {% endif %}
             
             vstrbq_p_u16(   (uint8_t*)pwTargetLine,
                             __arm_2d_blend_cccn888( 
