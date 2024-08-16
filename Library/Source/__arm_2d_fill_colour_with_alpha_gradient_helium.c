@@ -383,9 +383,9 @@ __MVE_WRAPPER(
                             << 16)
                         / iHeight;
     
-        q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
-                                -   tSamplePoints.chTopRight)) 
-                                << 16) 
+        q16YRatioRight = (  (   (int32_t)(tSamplePoints.chBottomRight 
+                            -   tSamplePoints.chTopRight)) 
+                            << 16) 
                        / iHeight;
     
     } while (0);
@@ -640,9 +640,9 @@ __MVE_WRAPPER(
                             << 16)
                         / iHeight;
     
-        q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
-                                -   tSamplePoints.chTopRight)) 
-                                << 16) 
+        q16YRatioRight = (  ((int32_t)( tSamplePoints.chBottomRight 
+                                      - tSamplePoints.chTopRight)) 
+                            << 16) 
                        / iHeight;
     
     } while (0);
@@ -778,9 +778,9 @@ __MVE_WRAPPER(
                             << 16)
                         / iHeight;
     
-        q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
-                                -   tSamplePoints.chTopRight)) 
-                                << 16) 
+        q16YRatioRight = (  ((int32_t)( tSamplePoints.chBottomRight 
+                                      - tSamplePoints.chTopRight)) 
+                            << 16) 
                        / iHeight;
     
     } while (0);
@@ -1036,9 +1036,9 @@ __MVE_WRAPPER(
                             << 16)
                         / iHeight;
     
-        q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
-                                -   tSamplePoints.chTopRight)) 
-                                << 16) 
+        q16YRatioRight = (  (   (int32_t)(tSamplePoints.chBottomRight 
+                            -   tSamplePoints.chTopRight)) 
+                            << 16) 
                        / iHeight;
     
     } while (0);
@@ -1158,9 +1158,9 @@ __MVE_WRAPPER(
                             << 16)
                         / iHeight;
     
-        q16YRatioRight =    (   (   (int32_t)(tSamplePoints.chBottomRight 
-                                -   tSamplePoints.chTopRight)) 
-                                << 16) 
+        q16YRatioRight = (  ((int32_t)( tSamplePoints.chBottomRight 
+                                      - tSamplePoints.chTopRight)) 
+                            << 16) 
                        / iHeight;
     
     } while (0);
@@ -1436,7 +1436,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -1575,7 +1575,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -1716,7 +1716,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -1854,7 +1854,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -2002,8 +2002,8 @@ __MVE_WRAPPER(
     do {
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
-        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+        q16XRatio = (((int32_t)( tSamplePoints.chTopRight 
+                               - tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -2283,7 +2283,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -2416,7 +2416,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -2660,7 +2660,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -2773,7 +2773,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -2888,7 +2888,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -3000,7 +3000,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -3122,8 +3122,8 @@ __MVE_WRAPPER(
     do {
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
-        q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+        q16XRatio = (((int32_t)( tSamplePoints.chTopRight 
+                               - tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -3351,7 +3351,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
@@ -3458,7 +3458,7 @@ __MVE_WRAPPER(
         int16_t iWidth = ptTargetRegionOnVirtualScreen->tSize.iWidth;
 
         q16XRatio = (((int32_t)(   tSamplePoints.chTopRight 
-                                   -   tSamplePoints.chTopLeft)) << 16) 
+                               -   tSamplePoints.chTopLeft)) << 16) 
                   / iWidth;
     } while(0);
 
