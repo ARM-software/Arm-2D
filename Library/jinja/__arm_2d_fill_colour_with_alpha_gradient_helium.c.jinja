@@ -721,11 +721,14 @@ __MVE_WRAPPER(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-    {% if sample_algorithm != 'horizontal' %}
+{% if sample_algorithm != 'horizontal' %}
         /* calculate the end points of the current row */
-        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16) 
+        int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
+    {% if sample_algorithm == 'vertical' %}
+        q16OpacityLeft >>= 16;
     {% endif %}
+{% endif %}
 
     {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
@@ -736,17 +739,24 @@ __MVE_WRAPPER(
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
     {% endif %}
 
-        int32_t blkCnt                     = iWidth;
+        
+{% if sample_algorithm == 'vertical' %}
+        int16x8_t vOpacity = vdupq_n_s16((int16_t)q16OpacityLeft);
+{% else %}
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
         int32x4_t vev                     = vidupq_n_u32(0, 2);
         int32x4_t vodd                    = vidupq_n_u32(1, 2);
+{% endif %}
+
+        int32_t blkCnt                     = iWidth;
         uint8_t  *__RESTRICT pchMaskLine = ( uint8_t *__RESTRICT)pwMask;
         uint16_t *__RESTRICT phwTargetLine = phwTarget;
         uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
 
         do
         {
+        {% if sample_algorithm != 'vertical' %}
             int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
                            
@@ -755,6 +765,7 @@ __MVE_WRAPPER(
 
             int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
                       vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
+        {% endif %}
 
         {% if sample_algorithm == '3pts' %}
             /* 
@@ -777,7 +788,6 @@ __MVE_WRAPPER(
                                                         tailPred);
             uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
 
-
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vhwAlpha = vpselq(  vdupq_n_u16(256), 
                                 vhwAlpha, 
@@ -791,8 +801,10 @@ __MVE_WRAPPER(
                                             vhwAlpha),
                     tailPred);
 
+        {% if sample_algorithm != 'vertical' %}
             vev += 8;
             vodd += 8;
+        {% endif %}
 
             pchMaskLine += 8*4;
             phwTargetLine += 8;
@@ -883,11 +895,14 @@ __MVE_WRAPPER(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-    {% if sample_algorithm != 'horizontal' %}
+{% if sample_algorithm != 'horizontal' %}
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
+    {% if sample_algorithm == 'vertical' %}
+        q16OpacityLeft >>= 16;
     {% endif %}
+{% endif %}
 
     {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
@@ -898,17 +913,33 @@ __MVE_WRAPPER(
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
     {% endif %}
 
-        int32_t blkCnt                     = iWidth;
+{% if sample_algorithm == 'vertical' %}
+        int16x8_t vOpacity = vdupq_n_s16((int16_t)q16OpacityLeft);
+
+    {% if func_has_mask == false %}
+        uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+        vhwAlpha = vpselq(  vdupq_n_u16(256), 
+                            vhwAlpha, 
+                            vcmpeqq_n_u16(vhwAlpha, 255));
+#endif
+        vhwAlpha = 256 - vhwAlpha;
+    {% endif %}
+{% else %}
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
         int32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
         int32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
+{% endif %}
+
+        int32_t blkCnt                     = iWidth;
     {% if func_has_mask %}
         uint8_t *__RESTRICT pchMaskLine    = pchMask;
     {% endif %}
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
+        {% if sample_algorithm != 'vertical' %}
             int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
             int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
@@ -916,6 +947,7 @@ __MVE_WRAPPER(
 
             int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
                       vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
+        {% endif %}
 
         {% if sample_algorithm == '3pts' %}
             /* 
@@ -944,7 +976,7 @@ __MVE_WRAPPER(
             static const uint16x8_t c_vOffset = { 0, 0, 0, 0, 1, 1, 1, 1 };
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, c_vOffset, (0x3f3f & tailPred));
             uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
-        {% else %}
+        {% elif sample_algorithm != 'vertical' %}
             uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
         {% endif %}
 
@@ -963,8 +995,10 @@ __MVE_WRAPPER(
                                 vhwAlpha),
                             tailPred);
 
+        {% if sample_algorithm != 'vertical' %}
             vev += 2;
             vodd += 2;
+        {% endif %}
         {% if func_has_mask %}
             pchMaskLine += 2;
         {% endif %}
@@ -1048,11 +1082,14 @@ __MVE_WRAPPER(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-    {% if sample_algorithm != 'horizontal' %}
+{% if sample_algorithm != 'horizontal' %}
         /* calculate the end points of the current row */
         int32_t q16OpacityLeft = (((int32_t)tSamplePoints.chTopLeft) << 16)
                                + (y + tOffset.iY) * q16YRatioLeft;
+    {% if sample_algorithm == 'vertical' %}
+        q16OpacityLeft >>= 16;
     {% endif %}
+{% endif %}
 
     {% if sample_algorithm == '4pts' %}
         int32_t q16XRatio;
@@ -1063,15 +1100,21 @@ __MVE_WRAPPER(
         q16XRatio   = ((q63_t)num * (int32_t)invWidth + 0x80000000LL) >> 32;
     {% endif %}
 
-        int32_t blkCnt                     = iWidth;
+{% if sample_algorithm == 'vertical' %}
+        int16x8_t vOpacity = vdupq_n_s16((int16_t)q16OpacityLeft);
+{% else %}
         /* even / odd generators for 32-bit widened Opacity computation */
         /* This one will be narrowed in a 16-bit vector */
-        int32x4_t vev                     = {0, 0, 1, 1};//vidupq_n_u32(0, 2);
-        int32x4_t vodd                    = {0, 0, 1, 1};//vidupq_n_u32(1, 2);
+        int32x4_t vev                     = {0, 0, 1, 1};
+        int32x4_t vodd                    = {0, 0, 1, 1};
+{% endif %}
+
+        int32_t blkCnt                     = iWidth;
         uint8_t  *__RESTRICT pchMaskLine = (uint8_t *__RESTRICT)pwMask;
         uint32_t *__RESTRICT pwTargetLine = pwTarget;
 
         do {
+        {% if sample_algorithm != 'vertical' %}
             int32x4_t vxe = (vev + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
                            + q16OpacityLeft;
             int32x4_t vxo = (vodd + (int32_t)tOffset.iX) * (int32_t)q16XRatio 
@@ -1079,6 +1122,7 @@ __MVE_WRAPPER(
 
             int16x8_t vOpacity = vqshrnbq_n_s32(vuninitializedq_s16(), vxe, 16);
                       vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
+        {% endif %}
 
         {% if sample_algorithm == '3pts' %}
             /* 
@@ -1124,8 +1168,10 @@ __MVE_WRAPPER(
                                 vhwAlpha),
                             tailPred);
 
+        {% if sample_algorithm != 'vertical' %}
             vev += 2;
             vodd += 2;
+        {% endif %}
 
             pchMaskLine += 2 * 4;
             pwTargetLine += 2;
