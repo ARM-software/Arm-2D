@@ -734,10 +734,6 @@ typedef union arm_2d_alpha_samples_2pts_t {
         uint8_t chTop;
         uint8_t chBottom;
     };
-    struct {
-        uint8_t chTopLeft;
-        uint8_t chBottomLeft;
-    };
     uint8_t chAlpha[2];
 } arm_2d_alpha_samples_2pts_t;
 
