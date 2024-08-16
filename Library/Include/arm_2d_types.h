@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        2. Aug 2024
- * $Revision:    V.1.2.12
+ * $Date:        15. Aug 2024
+ * $Revision:    V.1.2.13
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -727,8 +727,16 @@ typedef union arm_2d_alpha_samples_2pts_t {
         uint8_t chRight;
     };
     struct {
+        uint8_t chTopLeft;
+        uint8_t chTopRight;
+    };
+    struct {
         uint8_t chTop;
         uint8_t chBottom;
+    };
+    struct {
+        uint8_t chTopLeft;
+        uint8_t chBottomLeft;
     };
     uint8_t chAlpha[2];
 } arm_2d_alpha_samples_2pts_t;
