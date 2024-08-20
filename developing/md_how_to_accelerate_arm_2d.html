@@ -372,7 +372,7 @@ Feature Agnostic</h3>
 <div class="line">} <a class="code hl_typedef" href="group__gKernel.html#ga5794a4d595906803e2c82088b3e29464" title="an incomplete defintion which is only used for defining pointers">__arm_2d_low_level_io_t</a>;</div>
 </div><!-- fragment --><ul>
 <li>Here <code>SW</code> points to a software implementation that <b>won't return until either the 2D operation is complete or some error happens</b>.</li>
-<li>Here <code>HW</code> points to the <b>hardware adaptor</b> (a.k.a driver) of a hardware accelerator that can work asynchronously with the caller of the Arm-2D APIs. Based on the arguments passed to the <code>SW</code>, the capability and the status of the 2D accelerator, the <b>hardware adaptor</b> might:<ul>
+<li>Here <code>HW</code> points to the <b>hardware adaptor</b> (a.k.a driver) of a hardware accelerator that can work asynchronously with the caller of the Arm-2D APIs. Based on the arguments passed to the <code>HW</code>, the capability and the status of the 2D accelerator, the <b>hardware adaptor</b> might:<ul>
 <li>return <code>ARM_2D_ERR_NOT_SUPPORT</code> if the hardware isn't capable to do what is requested.</li>
 <li>return <code>arm_fsm_rt_cpl</code> if the task is done immediately (and no need to wait).</li>
 <li>return <code>arm_fsm_rt_async</code> if the task is done asynchronously and the driver will call function <code>__arm_2d_notify_sub_task_cpl()</code> to report the result.</li>
