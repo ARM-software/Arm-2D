@@ -308,7 +308,7 @@ typedef struct __arm_2d_low_level_io_t {
 
 - Here `SW` points to a software implementation that **won't return until either the 2D operation is complete or some error happens**. 
 
-- Here `HW` points to the **hardware adaptor** (a.k.a driver) of a hardware accelerator that can work asynchronously with the caller of the Arm-2D APIs. Based on the arguments passed to the `SW`, the capability and the status of the 2D accelerator, the **hardware adaptor** might:
+- Here `HW` points to the **hardware adaptor** (a.k.a driver) of a hardware accelerator that can work asynchronously with the caller of the Arm-2D APIs. Based on the arguments passed to the `HW`, the capability and the status of the 2D accelerator, the **hardware adaptor** might:
 
   - return `ARM_2D_ERR_NOT_SUPPORT` if the hardware isn't capable to do what is requested.
 
