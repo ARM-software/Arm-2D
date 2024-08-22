@@ -279,7 +279,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                     {32, 32, 255-64, 255-64},
                                                 (arm_2d_corner_opacity_t)
                                                     {0, 128, 128, 128});
-                #if 0
+
                     arm_2d_dock_vertical(__item_region, 
                                         ARM_2D_FONT_A8_DIGITS_ONLY
                                             .use_as__arm_2d_user_font_t
@@ -302,7 +302,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                             arm_lcd_printf("%d", n);
                         }
                     }
-                #endif
+
                 }
             }                
         }
