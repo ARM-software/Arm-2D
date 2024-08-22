@@ -67,6 +67,28 @@
     __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, In1Out, In2, Ratio, 1)
 
 __STATIC_FORCEINLINE
+uint16x8_t vblda7q_rgb565(uint16x8_t vec1, 
+                        uint16x8_t vec2, 
+                        uint16x8_t vu7TransRatio)
+{
+    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2, vu7TransRatio, 1);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t vblda7q_m_rgb565(uint16x8_t vec1, 
+                        uint16x8_t vec2, 
+                        uint16x8_t vu7TransRatio,
+                        mve_pred16_t p)
+{
+    return __arm_vcx3qa_m(  ARM_2D_RGB565_ACI_LIB_COPRO_ID, 
+                            vec1, 
+                            vec2, 
+                            vu7TransRatio, 
+                            1, 
+                            p);
+}
+
+__STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_blendq(  uint16x8_t vec1, 
                                         uint16x8_t vec2, 
                                         uint16x8_t vratio)

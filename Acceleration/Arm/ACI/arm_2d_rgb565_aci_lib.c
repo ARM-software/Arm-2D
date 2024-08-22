@@ -698,9 +698,9 @@ __STATIC_FORCEINLINE void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_poi
 
 
         vHwPixelAlpha = (vAvgPixel);
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmphiq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmphiq_n_u16(vHwPixelAlpha, 255));
     }
 #else
     {
@@ -712,37 +712,26 @@ __STATIC_FORCEINLINE void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_poi
         uint8_t        *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);
         vHwPixelAlpha = vldrbq_gather_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
     }
 
 #endif
-    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity) >> 1,
+                           vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 9),
+                           vcmphiq_n_u16(vHwPixelAlpha, 255));
+
+    uint16x8_t vhwTransparency = vpselq(vdupq_n_u16(0),
+                                        127 - vHwPixelAlpha,
+                                        vcmphiq_n_u16(vHwPixelAlpha, 127));
+
     uint16x8_t      vBlended;
 
-#if COMPARE_CDE_TEST
-    __arm_2d_color_fast_rgb_t tSrcPix;
-
-    __arm_2d_rgb565_unpack(*(&MaskColour), &tSrcPix);
-
-    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, &tSrcPix, vhwTransparency);
-
-    uint16x8_t      cde =
-        __arm_2d_cde_rgb565_blendq(vTarget, vdupq_n_u16(MaskColour), vhwTransparency);
-
-
-    if (COMPARE_Q15_VEC(cde, vBlended) == 0) {
-        printf("error %d %d\n", errorCnt, okCnt);
-        DUMP_Q15_VEC(vBlended);
-        DUMP_Q15_VEC(cde);
-        errorCnt++;
-    } else
-        //printf("ok %d %d\n", errorCnt, okCnt);
-        okCnt++;
-#else
-    vBlended = __arm_2d_cde_rgb565_blendq(vTarget, vdupq_n_u16(MaskColour), vhwTransparency);
-#endif
+    vBlended = vblda7q_m_rgb565(vTarget, 
+                                vdupq_n_u16(MaskColour), 
+                                vhwTransparency,
+                                vcmpneq_n_u16(vhwTransparency, 127));
 
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
 
@@ -1924,12 +1913,9 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __RESTRICT p
     uint16x8_t      curA2Masks = vldrbq_u16(A2_masks + nAlphaOffset);
     int16x8_t       curA2MasksShift = vnegq_s16(vldrbq_s16(A2_masks_shifts + nAlphaOffset));
 
-#if COMPARE_CDE_TEST
-    __arm_2d_color_fast_rgb_t tSrcPix;
-    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
-#endif
-
     uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vColour = vdupq_n_u16(Colour);
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
         const uint8_t  *pAlpha = (const uint8_t *) pchAlpha;
         uint16_t       *pCurTarget = pTarget;
@@ -1945,50 +1931,12 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t * __RESTRICT p
                                (vldrbq_gather_offset_z_u16(pAlpha, curA2Offs, p), curA2Masks, p),
                                curA2MasksShift, p), 85, p);
             vecTransp = (uint16x8_t) vmulhq_x((uint8x16_t) vecTransp, vOpacity, p);
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vecTransp = vpselq(vdupq_n_u16(256), vecTransp, vcmpeqq_m_n_u16(vecTransp, cst254, p));
-#endif
-            uint16x8_t      vecAlpha = vsubq_x_u16(v256, vecTransp, p);
 
-#if COMPARE_CDE_TEST
-
-
-            uint16x8_t      tmp = vdupq_n_u16(0);
-            tmp = vaddq_m_n_u16(tmp, tmp, 1, p);
-
-
-            uint16x8_t      cde =
-                __arm_2d_cde_rgb565_blendq(vecTarget, vdupq_n_u16(Colour), vecAlpha);
-
-
-            uint16x8_t      vecR, vecG, vecB;
-            __arm_2d_rgb565_unpack_single_vec_cde(vecTarget, &vecR, &vecG, &vecB);
-            vecR = vmulq(vecR, vecAlpha);
-            vecR = vmlaq(vecR, vecTransp, (uint16_t) tSrcPix.R);
-            vecR = vecR >> 8;
-            vecG = vmulq(vecG, vecAlpha);
-            vecG = vmlaq(vecG, vecTransp, (uint16_t) tSrcPix.G);
-            vecG = vecG >> 8;
-            vecB = vmulq(vecB, vecAlpha);
-            vecB = vmlaq(vecB, vecTransp, (uint16_t) tSrcPix.B);
-            vecB = vecB >> 8;
-            vecTarget = __arm_2d_rgb565_pack_single_vec(vecR, vecG, vecB);
-
-
-            vecTarget = vecTarget * tmp;
-            cde = cde * tmp;
-
-            if (COMPARE_Q15_VEC(cde, vecTarget) == 0) {
-                printf("errorz %d %d %x\n", errorCnt++, okCnt, p);
-                DUMP_Q15_VEC(vecTarget);
-                DUMP_Q15_VEC(cde);
-            } else
-                okCnt++;
-            //   printf("ok2 %d %d\n", errorCnt, okCnt++);
-#else
-            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);
-#endif
-
+            uint16x8_t vecAlpha = 127 - (vecTransp >> 1);
+            vecTarget = vblda7q_m_rgb565(   vecTarget, 
+                                            vColour, 
+                                            vecAlpha, 
+                                            vcmpneq_n_u16(vecAlpha, 127));
 
             vst1q_p_u16(pCurTarget, vecTarget, p);
             pAlpha += (8 * 1 / 4);
@@ -2022,12 +1970,8 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __RESTRICT pTarget,
     uint16x8_t      curA4Masks = vldrbq_u16(A4_masks + nAlphaOffset);
     int16x8_t       curA4MasksShift = vnegq_s16(vldrbq_s16(A4_masks_shifts + nAlphaOffset));
 
-#if COMPARE_CDE_TEST
-    __arm_2d_color_fast_rgb_t tSrcPix;
-    __arm_2d_rgb565_unpack(*(&Colour), &tSrcPix);
-#endif
-
     uint16x8_t      v256 = vdupq_n_u16(256);
+    uint16x8_t      vColour = vdupq_n_u16(Colour);
     for (int_fast16_t y = 0; y < iHeight; y++) {
         const uint8_t  *pAlpha = (const uint8_t *) pchAlpha;
         uint16_t       *pCurTarget = pTarget;
@@ -2042,52 +1986,15 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __RESTRICT pTarget,
                               (vandq_x
                                (vldrbq_gather_offset_z_u16(pAlpha, curA4Offs, p), curA4Masks, p),
                                curA4MasksShift, p), 17, p);
-            vecTransp = vecTransp;
-            vecTransp = vpselq(vdupq_n_u16(256), vecTransp, vcmpeqq_m_n_u16(vecTransp, cst255, p));
-            uint16x8_t      vecAlpha = vsubq_x_u16(v256, vecTransp, p);
 
-#if COMPARE_CDE_TEST
+            vecTransp = vecTransp >> 1;
+            uint16x8_t      vecAlpha = 127 - vecTransp;
 
-            uint16x8_t      tmp = vdupq_n_u16(0);
-            tmp = vaddq_m_n_u16(tmp, tmp, 1, p);
+            vecTarget = vblda7q_m_rgb565(   vecTarget, 
+                                            vColour, 
+                                            vecAlpha, 
+                                            vcmpneq_n_u16(vecAlpha, 127));
 
-
-            uint16x8_t      cde =
-                __arm_2d_cde_rgb565_blendq(vecTarget, vdupq_n_u16(Colour), vecAlpha);
-
-            uint16x8_t      vecR, vecG, vecB;
-            __arm_2d_rgb565_unpack_single_vec_cde(vecTarget, &vecR, &vecG, &vecB);
-
-            vecR = vmulq(vecR, vecAlpha);
-            vecR = vmlaq(vecR, vecTransp, (uint16_t) tSrcPix.R);
-            vecR = vecR >> 8;
-            vecG = vmulq(vecG, vecAlpha);
-            vecG = vmlaq(vecG, vecTransp, (uint16_t) tSrcPix.G);
-            vecG = vecG >> 8;
-            vecB = vmulq(vecB, vecAlpha);
-            vecB = vmlaq(vecB, vecTransp, (uint16_t) tSrcPix.B);
-            vecB = vecB >> 8;
-
-
-
-            vecTarget = __arm_2d_rgb565_pack_single_vec(vecR, vecG, vecB);
-
-            vecTarget = vecTarget * tmp;
-            cde = cde * tmp;
-            if (COMPARE_Q15_VEC(cde, vecTarget) == 0) {
-                printf("error3  %d %d %x\n", errorCnt++, okCnt, p);
-                DUMP_Q15_VEC(vecR);
-                DUMP_Q15_VEC(vecG);
-                DUMP_Q15_VEC(vecB);
-                DUMP_Q15_VEC(vecTarget);
-                DUMP_Q15_VEC(cde);
-
-            } else
-                okCnt++;
-            //   printf("ok3 %d %d\n", errorCnt, okCnt++);
-#else
-            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vdupq_n_u16(Colour), vecAlpha, p);
-#endif
             vst1q_p_u16(pCurTarget, vecTarget, p);
             pAlpha += (8 * 1 / 2);
             pCurTarget += 8;
@@ -2130,35 +2037,14 @@ void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __RESTRICT pSourceBase,
             uint16x8_t      vecTarget = vld1q_z(ptTargetCur, p);
             uint16x8_t      vecSource = vld1q_z(ptSrc, p);
             uint16x8_t      vecTargetMask = vldrbq_z_u16(ptTargetMaskCur, p);
-            uint16x8_t      vecHwOpacity = vsubq_x(v256, vecTargetMask, p);
+            uint16x8_t      vecHwOpacity = 127 - (vecTargetMask >> 1);
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vecHwOpacity =
-                vpselq(vdupq_n_u16(0), vecHwOpacity, vcmpeqq_m_n_u16(vecHwOpacity, 1, p));
-#endif
+            vecTarget = vblda7q_m_rgb565(   vecTarget, 
+                                            vecSource, 
+                                            vecHwOpacity, 
+                                            vcmpneq_n_u16(vecHwOpacity, 127));
 
-#if COMPARE_CDE_TEST
-            uint16x8_t      cde = __arm_2d_cde_rgb565_blendq(vecTarget, vecSource,
-                                                             vecHwOpacity);
-
-            vecTarget =
-                __arm_2d_rgb565_blending_opacity_single_vec(vecTarget, vecSource, vecHwOpacity);
-
-
-
-            if (COMPARE_Q15_VEC(cde, vecTarget) == 0) {
-
-                DUMP_Q15_VEC(cde);
-                DUMP_Q15_VEC(vecHwOpacity);
-                DUMP_Q15_VEC(vecTarget);
-                printf("blkCnt %x\n", blkCnt);
-
-            }
-#else
-            vecTarget = __arm_2d_cde_rgb565_blendq_m(vecTarget, vecSource, vecHwOpacity, p);
-#endif
             vst1q_p(ptTargetCur, vecTarget, p);
-
 
             ptTargetMaskCur += (128 / 16);
             ptTargetCur += (128 / 16);
@@ -2710,19 +2596,14 @@ __MVE_WRAPPER(
                       vOpacity = vqshrntq_n_s32(vOpacity, vxo, 16);
 
             mve_pred16_t    tailPred = vctp16q(blkCnt);
-            uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity);
+            uint16x8_t vhwAlpha = vreinterpretq_s16_u16(vOpacity) >> 1;
 
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vhwAlpha = vpselq(  vdupq_n_u16(256), 
-                                vhwAlpha, 
-                                vcmpeqq_n_u16(vhwAlpha, 255));
-#endif
-            vhwAlpha = 256 - vhwAlpha;
+            vhwAlpha = 127 - vhwAlpha;
             
             vst1q_p(phwTargetLine,
-                    __arm_2d_cde_rgb565_blendq( vldrhq_z_u16(phwTargetLine, tailPred),
-                                                vColourRGB, 
-                                                vhwAlpha),
+                    vblda7q_rgb565( vldrhq_z_u16(phwTargetLine, tailPred),
+                                    vColourRGB,
+                                    vhwAlpha),
                     tailPred);
 
             vev += 8;
@@ -2819,20 +2700,15 @@ __MVE_WRAPPER(
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 9);
         
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vhwAlpha = vpselq(  vdupq_n_u16(256), 
-                                vhwAlpha, 
-                                vcmpeqq_n_u16(vhwAlpha, 255));
-#endif
-            vhwAlpha = 256 - vhwAlpha;
+            vhwAlpha = 127 - vhwAlpha;
 
             vst1q_p(phwTargetLine,
-                    __arm_2d_cde_rgb565_blendq(   vldrhq_z_u16(phwTargetLine, 
-                                                                 tailPred),
-                                                  vColourRGB, 
-                                                  vhwAlpha),
+                    vblda7q_m_rgb565( vldrhq_z_u16(phwTargetLine, tailPred),
+                                      vColourRGB, 
+                                      vhwAlpha,
+                                      vcmpneq_n_u16(vhwAlpha, 127)),
                     tailPred);
 
             vev += 8;
@@ -2935,19 +2811,15 @@ __MVE_WRAPPER(
             uint16x8_t vMask = vldrbq_gather_offset_z_u16(pchMaskLine, 
                                                         vStride4Offs,
                                                         tailPred);
-            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            vhwAlpha = vpselq(  vdupq_n_u16(256), 
-                                vhwAlpha, 
-                                vcmpeqq_n_u16(vhwAlpha, 255));
-#endif
-            vhwAlpha = 256 - vhwAlpha;
+            uint16x8_t vhwAlpha = ((vMask * vreinterpretq_s16_u16(vOpacity)) >> 9);
+        
+            vhwAlpha = 127 - vhwAlpha;
 
             vst1q_p(phwTargetLine,
-                    __arm_2d_cde_rgb565_blendq( vldrhq_z_u16(phwTargetLine, tailPred),
-                                                vColourRGB, 
-                                                vhwAlpha),
+                    vblda7q_m_rgb565( vldrhq_z_u16(phwTargetLine, tailPred),
+                                      vColourRGB, 
+                                      vhwAlpha,
+                                      vcmpneq_n_u16(vhwAlpha, 127)),
                     tailPred);
 
             vev += 8;
