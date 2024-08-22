@@ -21,8 +21,8 @@
  * Title:        arm_2d_user_aci.h
  * Description:  Public header file template for adding ACI acceleration
  *
- * $Date:        24 Aug 2023
- * $Revision:    V.1.0.0
+ * $Date:        22 Aug 2024
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -51,65 +51,71 @@
 #if defined(__ARM_2D_IMPLEMENT_HELIUM__) && __ARM_2D_IMPLEMENT_HELIUM__
 
 
-#define __arm_2d_impl_rgb565_colour_filling_with_opacity    \
-                __arm_2d_impl_rgb565_colour_filling_with_opacity_orig
+#define __arm_2d_impl_rgb565_colour_filling_with_opacity                        \
+    __arm_2d_impl_rgb565_colour_filling_with_opacity_orig
 
-#define __arm_2d_impl_rgb565_colour_filling_mask_opacity \
-                __arm_2d_impl_rgb565_colour_filling_mask_opacity_orig
+#define __arm_2d_impl_rgb565_colour_filling_mask_opacity                        \
+    __arm_2d_impl_rgb565_colour_filling_mask_opacity_orig
 
-#define __arm_2d_impl_rgb565_tile_copy_opacity \
-                __arm_2d_impl_rgb565_tile_copy_opacity_orig
+#define __arm_2d_impl_rgb565_tile_copy_opacity                                  \
+    __arm_2d_impl_rgb565_tile_copy_opacity_orig
 
-#define __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity \
-                __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity_orig
+#define __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity                    \
+    __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy                            \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill                            \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_orig
 
-#define __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform \
-                __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform_orig
+#define __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform              \
+    __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform_orig
 
-#define __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity \
-                __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity_orig
+#define __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity                     \
+    __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity_orig
 
-#define __arm_2d_impl_rgb565_colour_filling_a4_mask \
-                __arm_2d_impl_rgb565_colour_filling_a4_mask_orig
+#define __arm_2d_impl_rgb565_colour_filling_a4_mask                             \
+    __arm_2d_impl_rgb565_colour_filling_a4_mask_orig
 
-#define __arm_2d_impl_rgb565_des_msk_copy \
-                __arm_2d_impl_rgb565_des_msk_copy_orig
+#define __arm_2d_impl_rgb565_des_msk_copy                                       \
+    __arm_2d_impl_rgb565_des_msk_copy_orig
 
-#define __arm_2d_impl_rgb565_transform_with_opacity \
-                __arm_2d_impl_rgb565_transform_with_opacity_orig
+#define __arm_2d_impl_rgb565_transform_with_opacity                             \
+    __arm_2d_impl_rgb565_transform_with_opacity_orig
 
-#define __arm_2d_impl_rgb565_transform_with_src_mask \
-                __arm_2d_impl_rgb565_transform_with_src_mask_orig
+#define __arm_2d_impl_rgb565_transform_with_src_mask                            \
+    __arm_2d_impl_rgb565_transform_with_src_mask_orig
 
-#define __arm_2d_impl_rgb565_transform \
-                __arm_2d_impl_rgb565_transform_orig
+#define __arm_2d_impl_rgb565_transform                                          \
+    __arm_2d_impl_rgb565_transform_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror                   \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror                   \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror                  \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror                   \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror                   \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror_orig
 
-#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror \
-                __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror_orig
+#define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror                  \
+    __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror_orig
 
-#define __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient \
-                __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_orig
+#define __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient               \
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_orig
+
+#define __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask      \
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask_orig
+
+#define __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask  \
+    __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask_orig
 
 #endif
 
