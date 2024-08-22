@@ -108,6 +108,9 @@
 #define __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror \
                 __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror_orig
 
+#define __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient \
+                __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_orig
+
 #endif
 
 #endif                          /* end of __ARM_2D_USER_ACI_H__ */
