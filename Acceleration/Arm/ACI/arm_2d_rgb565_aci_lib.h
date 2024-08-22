@@ -61,28 +61,23 @@
 #include <arm_mve.h>
 #include <arm_cde.h>
 
-
-/* Vector RGB565 Mix */
-#define VRGB565MIX_ACI(In1Out, In2, Ratio)                                      \
-    __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, In1Out, In2, Ratio, 1)
-
 __STATIC_FORCEINLINE
-uint16x8_t vblda7q_rgb565(uint16x8_t vec1, 
-                        uint16x8_t vec2, 
-                        uint16x8_t vu7TransRatio)
+uint16x8_t vblda7q_rgb565(  uint16x8_t In1Out, 
+                            uint16x8_t In2, 
+                            uint16x8_t vu7TransRatio)
 {
-    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2, vu7TransRatio, 1);
+    return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, In1Out, In2, vu7TransRatio, 1);
 }
 
 __STATIC_FORCEINLINE
-uint16x8_t vblda7q_m_rgb565(uint16x8_t vec1, 
-                        uint16x8_t vec2, 
+uint16x8_t vblda7q_m_rgb565(uint16x8_t In1Out, 
+                        uint16x8_t In2, 
                         uint16x8_t vu7TransRatio,
                         mve_pred16_t p)
 {
     return __arm_vcx3qa_m(  ARM_2D_RGB565_ACI_LIB_COPRO_ID, 
-                            vec1, 
-                            vec2, 
+                            In1Out, 
+                            In2, 
                             vu7TransRatio, 
                             1, 
                             p);
