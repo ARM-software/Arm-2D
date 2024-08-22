@@ -117,6 +117,15 @@
 #define __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask  \
     __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask_orig
 
+#define __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient               \
+    __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_orig
+
+#define __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask      \
+    __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask_orig
+
+#define __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_chn_mask  \
+    __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_chn_mask_orig
+
 #endif
 
 #endif                          /* end of __ARM_2D_USER_ACI_H__ */
