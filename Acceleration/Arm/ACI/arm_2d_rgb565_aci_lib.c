@@ -2650,8 +2650,7 @@ __MVE_WRAPPER(
             - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    __arm_2d_color_fast_rgb_t ColorRGB;
-    __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
+    uint16x8_t vColourRGB = vdupq_n_u16(hwColour);
 
     int32_t q16YRatioLeft, q16YRatioRight;
 
@@ -2717,10 +2716,9 @@ __MVE_WRAPPER(
             vhwAlpha = 256 - vhwAlpha;
         
             vst1q_p(phwTargetLine,
-                    __arm_2d_cde_rgb565_blendq_m(   vldrhq_z_u16(phwTargetLine, tailPred),
-                                                    &ColorRGB, 
-                                                    vhwAlpha,
-                                                    tailPred),
+                    __arm_2d_cde_rgb565_blendq( vldrhq_z_u16(phwTargetLine, tailPred),
+                                                vColourRGB, 
+                                                vhwAlpha),
                     tailPred);
 
             vev += 8;
