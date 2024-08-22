@@ -267,7 +267,12 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 
         ARM_2D_OP_WAIT_ASYNC();
 
-        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
+    #if __DISP0_CFG_COLOUR_DEPTH__ == 8
+        arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_BLACK);
+    #else
+        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
+    #endif
+
         arm_lcd_text_location(0,0);
         if (DISP0_ADAPTER.Benchmark.wAverage) {
             arm_lcd_printf(
@@ -310,7 +315,11 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
 
         ARM_2D_OP_WAIT_ASYNC();
 
-        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
+    #if __DISP0_CFG_COLOUR_DEPTH__ == 8
+        arm_lcd_text_set_colour(GLCD_COLOR_LIGHT_GREY, GLCD_COLOR_BLACK);
+    #else
+        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
+    #endif
         arm_lcd_text_location((__DISP0_CFG_SCEEN_HEIGHT__ + 7) / 8 - 2,
                               0);
 
@@ -763,7 +772,12 @@ void disp_adapter0_navigator_init(void)
             .hwInputBufferSize = sizeof(s_chInputBuffer),
         #endif
 
+        #if __DISP0_CFG_COLOUR_DEPTH__ == 8
+            .tColor = GLCD_COLOR_WHITE,
+        #else
             .tColor = GLCD_COLOR_GREEN,
+        #endif
+            
             .bUseDirtyRegion = true,
             .ppDirtyRegionList = (arm_2d_region_list_item_t **)&s_tNavDirtyRegionList,
         };
