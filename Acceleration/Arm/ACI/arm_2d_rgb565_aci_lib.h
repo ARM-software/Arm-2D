@@ -63,17 +63,23 @@
 
 
 /* Vector RGB565 Mix */
-#define VRGB565MIX_ACI(In1Out, In2, Ratio)                           \
-    __arm_vcx3qa(0, In1Out, In2, Ratio, 1)
+#define VRGB565MIX_ACI(In1Out, In2, Ratio)                                      \
+    __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, In1Out, In2, Ratio, 1)
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_cde_rgb565_blendq(  uint16x8_t vec1, 
                                         uint16x8_t vec2, 
                                         uint16x8_t vratio)
 {
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    mve_pred16_t p = vcmpneq_n_u16(vratio, 256);
     /* ACI RGB565 Mix uses a 7-bit ratio */
+    return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2,
+            vqshrnbq_m_n_s16((int8x16_t)vratio, vratio, 1, p), 1, p);
+#else
     return __arm_vcx3qa(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2,
         vqshrnbq_n_s16((int8x16_t)vratio, vratio, 1), 1);
+#endif
 }
 
 
@@ -84,6 +90,9 @@ uint16x8_t __arm_2d_cde_rgb565_blendq_m(uint16x8_t vec1,
                                         mve_pred16_t p)
 {
     /* ACI RGB565 Mix uses a 7-bit ratio */
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    p &= vcmpneq_n_u16(vratio, 256);
+#endif
     return __arm_vcx3qa_m(ARM_2D_RGB565_ACI_LIB_COPRO_ID, vec1, vec2,
             vqshrnbq_m_n_s16((int8x16_t)vratio, vratio, 1, p), 1, p);
 }

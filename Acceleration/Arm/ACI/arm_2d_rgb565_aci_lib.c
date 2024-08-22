@@ -2718,7 +2718,7 @@ __MVE_WRAPPER(
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-        
+            
             vst1q_p(phwTargetLine,
                     __arm_2d_cde_rgb565_blendq( vldrhq_z_u16(phwTargetLine, tailPred),
                                                 vColourRGB, 
@@ -2827,11 +2827,12 @@ __MVE_WRAPPER(
                                 vcmpeqq_n_u16(vhwAlpha, 255));
 #endif
             vhwAlpha = 256 - vhwAlpha;
-        
+
             vst1q_p(phwTargetLine,
-                    __arm_2d_cde_rgb565_blendq( vldrhq_z_u16(phwTargetLine, tailPred),
-                                                vColourRGB, 
-                                                vhwAlpha),
+                    __arm_2d_cde_rgb565_blendq(   vldrhq_z_u16(phwTargetLine, 
+                                                                 tailPred),
+                                                  vColourRGB, 
+                                                  vhwAlpha),
                     tailPred);
 
             vev += 8;
