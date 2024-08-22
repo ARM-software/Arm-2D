@@ -170,13 +170,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
         
         /* following code is just a demo, you can remove them */
     
-        arm_2d_fill_colour_with_3pts_alpha_gradient(
+        arm_2d_fill_colour_with_4pts_alpha_gradient(
                                             ptTile, 
                                             &__top_canvas, 
                                             (__arm_2d_color_t){GLCD_COLOR_GREEN},
-                                            (arm_2d_alpha_samples_3pts_t) {
-                                                0, 255,
-                                                128,
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                {0, 255,
+                                                128, 64},
                                             });
 
     #if 0
@@ -200,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     
                     arm_2d_op_wait_async(NULL);
 
-                #if 1
+                #if 0
                     /* draw the cmsis logo in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
                     #if 0
@@ -229,7 +229,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                 #else
                     /* draw the cmsis logo using mask in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
-                    #if 1
+                    #if 0
                         arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                             ptTile, 
                                                             &__centre_region, 
@@ -237,12 +237,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                             (__arm_2d_color_t){GLCD_COLOR_BLACK},
                                                             128);
                     #else
-                        arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
-                                                            ptTile, 
-                                                            &__centre_region, 
-                                                            &c_tileCMSISLogoMask2, 
-                                                            (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                            128);
+                        arm_2d_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(
+                                            ptTile, 
+                                            &__centre_region,
+                                            &c_tileCMSISLogoMask2,
+                                            (__arm_2d_color_t){GLCD_COLOR_BLUE},
+                                            255,
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                {255, 0,
+                                                128, 32},
+                                            });
+                        
                     #endif
                     }
                 #endif
@@ -274,7 +279,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                     {32, 32, 255-64, 255-64},
                                                 (arm_2d_corner_opacity_t)
                                                     {0, 128, 128, 128});
-
+                #if 0
                     arm_2d_dock_vertical(__item_region, 
                                         ARM_2D_FONT_A8_DIGITS_ONLY
                                             .use_as__arm_2d_user_font_t
@@ -297,6 +302,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                             arm_lcd_printf("%d", n);
                         }
                     }
+                #endif
                 }
             }                
         }
