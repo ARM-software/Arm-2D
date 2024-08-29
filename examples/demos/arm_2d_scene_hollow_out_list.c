@@ -218,7 +218,7 @@ static void __on_scene_hollow_out_list_frame_start(arm_2d_scene_t *ptScene)
 
 
     do {
-        bool bIsListMoving = __arm_2d_list_core_is_list_moving(&this.tNumberList[0].use_as____arm_2d_list_core_t);
+        bool bIsListMoving = __arm_2d_list_core_is_list_moving((__arm_2d_list_core_t *)&this.tNumberList[0]);
         
         arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_LIST_SMALL_1],
                                             !bIsListMoving); 
@@ -340,7 +340,7 @@ arm_fsm_rt_t __ruler_number_list_draw_central_list_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_2d_size_t tListSize = __arm_2d_list_core_get_list_size(&this.use_as____arm_2d_list_core_t);
+    arm_2d_size_t tListSize = __arm_2d_list_core_get_list_size((__arm_2d_list_core_t *)&this);
     
 
     arm_2d_canvas(ptTile, __top_container) {
