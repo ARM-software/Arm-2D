@@ -1,5 +1,9 @@
 var NAVTREEINDEX6 =
 {
+"md_how_to_use_layout_assistant.html#autotoc_md117":[6,1],
+"md_how_to_use_layout_assistant.html#autotoc_md118":[6,2],
+"md_how_to_use_layout_assistant.html#autotoc_md119":[6,2,0],
+"md_how_to_use_layout_assistant.html#autotoc_md120":[6,2,0,0],
 "md_how_to_use_layout_assistant.html#autotoc_md121":[6,2,0,1],
 "md_how_to_use_layout_assistant.html#autotoc_md122":[6,2,1],
 "md_how_to_use_layout_assistant.html#autotoc_md123":[6,2,1,0],

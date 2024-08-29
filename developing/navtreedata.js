@@ -265,8 +265,8 @@ var NAVTREEINDEX =
 "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca",
 "group__gHelper.html#struct____arm__2d__list__work__area__t",
 "group__gKernel.html#ga47c48da11616accd1ae2d81871861fd4",
-"group__gKernel.html#structarm__2d__op__src__orig__t_8Target",
-"md_how_to_use_layout_assistant.html#autotoc_md121"
+"group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Target",
+"md_how_to_use_layout_assistant.html#autotoc_md117"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

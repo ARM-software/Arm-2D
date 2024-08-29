@@ -130,8 +130,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__font_8h_source.html',
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_font.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  the font helper service header file</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        19. July 2024</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.2.6.2</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        29. Aug 2024</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.2.7.0</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -385,112 +385,119 @@ $(document).ready(function(){initNavTree('arm__2d__helper__font_8h_source.html',
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="keywordtype">int</span> arm_lcd_printf(const <span class="keywordtype">char</span> *format, ...);</div>
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>extern</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="keywordtype">int</span> arm_lcd_printf_label(<a class="code hl_enumeration" href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3" title="alignment">arm_2d_align_t</a> tAlignment, const <span class="keywordtype">char</span> *format, ...);</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>extern</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span><span class="keywordtype">void</span> arm_lcd_puts(const <span class="keywordtype">char</span> *str);</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span><span class="keywordtype">void</span> arm_lcd_puts_label( const <span class="keywordtype">char</span> *pchString,</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                        <a class="code hl_enumeration" href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3" title="alignment">arm_2d_align_t</a> tAlignment);</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>extern </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="keywordtype">void</span> arm_lcd_text_location(uint8_t chY, uint8_t chX);</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span> </div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>extern</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="keywordtype">void</span> arm_lcd_text_reset_display_region_tracking(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>extern</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *arm_lcd_text_get_last_display_region(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment"></span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="comment"> * \brief draw a char to a given location in the draw region</span></div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="comment"> * \param[in] iX the x coordinate</span></div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="comment"> * \param[in] iY the y coordinate</span></div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="comment"> * \param[in] ppchCharCode a pointer of pointer that points to the string</span></div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment"> * \note this function will advance the pointer automatically</span></div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="comment"> * \param[in] chOpacity the opacity of the char</span></div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="comment"> * \note this chOpacity has NO effect on the default monochrome(A1) font</span></div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span><span class="comment"> * \return int16_t char advance in pixels</span></div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>extern</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno"><a class="line" href="group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7">  308</a></span>int16_t <a class="code hl_function" href="group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7" title="draw a char to a given location in the draw region">lcd_draw_char</a>(int16_t iX, </div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                     int16_t iY, </div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                     uint8_t **ppchCharCode, </div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                     uint_fast8_t chOpacity);</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>extern</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="keywordtype">void</span> arm_lcd_putchar(const <span class="keywordtype">char</span> *str);</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>extern </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span><span class="keywordtype">void</span> arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, </div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                                COLOUR_INT_TYPE wBackground);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>extern</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>ARM_NONNULL(2)</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="keywordtype">int</span> arm_lcd_printf_label(<a class="code hl_enumeration" href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3" title="alignment">arm_2d_align_t</a> tAlignment, const <span class="keywordtype">char</span> *format, ...);</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>extern</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="keywordtype">void</span> arm_lcd_puts(const <span class="keywordtype">char</span> *str);</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>extern </div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="keywordtype">void</span> arm_lcd_text_location(uint8_t chY, uint8_t chX);</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>extern</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="keywordtype">void</span> arm_lcd_text_reset_display_region_tracking(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>extern</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *arm_lcd_text_get_last_display_region(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment"></span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="comment"> * \brief draw a char to a given location in the draw region</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="comment"> * \param[in] iX the x coordinate</span></div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="comment"> * \param[in] iY the y coordinate</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span><span class="comment"> * \param[in] ppchCharCode a pointer of pointer that points to the string</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="comment"> * \note this function will advance the pointer automatically</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span><span class="comment"> * \param[in] chOpacity the opacity of the char</span></div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span><span class="comment"> * \note this chOpacity has NO effect on the default monochrome(A1) font</span></div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="comment"> * \return int16_t char advance in pixels</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>extern</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno"><a class="line" href="group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7">  315</a></span>int16_t <a class="code hl_function" href="group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7" title="draw a char to a given location in the draw region">lcd_draw_char</a>(int16_t iX, </div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                     int16_t iY, </div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                     uint8_t **ppchCharCode, </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                     uint_fast8_t chOpacity);</div>
 <div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>extern</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="keywordtype">void</span> arm_lcd_text_set_opacity(uint8_t chOpacity);</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="keywordtype">void</span> arm_lcd_putchar(const <span class="keywordtype">char</span> *str);</div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>extern</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span><span class="keywordtype">void</span> arm_lcd_text_set_scale(<span class="keywordtype">float</span> fScale);</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span><span class="comment"></span> </div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span><span class="comment"> * \brief Force all char use the same width</span></div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="comment"> * \param[in] bForced force or not</span></div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="comment"> * \return boolean the original configuration</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>extern</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a">  333</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a" title="Force all char use the same width.">arm_lcd_text_force_char_use_same_width</a>(<span class="keywordtype">bool</span> bForced);</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>extern </div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="keywordtype">void</span> arm_lcd_text_set_target_framebuffer(const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptFrameBuffer);</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="comment"></span> </div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span><span class="comment"> * \brief set the display mode for characters</span></div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="comment"> * \param[in] wMode the display mode which could be the combination of following </span></div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="comment">              enum values:</span></div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="comment">              - ARM_2D_DRW_PATN_MODE_COPY (default) - Copy without background colour</span></div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span><span class="comment">              - ARM_2D_DRW_PATN_MODE_WITH_BG_COLOR - with background colour</span></div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="comment">              - ARM_2D_DRW_PATN_MODE_NO_FG_COLOR - without foreground colour</span></div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span><span class="comment">              - ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR - use complement value as the foreground colour</span></div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>extern</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65">  349</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65" title="set the display mode for characters">arm_lcd_text_set_display_mode</a>(uint32_t wMode);</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>extern </div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span><span class="keywordtype">void</span> arm_lcd_text_set_draw_region(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span> </div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>extern</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> arm_lcd_text_set_font(const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont);</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span> </div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>extern</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> __arm_lcd_get_string_line_box(const <span class="keywordtype">char</span> *str, const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont);</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>extern</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char);</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span> </div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>extern</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char);</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>extern</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char);</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span> </div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>extern</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char);</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span><span class="comment"></span> </div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span> </div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span><span class="preprocessor">#elif __IS_COMPILER_GCC__</span></div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span><span class="preprocessor">#   pragma GCC diagnostic pop</span></div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span><span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>}</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>extern </div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span><span class="keywordtype">void</span> arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, </div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                                COLOUR_INT_TYPE wBackground);</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>extern</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="keywordtype">void</span> arm_lcd_text_set_opacity(uint8_t chOpacity);</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>extern</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="keywordtype">void</span> arm_lcd_text_set_scale(<span class="keywordtype">float</span> fScale);</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="comment"></span> </div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span><span class="comment"> * \brief Force all char use the same width</span></div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="comment"> * \param[in] bForced force or not</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="comment"> * \return boolean the original configuration</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>extern</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a">  340</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a" title="Force all char use the same width.">arm_lcd_text_force_char_use_same_width</a>(<span class="keywordtype">bool</span> bForced);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span> </div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>extern </div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span><span class="keywordtype">void</span> arm_lcd_text_set_target_framebuffer(const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptFrameBuffer);</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="comment"></span> </div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span><span class="comment"> * \brief set the display mode for characters</span></div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span><span class="comment"> * \param[in] wMode the display mode which could be the combination of following </span></div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span><span class="comment">              enum values:</span></div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span><span class="comment">              - ARM_2D_DRW_PATN_MODE_COPY (default) - Copy without background colour</span></div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span><span class="comment">              - ARM_2D_DRW_PATN_MODE_WITH_BG_COLOR - with background colour</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="comment">              - ARM_2D_DRW_PATN_MODE_NO_FG_COLOR - without foreground colour</span></div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span><span class="comment">              - ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR - use complement value as the foreground colour</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>extern</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65">  356</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65" title="set the display mode for characters">arm_lcd_text_set_display_mode</a>(uint32_t wMode);</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> </div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>extern </div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span><span class="keywordtype">void</span> arm_lcd_text_set_draw_region(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span> </div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>extern</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span><a class="code hl_enumeration" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c" title="the error code for arm-2d (minimal integer: int8_t)">arm_2d_err_t</a> arm_lcd_text_set_font(const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont);</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>extern</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><a class="code hl_struct" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> __arm_lcd_get_string_line_box(const <span class="keywordtype">char</span> *str, const <a class="code hl_struct" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont);</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>extern</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char);</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>extern</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char);</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>extern</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char);</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>extern</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char);</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span><span class="comment"></span> </div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span> </div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span><span class="preprocessor">#elif __IS_COMPILER_GCC__</span></div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span><span class="preprocessor">#   pragma GCC diagnostic pop</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span><span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>}</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -497,8 +497,12 @@ var group__gKernel =
       [ "ARM_2D_ALIGN_CENTRE_ALIAS", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a3a2d4d184400cccd14b4966d1b4e3a7e", null ],
       [ "ARM_2D_ALIGN_TOP_LEFT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a98cac0ad64f4d819ebcd2677562597df", null ],
       [ "ARM_2D_ALIGN_TOP_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a35c881c173d4c91cc1c2299b0bea464c", null ],
+      [ "ARM_2D_ALIGN_TOP_MIDDLE", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3afb88e90672658447b512dec69ec6681c", null ],
       [ "ARM_2D_ALIGN_BOTTOM_LEFT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a86c5767497217fbba15b7537e41e4c0e", null ],
-      [ "ARM_2D_ALIGN_BOTTOM_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a62f5fe387910173f6eea15c8286d4764", null ]
+      [ "ARM_2D_ALIGN_BOTTOM_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a62f5fe387910173f6eea15c8286d4764", null ],
+      [ "ARM_2D_ALIGN_BOTTOM_MIDDLE", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3aa83cca52e52516bc594ec82dcd757f44", null ],
+      [ "ARM_2D_ALIGN_MIDDLE_LEFT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a9109160f671822e70755dad6b656e931", null ],
+      [ "ARM_2D_ALIGN_MIDDLE_RIGHT", "group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a2278115779385f94f5b79eddbca1af13", null ]
     ] ],
     [ "arm_2d_mem_type_t", "group__gKernel.html#ga75983a418ea2c46866c20e2f1379c5cc", [
       [ "ARM_2D_MEM_TYPE_UNSPECIFIED", "group__gKernel.html#gga75983a418ea2c46866c20e2f1379c5ccac7f5e1b2ee0887e398840015ecd496c2", null ],
