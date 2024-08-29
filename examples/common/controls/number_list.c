@@ -21,7 +21,6 @@
 #define __NUMBER_LIST_IMPLEMENT__
 #define __ARM_2D_HELPER_LIST_VIEW_INHERIT__
 
-#include "./arm_2d_example_controls.h"
 #include "./number_list.h"
 
 #include "./__common.h"
@@ -157,7 +156,7 @@ arm_2d_err_t number_list_init(  number_list_t *ptThis,
     }
 
     /* provide the default drawing method */
-    if (NULL == ptCFG->fnOnDrawListItem ) {
+    if (NULL == ptCFG->use_as____simple_list_cfg_t.fnOnDrawListItem ) {
         __simple_list_set_draw_list_item_handler(
                                     &this.use_as____simple_list_t,
                                     &__arm_2d_number_list_draw_list_core_item);

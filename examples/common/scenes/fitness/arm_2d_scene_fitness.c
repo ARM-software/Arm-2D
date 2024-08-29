@@ -397,25 +397,28 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
     /* initialize number list */
     do {
         number_list_cfg_t tCFG = {
-            .hwCount = 10,
             .nStart = 0,
             .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            .tBackgroundColour = GLCD_COLOR_BLACK,
-            .chNextPadding = 3,
-            .chPrviousePadding = 3,
-            .tListSize = {
-                .iHeight = 80,
-                .iWidth = 28,
-            },
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
-            /* draw list cover */
-            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+            .use_as____simple_list_cfg_t = {
+                .hwCount = 10,
+                
+                .tFontColour = GLCD_COLOR_WHITE,
+                .tBackgroundColour = GLCD_COLOR_BLACK,
+                .chNextPadding = 3,
+                .chPrviousePadding = 3,
+                .tListSize = {
+                    .iHeight = 80,
+                    .iWidth = 28,
+                },
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+                /* draw list cover */
+                .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
 
-        #if !__FITNESS_CFG_NEBULA_ENABLE__
-            .bUseDirtyRegion = true,
-            .ptTargetScene = &this.use_as__arm_2d_scene_t,
-        #endif
+            #if !__FITNESS_CFG_NEBULA_ENABLE__
+                .bUseDirtyRegion = true,
+                .ptTargetScene = &this.use_as__arm_2d_scene_t,
+            #endif
+            },
         };
         number_list_init(&this.tNumberList[0], &tCFG);
         number_list_init(&this.tNumberList[1], &tCFG);
@@ -424,26 +427,29 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
     /* initialize number list */
     do {
         number_list_cfg_t tCFG = {
-            .hwCount = 6,
             .nStart = 0,
             .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            .tBackgroundColour = GLCD_COLOR_BLACK,
-            .chNextPadding = 3,
-            .chPrviousePadding = 3,
-            .tListSize = {
-                .iHeight = 80,
-                .iWidth = 28,
-            },
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
-            /* draw list cover */
-            .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
 
-        #if !__FITNESS_CFG_NEBULA_ENABLE__
-            .bUseDirtyRegion = true,
-            .ptTargetScene = &this.use_as__arm_2d_scene_t,
-        #endif
+            .use_as____simple_list_cfg_t = {
+                .hwCount = 6,
+                
+                .tFontColour = GLCD_COLOR_WHITE,
+                .tBackgroundColour = GLCD_COLOR_BLACK,
+                .chNextPadding = 3,
+                .chPrviousePadding = 3,
+                .tListSize = {
+                    .iHeight = 80,
+                    .iWidth = 28,
+                },
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+                /* draw list cover */
+                .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
 
+            #if !__FITNESS_CFG_NEBULA_ENABLE__
+                .bUseDirtyRegion = true,
+                .ptTargetScene = &this.use_as__arm_2d_scene_t,
+            #endif
+            }
         };
         number_list_init(&this.tNumberList[2], &tCFG);
     } while(0);

@@ -519,26 +519,31 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
     /* initialize number list */
     do {
         number_list_cfg_t tCFG = {
-            .hwCount = 100,
             .nStart = 0,
             .iDelta = 1,
 
-            .bIgnoreBackground = true,
+            .use_as____simple_list_cfg_t = {
+                .hwCount = 100,
+                
+                .bIgnoreBackground = true,
 
-            .tListSize = {
-                .iHeight = 284,
-                .iWidth = 76,
+                .tListSize = {
+                    .iHeight = 284,
+                    .iWidth = 76,
+                },
+
+                .tItemSize = {
+                    .iWidth = 76,
+                    .iHeight = 54,
+                },
+
+                .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
+
+                .bUseDirtyRegion = false,
+                .ptTargetScene = &this.use_as__arm_2d_scene_t,
             },
 
-            .tItemSize = {
-                .iWidth = 76,
-                .iHeight = 54,
-            },
 
-            .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
-
-            .bUseDirtyRegion = false,
-            .ptTargetScene = &this.use_as__arm_2d_scene_t,
         };
         number_list_init(&this.tNumberList, &tCFG);
     } while(0);

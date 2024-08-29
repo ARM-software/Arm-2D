@@ -475,49 +475,56 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
     /* initialize number list */
     do {
         number_list_cfg_t tCFG = {
-            .hwCount = 100,
             .nStart = 0,
             .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            .tBackgroundColour = GLCD_COLOR_BLACK,
-            .chNextPadding = 20,
-            .chPrviousePadding = 20,
 
-            .tListSize = {
-                .iWidth = 76,
-                .iHeight = 284,
+            .use_as____simple_list_cfg_t = {
+                .hwCount = 100,
+                
+                .tFontColour = GLCD_COLOR_WHITE,
+                .tBackgroundColour = GLCD_COLOR_BLACK,
+                .chNextPadding = 20,
+                .chPrviousePadding = 20,
+
+                .tListSize = {
+                    .iWidth = 76,
+                    .iHeight = 284,
+                },
+
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
+
+                .bUseDirtyRegion = false,
+                .ptTargetScene = &this.use_as__arm_2d_scene_t,
             },
-
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
-
-            .bUseDirtyRegion = false,
-            .ptTargetScene = &this.use_as__arm_2d_scene_t,
         };
         number_list_init(&this.tNumberList[0], &tCFG);
     } while(0);
 
     do {
         number_list_cfg_t tCFG = {
-            .hwCount = 100,
             .nStart = 0,
             .iDelta = 1,
-            .tFontColour = GLCD_COLOR_WHITE,
-            .tBackgroundColour = GLCD_COLOR_BLACK,
+            .use_as____simple_list_cfg_t = {
+                .hwCount = 100,
+                
+                .tFontColour = GLCD_COLOR_WHITE,
+                .tBackgroundColour = GLCD_COLOR_BLACK,
 
-            .tListSize = {
-                .iWidth = 45,
-                .iHeight = 45,
+                .tListSize = {
+                    .iWidth = 45,
+                    .iHeight = 45,
+                },
+
+                .tItemSize = {
+                    .iWidth = 45,
+                    .iHeight = 45,
+                },
+
+                .fnOnDrawListItem = &__ruler_number_list_draw_central_list_item,
+
+                .bUseDirtyRegion = false,
+                .ptTargetScene = &this.use_as__arm_2d_scene_t,
             },
-
-            .tItemSize = {
-                .iWidth = 45,
-                .iHeight = 45,
-            },
-
-            .fnOnDrawListItem = &__ruler_number_list_draw_central_list_item,
-
-            .bUseDirtyRegion = false,
-            .ptTargetScene = &this.use_as__arm_2d_scene_t,
         };
         number_list_init(&this.tNumberList[1], &tCFG);
     } while(0);

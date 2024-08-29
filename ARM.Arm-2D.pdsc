@@ -350,8 +350,8 @@
             <file category="sourceC"     name="examples/common/scenes/watch/arm_2d_scene_watch.c"   attr="template"  select="Scene Template: Watch"   version="1.1.1" />
             <file category="header"      name="examples/common/scenes/watch/arm_2d_scene_watch.h"   attr="template"  select="Scene Template: Watch"   version="1.1.1" />
 
-            <file category="sourceC"     name="examples/common/scenes/fitness/arm_2d_scene_fitness.c" attr="template"  select="Scene Template: Fitness"   version="1.2.3" />
-            <file category="header"      name="examples/common/scenes/fitness/arm_2d_scene_fitness.h" attr="template"  select="Scene Template: Fitness"   version="1.2.3" />
+            <file category="sourceC"     name="examples/common/scenes/fitness/arm_2d_scene_fitness.c" attr="template"  select="Scene Template: Fitness"   version="1.2.4" />
+            <file category="header"      name="examples/common/scenes/fitness/arm_2d_scene_fitness.h" attr="template"  select="Scene Template: Fitness"   version="1.2.4" />
 
             <file category="sourceC"     name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.c" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.3" />
             <file category="header"      name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.h" attr="template"  select="Scene Template: Alarm Clock"   version="1.0.3" />
@@ -453,6 +453,7 @@
             <file category="sourceC"     name="examples/common/controls/progress_bar_simple.c" />
             <file category="sourceC"     name="examples/common/controls/__simple_list.c" />
             <file category="sourceC"     name="examples/common/controls/number_list.c" />
+            <file category="sourceC"     name="examples/common/controls/text_list.c" />
             <file category="sourceC"     name="examples/common/controls/list_view.c" />
             <file category="sourceC"     name="examples/common/controls/progress_wheel.c" />
             <file category="sourceC"     name="examples/common/controls/battery_gasgauge.c" />
@@ -606,10 +607,10 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.0.2" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cversion="1.1.0" condition="Arm-2D-Demos">
           <description>A demo for typical controls on a panel </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_panel.c" attr="config" version="1.0.2" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_panel.c" attr="config" version="1.1.0" />
             <file category="header"      name="examples/demos/arm_2d_scene_panel.h" attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>

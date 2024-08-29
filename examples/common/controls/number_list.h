@@ -61,6 +61,7 @@ typedef struct number_list_cfg_t {
     /* The following structure is equivalent as implement(__simple_list_cfg_t) */
     union {
         inherit(__simple_list_cfg_t);
+
         /* we design this for backward compatibility */
         struct {
             /* replicate the content of __simple_list_cfg_t*/
@@ -85,6 +86,7 @@ typedef struct number_list_cfg_t {
             bool bUseDirtyRegion;
             arm_2d_scene_t *ptTargetScene;
         };
+
     };
 
     const char *pchFormatString;
