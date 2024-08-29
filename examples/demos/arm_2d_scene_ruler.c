@@ -384,7 +384,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_2d_size_t tListSize = __arm_2d_list_core_get_list_size(&this.use_as____arm_2d_list_core_t);
+    arm_2d_size_t tListSize = __arm_2d_list_core_get_list_size((__arm_2d_list_core_t *)&this);
 
     int16_t iHalfLength = tListSize.iHeight >> 1;
     int16_t iRadius = tListSize.iHeight;
