@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        19. July 2024
- * $Revision:    V.2.6.2
+ * $Date:        29. Aug 2024
+ * $Revision:    V.2.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1015,21 +1015,13 @@ typedef enum {
 } arm_2d_align_t ;
 #endif
 
-
-int arm_lcd_printf_label(   arm_2d_align_t tAlignment, 
-                            const char *format, ...)
+ARM_NONNULL(1)
+void arm_lcd_puts_label( const char *pchString,
+                        arm_2d_align_t tAlignment)
 {
-    int real_size;
-    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
-    __va_list ap;
-    va_start(ap, format);
-        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
-    va_end(ap);
-    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
-    s_chBuffer[real_size] = '\0';
+    assert(NULL != pchString);
 
-    arm_2d_size_t tLabelSize = arm_lcd_get_string_line_box(s_chBuffer);
-
+    arm_2d_size_t tLabelSize = arm_lcd_get_string_line_box(pchString);
     arm_2d_region_t tOriginalDrawRegion = s_tLCDTextControl.tRegion;
 
     arm_2d_region_t tLabelRegion = {
@@ -1060,11 +1052,27 @@ int arm_lcd_printf_label(   arm_2d_align_t tAlignment,
     }
 
     arm_lcd_text_set_draw_region(&tLabelRegion);
-    arm_lcd_puts(s_chBuffer);
+    arm_lcd_puts(pchString);
     arm_lcd_text_set_draw_region(&tOriginalDrawRegion);
+}
+
+ARM_NONNULL(2)
+int arm_lcd_printf_label(   arm_2d_align_t tAlignment, 
+                            const char *format, 
+                            ...)
+{
+    int real_size;
+    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
+    __va_list ap;
+    va_start(ap, format);
+        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+    va_end(ap);
+    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
+    s_chBuffer[real_size] = '\0';
+
+    arm_lcd_puts_label(s_chBuffer, tAlignment);
 
     return real_size;
-
 }
 
 

@@ -57,22 +57,27 @@ extern "C" {
 
 typedef struct __simple_list_cfg_t {
     uint16_t hwCount;
+
+    bool bIgnoreBackground;
+    uint8_t chOpacity;
+
     COLOUR_INT tFontColour;
     COLOUR_INT tBackgroundColour;
+
     arm_2d_size_t tItemSize;
     arm_2d_size_t tListSize;
 
     int8_t chPrviousePadding;
     int8_t chNextPadding;
     int16_t hwSwitchingPeriodInMs;
-    bool bIgnoreBackground;
-    uint8_t chOpacity;
+    
 
     arm_2d_draw_list_item_handler_t *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
     arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
     arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
     arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
     arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
+    arm_2d_align_t                  tTextAlignment;                             /*!< text alignment in each item*/
 
     bool bUseDirtyRegion;
     arm_2d_scene_t *ptTargetScene;
@@ -119,9 +124,16 @@ ARM_PROTECTED_METHOD(
     extern
     ARM_NONNULL(1,2)
     arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
-                                    const arm_2d_tile_t *ptTile, 
+                                    const arm_2d_tile_t *ptTile,
                                     const arm_2d_region_t *ptRegion, 
                                     bool bIsNewFrame);
+    extern
+    ARM_NONNULL(1,2,4)
+    int __simple_list_item_printf(  __simple_list_t *ptThis, 
+                                    const arm_2d_region_t *ptRegion,
+                                    arm_2d_align_t tAlignment,
+                                    const char *format, 
+                                    ...);
 
     extern
     ARM_NONNULL(1)

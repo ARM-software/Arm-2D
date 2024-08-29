@@ -396,6 +396,34 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
                             bIsNewFrame);
 }
 
+ARM_NONNULL(1,2,4)
+int __simple_list_item_printf(  __simple_list_t *ptThis, 
+                                const arm_2d_region_t *ptRegion,
+                                arm_2d_align_t tAlignment, 
+                                const char *format, 
+                                ...)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptRegion);
+    assert(NULL != format);
+
+    __simple_list_cfg_t *ptCFG = &this.tSimpleListCFG;
+    int real_size;
+    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
+    __va_list ap;
+    va_start(ap, format);
+        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+    va_end(ap);
+    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
+    s_chBuffer[real_size] = '\0';
+
+    arm_lcd_text_set_draw_region((arm_2d_region_t *)ptRegion);
+    arm_lcd_puts_label(s_chBuffer, tAlignment);
+    arm_lcd_text_set_draw_region(NULL);
+
+    return real_size;
+}
+
 ARM_NONNULL(1)
 void __simple_list_move_selection(__simple_list_t *ptThis,
                                 int16_t iSteps,

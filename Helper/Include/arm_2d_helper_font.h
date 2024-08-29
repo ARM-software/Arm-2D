@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        19. July 2024
- * $Revision:    V.2.6.2
+ * $Date:        29. Aug 2024
+ * $Revision:    V.2.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -276,6 +276,13 @@ extern
 int arm_lcd_printf(const char *format, ...);
 
 extern
+ARM_NONNULL(1)
+void arm_lcd_puts_label( const char *pchString,
+                        arm_2d_align_t tAlignment);
+
+
+extern
+ARM_NONNULL(2)
 int arm_lcd_printf_label(arm_2d_align_t tAlignment, const char *format, ...);
 
 extern

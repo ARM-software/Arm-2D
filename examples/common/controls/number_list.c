@@ -80,31 +80,6 @@
 #endif
 
 static 
-int __printf(number_list_t *ptThis, const arm_2d_region_t *ptRegion, const char *format, ...)
-{
-    __simple_list_cfg_t *ptCFG = &this.use_as____simple_list_t.tSimpleListCFG;
-    int real_size;
-    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
-    __va_list ap;
-    va_start(ap, format);
-        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
-    va_end(ap);
-    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
-    s_chBuffer[real_size] = '\0';
-    
-    int16_t iWidth = ptCFG->ptFont->tCharSize.iWidth;
-    int16_t iHeight = ptCFG->ptFont->tCharSize.iHeight;
-
-    arm_2d_align_centre( *ptRegion, (int16_t)real_size * iWidth, iHeight) {
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_puts(s_chBuffer);
-        arm_lcd_text_set_draw_region(NULL);
-    }
-
-    return real_size;
-}
-
-static 
 arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item( 
                                       arm_2d_list_item_t *ptItem,
                                       const arm_2d_tile_t *ptTile,
@@ -130,10 +105,12 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
         arm_lcd_text_set_opacity(255);
 
         /* print numbers */
-        __printf(ptThis,
-                 &__top_container,
-                 this.tCFG.pchFormatString,
-                 number_list_get_item_number(ptThis, ptItem->hwID));
+        __simple_list_item_printf(
+                &this.use_as____simple_list_t,
+                &__top_container,
+                this.use_as____simple_list_t.tSimpleListCFG.tTextAlignment,
+                this.tCFG.pchFormatString,
+                number_list_get_item_number(ptThis, ptItem->hwID));
     
         arm_lcd_text_set_target_framebuffer(NULL);
     }
@@ -228,10 +205,14 @@ uint16_t number_list_get_selected_item_id(number_list_t *ptThis)
 
 
 ARM_NONNULL(1)
-int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t iItemID)
+int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t hwItemID)
 {
     assert(NULL != ptThis);
-    return this.tCFG.nStart + iItemID * this.tCFG.iDelta;
+    if (hwItemID >= this.use_as____simple_list_t.tSimpleListCFG.hwCount) {
+        return -1;
+    }
+
+    return this.tCFG.nStart + hwItemID * this.tCFG.iDelta;
 }
 
 

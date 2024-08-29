@@ -158,7 +158,7 @@ uint16_t number_list_get_selected_item_id(number_list_t *ptThis);
 
 extern 
 ARM_NONNULL(1)
-int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t iItemID);
+int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t hwItemID);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
