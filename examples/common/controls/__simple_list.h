@@ -98,7 +98,7 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-
+/* only derived class can see the following methods */
 ARM_PROTECTED_METHOD(
 
     extern
