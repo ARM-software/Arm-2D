@@ -72,8 +72,8 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 enum {
-    NUMBER_LIST_DIRTY_REGION_START = 0,
-    NUMBER_LIST_DIRTY_REGION_REDRAW_DONE,
+    SIMPLE_LIST_DIRTY_REGION_START = 0,
+    SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE,
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -339,7 +339,7 @@ void __simple_list_on_frame_start(__simple_list_t *ptThis)
     if (this.tSimpleListCFG.bUseDirtyRegion) {
         arm_2d_dynamic_dirty_region_on_frame_start(
                                                 &this.tDirtyRegion, 
-                                                NUMBER_LIST_DIRTY_REGION_START);
+                                                SIMPLE_LIST_DIRTY_REGION_START);
     }
 }
 
@@ -357,27 +357,26 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
     /* process the dynamic dirty region */
     if (this.tSimpleListCFG.bUseDirtyRegion) {
         switch (arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
-            case NUMBER_LIST_DIRTY_REGION_START:
+            case SIMPLE_LIST_DIRTY_REGION_START:
                 if (__arm_2d_list_core_need_redraw(ptList, true)) {
 
                     arm_2d_tile_t *ptTargetTile = &(ptList->Runtime.tileList);
                     /* get the canvas for the list inner tile */
                     arm_2d_canvas(ptTargetTile, __list_canvas) {
-                        
                         arm_2d_dynamic_dirty_region_update(
                                         &this.tDirtyRegion,                     /* the dirty region */
                                         ptTargetTile,                           /* the target tile */
                                         &__list_canvas,                         /* the redraw region */
-                                        NUMBER_LIST_DIRTY_REGION_REDRAW_DONE);  /* next state */
+                                        SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE);  /* next state */
                     }
                 } else {
                     /* nothing to redraw, update state to DONE */
                     arm_2d_dynamic_dirty_region_change_user_region_index_only(
                                         &this.tDirtyRegion,
-                                        NUMBER_LIST_DIRTY_REGION_REDRAW_DONE);
+                                        SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE);
                 }
                 break;
-            case NUMBER_LIST_DIRTY_REGION_REDRAW_DONE:
+            case SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE:
                 break;
             default:    /* 0xFF */
                 break;

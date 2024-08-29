@@ -71,19 +71,13 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-enum {
-    NUMBER_LIST_DIRTY_REGION_START = 0,
-    NUMBER_LIST_DIRTY_REGION_REDRAW_DONE,
-};
-
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
-#define __va_list    va_list
-
+#   efine __va_list    va_list
 #endif
 
 static 
