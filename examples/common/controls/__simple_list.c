@@ -219,7 +219,7 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
 
 
 ARM_NONNULL(1,2)
-arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis, 
+arm_2d_err_t __simple_list_init(__simple_list_t *ptThis, 
                                 __simple_list_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
@@ -238,6 +238,13 @@ arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis,
         iItemHeight += ptCFG->tItemSize.iHeight;
     }
 
+    this.tSimpleListCFG = *ptCFG;
+
+    /* validation */
+    if (!this.tSimpleListCFG.hwCount) {
+        this.tSimpleListCFG.hwCount = 1;      /* at least one item */
+    }
+
     /* call base class contructor */
     do {
         __arm_2d_list_core_cfg_t tCFG = {
@@ -247,8 +254,8 @@ arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis,
             .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL,
             .fnOnDrawListBackground = &__arm_2d_simple_list_draw_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
-            .hwItemCount = ptCFG->hwCount,
-            .nTotalLength = ptCFG->hwCount * iItemHeight,
+            .hwItemCount = this.tSimpleListCFG.hwCount,
+            .nTotalLength = this.tSimpleListCFG.hwCount * iItemHeight,
             .tListSize = ptCFG->tListSize,
         };
 
@@ -266,17 +273,13 @@ arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis,
         __arm_2d_list_core_init(&this.use_as____arm_2d_list_core_t, &tCFG);
     } while(0);
 
-    this.tSimpleListCFG = *ptCFG;
+    
     
     if (NULL == this.tSimpleListCFG.ptFont) {
         this.tSimpleListCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
     }
     
-    /* validation */
-    if (!this.tSimpleListCFG.hwCount) {
-        this.tSimpleListCFG.hwCount = 1;      /* at least one item */
-    }
-
+    
     if (0 == this.tSimpleListCFG.chOpacity) {
         this.tSimpleListCFG.chOpacity = 255;
     }
