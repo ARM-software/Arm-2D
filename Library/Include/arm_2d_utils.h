@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        26. June 2024
- * $Revision:    V.1.4.4
+ * $Date:        29. Aug 2024
+ * $Revision:    V.1.4.5
  *
  * -------------------------------------------------------------------- */
 
@@ -1301,6 +1301,30 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
                 __ALIGNED(__alignof__(struct {__VA_ARGS__}));
 #endif
 
+
+#undef ARM_PRIVATE_METHOD
+#undef ARM_PROTECTED_METHOD
+#undef ARM_PUBLIC_METHOD
+
+#if defined(__ARM_2D_IMPL__)
+
+#   define ARM_PRIVATE_METHOD(...)      __VA_ARGS__
+#   define ARM_PROTECTED_METHOD(...)    __VA_ARGS__
+#   define ARM_PUBLIC_METHOD(...)       __VA_ARGS__
+
+#elif defined(__ARM_2D_INHERIT__)
+
+#   define ARM_PRIVATE_METHOD(...)
+#   define ARM_PROTECTED_METHOD(...)    __VA_ARGS__
+#   define ARM_PUBLIC_METHOD(...)       __VA_ARGS__
+
+#else
+
+#   define ARM_PRIVATE_METHOD(...)
+#   define ARM_PROTECTED_METHOD(...)
+#   define ARM_PUBLIC_METHOD(...)       __VA_ARGS__
+
+#endif
 
 
 

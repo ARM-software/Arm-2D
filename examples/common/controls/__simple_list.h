@@ -99,42 +99,46 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 
-extern
-ARM_NONNULL(1,2)
-arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis, 
-                                __simple_list_cfg_t *ptCFG);
+ARM_PROTECTED_METHOD(
 
-extern
-ARM_NONNULL(1,2)
-void __simple_list_set_draw_list_item_handler(
-                                    __simple_list_t *ptThis,
-                                    arm_2d_draw_list_item_handler_t *fnHandler);
+    extern
+    ARM_NONNULL(1,2)
+    arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis, 
+                                    __simple_list_cfg_t *ptCFG);
 
-extern
-ARM_NONNULL(1)
-void __simple_list_depose(__simple_list_t *ptThis);
+    extern
+    ARM_NONNULL(1,2)
+    void __simple_list_set_draw_list_item_handler(
+                                        __simple_list_t *ptThis,
+                                        arm_2d_draw_list_item_handler_t *fnHandler);
 
-extern
-ARM_NONNULL(1,2)
-arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
-                                const arm_2d_tile_t *ptTile, 
-                                const arm_2d_region_t *ptRegion, 
-                                bool bIsNewFrame);
+    extern
+    ARM_NONNULL(1)
+    void __simple_list_depose(__simple_list_t *ptThis);
 
-extern
-ARM_NONNULL(1)
-void __simple_list_move_selection(__simple_list_t *ptThis,
-                                int16_t iSteps,
-                                int32_t nFinishInMs);
+    extern
+    ARM_NONNULL(1,2)
+    arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
+                                    const arm_2d_tile_t *ptTile, 
+                                    const arm_2d_region_t *ptRegion, 
+                                    bool bIsNewFrame);
 
-extern 
-ARM_NONNULL(1)
-void __simple_list_on_frame_start(__simple_list_t *ptThis);
+    extern
+    ARM_NONNULL(1)
+    void __simple_list_move_selection(__simple_list_t *ptThis,
+                                    int16_t iSteps,
+                                    int32_t nFinishInMs);
+
+    extern 
+    ARM_NONNULL(1)
+    void __simple_list_on_frame_start(__simple_list_t *ptThis);
 
 
-extern
-ARM_NONNULL(1)
-uint16_t __simple_list_get_selected_item_id(__simple_list_t *ptThis);
+    extern
+    ARM_NONNULL(1)
+    uint16_t __simple_list_get_selected_item_id(__simple_list_t *ptThis);
+
+)
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
