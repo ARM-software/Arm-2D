@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        15. Aug 2024
- * $Revision:    V.1.2.14
+ * $Date:        29. Aug 2024
+ * $Revision:    V.1.2.15
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -664,10 +664,26 @@ typedef enum {
                                     | ARM_2D_ALIGN_LEFT,
     ARM_2D_ALIGN_TOP_RIGHT          = ARM_2D_ALIGN_TOP                          /*!< align to top right corner */
                                     | ARM_2D_ALIGN_RIGHT,
+    ARM_2D_ALIGN_TOP_MIDDLE         = ARM_2D_ALIGN_TOP                          /*!< align to the middle of the top */
+                                    | ARM_2D_ALIGN_LEFT
+                                    | ARM_2D_ALIGN_RIGHT,
+    ARM_2D_ALIGN_TOP_CENTRE         = ARM_2D_ALIGN_TOP_MIDDLE,
+
     ARM_2D_ALIGN_BOTTOM_LEFT        = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom left corner */
                                     | ARM_2D_ALIGN_LEFT,
     ARM_2D_ALIGN_BOTTOM_RIGHT       = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom right corner */
                                     | ARM_2D_ALIGN_RIGHT,
+    ARM_2D_ALIGN_BOTTOM_MIDDLE      = ARM_2D_ALIGN_BOTTOM                       /*!< align to the middle of the bottom */
+                                    | ARM_2D_ALIGN_LEFT
+                                    | ARM_2D_ALIGN_RIGHT,
+    ARM_2D_ALIGN_BOTTOM_CENTRE      = ARM_2D_ALIGN_TOP_MIDDLE,
+
+    ARM_2D_ALIGN_MIDDLE_LEFT        = ARM_2D_ALIGN_LEFT                         /*!< align to the middle of the left side */
+                                    | ARM_2D_ALIGN_BOTTOM
+                                    | ARM_2D_ALIGN_TOP,
+    ARM_2D_ALIGN_MIDDLE_RIGHT       = ARM_2D_ALIGN_RIGHT                        /*!< align to the middle of the right side */
+                                    | ARM_2D_ALIGN_BOTTOM
+                                    | ARM_2D_ALIGN_TOP,
 } arm_2d_align_t ;
 
 /*!
