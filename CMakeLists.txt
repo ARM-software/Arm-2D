@@ -116,6 +116,7 @@ if (ARM2D_CONTROLS)
             examples/common/controls/progress_bar_drill.c
             examples/common/controls/progress_bar_flowing.c
             examples/common/controls/progress_bar_simple.c
+            examples/common/controls/__simple_list.c
             examples/common/controls/number_list.c
             examples/common/controls/progress_wheel.c
             examples/common/controls/list_view.c

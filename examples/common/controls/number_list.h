@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "arm_2d_helper_list.h"
+#include "__simple_list.h"
 
 #include "./__common.h"
 
@@ -56,44 +57,50 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 typedef struct number_list_cfg_t {
+
+    /* The following structure is equivalent as implement(__simple_list_cfg_t) */
+    union {
+        inherit(__simple_list_cfg_t);
+        /* we design this for backward compatibility */
+        struct {
+            /* replicate the content of __simple_list_cfg_t*/
+            uint16_t hwCount;
+            COLOUR_INT tFontColour;
+            COLOUR_INT tBackgroundColour;
+            arm_2d_size_t tItemSize;
+            arm_2d_size_t tListSize;
+
+            int8_t chPrviousePadding;
+            int8_t chNextPadding;
+            int16_t hwSwitchingPeriodInMs;
+            bool bIgnoreBackground;
+            uint8_t chOpacity;
+
+            arm_2d_draw_list_item_handler_t *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
+            arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
+            arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
+            arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
+            arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
+
+            bool bUseDirtyRegion;
+            arm_2d_scene_t *ptTargetScene;
+        };
+    };
+
     const char *pchFormatString;
     int32_t nStart;
     int16_t iDelta;
-    uint16_t hwCount;
-    COLOUR_INT tFontColour;
-    COLOUR_INT tBackgroundColour;
-    arm_2d_size_t tItemSize;
-    arm_2d_size_t tListSize;
 
-    int8_t chPrviousePadding;
-    int8_t chNextPadding;
-    int16_t hwSwitchingPeriodInMs;
-    bool bIgnoreBackground;
-    uint8_t chOpacity;
-
-    arm_2d_draw_list_item_handler_t *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
-    arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
-    arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
-    arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
-    arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
-
-    bool bUseDirtyRegion;
-    arm_2d_scene_t *ptTargetScene;
 } number_list_cfg_t;
 
-
 typedef struct number_list_t {
-    implement(__arm_2d_list_core_t);
+    implement(__simple_list_t);
 
-ARM_PRIVATE(
-    number_list_cfg_t tNumListCFG;
-    arm_2d_list_item_t tTempItem;
-    
-    int32_t nIterationIndex;
-
-    arm_2d_region_list_item_t tDirtyRegion;
-)
-
+    struct {
+        const char *pchFormatString;
+        int32_t nStart;
+        int16_t iDelta;
+    } tCFG;
 } number_list_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -118,8 +125,8 @@ struct {
 
 extern
 ARM_NONNULL(1,2)
-void number_list_init(  number_list_t *ptThis, 
-                        number_list_cfg_t *ptCFG);
+arm_2d_err_t number_list_init(  number_list_t *ptThis, 
+                                number_list_cfg_t *ptCFG);
 
 extern
 ARM_NONNULL(1)
