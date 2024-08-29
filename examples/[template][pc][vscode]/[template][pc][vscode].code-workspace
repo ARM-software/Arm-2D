@@ -58,7 +58,8 @@
 			"arm_2d_disp_adapters.h": "c",
 			"number_list.h": "c",
 			"progress_bar_flowing.h": "c",
-			"progress_bar_simple.h": "c"
+			"progress_bar_simple.h": "c",
+			"arial_ascii_14": "c"
 		},
 		"cSpell.words": [
 			"cccn"
