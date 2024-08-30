@@ -92,7 +92,6 @@
 /*============================ TYPES =========================================*/
 enum {
     DIRTY_REGION_PIVOT,
-    DIRTY_REGION_NUMBER_TO_SHOW, 
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -101,27 +100,32 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileWhiteDotMiddleA4Mask;
 extern const arm_2d_tile_t c_tileFanBladeMask;
 
-extern
-struct {
-    implement(arm_2d_user_font_t);
-    arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ALARM_CLOCK_32_A4;
+extern 
+const arm_2d_tile_t c_tileListCoverLineMask;
 
 extern
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ALARM_CLOCK_64_A4;
+} ARM_2D_FONT_ALARM_CLOCK_32_A4,
+  ARM_2D_FONT_ALARM_CLOCK_64_A4;
+
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+}   ARM_2D_FONT_Arial14_A8,
+    ARM_2D_FONT_Arial14_A4,
+    ARM_2D_FONT_Arial14_A2,
+    ARM_2D_FONT_Arial14_A1;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-    ADD_REGION_TO_LIST(s_tDirtyRegions,
-        0
-    ),
 
     /* add the last region:
         * it is the top left corner for text display 
@@ -140,14 +144,18 @@ struct {
     float fSpeed;
 } c_tFanLevel[] = {
     [0] = {
+        .tColour = GLCD_COLOR_DARK_GREY,
+        .fSpeed = 0.0f,
+    },
+    [1] = {
         .tColour = GLCD_COLOR_GREEN,
         .fSpeed = 3.0f,
     },
-    [1] = {
+    [2] = {
         .tColour = GLCD_COLOR_BLUE,
         .fSpeed = 5.0f,
     },
-    [2] = {
+    [3] = {
         .tColour = __RGB(0xFF, 0xA5, 0x00),
         .fSpeed = 8.0f,
     },
@@ -216,25 +224,22 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_fan_t *ptThis = (user_scene_fan_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+    bool bMoveToStop = false;
 
     /* demo code */
     if (arm_2d_helper_is_time_out(4000, &this.lTimestamp[1])) {
         this.chLevel++;
-        if (this.chLevel >= 3) {
+        if (this.chLevel >= 4) {
             this.chLevel = 0;
+            bMoveToStop = true;
         }
-    }
 
-    /* demo code */
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[2])) {
-        this.fSomeNumberToShow = (float)arm_2d_helper_get_reference_clock_frequency() 
-                               / (float)DISP0_ADAPTER.Benchmark.wAverage;
-        this.fSomeNumberToShow = MIN(this.fSomeNumberToShow, 999.0f);
-
-        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW],
+        text_list_move_selection(&this.tLevelList, 1, 300);
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_PIVOT],
                                             false); 
+        
     } else {
-        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW],
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_PIVOT],
                                             true); 
     }
 
@@ -246,9 +251,15 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
         /* update helper with new values*/
         arm_2d_helper_dirty_region_transform_update_value(&this.tFanBlade[n].tHelper, ARM_2D_ANGLE(this.fAngle + n * 120.0f), 1.0f);
 
+        if (bMoveToStop) {
+            arm_2d_helper_dirty_region_transform_force_update(&this.tFanBlade[n].tHelper);
+        }
+
         /* call helper's on-frame-start event handler */
         arm_2d_helper_dirty_region_transform_on_frame_start(&this.tFanBlade[n].tHelper);
     }
+
+    text_list_on_frame_start(&this.tLevelList);
 }
 
 static void __on_scene_fan_frame_complete(arm_2d_scene_t *ptScene)
@@ -327,22 +338,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                 }
 
                 __item_line_dock_vertical() {
-                    arm_lcd_text_set_target_framebuffer(ptTile);
-                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
-                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
-                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("-00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                    while(arm_fsm_rt_cpl != text_list_show(   
+                                                    &this.tLevelList, 
+                                                    ptTile, 
+                                                    &__item_region, 
+                                                    bIsNewFrame));
 
-                    arm_2d_align_centre(__item_region, tStringSize) {
-                        arm_lcd_text_set_draw_region(&__centre_region);
-                        arm_lcd_text_location(0,0);
-                        if (this.fSomeNumberToShow < 0) {
-                            arm_lcd_printf("%02" PRIi32, (int32_t)this.fSomeNumberToShow);
-                        } else {
-                            arm_lcd_printf(" %02" PRIi32, (int32_t)this.fSomeNumberToShow);
-                        }
-                    }
                 }
+
             }
         }
 
@@ -352,6 +356,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
     }
     arm_2d_op_wait_async(NULL);
 
+    return arm_fsm_rt_cpl;
+}
+
+static 
+IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
+{
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    number_list_t *ptThis = (number_list_t *)pTarget;
+
+    arm_2d_canvas(ptTile, __canvas) {
+        arm_2d_dock_vertical(__canvas, c_tileListCoverLineMask.tRegion.tSize.iHeight) {
+            arm_2d_fill_colour_with_vertical_line_mask( ptTile, 
+                                                        &__vertical_region, 
+                                                        &c_tileListCoverLineMask, 
+                                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+        }
+    }
+
+    arm_2d_op_wait_async(NULL);
+    
     return arm_fsm_rt_cpl;
 }
 
@@ -384,18 +409,11 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                     }
                 }
 
+            #if 0
                 __item_line_dock_vertical() {
-                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
-                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
-                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("-00.0", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
-
-                    arm_2d_align_centre(__item_region, tStringSize) {
-
-                        s_tDirtyRegions[DIRTY_REGION_NUMBER_TO_SHOW].tRegion = __centre_region;
-
-                    }
                 }
+            #endif
             }
         }
 
@@ -451,7 +469,44 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
     s_tFanCentre.iX = (c_tileFanBladeMask.tRegion.tSize.iWidth >> 1) - 5;
     s_tFanCentre.iY = 70;
-    this.fSomeNumberToShow = 99.9f;
+
+    /* initialize text list */
+    do {
+        const static __disp_string_t c_strLevels[] = {
+                [0] = "STOP",
+                [1] = "ECO Mode",
+                [2] = "Normal Mode",
+                [3] = "Cooling Mode",
+        };
+        text_list_cfg_t tCFG = {
+            .ptStrings = (__disp_string_t *)c_strLevels,
+
+            .use_as____simple_list_cfg_t = {
+                .hwCount = dimof(c_strLevels),
+                
+                .tFontColour = GLCD_COLOR_WHITE,
+                .tBackgroundColour = GLCD_COLOR_BLACK,
+                .chNextPadding = 3,
+                .chPrviousePadding = 3,
+                .tListSize = {
+                    .iHeight = 80,
+                    //.iWidth = 28,
+                },
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
+                /* draw list cover */
+                .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+
+            #if !__FITNESS_CFG_NEBULA_ENABLE__
+                .bUseDirtyRegion = true,
+                .ptTargetScene = &this.use_as__arm_2d_scene_t,
+            #endif
+            }
+        };
+        text_list_init(&this.tLevelList, &tCFG);
+
+        this.chLevel = 1;
+        text_list_move_selection(&this.tLevelList, 1, 0);
+    } while(0);
 
     /* ------------   initialize members of user_scene_fan_t end   ---------------*/
 

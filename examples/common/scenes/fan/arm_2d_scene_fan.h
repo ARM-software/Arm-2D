@@ -30,6 +30,7 @@
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -98,7 +99,7 @@ ARM_PRIVATE(
     bool bUserAllocated;
     uint8_t chLevel;
 
-    float fSomeNumberToShow;
+    text_list_t tLevelList;
 
     float fAngle;
 
