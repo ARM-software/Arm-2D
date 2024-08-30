@@ -593,7 +593,7 @@ __STATIC_FORCEINLINE void __arm_2d_impl_rgb565_get_alpha_with_opacity(arm_2d_poi
 
 }
 
-__STATIC_FORCEINLINE void __arm_2d_impl_rgb565_get_alpha_with_opacity_all_inside(
+__STATIC_FORCEINLINE void __arm_2d_impl_rgb565_get_alpha_with_opacity_inside_src(
                                                         arm_2d_point_s16x8_t *
                                                         ptPoint,
                                                         arm_2d_region_t *
@@ -781,7 +781,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(__arm_2d_param_c
                                     &tPointTemp);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_rgb565_get_alpha_with_opacity_all_inside(
+                __arm_2d_impl_rgb565_get_alpha_with_opacity_inside_src(
                                                             &tPointV,
                                                             &ptParam->tOrigin.tValidRegion,
                                                             pchOrigin, iOrigStride,
