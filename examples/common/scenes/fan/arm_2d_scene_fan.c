@@ -241,7 +241,27 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
                                             true); 
     }
 
-    this.fAngle += c_tFanLevel[this.chLevel].fSpeed;
+    /* implement physical acceleration effect */
+    do {
+        float fTargetSpeed = c_tFanLevel[this.chLevel].fSpeed;
+
+        if (this.fCurrentSpeed != fTargetSpeed) {
+            int32_t nSpeed = 0;
+
+            if (arm_2d_helper_time_liner_slider(this.fCurrentSpeed * 10.0f, 
+                                                fTargetSpeed * 10.0f,
+                                                3000,
+                                                &nSpeed,
+                                                &this.lTimestamp[2])) {
+                this.fCurrentSpeed = fTargetSpeed;
+                this.lTimestamp[2] = 0;
+            } else {
+                this.fCurrentSpeed = nSpeed / 10.0f;
+            }
+        }
+    } while(0);
+
+    this.fAngle += this.fCurrentSpeed;
     this.fAngle = fmodf(this.fAngle, 120.0f);
 
     for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {

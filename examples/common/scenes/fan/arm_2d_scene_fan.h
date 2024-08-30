@@ -96,13 +96,14 @@ struct user_scene_fan_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[3];
     bool bUserAllocated;
     uint8_t chLevel;
 
     text_list_t tLevelList;
 
     float fAngle;
+    float fCurrentSpeed;
 
     __fan_blade_t tFanBlade[3];
 
