@@ -300,11 +300,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
     /*-----------------------draw the foreground begin-----------------------*/
 
         /* draw fan*/
-        arm_2d_align_centre(__top_canvas, 140, 200) {
+        arm_2d_align_centre(__top_canvas, 140, 220) {
 
             arm_2d_layout(__centre_region, true) {
 
-                __item_line_dock_vertical(140) {
+                __item_line_dock_vertical(160) {
                     arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
 
                         /* draw pointer */
@@ -410,11 +410,11 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
 
         /* draw fan*/
-        arm_2d_align_centre(tScreen, 140, 200) {
+        arm_2d_align_centre(tScreen, 140, 220) {
 
             arm_2d_layout(__centre_region) {
 
-                __item_line_dock_vertical(140) {
+                __item_line_dock_vertical(160) {
                     /* draw fan pivot */
                     arm_2d_align_centre(__item_region, 
                                         c_tileWhiteDotMiddleA4Mask.tRegion.tSize) {
