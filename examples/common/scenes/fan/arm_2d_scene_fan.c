@@ -135,29 +135,29 @@ struct {
     COLOUR_INT tColour;
     float fSpeed;
 } c_tFanLevel[] = {
-    [0] = {
+    [FAN_LEVEL_STOP] = {
         .tColour = GLCD_COLOR_DARK_GREY,
         .fSpeed = 0.0f,
     },
-    [1] = {
+    [FAN_LEVEL_ECO] = {
         .tColour = GLCD_COLOR_GREEN,
         .fSpeed = 3.0f,
     },
-    [2] = {
+    [FAN_LEVEL_NORMAL] = {
         .tColour = GLCD_COLOR_BLUE,
         .fSpeed = 5.0f,
     },
-    [3] = {
+    [FAN_LEVEL_COOLING] = {
         .tColour = __RGB(0xFF, 0xA5, 0x00),
         .fSpeed = 8.0f,
     },
 };
 
 const static __disp_string_t c_strLevels[] = {
-    [0] = "STOP",
-    [1] = "ECO Mode",
-    [2] = "Normal Mode",
-    [3] = "Cooling Mode",
+    [FAN_LEVEL_STOP]    = "STOP",
+    [FAN_LEVEL_ECO]     = "ECO Mode",
+    [FAN_LEVEL_NORMAL]  = "Normal Mode",
+    [FAN_LEVEL_COOLING] = "Cooling Mode",
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -201,7 +201,7 @@ static void __on_scene_fan_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene fan                                                                    *
+ * Scene fan                                                                  *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_fan_background_start(arm_2d_scene_t *ptScene)
@@ -247,14 +247,19 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
     for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {
 
         /* update helper with new values*/
-        arm_2d_helper_dirty_region_transform_update_value(&this.tFanBlade[n].tHelper, ARM_2D_ANGLE(this.fAngle + n * 120.0f), 1.0f);
+        arm_2d_helper_dirty_region_transform_update_value(  
+                                        &this.tFanBlade[n].tHelper, 
+                                        ARM_2D_ANGLE(this.fAngle + n * 120.0f),
+                                        1.0f);
 
         if (bMoveToStop) {
-            arm_2d_helper_dirty_region_transform_force_update(&this.tFanBlade[n].tHelper);
+            arm_2d_helper_dirty_region_transform_force_update(
+                                                    &this.tFanBlade[n].tHelper);
         }
 
         /* call helper's on-frame-start event handler */
-        arm_2d_helper_dirty_region_transform_on_frame_start(&this.tFanBlade[n].tHelper);
+        arm_2d_helper_dirty_region_transform_on_frame_start(
+                                                    &this.tFanBlade[n].tHelper);
     }
 
     text_list_on_frame_start(&this.tLevelList);
@@ -504,8 +509,8 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
         };
         text_list_init(&this.tLevelList, &tCFG);
 
-        this.chLevel = 1;
-        text_list_move_selection(&this.tLevelList, 1, 0);
+        this.chLevel = FAN_LEVEL_ECO;
+        text_list_move_selection(&this.tLevelList, FAN_LEVEL_ECO, 0);
     } while(0);
 
     /* ------------   initialize members of user_scene_fan_t end   ---------------*/

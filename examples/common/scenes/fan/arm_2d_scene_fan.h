@@ -75,9 +75,10 @@ extern "C" {
 
 /*============================ TYPES =========================================*/
 enum {
-    FAN_LEVEL_ECO = 0,
-    FAN_LEVEL_MID,
-    FAN_LEVEL_MAX,
+    FAN_LEVEL_STOP,
+    FAN_LEVEL_ECO,
+    FAN_LEVEL_NORMAL,
+    FAN_LEVEL_COOLING,
 };
 
 typedef struct __fan_blade_t {

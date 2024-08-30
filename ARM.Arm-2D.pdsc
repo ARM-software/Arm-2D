@@ -359,8 +359,8 @@
             <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="1.1.1" />
             <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="1.1.1" />
 
-            <file category="sourceC"     name="examples/common/scenes/fan/arm_2d_scene_fan.c"   attr="template"  select="Scene Template: Fan"   version="1.1.0" />
-            <file category="header"      name="examples/common/scenes/fan/arm_2d_scene_fan.h"   attr="template"  select="Scene Template: Fan"   version="1.1.0" />
+            <file category="sourceC"     name="examples/common/scenes/fan/arm_2d_scene_fan.c"   attr="template"  select="Scene Template: Fan"   version="1.1.1" />
+            <file category="header"      name="examples/common/scenes/fan/arm_2d_scene_fan.h"   attr="template"  select="Scene Template: Fan"   version="1.1.1" />
 
             <file category="sourceC"     name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.c"   attr="template"  select="Scene Template: Bubble Charging"   version="1.1.0" />
             <file category="header"      name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.h"   attr="template"  select="Scene Template: Bubble Charging"   version="1.1.0" />
