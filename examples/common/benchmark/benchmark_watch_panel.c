@@ -211,7 +211,7 @@ demo_gears_t s_tGears[] = {
 #endif
 
     {
-        .ptTile = &c_tilePointerSec,
+        //.ptTile = &c_tilePointerSec,
         .ptMask = &c_tilePointerSecMask,
     #if defined(__ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__)  \
     &&  __ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__
@@ -441,17 +441,7 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
             }
 
             if (NULL != ptItem->ptMask) {
-                if (255 == ptItem->chOpacity) {
-                    arm_2dp_tile_rotation_with_src_mask(
-                        (arm_2d_op_trans_msk_t *)&(ptItem->tOP),                    //!< control block
-                        ptItem->ptTile,                                             //!< source tile
-                        ptItem->ptMask,                                             //!< source mask
-                        ptTile,                                                     //!< target tile
-                        ptItem->ptRegion,                                           //!< target region
-                        ptItem->tCentre,                                            //!< pivot on source
-                        ptItem->fAngle                                              //!< rotation angle 
-                    );
-                } else {
+                if (NULL != ptItem->ptTile) {
                     arm_2dp_tile_rotation_with_src_mask_and_opacity(
                         &(ptItem->tOP),                                             //!< control block
                         ptItem->ptTile,                                             //!< source tile
@@ -462,18 +452,19 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                         ptItem->fAngle,                                             //!< rotation angle 
                         ptItem->chOpacity                                           //!< opacity
                     );
+                } else {
+                    arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                        (arm_2d_op_fill_cl_msk_opa_trans_t *)&(ptItem->tOP),        //!< control block
+                        ptItem->ptMask,                                             //!< source mask
+                        ptTile,                                                     //!< target tile
+                        ptItem->ptRegion,                                           //!< target region
+                        ptItem->tCentre,                                            //!< pivot on source
+                        ptItem->fAngle,                                             //!< rotation angle
+                        1.0f,
+                        GLCD_COLOR_RED,
+                        ptItem->chOpacity                                           //!< opacity
+                    );
                 }
-            } else if (255 == ptItem->chOpacity) {
-            
-                arm_2dp_tile_rotation_with_colour_keying(  
-                                        (arm_2d_op_trans_t *)&(_->tOP),
-                                        ptItem->ptTile,                             //!< source tile
-                                        ptTile,                                     //!< target tile
-                                        ptItem->ptRegion,                           //!< target region
-                                        ptItem->tCentre,                            //!< center point
-                                        ptItem->fAngle,                             //!< rotation angle
-                                        GLCD_COLOR_BLACK,                           //!< masking colour
-                                        ptItem->ptTargetCentre);
             } else {
                 arm_2dp_tile_rotation_with_opacity( (arm_2d_op_trans_opa_t *)&(ptItem->tOP),
                                                     ptItem->ptTile,                 //!< source tile
