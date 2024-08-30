@@ -484,7 +484,7 @@ user_scene_panel_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAd
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
                 .chNextPadding = 3,
-                .chPrviousePadding = 3,
+                .chPreviousPadding = 3,
                 .tListSize = {
                     .iHeight = 80,
                     .iWidth = 28,
@@ -513,7 +513,7 @@ user_scene_panel_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAd
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
                 .chNextPadding = 3,
-                .chPrviousePadding = 3,
+                .chPreviousPadding = 3,
                 .tListSize = {
                     .iHeight = 80,
                     .iWidth = 28,

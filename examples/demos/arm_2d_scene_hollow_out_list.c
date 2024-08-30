@@ -484,7 +484,7 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
                 .chNextPadding = 20,
-                .chPrviousePadding = 20,
+                .chPreviousPadding = 20,
 
                 .tListSize = {
                     .iWidth = 76,

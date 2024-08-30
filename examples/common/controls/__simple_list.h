@@ -48,9 +48,11 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
-/* a typo ...*/
+/* Opps! typos..., please use the correct spelling. 
+ * The typos will be removed in the future!
+ */
 #define numer_list_move_selection number_list_move_selection
-
+#define chPrviousePadding   chPreviousPadding  
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -67,7 +69,7 @@ typedef struct __simple_list_cfg_t {
     arm_2d_size_t tItemSize;
     arm_2d_size_t tListSize;
 
-    int8_t chPrviousePadding;
+    int8_t chPreviousPadding;
     int8_t chNextPadding;
     int16_t hwSwitchingPeriodInMs;
     

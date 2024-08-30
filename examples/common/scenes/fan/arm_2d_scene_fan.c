@@ -489,7 +489,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
                 .chNextPadding = 3,
-                .chPrviousePadding = 3,
+                .chPreviousPadding = 3,
                 .tListSize = {
                     .iHeight = 80,
                     .iWidth = 0,            /* automatically set the width */

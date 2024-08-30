@@ -226,7 +226,7 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
     assert(NULL != ptCFG);
     assert(ptCFG->hwCount > 0);
 
-    int16_t iItemHeight = ptCFG->chPrviousePadding + ptCFG->chNextPadding;
+    int16_t iItemHeight = ptCFG->chPreviousPadding + ptCFG->chNextPadding;
 
     if (0 == ptCFG->tItemSize.iHeight) {
         if (NULL != ptCFG->ptFont) {
@@ -291,7 +291,7 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
     this.tTempItem.bIsVisible = true;
     this.tTempItem.u4Alignment = ARM_2D_ALIGN_CENTRE;
     
-    this.tTempItem.Padding.chPrevious = ptCFG->chPrviousePadding;
+    this.tTempItem.Padding.chPrevious = ptCFG->chPreviousPadding;
     this.tTempItem.Padding.chNext = ptCFG->chNextPadding;
     this.tTempItem.tSize = ptCFG->tItemSize;
 
