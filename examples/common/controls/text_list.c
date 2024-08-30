@@ -125,7 +125,6 @@ arm_2d_err_t text_list_init(  text_list_t *ptThis,
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
-    assert(0 != ptCFG->hwStringCount);
     assert(NULL != ptCFG->ptStrings);
 
     arm_2d_err_t tResult =  __simple_list_init(&this.use_as____simple_list_t,
@@ -144,10 +143,9 @@ arm_2d_err_t text_list_init(  text_list_t *ptThis,
 
     static const char c_chDefaultFormatString[] = {"%s"};
 
-    this.tCFG.hwStringCount = ptCFG->hwStringCount;
     this.tCFG.ptString = ptCFG->ptStrings;
 
-    if (NULL == this.tCFG.ptString || 0 == this.tCFG.hwStringCount) {
+    if (NULL == this.tCFG.ptString) {
         return ARM_2D_ERR_INVALID_PARAM;
     } 
 

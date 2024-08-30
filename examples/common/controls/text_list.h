@@ -60,9 +60,7 @@ typedef struct text_list_cfg_t {
     implement(__simple_list_cfg_t);
 
     const char *pchFormatString;
-    
     __disp_string_t *ptStrings;
-    uint16_t hwStringCount;
 
 } text_list_cfg_t;
 
@@ -72,7 +70,6 @@ typedef struct text_list_t {
     struct {
         const char *pchFormatString;
         __disp_string_t *ptString;
-        uint16_t hwStringCount;
     } tCFG;
 } text_list_t;
 
