@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        04. May 2023
- * $Revision:    V.0.1.6
+ * $Date:        30. Aug 2024
+ * $Revision:    V.0.1.7
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -1530,9 +1530,9 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_get_alpha_with_opacity )(ARM_2D_POINT_VE
 
         vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmphiq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmphiq_n_u16(vHwPixelAlpha, 255));
     }
 #else
     {
@@ -1540,11 +1540,15 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_get_alpha_with_opacity )(ARM_2D_POINT_VE
                                              iOrigStride, predTail,
                                              vHwPixelAlpha, predGlb);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
     }
 #endif
+
+    vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+                           vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+                           vcmphiq_n_u16(vHwPixelAlpha, 255));
 
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
@@ -1590,9 +1594,9 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_alpha_with_opacity )(ARM_2D_POINT_V
 
         vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmphiq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmphiq_n_u16(vHwPixelAlpha, 255));
     }
 #else
     {
@@ -1600,11 +1604,15 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_alpha_with_opacity )(ARM_2D_POINT_V
                                              iOrigStride, predTail,
                                              vHwPixelAlpha, predGlb);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
     }
 #endif
+
+    vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+                           vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+                           vcmphiq_n_u16(vHwPixelAlpha, 255));
 
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
@@ -1652,20 +1660,24 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
 
         vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmphiq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmphiq_n_u16(vHwPixelAlpha, 255));
     }
 #else
     {
         __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(vXi, vYi, pOrigin, ptOrigValidRegion,
                                              iOrigStride, predTail, vHwPixelAlpha, predGlb);
 
-        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
-                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
-                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
     }
 #endif
+
+    vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+                           vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+                           vcmphiq_n_u16(vHwPixelAlpha, 255));
 
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
