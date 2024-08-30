@@ -91,8 +91,8 @@ mve_pred16_t arm_2d_is_point_vec_inside_region_s16_safe(const arm_2d_region_t * 
 {
     mve_pred16_t    p0 = vcmpgeq(ptPoint->X, ptRegion->tLocation.iX);
     p0 = vcmpgeq_m(ptPoint->Y, ptRegion->tLocation.iY, p0);
-    p0 = vcmpltq_m(ptPoint->X, ptRegion->tLocation.iX + ptRegion->tSize.iWidth + 1, p0);
-    p0 = vcmpltq_m(ptPoint->Y, ptRegion->tLocation.iY + ptRegion->tSize.iHeight + 1, p0);
+    p0 = vcmpltq_m(ptPoint->X, ptRegion->tLocation.iX + ptRegion->tSize.iWidth - 1, p0);
+    p0 = vcmpltq_m(ptPoint->Y, ptRegion->tLocation.iY + ptRegion->tSize.iHeight - 1, p0);
 
     return p0;
 }
