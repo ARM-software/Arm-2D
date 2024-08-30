@@ -153,6 +153,13 @@ struct {
     },
 };
 
+const static __disp_string_t c_strLevels[] = {
+    [0] = "STOP",
+    [1] = "ECO Mode",
+    [2] = "Normal Mode",
+    [3] = "Cooling Mode",
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_fan_load(arm_2d_scene_t *ptScene)
@@ -210,7 +217,6 @@ static void __on_scene_fan_background_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 }
-
 
 static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
 {
@@ -358,12 +364,22 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
     
     number_list_t *ptThis = (number_list_t *)pTarget;
 
-    arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_dock_vertical(__canvas, c_tileListCoverLineMask.tRegion.tSize.iHeight) {
-            arm_2d_fill_colour_with_vertical_line_mask( ptTile, 
-                                                        &__vertical_region, 
-                                                        &c_tileListCoverLineMask, 
-                                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+    arm_2d_canvas(ptTile, __list_cover) {
+        /* draw shadow */
+        arm_2d_dock_top(__list_cover, 40) {
+            arm_2d_fill_colour_with_vertical_alpha_gradient(
+                ptTile,
+                &__top_region,
+                (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                (arm_2d_alpha_samples_2pts_t) {255, 0,});
+        }
+
+        arm_2d_dock_bottom(__list_cover, 40) {
+            arm_2d_fill_colour_with_vertical_alpha_gradient(
+                ptTile,
+                &__bottom_region,
+                (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                (arm_2d_alpha_samples_2pts_t) {0, 255,});
         }
     }
 
@@ -464,12 +480,6 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
     /* initialize text list */
     do {
-        const static __disp_string_t c_strLevels[] = {
-                [0] = "STOP",
-                [1] = "ECO Mode",
-                [2] = "Normal Mode",
-                [3] = "Cooling Mode",
-        };
         text_list_cfg_t tCFG = {
             .ptStrings = (__disp_string_t *)c_strLevels,
 
