@@ -492,16 +492,14 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 .chPrviousePadding = 3,
                 .tListSize = {
                     .iHeight = 80,
-                    //.iWidth = 28,
+                    .iWidth = 0,            /* automatically set the width */
                 },
                 .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
                 /* draw list cover */
                 .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
 
-            #if !__FITNESS_CFG_NEBULA_ENABLE__
                 .bUseDirtyRegion = true,
                 .ptTargetScene = &this.use_as__arm_2d_scene_t,
-            #endif
             }
         };
         text_list_init(&this.tLevelList, &tCFG);
