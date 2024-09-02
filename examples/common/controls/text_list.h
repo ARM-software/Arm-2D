@@ -70,7 +70,7 @@ typedef struct text_list_t {
     struct {
         const char *pchFormatString;
         __disp_string_t *ptString;
-    } tCFG;
+    } tTextListCFG;
 } text_list_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/

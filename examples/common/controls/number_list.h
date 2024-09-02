@@ -102,7 +102,7 @@ typedef struct number_list_t {
         const char *pchFormatString;
         int32_t nStart;
         int16_t iDelta;
-    } tCFG;
+    } tNumberListCFG;
 } number_list_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/

@@ -109,7 +109,7 @@ arm_fsm_rt_t __arm_2d_number_list_draw_list_core_item(
                 &this.use_as____simple_list_t,
                 &__top_container,
                 this.use_as____simple_list_t.tSimpleListCFG.tTextAlignment,
-                this.tCFG.pchFormatString,
+                this.tNumberListCFG.pchFormatString,
                 number_list_get_item_number(ptThis, ptItem->hwID));
     
         arm_lcd_text_set_target_framebuffer(NULL);
@@ -141,13 +141,13 @@ arm_2d_err_t number_list_init(  number_list_t *ptThis,
 
     static const char c_chDefaultFormatString[] = {"%d"};
 
-    this.tCFG.iDelta = ptCFG->iDelta;
-    this.tCFG.nStart = ptCFG->nStart;
-    this.tCFG.pchFormatString = ptCFG->pchFormatString;
+    this.tNumberListCFG.iDelta = ptCFG->iDelta;
+    this.tNumberListCFG.nStart = ptCFG->nStart;
+    this.tNumberListCFG.pchFormatString = ptCFG->pchFormatString;
 
-    if (NULL == this.tCFG.pchFormatString) {
+    if (NULL == this.tNumberListCFG.pchFormatString) {
         /* use the default format string */
-        this.tCFG.pchFormatString = c_chDefaultFormatString;
+        this.tNumberListCFG.pchFormatString = c_chDefaultFormatString;
     }
 
     return tResult;
@@ -212,7 +212,7 @@ int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t hwItemI
         return -1;
     }
 
-    return this.tCFG.nStart + hwItemID * this.tCFG.iDelta;
+    return this.tNumberListCFG.nStart + hwItemID * this.tNumberListCFG.iDelta;
 }
 
 

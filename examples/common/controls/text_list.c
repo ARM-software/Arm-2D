@@ -110,7 +110,7 @@ arm_fsm_rt_t __arm_2d_text_list_draw_list_core_item(
                 &this.use_as____simple_list_t,
                  &__top_container,
                  this.use_as____simple_list_t.tSimpleListCFG.tTextAlignment,
-                 this.tCFG.pchFormatString,
+                 this.tTextListCFG.pchFormatString,
                  text_list_get_item_string(ptThis, ptItem->hwID));
     
         arm_lcd_text_set_target_framebuffer(NULL);
@@ -143,17 +143,17 @@ arm_2d_err_t text_list_init(  text_list_t *ptThis,
 
     static const char c_chDefaultFormatString[] = {"%s"};
 
-    this.tCFG.ptString = ptCFG->ptStrings;
+    this.tTextListCFG.ptString = ptCFG->ptStrings;
 
-    if (NULL == this.tCFG.ptString) {
+    if (NULL == this.tTextListCFG.ptString) {
         return ARM_2D_ERR_INVALID_PARAM;
     } 
 
-    this.tCFG.pchFormatString = ptCFG->pchFormatString;
+    this.tTextListCFG.pchFormatString = ptCFG->pchFormatString;
 
-    if (NULL == this.tCFG.pchFormatString) {
+    if (NULL == this.tTextListCFG.pchFormatString) {
         /* use the default format string */
-        this.tCFG.pchFormatString = c_chDefaultFormatString;
+        this.tTextListCFG.pchFormatString = c_chDefaultFormatString;
     }
 
     return tResult;
@@ -219,7 +219,7 @@ __disp_string_t text_list_get_item_string(text_list_t *ptThis, uint_fast16_t hwI
         return c_strDefaultString;
     }
 
-    __disp_string_t tString = this.tCFG.ptString[hwItemID];
+    __disp_string_t tString = this.tTextListCFG.ptString[hwItemID];
     if (NULL == tString) {
         return c_strDefaultString;
     }
