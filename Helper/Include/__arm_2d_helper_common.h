@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        22. July 2024
- * $Revision:    V.1.6.6
+ * $Date:        2. Sept 2024
+ * $Revision:    V.1.6.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1059,8 +1059,13 @@ extern "C" {
 
 #define __arm_2d_canvas(__tile_ptr, __region_name, ...)                         \
             arm_using(arm_2d_region_t __region_name = {0},                      \
-                        {__region_name.tSize = (__tile_ptr)->tRegion.tSize;},   \
-                        {arm_2d_op_wait_async(NULL);})
+                    {                                                           \
+                        ARM_2D_UNUSED(__region_name);                           \
+                        __region_name.tSize = (__tile_ptr)->tRegion.tSize;      \
+                    },                                                          \
+                    {                                                           \
+                        arm_2d_op_wait_async(NULL);                             \
+                    })
 
 #if 1
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
@@ -1069,6 +1074,7 @@ extern "C" {
                     *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;          \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
                     ({ /* on enter operations */                                \
+                        ARM_2D_UNUSED(__region_name);                           \
                         __region_name.tSize                                     \
                             = (__tile_ptr)->tRegion.tSize;                      \
                         const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptScreen) = NULL; \
