@@ -210,7 +210,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
+#if 0
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -237,7 +237,10 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #else
     //scene_transform_loader,
     //scene_bubble_charging_loader,
-    scene_basics_loader,
+    //scene_basics_loader,
+    scene_fan_loader,
+    //scene_hollow_out_list_loader,
+    //scene_fitness_loader,
 #endif
 
 

@@ -46,6 +46,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wgcc-compat"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress=1296,64,1,177
 #endif
 
 

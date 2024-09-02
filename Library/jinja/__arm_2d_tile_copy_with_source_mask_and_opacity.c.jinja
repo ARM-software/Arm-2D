@@ -72,7 +72,7 @@ extern "C" {
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 174,177,188,68,513,144
+#   pragma diag_suppress 174,177,188,68,513,144,1,64
 #endif
 
 /*============================ MACROS ========================================*/
@@ -485,7 +485,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower }}_tile_copy_with_src_mask_and_opacit
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif
