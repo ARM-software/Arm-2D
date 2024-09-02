@@ -25,6 +25,9 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d.h"
+#include "arm_2d_disp_adapters.h"
+
+#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 
 #define __USER_SCENE_VIRTUAL_RESOURCE_IMPLEMENT__
 #include "arm_2d_scene_virtual_resource.h"
@@ -101,7 +104,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
-extern const uint8_t c_bmpHelium[];
+extern const COLOUR_INT c_bmpHelium[];
 extern const arm_2d_tile_t c_tileHelium;
 extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
 extern const uint8_t c_bmpDigitsFontA4Alpha[];
@@ -534,6 +537,8 @@ user_scene_virtual_resource_t *__arm_2d_scene_virtual_resource_init(   arm_2d_sc
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#endif
+
 #endif
 
 #endif
