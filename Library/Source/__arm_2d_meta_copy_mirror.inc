@@ -22,8 +22,8 @@
  * Title:        __arm_2d_meta_copy_mirror.inc
  * Description:  c code template for tile copying
  *
- * $Date:        13. Sept 2022
- * $Revision:    V.1.0.0
+ * $Date:        03. Sept 2024
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -175,7 +175,7 @@ arm_fsm_rt_t __MCM_API_FUNC(tile_copy)( __API_MCM_OP_TYPE *ptOP,
                 
                 default:
                     return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                    break;
+                    //break;
             }
         }
     }

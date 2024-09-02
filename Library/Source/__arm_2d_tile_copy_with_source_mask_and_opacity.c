@@ -478,7 +478,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only(
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif
@@ -1056,7 +1056,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only(
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif
@@ -1634,7 +1634,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif

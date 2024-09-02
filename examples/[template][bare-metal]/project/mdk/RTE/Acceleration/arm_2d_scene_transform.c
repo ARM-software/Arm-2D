@@ -318,10 +318,10 @@ void __draw_transform_object_handler( void *pObj,
 
     bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
 
-    arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
+//    arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
 
-    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
-    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
+//    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
+//    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
 
     float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 2.0f;
 

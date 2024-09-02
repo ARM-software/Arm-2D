@@ -149,7 +149,7 @@ arm_fsm_rt_t __MCSMM_API_FUNC(tile_copy_with_src_mask)(
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif

@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        03. Aug 2024
- * $Revision:    V.1.4.7
+ * $Date:        03. Sept 2024
+ * $Revision:    V.1.4.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -915,7 +915,7 @@ arm_fsm_rt_t arm_2dp_c8bit_tile_copy(arm_2d_op_cp_t *ptOP,
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif
@@ -963,7 +963,7 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_copy(arm_2d_op_cp_t *ptOP,
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif
@@ -1012,7 +1012,7 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_copy(arm_2d_op_cp_t *ptOP,
             
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                break;
+                //break;
         }
     }
 #endif

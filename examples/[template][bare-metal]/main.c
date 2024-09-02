@@ -291,8 +291,9 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_animate_background_loader,
     scene_virtual_resource_loader,
 #endif
+    scene_fan_loader,
     //scene_bubble_charging_loader,
-    scene_transform_loader,
+    //scene_transform_loader,
 #endif
 
 

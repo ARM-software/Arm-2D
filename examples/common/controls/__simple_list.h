@@ -34,6 +34,8 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
 #   pragma clang diagnostic ignored "-Wpadded"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress 1296,174,64,177,1
 #endif
 
 /*============================ MACROS ========================================*/

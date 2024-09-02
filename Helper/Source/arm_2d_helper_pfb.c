@@ -70,6 +70,8 @@
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wpedantic"
 #   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress=1296,64,1,177,191
 #endif
 
 /*============================ MACROS ========================================*/

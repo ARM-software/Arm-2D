@@ -22,7 +22,7 @@
  * Description:  the font helper service source code
  *
  * $Date:        3. Sept 2024
- * $Revision:    V.2.7.0
+ * $Revision:    V.2.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -56,6 +56,8 @@
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wunreachable-code"
+#elif __IS_COMPILER_ARM_COMPILER_5__
+#   pragma diag_suppress 174,177,188,68,513,144,64
 #endif
 
 /*============================ MACROS ========================================*/

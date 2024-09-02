@@ -18,7 +18,7 @@
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress=1296
+#   pragma diag_suppress=1296,1,64,177
 #endif
 
 typedef struct {
