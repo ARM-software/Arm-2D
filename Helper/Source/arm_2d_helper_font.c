@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        29. Aug 2024
+ * $Date:        3. Sept 2024
  * $Revision:    V.2.7.0
  *
  * Target Processor:  Cortex-M cores
@@ -535,6 +535,8 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
 {
+    ARM_2D_UNUSED(ptFont);
+
     if (fScale == 0.0f) {
         return arm_2d_fill_colour_with_mask_and_opacity(
                                             ptTile,

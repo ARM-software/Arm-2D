@@ -396,7 +396,9 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
                 ptTile,
                 &__top_region,
                 (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                (arm_2d_alpha_samples_2pts_t) {{255, 0,},});
+                (arm_2d_alpha_samples_2pts_t) {
+                    {255, 0,},
+                });
         }
 
         arm_2d_dock_bottom(__list_cover, 40) {
@@ -404,7 +406,9 @@ IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
                 ptTile,
                 &__bottom_region,
                 (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                (arm_2d_alpha_samples_2pts_t) {0, 255,});
+                (arm_2d_alpha_samples_2pts_t) {
+                    {0, 255,},
+                });
         }
     }
 

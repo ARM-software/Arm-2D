@@ -106,35 +106,8 @@ IMPL_ON_DRAW_EVT(__arm_2d_simple_list_draw_background)
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
 #define __va_list    va_list
-
 #endif
 
-
-
-static 
-int __printf(number_list_t *ptThis, const arm_2d_region_t *ptRegion, const char *format, ...)
-{
-    __simple_list_cfg_t *ptCFG = &this.use_as____simple_list_t.tSimpleListCFG;
-    int real_size;
-    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
-    __va_list ap;
-    va_start(ap, format);
-        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
-    va_end(ap);
-    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
-    s_chBuffer[real_size] = '\0';
-    
-    int16_t iWidth = ptCFG->ptFont->tCharSize.iWidth;
-    int16_t iHeight = ptCFG->ptFont->tCharSize.iHeight;
-
-    arm_2d_align_centre( *ptRegion, (int16_t)real_size * iWidth, iHeight) {
-        arm_lcd_text_set_draw_region(&__centre_region);
-        arm_lcd_puts(s_chBuffer);
-        arm_lcd_text_set_draw_region(NULL);
-    }
-
-    return real_size;
-}
 
 static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
                                         __arm_2d_list_core_t *ptListView,
@@ -407,7 +380,6 @@ int __simple_list_item_printf(  __simple_list_t *ptThis,
     assert(NULL != ptRegion);
     assert(NULL != format);
 
-    __simple_list_cfg_t *ptCFG = &this.tSimpleListCFG;
     int real_size;
     static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
     __va_list ap;
