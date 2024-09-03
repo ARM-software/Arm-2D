@@ -863,12 +863,13 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             ptDescriptor = arm_2d_helper_get_char_descriptor(ptFont, 
                                                              &tCharDescriptor,
                                                              (uint8_t *)str);
-            
+
             if (NULL != ptDescriptor) {
-                int16_t tCharNewHeight = (tDrawBox.tSize.iHeight - tCharDescriptor.iBearingY) + tCharSize.iHeight;
+                int16_t tCharNewHeight = (tCharSize.iHeight - tCharDescriptor.iBearingY) + tCharSize.iHeight;
 
                 tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tCharNewHeight);
             }
+
             
             tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str);
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
