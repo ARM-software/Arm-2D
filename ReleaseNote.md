@@ -2,6 +2,98 @@
 
 
 
+## Release v1.2.0 
+
+### Core and Library
+
+- Adds Helium implementations for IIR-Blur operations
+
+- Adds Canary to the scratch memory management
+
+- Improves the porting user experience
+
+- Adds a new API for colour-filling-with-A1-mask with/without opacity
+
+- Fixes a potential issue found in the pixel-pipeline 
+
+  - In some rare case when the target region pointer is NULL, the operation behaviour is UNDEFINED
+
+- Adds new series APIs for colour-filling-with-alpha-gradient
+
+  - Adds variants for defining alpha gradient with 4-sample-points, 3-sample-points, vertial mode and horizontal mode
+  - Adds varients for specifying a source mask
+  - Adds varients for specifying an optional opacity
+
+- Significantly improves the performance of transform operations
+
+  - ~80% performance uplift for non-Helium powered Cortex-M processors
+  - ~20% performance uplift for the helium version of colour-filling-with-mask-opacity-and-transform
+  - Introduces an assumption that **ALL masks and pictures should contains a 1-pixel width boarder when applied to the transform operations.** The colour of the boarder should be same with the background of the picture or the corresponding alpha is always zero.
+
+- Adds an experimental 2x Super-Sampling-Anti-Alias (2xSSAA) transform implementation
+
+- Introduces new OOPC decorations `ARM_PRIVATE_METHOD()`, `ARM_PROTECTED_METHOD()` and `ARM_PUBLIC_METHOD()`
+
+  
+
+### Helper Services
+
+- Improves the Layout Assistant
+  - Updates the layout assistant to improve the performance of user applications
+  - Allows users to specify the layout alignment
+- Adds a helper service for fonts and lcd display
+  - Simplifies the support for user defined fonts.
+  - Adds the scaling support to A1, A2 and A4 fonts
+  - Improves the font display performance
+  - Fixes some char size calculation issues
+  - Adds a new API `arm_lcd_puts_label` to display a label with an user specified aligment requirement. 
+- Updates the scene player service
+  - Adds a manual switching mode and allows user to cancel an on-going switching
+  - Adds new switching mode, Fly-In, and adds an optional background blur effects to Fly-In mode
+- Adds a helper services for user defined controls (user defined element tree)
+  - Adds traversal algorithms: pre-order traversal, post-order traversal and bottom-up traversal
+  - Adds a dedicated API for finding the top-most control with the coordinate of an user touch event
+- Improves the helper service for list
+  - Fixes some list-item-selection related issues
+  - Adds the Non-Ring mode
+
+### Examples and Templates
+
+- Adds a new scene template `animate background`for the new virtual resource background-image-loading mode
+- Update the Benchmarks
+  - Adds a 4-sample-point alpha gradient to the Generic Benchmark
+  - Replaces the clock-pointer rotation transform operation from tile-transform-with-source-mask to colour-filling-with-mask-opacity-and-transform.
+  - Updates the benchmark table
+- Improves the overall performance and reduces the memory footprint
+- Adds an background-only mode to the bubble charging scene template
+- Updates the demo scene `arm_2d_scene_basics` to demonstarte the colour-filling-with-alpha-gradient operations.
+- Improves the `progress_bar_flowing`, `progress_bar_drill` and `progress_bar_simple`
+- Update list related controls
+  - Adds a base class `__simple_list_t`  
+  - Re-factories the `number_list_t` to inherit from the `__simple_list_t`
+  - Adds a new control `text_list_t` which is derived from `__simple_list_t`
+  - Allows users to customize a `number_list_t` instance.
+  - Adds new demos for list: Ruler and Hallow-Out List
+  - Updates the scene template Fan to demonstrate the use of the `text_list_t`.
+- Adds a new demo scene for testing tranform operations
+- Updates the example control: nebula
+  - Improves the performance
+  - Adds support for the inside-out movement
+- Improves the performance of the example Helium-ACI library
+- Adds built-in fonts for a subset of the ASCII: `ARM_2D_FONT_Arial14_A8`, `ARM_2D_FONT_Arial14_A4` ,`ARM_2D_FONT_Arial14_A2` and  `ARM_2D_FONT_Arial14_A1`
+- Updates the asset `c_tileSpinWheelMask` to fulfill the requirement of the updated transform operations.
+
+### Documentation and Misc
+
+- Improves python scripts in the `tools` folder.
+  - Adds support for `FT_PIXEL_MODE_MONO`, `FT_PIXEL_MODE_GRAY2` and `FT_PIXEL_MODE_GRAY4` font in ttf2c.py
+  - Allows adding an user defined header file in `arm_2d_cfg.h` by defining the macro `__ARM_2D_USER_APP_CFG_H__`.
+  - Adds support for generating A1 mask to img2c.py
+- Updates README.md and the doxygen script
+- Updates the copy-right
+
+
+
 ## Release v1.1.6 (23 May 2024)
 
 ### Core and Library
@@ -17,24 +109,30 @@
 - Adds experimental APIs for IIR blur
 - Adds a Helium-ACI example library.
 - Uses jinja scripts for generating source files
+- Improves pixel-pipeline for processing masks
 
 
 ### Helper Services
 
 - Improves performance statistics
   - Allows frame-skipping when no valid dirty region
+  
 - Improves log services
   - Adds a dedicated channel for statistics
   - Adds a dedicated channel for example controls
   - Adds line number
+  
 - Improves scratch memory management
+
 - Improves the layout assistant
   - Adds macro helpers for docking
   - Allows `arm_2d_canvas` to skip running when it is out of the partial-framebuffer valid region.
   - Improves the capability of the layout nesting. 
   - Adds a layout assistant debug mode
+  
 - Improves the lcd printf service
   - Improves the scaling service
+  
 - Improves the Display Adapter service
   - Adds the support for screen rotation (90, 180 and 270 degrees) in the Display Adapter service
   - Adds colour information
@@ -43,17 +141,22 @@
   - Improves the support for UTF8
   - Adds `arm_2d_helper_pfb_is_region_being_drawing`
   - Adds a Tiny Mode for navigation layer
+  
 - Improves the Scene Player service
   - Adds the canvas colour to arm_2d_scene_t.
   - Adds an onLoad event to arm_2d_scene_t.
   - Adds a built-in dirty region helper service
   - Improves the scene switching effects
+  
 - Adds a helper service for byte FIFO: `arm_2d_byte_fifo_t`
+
 - Adds `__arm_2d_helper_time_elapsed`
-- 
+
 - Adds helper services for dirty regions
+
 - Adds a code template for adding user defined OPCODE
-- Improves pixel-pipeline for processing masks
+
+  
 
 
 ### Examples and Templates
