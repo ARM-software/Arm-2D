@@ -108,8 +108,114 @@ $(document).ready(function(){initNavTree('md__home_runner_work_Arm_2D_Arm_2D_Rel
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md24"></a>
-Release v1.1.6 (23 May 2024)</h1>
+Release v1.2.0</h1>
 <h2><a class="anchor" id="autotoc_md25"></a>
+Core and Library</h2>
+<ul>
+<li>Adds Helium implementations for IIR-Blur operations</li>
+<li>Adds Canary to the scratch memory management</li>
+<li>Improves the porting user experience</li>
+<li>Adds a new API for colour-filling-with-A1-mask with/without opacity</li>
+<li>Fixes a potential issue found in the pixel-pipeline<ul>
+<li>In some rare case when the target region pointer is NULL, the operation behaviour is UNDEFINED</li>
+</ul>
+</li>
+<li>Adds new series APIs for colour-filling-with-alpha-gradient<ul>
+<li>Adds variants for defining alpha gradient with 4-sample-points, 3-sample-points, vertial mode and horizontal mode</li>
+<li>Adds varients for specifying a source mask</li>
+<li>Adds varients for specifying an optional opacity</li>
+</ul>
+</li>
+<li>Significantly improves the performance of transform operations<ul>
+<li>~80% performance uplift for non-Helium powered Cortex-M processors</li>
+<li>~20% performance uplift for the helium version of colour-filling-with-mask-opacity-and-transform</li>
+<li>Introduces an assumption that <b>ALL masks and pictures should contains a 1-pixel width boarder when applied to the transform operations.</b> The colour of the boarder should be same with the background of the picture or the corresponding alpha is always zero.</li>
+</ul>
+</li>
+<li>Adds an experimental 2x Super-Sampling-Anti-Alias (2xSSAA) transform implementation</li>
+<li>Introduces new OOPC decorations <code>ARM_PRIVATE_METHOD()</code>, <code>ARM_PROTECTED_METHOD()</code> and <code>ARM_PUBLIC_METHOD()</code></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md26"></a>
+Helper Services</h2>
+<ul>
+<li>Improves the Layout Assistant<ul>
+<li>Updates the layout assistant to improve the performance of user applications</li>
+<li>Allows users to specify the layout alignment</li>
+</ul>
+</li>
+<li>Adds a helper service for fonts and lcd display<ul>
+<li>Simplifies the support for user defined fonts.</li>
+<li>Adds the scaling support to A1, A2 and A4 fonts</li>
+<li>Improves the font display performance</li>
+<li>Fixes some char size calculation issues</li>
+<li>Adds a new API <code>arm_lcd_puts_label</code> to display a label with an user specified aligment requirement.</li>
+</ul>
+</li>
+<li>Updates the scene player service<ul>
+<li>Adds a manual switching mode and allows user to cancel an on-going switching</li>
+<li>Adds new switching mode, Fly-In, and adds an optional background blur effects to Fly-In mode</li>
+</ul>
+</li>
+<li>Adds a helper services for user defined controls (user defined element tree)<ul>
+<li>Adds traversal algorithms: pre-order traversal, post-order traversal and bottom-up traversal</li>
+<li>Adds a dedicated API for finding the top-most control with the coordinate of an user touch event</li>
+</ul>
+</li>
+<li>Improves the helper service for list<ul>
+<li>Fixes some list-item-selection related issues</li>
+<li>Adds the Non-Ring mode</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md27"></a>
+Examples and Templates</h2>
+<ul>
+<li>Adds a new scene template <code>animate background</code>for the new virtual resource background-image-loading mode</li>
+<li>Update the Benchmarks<ul>
+<li>Adds a 4-sample-point alpha gradient to the Generic Benchmark</li>
+<li>Replaces the clock-pointer rotation transform operation from tile-transform-with-source-mask to colour-filling-with-mask-opacity-and-transform.</li>
+<li>Updates the benchmark table</li>
+</ul>
+</li>
+<li>Improves the overall performance and reduces the memory footprint</li>
+<li>Adds an background-only mode to the bubble charging scene template</li>
+<li>Updates the demo scene <code>arm_2d_scene_basics</code> to demonstarte the colour-filling-with-alpha-gradient operations.</li>
+<li>Improves the <code>progress_bar_flowing</code>, <code>progress_bar_drill</code> and <code>progress_bar_simple</code></li>
+<li>Update list related controls<ul>
+<li>Adds a base class <code>__simple_list_t</code> <br  />
+</li>
+<li>Re-factories the <code>number_list_t</code> to inherit from the <code>__simple_list_t</code></li>
+<li>Adds a new control <code>text_list_t</code> which is derived from <code>__simple_list_t</code></li>
+<li>Allows users to customize a <code>number_list_t</code> instance.</li>
+<li>Adds new demos for list: Ruler and Hallow-Out List</li>
+<li>Updates the scene template Fan to demonstrate the use of the <code>text_list_t</code>.</li>
+</ul>
+</li>
+<li>Adds a new demo scene for testing tranform operations</li>
+<li>Updates the example control: nebula<ul>
+<li>Improves the performance</li>
+<li>Adds support for the inside-out movement</li>
+</ul>
+</li>
+<li>Improves the performance of the example Helium-ACI library</li>
+<li>Adds built-in fonts for a subset of the ASCII: <code>ARM_2D_FONT_Arial14_A8</code>, <code>ARM_2D_FONT_Arial14_A4</code> ,<code>ARM_2D_FONT_Arial14_A2</code> and <code>ARM_2D_FONT_Arial14_A1</code></li>
+<li>Updates the asset <code>c_tileSpinWheelMask</code> to fulfill the requirement of the updated transform operations.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md28"></a>
+Documentation and Misc</h2>
+<ul>
+<li>Improves python scripts in the <code>tools</code> folder.<ul>
+<li>Adds support for <code>FT_PIXEL_MODE_MONO</code>, <code>FT_PIXEL_MODE_GRAY2</code> and <code>FT_PIXEL_MODE_GRAY4</code> font in ttf2c.py</li>
+<li>Allows adding an user defined header file in <code>arm_2d_cfg.h</code> by defining the macro <code>__ARM_2D_USER_APP_CFG_H__</code>.</li>
+<li>Adds support for generating A1 mask to img2c.py</li>
+</ul>
+</li>
+<li>Updates README.md and the doxygen script</li>
+<li>Updates the copy-right</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md29"></a>
+Release v1.1.6 (23 May 2024)</h1>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Core and Library</h2>
 <ul>
 <li>Improves the compatibility with IAR and GCC</li>
@@ -125,8 +231,9 @@ Core and Library</h2>
 <li>Adds experimental APIs for IIR blur</li>
 <li>Adds a Helium-ACI example library.</li>
 <li>Uses jinja scripts for generating source files</li>
+<li>Improves pixel-pipeline for processing masks</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Helper Services</h2>
 <ul>
 <li>Improves performance statistics<ul>
@@ -170,12 +277,10 @@ Helper Services</h2>
 </li>
 <li>Adds a helper service for byte FIFO: <code><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a></code></li>
 <li>Adds <code>__arm_2d_helper_time_elapsed</code></li>
-<li></li>
 <li>Adds helper services for dirty regions</li>
 <li>Adds a code template for adding user defined OPCODE</li>
-<li>Improves pixel-pipeline for processing masks</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 Examples and Templates</h2>
 <ul>
 <li>Improves the compatibility with CMSIS6</li>
@@ -210,15 +315,15 @@ Examples and Templates</h2>
 <li>Reduces the memory footprint of example controls.</li>
 <li>Improves the performance of example controls</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Improves python scripts in the <code>tools</code> folder.</li>
 <li>Adds a document for how-to-use-jinja-script-for-code-generation</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md29"></a>
+<h1><a class="anchor" id="autotoc_md34"></a>
 Release v1.1.5 (01 Dec 2023)</h1>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Core and Library</h2>
 <ul>
 <li>Improves the support for masks in the pixel-pipeline.</li>
@@ -231,7 +336,7 @@ Core and Library</h2>
 <li>Adds the support for trace log</li>
 <li>Adds a new API: <code><a class="el" href="group__Tile.html#ga77b64272065500911f7e8c6734019106" title="check whether a given region is inside the target region">arm_2d_is_region_inside_target()</a></code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md31"></a>
+<h2><a class="anchor" id="autotoc_md36"></a>
 Helper Services</h2>
 <ul>
 <li>Updates <code>ttf2c.py</code> for generating <b>A1</b>, <b>A2</b> and <b>A4</b> fonts.</li>
@@ -259,7 +364,7 @@ Helper Services</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md37"></a>
 Examples and Templates</h2>
 <ul>
 <li>Adds a new example scene to demonstrate a curve-list-view.</li>
@@ -280,7 +385,7 @@ Examples and Templates</h2>
 </li>
 <li>Improve PC template</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md38"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Adds an initial support for CMake.</li>

@@ -107,13 +107,13 @@ $(document).ready(function(){initNavTree('md_getting_started_as_an_application_d
   <div class="headertitle"><div class="title">Getting Started as an Application Designer  </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md35"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md40"></a>
 1 Before We Start</h1>
 <p ><b>Arm-2D is not a GUI.</b> To be called GUI, it lacks many critical components, such as the element tree, the message processing, a rich set of controls, the support for interactive input devices, and a nice-to-have GUI designer.</p>
 <p >If possible, I hope that no one would have to use Arm-2D directly to create GUI applications. However, under the cost pressure, some embedded products must develop GUI applications in resource-constrained environments (e.g. 64K Flash, 12K RAM etc.). Meanwhile, even some devices have relatively richer resources, the application software is often too big to reserve sufficient memory for using a decent GUI stack. Supporting GUI applications in resource constraint environments is a world forgotten by the mainstream embedded GUI stacks.</p>
 <p >If the graphics in your application is simple, i.e. consists of panels (for displaying parameters and user settings), and the human-machine interactions are implemented based on a keyboard (or a touch panel without complex touch gestures), then using Arm-2D APIs directly to design GUI applications might be an option. In fact, if you can figure out a way to fulfill the missing parts aforementioned, the GUI application designed with Arm-2D is not only looking good but also has an impressively low memory footprint.</p>
 <p >If you happen to meet the conditions above, <b>don't panic</b>; we will try our best to provide you with an easy and efficient development experience. <b>By focusing on the API usage and following the guidance</b> introduced in this article, <b>you can master the Arm-2D application design quickly</b>.</p>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md41"></a>
 Table of Content &lt;!-- omit from toc --&gt;</h2>
 <ul>
 <li><a href="#1-before-we-start">1 Before We Start</a></li>
@@ -136,12 +136,12 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md37"></a>
+<h1><a class="anchor" id="autotoc_md42"></a>
 2 Step by Step Guidance</h1>
-<h2><a class="anchor" id="autotoc_md38"></a>
+<h2><a class="anchor" id="autotoc_md43"></a>
 2.1 The basic concepts</h2>
 <p >The first step of getting started is learning some basic concepts, among which <em><b>Tile</b></em>, <em><b>Region</b></em> and <em><b>Bounding Box model</b></em> are the most fundamental ones because almost all APIs take Tile(s) and Region(s) as input/output. Please kindly read <a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">**README**</a> and <a class="el" href="md_introduction.html">**Introduction**</a> for details.</p>
-<h2><a class="anchor" id="autotoc_md39"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 2.2 Port Arm-2D to your local platform</h2>
 <p >After learning the basic concepts of Arm-2d, please follow the guidance, <a class="el" href="md_how_to_deploy_the_arm_2d_library.html">how_to_deploy_the_arm_2d_library.md</a>, to deploy Arm-2d onto your local hardware platform.</p>
 <p >Of course, if you want to skip the porting step and jump to learn how to use the Arm-2D APIs, please try the template projects we prepared for you in the <code>examples</code> directory. These template projects provide porting for STM32 Discovery Board, Cortex-M FVP/VHT, MPS2/MPS3 development platforms and <b>PC (including MacOS, Windows and Linux)</b>. In addition, there are other 3rd-party porting available on Github, for example:</p>
@@ -150,7 +150,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <li><a href="https://github.com/lvgl/lv_port_an547_cm55_sim">A porting for LVGL + Arm-2D on Corstone-300-FVP</a></li>
 <li><a href="https://github.com/RT-Thread-Studio/sdk-bsp-ra8d1-vision-board/tree/master/projects/arm2d/vision_board_mipi_2.0inch_arm2d">A porting for RA8D1-Vision-Board</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md40"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 2.3 Try the basic Tile Operations and the Layout Assistant</h2>
 <p >After having a working platform, it is good to try Arm-2D APIs with the help of <a class="el" href="use_tile.html#md_how_to_use_tile_operations">how_to_use_tile_operations.md</a>. During this process, reading <a class="el" href="md_how_to_use_layout_assistant.html">how_to_use_layout_assistant.md</a> to learn the basic layout method can make your application development much easier.</p>
 <p >At this stage, one might have an outstanding question: where should I use these APIs to practice drawing operations? Please open <code>arm_2d_disp_adapter_0.c</code> and find the function <code>__pfb_draw_handler</code> as shown below - This is our playground.</p>
@@ -191,13 +191,13 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <p ><b>Figure 2-2 The Default Picture resource: CMSIS logo</b></p>
 <p ><img src="../examples/common/asset/CMSIS_Logo_Final.png" alt="" class="inline"/></p>
 <p >After finishing the steps above, <b>congratulations, welcome to join the Arm-2D community.</b></p>
-<h2><a class="anchor" id="autotoc_md41"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 2.4 Try example controls</h2>
 <p >Arm-2D provides example controls in the <code>examples/common</code> directory, which are not only read as reference codes but also available for user applications. To include those example controls, please add the component <code>Acceleration::Arm-2D Extras::Controls</code> in the RTE configuration (as shown in <b>Figure 2-3</b>). Hence all control source codes and related resources will be added to the project.</p>
 <p ><b>NOTE:</b> The linker will remove those unused controls or resources.</p>
 <p ><b>Figure 2-3 Selecting Controls in RTE</b></p>
 <p ><img src="GettingStartedAsAppDesigner_RTE_Controls.png" alt="" class="inline" title="Controls in RTE"/></p>
-<h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 2.5 Write a simple GUI Application</h2>
 <p >For a real application, you cannot write everything in the default scene coming in the display adapter. You might already notice that the display adapter provides a service called Scene Player, which maintains a FIFO of scenes, allowing us to add new scenes and switch to the next, during which the Scene Player could optionally apply some visual effects like fade-in-fade-out, erasing, sliding etc.</p>
 <p ><b>In Arm-2D realm, a GUI application is designed and organized as a series of scenes.</b> When and How to switch to Which scenes are totally under your control. There are two simple ways to add a new scene in MDK:</p>
@@ -251,7 +251,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="group__gHelper.html#gae6df5a7c480a7e3f44a926772ba78cb8" title="request switching to the next scene safely">arm_2d_scene_player_switch_to_next_scene</a>(&amp;DISP0_ADAPTER);</div>
 </div><!-- fragment --><p >In some visual effects, you can specify the period of the switching process by calling the function <code>arm_2d_scene_player_set_switching_period()</code>. For more, please check the header file <code><a class="el" href="arm__2d__helper__scene_8h_source.html">arm_2d_helper_scene.h</a></code>.</p>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md48"></a>
 2.6 Learn the basic method to optimize the performance and memory footprint</h2>
 <p >The design consideration of optimizing performance and memory footprint deserves a dedicated document or maybe more. We can only cover some preliminary tips here:</p>
 <ul>
@@ -282,9 +282,9 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<h2><a class="anchor" id="autotoc_md49"></a>
 2.7 Tips for other advanced topics</h2>
-<h3><a class="anchor" id="autotoc_md45"></a>
+<h3><a class="anchor" id="autotoc_md50"></a>
 2.7.1 Benchmarks</h3>
 <p >To evaluate the 2D performance for a given platform, Arm-2D provides two benchmarks, i.e. <b>Benchmark-Generic</b> and <b>Benchmark-Watchpanel</b>. You can deploy the target benchmark by selecting it in the RTE configuration as shown in <b>Figure 2-7</b>.</p>
 <p ><b>Figure 2-7 Selecting Benchmarks in RTE</b></p>
@@ -318,7 +318,7 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line">        disp_adapter0_task();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md46"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md51"></a>
 2.7.2 Asynchronous Mode and RTOS support</h3>
 <p >Arm-2D introduces an Asynchronous Mode for hardware accelerators and multi-core systems. To enable this feature, please set the macro <code>__ARM_2D_HAS_ASYNC__</code> defined in <code>arm_2d_cfg.h</code> to <code>1</code>.</p>
 <p ><b>NOTE</b>: If you have no hardware accelerator, 2D capable DMA (for example, DMAC-350) or dedicated Cortex-M core(s) for 2D graphics, enabling the Asynchronous Mode gains nothing.</p>
@@ -345,9 +345,9 @@ Table of Content &lt;!-- omit from toc --&gt;</h2>
 <div class="line"> </div>
 <div class="line">    <span class="comment">//osThreadExit();</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md47"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md52"></a>
 3 Tips For Exploring the Library</h1>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md53"></a>
 "I am a library user, I only care about how to use the library"</h2>
 <ul>
 <li>For library users, <b>ALL</b> useful information, i.e. type definitions, macros, prototypes of functions etc., are stored in header files which have <b>NO</b> double under-scope as their prefixes. We call those header files the <b>PUBLIC HEADER FILES</b>.</li>
