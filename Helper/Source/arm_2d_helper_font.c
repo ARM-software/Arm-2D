@@ -22,7 +22,7 @@
  * Description:  the font helper service source code
  *
  * $Date:        3. Sept 2024
- * $Revision:    V.2.7.1
+ * $Revision:    V.2.7.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -831,7 +831,6 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
         .tSize.iHeight = tCharSize.iHeight,
     };
 
-
     while(*str) {
         if (*str == '\r') {
             tDrawBox.tLocation.iX = 0;
@@ -859,8 +858,19 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             if (chCodeLength <= 0) {
                 chCodeLength = 1;
             }
+
+            arm_2d_char_descriptor_t tCharDescriptor, *ptDescriptor;
+            ptDescriptor = arm_2d_helper_get_char_descriptor(ptFont, 
+                                                             &tCharDescriptor,
+                                                             (uint8_t *)str);
             
-            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, NULL, (uint8_t *)str);
+            if (NULL != ptDescriptor) {
+                int16_t tCharNewHeight = (tDrawBox.tSize.iHeight - tCharDescriptor.iBearingY) + tCharSize.iHeight;
+
+                tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tCharNewHeight);
+            }
+            
+            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str);
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
             str += chCodeLength;

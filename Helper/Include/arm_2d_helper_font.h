@@ -22,7 +22,7 @@
  * Description:  the font helper service header file
  *
  * $Date:        3. Sept 2024
- * $Revision:    V.2.7.1
+ * $Revision:    V.2.7.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
