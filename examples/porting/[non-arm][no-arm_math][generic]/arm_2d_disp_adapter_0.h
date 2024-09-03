@@ -88,13 +88,13 @@ extern "C" {
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           __DISP0_CFG_SCEEN_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           32  //__DISP0_CFG_SCEEN_WIDTH__
 #endif
 
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__ / 10)
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          32   //__DISP0_CFG_SCEEN_HEIGHT__
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -157,7 +157,7 @@ extern "C" {
 //     <1=>     Real FPS
 // <i> Decide the meaning of the real time FPS display
 #ifndef __DISP0_CFG_FPS_CACULATION_MODE__
-#   define __DISP0_CFG_FPS_CACULATION_MODE__                        0
+#   define __DISP0_CFG_FPS_CACULATION_MODE__                        1
 #endif
 
 // <q> Enable Console
@@ -236,7 +236,7 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   0
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
