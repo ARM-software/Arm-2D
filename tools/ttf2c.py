@@ -232,6 +232,18 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
             bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width]
             bitmap_array = bitmap_array.astype(np.uint8) * 255
 
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY2:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 4
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width * 2]
+            bitmap_array = (bitmap_array.reshape((height, width * 2)) * 85).astype(np.uint8)
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY4:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 2
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width * 4]
+            bitmap_array = (bitmap_array.reshape((height, width * 2)) * 17).astype(np.uint8)
+
         elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY:
             bitmap_array = np.array(bitmap.buffer, dtype=np.uint8).reshape((height, width))
 
