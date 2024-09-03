@@ -58,3 +58,4 @@ examples/\[template\]\[pc\]\[vscode\]/.vscode/settings.json
 RTE_Components.h
 *.clangd
 tools/inputstring.txt
+*.ttc
