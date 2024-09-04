@@ -246,7 +246,11 @@ In this version (ver1.2.0)</h2>
 <li>For drawing anti-alias icons/texts in a specified colour</li>
 <li>Supports <b>A1</b>(<b>new</b>), A2, A4 and A8 masks</li>
 <li>Supports horizontal and vertical line masks</li>
-<li><b>[new]</b> Supports Alpha-Gradient in 4-points, 3-points, horizontal and vertical mode.</li>
+<li><b>[new]</b> Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.<ul>
+<li>Supports Mask</li>
+<li>Supports an optional Opacity</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -340,6 +344,7 @@ In this version (ver1.2.0)</h2>
 </li>
 <li><b>Virtual Resource</b><ul>
 <li>Supports loading resources on-demand from external memories that are not mapped into the Cortex-M memory space.</li>
+<li><b>[new]</b> Supports backgroud-image-loading mode that requests <b>NO</b> extra PFB block.</li>
 </ul>
 </li>
 <li><b>Layout Assistant</b><ul>
@@ -387,7 +392,8 @@ New Features Planned in the Future</h2>
 <ul>
 <li>Stretch and Perspective Transform</li>
 <li>Supports DMAC-350</li>
-<li>**[new] ** NEON Acceleration</li>
+<li><b>[new] ** NEON Acceleration</b></li>
+<li><b>**[new] ** 2x Super-Sampling-Anti-Alias (**2xSSAA</b>) transform</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md8"></a>
 1 Introduction</h1>
@@ -462,7 +468,7 @@ New Features Planned in the Future</h2>
 <li>Transform</li>
 <li>Mirroring</li>
 <li>Masking</li>
-<li>Colour-Filling (with alpha gradient)</li>
+<li><b>[new]</b> Colour-Filling (with alpha gradient)</li>
 </ul>
 </li>
 <li><b>Simulate a typical application scenario with sufficient complexity</b><ul>
@@ -477,7 +483,7 @@ New Features Planned in the Future</h2>
 <li><b>Let those layers float with different angles and speed to cover a sufficient number of conditions.</b></li>
 <li><b>Record the cycle count used for blending one frame and run 1000 iterations (frames).</b></li>
 </ul>
-<p ><b>Figure 1-4 A snapshot of the generic benchmark running on Simulation</b></p>
+<p ><b>Figure 1-4 A snapshot of the generic benchmark running in Simulation</b></p>
 <p ><img src="./documentation/pictures/benchmark.png" alt="Benchmark" class="inline"/></p>
 <ul>
 <li><b>Use the average cycle count in 1000 iterations as benchmark score.</b><ul>
