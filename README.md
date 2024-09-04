@@ -112,7 +112,9 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - For drawing anti-alias icons/texts in a specified colour
     - Supports **A1**(**new**), A2, A4 and A8 masks
     - Supports horizontal and vertical line masks
-    - **[new]** Supports Alpha-Gradient in 4-points, 3-points, horizontal and vertical mode.
+    - **[new]** Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.
+      - Supports Mask
+      - Supports an optional Opacity
   
 - **Image Copy (Tiling)**
   - With or without Colour-Keying
@@ -186,21 +188,21 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - **Virtual Resource**
 
     - Supports loading resources on-demand from external memories that are not mapped into the Cortex-M memory space.
+    - **[new]** Supports backgroud-image-loading mode that requests **NO** extra PFB block. 
 
   - **Layout Assistant**
-
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
-
+    
     - Docking, e.g. `arm_2d_dock_top`,`arm_2d_dock_right`, `arm_2d_dock_vertical`, `__item_line_dock_horizontal` etc.
-
+    
     - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertical`
-
+    
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
-
+    
     - A dedicated layout debug mode
-
+    
     - **[new]** Users can specify alignment in `arm_2d_layout()` macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.
-
+    
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
 
   - **Templates**
@@ -231,6 +233,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 - Stretch and Perspective Transform
 - Supports DMAC-350
 - **[new] ** NEON Acceleration
+- **[new] ** 2x Super-Sampling-Anti-Alias (**2xSSAA**) transform
 
 ## 1 Introduction
 
@@ -310,7 +313,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - Transform
   - Mirroring
   - Masking
-  - Colour-Filling (with alpha gradient)
+  - **[new]** Colour-Filling (with alpha gradient)
 - **Simulate a typical application scenario with sufficient complexity**
   - Background with Texture Tiling (switching mirroring modes every 4 second)
   - Foreground picture
@@ -321,7 +324,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 - **Let those layers float with different angles and speed to cover a sufficient number of conditions.**
 - **Record the cycle count used for blending one frame and run 1000 iterations (frames).**
 
-**Figure 1-4 A snapshot of the generic benchmark running on Simulation**
+**Figure 1-4 A snapshot of the generic benchmark running in Simulation**
 
 <img src="./documentation/pictures/benchmark.png" alt="Benchmark"  /> 
 
