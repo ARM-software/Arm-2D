@@ -39,6 +39,7 @@
 #include "./battery_gasgauge.h"
 #include "./dynamic_nebula.h"
 #include "./histogram.h"
+#include "./spin_zoom_widget.h"
 
 #ifdef   __cplusplus
 extern "C" {
