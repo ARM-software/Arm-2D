@@ -89,7 +89,7 @@ typedef struct spin_zoom_widget_cfg_t {
         } UpperLimit;
     } Indicator;
 
-    arm_2d_helper_pi_slider_cfg_t tPISliderCFG;
+    //arm_2d_helper_pi_slider_cfg_t tPISliderCFG;
 
 } spin_zoom_widget_cfg_t;
 
@@ -106,7 +106,7 @@ ARM_PRIVATE(
     } OPCODE;
 
     arm_2d_helper_dirty_region_transform_t  tHelper;
-    arm_2d_helper_pi_slider_t               tPISlider;
+    //arm_2d_helper_pi_slider_t               tPISlider;
 )
     
 };
@@ -129,18 +129,20 @@ spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING;
 extern
 ARM_NONNULL(1)
 void spin_zoom_widget_init( spin_zoom_widget_t *ptThis,
-                          spin_zoom_widget_cfg_t *ptCFG);
+                            spin_zoom_widget_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
-void spin_zoom_widget_depose( spin_zoom_widget_t *ptThis);
+void spin_zoom_widget_depose(spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void spin_zoom_widget_on_load( spin_zoom_widget_t *ptThis);
+void spin_zoom_widget_on_load(spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue, float fScale);
+void spin_zoom_widget_on_frame_start(   spin_zoom_widget_t *ptThis, 
+                                        int32_t nValue, 
+                                        float fScale);
 
 extern
 ARM_NONNULL(1,2)
@@ -149,7 +151,9 @@ void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
                             const arm_2d_region_t *ptRegion,
                             const arm_2d_location_t *ptPivot,
                             uint8_t chOpacity);
-
+extern
+ARM_NONNULL(1)
+void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT_TYPE tColour);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

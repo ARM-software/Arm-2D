@@ -132,17 +132,7 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* initialize transform helper */
-    arm_2d_helper_dirty_region_transform_init(
-                                &this.Pointer.tHelper,
-                                &ptScene->tDirtyRegionHelper,
-                                 (arm_2d_op_t *)&this.Pointer.tOP,
-                                 0.01f,
-                                 0.1f);
-#else
     spin_zoom_widget_on_load(&this.tMeterPointer);
-#endif
 
 }
 

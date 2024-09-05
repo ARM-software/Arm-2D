@@ -167,14 +167,8 @@ static void __on_scene_fan_load(arm_2d_scene_t *ptScene)
     user_scene_fan_t *ptThis = (user_scene_fan_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
-        /* initialize transform helper */
-        arm_2d_helper_dirty_region_transform_init(
-                                    &ptFanBlade->tHelper,
-                                    &ptScene->tDirtyRegionHelper,
-                                    (arm_2d_op_t *)&ptFanBlade->tOP,
-                                    0.01f,
-                                    0.1f);
+    arm_foreach(spin_zoom_widget_t, this.tFanBlades, ptFanBlade) {
+        spin_zoom_widget_on_load(ptFanBlade);
     }
 }
 
@@ -189,10 +183,8 @@ static void __on_scene_fan_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
-        ARM_2D_OP_DEPOSE(ptFanBlade->tOP);
-
-        arm_2d_helper_dirty_region_transform_depose(&ptFanBlade->tHelper);
+    arm_foreach(spin_zoom_widget_t, this.tFanBlades, ptFanBlade) {
+        spin_zoom_widget_depose(ptFanBlade);
     }
 
     if (!this.bUserAllocated) {
@@ -264,25 +256,12 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
     this.fAngle += this.fCurrentSpeed;
     this.fAngle = fmodf(this.fAngle, 120.0f);
 
-    for (int32_t n = 0; n < dimof(this.tFanBlade); n++) {
-
-        /* update helper with new values*/
-        arm_2d_helper_dirty_region_transform_update_value(  
-                                        &this.tFanBlade[n].tHelper, 
-                                        ARM_2D_ANGLE(this.fAngle + n * 120.0f),
-                                        1.0f);
-
-        if (bMoveToStop) {
-            arm_2d_helper_dirty_region_transform_force_update(
-                                                    &this.tFanBlade[n].tHelper);
-        }
-
-        /* call helper's on-frame-start event handler */
-        arm_2d_helper_dirty_region_transform_on_frame_start(
-                                                    &this.tFanBlade[n].tHelper);
-    }
-
     text_list_on_frame_start(&this.tLevelList);
+
+    arm_foreach(spin_zoom_widget_t, this.tFanBlades, ptFanBlade) {
+        spin_zoom_widget_set_colour(ptFanBlade, c_tFanLevel[this.chLevel].tColour);
+        spin_zoom_widget_on_frame_start(ptFanBlade, (int32_t)(this.fAngle * 10.0f), 1.0f);
+    }
 }
 
 static void __on_scene_fan_frame_complete(arm_2d_scene_t *ptScene)
@@ -325,29 +304,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
             arm_2d_layout(__centre_region, true) {
 
                 __item_line_dock_vertical(160) {
-                    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
-
-                        /* draw pointer */
-                        arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                            &ptFanBlade->tOP,
-                                            &c_tileFanBladeMask,
-                                            ptTile,
-                                            &__item_region,
-                                            s_tFanCentre,
-                                            ptFanBlade->tHelper.fAngle,
-                                            1.001f,
-                                            c_tFanLevel[this.chLevel].tColour,
-                                            255);
-                        
-                        arm_2d_helper_dirty_region_transform_update(
-                                                        &ptFanBlade->tHelper,
-                                                        &__item_region,
-                                                        bIsNewFrame);
-
-
-                        ARM_2D_OP_WAIT_ASYNC(&ptFanBlade->tOP);
+                
+                    arm_foreach(spin_zoom_widget_t, this.tFanBlades, ptFanBlade) {
+                        spin_zoom_widget_show(ptFanBlade, ptTile, &__item_region, NULL, 255);
                     }
-
 
                     /* draw fan pivot */
                     arm_2d_align_centre(__item_region, 
@@ -500,12 +460,79 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
 
     /* ------------   initialize members of user_scene_fan_t begin ---------------*/
 
-    arm_foreach(__fan_blade_t, this.tFanBlade, ptFanBlade) {
-        ARM_2D_OP_INIT(ptFanBlade->tOP);
-    }
-
     s_tFanCentre.iX = (c_tileFanBladeMask.tRegion.tSize.iWidth >> 1) - 5;
     s_tFanCentre.iY = 70;
+
+    do {
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 3600,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tileFanBladeMask,
+                .tCentre = s_tFanCentre,
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tFanBlades[0], &tCFG);
+    } while(0);
+
+    do {
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 120.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 480.0f,
+                    .nValue = 3600,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tileFanBladeMask,
+                .tCentre = s_tFanCentre,
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tFanBlades[1], &tCFG);
+    } while(0);
+
+    do {
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 240.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 600.0f,
+                    .nValue = 3600,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tileFanBladeMask,
+                .tCentre = s_tFanCentre,
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tFanBlades[2], &tCFG);
+    } while(0);
+
+
 
     /* initialize text list */
     do {

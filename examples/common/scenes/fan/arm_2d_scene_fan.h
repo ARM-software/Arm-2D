@@ -81,11 +81,6 @@ enum {
     FAN_LEVEL_COOLING,
 };
 
-typedef struct __fan_blade_t {
-    arm_2d_op_fill_cl_msk_opa_trans_t tOP;
-    arm_2d_helper_dirty_region_transform_t tHelper;
-} __fan_blade_t;
-
 /*!
  * \brief a user class for scene fan
  */
@@ -105,8 +100,7 @@ ARM_PRIVATE(
     float fAngle;
     float fCurrentSpeed;
 
-    __fan_blade_t tFanBlade[3];
-
+    spin_zoom_widget_t tFanBlades[3];
 )
     /* place your public member here */
     
