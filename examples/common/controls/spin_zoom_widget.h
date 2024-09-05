@@ -87,6 +87,11 @@ typedef struct spin_zoom_widget_cfg_t {
             float fAngleInDegree;
             int32_t nValue;
         } UpperLimit;
+
+        struct {
+            float fAngle;
+            float fScale;
+        } Step;
     } Indicator;
 
     //arm_2d_helper_pi_slider_cfg_t tPISliderCFG;

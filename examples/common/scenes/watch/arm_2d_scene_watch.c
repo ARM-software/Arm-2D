@@ -217,8 +217,6 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
     /* calculate the Ten-Miliseconds */
     do {
         this.chMs = lTimeStampInMs;
-        
-
     } while(0);
 
 }
@@ -230,7 +228,7 @@ static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -388,6 +386,9 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
                     .fAngleInDegree = 360.0f,
                     .nValue = 60*1000ul,
                 },
+                .Step = {
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watch, 6.0f looks like wall clock
+                },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
             .Source = {
@@ -414,6 +415,9 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
                 .UpperLimit = {
                     .fAngleInDegree = 360.0f,
                     .nValue = 3600,
+                },
+                .Step = {
+                    .fAngle = 1.0f,
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,

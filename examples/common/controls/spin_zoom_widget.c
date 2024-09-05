@@ -147,6 +147,17 @@ ARM_NONNULL(1)
 void spin_zoom_widget_on_load( spin_zoom_widget_t *ptThis)
 {
     assert(NULL != ptThis);
+
+    float fAngleStep = 0.05f;
+    float fScaleStep = 0.01f;
+
+    if (this.tCFG.Indicator.Step.fAngle > 0.0f) {
+        fAngleStep = this.tCFG.Indicator.Step.fAngle;
+    }
+
+    if (this.tCFG.Indicator.Step.fScale > 0.0f) {
+        fScaleStep = this.tCFG.Indicator.Step.fScale;
+    }
     
     if (NULL != this.tCFG.ptScene) {
         /* initialize transform helper */
@@ -154,8 +165,8 @@ void spin_zoom_widget_on_load( spin_zoom_widget_t *ptThis)
                                     &this.tHelper,
                                     &this.tCFG.ptScene->tDirtyRegionHelper,
                                     (arm_2d_op_t *)&this.OPCODE,
-                                    0.05f,
-                                    0.01f);
+                                    fAngleStep,
+                                    fScaleStep);
     }
 }
 
