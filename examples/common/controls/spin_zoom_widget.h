@@ -102,6 +102,7 @@ ARM_PRIVATE(
     union {
         arm_2d_op_fill_cl_msk_opa_trans_t   tFillColourTransform;
         arm_2d_op_trans_msk_opa_t           tTileTransform;
+        arm_2d_op_trans_opa_t               tTile;
     } OPCODE;
 
     arm_2d_helper_dirty_region_transform_t  tHelper;
@@ -113,6 +114,15 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR;
+
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_MASK;
+
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_ONLY;
+
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING;
 
 /*============================ PROTOTYPES ====================================*/
 

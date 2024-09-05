@@ -73,11 +73,47 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
                                             const arm_2d_location_t *ptPivot,
                                             uint8_t chOpacity);
 
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_with_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity);
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_only( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity);
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_colour_keying( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity);
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR = {
     .fnTransform = &__spin_zoom_widget_transform_mode_fill_colour,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_MASK = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_tile_with_mask,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_ONLY = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_tile_only,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_tile_only,
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -199,6 +235,108 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
                         this.tCFG.Source.tColourToFill,
                         chOpacity,
                         ptPivot);
+
+    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                ptRegion,
+                                                bIsNewFrame);
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_with_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+
+    arm_2dp_tile_transform_with_src_mask_and_opacity(
+                                                &this.OPCODE.tTileTransform,
+                                                this.tCFG.Source.ptSource,
+                                                this.tCFG.Source.ptMask,
+                                                ptTile,
+                                                ptRegion,
+                                                this.tCFG.Source.tCentre,
+                                                ARM_2D_ANGLE(this.tHelper.fAngle),
+                                                this.tHelper.fScale,
+                                                chOpacity,
+                                                ptPivot);
+
+    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                ptRegion,
+                                                bIsNewFrame);
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_only( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+
+    arm_2dp_tile_transform_only_with_opacity(   &this.OPCODE.tTile,
+                                                this.tCFG.Source.ptSource,
+                                                ptTile,
+                                                ptRegion,
+                                                this.tCFG.Source.tCentre,
+                                                ARM_2D_ANGLE(this.tHelper.fAngle),
+                                                this.tHelper.fScale,
+                                                chOpacity,
+                                                ptPivot);
+
+    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                ptRegion,
+                                                bIsNewFrame);
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_colour_keying( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+
+    arm_2dp_tile_transform_with_opacity(&this.OPCODE.tTile,
+                                        this.tCFG.Source.ptSource,
+                                        ptTile,
+                                        ptRegion,
+                                        this.tCFG.Source.tCentre,
+                                        ARM_2D_ANGLE(this.tHelper.fAngle),
+                                        this.tHelper.fScale,
+                                        this.tCFG.Source.tColourForKeying,
+                                        chOpacity,
+                                        ptPivot);
 
     arm_2d_helper_dirty_region_transform_update(&this.tHelper,
                                                 ptRegion,
