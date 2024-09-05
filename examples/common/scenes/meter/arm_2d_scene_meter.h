@@ -30,6 +30,7 @@
 
 #include "arm_2d_helper_scene.h"
 #include "arm_2d_helper.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -88,13 +89,11 @@ ARM_PRIVATE(
 
     int16_t iNumber;
     bool bUserAllocated;
-    
-    struct {
-        arm_2d_op_fill_cl_msk_opa_trans_t tOP;
-        arm_2d_helper_dirty_region_transform_t tHelper;
-    } Pointer;
 
     arm_2d_helper_pi_slider_t tPISlider;
+
+    spin_zoom_widget_t tMeterPointer;
+
 )
     /* place your public member here */
     

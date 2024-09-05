@@ -132,6 +132,7 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     /* initialize transform helper */
     arm_2d_helper_dirty_region_transform_init(
                                 &this.Pointer.tHelper,
@@ -139,6 +140,9 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
                                  (arm_2d_op_t *)&this.Pointer.tOP,
                                  0.01f,
                                  0.1f);
+#else
+    spin_zoom_widget_on_load(&this.tMeterPointer);
+#endif
 
 }
 
@@ -154,10 +158,7 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    arm_2d_helper_dirty_region_transform_depose(&this.Pointer.tHelper);
-
-    /* depose op */
-    ARM_2D_OP_DEPOSE(this.Pointer.tOP);
+    spin_zoom_widget_depose(&this.tMeterPointer);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -205,9 +206,6 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     } while(0);
 #endif
 
-    float fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
-    /* 0 ~ 200 km / h */
-
     do {
         int16_t iNumber = (int16_t)(200 * (iResult + 1200) / 2400);
         bool bNumberUnchanged = (this.iNumber == iNumber);
@@ -219,11 +217,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
-    /* update helper with new values*/
-    arm_2d_helper_dirty_region_transform_update_value(&this.Pointer.tHelper, fAngle,1.0f);
-
-    /* call helper's on-frame-start event handler */
-    arm_2d_helper_dirty_region_transform_on_frame_start(&this.Pointer.tHelper);
+    spin_zoom_widget_on_frame_start(&this.tMeterPointer, this.iNumber, 1.0f);
 }
 
 static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
@@ -265,27 +259,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                                     &__centre_region);
 
             arm_2d_op_wait_async(NULL);
-            
-            /* draw pointer */
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                &this.Pointer.tOP,
-                                &c_tilePointerMask,
-                                ptTile,
-                                &__centre_region,
-                                s_tPointerCenter,
-                                this.Pointer.tHelper.fAngle,
-                                this.Pointer.tHelper.fScale,
-                                GLCD_COLOR_RED,
-                                255);
-
-            arm_2d_helper_dirty_region_transform_update(&this.Pointer.tHelper,
-                                                         &__centre_region,
-                                                         bIsNewFrame);
-
-            arm_2d_op_wait_async((arm_2d_op_core_t *)&this.Pointer.tOP);
+        
+            spin_zoom_widget_show(&this.tMeterPointer,
+                                  ptTile,
+                                  &__centre_region,
+                                  NULL,
+                                  255);
         }
-        
-        
         
         /* draw 3 digits numbers */
         do {
@@ -415,9 +395,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         },
         .bUserAllocated = bUserAllocated,
     };
-    
-    /* initialize op */
-    ARM_2D_OP_INIT(this.Pointer.tOP);
 
 
     s_tPointerCenter.iX = c_tilePointerMask.tRegion.tSize.iWidth >> 1;
@@ -432,6 +409,29 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         };
 
         arm_2d_helper_pi_slider_init(&this.tPISlider, (arm_2d_helper_pi_slider_cfg_t *)&tCFG, 0);
+    } while(0);
+
+    do {
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = -120.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 100.0f,
+                    .nValue = 200,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tilePointerMask,
+                .tCentre = s_tPointerCenter,
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tMeterPointer, &tCFG);
     } while(0);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 

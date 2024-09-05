@@ -134,16 +134,17 @@ void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue
     int32_t nValueDistance = this.tCFG.Indicator.UpperLimit.nValue
                            - this.tCFG.Indicator.LowerLimit.nValue;
     
-    float fAngle = ((float)nDelta / (float)nValueDistance) * fDegreeDistance;
+    float fAngle = (((float)nDelta / (float)nValueDistance) * fDegreeDistance)
+                 + this.tCFG.Indicator.LowerLimit.fAngleInDegree;
 
     /* update helper with new values*/
-    arm_2d_helper_dirty_region_transform_update_value(&this.tHelper, 0.0f, fScale);
+    arm_2d_helper_dirty_region_transform_update_value(&this.tHelper, fAngle, fScale);
 
     /* call helper's on-frame-start event handler */
     arm_2d_helper_dirty_region_transform_on_frame_start(&this.tHelper);
 }
 
-ARM_NONNULL(1,2,4)
+ARM_NONNULL(1,2)
 void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
                             const arm_2d_tile_t *ptTile,
                             const arm_2d_region_t *ptRegion,
@@ -159,7 +160,6 @@ void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
     }
 
     assert(NULL != ptThis);
-    assert(NULL != ptPivot);
     assert(NULL != this.tCFG.ptTransformMode);
     
     ARM_2D_INVOKE( this.tCFG.ptTransformMode->fnTransform,
@@ -183,7 +183,6 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
                                             uint8_t chOpacity)
 {
     assert(NULL != ptThis);
-    assert(NULL != ptPivot);
     assert(NULL != ptTile);
 
     bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
@@ -195,10 +194,11 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
                         ptTile,
                         ptRegion,
                         this.tCFG.Source.tCentre,
-                        this.tHelper.fAngle,
+                        ARM_2D_ANGLE(this.tHelper.fAngle),
                         this.tHelper.fScale,
                         this.tCFG.Source.tColourToFill,
-                        chOpacity);
+                        chOpacity,
+                        ptPivot);
 
     arm_2d_helper_dirty_region_transform_update(&this.tHelper,
                                                 ptRegion,
