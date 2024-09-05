@@ -256,8 +256,8 @@
             <file category="other"       name="ReleaseNote.md" />
             
             <!-- the template for user controls -->
-            <file category="header"      name="examples/common/controls/template/user_control_template.h"   attr="template"  select="User Control Template" version="1.2.1"/>
-            <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.2.1"/>
+            <file category="header"      name="examples/common/controls/template/user_control_template.h"   attr="template"  select="User Control Template" version="1.2.2"/>
+            <file category="sourceC"     name="examples/common/controls/template/user_control_template.c"   attr="template"  select="User Control Template" version="1.2.2"/>
             
             <!-- the template for scenes -->
             <file category="sourceC"     name="Helper/template/arm_2d_scene_template.c" attr="template"  select="User Scene Template"   version="1.3.3" />

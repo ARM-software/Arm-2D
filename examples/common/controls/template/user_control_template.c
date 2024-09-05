@@ -137,13 +137,11 @@ void <control_name>_show( user_<control_name>_t *ptThis,
             );
 
             /* make sure the operation is complete */
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
         }
-
-        
     }
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 #if defined(__clang__)
