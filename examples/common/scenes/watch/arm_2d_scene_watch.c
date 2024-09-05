@@ -387,7 +387,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
                     .nValue = 60*1000ul,
                 },
                 .Step = {
-                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watch, 6.0f looks like wall clock
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
