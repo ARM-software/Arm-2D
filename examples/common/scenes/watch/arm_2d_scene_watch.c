@@ -96,7 +96,10 @@ const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_ALARM_CLOCK_32_A4;
+}   ARM_2D_FONT_ALARM_CLOCK_32_A8, 
+    ARM_2D_FONT_ALARM_CLOCK_32_A4,
+    ARM_2D_FONT_ALARM_CLOCK_32_A2,
+    ARM_2D_FONT_ALARM_CLOCK_32_A1;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -227,7 +230,7 @@ static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -280,7 +283,6 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
         
         }
     }
-
 
     #endif
     }
