@@ -154,7 +154,7 @@ void spin_zoom_widget_on_load( spin_zoom_widget_t *ptThis)
                                     &this.tHelper,
                                     &this.tCFG.ptScene->tDirtyRegionHelper,
                                     (arm_2d_op_t *)&this.OPCODE,
-                                    0.1f,
+                                    0.05f,
                                     0.01f);
     }
 }
