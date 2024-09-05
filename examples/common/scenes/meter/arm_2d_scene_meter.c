@@ -97,6 +97,11 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+
+enum {
+    DIRTY_REGION_SPEED,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern 
@@ -109,6 +114,17 @@ static arm_2d_location_t s_tPointerCenter;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+
+/*! define dirty regions */
+IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
+
+    /* add the last region for Speed String */
+    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
+        0
+    ),
+
+END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
@@ -198,9 +214,8 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
         this.iNumber = iNumber;
 
-        arm_2d_helper_dirty_region_item_suspend_update(
-                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
-                bNumberUnchanged);
+        arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[DIRTY_REGION_SPEED],
+                                            bNumberUnchanged); 
 
     } while(0);
 
@@ -233,11 +248,9 @@ static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
 {
     user_scene_meter_t *ptThis = (user_scene_meter_t *)pTarget;
-    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(bIsNewFrame);
-    ARM_2D_UNUSED(tScreenSize);
     
     arm_2d_canvas(ptTile, __canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
@@ -276,13 +289,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         
         /* draw 3 digits numbers */
         do {
-            arm_2d_size_t tTextSize = ARM_2D_FONT_A4_DIGITS_ONLY
-                                            .use_as__arm_2d_user_font_t
-                                                .use_as__arm_2d_font_t
-                                                    .tCharSize;
-            tTextSize.iWidth *=3;     /* 3 digits */
-            tTextSize.iHeight += 16;  /* for "km/h */
-
+            /* 3 digits */
+            arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("000", &ARM_2D_FONT_A4_DIGITS_ONLY);
+            tTextSize.iHeight += 16;    /* for "km/h */
 
             arm_2d_align_centre(__canvas,  tTextSize) {
                 
@@ -297,13 +306,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                         arm_lcd_text_set_opacity(255 - 64);
                         arm_lcd_printf("%03d", (int)this.iNumber);
                         arm_lcd_text_set_opacity(255);
-
-                        arm_2d_helper_dirty_region_update_item(
-                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
-                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
-                                ptTile,
-                                NULL,
-                                &__item_region);
                     }
                     
                     /* print "km/h" */
@@ -345,7 +347,36 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-    
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+
+    arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("000", &ARM_2D_FONT_A4_DIGITS_ONLY);
+    tTextSize.iHeight += 16;
+
+    arm_2d_align_centre(tScreen,  tTextSize) {
+                
+        arm_2d_layout(__centre_region) {
+            /* print speed */
+            __item_line_vertical(tTextSize.iWidth, tTextSize.iHeight - 16) {
+                s_tDirtyRegions[DIRTY_REGION_SPEED].tRegion = __item_region;
+            }
+        
+        #if 0
+            /* print "km/h" */
+            __item_line_vertical(tTextSize.iWidth,16) {
+                arm_2d_align_centre(__item_region, 4*6, 8) {
+
+                }
+            }
+        #endif
+        }
+    }
+
     if (NULL == ptThis) {
         ptThis = (user_scene_meter_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_meter_t),
@@ -371,6 +402,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
              */
             .fnOnLoad       = &__on_scene_meter_load,
             .fnScene        = &__pfb_draw_scene_meter_handler,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
 
             //.fnOnBGStart    = &__on_scene_meter_background_start,
             //.fnOnBGComplete = &__on_scene_meter_background_complete,
