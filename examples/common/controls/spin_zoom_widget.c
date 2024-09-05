@@ -206,8 +206,6 @@ void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
             ptPivot,
             chOpacity
         ));
-
-    ARM_2D_OP_WAIT_ASYNC();
 }
 
 ARM_NONNULL(1)
