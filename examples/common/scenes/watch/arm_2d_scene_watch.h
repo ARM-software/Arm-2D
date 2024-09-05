@@ -30,6 +30,7 @@
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -91,8 +92,12 @@ ARM_PRIVATE(
     int64_t lTimestamp[4];
     bool bUserAllocated;
 
-    __clock_pointer_t Pointers[3];
+    spin_zoom_widget_t tPointers[3];
 
+    uint32_t chHour;
+    uint32_t chMin;
+    uint32_t chSec;
+    uint32_t chMs;
 )
     /* place your public member here */
     

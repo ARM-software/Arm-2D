@@ -92,18 +92,33 @@ extern const arm_2d_tile_t c_tileWatchPanel;
 extern const arm_2d_tile_t c_tilePointerSecMask;
 
 extern
-const arm_2d_tile_t c_tilePointerMask;
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A4;
+
+/*============================ PROTOTYPES ====================================*/
+/*============================ LOCAL VARIABLES ===============================*/
 
 static
 const arm_2d_tile_t c_tilePointerHourMask = 
-    impl_child_tile(c_tilePointerSecMask, 0, 80, 9, 67);
+    impl_child_tile(c_tilePointerSecMask, 0, 0, 9, 67);
+
+static
+const arm_2d_tile_t c_tilePointerMinMask = 
+    impl_child_tile(c_tilePointerSecMask, 0, 0, 9, 80);
 
 static arm_2d_location_t s_tPointerSecCenter;
 static arm_2d_location_t s_tPointerMinCenter;
 static arm_2d_location_t s_tPointerHourCenter;
 
-/*============================ PROTOTYPES ====================================*/
-/*============================ LOCAL VARIABLES ===============================*/
+ARM_NOINIT
+static struct {
+    arm_2d_location_t tLocation;
+    uint8_t chNumber;
+} s_tDigitsTable[12];
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
@@ -111,14 +126,8 @@ static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    // initialize clock pointers
-    arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
-        arm_2d_helper_dirty_region_transform_init(
-                                    &ptItem->tHelper,
-                                    &ptScene->tDirtyRegionHelper,
-                                    (arm_2d_op_t *)&ptItem->tOP,
-                                    ARM_2D_ANGLE(0.5f),
-                                    0.1f);
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_on_load(ptPointer);
     }
 
 }
@@ -135,14 +144,9 @@ static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
-        arm_2d_helper_dirty_region_transform_depose(&ptItem->tHelper);
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_depose(ptPointer);
     }
-
-    /* depose op */
-    ARM_2D_OP_INIT(this.Pointers[0].tOP);
-    ARM_2D_OP_INIT(this.Pointers[1].tOP);
-    ARM_2D_OP_INIT(this.Pointers[2].tOP);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -172,51 +176,48 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    int32_t iResult;
-    float fAngle;
-    
-    /* update second pointer */
+
+    int64_t lTimeStampInMs = arm_2d_helper_convert_ticks_to_ms(
+                                arm_2d_helper_get_system_timestamp());
+
+    /* calculate the hours */
     do {
-        if (arm_2d_helper_time_liner_slider(0, 3600, 60 * 100, &iResult, &this.lTimestamp[1])) {
-            this.lTimestamp[1] = 0;
-        }
-        fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
+        uint32_t chHour = lTimeStampInMs / 1000ul;
+        chHour %= 12 * 3600ul;
+        this.chHour = chHour / 3600;
+        spin_zoom_widget_on_frame_start(&this.tPointers[0], chHour, 1.0f);
 
-
-        /* update helper with new values*/
-        arm_2d_helper_dirty_region_transform_update_value(&this.Pointers[0].tHelper, fAngle, 1.0f);
-    } while(0);
-    
-    /* update minute pointer */
-    do {
-        if (arm_2d_helper_time_liner_slider(0, 3600, 60 * 60 * 100, &iResult, &this.lTimestamp[2])) {
-            this.lTimestamp[2] = 0;
-        }
-        fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
-
-
-        /* update helper with new values*/
-        arm_2d_helper_dirty_region_transform_update_value(&this.Pointers[1].tHelper, fAngle, 1.0f);
+        lTimeStampInMs %= (3600ul * 1000ul);
+        
     } while(0);
 
-    /* update hour pointer */
+    /* calculate the Minutes */
     do {
-        if (arm_2d_helper_time_liner_slider(0, 3600, 12*60*60*100, &iResult, &this.lTimestamp[3])) {
-            this.lTimestamp[3] = 0;
-        }
-        fAngle = ARM_2D_ANGLE((float)iResult / 10.0f);
+        uint32_t chMin = lTimeStampInMs / 1000ul;
 
+        this.chMin = chMin / 60;
+        spin_zoom_widget_on_frame_start(&this.tPointers[1], chMin, 1.0f);
 
-        /* update helper with new values*/
-        arm_2d_helper_dirty_region_transform_update_value(&this.Pointers[2].tHelper, fAngle, 1.0f);
+        lTimeStampInMs %= (60ul * 1000ul);
     } while(0);
 
-    /* call helper's on-frame-start event handler */
+    /* calculate the Seconds */
+    do {
+        uint32_t chSec = lTimeStampInMs;
+        this.chSec = chSec / 1000;
 
-    arm_foreach(__clock_pointer_t, this.Pointers, ptItem) {
-        arm_2d_helper_dirty_region_transform_on_frame_start(&ptItem->tHelper);
-    }
+        spin_zoom_widget_on_frame_start(&this.tPointers[2], chSec, 1.0f);
+
+        lTimeStampInMs %= (1000ul);
+    } while(0);
+
+    /* calculate the Ten-Miliseconds */
+    do {
+        this.chMs = lTimeStampInMs;
+        
+
+    } while(0);
+
 }
 
 static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
@@ -225,9 +226,9 @@ static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     /* switch to next scene after 3s */
-//    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-//        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-//    }
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static void __before_scene_watch_switching_out(arm_2d_scene_t *ptScene)
@@ -235,6 +236,54 @@ static void __before_scene_watch_switching_out(arm_2d_scene_t *ptScene)
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+}
+
+static
+void __draw_watch_panel(const arm_2d_tile_t *ptTile, 
+                        const arm_2d_region_t *ptRegion, 
+                        user_scene_watch_t *ptThis)
+{
+    arm_2d_container(ptTile, __panel, ptRegion) {
+
+
+    #if 0 /* use simple background picture */
+        arm_2d_tile_copy_with_opacity(  &c_tileWatchPanel,
+                                        &__panel,
+                                        &__panel_canvas,
+                                        64);
+
+        ARM_2D_OP_WAIT_ASYNC();
+    #else   /* draw digits directly */
+
+    arm_2d_align_centre(__panel_canvas, 200, 200) {
+        arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+
+        for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
+            arm_2d_region_t tDigitsRegion = {
+                .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
+                .tSize = tDigitsSize,
+            };
+
+            tDigitsRegion.tLocation.iX += s_tDigitsTable[n].tLocation.iX - (tDigitsSize.iWidth >> 1);
+            tDigitsRegion.tLocation.iY += s_tDigitsTable[n].tLocation.iY - (tDigitsSize.iHeight >> 1);
+
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__panel);
+            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
+            arm_lcd_text_set_draw_region(&tDigitsRegion);
+
+            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+            
+            arm_lcd_text_location(0,0);
+            
+            
+            arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
+        
+        }
+    }
+
+
+    #endif
+    }
 }
 
 
@@ -251,80 +300,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
     arm_2d_canvas(ptTile, __canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
 
-        arm_2d_align_centre(__canvas, c_tileWatchPanel.tRegion.tSize) {
+        arm_2d_align_centre(__canvas, 240, 240) {
 
-            arm_2d_tile_copy_with_opacity(  &c_tileWatchPanel,
-                                            ptTile,
-                                            &__centre_region,
-                                            64);
+            __draw_watch_panel(ptTile, &__centre_region, ptThis);
 
-            arm_2d_op_wait_async(NULL);
+            arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+                spin_zoom_widget_show(ptPointer, ptTile, &__centre_region, NULL, 255);
+            }
 
-            /* draw pointer hour */
-            do {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                    &this.Pointers[2].tOP,
-                                    &c_tilePointerHourMask,
-                                    ptTile,
-                                    &__centre_region,
-                                    s_tPointerHourCenter,
-                                    this.Pointers[2].tHelper.fAngle,
-                                    this.Pointers[2].tHelper.fScale,
-                                    GLCD_COLOR_GREEN,
-                                    128);
-
-                arm_2d_helper_dirty_region_transform_update(
-                                                    &this.Pointers[2].tHelper,
-                                                    &__centre_region,
-                                                    bIsNewFrame);
-                arm_2d_op_wait_async(
-                                &this.Pointers[2].tOP.use_as__arm_2d_op_core_t);
-            } while(0);
-
-            /* draw pointer minutes */
-            do {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                    &this.Pointers[1].tOP,
-                                    &c_tilePointerMask,
-                                    ptTile,
-                                    &__centre_region,
-                                    s_tPointerMinCenter,
-                                    this.Pointers[1].tHelper.fAngle,
-                                    this.Pointers[1].tHelper.fScale,
-                                    GLCD_COLOR_GREEN,
-                                    128);
-
-                arm_2d_helper_dirty_region_transform_update(
-                                                    &this.Pointers[1].tHelper,
-                                                    &__centre_region,
-                                                    bIsNewFrame);
-
-                arm_2d_op_wait_async(
-                                &this.Pointers[1].tOP.use_as__arm_2d_op_core_t);
-            } while(0);
-
-            /* draw pointer sec */
-            do {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                    &this.Pointers[0].tOP,
-                                    &c_tilePointerSecMask,
-                                    ptTile,
-                                    &__centre_region,
-                                    s_tPointerSecCenter,
-                                    this.Pointers[0].tHelper.fAngle,
-                                    this.Pointers[0].tHelper.fScale,
-                                    GLCD_COLOR_RED,
-                                    255);
-
-                arm_2d_helper_dirty_region_transform_update(
-                                                    &this.Pointers[0].tHelper,
-                                                    &__centre_region,
-                                                    bIsNewFrame);
-
-
-                arm_2d_op_wait_async(
-                    &this.Pointers[0].tOP.use_as__arm_2d_op_core_t);
-            } while(0);
         }
 
         /* draw text at the top-left corner */
@@ -350,39 +333,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-//        /* a dirty region to be specified at runtime*/
-//        ADD_REGION_TO_LIST(s_tDirtyRegions,
-//            0  /* initialize at runtime later */
-//        ),
-        
-        /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = 0,
-                .iHeight = 8,
-            },
-        ),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-
-    s_tDirtyRegions[0].tRegion.tSize.iWidth = tScreen.tSize.iWidth;
-
     if (NULL == ptThis) {
         ptThis = (user_scene_watch_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_watch_t),
@@ -407,7 +357,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
              */
             .fnOnLoad       = &__on_scene_watch_load,
             .fnScene        = &__pfb_draw_scene_watch_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_watch_background_start,
@@ -426,30 +375,97 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
     do {
         s_tPointerSecCenter.iX = (c_tilePointerSecMask.tRegion.tSize.iWidth >> 1);
         s_tPointerSecCenter.iY = 100;  /* radius */
-        
-        /* initialize op */
-        ARM_2D_OP_INIT(this.Pointers[0].tOP);
 
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 60*1000ul,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tilePointerSecMask,
+                .tCentre = s_tPointerSecCenter,
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tPointers[2], &tCFG);
     } while(0);
 
     // initialize minutes pointer
     do {
-        s_tPointerMinCenter.iX = (c_tilePointerMask.tRegion.tSize.iWidth >> 1);
-        s_tPointerMinCenter.iY = 70;  /* radius */
+        s_tPointerMinCenter.iX = (c_tilePointerMinMask.tRegion.tSize.iWidth >> 1);
+        s_tPointerMinCenter.iY = c_tilePointerMinMask.tRegion.tSize.iHeight;
         
-        /* initialize op */
-        ARM_2D_OP_INIT(this.Pointers[1].tOP);
-
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 3600,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tilePointerMinMask,
+                .tCentre = s_tPointerMinCenter,
+                .tColourToFill = GLCD_COLOR_WHITE,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tPointers[1], &tCFG);
     } while(0);
 
     // initialize hour pointer
     do {
-        s_tPointerHourCenter.iX = (c_tilePointerMask.tRegion.tSize.iWidth >> 1);
-        s_tPointerHourCenter.iY = 67;  /* radius */
+        s_tPointerHourCenter.iX = (c_tilePointerHourMask.tRegion.tSize.iWidth >> 1);
+        s_tPointerHourCenter.iY = c_tilePointerHourMask.tRegion.tSize.iHeight;
         
-        /* initialize op */
-        ARM_2D_OP_INIT(this.Pointers[2].tOP);
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 12 * 3600ul,
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tilePointerHourMask,
+                .tCentre = s_tPointerHourCenter,
+                .tColourToFill = GLCD_COLOR_WHITE,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tPointers[0], &tCFG);
 
+    } while(0);
+
+    /* initialize watch panel digits table */
+    do {
+        #define __PI        (3.1415926f)
+        #define __RADIUS    (100.0f)
+
+        for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
+            s_tDigitsTable[n].chNumber = n;
+
+            s_tDigitsTable[n].tLocation.iY = (int16_t)(arm_sin_f32(ARM_2D_ANGLE(n*30.0f - 90.0f)) * __RADIUS) + __RADIUS;
+            s_tDigitsTable[n].tLocation.iX = (int16_t)(arm_cos_f32(ARM_2D_ANGLE(n*30.0f - 90.0f)) * __RADIUS) + __RADIUS;
+        }
+
+        s_tDigitsTable[0].chNumber = 12;
     } while(0);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
