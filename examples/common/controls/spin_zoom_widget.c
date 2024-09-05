@@ -128,8 +128,6 @@ void spin_zoom_widget_init( spin_zoom_widget_t *ptThis,
 
     /* initialize op */
     ARM_2D_OP_INIT(this.OPCODE);
-
-
 }
 
 ARM_NONNULL(1)
@@ -137,7 +135,9 @@ void spin_zoom_widget_depose( spin_zoom_widget_t *ptThis)
 {
     assert(NULL != ptThis);
     
-    arm_2d_helper_dirty_region_transform_depose(&this.tHelper);
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_depose(&this.tHelper);
+    }
 
     /* depose op */
     ARM_2D_OP_DEPOSE(this.OPCODE);
@@ -241,9 +241,11 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
                         chOpacity,
                         ptPivot);
 
-    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
-                                                ptRegion,
-                                                bIsNewFrame);
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
 
     ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
 
@@ -275,10 +277,11 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_with_mask(
                                                 this.tHelper.fScale,
                                                 chOpacity,
                                                 ptPivot);
-
-    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
-                                                ptRegion,
-                                                bIsNewFrame);
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
 
     ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
 
@@ -309,9 +312,11 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_only(
                                                 chOpacity,
                                                 ptPivot);
 
-    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
-                                                ptRegion,
-                                                bIsNewFrame);
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
 
     ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
 
@@ -343,9 +348,11 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_colour_keying(
                                         chOpacity,
                                         ptPivot);
 
-    arm_2d_helper_dirty_region_transform_update(&this.tHelper,
-                                                ptRegion,
-                                                bIsNewFrame);
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
 
     ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
 
