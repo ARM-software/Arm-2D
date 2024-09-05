@@ -82,6 +82,9 @@
 - Improves the performance of the example Helium-ACI library
 - Adds built-in fonts for a subset of the ASCII: `ARM_2D_FONT_Arial14_A8`, `ARM_2D_FONT_Arial14_A4` ,`ARM_2D_FONT_Arial14_A2` and  `ARM_2D_FONT_Arial14_A1`
 - Updates the asset `c_tileSpinWheelMask` to fulfill the requirement of the updated transform operations.
+- Adds a new example control: `spin_zoom_widget_t`
+  - Updates `arm_2d_scene_fan` and `arm_2d_scene_meter` to demonstrate the usage of `spin_zoom_widget_t`
+
 
 ### Documentation and Misc
 
