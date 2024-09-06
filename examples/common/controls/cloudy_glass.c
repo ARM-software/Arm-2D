@@ -121,8 +121,9 @@ void cloudy_glass_init( cloudy_glass_t *ptThis,
         dynamic_nebula_init(&this.tNebula, &tCFG);
     } while(0);
 
-    ARM_2D_OP_INIT(this.tBlurOP);
-
+    if (this.tCFG.bEnableBlur) {
+        ARM_2D_OP_INIT(this.tBlurOP);
+    }
 }
 
 
@@ -165,7 +166,9 @@ void cloudy_glass_depose( cloudy_glass_t *ptThis)
     
     dynamic_nebula_depose(&this.tNebula);
 
-    ARM_2D_OP_DEPOSE(this.tBlurOP);
+    if (this.tCFG.bEnableBlur) {
+        ARM_2D_OP_DEPOSE(this.tBlurOP);
+    }
 
     if (NULL != this.tCFG.ptScene) {
         arm_2d_helper_dirty_region_remove_items(&this.tCFG.ptScene->tDirtyRegionHelper,
@@ -206,7 +209,9 @@ void cloudy_glass_on_frame_complete( cloudy_glass_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
+    if (this.tCFG.bEnableBlur) {
+        arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
+    }
     
 }
 
@@ -244,11 +249,14 @@ void cloudy_glass_show(   cloudy_glass_t *ptThis,
                                 bIsNewFrame);
 
             arm_2d_align_centre(__centre_region, iDirtyRegionLength, iDirtyRegionLength) {
-                arm_2dp_filter_iir_blur(&this.tBlurOP,
-                                        &__glass,
-                                        &__centre_region,
-                                        255 - 16);
-                
+
+                if (this.tCFG.bEnableBlur) {
+                    arm_2dp_filter_iir_blur(&this.tBlurOP,
+                                            &__glass,
+                                            &__centre_region,
+                                            255 - 16);
+                }
+
                 if (NULL != this.tCFG.ptScene) {
                     /* update dirty region */
                     arm_2d_helper_dirty_region_update_item( &this.tCFG.ptScene->tDirtyRegionHelper,
@@ -257,6 +265,7 @@ void cloudy_glass_show(   cloudy_glass_t *ptThis,
                                                             &__glass_canvas,
                                                             &__centre_region);
                 }
+                
             }
 
             

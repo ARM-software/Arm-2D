@@ -63,6 +63,7 @@ typedef struct cloudy_glass_cfg_t {
     
 
     COLOUR_INT_TYPE tColour;
+    bool bEnableBlur; 
 
 } cloudy_glass_cfg_t;
 

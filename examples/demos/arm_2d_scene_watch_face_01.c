@@ -293,6 +293,7 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
         arm_2d_align_centre(__panel_canvas, 200, 200) {
             arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
+            arm_lcd_text_set_opacity(50);
             for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
                 arm_2d_region_t tDigitsRegion = {
                     .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
@@ -314,6 +315,7 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
                 arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
             
             }
+            arm_lcd_text_set_opacity(255);
         }
 
     }
@@ -340,7 +342,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_face_01_handler)
                               ptTile,
                               &__centre_region);
 
-            //__draw_watch_panel(ptTile, &__centre_region, ptThis);
+            __draw_watch_panel(ptTile, &__centre_region, ptThis);
 
             arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
                 spin_zoom_widget_show(ptPointer, ptTile, &__centre_region, NULL, 255);
@@ -516,6 +518,7 @@ user_scene_watch_face_01_t *__arm_2d_scene_watch_face_01_init(   arm_2d_scene_pl
             .ptParticles = this.tParticles,
             .tColour = GLCD_COLOR_ORANGE,
             .fSpeed = 0.5f,
+            .bEnableBlur = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
 
