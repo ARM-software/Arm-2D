@@ -99,7 +99,13 @@ void cloudy_glass_init( cloudy_glass_t *ptThis,
 
     do {
         int16_t iRadius = MIN(tGlassSize.iHeight, tGlassSize.iWidth) / 2;
+
         iRadius -= c_tileRadialGradientMask.tRegion.tSize.iWidth >> 1;
+
+        if (this.tCFG.iDirtyRegionRadius <= 0) {
+            this.tCFG.iDirtyRegionRadius = iRadius;
+        }
+
         dynamic_nebula_cfg_t tCFG = {
             .fSpeed = this.tCFG.fSpeed,
             .iRadius = iRadius,
@@ -218,6 +224,8 @@ void cloudy_glass_show(   cloudy_glass_t *ptThis,
 
     bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
 
+    int16_t iDirtyRegionLength = this.tCFG.iDirtyRegionRadius * 2;
+
     arm_2d_container(ptTile, __glass, ptRegion) {
         /* put your drawing code inside here
          *    - &__control is the target tile (please do not use ptTile anymore)
@@ -235,19 +243,23 @@ void cloudy_glass_show(   cloudy_glass_t *ptThis,
                                 255,
                                 bIsNewFrame);
 
-            arm_2dp_filter_iir_blur(&this.tBlurOP,
-                                    &__glass,
-                                    &__centre_region,
-                                    255 - 16);
-
-            if (NULL != this.tCFG.ptScene) {
-                /* update dirty region */
-                arm_2d_helper_dirty_region_update_item( &this.tCFG.ptScene->tDirtyRegionHelper,
-                                                        &this.tDirtyRegionItem,
-                                                        &__glass,
-                                                        &__glass_canvas,
-                                                        &__centre_region);
+            arm_2d_align_centre(__centre_region, iDirtyRegionLength, iDirtyRegionLength) {
+                arm_2dp_filter_iir_blur(&this.tBlurOP,
+                                        &__glass,
+                                        &__centre_region,
+                                        255 - 16);
+                
+                if (NULL != this.tCFG.ptScene) {
+                    /* update dirty region */
+                    arm_2d_helper_dirty_region_update_item( &this.tCFG.ptScene->tDirtyRegionHelper,
+                                                            &this.tDirtyRegionItem,
+                                                            &__glass,
+                                                            &__glass_canvas,
+                                                            &__centre_region);
+                }
             }
+
+            
 
             /* make sure the operation is complete */
             ARM_2D_OP_WAIT_ASYNC(&this.tBlurOP);

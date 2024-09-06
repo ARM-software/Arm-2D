@@ -84,7 +84,7 @@ struct user_scene_watch_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[4];
+    int64_t lTimestamp[1];
     bool bUserAllocated;
 
     spin_zoom_widget_t tPointers[3];

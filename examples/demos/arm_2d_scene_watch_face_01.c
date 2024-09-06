@@ -122,6 +122,17 @@ static struct {
     uint8_t chNumber;
 } s_tDigitsTable[12];
 
+static uint32_t c_wColourTable[] = {
+    __RGB32(0xFF, 00, 0x00),
+    __RGB32(0x00, 0xFF, 0x00),
+    __RGB32(0x00, 0x00, 0xFF),
+    __RGB32(0x00, 0xFF, 0xFF),
+    __RGB32(0xFF, 0xFF, 0xFF),
+    __RGB32(0xFF, 0xFF, 0x00),
+    __RGB32(0xFF, 0x00, 0x00),
+    __RGB32(0xFF, 0x00, 0xFF),
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_watch_face_01_load(arm_2d_scene_t *ptScene)
@@ -220,6 +231,28 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
     /* calculate the Ten-Miliseconds */
     do {
         //this.chMs = lTimeStampInMs;
+    } while(0);
+
+    /* update cloud colour */
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 1000, 5000, &nResult, &this.lTimestamp[1])) {
+            this.lTimestamp[1] = 0;
+            this.wPreviousColour = c_wColourTable[this.chColourTableIndex];
+
+            this.chColourTableIndex = rand() % dimof(c_wColourTable);
+            nResult = 0;
+        }
+
+        COLOUR_INT_TYPE tColour = arm_2d_pixel_from_brga8888(
+                                            __arm_2d_helper_colour_slider(
+                                                this.wPreviousColour, 
+                                                c_wColourTable[this.chColourTableIndex],
+                                                1000,
+                                                nResult));
+        
+        cloudy_glass_set_colour(&this.tCloudyGlass, tColour);
+
     } while(0);
 
     cloudy_glass_on_frame_start(&this.tCloudyGlass);
@@ -474,15 +507,18 @@ user_scene_watch_face_01_t *__arm_2d_scene_watch_face_01_init(   arm_2d_scene_pl
                 .iWidth = 200,
                 .iHeight = 200,
             },
+            .iDirtyRegionRadius = 80,
             .hwParticleCount = dimof(this.tParticles),
             .ptParticles = this.tParticles,
             .tColour = GLCD_COLOR_ORANGE,
-            .fSpeed = 0.2f,
+            .fSpeed = 0.5f,
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
 
         cloudy_glass_init(&this.tCloudyGlass, &tCFG);
     } while(0);
+
+    this.wPreviousColour = c_wColourTable[this.chColourTableIndex++];
 
     /* ------------   initialize members of user_scene_ruler_t end   ---------------*/
 

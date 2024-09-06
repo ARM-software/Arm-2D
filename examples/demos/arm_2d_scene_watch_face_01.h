@@ -84,13 +84,16 @@ struct user_scene_watch_face_01_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[4];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
 
     spin_zoom_widget_t tPointers[3];
 
     cloudy_glass_t tCloudyGlass;
     dynamic_nebula_particle_t tParticles[16];
+
+    uint8_t chColourTableIndex;
+    uint32_t wPreviousColour;
 
 #if 0   /* uncomment this part when you want to use them */
     uint32_t chHour;

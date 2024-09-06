@@ -54,6 +54,8 @@ typedef struct cloudy_glass_cfg_t {
     arm_2d_scene_t *ptScene;
 
     arm_2d_size_t tSize;
+    int16_t iDirtyRegionRadius;
+
     float fSpeed;
 
     dynamic_nebula_particle_t *ptParticles;
