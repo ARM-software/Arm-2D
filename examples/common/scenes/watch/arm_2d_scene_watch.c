@@ -256,31 +256,31 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
         ARM_2D_OP_WAIT_ASYNC();
     #else   /* draw digits directly */
 
-    arm_2d_align_centre(__panel_canvas, 200, 200) {
-        arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+        arm_2d_align_centre(__panel_canvas, 200, 200) {
+            arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
-        for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
-            arm_2d_region_t tDigitsRegion = {
-                .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
-                .tSize = tDigitsSize,
-            };
+            for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
+                arm_2d_region_t tDigitsRegion = {
+                    .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
+                    .tSize = tDigitsSize,
+                };
 
-            tDigitsRegion.tLocation.iX += s_tDigitsTable[n].tLocation.iX - (tDigitsSize.iWidth >> 1);
-            tDigitsRegion.tLocation.iY += s_tDigitsTable[n].tLocation.iY - (tDigitsSize.iHeight >> 1);
+                tDigitsRegion.tLocation.iX += s_tDigitsTable[n].tLocation.iX - (tDigitsSize.iWidth >> 1);
+                tDigitsRegion.tLocation.iY += s_tDigitsTable[n].tLocation.iY - (tDigitsSize.iHeight >> 1);
 
-            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__panel);
-            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
-            arm_lcd_text_set_draw_region(&tDigitsRegion);
+                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__panel);
+                arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                arm_lcd_text_set_draw_region(&tDigitsRegion);
 
-            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                
+                arm_lcd_text_location(0,0);
+                
+                
+                arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
             
-            arm_lcd_text_location(0,0);
-            
-            
-            arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
-        
+            }
         }
-    }
 
     #endif
     }
