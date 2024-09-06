@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        19. July 2024
- * $Revision:    V.1.11.3
+ * $Date:        6. Sept 2024
+ * $Revision:    V.1.11.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4711,7 +4711,7 @@ void arm_2d_helper_dirty_region_transform_update_value(
         fDelta = ABS(fDelta);
 
         if (fDelta >= this.Scale.fStep) {
-            this.Scale.fValue = fAngle;
+            this.Scale.fValue = fScale;
             this.bNeedUpdate = true;
         }
     }
@@ -4865,7 +4865,7 @@ void arm_2d_helper_transform_update_value(  arm_2d_helper_transform_t *ptThis,
         fDelta = ABS(fDelta);
 
         if (fDelta >= this.Scale.fStep) {
-            this.Scale.fValue = fAngle;
+            this.Scale.fValue = fScale;
             this.bNeedUpdate = true;
         }
     }
