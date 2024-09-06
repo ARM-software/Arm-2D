@@ -40,6 +40,7 @@
 #include "./dynamic_nebula.h"
 #include "./histogram.h"
 #include "./spin_zoom_widget.h"
+#include "./cloudy_glass.h"
 
 #ifdef   __cplusplus
 extern "C" {
