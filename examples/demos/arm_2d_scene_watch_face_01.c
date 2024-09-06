@@ -123,7 +123,7 @@ static struct {
 } s_tDigitsTable[12];
 
 static uint32_t c_wColourTable[] = {
-    __RGB32(0xFF, 00, 0x00),
+    __RGB32(0xFF, 0x00, 0x00),
     __RGB32(0x00, 0xFF, 0x00),
     __RGB32(0x00, 0x00, 0xFF),
     __RGB32(0x00, 0xFF, 0xFF),
@@ -131,6 +131,9 @@ static uint32_t c_wColourTable[] = {
     __RGB32(0xFF, 0xFF, 0x00),
     __RGB32(0xFF, 0x00, 0x00),
     __RGB32(0xFF, 0x00, 0xFF),
+    __RGB32(0xFF, 0x80, 0x00),      /* orange */
+    __RGB32(0xFF, 0xA5, 0x00),      /* nixie tube */
+
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -240,6 +243,7 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
             this.lTimestamp[1] = 0;
             this.wPreviousColour = c_wColourTable[this.chColourTableIndex];
 
+            srand((uint32_t)arm_2d_helper_get_system_timestamp());
             this.chColourTableIndex = rand() % dimof(c_wColourTable);
             nResult = 0;
         }
