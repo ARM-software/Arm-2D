@@ -94,6 +94,10 @@ void <control_name>_on_frame_start( user_<control_name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
+void <control_name>_on_frame_complete( user_<control_name>_t *ptThis);
+
+extern
+ARM_NONNULL(1)
 void <control_name>_show( user_<control_name>_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
