@@ -293,7 +293,7 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
         arm_2d_align_centre(__panel_canvas, 200, 200) {
             arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
-            arm_lcd_text_set_opacity(50);
+            arm_lcd_text_set_opacity(32);
             for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
                 arm_2d_region_t tDigitsRegion = {
                     .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
