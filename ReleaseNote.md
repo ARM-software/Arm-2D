@@ -84,6 +84,8 @@
 - Updates the asset `c_tileSpinWheelMask` to fulfill the requirement of the updated transform operations.
 - Adds a new example control: `spin_zoom_widget_t`
   - Updates `arm_2d_scene_fan`, `arm_2d_scene_watch` and `arm_2d_scene_meter` to demonstrate the usage of `spin_zoom_widget_t`
+- Adds a new example control: `cloudy_glass_t`
+- Adds a new demo: watch face 01
 
 
 ### Documentation and Misc
