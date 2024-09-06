@@ -89,10 +89,16 @@ ARM_PRIVATE(
 
     spin_zoom_widget_t tPointers[3];
 
+    cloudy_glass_t tCloudyGlass;
+    dynamic_nebula_particle_t tParticles[16];
+
+#if 0   /* uncomment this part when you want to use them */
     uint32_t chHour;
     uint32_t chMin;
     uint32_t chSec;
-    uint32_t chMs;
+    uint32_t chMs
+#endif
+
 )
     /* place your public member here */
     

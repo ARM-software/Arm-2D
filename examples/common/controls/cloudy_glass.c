@@ -93,10 +93,15 @@ void cloudy_glass_init( cloudy_glass_t *ptThis,
     assert(this.tCFG.hwParticleCount > 0);
     assert(this.tCFG.ptParticles != NULL);
 
+    if (this.tCFG.fSpeed == 0.0f) {
+        this.tCFG.fSpeed = 0.3f;
+    }
+
     do {
         int16_t iRadius = MIN(tGlassSize.iHeight, tGlassSize.iWidth) / 2;
+        iRadius -= c_tileRadialGradientMask.tRegion.tSize.iWidth >> 1;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.6f,
+            .fSpeed = this.tCFG.fSpeed,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius,
             .hwParticleCount = this.tCFG.hwParticleCount,

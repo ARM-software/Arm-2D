@@ -133,6 +133,8 @@ static void __on_scene_watch_face_01_load(arm_2d_scene_t *ptScene)
         spin_zoom_widget_on_load(ptPointer);
     }
 
+    cloudy_glass_on_load(&this.tCloudyGlass);
+
 }
 
 static void __on_scene_watch_face_01_depose(arm_2d_scene_t *ptScene)
@@ -150,6 +152,8 @@ static void __on_scene_watch_face_01_depose(arm_2d_scene_t *ptScene)
     arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
         spin_zoom_widget_depose(ptPointer);
     }
+
+    cloudy_glass_depose(&this.tCloudyGlass);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -187,7 +191,7 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
     do {
         uint32_t chHour = lTimeStampInMs / 1000ul;
         chHour %= 12 * 3600ul;
-        this.chHour = chHour / 3600;
+        //this.chHour = chHour / 3600;
         spin_zoom_widget_on_frame_start(&this.tPointers[0], chHour, 1.0f);
 
         lTimeStampInMs %= (3600ul * 1000ul);
@@ -198,7 +202,7 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
     do {
         uint32_t chMin = lTimeStampInMs / 1000ul;
 
-        this.chMin = chMin / 60;
+        //this.chMin = chMin / 60;
         spin_zoom_widget_on_frame_start(&this.tPointers[1], chMin, 1.0f);
 
         lTimeStampInMs %= (60ul * 1000ul);
@@ -207,7 +211,6 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
     /* calculate the Seconds */
     do {
         uint32_t chSec = lTimeStampInMs;
-        this.chSec = chSec / 1000;
 
         spin_zoom_widget_on_frame_start(&this.tPointers[2], chSec, 1.0f);
 
@@ -216,8 +219,10 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
 
     /* calculate the Ten-Miliseconds */
     do {
-        this.chMs = lTimeStampInMs;
+        //this.chMs = lTimeStampInMs;
     } while(0);
+
+    cloudy_glass_on_frame_start(&this.tCloudyGlass);
 
 }
 
@@ -226,6 +231,8 @@ static void __on_scene_watch_face_01_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_watch_face_01_t *ptThis = (user_scene_watch_face_01_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    cloudy_glass_on_frame_complete(&this.tCloudyGlass);
+
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
@@ -246,43 +253,32 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
 {
     arm_2d_container(ptTile, __panel, ptRegion) {
 
+        arm_2d_align_centre(__panel_canvas, 200, 200) {
+            arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
-    #if 0 /* use simple background picture */
-        arm_2d_tile_copy_with_opacity(  &c_tileWatchPanel,
-                                        &__panel,
-                                        &__panel_canvas,
-                                        64);
+            for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
+                arm_2d_region_t tDigitsRegion = {
+                    .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
+                    .tSize = tDigitsSize,
+                };
 
-        ARM_2D_OP_WAIT_ASYNC();
-    #else   /* draw digits directly */
+                tDigitsRegion.tLocation.iX += s_tDigitsTable[n].tLocation.iX - (tDigitsSize.iWidth >> 1);
+                tDigitsRegion.tLocation.iY += s_tDigitsTable[n].tLocation.iY - (tDigitsSize.iHeight >> 1);
 
-    arm_2d_align_centre(__panel_canvas, 200, 200) {
-        arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__panel);
+                arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
+                arm_lcd_text_set_draw_region(&tDigitsRegion);
 
-        for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
-            arm_2d_region_t tDigitsRegion = {
-                .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
-                .tSize = tDigitsSize,
-            };
-
-            tDigitsRegion.tLocation.iX += s_tDigitsTable[n].tLocation.iX - (tDigitsSize.iWidth >> 1);
-            tDigitsRegion.tLocation.iY += s_tDigitsTable[n].tLocation.iY - (tDigitsSize.iHeight >> 1);
-
-            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__panel);
-            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4);
-            arm_lcd_text_set_draw_region(&tDigitsRegion);
-
-            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                
+                arm_lcd_text_location(0,0);
+                
+                
+                arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
             
-            arm_lcd_text_location(0,0);
-            
-            
-            arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
-        
+            }
         }
-    }
 
-    #endif
     }
 }
 
@@ -302,22 +298,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_face_01_handler)
 
         arm_2d_align_centre(__canvas, 240, 240) {
 
-            __draw_watch_panel(ptTile, &__centre_region, ptThis);
+
+            cloudy_glass_show(&this.tCloudyGlass,
+                              ptTile,
+                              &__centre_region);
+
+            //__draw_watch_panel(ptTile, &__centre_region, ptThis);
 
             arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
                 spin_zoom_widget_show(ptPointer, ptTile, &__centre_region, NULL, 255);
             }
 
         }
-
-        /* draw text at the top-left corner */
-
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-        arm_lcd_text_set_draw_region(NULL);
-        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-        arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene watch");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -371,6 +363,7 @@ user_scene_watch_face_01_t *__arm_2d_scene_watch_face_01_init(   arm_2d_scene_pl
         .bUserAllocated = bUserAllocated,
     };
     
+    /* ------------   initialize members of user_scene_ruler_t begin ---------------*/
     // initialize second pointer
     do {
         s_tPointerSecCenter.iX = (c_tilePointerSecMask.tRegion.tSize.iWidth >> 1);
@@ -473,6 +466,25 @@ user_scene_watch_face_01_t *__arm_2d_scene_watch_face_01_init(   arm_2d_scene_pl
 
         s_tDigitsTable[0].chNumber = 12;
     } while(0);
+
+    /* initialize the cloudy glass background */
+    do {
+        cloudy_glass_cfg_t tCFG = {
+            .tSize = {
+                .iWidth = 200,
+                .iHeight = 200,
+            },
+            .hwParticleCount = dimof(this.tParticles),
+            .ptParticles = this.tParticles,
+            .tColour = GLCD_COLOR_ORANGE,
+            .fSpeed = 0.2f,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+
+        cloudy_glass_init(&this.tCloudyGlass, &tCFG);
+    } while(0);
+
+    /* ------------   initialize members of user_scene_ruler_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

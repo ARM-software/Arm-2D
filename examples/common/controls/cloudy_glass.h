@@ -54,8 +54,11 @@ typedef struct cloudy_glass_cfg_t {
     arm_2d_scene_t *ptScene;
 
     arm_2d_size_t tSize;
+    float fSpeed;
+
     dynamic_nebula_particle_t *ptParticles;
     uint16_t hwParticleCount;
+    
 
     COLOUR_INT_TYPE tColour;
 
@@ -101,6 +104,10 @@ void cloudy_glass_on_load( cloudy_glass_t *ptThis);
 extern
 ARM_NONNULL(1)
 void cloudy_glass_on_frame_start( cloudy_glass_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void cloudy_glass_on_frame_complete( cloudy_glass_t *ptThis);
 
 extern
 ARM_NONNULL(1)
