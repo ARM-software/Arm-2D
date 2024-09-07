@@ -187,7 +187,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         /* generate a new position every 2000 sec */
-        if (arm_2d_helper_is_time_out(4000,  &this.lTimestamp[1])) {
+        if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[1])) {
             this.lTimestamp[1] = 0;
             srand(arm_2d_helper_get_system_timestamp());
             this.iTargetNumber = rand() % 200;
@@ -419,8 +419,11 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                 .fIntegration = 0.0020f,
                 .nInterval = 10,
             }
+
         };
         meter_pointer_init(&this.tMeterPointer, &tCFG);
+
+        this.iTargetNumber = 150;
     } while(0);
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
