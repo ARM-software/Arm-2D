@@ -218,8 +218,8 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     meter_pointer_on_frame_complete(&this.tMeterPointer);
 
     /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
