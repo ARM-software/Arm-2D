@@ -2,7 +2,7 @@
 
 
 
-## Release v1.2.0 
+## Release v1.2.0 (6 September 2024)
 
 ### Core and Library
 
@@ -56,6 +56,7 @@
 - Improves the helper service for list
   - Fixes some list-item-selection related issues
   - Adds the Non-Ring mode
+- Improves the accuracy and behaviour of the PIHelper
 
 ### Examples and Templates
 
@@ -83,7 +84,10 @@
 - Adds built-in fonts for a subset of the ASCII: `ARM_2D_FONT_Arial14_A8`, `ARM_2D_FONT_Arial14_A4` ,`ARM_2D_FONT_Arial14_A2` and  `ARM_2D_FONT_Arial14_A1`
 - Updates the asset `c_tileSpinWheelMask` to fulfill the requirement of the updated transform operations.
 - Adds a new example control: `spin_zoom_widget_t`
-  - Updates `arm_2d_scene_fan`, `arm_2d_scene_watch` and `arm_2d_scene_meter` to demonstrate the usage of `spin_zoom_widget_t`
+  - Updates `arm_2d_scene_fan` and `arm_2d_scene_watch` to demonstrate the usage of `spin_zoom_widget_t`
+- Adds a new example control: `meter_pointer_t`
+  - Updates `arm_2d_scene_meter` to demonstrate the usage of `meter_pointer_t`
+
 - Adds a new example control: `cloudy_glass_t`
 - Adds a new demo: watch face 01
 
