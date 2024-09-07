@@ -1115,9 +1115,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="memitem:ga8b1bfeda16ff74338c13c604575923b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8b1bfeda16ff74338c13c604575923b3">arm_2d_helper_pi_slider</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t">arm_2d_helper_pi_slider_t</a> *ptThis, int32_t nTargetPosition, int32_t *pnResult)</td></tr>
 <tr class="memdesc:ga8b1bfeda16ff74338c13c604575923b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper function for Proportional-Integral Control.  <a href="group__gHelper.html#ga8b1bfeda16ff74338c13c604575923b3">More...</a><br /></td></tr>
 <tr class="separator:ga8b1bfeda16ff74338c13c604575923b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga303379eaf70b56a9c3d72197fdbfc2b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga303379eaf70b56a9c3d72197fdbfc2b2">arm_2d_helper_pi_slider_set_current</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t">arm_2d_helper_pi_slider_t</a> *ptThis, int32_t nCurrent)</td></tr>
+<tr class="memdesc:ga303379eaf70b56a9c3d72197fdbfc2b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the PI slider and set the current value  <a href="group__gHelper.html#ga303379eaf70b56a9c3d72197fdbfc2b2">More...</a><br /></td></tr>
+<tr class="separator:ga303379eaf70b56a9c3d72197fdbfc2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaac54d64b5a5a15c6ecf803d52f4811fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaac54d64b5a5a15c6ecf803d52f4811fa">arm_2d_helper_pi_slider_f32</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t">arm_2d_helper_pi_slider_t</a> *ptThis, float fTargetPosition, float *pfResult)</td></tr>
 <tr class="memdesc:gaac54d64b5a5a15c6ecf803d52f4811fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper function for Proportional-Integral Control.  <a href="group__gHelper.html#gaac54d64b5a5a15c6ecf803d52f4811fa">More...</a><br /></td></tr>
 <tr class="separator:gaac54d64b5a5a15c6ecf803d52f4811fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga117a0619ae6092f6d91217463bc58e37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga117a0619ae6092f6d91217463bc58e37">arm_2d_helper_pi_slider_set_current_f32</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t">arm_2d_helper_pi_slider_t</a> *ptThis, float fCurrent)</td></tr>
+<tr class="memdesc:ga117a0619ae6092f6d91217463bc58e37"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the PI slider and set the current value  <a href="group__gHelper.html#ga117a0619ae6092f6d91217463bc58e37">More...</a><br /></td></tr>
+<tr class="separator:ga117a0619ae6092f6d91217463bc58e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd0e2f64404ceef7412a3715c0bc47fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, int16_t iBorderWidth, COLOUR_INT tColour, uint8_t chOpacity)</td></tr>
 <tr class="separator:gacd0e2f64404ceef7412a3715c0bc47fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8973bb94243b6b082f9e2888267bea04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04">arm_2d_helper_film_next_frame</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis)</td></tr>
@@ -12079,6 +12085,43 @@ sometimes, we want to force transform helper to update dirty regions even if bot
 
 </div>
 </div>
+<a id="ga303379eaf70b56a9c3d72197fdbfc2b2" name="ga303379eaf70b56a9c3d72197fdbfc2b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga303379eaf70b56a9c3d72197fdbfc2b2">&#9670;&nbsp;</a></span>arm_2d_helper_pi_slider_set_current()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_pi_slider_set_current </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t">arm_2d_helper_pi_slider_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>nCurrent</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>reset the PI slider and set the current value </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the control block (<a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t" title="a helper class for Proportional-Integral Control">arm_2d_helper_pi_slider_t</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nCurrent</td><td>the new current value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gaac54d64b5a5a15c6ecf803d52f4811fa" name="gaac54d64b5a5a15c6ecf803d52f4811fa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaac54d64b5a5a15c6ecf803d52f4811fa">&#9670;&nbsp;</a></span>arm_2d_helper_pi_slider_f32()</h2>
 
@@ -12124,6 +12167,43 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   <table class="retval">
     <tr><td class="paramname">true</td><td>the slider has reached the target postion </td></tr>
     <tr><td class="paramname">false</td><td>the slider is still moving </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga117a0619ae6092f6d91217463bc58e37" name="ga117a0619ae6092f6d91217463bc58e37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga117a0619ae6092f6d91217463bc58e37">&#9670;&nbsp;</a></span>arm_2d_helper_pi_slider_set_current_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_helper_pi_slider_set_current_f32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t">arm_2d_helper_pi_slider_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>fCurrent</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>reset the PI slider and set the current value </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the control block (<a class="el" href="group__gHelper.html#structarm__2d__helper__pi__slider__t" title="a helper class for Proportional-Integral Control">arm_2d_helper_pi_slider_t</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fCurrent</td><td>the new current value </td></tr>
   </table>
   </dd>
 </dl>
