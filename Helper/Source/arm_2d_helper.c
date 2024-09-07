@@ -410,9 +410,9 @@ arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(
 
     /* the default parameter for PI control*/
     arm_2d_helper_pi_slider_cfg_t tCFG = {
-        .fProportion = 0.20f,
-        .fIntegration = 0.30f,
-        .nInterval = 10,
+        .fProportion = 0.25f,
+        .fIntegration = 0.10f,
+        .nInterval = 20,
     };
 
     if (NULL == ptCFG) {
@@ -464,8 +464,8 @@ bool arm_2d_helper_pi_slider(arm_2d_helper_pi_slider_t *ptThis,
                 float fProp = fError * this.tCFG.fProportion;
                 this.fOP +=  fError * this.tCFG.fIntegration;
                 this.fCurrent += (fProp + this.fOP);
-                float fStableCheck = ABS(fProp) + ABS(this.fOP);
-                if ( fStableCheck < 0.1f ) {
+                float fStableCheck = ABS(fProp + this.fOP);
+                if ( fStableCheck <= 0.1f ) {
                     /* has reached the final value */
                     //this.iCurrent = nTargetPosition; /* correct the residual error */
                     //this.fOP = 0.0f;
@@ -516,8 +516,8 @@ bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
                 float fProp = fError * this.tCFG.fProportion;
                 this.fOP += fError * this.tCFG.fIntegration;
                 this.fCurrent += (fProp + this.fOP);
-                float fStableCheck = ABS(fProp) + ABS(this.fOP);
-                if ( fStableCheck < 0.1f ) {
+                float fStableCheck = ABS(fProp + this.fOP);
+                if ( fStableCheck <= 0.1f ) {
                     /* has reached the final value */
                     //this.iCurrent = nTargetPosition; /* correct the residual error */
                     //this.fOP = 0.0f;
