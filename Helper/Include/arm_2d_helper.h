@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        20. June 2024
- * $Revision:    V.1.9.0
+ * $Date:        07. Sept 2024
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -243,7 +243,7 @@ ARM_PRIVATE (
     arm_2d_helper_pi_slider_cfg_t tCFG;
     int64_t lTimestamp;
     int32_t nTimeResidual;
-    int32_t iCurrent;
+    float   fCurrent;
     float   fOP;
 )
 } arm_2d_helper_pi_slider_t;
@@ -473,6 +473,19 @@ ARM_NONNULL( 1, 3 )
 bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                                   int32_t nTargetPosition,
                                   int32_t *pnResult);
+
+/*!
+ * \brief A helper function for Proportional-Integral Control
+ * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
+ * \param[in] fTargetPosition the new target position 
+ * \param[in] pfResult a int32_t buffer for reading the current postion
+ * \retval true the slider has reached the target postion
+ * \retval false the slider is still moving
+ */
+ARM_NONNULL( 1, 3 )
+bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
+                                 float fTargetPosition,
+                                 float *pfResult);
 
 /*!
  * \brier draw a box with specified colour, border width and opacity

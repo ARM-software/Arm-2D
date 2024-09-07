@@ -111,6 +111,9 @@ arm_2d_err_t meter_pointer_init(meter_pointer_t *ptThis,
             }
         }
 
+        tCFG.Indicator.LowerLimit.nValue;
+        tCFG.Indicator.UpperLimit.nValue;
+
         spin_zoom_widget_init(&this.use_as__spin_zoom_widget_t, 
                               &tCFG);
     } while(0);
@@ -120,18 +123,16 @@ arm_2d_err_t meter_pointer_init(meter_pointer_t *ptThis,
         this.tPISliderCFG = ptCFG->tPISliderCFG;
         if (    (this.tPISliderCFG.fProportion <= 0.0f) 
         ||   (this.tPISliderCFG.nInterval <= 0)) {
-            this.tPISliderCFG = (arm_2d_helper_pi_slider_cfg_t) {
-                .fProportion = 0.15f,
-                .fIntegration = 0.6667f,
-                .nInterval = 20, 
-            };
+            /* use default parameters */
+            arm_2d_helper_pi_slider_init(&this.tPISlider, 
+                                         NULL, 
+                                        ptCFG->nPISliderStartPosition);
+        } else {
+            arm_2d_helper_pi_slider_init(&this.tPISlider, 
+                                        &this.tPISliderCFG, 
+                                        ptCFG->nPISliderStartPosition);
         }
-
-        arm_2d_helper_pi_slider_init(&this.tPISlider, 
-                                     &this.tPISliderCFG, 
-                                     ptCFG->nPISliderStartPosition);
     } while(0);
-
 
     return ARM_2D_ERR_NONE;
 
@@ -154,15 +155,41 @@ void meter_pointer_on_load( meter_pointer_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void meter_pointer_on_frame_start(  meter_pointer_t *ptThis, 
-                                    int32_t nTargetValue, 
+bool meter_pointer_on_frame_start(  meter_pointer_t *ptThis, 
+                                    int32_t nTargetValue,
                                     float fScale)
 {
     assert(NULL != ptThis);
+
+    bool bFinished = arm_2d_helper_pi_slider_f32(&this.tPISlider, 
+                                                (float)nTargetValue, 
+                                                &this.fCurrentValue);
+
+    spin_zoom_widget_on_frame_start_f32(&this.use_as__spin_zoom_widget_t,
+                                        this.fCurrentValue,
+                                        fScale);
     
-    spin_zoom_widget_on_frame_start(&this.use_as__spin_zoom_widget_t,
-                                    nTargetValue,
-                                    fScale);
+
+    return bFinished;
+}
+
+ARM_NONNULL(1)
+bool meter_pointer_on_frame_start_f32(  meter_pointer_t *ptThis, 
+                                        float fTargetValue,
+                                        float fScale)
+{
+    assert(NULL != ptThis);
+
+    bool bFinished = arm_2d_helper_pi_slider_f32(&this.tPISlider, 
+                                                fTargetValue, 
+                                                &this.fCurrentValue);
+
+    spin_zoom_widget_on_frame_start_f32(&this.use_as__spin_zoom_widget_t,
+                                        this.fCurrentValue,
+                                        fScale);
+    
+
+    return bFinished;
 }
 
 ARM_NONNULL(1)
@@ -194,6 +221,22 @@ void meter_pointer_set_colour(  meter_pointer_t *ptThis,
 {
     assert(NULL != ptThis);
     spin_zoom_widget_set_colour(&this.use_as__spin_zoom_widget_t, tColour);
+}
+
+ARM_NONNULL(1)
+int32_t meter_pointer_get_current_value(meter_pointer_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return (int32_t)this.fCurrentValue;
+}
+
+ARM_NONNULL(1)
+float meter_pointer_get_current_value_f32(meter_pointer_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.fCurrentValue;
 }
 
 #if defined(__clang__)

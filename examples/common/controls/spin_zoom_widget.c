@@ -192,6 +192,27 @@ void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue
 }
 
 ARM_NONNULL(1)
+void spin_zoom_widget_on_frame_start_f32( spin_zoom_widget_t *ptThis, float fValue, float fScale)
+{
+    assert(NULL != ptThis);
+    
+    float fDelta = fValue - (float)this.tCFG.Indicator.LowerLimit.nValue;
+    float fDegreeDistance = this.tCFG.Indicator.UpperLimit.fAngleInDegree
+                          - this.tCFG.Indicator.LowerLimit.fAngleInDegree;
+    int32_t nValueDistance = this.tCFG.Indicator.UpperLimit.nValue
+                           - this.tCFG.Indicator.LowerLimit.nValue;
+    
+    float fAngle = ((fDelta / (float)nValueDistance) * fDegreeDistance)
+                 + this.tCFG.Indicator.LowerLimit.fAngleInDegree;
+
+    /* update helper with new values*/
+    arm_2d_helper_dirty_region_transform_update_value(&this.tHelper, fAngle, fScale);
+
+    /* call helper's on-frame-start event handler */
+    arm_2d_helper_dirty_region_transform_on_frame_start(&this.tHelper);
+}
+
+ARM_NONNULL(1)
 void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis)
 {
     assert(NULL != ptThis);

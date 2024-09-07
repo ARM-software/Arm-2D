@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        20. June 2024
- * $Revision:    V.1.9.0
+ * $Date:        07. Sept 2024
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -410,9 +410,9 @@ arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(
 
     /* the default parameter for PI control*/
     arm_2d_helper_pi_slider_cfg_t tCFG = {
-        .fProportion = 0.2f,
-        .fIntegration = 0.3f,
-        .nInterval = 20,
+        .fProportion = 0.20f,
+        .fIntegration = 0.30f,
+        .nInterval = 10,
     };
 
     if (NULL == ptCFG) {
@@ -424,26 +424,29 @@ arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(
     this.tCFG = *ptCFG;
 
     this.tCFG.nInterval = arm_2d_helper_convert_ms_to_ticks(this.tCFG.nInterval);
-    this.iCurrent = nStartPosition;
+    this.fCurrent = (float)nStartPosition;
 
     return ptThis;
 }
 
 ARM_NONNULL( 1, 3 )
-bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
-                                  int32_t nTargetPosition,
-                                  int32_t *pnResult)
+bool arm_2d_helper_pi_slider(arm_2d_helper_pi_slider_t *ptThis,
+                             int32_t nTargetPosition,
+                             int32_t *pnResult)
 {
     int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
     assert( NULL != ptThis );
     assert( NULL != pnResult );
     bool bResult = false;
 
+#if 0
     if ( nTargetPosition == this.iCurrent && this.fOP <= 0.01f ) {
         this.lTimestamp = lTimestamp;
         this.fOP = 0.0f;
         return true;
-    } else {
+    } else 
+#endif
+    {
         if ( 0 == this.lTimestamp ) { //first entry init
             this.lTimestamp = lTimestamp;
             this.fOP = 0.0f;
@@ -457,10 +460,10 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
             while ( lElapsed >= this.tCFG.nInterval ) {
                 lElapsed -= this.tCFG.nInterval;
 
-                int32_t nError = nTargetPosition - this.iCurrent;
-                float fProp = (float)nError * this.tCFG.fProportion;
-                this.fOP += fProp * this.tCFG.fIntegration;
-                this.iCurrent += (int32_t)(fProp + this.fOP);
+                float fError = (float)nTargetPosition - this.fCurrent;
+                float fProp = fError * this.tCFG.fProportion;
+                this.fOP +=  fError * this.tCFG.fIntegration;
+                this.fCurrent += (fProp + this.fOP);
                 float fStableCheck = ABS(fProp) + ABS(this.fOP);
                 if ( fStableCheck < 0.1f ) {
                     /* has reached the final value */
@@ -470,7 +473,59 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                 }
             }
             this.nTimeResidual = (int32_t)lElapsed;
-            *pnResult = this.iCurrent;
+            *pnResult = (int32_t)this.fCurrent;
+
+        } while( 0 );
+    }
+
+    return bResult;
+}
+
+ARM_NONNULL( 1, 3 )
+bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
+                                 float fTargetPosition,
+                                 float *pfResult)
+{
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+    assert( NULL != ptThis );
+    assert( NULL != pfResult );
+    bool bResult = false;
+
+#if 0
+    if ( nTargetPosition == this.iCurrent && this.fOP <= 0.01f ) {
+        this.lTimestamp = lTimestamp;
+        this.fOP = 0.0f;
+        return true;
+    } else 
+#endif
+    {
+        if ( 0 == this.lTimestamp ) { //first entry init
+            this.lTimestamp = lTimestamp;
+            this.fOP = 0.0f;
+        }
+
+        do {
+            int64_t lElapsed = ( lTimestamp - this.lTimestamp ) + this.nTimeResidual;
+            this.lTimestamp = lTimestamp;
+
+            /* perform iterations */
+            while ( lElapsed >= this.tCFG.nInterval ) {
+                lElapsed -= this.tCFG.nInterval;
+
+                float fError = fTargetPosition - this.fCurrent;
+                float fProp = fError * this.tCFG.fProportion;
+                this.fOP += fError * this.tCFG.fIntegration;
+                this.fCurrent += (fProp + this.fOP);
+                float fStableCheck = ABS(fProp) + ABS(this.fOP);
+                if ( fStableCheck < 0.1f ) {
+                    /* has reached the final value */
+                    //this.iCurrent = nTargetPosition; /* correct the residual error */
+                    //this.fOP = 0.0f;
+                    bResult = true;
+                }
+            }
+            this.nTimeResidual = (int32_t)lElapsed;
+            *pfResult = this.fCurrent;
 
         } while( 0 );
     }

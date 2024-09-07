@@ -185,19 +185,19 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     
     int32_t iResult;
 
-#if 1
     do {
-        /* example: let the pointer swing back and forth between -120 degree and 100 degree */
-        arm_2d_helper_time_cos_slider(-1200, 1000, 3000, 0, &iResult, &this.lTimestamp[1]);
+        /* generate a new position every 2000 sec */
+        if (arm_2d_helper_is_time_out(4000,  &this.lTimestamp[1])) {
+            this.lTimestamp[1] = 0;
+            srand(arm_2d_helper_get_system_timestamp());
+            this.iTargetNumber = rand() % 200;
+        }
+
+        meter_pointer_on_frame_start(&this.tMeterPointer, this.iTargetNumber, 1.0f);
     } while(0);
-#else
-    do {
-        arm_2d_helper_pi_slider(&this.tPISlider, 1000, &iResult);
-    } while(0);
-#endif
 
     do {
-        int16_t iNumber = (int16_t)(200 * (iResult + 1200) / 2400);
+        int16_t iNumber = meter_pointer_get_current_value(&this.tMeterPointer);
         bool bNumberUnchanged = (this.iNumber == iNumber);
 
         this.iNumber = iNumber;
@@ -207,7 +207,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
-    meter_pointer_on_frame_start(&this.tMeterPointer, this.iNumber, 1.0f);
+    
 }
 
 static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
@@ -219,7 +219,7 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
 
     /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -388,21 +388,6 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         .bUserAllocated = bUserAllocated,
     };
 
-
-    //s_tPointerCenter.iX = c_tilePointerMask.tRegion.tSize.iWidth >> 1;
-    //s_tPointerCenter.iY = 100; /* radius */
-
-    /* initialize PI slider */
-    do {
-        static const arm_2d_helper_pi_slider_cfg_t tCFG = {
-            .fProportion = 0.15f,
-            .fIntegration = 0.6667f,
-            .nInterval = 20, 
-        };
-
-        arm_2d_helper_pi_slider_init(&this.tPISlider, (arm_2d_helper_pi_slider_cfg_t *)&tCFG, 0);
-    } while(0);
-
     do {
         meter_pointer_cfg_t tCFG = {
             .tSpinZoom = {
@@ -428,6 +413,12 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                 .bIsSourceHorizontal = false,
                 .iRadius = 100,
             },
+
+            .tPISliderCFG = {
+                .fProportion = 0.0300f,
+                .fIntegration = 0.0020f,
+                .nInterval = 10,
+            }
         };
         meter_pointer_init(&this.tMeterPointer, &tCFG);
     } while(0);

@@ -76,13 +76,8 @@ struct meter_pointer_t {
 ARM_PRIVATE(
     arm_2d_helper_pi_slider_cfg_t   tPISliderCFG; 
     arm_2d_helper_pi_slider_t       tPISlider;
-
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    uint8_t chOpacity;
+    float                           fCurrentValue;
 )
-    /* place your public member here */
-    
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -102,7 +97,15 @@ void meter_pointer_on_load( meter_pointer_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void meter_pointer_on_frame_start( meter_pointer_t *ptThis, int32_t nTargetValue, float fScale);
+bool meter_pointer_on_frame_start(  meter_pointer_t *ptThis, 
+                                    int32_t nTargetValue, 
+                                    float fScale);
+
+extern
+ARM_NONNULL(1)
+bool meter_pointer_on_frame_start_f32(  meter_pointer_t *ptThis, 
+                                        float fTargetValue,
+                                        float fScale);
 
 extern
 ARM_NONNULL(1)
@@ -120,6 +123,14 @@ extern
 ARM_NONNULL(1)
 void meter_pointer_set_colour(  meter_pointer_t *ptThis, 
                                 COLOUR_INT_TYPE tColour);
+
+extern
+ARM_NONNULL(1)
+int32_t meter_pointer_get_current_value(meter_pointer_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+float meter_pointer_get_current_value_f32(meter_pointer_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

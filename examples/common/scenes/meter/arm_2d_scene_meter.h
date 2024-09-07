@@ -88,6 +88,8 @@ ARM_PRIVATE(
     int64_t lTimestamp[2];
 
     int16_t iNumber;
+    int16_t iTargetNumber;
+    
     bool bUserAllocated;
 
     arm_2d_helper_pi_slider_t tPISlider;
