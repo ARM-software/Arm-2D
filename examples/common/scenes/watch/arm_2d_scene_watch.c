@@ -225,6 +225,10 @@ static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_on_frame_complete(ptPointer);
+    }
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {

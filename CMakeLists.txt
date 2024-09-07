@@ -126,6 +126,7 @@ if (ARM2D_CONTROLS)
             examples/common/controls/histogram.c
             examples/common/controls/spin_zoom_widget.c
             examples/common/controls/cloudy_glass.c
+            examples/common/controls/meter_pointer.c
             
             examples/common/asset/WhiteDotMiddle.c
             examples/common/asset/WhiteDotBig.c

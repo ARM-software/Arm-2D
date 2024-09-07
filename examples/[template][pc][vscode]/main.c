@@ -85,6 +85,15 @@ void scene_watch_loader(void)
     arm_2d_scene_watch_init(&DISP0_ADAPTER);
 }
 
+void scene_watch_face_01_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+
+    arm_2d_scene_watch_face_01_init(&DISP0_ADAPTER);
+}
+
 void scene_fitness_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
@@ -210,7 +219,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
+#if 0
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -238,9 +247,11 @@ static scene_loader_t * const c_SceneLoaders[] = {
     //scene_transform_loader,
     //scene_bubble_charging_loader,
     //scene_basics_loader,
-    scene_fan_loader,
+    scene_meter_loader,
     //scene_hollow_out_list_loader,
     //scene_fitness_loader,
+    //scene_fan_loader,
+    //scene_watch_face_01_loader,
 #endif
 
 

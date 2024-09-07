@@ -269,6 +269,9 @@ static void __on_scene_watch_face_01_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     cloudy_glass_on_frame_complete(&this.tCloudyGlass);
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_on_frame_complete(ptPointer);
+    }
 
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {

@@ -191,6 +191,13 @@ void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue
     arm_2d_helper_dirty_region_transform_on_frame_start(&this.tHelper);
 }
 
+ARM_NONNULL(1)
+void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+}
+
 ARM_NONNULL(1,2)
 void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
                             const arm_2d_tile_t *ptTile,

@@ -94,8 +94,6 @@ typedef struct spin_zoom_widget_cfg_t {
         } Step;
     } Indicator;
 
-    //arm_2d_helper_pi_slider_cfg_t tPISliderCFG;
-
 } spin_zoom_widget_cfg_t;
 
 struct spin_zoom_widget_t {
@@ -111,7 +109,6 @@ ARM_PRIVATE(
     } OPCODE;
 
     arm_2d_helper_dirty_region_transform_t  tHelper;
-    //arm_2d_helper_pi_slider_t               tPISlider;
 )
     
 };
@@ -148,6 +145,9 @@ ARM_NONNULL(1)
 void spin_zoom_widget_on_frame_start(   spin_zoom_widget_t *ptThis, 
                                         int32_t nValue, 
                                         float fScale);
+extern
+ARM_NONNULL(1)
+void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

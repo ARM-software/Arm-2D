@@ -92,7 +92,7 @@ ARM_PRIVATE(
 
     arm_2d_helper_pi_slider_t tPISlider;
 
-    spin_zoom_widget_t tMeterPointer;
+    meter_pointer_t tMeterPointer;
 
 )
     /* place your public member here */

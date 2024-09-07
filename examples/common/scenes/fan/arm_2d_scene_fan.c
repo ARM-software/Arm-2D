@@ -269,6 +269,9 @@ static void __on_scene_fan_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_fan_t *ptThis = (user_scene_fan_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_foreach(spin_zoom_widget_t, this.tFanBlades, ptFanBlade) {
+        spin_zoom_widget_on_frame_complete(ptFanBlade);
+    }
 
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(13000, &this.lTimestamp[0])) {
