@@ -59,6 +59,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+#   define __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__    1
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -87,7 +91,12 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
     bool bUserAllocated;
 
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+    spin_zoom_widget_t tPointers[2];
+    meter_pointer_t tSecPointer;
+#else
     spin_zoom_widget_t tPointers[3];
+#endif
 
     uint32_t chHour;
     uint32_t chMin;

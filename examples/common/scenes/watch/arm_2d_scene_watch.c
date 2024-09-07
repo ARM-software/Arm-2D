@@ -133,6 +133,10 @@ static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
         spin_zoom_widget_on_load(ptPointer);
     }
 
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+    meter_pointer_on_load(&this.tSecPointer);
+#endif
+
 }
 
 static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
@@ -150,6 +154,10 @@ static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
     arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
         spin_zoom_widget_depose(ptPointer);
     }
+
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+    meter_pointer_depose(&this.tSecPointer);
+#endif
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -209,8 +217,11 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
         uint32_t chSec = lTimeStampInMs;
         this.chSec = chSec / 1000;
 
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+        meter_pointer_on_frame_start(&this.tSecPointer, this.chSec, 1.0f);
+#else
         spin_zoom_widget_on_frame_start(&this.tPointers[2], chSec, 1.0f);
-
+#endif
         lTimeStampInMs %= (1000ul);
     } while(0);
 
@@ -229,10 +240,14 @@ static void __on_scene_watch_frame_complete(arm_2d_scene_t *ptScene)
     arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
         spin_zoom_widget_on_frame_complete(ptPointer);
     }
+
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+    meter_pointer_on_frame_complete(&this.tSecPointer);
+#endif
     
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+        //arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
 
@@ -311,6 +326,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
             arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
                 spin_zoom_widget_show(ptPointer, ptTile, &__centre_region, NULL, 255);
             }
+        
+        #if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+                meter_pointer_show(&this.tSecPointer, ptTile, &__centre_region, NULL, 255);
+        #endif
 
         }
 
@@ -374,7 +393,47 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         },
         .bUserAllocated = bUserAllocated,
     };
-    
+
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+    do {
+        meter_pointer_cfg_t tCFG = {
+            .tSpinZoom = {
+                .Indicator = {
+                    .LowerLimit = {
+                        .fAngleInDegree = 0.0f,
+                        .nValue = 0,
+                    },
+                    .UpperLimit = {
+                        .fAngleInDegree = 360.0f,
+                        .nValue = 60,
+                    },
+                    .Step = {
+                        .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
+                    },
+                },
+                .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+                .Source = {
+                    .ptMask = &c_tilePointerSecMask,
+                    .tColourToFill = GLCD_COLOR_RED,
+                },
+                .ptScene = (arm_2d_scene_t *)ptThis,
+            },
+
+            .Pointer = {
+                .bIsSourceHorizontal = false,
+                .iRadius = 100,
+            },
+
+            .tPISliderCFG = {
+                .fProportion = 0.3000f,
+                .fIntegration = 0.150f,
+                .nInterval = 10,
+            }
+
+        };
+        meter_pointer_init(&this.tSecPointer, &tCFG);
+    } while(0);
+#else
     // initialize second pointer
     do {
         s_tPointerSecCenter.iX = (c_tilePointerSecMask.tRegion.tSize.iWidth >> 1);
@@ -404,6 +463,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         };
         spin_zoom_widget_init(&this.tPointers[2], &tCFG);
     } while(0);
+#endif
 
     // initialize minutes pointer
     do {
