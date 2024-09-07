@@ -63,6 +63,8 @@ typedef struct meter_pointer_cfg_t {
     arm_2d_helper_pi_slider_cfg_t tPISliderCFG;
     int32_t nPISliderStartPosition;
 
+    
+
 } meter_pointer_cfg_t;
 
 /*!
@@ -130,7 +132,15 @@ int32_t meter_pointer_get_current_value(meter_pointer_t *ptThis);
 
 extern
 ARM_NONNULL(1)
+int32_t meter_pointer_set_current_value(meter_pointer_t *ptThis, int32_t nValue);
+
+extern
+ARM_NONNULL(1)
 float meter_pointer_get_current_value_f32(meter_pointer_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+float meter_pointer_set_current_value_f32(meter_pointer_t *ptThis, float fValue);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

@@ -98,10 +98,12 @@ typedef struct spin_zoom_widget_cfg_t {
 
 struct spin_zoom_widget_t {
 
-ARM_PRIVATE(
 
+ARM_PROTECTED(
     spin_zoom_widget_cfg_t tCFG;
+)
 
+ARM_PRIVATE(
     union {
         arm_2d_op_fill_cl_msk_opa_trans_t   tFillColourTransform;
         arm_2d_op_trans_msk_opa_t           tTileTransform;

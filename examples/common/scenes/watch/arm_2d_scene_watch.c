@@ -215,11 +215,23 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
     /* calculate the Seconds */
     do {
         uint32_t chSec = lTimeStampInMs;
-        this.chSec = chSec / 1000;
 
 #if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
-        meter_pointer_on_frame_start(&this.tSecPointer, this.chSec, 1.0f);
+
+        chSec /= 1000;
+        if (!(this.chSec == -1 && chSec == 59)) {
+            this.chSec = chSec;
+        }
+
+        if (meter_pointer_on_frame_start(&this.tSecPointer, this.chSec, 1.0f)) {
+            /* when complete, map 59 to -1 */
+            if (59 == this.chSec) {
+                meter_pointer_set_current_value(&this.tSecPointer, -1);
+                this.chSec = -1;
+            }
+        }
 #else
+        this.chSec = chSec / 1000;
         spin_zoom_widget_on_frame_start(&this.tPointers[2], chSec, 1.0f);
 #endif
         lTimeStampInMs %= (1000ul);

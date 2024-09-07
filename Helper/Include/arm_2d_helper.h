@@ -475,6 +475,16 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
                                   int32_t *pnResult);
 
 /*!
+ * \brief reset the PI slider and set the current value
+ * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
+ * \param[in] nCurrent the new current value
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pi_slider_set_current(arm_2d_helper_pi_slider_t *ptThis,
+                                        int32_t nCurrent);
+
+/*!
  * \brief A helper function for Proportional-Integral Control
  * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
  * \param[in] fTargetPosition the new target position 
@@ -482,10 +492,22 @@ bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
  * \retval true the slider has reached the target postion
  * \retval false the slider is still moving
  */
+extern
 ARM_NONNULL( 1, 3 )
 bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
                                  float fTargetPosition,
                                  float *pfResult);
+
+/*!
+ * \brief reset the PI slider and set the current value
+ * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
+ * \param[in] fCurrent the new current value
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pi_slider_set_current_f32(
+                                arm_2d_helper_pi_slider_t *ptThis,
+                                float fCurrent);
 
 /*!
  * \brier draw a box with specified colour, border width and opacity

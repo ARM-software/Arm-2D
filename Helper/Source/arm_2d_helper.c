@@ -481,6 +481,28 @@ bool arm_2d_helper_pi_slider(arm_2d_helper_pi_slider_t *ptThis,
     return bResult;
 }
 
+ARM_NONNULL(1)
+void arm_2d_helper_pi_slider_set_current_f32(arm_2d_helper_pi_slider_t *ptThis,
+                                            float fCurrent)
+{
+    assert( NULL != ptThis );
+    this.fCurrent = fCurrent;
+
+    this.lTimestamp = arm_2d_helper_get_system_timestamp();
+    this.fOP = 0.0f;
+}
+
+ARM_NONNULL(1)
+void arm_2d_helper_pi_slider_set_current(arm_2d_helper_pi_slider_t *ptThis,
+                                        int32_t nCurrent)
+{
+    assert( NULL != ptThis );
+    this.fCurrent = (float)nCurrent;
+
+    this.lTimestamp = arm_2d_helper_get_system_timestamp();
+    this.fOP = 0.0f;
+}
+
 ARM_NONNULL( 1, 3 )
 bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
                                  float fTargetPosition,

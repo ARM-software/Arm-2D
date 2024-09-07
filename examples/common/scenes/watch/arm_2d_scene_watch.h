@@ -100,7 +100,7 @@ ARM_PRIVATE(
 
     uint32_t chHour;
     uint32_t chMin;
-    uint32_t chSec;
+    int32_t chSec;
     uint32_t chMs;
 )
     /* place your public member here */
