@@ -69,7 +69,7 @@ typedef struct {
     int16_t       iBearingY;
     uint8_t       chCodeLength;
     uint8_t       chUTF8[4];
-} __ttf_char_descriptor_t;
+} const __ttf_char_descriptor_t;
 """
 
 

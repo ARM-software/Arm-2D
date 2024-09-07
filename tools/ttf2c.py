@@ -69,7 +69,7 @@ typedef struct {
     int16_t       iBearingY;
     uint8_t       chCodeLength;
     uint8_t       chUTF8[4];
-} __ttf_char_descriptor_t;
+} const __ttf_char_descriptor_t;
 """
 
 
@@ -357,7 +357,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\n __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
                 .format(name, font_bit_size), file=f)
 
         last_index = 0;
@@ -384,7 +384,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.0.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.1.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("--index",          type=int,   help="The Font Index in a TTC file",    required=False,     default=0)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)

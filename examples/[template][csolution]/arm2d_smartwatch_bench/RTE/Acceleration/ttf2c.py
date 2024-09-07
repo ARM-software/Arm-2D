@@ -64,7 +64,7 @@ typedef struct {
     int16_t       iBearingY;
     uint8_t       chCodeLength;
     uint8_t       chUTF8[4];
-} __ttf_char_descriptor_t;
+} const __ttf_char_descriptor_t;
 """
 
 
@@ -385,7 +385,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst static __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\nstatic __ttf_char_descriptor_t c_tUTF8LookUpTableA{0}[] = {{\n"
                 .format(font_bit_size), file=f)
 
         last_index = 0;

@@ -29,7 +29,7 @@ typedef struct {
     int16_t       iBearingY;
     uint8_t       chCodeLength;
     uint8_t       chUTF8[4];
-} __ttf_char_descriptor_t;
+} const __ttf_char_descriptor_t;
 
 ARM_SECTION("arm2d.asset.FONT")
 const static uint8_t c_bmpUTF8UserA1Font[] = {
@@ -151,7 +151,7 @@ const static uint8_t c_bmpUTF8UserA1Font[] = {
 };
 
 ARM_SECTION("arm2d.asset.FONT")
-const static __ttf_char_descriptor_t c_tUTF8LookUpTableA1[] = {
+static __ttf_char_descriptor_t c_tUTF8LookUpTableA1[] = {
 
     { 0, { 23, 36, }, 38, 5, 41, 1, {0x2b} },
     { 36, { 23, 5, }, 38, 5, 25, 1, {0x2d} },
@@ -454,7 +454,7 @@ const static uint8_t c_bmpUTF8UserA2Font[] = {
 };
 
 ARM_SECTION("arm2d.asset.FONT")
-const static __ttf_char_descriptor_t c_tUTF8LookUpTableA2[] = {
+static __ttf_char_descriptor_t c_tUTF8LookUpTableA2[] = {
 
     { 0, { 23, 36, }, 38, 5, 41, 1, {0x2b} },
     { 36, { 23, 5, }, 38, 5, 25, 1, {0x2d} },
@@ -885,7 +885,7 @@ const static uint8_t c_bmpUTF8UserA4Font[] = {
 };
 
 ARM_SECTION("arm2d.asset.FONT")
-const static __ttf_char_descriptor_t c_tUTF8LookUpTableA4[] = {
+static __ttf_char_descriptor_t c_tUTF8LookUpTableA4[] = {
 
     { 0, { 23, 36, }, 38, 5, 41, 1, {0x2b} },
     { 36, { 23, 5, }, 38, 5, 25, 1, {0x2d} },
@@ -1561,7 +1561,7 @@ const static uint8_t c_bmpUTF8UserA8Font[] = {
 };
 
 ARM_SECTION("arm2d.asset.FONT")
-const static __ttf_char_descriptor_t c_tUTF8LookUpTableA8[] = {
+static __ttf_char_descriptor_t c_tUTF8LookUpTableA8[] = {
 
     { 0, { 23, 36, }, 38, 5, 41, 1, {0x2b} },
     { 36, { 23, 5, }, 38, 5, 25, 1, {0x2d} },
