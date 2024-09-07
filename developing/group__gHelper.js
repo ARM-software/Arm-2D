@@ -439,6 +439,7 @@ var group__gHelper =
     [ "__arm_2d_helper_colour_slider", "group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db", null ],
     [ "arm_2d_helper_pi_slider_init", "group__gHelper.html#gaa5946f15d97b62f2c86c018fbb720583", null ],
     [ "arm_2d_helper_pi_slider", "group__gHelper.html#ga8b1bfeda16ff74338c13c604575923b3", null ],
+    [ "arm_2d_helper_pi_slider_f32", "group__gHelper.html#gaac54d64b5a5a15c6ecf803d52f4811fa", null ],
     [ "arm_2d_helper_draw_box", "group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd", null ],
     [ "arm_2d_helper_film_next_frame", "group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04", null ],
     [ "arm_2d_helper_film_reset", "group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b", null ],
