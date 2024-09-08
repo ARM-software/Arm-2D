@@ -76,7 +76,7 @@
 /*============================ IMPLEMENTATION ================================*/
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
-#   efine __va_list    va_list
+#   define __va_list    va_list
 #endif
 
 static 
