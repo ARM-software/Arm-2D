@@ -26,7 +26,7 @@
 - **Arm-2D is NOT a GUI.**
   - No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support
 - **Provide conveniences for Arm eco-partners to create value through differentiation**
-  - Provide the default implementation for commonly used 2.5D operations and **enable 3rd-parties to accelerate application specific algorithms**
+  - Provide the default implementation for commonly used 2.5D operations and **enable 3rd-parties to accelerate application-specific algorithms**
 
 **Current Focus and Objectives:**
 
@@ -61,7 +61,7 @@
 
 ## How to Get Started
 
-Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer, based on the purpose of using Arm-2D, there are two ways to get started:
+Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer based on the purpose of using Arm-2D, there are two ways to get started:
 
 - [Getting Started as an Application Designer](./documentation/getting_started_as_an_application_designer.md)
 
@@ -84,7 +84,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
-  - [1.2 The Problems in current solutions](#12-the-problems-in-current-solutions)
+  - [1.2 The Problems in Current Solutions](#12-the-problems-in-current-solutions)
 - [2 The Platform and Dependency](#2-the-platform-and-dependency)
   - [2.1 Processors and Hardware](#21-processors-and-hardware)
   - [2.2 Dependency](#22-dependency)
@@ -108,7 +108,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - **Alpha-Blending** / **Masks**
   - With or without Colour-Keying
-  - Filling-Colour with an mask and an optional opacity
+  - Filling-Colour with a mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
     - Supports **A1**(**new**), A2, A4 and A8 masks
     - Supports horizontal and vertical line masks
@@ -120,7 +120,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
-  - Provides API variants that accepts **Opacity** as arguments.
+  - Provides API variants that accept **Opacity** as arguments.
   -  Implicit colour conversion for **ARGB8888** (**ccca8888**)
 
 - **Supported Colour formats**
@@ -130,7 +130,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
     - Implicit colour conversion for **ARGB8888** (**ccca8888**)
   - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
-    - Using **Gray8** as the internal processing format and converting to target colour format inside Display Adapter, e.g. `Disp0_DrawBitmap`
+    - Using **Gray8** as the internal processing format and converting to target colour format inside the Display Adapter, e.g. `Disp0_DrawBitmap`
 
 - **Display Adapter Service for connecting LCD**
   - Generic Partial Frame-buffer (PFB)
@@ -153,7 +153,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
 
-  - Supports various Buffer Modes with a built-in framebuffer pool.
+  - Supports various buffering Modes with a built-in frame buffer pool.
     - Single Buffer/Double-Buffers
     - Provides a helper service for Direct Mode
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
@@ -173,22 +173,22 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
   - Supports both **bare-metal** and **RTOS** environments
-  - Ultra small memory footprint
+  - Ultra-small memory footprint
 
-- **Helper Services ,Tools and Others**
+- **Helper Services, Tools and Others**
 
   - **Timer Services**
 
     - Timeout: `arm_2d_helper_is_time_out`
-    - Time based functions:
+    - Time-based functions:
       - Liner: `arm_2d_helper_time_liner_slider`
       - Cosine: `arm_2d_helper_time_cos_slider`
       - S-curve: `arm_2d_helper_time_half_cos_slider`
 
   - **Virtual Resource**
 
-    - Supports loading resources on-demand from external memories that are not mapped into the Cortex-M memory space.
-    - **[new]** Supports backgroud-image-loading mode that requests **NO** extra PFB block. 
+    - Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.
+    - **[new]** Supports background-image-loading mode that requests **NO** extra PFB block. 
 
   - **Layout Assistant**
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
@@ -215,12 +215,12 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
       - Provide dynamic dirty region tracking
       - Double-buffered Angle and Scale updating
   - **Tools**
-    - A `img2c.py` for generating arm-2d resources from user specified images
-    - A `ttf2c.py` for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font
+    - A `img2c.py` for generating arm-2d resources from user-specified images
+    - A `ttf2c.py` for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font
     - A `jinja2c.py` for code generation.
   - **Demos**
     - Demos for various scenarios
-    - An dedicated demo for Helium-ACI acceleration. 
+    - A dedicated demo for Helium-ACI acceleration. 
 
 - **Ready and Welcome 3rd party adoption**
 
@@ -243,13 +243,13 @@ With the increasing introduction of smart IoT edge devices into our daily lives,
 
 Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to facilitate 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as [LVGL](https://lvgl.io/), are gaining popularity on GitHub.
 
-In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. The pursuit of a user experience comparable to that of a smartphone has become a fundamental requirement for many products.
+In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. Pursuing a user experience comparable to a smartphone has become a fundamental requirement for many products.
 
 Interestingly, seemingly complex GUIs are often created using simple techniques like 2D image copying and tiling. Even translucent effects are achievable on microcontrollers running at tens or hundreds of MHz.
 
 Technologies for 2D graphics have been mature since the era of 8-bit gaming consoles. If an 8-bit 6502 processor could produce impressive graphics effects, there is no reason why the most advanced Cortex-M processors today cannot achieve even more.
 
-### 1.2 The Problems in current solutions
+### 1.2 The Problems in Current Solutions
 
 As shown in **Figure 1-2**, Linux based systems have a complete ecosystem that provides GPU drivers and GUI software services. In contrast, resource-constrained embedded systems do not have such luxury. To enhance the MCU ecosystem, Arm-2D is introduced.
 
@@ -259,7 +259,7 @@ As shown in **Figure 1-2**, Linux based systems have a complete ecosystem that p
 
 When we look at the traditionally embedded  GUI architecture(as shown in **Figure 1-3** ), there are four layers: 1) the application and designer layer, 2) the GUI software service layer, 3) the rendering layer, and 3) the hardware driver layer.
 
-**Arm-2D focuses on accelerating the low-level 2D image processing**, and will not touch upper layers of the GUI software stacks, hence avoiding competing with GUI service providers in the same ecosystem. In fact, because Arm has proposed an abstraction layer for the low-level 2D image processing, **a whole ecological level of cooperation can be quickly established** between chip manufacturers that provide hardware accelerators and software providers that provide GUI services. **Everyone can concentrate on enlarging their own values**. For example, by adding arm-2d adaptor drivers for their proprietary 2D accelerators silicon vendors can achieve a wide range of support from GUI providers who build/port their GUI stack upon Arm-2D APIs.
+**Arm-2D focuses on accelerating the low-level 2D image processing**, and will not touch upper layers of the GUI software stacks, hence avoiding competing with GUI service providers in the same ecosystem. In fact, because Arm has proposed an abstraction layer for the low-level 2D image processing, **a whole ecological level of cooperation can be quickly established** between chip manufacturers that provide hardware accelerators and software providers that provide GUI services. **Everyone can concentrate on enlarging their own values**. For example, by adding arm-2d adaptor drivers for their proprietary 2D accelerators, silicon vendors can achieve a wide range of support from GUI providers who build/port their GUI stack upon Arm-2D APIs.
 
 **Figure 1-3 The Hierarchy of a Typical Embedded GUI System.**
 
@@ -278,9 +278,9 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 **The library is designed with ACI (Arm Custom Instructions) in mind.** Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.
 
-**The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.**  The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.
+**The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.**  Accelerators can be supported easily without modifying the existing Arm-2D library or upper-layer software.
 
-**The library is designed with resource constraints in mind.** **For Cortex-M processors with 8K~32K SRAM that cannot afford a complete-framebuffer**, Arm-2D introduces a feature called **Generic Partial Framebuffer** enabling those existing MCUs to run GUI applications in a decent frame rate.
+**The library is designed with resource constraints in mind.** **For Cortex-M processors with 8K~32K SRAM that cannot afford a complete framebuffer**, Arm-2D introduces a feature called **Generic Partial Framebuffer**, enabling those existing MCUs to run GUI applications in a decent frame rate.
 
 ### 2.2 Dependency
 
@@ -297,13 +297,13 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 | Projects                     | Description                                                  | Folder                                | Note |
 | ---------------------------- | ------------------------------------------------------------ | ------------------------------------- | ---- |
 | \[template\]\[bare-metal\]   | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]   |      |
-| \[template\]\[cmsis-rtos2\]  | It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]  |      |
+| \[template\]\[cmsis-rtos2\]  | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]  |      |
 | \[template\]\[pc\]\[vscode\] | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\] |      |
 | \[template\]\[csolution\]    | It is a csolution project template.                          | examples/\[template\]\[csolution\]    |      |
 
 ### 3.2 Benchmark
 
-There is no public 2D image processing benchmark available for microcontrollers. To facilitate the library development and optimization,  we overcome this problem with following methods:
+There is no public 2D image processing benchmark available for microcontrollers. To facilitate the library development and optimization,  we overcome this problem with the following methods:
 
 - **Choose the widely used algorithms in embedded GUI as the body of the benchmark**
   - Alpha-blending
@@ -315,22 +315,22 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - Masking
   - **[new]** Colour-Filling (with alpha gradient)
 - **Simulate a typical application scenario with sufficient complexity**
-  - Background with Texture Tiling (switching mirroring modes every 4 second)
+  - Background with Texture Tiling (switching mirroring modes every 4 seconds)
   - Foreground picture
   - Two constructed layers for alpha-blending and tiling with colour keying
   - Moving icons
   - Spinning busy wheel
 - **Choose a typical low-cost LCD resolution 320*240 in RGB565**
-- **Let those layers float with different angles and speed to cover a sufficient number of conditions.**
+- **Let those layers float at different angles and speeds to cover a sufficient number of conditions.**
 - **Record the cycle count used for blending one frame and run 1000 iterations (frames).**
 
 **Figure 1-4 A snapshot of the generic benchmark running in Simulation**
 
 <img src="./documentation/pictures/benchmark.png" alt="Benchmark"  /> 
 
-- **Use the average cycle count in 1000 iterations as benchmark score.**
+- **Use the average cycle count in 1000 iterations as the benchmark score.**
 
-  - Based on that, for typical embedded application requirement, we derive a more meaningful metrics called the **Minimal Frequency Required for 30 FPS (MHz)** as shown in **Figure 1-5**.
+  - Based on that, for typical embedded application requirements, we derive more meaningful metrics called the **Minimal Frequency Required for 30 FPS (MHz)** as shown in **Figure 1-5**.
 
 **Figure 1-5 Performance Comparison among some Cortex-M processors**
 
@@ -342,7 +342,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 ### 4.1 The Generic Limitations
 
-- The library focus on Cortex-M processors.
+- The library focuses on Cortex-M processors.
 - The library supports the following compilers:
   - Arm Compiler 5 (**Deprecated**)
   - Arm Compiler 6
@@ -350,8 +350,8 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - LLVM
   - IAR
 - The library focus on **Accelerating Low Level Pixel Processing**
-  - In principle, the library will **NOT** provide APIs for content creation, such as drawing shapes, text display etc., but simple point drawing and colour-filling APIs .
-  - In principle, the library will **NOT** provide data structures or algorithms essential for creating a GUI, for example, the element tree, the GUI message handling and the tree traversal algorithms.
+  - In principle, the library will **NOT** provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.
+  - In principle, the library will **NOT** provide data structures or algorithms essential for creating a GUI, such as the element tree, the GUI message handling and the tree traversal algorithms.
 
 ### 4.2 The Temporary Limitations
 
@@ -362,14 +362,14 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 | Folder and File | Type    | Description                                                  |
 | :-------------- | ------- | ------------------------------------------------------------ |
-| **Library**     | Folder  | This folder contains the source files and header files of the library. |
-| **Helper**      | Folder  | This folder contains the source files and header files of helper functions / services. |
+| **Library**     | Folder  | This folder contains the library's source files and header files. |
+| **Helper**      | Folder  | This folder contains the source files and header files of helper functions/services. |
 | Acceleration    | Folder  | This folder contains hardware specific accelerations, e.g. Helium-ACI example in FVP |
 | documentation   | Folder  | This folder contains all the documents.                      |
-| examples        | Folder  | This folder contains all the examples, controls and templates etc. |
+| examples        | Folder  | This folder contains all the examples, controls and templates, etc. |
 | README          | .md     | The README.md you are currently reading.                     |
 | LICENSE         | License | The Apache 2.0 License                                       |
-| tools           | Folder  | This folder contains useful utilities for using the library. For example, img2c.py is a python script that converts specified pictures into the arm2-d tile data structures. |
+| tools           | Folder  | This folder contains useful utilities for using the library. For example, img2c.py is a Python script that converts specified pictures into the arm2-d tile data structures. |
 
 ## 6 Documentation
 
@@ -402,7 +402,7 @@ Your thoughts and feedback are invaluable to us. If you can spend some time tryi
 - Details about the device:
   - Does it contain hardware accelerators for 2D image processing?
   - What is the feature set of this 2D accelerator?
-  - Are there features in the 2D accelerator that are currently missing in this library?
+  - Are there features in the 2D accelerator currently missing in this library?
 - Any other thoughts or suggestions?
 
 Thank you for your time.
