@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['target_0',['Target',['../group__gAlpha.html#abb12f1e1bec961c6fd42537cda257129',1,'arm_2d_op_alpha_cl_key_t::Target()'],['../group__gAlpha.html#a796c41fceb2da2f6386ec59dd69872d9',1,'arm_2d_op_fill_cl_msk_t::Target()'],['../group__gAlpha.html#aa6c4f368529c201cf3d88945e95657e7',1,'arm_2d_op_fill_cl_msk_opc_t::Target()'],['../group__gAlpha.html#ad4936e60f38a2a0bb42f4bcda012a752',1,'arm_2d_op_fill_cl_opc_t::Target()'],['../group__gAlpha.html#a8de52719996c4adcd1692087c13799a8',1,'arm_2d_op_alpha_t::Target()']]],
+  ['tcanvas_1',['tCanvas',['../group__gHelper.html#a64812662df8ef2562d0b4ab62e2a6cff',1,'arm_2d_scene_t']]],
+  ['tcenter_2',['tCenter',['../group__gTransform.html#af28938e370300a48f60257df2ff20241',1,'__arm_2d_transform_info_t']]],
+  ['tcharsize_3',['tCharSize',['../group__gHelper.html#a9a6cdac387af2ac61607310fa1eb722e',1,'arm_2d_font_t']]],
+  ['tdirection_4',['tDirection',['../group__gHelper.html#a7cb2dee12ae53adb466e49351e9dbf45',1,'__arm_2d_list_work_area_t']]],
+  ['tdisplayarea_5',['tDisplayArea',['../group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca',1,'arm_2d_helper_pfb_cfg_t']]],
+  ['tinfo_6',['tInfo',['../group__gKernel.html#af8aad571c70857370861ac3cf2544890',1,'__arm_2d_mem_t']]],
+  ['tlistsize_7',['tListSize',['../group__gHelper.html#ab819d6694c9134bddb53e86d5b249819',1,'__arm_2d_list_core_cfg_t']]],
+  ['tparam_8',['tParam',['../group__gHelper.html#a1433bc4e8532711ae843a50f3e39e8f0',1,'__arm_2d_list_work_area_t']]],
+  ['treat_5fout_5fof_5frange_5fas_5fcomplete_9',['TREAT_OUT_OF_RANGE_AS_COMPLETE',['../group__gKernel.html#ae03a394dafc3dbbc3bca364bc21c902c',1,'arm_2d_runtime_feature_t']]],
+  ['tregion_10',['tRegion',['../group__gHelper.html#ab8277f4623dab0bdc3751d2e03328716',1,'__arm_2d_list_work_area_t::tRegion()'],['../group__gHelper.html#aa17e31540f22ea3e9af8a23332b655e1',1,'arm_2d_region_list_item_t::tRegion()']]],
+  ['tscreensize_11',['tScreenSize',['../group__gHelper.html#abffb99e2538d255f81587b6a6226c018',1,'arm_2d_helper_3fb_cfg_t']]],
+  ['tsize_12',['tSize',['../group__gHelper.html#a3169b2593cba09c104848d881340e3a1',1,'arm_2d_list_item_t']]],
+  ['ttile_13',['tTile',['../group__gHelper.html#a5c06645aaf74ac1f648bc144d614c7aa',1,'arm_2d_pfb_t']]],
+  ['ttransform_14',['tTransform',['../group__gTransform.html#adb77b2696b68897ab5fdbb2ac188f5cd',1,'arm_2d_op_trans_t::tTransform()'],['../group__gTransform.html#a1ee6a99fcab954c06cfdd8e6949c1399',1,'arm_2d_op_trans_opa_t::tTransform()'],['../group__gTransform.html#a2d7ad154879793fc0e49a058f7427c36',1,'arm_2d_op_trans_msk_t::tTransform()'],['../group__gTransform.html#a65cef0e460684c19c92ffa545facb4ec',1,'arm_2d_op_trans_msk_opa_t::tTransform()']]],
+  ['tvalue_15',['tValue',['../group__gKernel.html#a8ca4c52fadfcbc94c68db2f5452531d3',1,'arm_2d_op_status_t']]]
+];
