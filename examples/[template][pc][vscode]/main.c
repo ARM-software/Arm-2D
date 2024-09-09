@@ -334,6 +334,16 @@ int app_2d_main_thread (void *argument)
 #if 1
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
+
+    #if 0
+        /*
+         * Fly-In with Blur background.
+         */
+        arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                                ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_RIGHT,
+                                                ARM_2D_SCENE_SWITCH_CFG_BG_BLUR);
+    #endif
+
     arm_2d_scene_player_set_auto_switching_period(&DISP0_ADAPTER, 3000);
 #else
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
