@@ -49,7 +49,10 @@ extern "C" {
 #   define __ARM_2D_HAS_ASYNC__                                     0
 #endif
 
-// <q>Enable anti-alias support for all tranform operations.
+// <o>Enable Anti-Alias support for all transform operations.
+//     <0=>     No Anti-Alias
+//     <1=>     Use 4x Supersampling Anti-Alias (4xSSAA)
+//     <2=>     Use 2x Supersampling Anti-Alias (2xSSAA)
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
@@ -74,6 +77,12 @@ extern "C" {
 // <i> This feature is disabled by default to improve performance
 #ifndef __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 #   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                 0
+#endif
+
+// <q>Support Scaling for A1, A2 and A4 fonts
+// <i> Note that enabling this feature will reduces performance when using A1, A2 and A4 fonts when using scaling.
+#ifndef __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+#   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        1
 #endif
 // </h>
 

@@ -18,18 +18,14 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
-
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
-
 #define __USER_SCENE_BASICS_IMPLEMENT__
 #include "arm_2d_scene_basics.h"
 
-#include "arm_2d_helper.h"
-#include "arm_2d_example_controls.h"
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include <stdlib.h>
 #include <string.h>
+#include "arm_2d_example_controls.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -95,6 +91,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask2;
 
 extern const arm_2d_tile_t c_tileBackground;
 extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -172,6 +169,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
+    
+        arm_2d_fill_colour_with_4pts_alpha_gradient(
+                                            ptTile, 
+                                            &__top_canvas, 
+                                            (__arm_2d_color_t){GLCD_COLOR_GREEN},
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                {0, 255,
+                                                128, 64},
+                                            });
 
     #if 0
         arm_2d_align_centre(__top_canvas, c_tileBackground.tRegion.tSize) {
@@ -194,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     
                     arm_2d_op_wait_async(NULL);
 
-                #if 1
+                #if 0
                     /* draw the cmsis logo in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
                     #if 0
@@ -223,7 +229,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                 #else
                     /* draw the cmsis logo using mask in the centre of the screen */
                     arm_2d_align_centre(__item_region, c_tileCMSISLogo.tRegion.tSize) {
-                    #if 1
+                    #if 0
                         arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                             ptTile, 
                                                             &__centre_region, 
@@ -231,12 +237,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                             (__arm_2d_color_t){GLCD_COLOR_BLACK},
                                                             128);
                     #else
-                        arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
-                                                            ptTile, 
-                                                            &__centre_region, 
-                                                            &c_tileCMSISLogoMask2, 
-                                                            (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                            128);
+                        arm_2d_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(
+                                            ptTile, 
+                                            &__centre_region,
+                                            &c_tileCMSISLogoMask,
+                                            (__arm_2d_color_t){GLCD_COLOR_BLUE},
+                                            255,
+                                            (arm_2d_alpha_samples_4pts_t) {
+                                                {255, 0,
+                                                128, 32},
+                                            });
+                        
                     #endif
                     }
                 #endif
@@ -256,7 +267,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
                                             GLCD_COLOR_WHITE, 
-                                            255,
+                                            128,
                                             bIsNewFrame);
                     
                     arm_2d_op_wait_async(NULL);
@@ -275,7 +286,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                 .use_as__arm_2d_font_t
                                                     .tCharSize.iHeight) {
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    
+                    #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+                    #else
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
+                    #endif
+
                         arm_lcd_text_set_draw_region(&__vertical_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
                         arm_lcd_text_location(0,0);

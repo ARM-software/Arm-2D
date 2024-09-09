@@ -210,6 +210,7 @@ typedef union arm_2d_log_chn_t {
 } arm_2d_log_chn_t;
 
 
+#if __ARM_2D_CFG_ENABLE_LOG__
 __WEAK
 void __arm_2d_log_printf(int32_t nIndentLevel, 
                          uint32_t wChannelMask,
@@ -278,6 +279,20 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
     }
 
 }
+#else
+__WEAK
+void __arm_2d_log_printf(int32_t nIndentLevel, 
+                         uint32_t wChannelMask,
+                         const char *pchPrefix,
+                         const char *pchFormatString,
+                         ...)
+{
+    ARM_2D_UNUSED(nIndentLevel);
+    ARM_2D_UNUSED(wChannelMask);
+    ARM_2D_UNUSED(pchPrefix);
+    ARM_2D_UNUSED(pchFormatString);
+}
+#endif
 
 
 __WEAK

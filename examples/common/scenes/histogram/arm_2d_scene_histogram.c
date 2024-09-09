@@ -190,7 +190,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
         
-    #if 1
+    #if 0
         arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
             arm_2d_tile_copy_only(
                 &c_tileHelium,
