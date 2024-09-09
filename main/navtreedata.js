@@ -36,7 +36,7 @@ var NAVTREE =
       ] ],
       [ "1 Introduction", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md8", [
         [ "1.1 The Background", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md9", null ],
-        [ "1.2 The Problems in current solutions", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md10", null ]
+        [ "1.2 The Problems in Current Solutions", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md10", null ]
       ] ],
       [ "2 The Platform and Dependency", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md11", [
         [ "2.1 Processors and Hardware", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md12", null ],

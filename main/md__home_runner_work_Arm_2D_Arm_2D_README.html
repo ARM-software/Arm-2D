@@ -135,7 +135,7 @@ Overview</h1>
 </ul>
 </li>
 <li><b>Provide conveniences for Arm eco-partners to create value through differentiation</b><ul>
-<li>Provide the default implementation for commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application specific algorithms</b></li>
+<li>Provide the default implementation for commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application-specific algorithms</b></li>
 </ul>
 </li>
 </ul>
@@ -188,7 +188,7 @@ Key Messages for You</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
 How to Get Started</h1>
-<p >Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer, based on the purpose of using Arm-2D, there are two ways to get started:</p>
+<p >Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer based on the purpose of using Arm-2D, there are two ways to get started:</p>
 <ul>
 <li><p class="startli"><a class="el" href="md_getting_started_as_an_application_designer.html">Getting Started as an Application Designer</a></p>
 <p class="startli">In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, so such systems cannot afford the cost of a decent GUI stack. Meanwhile, such a low-cost system usually won't have a complex graphical user interface, hence application developers can directly use the arm-2d APIs to draw the panels and scenes.</p>
@@ -211,7 +211,7 @@ Table of Content</h1>
 </li>
 <li><a href="#1-introduction">1 Introduction</a><ul>
 <li><a href="#11-the-background">1.1 The Background</a></li>
-<li><a href="#12-the-problems-in-current-solutions">1.2 The Problems in current solutions</a></li>
+<li><a href="#12-the-problems-in-current-solutions">1.2 The Problems in Current Solutions</a></li>
 </ul>
 </li>
 <li><a href="#2-the-platform-and-dependency">2 The Platform and Dependency</a><ul>
@@ -242,7 +242,7 @@ In this version (ver1.2.0)</h2>
 <li><b>CMSIS-Pack is available.</b></li>
 <li><b>Alpha-Blending</b> / <b>Masks</b><ul>
 <li>With or without Colour-Keying</li>
-<li>Filling-Colour with an mask and an optional opacity<ul>
+<li>Filling-Colour with a mask and an optional opacity<ul>
 <li>For drawing anti-alias icons/texts in a specified colour</li>
 <li>Supports <b>A1</b>(<b>new</b>), A2, A4 and A8 masks</li>
 <li>Supports horizontal and vertical line masks</li>
@@ -259,7 +259,7 @@ In this version (ver1.2.0)</h2>
 <li>With or without Colour-Keying</li>
 <li>Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring</li>
 <li>Supports <b>masks</b> on the source side and/or the target side</li>
-<li>Provides API variants that accepts <b>Opacity</b> as arguments.</li>
+<li>Provides API variants that accept <b>Opacity</b> as arguments.</li>
 <li>Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
 </ul>
 </li>
@@ -271,7 +271,7 @@ In this version (ver1.2.0)</h2>
 </ul>
 </li>
 <li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>e-ink displays</b> (the 2bits and 4bits colour formats)<ul>
-<li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
+<li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside the Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
 </ul>
 </li>
 </ul>
@@ -304,7 +304,7 @@ In this version (ver1.2.0)</h2>
 </li>
 <li>Supports swapping high and low bytes for RGB16 pixels</li>
 <li>Provides a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
-<li>Supports various Buffer Modes with a built-in framebuffer pool.<ul>
+<li>Supports various buffering Modes with a built-in frame buffer pool.<ul>
 <li>Single Buffer/Double-Buffers</li>
 <li>Provides a helper service for Direct Mode</li>
 <li>Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)</li>
@@ -328,13 +328,13 @@ In this version (ver1.2.0)</h2>
 <p ><b>An Unified and User-Friendly Programmers' Model</b></p><ul>
 <li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic Blocking-code</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
 <li>Supports both <b>bare-metal</b> and <b>RTOS</b> environments</li>
-<li>Ultra small memory footprint</li>
+<li>Ultra-small memory footprint</li>
 </ul>
-<p ><b>Helper Services ,Tools and Others</b></p>
+<p ><b>Helper Services, Tools and Others</b></p>
 <ul>
 <li><b>Timer Services</b><ul>
 <li>Timeout: <code>arm_2d_helper_is_time_out</code></li>
-<li>Time based functions:<ul>
+<li>Time-based functions:<ul>
 <li>Liner: <code>arm_2d_helper_time_liner_slider</code></li>
 <li>Cosine: <code>arm_2d_helper_time_cos_slider</code></li>
 <li>S-curve: <code>arm_2d_helper_time_half_cos_slider</code></li>
@@ -343,8 +343,8 @@ In this version (ver1.2.0)</h2>
 </ul>
 </li>
 <li><b>Virtual Resource</b><ul>
-<li>Supports loading resources on-demand from external memories that are not mapped into the Cortex-M memory space.</li>
-<li><b>[new]</b> Supports backgroud-image-loading mode that requests <b>NO</b> extra PFB block.</li>
+<li>Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.</li>
+<li><b>[new]</b> Supports background-image-loading mode that requests <b>NO</b> extra PFB block.</li>
 </ul>
 </li>
 <li><b>Layout Assistant</b><ul>
@@ -372,14 +372,14 @@ In this version (ver1.2.0)</h2>
 </ul>
 </li>
 <li><b>Tools</b><ul>
-<li>A <code>img2c.py</code> for generating arm-2d resources from user specified images</li>
-<li>A <code>ttf2c.py</code> for generating user customized A1, A2, A4 and A8 fonts from an user specified TrueType Font</li>
+<li>A <code>img2c.py</code> for generating arm-2d resources from user-specified images</li>
+<li>A <code>ttf2c.py</code> for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font</li>
 <li>A <code>jinja2c.py</code> for code generation.</li>
 </ul>
 </li>
 <li><b>Demos</b><ul>
 <li>Demos for various scenarios</li>
-<li>An dedicated demo for Helium-ACI acceleration.</li>
+<li>A dedicated demo for Helium-ACI acceleration.</li>
 </ul>
 </li>
 </ul>
@@ -401,16 +401,16 @@ New Features Planned in the Future</h2>
 1.1 The Background</h2>
 <p >With the increasing introduction of smart IoT edge devices into our daily lives, users accustomed to smartphone-like graphical user interfaces (GUIs) now expect a similar modernized experience, even when using microcontroller-based products. This trend has been long recognized and understood by Arm's ecosystem partners.</p>
 <p >Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to facilitate 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as <a href="https://lvgl.io/">LVGL</a>, are gaining popularity on GitHub.</p>
-<p >In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. The pursuit of a user experience comparable to that of a smartphone has become a fundamental requirement for many products.</p>
+<p >In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. Pursuing a user experience comparable to a smartphone has become a fundamental requirement for many products.</p>
 <p >Interestingly, seemingly complex GUIs are often created using simple techniques like 2D image copying and tiling. Even translucent effects are achievable on microcontrollers running at tens or hundreds of MHz.</p>
 <p >Technologies for 2D graphics have been mature since the era of 8-bit gaming consoles. If an 8-bit 6502 processor could produce impressive graphics effects, there is no reason why the most advanced Cortex-M processors today cannot achieve even more.</p>
 <h2><a class="anchor" id="autotoc_md10"></a>
-1.2 The Problems in current solutions</h2>
+1.2 The Problems in Current Solutions</h2>
 <p >As shown in <b>Figure 1-2</b>, Linux based systems have a complete ecosystem that provides GPU drivers and GUI software services. In contrast, resource-constrained embedded systems do not have such luxury. To enhance the MCU ecosystem, Arm-2D is introduced.</p>
 <p ><b>Figure 1-2 Ecosystem Comparison between Rich Embedded and Constraint Embedded System in GUI</b></p>
 <p ><img src="TopReadme_1_2a.png" alt="" class="inline" title="Ecosystem Comparison"/></p>
 <p >When we look at the traditionally embedded GUI architecture(as shown in <b>Figure 1-3</b> ), there are four layers: 1) the application and designer layer, 2) the GUI software service layer, 3) the rendering layer, and 3) the hardware driver layer.</p>
-<p ><b>Arm-2D focuses on accelerating the low-level 2D image processing</b>, and will not touch upper layers of the GUI software stacks, hence avoiding competing with GUI service providers in the same ecosystem. In fact, because Arm has proposed an abstraction layer for the low-level 2D image processing, <b>a whole ecological level of cooperation can be quickly established</b> between chip manufacturers that provide hardware accelerators and software providers that provide GUI services. <b>Everyone can concentrate on enlarging their own values</b>. For example, by adding arm-2d adaptor drivers for their proprietary 2D accelerators silicon vendors can achieve a wide range of support from GUI providers who build/port their GUI stack upon Arm-2D APIs.</p>
+<p ><b>Arm-2D focuses on accelerating the low-level 2D image processing</b>, and will not touch upper layers of the GUI software stacks, hence avoiding competing with GUI service providers in the same ecosystem. In fact, because Arm has proposed an abstraction layer for the low-level 2D image processing, <b>a whole ecological level of cooperation can be quickly established</b> between chip manufacturers that provide hardware accelerators and software providers that provide GUI services. <b>Everyone can concentrate on enlarging their own values</b>. For example, by adding arm-2d adaptor drivers for their proprietary 2D accelerators, silicon vendors can achieve a wide range of support from GUI providers who build/port their GUI stack upon Arm-2D APIs.</p>
 <p ><b>Figure 1-3 The Hierarchy of a Typical Embedded GUI System.</b></p>
 <p ><img src="TopReadme_1_2b.png" alt="" class="inline" title="The Hierarchy of a Typical Embedded GUI System"/></p>
 <h1><a class="anchor" id="autotoc_md11"></a>
@@ -425,8 +425,8 @@ New Features Planned in the Future</h2>
 <li>Armv8.1-M processors: Cortex-M55/M85/M52</li>
 </ul>
 <p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.</p>
-<p ><b>The library is designed with 2D image accelerators in mind and following the feature-agnostic principle.</b> The Support for accelerators can be added easily without modifying the existing Arm-2D library or upper-layer software.</p>
-<p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 8K~32K SRAM that cannot afford a complete-framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b> enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
+<p ><b>The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.</b> Accelerators can be supported easily without modifying the existing Arm-2D library or upper-layer software.</p>
+<p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 8K~32K SRAM that cannot afford a complete framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b>, enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
 <h2><a class="anchor" id="autotoc_md13"></a>
 2.2 Dependency</h2>
 <ul>
@@ -450,7 +450,7 @@ New Features Planned in the Future</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">[template][bare-metal]   </td><td class="markdownTableBodyNone">It is a project template for the bare-metal environment.   </td><td class="markdownTableBodyNone">examples/[template][bare-metal]   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">[template][cmsis-rtos2]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which use CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2]   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">[template][cmsis-rtos2]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2]   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">[template][pc][vscode]   </td><td class="markdownTableBodyNone">It is a project template for PC (i.e. <b>MacOS</b>, <b>Windows</b> and <b>Linux</b>) using <b>VS Code + SDL2</b>   </td><td class="markdownTableBodyNone">examples/[template][pc][vscode]   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
@@ -458,7 +458,7 @@ New Features Planned in the Future</h2>
 </table>
 <h2><a class="anchor" id="autotoc_md16"></a>
 3.2 Benchmark</h2>
-<p >There is no public 2D image processing benchmark available for microcontrollers. To facilitate the library development and optimization, we overcome this problem with following methods:</p>
+<p >There is no public 2D image processing benchmark available for microcontrollers. To facilitate the library development and optimization, we overcome this problem with the following methods:</p>
 <ul>
 <li><b>Choose the widely used algorithms in embedded GUI as the body of the benchmark</b><ul>
 <li>Alpha-blending</li>
@@ -472,7 +472,7 @@ New Features Planned in the Future</h2>
 </ul>
 </li>
 <li><b>Simulate a typical application scenario with sufficient complexity</b><ul>
-<li>Background with Texture Tiling (switching mirroring modes every 4 second)</li>
+<li>Background with Texture Tiling (switching mirroring modes every 4 seconds)</li>
 <li>Foreground picture</li>
 <li>Two constructed layers for alpha-blending and tiling with colour keying</li>
 <li>Moving icons</li>
@@ -480,14 +480,14 @@ New Features Planned in the Future</h2>
 </ul>
 </li>
 <li><b>Choose a typical low-cost LCD resolution 320*240 in RGB565</b></li>
-<li><b>Let those layers float with different angles and speed to cover a sufficient number of conditions.</b></li>
+<li><b>Let those layers float at different angles and speeds to cover a sufficient number of conditions.</b></li>
 <li><b>Record the cycle count used for blending one frame and run 1000 iterations (frames).</b></li>
 </ul>
 <p ><b>Figure 1-4 A snapshot of the generic benchmark running in Simulation</b></p>
 <p ><img src="./documentation/pictures/benchmark.png" alt="Benchmark" class="inline"/></p>
 <ul>
-<li><b>Use the average cycle count in 1000 iterations as benchmark score.</b><ul>
-<li>Based on that, for typical embedded application requirement, we derive a more meaningful metrics called the <b>Minimal Frequency Required for 30 FPS (MHz)</b> as shown in <b>Figure 1-5</b>.</li>
+<li><b>Use the average cycle count in 1000 iterations as the benchmark score.</b><ul>
+<li>Based on that, for typical embedded application requirements, we derive more meaningful metrics called the <b>Minimal Frequency Required for 30 FPS (MHz)</b> as shown in <b>Figure 1-5</b>.</li>
 </ul>
 </li>
 </ul>
@@ -498,7 +498,7 @@ New Features Planned in the Future</h2>
 <h2><a class="anchor" id="autotoc_md18"></a>
 4.1 The Generic Limitations</h2>
 <ul>
-<li>The library focus on Cortex-M processors.</li>
+<li>The library focuses on Cortex-M processors.</li>
 <li>The library supports the following compilers:<ul>
 <li>Arm Compiler 5 (<b>Deprecated</b>)</li>
 <li>Arm Compiler 6</li>
@@ -508,8 +508,8 @@ New Features Planned in the Future</h2>
 </ul>
 </li>
 <li>The library focus on <b>Accelerating Low Level Pixel Processing</b><ul>
-<li>In principle, the library will <b>NOT</b> provide APIs for content creation, such as drawing shapes, text display etc., but simple point drawing and colour-filling APIs .</li>
-<li>In principle, the library will <b>NOT</b> provide data structures or algorithms essential for creating a GUI, for example, the element tree, the GUI message handling and the tree traversal algorithms.</li>
+<li>In principle, the library will <b>NOT</b> provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.</li>
+<li>In principle, the library will <b>NOT</b> provide data structures or algorithms essential for creating a GUI, such as the element tree, the GUI message handling and the tree traversal algorithms.</li>
 </ul>
 </li>
 </ul>
@@ -525,21 +525,21 @@ New Features Planned in the Future</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Folder and File   </th><th class="markdownTableHeadNone">Type   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>Library</b>   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains the source files and header files of the library.    </td></tr>
+<td class="markdownTableBodyLeft"><b>Library</b>   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains the library's source files and header files.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>Helper</b>   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains the source files and header files of helper functions / services.    </td></tr>
+<td class="markdownTableBodyLeft"><b>Helper</b>   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains the source files and header files of helper functions/services.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">Acceleration   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains hardware specific accelerations, e.g. Helium-ACI example in FVP    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">documentation   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains all the documents.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">examples   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains all the examples, controls and templates etc.    </td></tr>
+<td class="markdownTableBodyLeft">examples   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains all the examples, controls and templates, etc.    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">README   </td><td class="markdownTableBodyNone">.md   </td><td class="markdownTableBodyNone">The README.md you are currently reading.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">LICENSE   </td><td class="markdownTableBodyNone">License   </td><td class="markdownTableBodyNone">The Apache 2.0 License    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">tools   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains useful utilities for using the library. For example, img2c.py is a python script that converts specified pictures into the arm2-d tile data structures.   </td></tr>
+<td class="markdownTableBodyLeft">tools   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains useful utilities for using the library. For example, img2c.py is a Python script that converts specified pictures into the arm2-d tile data structures.   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md21"></a>
 6 Documentation</h1>
@@ -586,7 +586,7 @@ New Features Planned in the Future</h2>
 <li>Details about the device:<ul>
 <li>Does it contain hardware accelerators for 2D image processing?</li>
 <li>What is the feature set of this 2D accelerator?</li>
-<li>Are there features in the 2D accelerator that are currently missing in this library?</li>
+<li>Are there features in the 2D accelerator currently missing in this library?</li>
 </ul>
 </li>
 <li>Any other thoughts or suggestions?</li>
