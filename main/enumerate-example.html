@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arm-2D: Getting Started as an Professional User</title>
+<title>Arm-2D: enumerate</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,7 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('md_getting_started_as_a_professional_user.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('enumerate-example.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -103,48 +103,21 @@ $(document).ready(function(){initNavTree('md_getting_started_as_a_professional_u
 </iframe>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Getting Started as an Professional User </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">enumerate</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md55"></a>
-"I am interested in the implementation"</h2>
-<ul>
-<li>We apologise that at the current stage (it's the early stage, as you can see), there is no sufficient guidance or documents about:<ul>
-<li>How the library is implemented</li>
-<li>How to contribute</li>
-<li>How to add new features</li>
-<li>What's the design principles behind the code</li>
-<li>What's the structure of the design in details</li>
-</ul>
-</li>
-<li>Some design considerations:<ul>
-<li>The library supports <b>Arm Compiler 5/6</b>, <b>GCC</b>, <b>LLVM</b> and <b>IAR</b>.</li>
-<li>The library supports <b>ALL</b> Cortex-M processors. There should be no problem for working with existing Cortex-M processors, i.e. <b>Cortex-M0/M0+/M1/M3/M4/M7/M23/M33/Star-MC1/M35P/M55/M85</b>. If you find any issue, please feel free to let us know.</li>
-<li>The library is designed with some <b>OOPC</b> (Object-Oriented Programming with ANSI-C) methodologies. And the bottom line is that any methods and tricks adopted in this library should come with no or very little cost.</li>
-</ul>
-</li>
-<li>This library is compliant with <b>C11</b> standard and uses some <b>widely accepted GCC extensions</b>:<ul>
-<li><a href="https://gcc.gnu.org/onlinedocs/gcc/Variadic-Macros.html#Variadic-Macros">Macros with a Variable Number of Arguments</a></li>
-<li><a href="https://gcc.gnu.org/onlinedocs/gcc/Alignment.html#Alignment"><em><b>__alignof__()</b></em></a></li>
-<li><a href="https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html">Unnamed Structure and Union Fields</a></li>
-<li><a href="https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html#Statement-Exprs">Statements and Declarations in Expressions</a></li>
-</ul>
-</li>
-<li>Some of the definitions are written with the support of the <b>Microsoft Extensions</b> in mind ( <code>-fms-extensions</code> ), but <b>the library never depends on it</b>. This means that if programmers enable the support of the Microsoft Extensions in their project, they can benefit from it.</li>
-<li>This library follows <em><b>"Using Extensions to replace Modifications"</b></em> principle<ul>
-<li>Keywords <code>__WEAK</code> and <code>__OVERRIDE_WEAK</code> are introduced for default functions and extensions; it is similar to the concept of "virtual functions" and "override functions" in C#.<ul>
-<li><code>arm_2d_async.c</code> is used to override some infrastructure functions in <code>arm_2d.c</code> to support asynchronous mode in the programmers' mode. <br  />
-</li>
-<li><em><b>arm_2d_helium.c</b></em> is used to override some default software algorithm implementations across the library.</li>
-</ul>
-</li>
-<li>For the way of adding supports for hardware accelerations. Please click to <a class="el" href="md_how_to_accelerate_arm_2d.html">here</a> for details. </li>
-</ul>
-</li>
-</ul>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+<p >a helper macro to enumerate nodes in the target element tree with a given traversal policy </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__ROOT</td><td>the root node of the target element tree </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">__ITEM_NAME</td><td>the pointer variable name represents the current node </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>traversal policy. Please ignore the prefix ARM_2D_CONTROL_ENUMERATION_POLICY_xxxxx</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>each nodes in ptRoot using preorder traversal policy: arm_ctrl_foreach(ptRoot, ptItem, PREORDER_TRAVERSAL) { ... ptItem-&gt;tRegion.xxxx ... ptItem-&gt;xxxx ... ... } <br  />
+</p>
+<div class="fragment"> </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

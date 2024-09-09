@@ -2,35 +2,38 @@ var group__gAlpha =
 [
     [ "arm_2d_op_alpha_t", "group__gAlpha.html#structarm__2d__op__alpha__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#aea403a4255e444d2b886f48e9a07bbb8", null ],
-      [ "Target", "group__gAlpha.html#a1a768d5cee2a53da8f3295eb6e464a72", null ],
-      [ "Source", "group__gAlpha.html#a7c6d75e503d7efc96683b9c5afea8fce", null ],
+      [ "Target", "group__gAlpha.html#a8de52719996c4adcd1692087c13799a8", null ],
+      [ "Source", "group__gAlpha.html#a965d51d7f6db25acde362e81299b042f", null ],
       [ "wMode", "group__gAlpha.html#a62e802b58cbaf51f05e8b5ec41436da8", null ],
       [ "chRatio", "group__gAlpha.html#ad388497db0e4fd29a1dcffa9a8124d5b", null ]
     ] ],
     [ "arm_2d_op_alpha_cl_key_t", "group__gAlpha.html#structarm__2d__op__alpha__cl__key__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#aa25ee06c23b4722003bbbf0abaf6b995", null ],
-      [ "Target", "group__gAlpha.html#aefef78f0447140df96f7813c5f99e118", null ],
-      [ "Source", "group__gAlpha.html#afae10839e516e5e63ebc735e988be03b", null ],
+      [ "Target", "group__gAlpha.html#abb12f1e1bec961c6fd42537cda257129", null ],
+      [ "Source", "group__gAlpha.html#afe509a870d5c55890f1f20d3b09a0a91", null ],
       [ "wMode", "group__gAlpha.html#a1116adbfe72a3d50257f9fcb6c2d05b2", null ],
       [ "chRatio", "group__gAlpha.html#a847ada916032c171108dd3c81e465d32", null ]
     ] ],
     [ "arm_2d_op_fill_cl_msk_t", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#a6dce4413320f2aa7ead0a8deeba8fa1c", null ],
-      [ "Target", "group__gAlpha.html#a9450cb4c798597ec95a67826e0679a9e", null ],
-      [ "Mask", "group__gAlpha.html#ac7f768fcf00eb621d206aade9053ab44", null ],
+      [ "Target", "group__gAlpha.html#a796c41fceb2da2f6386ec59dd69872d9", null ],
+      [ "Mask", "group__gAlpha.html#a7f27bb76426a97835ab35ceaefee06b7", null ],
       [ "wMode", "group__gAlpha.html#a3eecb67b068680cf206df2a75eefb2f0", null ]
     ] ],
     [ "arm_2d_op_fill_cl_msk_opc_t", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__opc__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#ae7f1581159de276fd1752c9bcec52cb2", null ],
-      [ "Target", "group__gAlpha.html#afd8ed7e1316410a09c43da525fb63ee4", null ],
-      [ "Mask", "group__gAlpha.html#a57bbe38a34cb001919c9401c4fec89d4", null ],
+      [ "Target", "group__gAlpha.html#aa6c4f368529c201cf3d88945e95657e7", null ],
+      [ "Mask", "group__gAlpha.html#ae630a612480a07cc7f661c9dda49bf0b", null ],
       [ "wMode", "group__gAlpha.html#ad0254d07a5cbfb009bec898443245c98", null ]
     ] ],
     [ "arm_2d_op_fill_cl_opc_t", "group__gAlpha.html#structarm__2d__op__fill__cl__opc__t", [
       [ "arm_2d_op_core_t", "group__gAlpha.html#a434790e4bf185ebc635e88a3bb8233d6", null ],
-      [ "Target", "group__gAlpha.html#ad1d2690634348b2f8d6af618d7284816", null ],
+      [ "Target", "group__gAlpha.html#ad4936e60f38a2a0bb42f4bcda012a752", null ],
       [ "chRatio", "group__gAlpha.html#a08ddfde2b216f45914bf76fe86b63cae", null ]
     ] ],
+    [ "arm_2d_fill_cl_4p_al_grd_t", "group__gAlpha.html#structarm__2d__fill__cl__4p__al__grd__t", null ],
+    [ "arm_2d_fill_cl_3p_al_grd_t", "group__gAlpha.html#structarm__2d__fill__cl__3p__al__grd__t", null ],
+    [ "arm_2d_fill_cl_2p_al_grd_t", "group__gAlpha.html#structarm__2d__fill__cl__2p__al__grd__t", null ],
     [ "arm_2d_op_alpha_t.Target", "group__gAlpha.html#structarm__2d__op__alpha__t_8Target", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gAlpha.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
@@ -45,7 +48,7 @@ var group__gAlpha =
     [ "arm_2d_op_alpha_cl_key_t.Source", "group__gAlpha.html#structarm__2d__op__alpha__cl__key__t_8Source", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_alpha_cl_key_t.__unnamed119__", "group__gAlpha.html#unionarm__2d__op__alpha__cl__key__t_8____unnamed119____", [
+    [ "arm_2d_op_alpha_cl_key_t.__unnamed148__", "group__gAlpha.html#unionarm__2d__op__alpha__cl__key__t_8____unnamed148____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -57,7 +60,7 @@ var group__gAlpha =
     [ "arm_2d_op_fill_cl_msk_t.Mask", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__t_8Mask", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_msk_t.__unnamed123__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__t_8____unnamed123____", [
+    [ "arm_2d_op_fill_cl_msk_t.__unnamed152__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__t_8____unnamed152____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -69,23 +72,32 @@ var group__gAlpha =
     [ "arm_2d_op_fill_cl_msk_opc_t.Mask", "group__gAlpha.html#structarm__2d__op__fill__cl__msk__opc__t_8Mask", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed127__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed127____", [
+    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed156__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed156____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed129__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed129____", [
+    [ "arm_2d_op_fill_cl_msk_opc_t.__unnamed158__", "group__gAlpha.html#unionarm__2d__op__fill__cl__msk__opc__t_8____unnamed158____", [
       [ "chRatio", "group__gAlpha.html#a76aae367b0d10ccb4492541180f67787", null ]
     ] ],
     [ "arm_2d_op_fill_cl_opc_t.Target", "group__gAlpha.html#structarm__2d__op__fill__cl__opc__t_8Target", [
       [ "ptTile", "group__gAlpha.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gAlpha.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
     ] ],
-    [ "arm_2d_op_fill_cl_opc_t.__unnamed132__", "group__gAlpha.html#unionarm__2d__op__fill__cl__opc__t_8____unnamed132____", [
+    [ "arm_2d_op_fill_cl_opc_t.__unnamed161__", "group__gAlpha.html#unionarm__2d__op__fill__cl__opc__t_8____unnamed161____", [
       [ "chColour", "group__gAlpha.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__gAlpha.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
     ] ],
+    [ "arm_2d_fill_cl_4p_al_grd_t.__unnamed167__", "group__gAlpha.html#structarm__2d__fill__cl__4p__al__grd__t_8____unnamed167____", null ],
+    [ "arm_2d_fill_cl_4p_al_grd_t.__unnamed167__.__unnamed169__", "group__gAlpha.html#unionarm__2d__fill__cl__4p__al__grd__t_8____unnamed167_____8____unnamed169____", null ],
+    [ "arm_2d_fill_cl_4p_al_grd_t.__unnamed167__.__unnamed171__", "group__gAlpha.html#unionarm__2d__fill__cl__4p__al__grd__t_8____unnamed167_____8____unnamed171____", null ],
+    [ "arm_2d_fill_cl_3p_al_grd_t.__unnamed173__", "group__gAlpha.html#structarm__2d__fill__cl__3p__al__grd__t_8____unnamed173____", null ],
+    [ "arm_2d_fill_cl_3p_al_grd_t.__unnamed173__.__unnamed175__", "group__gAlpha.html#unionarm__2d__fill__cl__3p__al__grd__t_8____unnamed173_____8____unnamed175____", null ],
+    [ "arm_2d_fill_cl_3p_al_grd_t.__unnamed173__.__unnamed177__", "group__gAlpha.html#unionarm__2d__fill__cl__3p__al__grd__t_8____unnamed173_____8____unnamed177____", null ],
+    [ "arm_2d_fill_cl_2p_al_grd_t.__unnamed179__", "group__gAlpha.html#structarm__2d__fill__cl__2p__al__grd__t_8____unnamed179____", null ],
+    [ "arm_2d_fill_cl_2p_al_grd_t.__unnamed179__.__unnamed181__", "group__gAlpha.html#unionarm__2d__fill__cl__2p__al__grd__t_8____unnamed179_____8____unnamed181____", null ],
+    [ "arm_2d_fill_cl_2p_al_grd_t.__unnamed179__.__unnamed183__", "group__gAlpha.html#unionarm__2d__fill__cl__2p__al__grd__t_8____unnamed179_____8____unnamed183____", null ],
     [ "arm_2d_op_cp_msk_t", "group__gAlpha.html#ga8d81a82d787906c56381e84f8944969f", null ],
     [ "arm_2dp_gray8_tile_copy_with_opacity", "group__gAlpha.html#ga22fd2987861065addd8dc0a915978c45", null ],
     [ "arm_2dp_rgb565_tile_copy_with_opacity", "group__gAlpha.html#ga551075b704424bdff95c9aab795841d1", null ],
@@ -93,6 +105,9 @@ var group__gAlpha =
     [ "arm_2dp_gray8_fill_colour_with_opacity", "group__gAlpha.html#ga3b9f690962ca54aa2a895e77958ee522", null ],
     [ "arm_2dp_rgb565_fill_colour_with_opacity", "group__gAlpha.html#ga726c4f2b32a0243c953b2a62bdf2d72a", null ],
     [ "arm_2dp_cccn888_fill_colour_with_opacity", "group__gAlpha.html#ga68b7fdd26e2ac52f458457d428c2fa34", null ],
+    [ "arm_2dp_gray8_fill_colour_with_a1_mask", "group__gAlpha.html#ga6108f8dfed628e237155db33d1c212b2", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_a1_mask", "group__gAlpha.html#ga59eed8a7dd7d2b8bc2a36bc8d5de7345", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_a1_mask", "group__gAlpha.html#ga96d9ea7f1b3770855c44fb593626be9e", null ],
     [ "arm_2dp_gray8_fill_colour_with_a2_mask", "group__gAlpha.html#ga9c827e92a33e5eaf1b95930cae3268ad", null ],
     [ "arm_2dp_rgb565_fill_colour_with_a2_mask", "group__gAlpha.html#gaca38c4140a90b17ae71efcb43a4bff8c", null ],
     [ "arm_2dp_cccn888_fill_colour_with_a2_mask", "group__gAlpha.html#ga14972e0a53a1bd3d8029e9ad6711aba4", null ],
@@ -102,6 +117,9 @@ var group__gAlpha =
     [ "arm_2dp_gray8_fill_colour_with_mask", "group__gAlpha.html#gac3699d67847ddc3bea0a848e756f4c18", null ],
     [ "arm_2dp_rgb565_fill_colour_with_mask", "group__gAlpha.html#gaaa694b86a24ae15b092de1aa5dd0dea9", null ],
     [ "arm_2dp_cccn888_fill_colour_with_mask", "group__gAlpha.html#gae8c504c6f2ebe3b72a6406c6e13108e3", null ],
+    [ "arm_2dp_gray8_fill_colour_with_a1_mask_and_opacity", "group__gAlpha.html#ga19eb722d5ec019331a70351fb58ed641", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_a1_mask_and_opacity", "group__gAlpha.html#gac17dc897fe94d9f8a3f5621b15832aec", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_a1_mask_and_opacity", "group__gAlpha.html#gaecd8302b6571b8b1fd034ffbfd00989c", null ],
     [ "arm_2dp_gray8_fill_colour_with_a2_mask_and_opacity", "group__gAlpha.html#gac129815164be0746f95092f5d62a8072", null ],
     [ "arm_2dp_rgb565_fill_colour_with_a2_mask_and_opacity", "group__gAlpha.html#gaec7485a0a6b6172c0d3216588fe33036", null ],
     [ "arm_2dp_cccn888_fill_colour_with_a2_mask_and_opacity", "group__gAlpha.html#ga035bd93eeba7c0e4138cc0ff9429a8e4", null ],
@@ -207,6 +225,30 @@ var group__gAlpha =
     [ "arm_2dp_rgb565_fill_colour_with_vertical_line_mask_and_opacity", "group__gAlpha.html#ga2c6043dcebaba4521f3770411edb45a3", null ],
     [ "arm_2dp_cccn888_fill_colour_with_vertical_line_mask", "group__gAlpha.html#ga499ad4f34fa09f19d580e396740b52f3", null ],
     [ "arm_2dp_cccn888_fill_colour_with_vertical_line_mask_and_opacity", "group__gAlpha.html#ga009619f0275876afa8fe7fe333bc951e", null ],
+    [ "arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient", "group__gAlpha.html#ga33d6a688e3340722dae54282ca5f7a84", null ],
+    [ "arm_2dp_gray8_fill_colour_with_4pts_alpha_gradient_and_opacity", "group__gAlpha.html#ga5ce95446c832d85e6c41193976e1232f", null ],
+    [ "arm_2dp_gray8_fill_colour_with_3pts_alpha_gradient", "group__gAlpha.html#gaf121f8d8601b729bb289d5540eab32a4", null ],
+    [ "arm_2dp_gray8_fill_colour_with_3pts_alpha_gradient_and_opacity", "group__gAlpha.html#ga3c6d07c5c7a04e9c29a73eb2edfee836", null ],
+    [ "arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient", "group__gAlpha.html#ga83ba77464b3112e686cd0ca9f336eeeb", null ],
+    [ "arm_2dp_gray8_fill_colour_with_vertical_alpha_gradient_and_opacity", "group__gAlpha.html#gad31b5de2ce8f8827fd4f6ea0f96e2dd7", null ],
+    [ "arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient", "group__gAlpha.html#gaf0385ac185a16b5d33509df013a7efc1", null ],
+    [ "arm_2dp_gray8_fill_colour_with_horizontal_alpha_gradient_and_opacity", "group__gAlpha.html#ga06a72ec6499732b6be771742103e14d8", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient", "group__gAlpha.html#ga63c10789111cbdcafc8812a9b6bf392d", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_4pts_alpha_gradient_and_opacity", "group__gAlpha.html#ga850e972f8f58412ee13d2cba3e1615f9", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_3pts_alpha_gradient", "group__gAlpha.html#gad98dc26b5589850a063ef74bd85c90cc", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_3pts_alpha_gradient_and_opacity", "group__gAlpha.html#gac5caf8c3e856a22582811c9798f70ef8", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_vertical_alpha_gradient", "group__gAlpha.html#gac53cb2e03f330f1d275afb60d7d1e0b9", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_vertical_alpha_gradient_and_opacity", "group__gAlpha.html#ga79b433206ea168f0aa7aa5327ec44a85", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_horizontal_alpha_gradient", "group__gAlpha.html#gaf186bf8c2aa53518bcc2db8afd38408a", null ],
+    [ "arm_2dp_rgb565_fill_colour_with_horizontal_alpha_gradient_and_opacity", "group__gAlpha.html#ga25f4903918d5bb75594d43c3dff1949c", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient", "group__gAlpha.html#ga51fca15c09d2a798b033ab84433823b3", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_4pts_alpha_gradient_and_opacity", "group__gAlpha.html#ga492d672dcb5f3d722e9d8b5c5561bab4", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_3pts_alpha_gradient", "group__gAlpha.html#ga6577214c5f68540e81e0744279f87f5a", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_3pts_alpha_gradient_and_opacity", "group__gAlpha.html#ga479862a40d017ba4e5122cc729ad53be", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_vertical_alpha_gradient", "group__gAlpha.html#ga2a258a3e9fb6c85ede27df0fd07cb0b1", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_vertical_alpha_gradient_and_opacity", "group__gAlpha.html#gaf1a7541e9306e86ea9d08ae0f5d7eb61", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient", "group__gAlpha.html#ga0e41bf4b5bff055576647d3c0fdd75bf", null ],
+    [ "arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient_and_opacity", "group__gAlpha.html#ga5ffe7eb3b32a017c2b1917ed45e4ddbf", null ],
     [ "arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gad183117190a6fc1d8a48666aba9fa296", null ],
     [ "arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gadf5f158479a2eeee0f0f70367cf14179", null ],
     [ "arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gadf2c6378b96a64b53b5a43f56e0b86a6", null ]
