@@ -55,7 +55,7 @@ var NAVTREE =
       [ "7 Feedback", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md22", null ]
     ] ],
     [ "Release Note", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html", [
-      [ "Release v1.2.0 (7 September 2024)", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md24", [
+      [ "Release v1.2.0 (9 September 2024)", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md24", [
         [ "Core and Library", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md25", null ],
         [ "Helper Services", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md26", null ],
         [ "Examples and Templates", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md27", null ],
