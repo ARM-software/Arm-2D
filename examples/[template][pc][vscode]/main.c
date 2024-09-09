@@ -225,6 +225,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_fan_loader,
     scene_console_window_loader,
     scene_meter_loader,
+    scene_watch_face_01_loader,
+    scene_watch_loader,
     scene_alarm_clock_loader,
     scene_atom_loader,
     scene_histogram_loader,
@@ -244,14 +246,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #endif
 
 #else
-    //scene_transform_loader,
-    //scene_bubble_charging_loader,
-    //scene_basics_loader,
-    scene_meter_loader,
-    //scene_hollow_out_list_loader,
-    //scene_fitness_loader,
-    //scene_fan_loader,
-    //scene_watch_face_01_loader,
+    scene_basics_loader,
 #endif
 
 
