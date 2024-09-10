@@ -306,7 +306,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
     /*-----------------------draw the foreground end  -----------------------*/
     }
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -360,7 +360,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         bUserAllocated = true;
        
     }
-     memset(ptThis, 0, sizeof(user_scene_meter_t));
+    memset(ptThis, 0, sizeof(user_scene_meter_t));
     
     *ptThis = (user_scene_meter_t){
         .use_as__arm_2d_scene_t = {
