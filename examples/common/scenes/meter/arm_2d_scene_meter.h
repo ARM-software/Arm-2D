@@ -92,8 +92,6 @@ ARM_PRIVATE(
     
     bool bUserAllocated;
 
-    arm_2d_helper_pi_slider_t tPISlider;
-
     meter_pointer_t tMeterPointer;
 
 )

@@ -182,8 +182,6 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     /*-----------------------    IMPORTANT MESSAGE    -----------------------*
      * It is better to update the 3 digits and pointer angle here            *
      *-----------------------------------------------------------------------*/
-    
-    int32_t iResult;
 
     do {
         /* generate a new position every 2000 sec */
