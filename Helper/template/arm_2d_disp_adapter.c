@@ -354,7 +354,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                     ARM_TO_STRING(ARM_2D_VERSION_MINOR)
                     "."
                     ARM_TO_STRING(ARM_2D_VERSION_PATCH)
-                    "-"
+                    " "
                     ARM_2D_VERSION_STR
                     );
 #endif

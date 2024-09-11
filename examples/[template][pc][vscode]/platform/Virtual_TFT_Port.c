@@ -98,7 +98,7 @@ static void monitor_sdl_init(void)
                                 ARM_TO_STRING(ARM_2D_VERSION_MINOR)
                                 "."
                                 ARM_TO_STRING(ARM_2D_VERSION_PATCH)
-                                "-"
+                                " "
                                 ARM_2D_VERSION_STR
                                 " ("
                                 ARM_TO_STRING(VT_WIDTH)

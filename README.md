@@ -80,7 +80,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (ver1.2.0)](#in-this-version-ver120)
+  - [In this version (v1.2.1-dev)](#in-this-version-v121-dev)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -100,7 +100,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (ver1.2.0)
+### In this version (v1.2.1-dev)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -112,7 +112,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - For drawing anti-alias icons/texts in a specified colour
     - Supports **A1**(**new**), A2, A4 and A8 masks
     - Supports horizontal and vertical line masks
-    - **[new]** Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.
+    - Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.
       - Supports Mask
       - Supports an optional Opacity
   
@@ -188,7 +188,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - **Virtual Resource**
 
     - Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.
-    - **[new]** Supports background-image-loading mode that requests **NO** extra PFB block. 
+    - Supports background-image-loading mode that requests **NO** extra PFB block. 
 
   - **Layout Assistant**
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
@@ -201,7 +201,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     
     - A dedicated layout debug mode
     
-    - **[new]** Users can specify alignment in `arm_2d_layout()` macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.
+    - Users can specify alignment in `arm_2d_layout()` macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.
     
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
 
@@ -313,7 +313,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - Transform
   - Mirroring
   - Masking
-  - **[new]** Colour-Filling (with alpha gradient)
+  - Colour-Filling (with alpha gradient)
 - **Simulate a typical application scenario with sufficient complexity**
   - Background with Texture Tiling (switching mirroring modes every 4 seconds)
   - Foreground picture
