@@ -22,7 +22,7 @@
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
 
-#include "arm_2d_<user opcode template>.h"
+#include "arm_2d_user_<user opcode template>.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -66,7 +66,7 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 enum {
-    __ARM_2D_OP_IDX_<USER OPCODE TEMPLATE> = __ARM_2D_OP_IDX_USER_OP_START,
+    __ARM_2D_OP_IDX_USER_<USER OPCODE TEMPLATE> = __ARM_2D_OP_IDX_USER_OP_START,
 
 };
 
@@ -74,7 +74,7 @@ enum {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 extern
-void __arm_2d_impl_cccn888_<user opcode template>(
+void __arm_2d_impl_cccn888_user_<user opcode template>(
                             uint32_t *__RESTRICT pSource,
                             int16_t iSourceStride,
                             uint32_t *__RESTRICT pTarget,
@@ -82,7 +82,7 @@ void __arm_2d_impl_cccn888_<user opcode template>(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            arm_2d_<user opcode template>_api_params_t *ptParam);
+                            arm_2d_user_<user opcode template>_api_params_t *ptParam);
 
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -92,24 +92,24 @@ void __arm_2d_impl_cccn888_<user opcode template>(
  */
 
 ARM_NONNULL(2,3,5)
-arm_fsm_rt_t arm_2dp_cccn888_<user opcode template>(  
-                            arm_2d_<user opcode template>_descriptor_t *ptOP,
+arm_fsm_rt_t arm_2dp_cccn888_user_<user opcode template>(  
+                            arm_2d_user_<user opcode template>_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptSource,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
-                            const arm_2d_<user opcode template>_api_params_t *ptParams)
+                            const arm_2d_user_<user opcode template>_api_params_t *ptParams)
 {
 
     assert(NULL != ptSource);
     assert(NULL != ptTarget);
 
-    ARM_2D_IMPL(arm_2d_<user opcode template>_descriptor_t, ptOP);
+    ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptOP);
     
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
     
-    OP_CORE.ptOp = &ARM_2D_OP_<USER OPCODE TEMPLATE>;
+    OP_CORE.ptOp = &ARM_2D_OP_USER_<USER OPCODE TEMPLATE>;
     
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
@@ -125,16 +125,16 @@ arm_fsm_rt_t arm_2dp_cccn888_<user opcode template>(
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_cccn888_sw_<user opcode template>( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_cccn888_sw_user_<user opcode template>( __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_<user opcode template>_descriptor_t, ptTask->ptOP);
+    ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
     arm_2d_region_t tTargetRegion = {0};
     
     if (NULL == ((arm_2d_op_t *)ptThis)->Target.ptRegion) {
-        tTargetRegion = ((arm_2d_op_t *)ptThis)->Target.ptTile->tRegion.tSize;
+        tTargetRegion.tSize = ((arm_2d_op_t *)ptThis)->Target.ptTile->tRegion.tSize;
     } else {
         tTargetRegion = *(((arm_2d_op_t *)ptThis)->Target.ptRegion);
     }
@@ -144,7 +144,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_<user opcode template>( __arm_2d_sub_task_t *pt
                                         tTargetRegion.tLocation,
                                         true);
 
-    __arm_2d_impl_cccn888_<user opcode template>(   ptTask->Param.tCopy.tSource.pBuffer,
+    __arm_2d_impl_cccn888_user_<user opcode template>(   ptTask->Param.tCopy.tSource.pBuffer,
                                                     ptTask->Param.tCopy.tSource.iStride,
                                                     ptTask->Param.tCopy.tTarget.pBuffer,
                                                     ptTask->Param.tCopy.tTarget.iStride,
@@ -159,7 +159,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_<user opcode template>( __arm_2d_sub_task_t *pt
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_cccn888_<user opcode template>(
+void __arm_2d_impl_cccn888_user_<user opcode template>(
                                     uint32_t *__RESTRICT pwSource,
                                     int16_t iSourceStride,
                                     uint32_t *__RESTRICT pwTarget,
@@ -167,7 +167,7 @@ void __arm_2d_impl_cccn888_<user opcode template>(
                                     arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                                     arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    arm_2d_<user opcode template>_api_params_t *ptParam)
+                                    arm_2d_user_<user opcode template>_api_params_t *ptParam)
 {
 
     /* calculate the offset between the target region and the valid region */
@@ -232,14 +232,14 @@ void __arm_2d_impl_cccn888_<user opcode template>(
  * OPCODE Low Level Implementation Entries
  */
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_<USER OPCODE TEMPLATE>_CCCN888,
-                __arm_2d_cccn888_sw_<user opcode template>);      /* Default SW Implementation */
+def_low_lv_io(  __ARM_2D_IO_USER_<USER OPCODE TEMPLATE>_CCCN888,
+                __arm_2d_cccn888_sw_user_<user opcode template>);      /* Default SW Implementation */
 
 
 /*
  * OPCODE
  */
-const __arm_2d_op_info_t ARM_2D_OP_<USER OPCODE TEMPLATE> = {
+const __arm_2d_op_info_t ARM_2D_OP_USER_<USER OPCODE TEMPLATE> = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -248,10 +248,10 @@ const __arm_2d_op_info_t ARM_2D_OP_<USER OPCODE TEMPLATE> = {
             .bHasSource     = true,
             .bHasTarget     = true,
         },
-        .chOpIndex      = __ARM_2D_OP_IDX_<USER OPCODE TEMPLATE>,
+        .chOpIndex      = __ARM_2D_OP_IDX_USER_<USER OPCODE TEMPLATE>,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_<USER OPCODE TEMPLATE>_CCCN888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_USER_<USER OPCODE TEMPLATE>_CCCN888),
             .ptFillLike = NULL,
         },
     },

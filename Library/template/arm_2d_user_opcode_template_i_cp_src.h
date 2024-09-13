@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_<USER OPCODE TEMPLATE>_H__
-#define __ARM_2D_<USER OPCODE TEMPLATE>_H__
+#ifndef __ARM_2D_USER_<USER OPCODE TEMPLATE>_H__
+#define __ARM_2D_USER_<USER OPCODE TEMPLATE>_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d_types.h"
@@ -43,24 +43,24 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 
-typedef struct arm_2d_<user opcode template>_api_params_t {
+typedef struct arm_2d_user_<user opcode template>_api_params_t {
     /* add your parameters here */
     uint_fast8_t chChannel;
-} arm_2d_<user opcode template>_api_params_t;
+} arm_2d_user_<user opcode template>_api_params_t;
 
 
-typedef struct arm_2d_<user opcode template>_descriptor_t {
+typedef struct arm_2d_user_<user opcode template>_descriptor_t {
     implement(arm_2d_op_cp_t);      /* inherit from base class arm_2d_op_cp_t*/
 
-    arm_2d_<user opcode template>_api_params_t tParams;
+    arm_2d_user_<user opcode template>_api_params_t tParams;
 
-}arm_2d_<user opcode template>_descriptor_t;
+}arm_2d_user_<user opcode template>_descriptor_t;
 
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_<USER OPCODE TEMPLATE>;
+const __arm_2d_op_info_t ARM_2D_OP_USER_USER_<USER OPCODE TEMPLATE>;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -68,12 +68,12 @@ const __arm_2d_op_info_t ARM_2D_OP_<USER OPCODE TEMPLATE>;
 
 extern
 ARM_NONNULL(2,3,5)
-arm_fsm_rt_t arm_2dp_cccn888_<user opcode template>(  
-                    arm_2d_<user opcode template>_descriptor_t *ptOP,
+arm_fsm_rt_t arm_2dp_cccn888_user_<user opcode template>(  
+                    arm_2d_user_<user opcode template>_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptSource,
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
-                    const arm_2d_<user opcode template>_api_params_t *ptParams);
+                    const arm_2d_user_<user opcode template>_api_params_t *ptParams);
 
 
 #if defined(__clang__)
@@ -85,4 +85,4 @@ arm_fsm_rt_t arm_2dp_cccn888_<user opcode template>(
 #endif
 
 
-#endif /* __ARM_2D_<USER OPCODE TEMPLATE>_H__ */
+#endif /* __ARM_2D_USER_<USER OPCODE TEMPLATE>_H__ */
