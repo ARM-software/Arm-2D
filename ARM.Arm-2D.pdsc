@@ -441,7 +441,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.9.4" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.9.5" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -510,6 +510,7 @@
             <file category="sourceC"     name="examples/common/asset/alarm_clock_font64.c" />
             <file category="sourceC"     name="examples/common/asset/arial_ascii_font14.c" />
             <file category="sourceC"     name="examples/common/asset/ClockMarking.c" />
+            <file category="sourceC"     name="examples/common/asset/compass.c" />
           </files>
           <RTE_Components_h>
 
@@ -687,6 +688,17 @@
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Transform
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cversion="1.0.0" condition="Arm-2D-Demos">
+          <description>A compass demo shows how to manually create dirty regions to cover rotating compass panel. </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_compass.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_compass.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Compass
           </RTE_Components_h>
         </component>
   

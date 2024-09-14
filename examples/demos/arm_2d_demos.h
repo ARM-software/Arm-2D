@@ -36,6 +36,7 @@
 #include "./arm_2d_scene_hollow_out_list.h"
 #include "./arm_2d_scene_transform.h"
 #include "./arm_2d_scene_watch_face_01.h"
+#include "./arm_2d_scene_compass.h"
 
 #ifdef   __cplusplus
 extern "C" {

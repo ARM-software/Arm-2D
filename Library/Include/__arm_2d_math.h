@@ -125,6 +125,7 @@ extern "C" {
 #define ARM_2D_LROUNDF(a)   lroundf((a))
 #endif
 
+
 #if __ARM_2D_HAS_DSP__
 
 #undef __QDADD
@@ -134,9 +135,6 @@ extern "C" {
 
 #define __LARGEINVF32       100.0f
 
-/*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
-/*============================ PROTOTYPES ====================================*/
 
 #elif defined(__ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__)
 /*
@@ -179,6 +177,71 @@ __STATIC_FORCEINLINE int32_t __QDSUB(
 }
 
 #endif
+
+/*============================ TYPES =========================================*/
+typedef int32_t q16_t;
+
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+
+
+__STATIC_INLINE q16_t
+reinterpret_q16_s16(int16_t iIn0)
+{
+    return ((q16_t)(iIn0) << 16);
+}
+
+__STATIC_INLINE int16_t
+reinterpret_s16_q16(q16_t q16In0)
+{
+    return (int16_t)((q16_t)(q16In0) >> 16);
+}
+
+__STATIC_INLINE q16_t
+reinterpret_q16_f32(float fIn0)
+{
+    return ((q16_t)((fIn0) * 65536.0f + ((fIn0) >= 0 ? 0.5f : -0.5f)));
+}
+
+__STATIC_INLINE float
+reinterpret_f32_q16(q16_t q16In0)
+{
+    return ((float)(q16In0) / 65536.0f);
+}
+
+__STATIC_INLINE q16_t
+mul_q16(q16_t q16In0, q16_t q16In1)
+{
+    return (q16_t)((((int64_t)(q16In0)) * ((int64_t)(q16In1))) >> 16);
+}
+
+__STATIC_INLINE q16_t
+mul_n_q16(q16_t q16In0, int32_t nIn1)
+{
+    return q16In0 * nIn1;
+}
+
+__STATIC_INLINE q16_t
+div_q16(q16_t q16In0, q16_t q16In1)
+{
+    if (0 == q16In1) {
+        return 0;
+    }
+
+    int64_t lTemp = ((int64_t)q16In0 << 16) + (q16In1 / 2);
+    return (q16_t)(lTemp / q16In1);
+}
+
+__STATIC_INLINE q16_t
+div_n_q16(q16_t q16In0, int32_t nIn1)
+{
+    if (0 == nIn1) {
+        return 0;
+    }
+
+    q16_t q16Temp = (q16In0 + (nIn1 / 2));
+    return (q16_t)(q16Temp / nIn1);
+}
 
 
 
