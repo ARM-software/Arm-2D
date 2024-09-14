@@ -113,7 +113,7 @@ spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_ONLY = {
 };
 
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING = {
-    .fnTransform = &__spin_zoom_widget_transform_mode_tile_only,
+    .fnTransform = &__spin_zoom_widget_transform_mode_tile_colour_keying,
 };
 
 /*============================ IMPLEMENTATION ================================*/
