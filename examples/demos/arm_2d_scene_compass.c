@@ -226,8 +226,6 @@ static void __on_scene_compass_frame_start(arm_2d_scene_t *ptScene)
     user_scene_compass_t *ptThis = (user_scene_compass_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-
-
     do {
         /* generate a new position every 2000 sec */
         if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[1])) {
@@ -237,15 +235,7 @@ static void __on_scene_compass_frame_start(arm_2d_scene_t *ptScene)
             srand(arm_2d_helper_get_system_timestamp());
 
             this.iTargetAngle = rand() % 3600;
-
-            arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[COMPASS_DIRTY_REGION_TEXT],
-                                                false); 
-        } else {
-            arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[COMPASS_DIRTY_REGION_TEXT],
-                                                true); 
-        }
-
-        
+        } 
     } while(0);
 
     int16_t iCurrentAngle = meter_pointer_get_current_value(&this.tCompass);
@@ -259,7 +249,6 @@ static void __on_scene_compass_frame_start(arm_2d_scene_t *ptScene)
     arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[COMPASS_DIRTY_REGION_TEXT],
                                         (iCurrentAngle == this.iDisplayAngle));
     this.iDisplayAngle = iCurrentAngle;
-   
 
     meter_pointer_on_frame_start(&this.tCompass, this.iTargetAngle, 1.0f);
 
