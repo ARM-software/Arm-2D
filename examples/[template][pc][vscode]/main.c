@@ -202,6 +202,11 @@ void scene_transform_loader(void)
     arm_2d_scene_transform_init(&DISP0_ADAPTER);
 }
 
+void scene_transform_compass(void) 
+{
+    arm_2d_scene_compass_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -227,6 +232,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_meter_loader,
     scene_watch_face_01_loader,
     scene_watch_loader,
+    scene_transform_compass,
     scene_alarm_clock_loader,
     scene_atom_loader,
     scene_histogram_loader,
@@ -246,7 +252,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #endif
 
 #else
-    scene_basics_loader,
+    scene_transform_compass,
+    //scene_basics_loader,
 #endif
 
 
