@@ -441,7 +441,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.9.5" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.9.6" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -511,6 +511,8 @@
             <file category="sourceC"     name="examples/common/asset/arial_ascii_font14.c" />
             <file category="sourceC"     name="examples/common/asset/ClockMarking.c" />
             <file category="sourceC"     name="examples/common/asset/compass.c" />
+            <file category="sourceC"     name="examples/common/asset/wedge_pattern.c" />
+            <file category="sourceC"     name="examples/common/asset/radial_line_pattern.c" />
           </files>
           <RTE_Components_h>
 
