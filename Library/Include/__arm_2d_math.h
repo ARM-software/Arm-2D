@@ -228,7 +228,7 @@ div_q16(q16_t q16In0, q16_t q16In1)
         return 0;
     }
 
-    int64_t lTemp = ((int64_t)q16In0 << 16) + (q16In1 / 2);
+    int64_t lTemp = ((int64_t)(q16In0 + (q16In1 / 2)) << 16);
     return (q16_t)(lTemp / q16In1);
 }
 
