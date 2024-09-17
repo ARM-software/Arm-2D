@@ -71,7 +71,7 @@
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_tileCompass            c_tileCompassCCCA8888
+#   define c_tileCompass            c_tileCompassCCCN888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -89,7 +89,6 @@ extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileCompass;
-extern const arm_2d_tile_t c_tileCompassMask;
 
 extern
 const
@@ -238,7 +237,7 @@ static void __on_scene_compass_frame_start(arm_2d_scene_t *ptScene)
         } 
     } while(0);
 
-    int16_t iCurrentAngle = meter_pointer_get_current_value(&this.tCompass);
+    int16_t iCurrentAngle = 3600 - meter_pointer_get_current_value(&this.tCompass);
 
     if (iCurrentAngle < 0) {
         iCurrentAngle += 3600;
@@ -350,19 +349,19 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
     
     
     arm_2d_align_centre(tScreen, c_tileCompass.tRegion.tSize) {
-        arm_2d_dock_top(__centre_region, 50) {
+        arm_2d_dock_top(__centre_region, 55) {
             s_tDirtyRegions[COMPASS_DIRTY_REGION_TOP].tRegion = __top_region;
         }
 
-        arm_2d_dock_bottom(__centre_region, 50) {
+        arm_2d_dock_bottom(__centre_region, 55) {
             s_tDirtyRegions[COMPASS_DIRTY_REGION_BOTTOM].tRegion = __bottom_region;
         }
 
-        arm_2d_dock_left(__centre_region, 50) {
+        arm_2d_dock_left(__centre_region, 55) {
             s_tDirtyRegions[COMPASS_DIRTY_REGION_LEFT].tRegion = __left_region;
         }
     
-        arm_2d_dock_right(__centre_region, 50) {
+        arm_2d_dock_right(__centre_region, 55) {
             s_tDirtyRegions[COMPASS_DIRTY_REGION_RIGHT].tRegion = __right_region;
         }
 
@@ -370,19 +369,19 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
                             c_tileCompass.tRegion.tSize.iWidth - 100, 
                             c_tileCompass.tRegion.tSize.iHeight - 100) {
 
-            arm_2d_align_top_left(__centre_region, 30, 30) {
+            arm_2d_align_top_left(__centre_region, 35, 35) {
                 s_tDirtyRegions[COMPASS_DIRTY_REGION_CORNER_TOP_LEFT].tRegion = __top_left_region;
             }
 
-            arm_2d_align_top_right(__centre_region, 30, 30) {
+            arm_2d_align_top_right(__centre_region, 35, 35) {
                 s_tDirtyRegions[COMPASS_DIRTY_REGION_CORNER_TOP_RIGHT].tRegion = __top_right_region;
             }
 
-            arm_2d_align_bottom_left(__centre_region, 30, 30) {
+            arm_2d_align_bottom_left(__centre_region, 35, 35) {
                 s_tDirtyRegions[COMPASS_DIRTY_REGION_CORNER_BOTTOM_LEFT].tRegion = __bottom_left_region;
             }
 
-            arm_2d_align_bottom_right(__centre_region, 30, 30) {
+            arm_2d_align_bottom_right(__centre_region, 35, 35) {
                 s_tDirtyRegions[COMPASS_DIRTY_REGION_CORNER_BOTTOM_RIGHT].tRegion = __bottom_right_region;
             }
 
@@ -457,13 +456,12 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
                 .ptScene = (arm_2d_scene_t *)ptThis,
                 .ptTransformMode = &SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING,
                 .Source = {
-                    .ptMask = &c_tileCompassMask,
                     .ptSource = &c_tileCompass,
                     .tCentre = {
                         .iX = c_tileCompass.tRegion.tSize.iWidth >> 1,
                         .iY = c_tileCompass.tRegion.tSize.iHeight >> 1,
                     },
-                    .tColourForKeying = 0xef9e,
+                    .tColourForKeying = GLCD_COLOR_WHITE,
                 },
             },
             .tPISliderCFG = {
