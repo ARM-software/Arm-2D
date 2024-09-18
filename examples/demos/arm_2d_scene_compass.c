@@ -160,10 +160,8 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
     ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
         0
     ),
-
-
-
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -245,8 +243,11 @@ static void __on_scene_compass_frame_start(arm_2d_scene_t *ptScene)
         iCurrentAngle -= 3600;
     }
 
+#if 0
     arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[COMPASS_DIRTY_REGION_TEXT],
                                         (iCurrentAngle == this.iDisplayAngle));
+#endif
+
     this.iDisplayAngle = iCurrentAngle;
 
     meter_pointer_on_frame_start(&this.tCompass, this.iTargetAngle, 1.0f);
@@ -260,8 +261,8 @@ static void __on_scene_compass_frame_complete(arm_2d_scene_t *ptScene)
 
     meter_pointer_on_frame_complete(&this.tCompass);
 
-    /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+    /* switch to next scene after 20s */
+    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 }
@@ -295,7 +296,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_compass_handler)
 
         arm_2d_align_centre(__top_canvas, c_tileCompass.tRegion.tSize) {
             meter_pointer_show(&this.tCompass, ptTile, &__centre_region, NULL, 255);
-
         }
 
         /* draw 3 digits numbers */
@@ -342,6 +342,7 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
+#if 0
     /* get the screen region */
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
@@ -394,6 +395,7 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
         }
     
     }
+#endif
 
     if (NULL == ptThis) {
         ptThis = (user_scene_compass_t *)
@@ -423,7 +425,7 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
             //.fnAfterSwitch  = &__after_scene_compass_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_compass_background_start,
@@ -433,7 +435,7 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
             .fnOnFrameCPL   = &__on_scene_compass_frame_complete,
             .fnDepose       = &__on_scene_compass_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -472,6 +474,8 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
         };
 
         meter_pointer_init(&this.tCompass, &tCFG);
+
+        this.iTargetAngle = 1800;
     } while(0);
 
 
