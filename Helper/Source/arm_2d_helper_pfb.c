@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        9. Sept 2024
- * $Revision:    V.1.11.4
+ * $Date:        18. Sept 2024
+ * $Revision:    V.1.11.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1932,27 +1932,40 @@ label_iteration_begin_start:
                 if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
                     /* in debug mode, if there is nothing to refresh, we should ignore this frame*/
                     if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
-                        ARM_2D_LOG_INFO(
-                            DIRTY_REGION_OPTIMISATION, 
-                            1, 
-                            "Iteration Begin", 
-                            "No valid dirty region in the list, this frame SHOULD BE ignored"
-                        );
                         
-                    #if 1
-                        /* free pfb */
-                        arm_irq_safe {
-                            __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
-                            this.Adapter.ptCurrent = NULL;
-                        }
+                        do {
+                            /* we need to use ONE whole frame flush to erase any existing dirty region 
+                             * indication to avoid confusion in debug mode before frame skipping.
+                             */
+                            if (!this.Adapter.bDirtyRegionDebugModeSkipFrame) {
+                                this.Adapter.bDirtyRegionDebugModeSkipFrame = true;
+                                break;
+                            }
 
-                        /* reset flag */
-                        this.Adapter.bFirstIteration = true;
-                        this.Adapter.bIsDryRun = false;
+                            ARM_2D_LOG_INFO(
+                                DIRTY_REGION_OPTIMISATION, 
+                                1, 
+                                "Iteration Begin", 
+                                "No valid dirty region in the list, this frame SHOULD BE ignored"
+                            );
+                            
+                        #if 1
+                            /* free pfb */
+                            arm_irq_safe {
+                                __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
+                                this.Adapter.ptCurrent = NULL;
+                            }
 
-                        // out of lcd 
-                        return (arm_2d_tile_t *)-1;
+                            /* reset flag */
+                            this.Adapter.bFirstIteration = true;
+                            this.Adapter.bIsDryRun = false;
+
+                            // out of lcd 
+                            return (arm_2d_tile_t *)-1;
+                        } while(0);
                     #endif
+                    } else {
+                        this.Adapter.bDirtyRegionDebugModeSkipFrame = false;
                     }
                 }
             } else {
@@ -2122,7 +2135,7 @@ label_iteration_begin_start:
                             HELPER_PFB, 
                             1, 
                             "Iteration Begin", 
-                            "No valid dirty region in the list, this frame SHOULD BE ignored, but as we are in dirty region debug mode, we will continue...";
+                            "No valid dirty region in the list, this frame SHOULD BE ignored, but as we are in dirty region debug mode, we will continue..."
                         );
 
                         this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
