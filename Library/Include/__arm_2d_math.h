@@ -243,6 +243,12 @@ div_n_q16(q16_t q16In0, int32_t nIn1)
     return (q16_t)(q16Temp / nIn1);
 }
 
+__STATIC_INLINE q16_t
+abs_q16(q16_t q16In0)
+{
+    return ABS(q16In0);
+}
+
 
 
 #if defined(__clang__)
