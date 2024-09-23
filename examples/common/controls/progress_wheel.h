@@ -46,13 +46,30 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+enum {
+    PROGRESS_WHEEL_START_POSITION_TOP = 0, 
+    PROGRESS_WHEEL_START_POSITION_RIGHT,
+    PROGRESS_WHEEL_START_POSITION_BOTTOM,
+    PROGRESS_WHEEL_START_POSITION_LEFT
+};
+
 typedef struct progress_wheel_cfg_t {
     const arm_2d_tile_t *ptileArcMask;
     const arm_2d_tile_t *ptileDotMask;
     int16_t iWheelDiameter;
+    int16_t iRingWidth;
     COLOUR_INT tWheelColour;
     COLOUR_INT tDotColour;
-    bool bUseDirtyRegions;
+
+    uint32_t bUseDirtyRegions    : 1;
+    uint32_t bIgnoreDot          : 1;
+    uint32_t u2StartPosition     : 2;
+    uint32_t                     : 4;
+    uint32_t                     : 8;
+    uint32_t u15FullLength       : 15;
+    uint32_t                     : 1;
+
 } progress_wheel_cfg_t;
 
 
@@ -71,11 +88,13 @@ ARM_PRIVATE(
     
     arm_2d_region_list_item_t tDirtyRegion;
     //arm_2d_region_t tLastCurveRegion;
-    
+    arm_2d_tile_t tileInvisibleDot;
+
     int8_t  chLastQuadrant;
     int16_t iLastProgress;
     int16_t iProgress;
     int16_t iNewProgress;
+    q16_t q16LengthRatio;
 )
 
 } progress_wheel_t;

@@ -148,10 +148,15 @@ void spin_zoom_widget_on_frame_start(   spin_zoom_widget_t *ptThis,
                                         int32_t nValue, 
                                         float fScale);
 
+extern
 ARM_NONNULL(1)
 void spin_zoom_widget_on_frame_start_f32(spin_zoom_widget_t *ptThis, 
                                          float fValue, 
                                          float fScale);
+
+extern
+ARM_NONNULL(1)
+float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1)

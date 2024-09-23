@@ -35,6 +35,7 @@
 #include "arm_2d_scene_fan.h"
 #include "arm_2d_scene_bubble_charging.h"
 #include "arm_2d_scene_animate_background.h"
+#include "arm_2d_scene_knob.h"
 
 #include "arm_2d_demos.h"
 
@@ -207,6 +208,11 @@ void scene_transform_compass(void)
     arm_2d_scene_compass_init(&DISP0_ADAPTER);
 }
 
+void scene_knob_loader(void) 
+{
+    arm_2d_scene_knob_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -224,8 +230,8 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 1
-    scene_basics_loader,
+#if 0
+    //scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
     scene_console_window_loader,
@@ -252,8 +258,12 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #endif
 
 #else
-    scene_transform_compass,
+    //scene_meter_loader,
+    //scene_transform_compass,
     //scene_basics_loader,
+    //scene_fitness_loader,
+    scene_knob_loader,
+    //scene_panel_loader,
 #endif
 
 
@@ -434,5 +444,3 @@ int main(int argc, char* argv[])
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
-
-

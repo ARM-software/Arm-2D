@@ -61,7 +61,8 @@
 			"progress_bar_simple.h": "c",
 			"arial_ascii_14": "c",
 			"histogram.h": "c",
-			"arm_2d_utils.h": "c"
+			"arm_2d_utils.h": "c",
+			"arm_2d_user_opcode_template_i_draw.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

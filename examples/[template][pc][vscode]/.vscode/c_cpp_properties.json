@@ -23,7 +23,8 @@
                 "${workspaceFolder}/../../examples/common/scenes/histogram",
                 "${workspaceFolder}/../../examples/common/scenes/fan",
                 "${workspaceFolder}/../../examples/common/scenes/bubble_charging",
-                "${workspaceFolder}/../../examples/common/scenes/animate_background"
+                "${workspaceFolder}/../../examples/common/scenes/animate_background",
+                "${workspaceFolder}/../../examples/common/scenes/knob"
             ],
             "defines": [
                 "_RTE_",
@@ -59,7 +60,8 @@
                 "${workspaceFolder}/../../examples/common/scenes/histogram",
                 "${workspaceFolder}/../../examples/common/scenes/fan",
                 "${workspaceFolder}/../../examples/common/scenes/bubble_charging",
-                "${workspaceFolder}/../../examples/common/scenes/animate_background"
+                "${workspaceFolder}/../../examples/common/scenes/animate_background",
+                "${workspaceFolder}/../../examples/common/scenes/knob"
             ],
             "defines": [
                 "_RTE_",

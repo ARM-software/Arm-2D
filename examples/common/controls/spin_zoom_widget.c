@@ -254,6 +254,13 @@ void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT_TYPE tC
     this.tCFG.Source.tColourToFill = tColour;
 }
 
+ARM_NONNULL(1)
+float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.tHelper.fAngle;
+}
+
 static
 arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour( 
                                             spin_zoom_widget_t *ptThis, 

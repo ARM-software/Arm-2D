@@ -19,7 +19,8 @@
                 "examples/common/scenes/histogram",
                 "examples/common/scenes/fan",
                 "examples/common/scenes/bubble_charging",
-                "examples/common/scenes/animate_background"
+                "examples/common/scenes/animate_background",
+                "examples/common/scenes/knob"
             ],
             "defines": [
                 "_RTE_",
@@ -51,7 +52,8 @@
                 "examples/common/scenes/histogram",
                 "examples/common/scenes/fan",
                 "examples/common/scenes/bubble_charging",
-                "examples/common/scenes/animate_background"
+                "examples/common/scenes/animate_background",
+                "examples/common/scenes/knob"
             ],
             "defines": [
                 "_RTE_",

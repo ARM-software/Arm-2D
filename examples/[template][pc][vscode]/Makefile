@@ -18,6 +18,7 @@ CC_SRC  += $(wildcard ../../examples/common/scenes/histogram/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/fan/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/bubble_charging/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/animate_background/*.c)
+CC_SRC  += $(wildcard ../../examples/common/scenes/knob/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 
 CC_INC  := .
@@ -37,6 +38,7 @@ CC_INC  += ../../examples/common/scenes/histogram
 CC_INC  += ../../examples/common/scenes/fan
 CC_INC  += ../../examples/common/scenes/bubble_charging
 CC_INC  += ../../examples/common/scenes/animate_background
+CC_INC  += ../../examples/common/scenes/knob
 CC_INC  += ../../examples/demos
 
 CC_DEF  := ARM_SECTION\(x\)=
@@ -94,10 +96,10 @@ CCFLAG  +=  -ffunction-sections -fdata-sections
 CCFLAG  +=  -fno-ms-extensions
 CCFLAG  +=  -Wno-macro-redefined
 
-CCFLAG  +=  -Ofast
-CCFLAG  +=  -flto
-LDFLAG  +=  -flto
-LDFLAG  +=  -lpthread
+CCFLAG  +=  -O0
+#CCFLAG  +=  -flto
+#LDFLAG  +=  -flto
+#LDFLAG  +=  -lpthread
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
