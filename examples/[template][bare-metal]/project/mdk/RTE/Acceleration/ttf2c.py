@@ -58,7 +58,7 @@ c_head_string="""
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress=1296
+#   pragma diag_suppress=1296,1,64
 #endif
 
 typedef struct {
@@ -184,8 +184,8 @@ c_tail_string="""
 #endif
 """
 
-def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
-    face = freetype.Face(input_file)
+def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index):
+    face = freetype.Face(input_file, index=font_index)
     face.set_pixel_sizes(0, pixel_size)
 
     glyphs_data = []
@@ -224,8 +224,32 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size):
         bearing_y = face.glyph.bitmap_top
         width = bitmap.width
         height = bitmap.rows
+        pitch = bitmap.pitch
 
-        bitmap_array = np.array(bitmap.buffer, dtype=np.uint8).reshape((height, width))
+        if bitmap.pixel_mode == freetype.FT_PIXEL_MODE_MONO:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 8
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width]
+            bitmap_array = bitmap_array.astype(np.uint8) * 255
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY2:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 4
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width * 2]
+            bitmap_array = (bitmap_array.reshape((height, width * 2)) * 85).astype(np.uint8)
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY4:
+            buffer = np.frombuffer(bytes(bitmap.buffer), dtype=np.uint8)
+            bits_per_row = pitch * 2
+            bitmap_array = np.unpackbits(buffer).reshape((height, bits_per_row))[:, :width * 4]
+            bitmap_array = (bitmap_array.reshape((height, width * 2)) * 17).astype(np.uint8)
+
+        elif bitmap.pixel_mode == freetype.FT_PIXEL_MODE_GRAY:
+            bitmap_array = np.array(bitmap.buffer, dtype=np.uint8).reshape((height, width))
+
+        else:
+            raise ValueError(f"Unsupported pixel mode: {bitmap.pixel_mode}")
+            continue
 
         if width < width_max:
            padding = ((0, 0), (0, width_max - width))
@@ -333,7 +357,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT\")\n __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
                 .format(name, font_bit_size), file=f)
 
         last_index = 0;
@@ -360,8 +384,9 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v1.3.1)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.1.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
+    parser.add_argument("--index",          type=int,   help="The Font Index in a TTC file",    required=False,     default=0)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
     parser.add_argument("-n", "--name",     type=str,   help="The customized UTF8 font name",   required=False,     default="UTF8")
     parser.add_argument("-o", "--output",   type=str,   help="Path to the output C file",       required=True)
@@ -387,35 +412,35 @@ def main():
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, args.fontbitsize)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, args.fontbitsize, args.index)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, args.fontbitsize)
 
     else:
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 1)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 1, args.index)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 1)
 
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 2)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 2, args.index)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 2)
 
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 4)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 4, args.index)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 4)
 
 
         with open(args.text, 'r', encoding='utf-8') as f:
             text = f.read()
 
-            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 8)
+            glyphs_data, char_max_width, char_max_height = generate_glyphs_data(args.input, text, args.pixelsize, 8, args.index)
             write_c_code(glyphs_data, args.output, args.name, char_max_width, char_max_height, 8)
 
     with open(args.output, "a") as outputfile:
