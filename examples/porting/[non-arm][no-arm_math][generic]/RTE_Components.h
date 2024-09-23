@@ -35,6 +35,7 @@
 
 #define RTE_Acceleration_Arm_2D_Filter
 
+#define #define RTE_Acceleration_Arm_2D_Demos_User_Defined_OPCODE
 
 
 #endif /* RTE_COMPONENTS_H */
