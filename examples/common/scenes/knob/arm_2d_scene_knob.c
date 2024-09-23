@@ -369,7 +369,6 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
         }
     }
 
-
     if (NULL == ptThis) {
         ptThis = (user_scene_knob_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_knob_t),
@@ -400,7 +399,6 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
             /* if you want to use predefined dirty region list, please uncomment the following code */
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
-
             //.fnOnBGStart    = &__on_scene_knob_background_start,
             //.fnOnBGComplete = &__on_scene_knob_background_complete,
             .fnOnFrameStart = &__on_scene_knob_frame_start,

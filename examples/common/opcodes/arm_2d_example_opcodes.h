@@ -16,28 +16,12 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_DEMOS_H__
-#define __ARM_2D_DEMOS_H__
+#ifndef __ARM_2D_EXAMPLE_OPCODES_H__
+#define __ARM_2D_EXAMPLE_OPCODES_H__
 
 /*============================ INCLUDES ======================================*/
 
-#include "./arm_2d_scene_basics.h"
-#include "./arm_2d_scene_audiomark.h"
-#include "./arm_2d_scene_console.h"
-#include "./arm_2d_scene_console_window.h"
-#include "./arm_2d_scene_atom.h"
-#include "./arm_2d_scene_gas_gauge.h"
-#include "./arm_2d_scene_listview.h"
-#include "./arm_2d_scene_panel.h"
-#include "./arm_2d_scene_progress_status.h"
-#include "./arm_2d_scene_menu.h"
-#include "./arm_2d_scene_virtual_resource.h"
-#include "./arm_2d_scene_ruler.h"
-#include "./arm_2d_scene_hollow_out_list.h"
-#include "./arm_2d_scene_transform.h"
-#include "./arm_2d_scene_watch_face_01.h"
-#include "./arm_2d_scene_compass.h"
-#include "./arm_2d_scene_user_defined_opcode.h"
+#include "./arm_2d_user_opcode_draw_line.h"
 
 #ifdef   __cplusplus
 extern "C" {

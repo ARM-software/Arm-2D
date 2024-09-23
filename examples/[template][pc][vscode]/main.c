@@ -213,6 +213,11 @@ void scene_knob_loader(void)
     arm_2d_scene_knob_init(&DISP0_ADAPTER);
 }
 
+void scene_user_defined_opcode_loader(void) 
+{
+    arm_2d_scene_user_defined_opcode_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -230,7 +235,7 @@ typedef void scene_loader_t(void);
 
 static scene_loader_t * const c_SceneLoaders[] = {
 
-#if 0
+#if 1
     //scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -262,7 +267,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
     //scene_transform_compass,
     //scene_basics_loader,
     //scene_fitness_loader,
-    scene_knob_loader,
+    scene_user_defined_opcode_loader,
+    //scene_knob_loader,
     //scene_panel_loader,
 #endif
 

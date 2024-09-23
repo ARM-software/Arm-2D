@@ -10,6 +10,7 @@ CC_SRC  += $(wildcard ../../Helper/asset/*.c)
 CC_SRC  += $(wildcard ../../examples/common/asset/*.c)
 CC_SRC  += $(wildcard ../../examples/common/benchmark/*.c)
 CC_SRC  += $(wildcard ../../examples/common/controls/*.c)
+CC_SRC  += $(wildcard ../../examples/common/opcodes/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/fitness/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/meter/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/watch/*.c)
@@ -30,6 +31,7 @@ CC_INC  += ../../Helper/Include
 CC_INC  += ../../Helper/built_in
 CC_INC  += ../../examples/common/benchmark
 CC_INC  += ../../examples/common/controls
+CC_INC  += ../../examples/common/opcodes
 CC_INC  += ../../examples/common/scenes/fitness
 CC_INC  += ../../examples/common/scenes/meter
 CC_INC  += ../../examples/common/scenes/watch
@@ -96,10 +98,10 @@ CCFLAG  +=  -ffunction-sections -fdata-sections
 CCFLAG  +=  -fno-ms-extensions
 CCFLAG  +=  -Wno-macro-redefined
 
-CCFLAG  +=  -O0
-#CCFLAG  +=  -flto
-#LDFLAG  +=  -flto
-#LDFLAG  +=  -lpthread
+CCFLAG  +=  -Ofast
+CCFLAG  +=  -flto
+LDFLAG  +=  -flto
+LDFLAG  +=  -lpthread
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
