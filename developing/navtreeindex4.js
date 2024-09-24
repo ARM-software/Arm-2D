@@ -1,5 +1,8 @@
 var NAVTREEINDEX4 =
 {
+"group__gKernel.html#ga441fd78aae18a38a35c0e5b1fe11dfed":[11,0,238],
+"group__gKernel.html#ga44a9aef2f2e7ef3930ea67bc5dd22018":[11,0,233],
+"group__gKernel.html#ga44b4f0ecafd8d5fb7de9f104d9321998":[11,0,265],
 "group__gKernel.html#ga45988329728665a27dd86553af72c343":[11,0,127],
 "group__gKernel.html#ga463ebe367cc3b019a3078593b525a096":[11,0,121],
 "group__gKernel.html#ga467717c9835f6c6a75f3d6d8c3aee8c8":[11,0,153],
@@ -246,8 +249,5 @@ var NAVTREEINDEX4 =
 "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Source":[11,0,90],
 "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Target":[11,0,89],
 "group__gKernel.html#structarm__2d__op__src__msk__t":[11,0,35],
-"group__gKernel.html#structarm__2d__op__src__msk__t_8Mask":[11,0,88],
-"group__gKernel.html#structarm__2d__op__src__msk__t_8Source":[11,0,87],
-"group__gKernel.html#structarm__2d__op__src__msk__t_8Target":[11,0,86],
-"group__gKernel.html#structarm__2d__op__src__orig__msk__t":[11,0,38]
+"group__gKernel.html#structarm__2d__op__src__msk__t_8Mask":[11,0,88]
 };
