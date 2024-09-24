@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        18. Sept 2024
- * $Revision:    V.1.11.5
+ * $Date:        24. Sept 2024
+ * $Revision:    V.1.11.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -392,6 +392,45 @@ extern "C" {
                         __ARM_VA_NUM_ARGS(__VA_ARGS__))((__helper_ptr),         \
                                                         (__tile_ptr)            \
                                                         ,##__VA_ARGS__)
+
+/*!
+ * \brief update a specified new region while erase the previous region
+ * 
+ * \param[in] __item_ptr the target region item
+ * \param[in] __target_tile_ptr the target tile to draw content
+ * \param[in] __visible_region_ptr a visible region in the target tile used to clip
+ *            the ptNewRegion, NULL means no clipping.
+ * \param[in] __new_region_ptr the new region to update, NULL means nothing 
+ *            to update
+ */
+#define __arm_2d_helper_dirty_region_update_item4(  __item_ptr,                 \
+                                                    __target_tile_ptr,          \
+                                                    __visible_region_ptr,       \
+                                                    __new_region_ptr)           \
+            __arm_2d_helper_dirty_region_update_item((__item_ptr),              \
+                                                     (__target_tile_ptr),       \
+                                                     (__visible_region_ptr),    \
+                                                     (__new_region_ptr))
+
+/*!
+ * \brief deprecated
+ * 
+ */
+#define __arm_2d_helper_dirty_region_update_item5(  __dirty_region_helper_ptr,  \
+                                                    __item_ptr,                 \
+                                                    __target_tile_ptr,          \
+                                                    __visible_region_ptr,       \
+                                                    __new_region_ptr)           \
+            __arm_2d_helper_dirty_region_update_item((__item_ptr),              \
+                                                     (__target_tile_ptr),       \
+                                                     (__visible_region_ptr),    \
+                                                     (__new_region_ptr))
+
+#define arm_2d_helper_dirty_region_update_item(...)                             \
+            ARM_CONNECT2(   __arm_2d_helper_dirty_region_update_item,           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__)                      \
+                        )(__VA_ARGS__)
+
 
 #define impl_arm_2d_region_list(__NAME, ...)                                    \
             IMPL_ARM_2D_REGION_LIST(__NAME,##__VA_ARGS__)
@@ -769,7 +808,7 @@ typedef struct arm_2d_helper_dirty_region_t  arm_2d_helper_dirty_region_t;
 
 struct arm_2d_helper_dirty_region_item_t{
 
-//ARM_PRIVATE(
+ARM_PRIVATE(
     arm_2d_helper_dirty_region_item_t *ptNext;
     arm_2d_helper_dirty_region_t *ptHelper;
 
@@ -783,6 +822,8 @@ struct arm_2d_helper_dirty_region_item_t{
             };
         };
     };
+
+    arm_2d_region_t tExtraAreaToInclude;
     
     uint8_t bForceToUseMinimalEnclosure : 1;
     uint8_t bSuspendUpdate              : 1;
@@ -792,8 +833,9 @@ struct arm_2d_helper_dirty_region_item_t{
     uint8_t chUpdateLifeCycle;                  /* a life cycle counter used to avoid repeated update operations in the same frame.*/
 
     uint16_t u16Key;
-//)
+)
     arm_2d_region_t tRegionPatch;
+    
 
 };
 
@@ -1468,7 +1510,6 @@ void arm_2d_helper_dirty_region_on_frame_start(
 /*!
  * \brief update a specified new region while erase the previous region
  * 
- * \param[in] ptHelper the target dirty region helper
  * \param[in] ptThis the target region item
  * \param[in] ptTargetTile the target tile to draw content
  * \param[in] ptVisibleArea a visible region in the target tile used to clip
@@ -1477,9 +1518,8 @@ void arm_2d_helper_dirty_region_on_frame_start(
  *            to update
  */
 extern
-ARM_NONNULL(1,2,3)
-void arm_2d_helper_dirty_region_update_item(
-                                        arm_2d_helper_dirty_region_t *ptHelper,
+ARM_NONNULL(1,2)
+void __arm_2d_helper_dirty_region_update_item(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,

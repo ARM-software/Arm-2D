@@ -259,8 +259,7 @@ void cloudy_glass_show(   cloudy_glass_t *ptThis,
 
                 if (NULL != this.tCFG.ptScene) {
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_item( &this.tCFG.ptScene->tDirtyRegionHelper,
-                                                            &this.tDirtyRegionItem,
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
                                                             &__glass,
                                                             &__glass_canvas,
                                                             &__centre_region);

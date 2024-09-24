@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        18. Sept 2024
- * $Revision:    V.1.11.5
+ * $Date:        24. Sept 2024
+ * $Revision:    V.1.11.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4202,6 +4202,8 @@ void arm_2d_helper_dirty_region_init(
     arm_2d_dynamic_dirty_region_init(&this.tDirtyRegion);
 
     this.tDefaultItem.bIgnore = true;
+    this.tDefaultItem.ptHelper = ptThis;
+    this.tDefaultItem.u16Key = 0xCAFE;        /* add key for security */
 
     arm_2d_helper_pfb_append_dirty_regions_to_list( ppDirtyRegionList, 
                                                     &this.tDirtyRegion, 
@@ -4309,23 +4311,25 @@ void arm_2d_helper_dirty_region_on_frame_start(
 }
 
 
-ARM_NONNULL(1,2,3)
-void arm_2d_helper_dirty_region_update_item(
-                                        arm_2d_helper_dirty_region_t *ptHelper,
+ARM_NONNULL(1,2)
+void __arm_2d_helper_dirty_region_update_item(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
                                         const arm_2d_region_t *ptNewRegion)
 {
     assert(NULL != ptThis);
-    assert(NULL != ptHelper);
     assert(NULL != ptTargetTile);
 
-    if (ptHelper->chUpdateLifeCycle == this.chUpdateLifeCycle) {
-        /* already updated */
-        return ;
+    arm_2d_helper_dirty_region_t *ptHelper = this.ptHelper;
+
+    if (NULL != ptHelper) {
+        if (ptHelper->chUpdateLifeCycle == this.chUpdateLifeCycle) {
+            /* already updated */
+            return ;
+        }
+        this.chUpdateLifeCycle = ptHelper->chUpdateLifeCycle;
     }
-    this.chUpdateLifeCycle = ptHelper->chUpdateLifeCycle;
 
     if (NULL == ptNewRegion) {
         this.bIgnore = true;
@@ -4428,11 +4432,10 @@ void __arm_2d_helper_dirty_region_update_dirty_regions2(
     assert(NULL != ptTargetTile);
 
     /* update the first item for simplicity */
-    arm_2d_helper_dirty_region_update_item( ptThis, 
-                                            &this.tDefaultItem, 
-                                            ptTargetTile, 
-                                            ptVisibleArea, 
-                                            ptNewRegion);
+    __arm_2d_helper_dirty_region_update_item(   &this.tDefaultItem, 
+                                                ptTargetTile, 
+                                                ptVisibleArea, 
+                                                ptNewRegion);
 
     __arm_2d_helper_dirty_region_update_dirty_regions(ptThis, ptTargetTile);
 }
@@ -4468,11 +4471,20 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
                 this.ptCurrent->bIgnore = true;
 
                 if (this.ptCurrent->bOnlyUpdateMinimalEnclosure) {
+                    arm_2d_region_t tEnclosureArea = this.ptCurrent->tEnclosureArea;
+
+                    if (    (this.ptCurrent->tExtraAreaToInclude.tSize.iHeight > 0)
+                        &&  (this.ptCurrent->tExtraAreaToInclude.tSize.iWidth > 0)) {
+                        arm_2d_region_get_minimal_enclosure(&tEnclosureArea, 
+                                                            &this.ptCurrent->tExtraAreaToInclude, 
+                                                            &tEnclosureArea);
+                    }
+
                     /* we only update the minimal enclosure region */
                     __arm_2d_dynamic_dirty_region_update(
                                         &this.tDirtyRegion,
                                         NULL, 
-                                        &this.ptCurrent->tEnclosureArea,
+                                        &tEnclosureArea,
                                         DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
                                         true);             
                     this.ptCurrent = this.ptCurrent->ptNext;                    /* move to next */
@@ -4630,15 +4642,13 @@ void arm_2d_helper_dirty_region_transform_update(
         tCanvasInTarget.tLocation.iX -= ptTarget->tRegion.tLocation.iX;
         tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
         
-        arm_2d_helper_dirty_region_update_item(
-                                        this.ptHelper,
+        __arm_2d_helper_dirty_region_update_item(
                                         &this.tItem,
                                         ptTarget,
                                         &tCanvasInTarget,
                                         (this.ptTransformOP->Target.ptRegion));
     } else {
-        arm_2d_helper_dirty_region_update_item(
-                                        this.ptHelper,
+        __arm_2d_helper_dirty_region_update_item(
                                         &this.tItem,
                                         ptTarget,
                                         NULL,

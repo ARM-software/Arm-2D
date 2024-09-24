@@ -316,7 +316,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 bool bSmallMove = ABS(iProgressDelta) <= 90;
 
                 if (chDelta < 2) {
-                    this.chLastQuadrant = chCurrentQuadrant;
+                    
                     if (bSmallMove) {
                         ARM_2D_LOG_INFO(
                             CONTROLS, 
@@ -334,8 +334,29 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             chCurrentQuadrant
                         );
 
+                        if (iProgressDelta > 0) {
+                            /* increase */
+                            switch (this.chLastQuadrant) {
+                                case 0:
+                                case 1:
+                                case 2:
+                                case 3:
+                                
+                                default:
+                                    break;
+                            }
+
+
+                        } else {
+                            /* decrease */
+                        }
+
+
+
                         chState = DRAW_MIDDLE_STEP;
                     }
+
+                    this.chLastQuadrant = chCurrentQuadrant;
                 } else {
 
                     ARM_2D_LOG_INFO(
@@ -347,8 +368,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
                     chState = DRAW_WHOLE_WHEEL;
                 }
-
-                
             }
         }
 
@@ -369,8 +388,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 &__wheel_canvas,
                                                 WAIT_CHANGE);
             this.chLastQuadrant = chCurrentQuadrant;
-
-
         }
     
         arm_2d_region_t tRotationRegion = __wheel_canvas;
@@ -389,7 +406,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             .iY = ptileArcMask->tRegion.tSize.iHeight - 1 - !bNoScale,
         };
 
-        //if(this.fAngle >= ARM_2D_ANGLE(90.0f)){
         if (this.iProgress >= 900) {
             if (this.iProgress == 900) {
                 bIgnoreCurve = true;
@@ -464,12 +480,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
 
-                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[3]);
+                ARM_2D_OP_WAIT_ASYNC(&this.tOP[3]);
             } while(0);
 
         }
 
-        //if(this.fAngle >= ARM_2D_ANGLE(180.0f)){
         if (this.iProgress >= 1800) {
 
             if (this.iProgress == 1800) {
@@ -544,11 +559,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
                 
-                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[1]);
+                ARM_2D_OP_WAIT_ASYNC(&this.tOP[1]);
             }
         }
 
-        //if(this.fAngle >= ARM_2D_ANGLE(270.0)){
         if (this.iProgress >= 2700) {
             if (this.iProgress == 2700) {
                 bIgnoreCurve = true;
@@ -623,7 +637,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
                     
-                ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[2]);
+                ARM_2D_OP_WAIT_ASYNC(&this.tOP[2]);
             }
         }
 
@@ -633,16 +647,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
             arm_2d_region_t tQuater = tRotationRegion;
 
-            //if (this.iProgress < 250) {
             if (this.fAngle < ARM_2D_ANGLE(90.0f)) {
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
 
-            //} else if (this.iProgress < 500) {
             } else if (this.fAngle < ARM_2D_ANGLE(180.0f)) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
 
-            //} else if (this.iProgress < 750) {
             } else if (this.fAngle < ARM_2D_ANGLE(270.0f)) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
 
@@ -660,7 +671,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             chOpacity,
                                             &tTargetCentre);
 
-            ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[0]);
+            ARM_2D_OP_WAIT_ASYNC(&this.tOP[0]);
 
         } while(0);
 
@@ -713,7 +724,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                     chOpacity,
                                                     &tPivot);
                     
-                    ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[4]);
+                    ARM_2D_OP_WAIT_ASYNC(&this.tOP[4]);
                 }
             }
 
@@ -754,9 +765,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 );
                 }
 
-                arm_2d_helper_dirty_region_transform_update(   &this.tTransHelper,
-                                                                &__wheel_canvas,
-                                                                bIsNewFrame);
+                arm_2d_helper_dirty_region_transform_update(&this.tTransHelper,
+                                                            &__wheel_canvas,
+                                                            bIsNewFrame);
             }
 
             ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[5]);
@@ -780,11 +791,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
                 ARM_2D_OP_WAIT_ASYNC((arm_2d_op_core_t *)&this.tOP[6]);
             }
-
         }
     }
-
-
 }
 
 

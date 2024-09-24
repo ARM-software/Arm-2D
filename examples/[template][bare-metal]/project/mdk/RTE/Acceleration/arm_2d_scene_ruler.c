@@ -439,8 +439,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
                     = &ptScene->tNumberDirtyRegion[ptItem->hwID & 0x07];
 
                 arm_2d_region_t *ptTextRegion = arm_lcd_text_get_last_display_region();
-                arm_2d_helper_dirty_region_update_item( &ptScene->use_as__arm_2d_scene_t.tDirtyRegionHelper,
-                                                        ptDirtyRegionItem,
+                arm_2d_helper_dirty_region_update_item( ptDirtyRegionItem,
                                                         (arm_2d_tile_t *)ptTile,
                                                         NULL,
                                                         ptTextRegion);

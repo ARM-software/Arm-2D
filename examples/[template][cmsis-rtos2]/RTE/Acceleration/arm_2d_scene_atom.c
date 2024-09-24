@@ -258,8 +258,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     tDirtyRegion.tSize.iHeight += tCharSize.iHeight;
 
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_item(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
-                                                           &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                    arm_2d_helper_dirty_region_update_item(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
                                                             (arm_2d_tile_t *)ptTile,
                                                             &__top_canvas,
                                                             &tDirtyRegion);
@@ -356,8 +355,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     __centre_region.tLocation.iY += this.Electronic[0].tOffset.iY;
               
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_item( &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
-                                                            &this.Electronic[0].tDirtyRegionItem,
+                    arm_2d_helper_dirty_region_update_item( &this.Electronic[0].tDirtyRegionItem,
                                                             (arm_2d_tile_t *)ptTile,
                                                             &__top_canvas,
                                                             &__centre_region);
@@ -388,8 +386,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     __centre_region.tLocation.iY += this.Electronic[1].tOffset.iY;
 
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_item( &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
-                                                            &this.Electronic[1].tDirtyRegionItem,
+                    arm_2d_helper_dirty_region_update_item( &this.Electronic[1].tDirtyRegionItem,
                                                             (arm_2d_tile_t *)ptTile,
                                                             &__top_canvas,
                                                             &__centre_region);
