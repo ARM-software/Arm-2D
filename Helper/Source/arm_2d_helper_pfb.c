@@ -4310,9 +4310,51 @@ void arm_2d_helper_dirty_region_on_frame_start(
                                                 DIRTY_REGION_HELPER_START);
 }
 
+ARM_NONNULL(1,2)
+void arm_2d_helper_dirty_region_item_set_extra_region(
+                                        arm_2d_helper_dirty_region_item_t *ptThis,
+                                        const arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_region_t *ptVisibleArea,
+                                        const arm_2d_region_t *ptExtraRegion)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTargetTile);
+
+    /* invalid the extra area first */
+    this.tExtraAreaToInclude.tSize = (arm_2d_size_t){0,0};
+    if (NULL == ptExtraRegion) {
+        return ;
+    }
+
+    arm_2d_region_t tExtraRegion = *ptExtraRegion;
+
+    do {
+        //! get absolute location
+        tExtraRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                                (arm_2d_tile_t *)ptTargetTile, 
+                                                tExtraRegion.tLocation);
+        if (NULL != ptVisibleArea) {
+
+            arm_2d_region_t tTargetRegion = *ptVisibleArea;
+            tTargetRegion.tLocation = arm_2d_helper_pfb_get_absolute_location(
+                                                (arm_2d_tile_t *)ptTargetTile, 
+                                                tTargetRegion.tLocation);
+
+            if (!arm_2d_region_intersect(   &tExtraRegion, 
+                                            &tTargetRegion,
+                                            &tExtraRegion)) {
+                break;
+            }
+        }
+
+        /* update extra area */
+        this.tExtraAreaToInclude = tExtraRegion;
+    } while(0);
+}
+
 
 ARM_NONNULL(1,2)
-void __arm_2d_helper_dirty_region_update_item(
+void __arm_2d_helper_dirty_region_item_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
@@ -4432,7 +4474,7 @@ void __arm_2d_helper_dirty_region_update_dirty_regions2(
     assert(NULL != ptTargetTile);
 
     /* update the first item for simplicity */
-    __arm_2d_helper_dirty_region_update_item(   &this.tDefaultItem, 
+    __arm_2d_helper_dirty_region_item_update(   &this.tDefaultItem, 
                                                 ptTargetTile, 
                                                 ptVisibleArea, 
                                                 ptNewRegion);
@@ -4642,13 +4684,13 @@ void arm_2d_helper_dirty_region_transform_update(
         tCanvasInTarget.tLocation.iX -= ptTarget->tRegion.tLocation.iX;
         tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
         
-        __arm_2d_helper_dirty_region_update_item(
+        __arm_2d_helper_dirty_region_item_update(
                                         &this.tItem,
                                         ptTarget,
                                         &tCanvasInTarget,
                                         (this.ptTransformOP->Target.ptRegion));
     } else {
-        __arm_2d_helper_dirty_region_update_item(
+        __arm_2d_helper_dirty_region_item_update(
                                         &this.tItem,
                                         ptTarget,
                                         NULL,

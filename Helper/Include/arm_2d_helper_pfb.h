@@ -407,7 +407,7 @@ extern "C" {
                                                     __target_tile_ptr,          \
                                                     __visible_region_ptr,       \
                                                     __new_region_ptr)           \
-            __arm_2d_helper_dirty_region_update_item((__item_ptr),              \
+            __arm_2d_helper_dirty_region_item_update((__item_ptr),              \
                                                      (__target_tile_ptr),       \
                                                      (__visible_region_ptr),    \
                                                      (__new_region_ptr))
@@ -421,7 +421,7 @@ extern "C" {
                                                     __target_tile_ptr,          \
                                                     __visible_region_ptr,       \
                                                     __new_region_ptr)           \
-            __arm_2d_helper_dirty_region_update_item((__item_ptr),              \
+            __arm_2d_helper_dirty_region_item_update((__item_ptr),              \
                                                      (__target_tile_ptr),       \
                                                      (__visible_region_ptr),    \
                                                      (__new_region_ptr))
@@ -1519,11 +1519,28 @@ void arm_2d_helper_dirty_region_on_frame_start(
  */
 extern
 ARM_NONNULL(1,2)
-void __arm_2d_helper_dirty_region_update_item(
+void __arm_2d_helper_dirty_region_item_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
                                         const arm_2d_region_t *ptNewRegion);
+
+/*!
+ * \brief update the "extra area" of a specified dirty region item
+ * 
+ * \param[in] ptThis the target region item
+ * \param[in] ptTargetTile the target tile to draw content
+ * \param[in] ptVisibleArea a visible region in the target tile used to clip
+ *            the ptNewRegion, NULL means no clipping.
+ * \param[in] ptExtraRegion the new extra region
+ */
+extern
+ARM_NONNULL(1,2)
+void arm_2d_helper_dirty_region_item_set_extra_region(
+                                        arm_2d_helper_dirty_region_item_t *ptThis,
+                                        const arm_2d_tile_t *ptTargetTile,
+                                        const arm_2d_region_t *ptVisibleArea,
+                                        const arm_2d_region_t *ptExtraRegion);
 
 /*!
  * \brief update a specified new region while erase the previous region
