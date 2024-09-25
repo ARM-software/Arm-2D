@@ -262,25 +262,25 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
             progress_wheel_show(&this.tWheel,
                             ptTile, 
                             &__centre_region,       
-                            this.iActual,    /* progress 0~1000 */
+                            this.iActual,    /* progress 0~3600 */
                             255,                    /* opacity */
                             bIsNewFrame);
 
-        #if 1
             arm_2d_fill_colour_with_a4_mask(ptTile, 
                                             &__centre_region, 
                                             &c_tileRadialLineCoverA4Mask, 
                                             (__arm_2d_color_t){GLCD_COLOR_BLACK});
-        #endif
+
         }
+
 
         meter_pointer_show(&this.tPointer, 
                         ptTile,
                         &__top_canvas,
                         NULL,
                         255);
-        
-                /* draw 3 digits numbers */
+
+        /* draw 3 digits numbers */
         do {
             /* 3 digits */
             arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("000", &ARM_2D_FONT_A4_DIGITS_ONLY);

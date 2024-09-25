@@ -249,7 +249,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
     COLOUR_INT tWheelColour = this.tCFG.tWheelColour;
 
-
     if (bIsNewFrame) {
         iProgress = MAX(0, iProgress);
         iProgress = MIN(iProgress, this.tCFG.u15FullLength);
@@ -349,7 +348,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_region_t tExtraRefreshArea = {0};
                         bool bExtraRefreshAreaInitialized = false;
 
-                        int16_t iRadius = this.tCFG.iWheelDiameter;
+                        int16_t iRadius = this.tCFG.iWheelDiameter / 2;
 
                         if (iProgressDelta > 0) {
                             /* increase */
@@ -773,6 +772,86 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
         }
 
+
+        if (this.iProgress >= 3600) {
+            if (this.iProgress == 3600) {
+                bIgnoreCurve = true;
+            }
+
+            arm_2d_region_t tQuater = tRotationRegion;
+
+            switch (this.tCFG.u2StartPosition) {
+                default:
+                case PROGRESS_WHEEL_START_POSITION_TOP:
+                    break;
+                case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                    break;
+                case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                    break;
+                case PROGRESS_WHEEL_START_POSITION_LEFT:
+                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                    break;
+            }
+
+            if (bNoScale) {
+            
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        arm_2d_fill_colour_with_mask_and_opacity(
+                            &__wheel,
+                            &tQuater,
+                            ptileArcMask,
+                            (__arm_2d_color_t){tWheelColour},
+                            chOpacity);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        arm_2d_fill_colour_with_mask_x_mirror_and_opacity(
+                            &__wheel,
+                            &tQuater,
+                            ptileArcMask,
+                            (__arm_2d_color_t){tWheelColour},
+                            chOpacity);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(
+                            &__wheel,
+                            &tQuater,
+                            ptileArcMask,
+                            (__arm_2d_color_t){tWheelColour},
+                            chOpacity);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        arm_2d_fill_colour_with_mask_y_mirror_and_opacity(
+                            &__wheel,
+                            &tQuater,
+                            ptileArcMask,
+                            (__arm_2d_color_t){tWheelColour},
+                            chOpacity);
+                        break;
+                }
+
+            } else {
+                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                                &this.tOP[2],
+                                                ptileArcMask,
+                                                &__wheel,
+                                                &tQuater,
+                                                tCentre,
+                                                ARM_2D_ANGLE((4 + (int)this.tCFG.u2StartPosition) * 90.0f),
+                                                this.fScale,
+                                                tWheelColour,
+                                                chOpacity,
+                                                &tTargetCentre);
+                    
+                ARM_2D_OP_WAIT_ASYNC(&this.tOP[2]);
+            }
+        }
+
+
         do {
             if (bIgnoreCurve) {
                 break;
@@ -788,7 +867,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             } else if (this.fAngle < ARM_2D_ANGLE(270.0f)) {
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-
             } 
 
             arm_2dp_fill_colour_with_mask_opacity_and_transform(

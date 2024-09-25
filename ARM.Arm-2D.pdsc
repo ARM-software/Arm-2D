@@ -319,7 +319,7 @@
         </component>
 
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.2.3" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.2.4" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -369,12 +369,12 @@
             <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.c"   attr="template"  select="Scene Template: Animate Background"   version="1.0.1" />
             <file category="header"      name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.h"   attr="template"  select="Scene Template: Animate Background"   version="1.0.1" />
           
-            <file category="sourceC"     name="examples/common/scenes/knob/arm_2d_scene_knob.c"   attr="template"  select="Scene Template: Knob"   version="1.1.0" />
-            <file category="header"      name="examples/common/scenes/knob/arm_2d_scene_knob.h"   attr="template"  select="Scene Template: Knob"   version="1.1.0" />
-            <file category="sourceC"     name="examples/common/asset/wedge_pattern.c"             attr="template"  select="Scene Template: Knob"   version="1.1.0" />
-            <file category="sourceC"     name="examples/common/asset/radial_line_pattern.c"       attr="template"  select="Scene Template: Knob"   version="1.1.0" />
-            <file category="sourceC"     name="examples/common/asset/radial_line_cover.c"         attr="template"  select="Scene Template: Knob"   version="1.1.0" />
-            <file category="sourceC"     name="examples/common/asset/knob_circle_quater.c"        attr="template"  select="Scene Template: Knob"   version="1.1.0" />
+            <file category="sourceC"     name="examples/common/scenes/knob/arm_2d_scene_knob.c"   attr="template"  select="Scene Template: Knob"   version="1.1.1" />
+            <file category="header"      name="examples/common/scenes/knob/arm_2d_scene_knob.h"   attr="template"  select="Scene Template: Knob"   version="1.1.1" />
+            <file category="sourceC"     name="examples/common/asset/wedge_pattern.c"             attr="template"  select="Scene Template: Knob"   version="1.1.1" />
+            <file category="sourceC"     name="examples/common/asset/radial_line_pattern.c"       attr="template"  select="Scene Template: Knob"   version="1.1.1" />
+            <file category="sourceC"     name="examples/common/asset/radial_line_cover.c"         attr="template"  select="Scene Template: Knob"   version="1.1.1" />
+            <file category="sourceC"     name="examples/common/asset/knob_circle_quater.c"        attr="template"  select="Scene Template: Knob"   version="1.1.1" />
 
           </files>
           <RTE_Components_h>
@@ -450,7 +450,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.9.7" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="1.9.8" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
