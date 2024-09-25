@@ -95,8 +95,7 @@ extern const arm_2d_tile_t c_tileRadialLineCoverA4Mask;
 extern const arm_2d_tile_t c_tileKnobCircleMask;
 extern const arm_2d_tile_t c_tileWedgeMask;
 
-ARM_NOINIT
-static arm_2d_tile_t s_tileRadialCircleQuaterMask;
+extern const arm_2d_tile_t c_tileKnobCircleQuaterMask;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -222,8 +221,8 @@ static void __on_scene_knob_frame_complete(arm_2d_scene_t *ptScene)
     meter_pointer_on_frame_complete(&this.tPointer);
 
 #if 1
-    /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+    /* switch to next scene after 15s */
+    if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 #endif
@@ -267,11 +266,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
                             255,                    /* opacity */
                             bIsNewFrame);
 
+        #if 0
             arm_2d_fill_colour_with_a4_mask(ptTile, 
                                             &__centre_region, 
                                             &c_tileRadialLineCoverA4Mask, 
                                             (__arm_2d_color_t){GLCD_COLOR_BLACK});
-            
+        #endif
         }
 
         meter_pointer_show(&this.tPointer, 
@@ -414,16 +414,9 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
     /* ------------   initialize members of user_scene_knob_t begin ---------------*/
 
     do {
-        s_tileRadialCircleQuaterMask = (arm_2d_tile_t)
-            impl_child_tile(c_tileKnobCircleMask,
-                            0, 
-                            0,
-                            c_tileKnobCircleMask.tRegion.tSize.iWidth >> 1,
-                            c_tileKnobCircleMask.tRegion.tSize.iHeight >> 1,
-                            );
 
         progress_wheel_cfg_t tCFG = {
-            .ptileArcMask   = &s_tileRadialCircleQuaterMask, /* mask for arc */
+            .ptileArcMask   = &c_tileKnobCircleQuaterMask, /* mask for arc */
             .tWheelColour   = GLCD_COLOR_NIXIE_TUBE,         /* arc colour */
             .iWheelDiameter = 0,                            /* diameter, 0 means use the mask's original size */
 
