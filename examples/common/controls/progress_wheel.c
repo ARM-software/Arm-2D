@@ -286,6 +286,11 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
+        arm_2d_location_t tTargetCentre = {
+            .iX = __wheel_canvas.tLocation.iX + (__wheel_canvas.tSize.iWidth >> 1),
+            .iY = __wheel_canvas.tLocation.iY + (__wheel_canvas.tSize.iHeight >> 1),
+        };
+
         if (    (chState == START) 
             &&  bIsNewFrame 
             &&  this.tCFG.bUseDirtyRegions) {
@@ -295,7 +300,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         }
 
         if ( WAIT_CHANGE == chState) {
-            if (this.iLastProgress != this.iProgress) {
+            if (this.iLastProgress != this.iProgress && bIsNewFrame) {
                 
                 int8_t chQuadrantChange = chCurrentQuadrant - this.chLastQuadrant;
                 int8_t chDelta = ABS(chQuadrantChange);
@@ -316,7 +321,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 bool bSmallMove = ABS(iProgressDelta) <= 90;
 
                 if (chDelta < 2) {
-                    
+
                     if (bSmallMove) {
                         ARM_2D_LOG_INFO(
                             CONTROLS, 
@@ -325,6 +330,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             "Progress in small steps, updating the regions of end point is sufficient.",
                             chCurrentQuadrant
                         );
+
+                        /* remove extra area */
+                        arm_2d_helper_dirty_region_item_set_extra_region(&this.tTransHelper.tItem,
+                                                                         &__wheel,
+                                                                         &__wheel_canvas,
+                                                                         NULL);
+
                     } else {
                         ARM_2D_LOG_INFO(
                             CONTROLS, 
@@ -334,24 +346,144 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             chCurrentQuadrant
                         );
 
+                        arm_2d_region_t tExtraRefreshArea = {0};
+                        bool bExtraRefreshAreaInitialized = false;
+
+                        int16_t iRadius = this.tCFG.iWheelDiameter;
+
                         if (iProgressDelta > 0) {
                             /* increase */
                             switch (this.chLastQuadrant) {
                                 case 0:
+                                    if (chCurrentQuadrant > 0) {
+                                        arm_2d_region_t tRightMostPoint = {
+                                            .tLocation.iX = tTargetCentre.iX + iRadius - 1,
+                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tSize = {1,1},
+                                        };
+
+                                        bExtraRefreshAreaInitialized = true;
+                                        tExtraRefreshArea = tRightMostPoint;
+                                    }
+                                    // fall_through
                                 case 1:
+                                    if (chCurrentQuadrant > 1) {
+                                        arm_2d_region_t tBottomMostPoint = {
+                                            .tLocation.iX = tTargetCentre.iX,
+                                            .tLocation.iY = tTargetCentre.iY + iRadius - 1,
+                                            .tSize = {1,1},
+                                        };
+
+                                        if (bExtraRefreshAreaInitialized) {
+                                            bExtraRefreshAreaInitialized = true;
+                                            tExtraRefreshArea = tBottomMostPoint;
+                                        } else {
+                                            /* update extra area */
+                                            arm_2d_region_get_minimal_enclosure(&tBottomMostPoint,
+                                                                                &tExtraRefreshArea,
+                                                                                &tExtraRefreshArea);
+                                        }
+                                    }
+                                    // fall_through
                                 case 2:
+                                    if (chCurrentQuadrant > 2) {
+                                        arm_2d_region_t tLeftMostPoint = {
+                                            .tLocation.iX = tTargetCentre.iX - iRadius + 1,
+                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tSize = {1,1},
+                                        };
+
+                                        if (bExtraRefreshAreaInitialized) {
+                                            bExtraRefreshAreaInitialized = true;
+                                            tExtraRefreshArea = tLeftMostPoint;
+                                        } else {
+                                            /* update extra area */
+                                            arm_2d_region_get_minimal_enclosure(&tLeftMostPoint,
+                                                                                &tExtraRefreshArea,
+                                                                                &tExtraRefreshArea);
+                                        }
+                                    }
+                                    break;
                                 case 3:
-                                
                                 default:
+                                    /* this won't happen */
                                     break;
                             }
 
+                            arm_2d_helper_dirty_region_item_set_extra_region(
+                                                                            &this.tTransHelper.tItem,
+                                                                            &__wheel,
+                                                                            &__wheel_canvas,
+                                                                            &tExtraRefreshArea);
 
                         } else {
                             /* decrease */
+                            switch (this.chLastQuadrant) {
+                                
+                                case 3:
+                                    if (chCurrentQuadrant < 3) {
+                                        arm_2d_region_t tLeftMostPoint = {
+                                            .tLocation.iX = tTargetCentre.iX - iRadius + 1,
+                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tSize = {1,1},
+                                        };
+
+                                        bExtraRefreshAreaInitialized = true;
+                                        tExtraRefreshArea = tLeftMostPoint;
+                                    }
+                                    // fall_through
+                                case 2:
+                                    if (chCurrentQuadrant < 2) {
+                                        arm_2d_region_t tBottomMostPoint = {
+                                            .tLocation.iX = tTargetCentre.iX,
+                                            .tLocation.iY = tTargetCentre.iY + iRadius - 1,
+                                            .tSize = {1,1},
+                                        };
+
+                                        if (bExtraRefreshAreaInitialized) {
+                                            bExtraRefreshAreaInitialized = true;
+                                            tExtraRefreshArea = tBottomMostPoint;
+                                        } else {
+                                            /* update extra area */
+                                            arm_2d_region_get_minimal_enclosure(&tBottomMostPoint,
+                                                                                &tExtraRefreshArea,
+                                                                                &tExtraRefreshArea);
+                                        }
+                                    }
+                                    // fall through
+                                case 1:
+                                    if (chCurrentQuadrant < 2) {
+                                        arm_2d_region_t tRightMostPoint = {
+                                            .tLocation.iX = tTargetCentre.iX + iRadius - 1,
+                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tSize = {1,1},
+                                        };
+
+                                        if (bExtraRefreshAreaInitialized) {
+                                            bExtraRefreshAreaInitialized = true;
+                                            tExtraRefreshArea = tRightMostPoint;
+                                        } else {
+                                            /* update extra area */
+                                            arm_2d_region_get_minimal_enclosure(&tRightMostPoint,
+                                                                                &tExtraRefreshArea,
+                                                                                &tExtraRefreshArea);
+                                        }
+                                    }
+                                    // fall through
+                                    break;
+                                default:
+                                case 0:
+                                    /* this won't happen */
+                                    break;
+                            }
+
+                            arm_2d_helper_dirty_region_item_set_extra_region(
+                                                                            &this.tTransHelper.tItem,
+                                                                            &__wheel,
+                                                                            &__wheel_canvas,
+                                                                            &tExtraRefreshArea);
+
                         }
-
-
 
                         chState = DRAW_MIDDLE_STEP;
                     }
@@ -383,6 +515,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 chCurrentQuadrant
             );
 
+            /* remove extra area */
+            arm_2d_helper_dirty_region_item_set_extra_region(&this.tTransHelper.tItem,
+                                                             &__wheel,
+                                                             &__wheel_canvas,
+                                                             NULL);
+
             arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
                                                 &__wheel,
                                                 &__wheel_canvas,
@@ -395,12 +533,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
         tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
 
-
-        arm_2d_location_t tTargetCentre = {
-            .iX = __wheel_canvas.tLocation.iX + (__wheel_canvas.tSize.iWidth >> 1),
-            .iY = __wheel_canvas.tLocation.iY + (__wheel_canvas.tSize.iHeight >> 1),
-        };
-        
         arm_2d_location_t tCentre = {
             .iX = ptileArcMask->tRegion.tSize.iWidth - 1 - !bNoScale,
             .iY = ptileArcMask->tRegion.tSize.iHeight - 1 - !bNoScale,
@@ -756,7 +888,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 if (bIsNewFrame) {
                     arm_2d_helper_dirty_region_transform_force_to_use_minimal_enclosure(
                                                     &this.tTransHelper,
-                                                    (chState == DRAW_MIDDLE_STEP)
+                                                        (chState == DRAW_MIDDLE_STEP)
+                                                    ||  this.tCFG.bIgnoreDot
                                                 );
                     
                     arm_2d_helper_dirty_region_transform_suspend_update(
