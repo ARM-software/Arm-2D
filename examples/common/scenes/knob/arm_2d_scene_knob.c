@@ -266,7 +266,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
                             255,                    /* opacity */
                             bIsNewFrame);
 
-        #if 0
+        #if 1
             arm_2d_fill_colour_with_a4_mask(ptTile, 
                                             &__centre_region, 
                                             &c_tileRadialLineCoverA4Mask, 
