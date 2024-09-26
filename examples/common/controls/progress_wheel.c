@@ -345,10 +345,122 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             chCurrentQuadrant
                         );
 
+                        enum {
+                            PROGRESS_INCREASE = 0,
+                            PROGRESS_DECREASE,
+                        };
+
+                        static const struct {
+                            int16_t s1Q0X       :2;
+                            int16_t s1Q0Y       :2;
+                            int16_t s1Q1X       :2;
+                            int16_t s1Q1Y       :2;
+                            int16_t s1Q2X       :2;
+                            int16_t s1Q2Y       :2;
+                            int16_t s1Q3X       :2;
+                            int16_t s1Q3Y       :2;
+                        } c_tQuadrantTable[2][4] = {
+                            [PROGRESS_INCREASE] = {
+                                [PROGRESS_WHEEL_START_POSITION_TOP] = {
+                                    .s1Q0X = 1,
+                                    .s1Q0Y = 0,
+
+                                    .s1Q1X = 0,
+                                    .s1Q1Y = 1,
+
+                                    .s1Q2X = -1,
+                                    .s1Q2Y = 0,
+                                },
+
+                                [PROGRESS_WHEEL_START_POSITION_RIGHT] = {
+                                    .s1Q0X = 0,
+                                    .s1Q0Y = 1,
+
+                                    .s1Q1X = -1,
+                                    .s1Q1Y = 0,
+
+                                    .s1Q2X = 0,
+                                    .s1Q2Y = -1,
+                                },
+
+                                [PROGRESS_WHEEL_START_POSITION_BOTTOM] = {
+
+                                    .s1Q0X = -1,
+                                    .s1Q0Y = 0,
+
+                                    .s1Q1X = 0,
+                                    .s1Q1Y = -1,
+
+                                    .s1Q2X = 1,
+                                    .s1Q2Y = 0,
+                                },
+
+                                [PROGRESS_WHEEL_START_POSITION_LEFT] = {
+
+                                    .s1Q0X = 0,
+                                    .s1Q0Y = -1,
+
+                                    .s1Q1X = 1,
+                                    .s1Q1Y = 0,
+
+                                    .s1Q2X = 0,
+                                    .s1Q2Y = 1,
+                                },
+
+                            },
+                            [PROGRESS_DECREASE] = {
+                                [PROGRESS_WHEEL_START_POSITION_TOP] = {
+                                    .s1Q3X = -1,
+                                    .s1Q3Y = 0,
+
+                                    .s1Q2X = 0,
+                                    .s1Q2Y = 1,
+
+                                    .s1Q1X = 1,
+                                    .s1Q1Y = 0,
+                                },
+
+                                [PROGRESS_WHEEL_START_POSITION_RIGHT] = {
+                                    .s1Q3X = 0,
+                                    .s1Q3Y = -1,
+
+                                    .s1Q2X = -1,
+                                    .s1Q2Y = 0,
+
+                                    .s1Q1X = 0,
+                                    .s1Q1Y = 1,
+                                },
+
+                                [PROGRESS_WHEEL_START_POSITION_BOTTOM] = {
+                                    .s1Q3X = 1,
+                                    .s1Q3Y = 0,
+
+                                    .s1Q2X = 0,
+                                    .s1Q2Y = -1,
+
+                                    .s1Q1X = -1,
+                                    .s1Q1Y = 0,
+                                },
+
+                                [PROGRESS_WHEEL_START_POSITION_LEFT] = {
+
+                                    .s1Q3X = 0,
+                                    .s1Q3Y = 1,
+
+                                    .s1Q2X = 1,
+                                    .s1Q2Y = 0,
+
+                                    .s1Q1X = 0,
+                                    .s1Q1Y = -1,
+                                },
+
+                            },
+                        };
+
                         arm_2d_region_t tExtraRefreshArea = {0};
                         bool bExtraRefreshAreaInitialized = false;
-
-                        int16_t iRadius = this.tCFG.iWheelDiameter / 2;
+                        int_fast8_t chStartPosition = this.tCFG.u2StartPosition;
+                        int16_t iRadius = (this.tCFG.iWheelDiameter / 2) - 1;
 
                         if (iProgressDelta > 0) {
                             /* increase */
@@ -356,8 +468,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 0:
                                     if (chCurrentQuadrant > 0) {
                                         arm_2d_region_t tRightMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX + iRadius - 1,
-                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tLocation.iX = tTargetCentre.iX 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q0X,
+                                            .tLocation.iY = tTargetCentre.iY 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q0Y,
                                             .tSize = {1,1},
                                         };
 
@@ -368,8 +484,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 1:
                                     if (chCurrentQuadrant > 1) {
                                         arm_2d_region_t tBottomMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX,
-                                            .tLocation.iY = tTargetCentre.iY + iRadius - 1,
+                                            .tLocation.iX = tTargetCentre.iX 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q1X,
+                                            .tLocation.iY = tTargetCentre.iY 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q1Y,
                                             .tSize = {1,1},
                                         };
 
@@ -387,8 +507,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 2:
                                     if (chCurrentQuadrant > 2) {
                                         arm_2d_region_t tLeftMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX - iRadius + 1,
-                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tLocation.iX = tTargetCentre.iX 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q2X,
+                                            .tLocation.iY = tTargetCentre.iY 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q2Y,
                                             .tSize = {1,1},
                                         };
 
@@ -422,8 +546,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 3:
                                     if (chCurrentQuadrant < 3) {
                                         arm_2d_region_t tLeftMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX - iRadius + 1,
-                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tLocation.iX = tTargetCentre.iX 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q3X,
+                                            .tLocation.iY = tTargetCentre.iY 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q3Y,
                                             .tSize = {1,1},
                                         };
 
@@ -434,8 +562,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 2:
                                     if (chCurrentQuadrant < 2) {
                                         arm_2d_region_t tBottomMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX,
-                                            .tLocation.iY = tTargetCentre.iY + iRadius - 1,
+                                            .tLocation.iX = tTargetCentre.iX 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q2X,
+                                            .tLocation.iY = tTargetCentre.iY 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q2Y,
                                             .tSize = {1,1},
                                         };
 
@@ -453,8 +585,12 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 1:
                                     if (chCurrentQuadrant < 2) {
                                         arm_2d_region_t tRightMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX + iRadius - 1,
-                                            .tLocation.iY = tTargetCentre.iY,
+                                            .tLocation.iX = tTargetCentre.iX 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q1X,
+                                            .tLocation.iY = tTargetCentre.iY 
+                                                          + iRadius 
+                                                          * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q1Y,
                                             .tSize = {1,1},
                                         };
 
@@ -527,6 +663,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             this.chLastQuadrant = chCurrentQuadrant;
         }
     
+    /*------------------------------------------------------------------------*
+     * Quadrant related variables won't cross this line                       *
+     *------------------------------------------------------------------------*/
+
         arm_2d_region_t tRotationRegion = __wheel_canvas;
 
         tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
@@ -774,9 +914,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
 
         if (this.iProgress >= 3600) {
-            if (this.iProgress == 3600) {
+            //if (this.iProgress == 3600) {
                 bIgnoreCurve = true;
-            }
+            //}
 
             arm_2d_region_t tQuater = tRotationRegion;
 

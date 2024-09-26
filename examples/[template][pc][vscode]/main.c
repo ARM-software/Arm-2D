@@ -267,8 +267,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
     //scene_transform_compass,
     //scene_basics_loader,
     //scene_fitness_loader,
-    scene_user_defined_opcode_loader,
-    //scene_knob_loader,
+    //scene_user_defined_opcode_loader,
+    scene_knob_loader,
     //scene_panel_loader,
 #endif
 

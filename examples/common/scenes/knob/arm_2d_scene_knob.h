@@ -96,7 +96,8 @@ ARM_PRIVATE(
         arm_2d_helper_pi_slider_t   tPISlider;
         int16_t                     iActual;
     };
-   
+
+    arm_2d_op_fill_cl_msk_opa_trans_t tCoverRotateOP;
 
 )
     /* place your public member here */

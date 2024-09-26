@@ -92,6 +92,8 @@ extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileRadialLineCoverA4Mask;
+extern const arm_2d_tile_t c_tileRadialLineCoverMask;
+
 extern const arm_2d_tile_t c_tileKnobCircleMask;
 extern const arm_2d_tile_t c_tileWedgeMask;
 
@@ -111,6 +113,58 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
     ),
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
+
+/*
+ * \note You can change the following value to change the orientation of 
+ *       the knob. The valid values are:
+ *       KNOB_START_POINT_TOP
+ *       KNOB_START_POINT_RIGHT
+ *       KNOB_START_POINT_BOTTOM
+ *       KNOB_START_POINT_LEFT
+ */
+
+static
+const 
+enum {
+    KNOB_START_POINT_TOP    = PROGRESS_WHEEL_START_POSITION_TOP,
+    KNOB_START_POINT_RIGHT  = PROGRESS_WHEEL_START_POSITION_RIGHT,
+    KNOB_START_POINT_BOTTOM = PROGRESS_WHEEL_START_POSITION_BOTTOM,
+    KNOB_START_POINT_LEFT   = PROGRESS_WHEEL_START_POSITION_LEFT,
+} c_tKnobStartPosition = KNOB_START_POINT_BOTTOM;
+
+const
+static 
+struct {
+    float fStartAngle;
+    float fStopAngle;
+    int16_t iProgressWheelOffset;
+    int16_t iCoverAngle;
+} c_tKnobAngleTable[4] = {
+    [KNOB_START_POINT_TOP] = {
+        .fStartAngle = 45.0f,
+        .fStopAngle = 315.0f,
+        .iProgressWheelOffset = 0,
+        .iCoverAngle = 1800,
+    },
+    [KNOB_START_POINT_RIGHT] = {
+        .fStartAngle = 135.0f,
+        .fStopAngle = 405.0f,
+        .iProgressWheelOffset = -900,
+        .iCoverAngle = -900,
+    },
+    [KNOB_START_POINT_BOTTOM] = {
+        .fStartAngle = -135.0f,
+        .fStopAngle = 135.0f,
+        .iProgressWheelOffset = 1800,
+        .iCoverAngle = 0,
+    },
+    [KNOB_START_POINT_LEFT] = {
+        .fStartAngle = -45.0f,
+        .fStopAngle = 225.0f,
+        .iProgressWheelOffset = 900,
+        .iCoverAngle = 900,
+    },
+};
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -143,6 +197,11 @@ static void __on_scene_knob_depose(arm_2d_scene_t *ptScene)
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
+    }
+
+    if (    c_tKnobStartPosition == KNOB_START_POINT_LEFT
+       ||   c_tKnobStartPosition == KNOB_START_POINT_RIGHT) {
+        ARM_2D_OP_DEPOSE(this.tCoverRotateOP);
     }
 
     if (!this.bUserAllocated) {
@@ -201,7 +260,8 @@ static void __on_scene_knob_frame_start(arm_2d_scene_t *ptScene)
     } while(0);
     
     do {
-        int16_t iTemp = spin_zoom_widget_get_current_angle(&this.tPointer.use_as__spin_zoom_widget_t) * 10.0f + 1800;
+        int16_t iTemp = spin_zoom_widget_get_current_angle(&this.tPointer.use_as__spin_zoom_widget_t) * 10.0f
+                      + c_tKnobAngleTable[c_tKnobStartPosition].iProgressWheelOffset;
         int32_t nResult;
         arm_2d_helper_pi_slider(&this.tPISlider, 
                                 iTemp, 
@@ -220,7 +280,7 @@ static void __on_scene_knob_frame_complete(arm_2d_scene_t *ptScene)
 
     meter_pointer_on_frame_complete(&this.tPointer);
 
-#if 1
+#if 0
     /* switch to next scene after 15s */
     if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
@@ -251,12 +311,46 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
     /*-----------------------draw the foreground begin-----------------------*/
 
         /* draw the radial line cover */
-        arm_2d_align_centre(__top_canvas, c_tileRadialLineCoverA4Mask.tRegion.tSize) {
+        arm_2d_align_centre(__top_canvas,
+                            c_tileRadialLineCoverA4Mask.tRegion.tSize) {
 
-            arm_2d_fill_colour_with_opacity(ptTile, 
-                                            &__centre_region,
-                                             (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
-                                            128);
+            /*!
+             * \NOTE since rotation(transform) algorithm will ignore the 
+             *       bottom and right (1pixel) border, it is necessary 
+             *       to apply some fixes, for example
+             *       1. enlarge the background colour area
+             *       2. use the scaling factor 1.01f rather than 1.0f
+             *          in transform.
+             */
+            switch (c_tKnobStartPosition) {
+                case KNOB_START_POINT_RIGHT: {
+                        arm_2d_region_t tCoverRegion = __centre_region;
+                        tCoverRegion.tSize.iHeight += 1;
+
+                        arm_2d_fill_colour_with_opacity(ptTile, 
+                                &tCoverRegion,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                128);
+                    }
+                    break;
+                case KNOB_START_POINT_LEFT: {
+                        arm_2d_region_t tCoverRegion = __centre_region;
+                        tCoverRegion.tSize.iWidth += 1;
+
+                        arm_2d_fill_colour_with_opacity(ptTile, 
+                                &tCoverRegion,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                128);
+                    }
+                    break;
+                default:
+                    arm_2d_fill_colour_with_opacity(ptTile, 
+                                &__centre_region,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                128);
+                    break;
+            }
+
 
 
             progress_wheel_show(&this.tWheel,
@@ -266,19 +360,51 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
                             255,                    /* opacity */
                             bIsNewFrame);
 
-            arm_2d_fill_colour_with_a4_mask(ptTile, 
-                                            &__centre_region, 
-                                            &c_tileRadialLineCoverA4Mask, 
-                                            (__arm_2d_color_t){GLCD_COLOR_BLACK});
+            switch (c_tKnobStartPosition) {
+                default:
+                case KNOB_START_POINT_BOTTOM:
+                    arm_2d_fill_colour_with_a4_mask(
+                                        ptTile, 
+                                        &__centre_region, 
+                                        &c_tileRadialLineCoverA4Mask, 
+                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                    break;
 
+                case KNOB_START_POINT_TOP:
+                    arm_2d_fill_colour_with_mask_and_y_mirror(  
+                                        ptTile, 
+                                        &__centre_region, 
+                                        &c_tileRadialLineCoverMask, 
+                                        (__arm_2d_color_t){GLCD_COLOR_BLACK});
+                    break;
+                case KNOB_START_POINT_RIGHT:
+                case KNOB_START_POINT_LEFT: {
+                    arm_2d_location_t tCoverCentre = {
+                        c_tileRadialLineCoverMask.tRegion.tSize.iWidth >> 1,
+                        c_tileRadialLineCoverMask.tRegion.tSize.iHeight >> 1,
+                    };
+
+                    arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                                &this.tCoverRotateOP,
+                                &c_tileRadialLineCoverMask,
+                                ptTile,
+                                NULL,
+                                tCoverCentre,
+                                ARM_2D_ANGLE(c_tKnobAngleTable[c_tKnobStartPosition].iCoverAngle / 10),
+                                1.01f,
+                                GLCD_COLOR_BLACK,
+                                255);
+                    }
+                    break;
+            }
         }
-
 
         meter_pointer_show(&this.tPointer, 
                         ptTile,
                         &__top_canvas,
                         NULL,
                         255);
+
 
         /* draw 3 digits numbers */
         do {
@@ -422,7 +548,7 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
 
             .bIgnoreDot = true,
             .iRingWidth = 25,
-            .u2StartPosition = PROGRESS_WHEEL_START_POSITION_BOTTOM,
+            .u2StartPosition = c_tKnobStartPosition,
             .u15FullLength = 3600,
 
             .bUseDirtyRegions = true,                       /* use dirty regions */
@@ -438,11 +564,11 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
             .tSpinZoom = {
                 .Indicator = {
                     .LowerLimit = {
-                        .fAngleInDegree = -135.0f,
+                        .fAngleInDegree = c_tKnobAngleTable[c_tKnobStartPosition].fStartAngle,
                         .nValue = 0,
                     },
                     .UpperLimit = {
-                        .fAngleInDegree = 135.0f,
+                        .fAngleInDegree = c_tKnobAngleTable[c_tKnobStartPosition].fStopAngle,
                         .nValue = 1000,
                     },
                     .Step = {
@@ -481,6 +607,11 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
                                      &tCFG, 
                                      0);
     } while(0);
+
+    if (    c_tKnobStartPosition == KNOB_START_POINT_LEFT
+       ||   c_tKnobStartPosition == KNOB_START_POINT_RIGHT) {
+        ARM_2D_OP_INIT(this.tCoverRotateOP);
+    }
 
     /* ------------   initialize members of user_scene_knob_t end   ---------------*/
 
