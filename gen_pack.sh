@@ -21,8 +21,10 @@ PACK_BUILD=./build
 # Specify directory names to be added to pack base directory
 PACK_DIRS="
   documentation/html
+  examples/porting
   examples/common
   examples/demos
+  examples/[template][pc][vscode]
   Acceleration
   Helper
   Library
