@@ -338,7 +338,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 #else
         arm_lcd_printf( 
             "LCD:%2"PRIu32"ms",
-            (uint_fast64_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
+            (uint32_t)arm_2d_helper_convert_ticks_to_ms(DISP%Instance%_ADAPTER.Benchmark.wLCDLatency) );
 #endif
     }
 
