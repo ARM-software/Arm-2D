@@ -1,5 +1,15 @@
+ifeq ($(OS),Windows_NT)
 # Target name
-TARGET = arm_2d_rgb565_aci_fvp.so
+TARGET = arm_2d_rgb565_aci_fvp.dll
+# Include directories
+INCLUDES = 
+else
+# Target name
+TARGET = arm_2d_rgb565_aci_fvp.o
+# Include directories
+INCLUDES = -I$(PVLIB_HOME)/include
+endif
+
 
 # C++ compiler
 CC = g++
@@ -12,8 +22,7 @@ CXXFLAGS = -O3 -Wall -Wall -Wextra -pedantic -fPIC -Wno-unused-parameter
 DEPFLAGS = -MMD -MP
 # linker flags
 LDFLAGS = -shared
-# Include directories
-INCLUDES = -I$(PVLIB_HOME)/include
+
 
 # Build directories
 BUILD_DIR=build
