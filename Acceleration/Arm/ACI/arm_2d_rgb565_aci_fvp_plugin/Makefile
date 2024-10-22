@@ -17,7 +17,7 @@ CC = g++
 LD = g++
 
 # C++ flags
-CXXFLAGS = -O3 -Wall -Wall -Wextra -pedantic -fPIC -Wno-unused-parameter
+CXXFLAGS = -O3 -Wall -Wall -Wextra -pedantic -fPIC -Wno-unused-parameter -std=c++11
 # Dependency-generation flags
 DEPFLAGS = -MMD -MP
 # linker flags
