@@ -187,8 +187,8 @@
         </Mm>
       </MemoryWindow4>
       <ScvdPack>
-        <Filename>C:\Users\gabriel\AppData\Local\Arm\Packs\ARM\CMSIS-RTX\5.9.0\RTX5.scvd</Filename>
-        <Type>ARM::CMSIS-RTX@5.9.0</Type>
+        <Filename>C:\Users\gabwan01\AppData\Local\Arm\Packs\ARM\CMSIS-RTX\5.8.0\RTX5.scvd</Filename>
+        <Type>ARM::CMSIS-RTX@5.8.0</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>
