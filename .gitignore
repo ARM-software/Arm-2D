@@ -35,7 +35,8 @@ si4
 Utilities
 documentation/html
 build
-*.gabriel
+*.uvguix.*
+*.uvgui.*
 *.scvd
 .DS_Store
 *@*
