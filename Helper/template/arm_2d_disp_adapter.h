@@ -49,7 +49,7 @@ extern "C" {
 //     <1=>     Monochrome
 // <i> When specifying a colour solution, the __DISP%Instance%_CFG_COLOUR_DEPTH__ and other corresponding options will be configured (overriden) accordingly.
 #ifndef __DISP%Instance%_CFG_COLOR_SOLUTION__
-#   define __DISP%Instance%_CFG_COLOR_SOLUTION__                            1
+#   define __DISP%Instance%_CFG_COLOR_SOLUTION__                            0
 #endif
 
 // <o> Select the screen colour depth
