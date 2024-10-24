@@ -44,6 +44,14 @@ extern "C" {
 // <h>Screen and Framebuffer
 // =======================
 
+// <o> Select the screen colour solution
+//     <0=>     None
+//     <1=>     Monochrome
+// <i> When specifying a colour solution, the __DISP0_CFG_COLOUR_DEPTH__ and other corresponding options will be configured (overriden) accordingly.
+#ifndef __DISP0_CFG_COLOR_SOLUTION__
+#   define __DISP0_CFG_COLOR_SOLUTION__                            1
+#endif
+
 // <o> Select the screen colour depth
 //     <8=>     8 Bits
 //     <16=>    16Bits
@@ -94,7 +102,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          8
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          2
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -223,7 +231,7 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
 // <o>Maximum number of Virtual Resources used per API
@@ -249,6 +257,12 @@ extern "C" {
 // </h>
 
 // <<< end of configuration section >>>
+
+#if __DISP0_CFG_COLOR_SOLUTION__ == 1
+/* the colour solution for monochrome screen */
+#   undef __DISP0_CFG_COLOUR_DEPTH__
+#   define __DISP0_CFG_COLOUR_DEPTH__                               8
+#endif
 
 #ifndef __DISP0_COLOUR_FORMAT__
 #   if      __DISP0_CFG_COLOUR_DEPTH__ == 8

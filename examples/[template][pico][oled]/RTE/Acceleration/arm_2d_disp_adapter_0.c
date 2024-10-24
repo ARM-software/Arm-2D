@@ -157,7 +157,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
     ARM_2D_PARAM(ptTile);
 
     arm_2d_canvas(ptTile, __top_container) {
-#if 0
+    
+#if __DISP0_CFG_COLOR_SOLUTION__ != 1              /* as long as it is not monochrome */
         arm_2d_align_centre(__top_container, 100, 100) {
             draw_round_corner_box(  ptTile,
                                     &__centre_region,
@@ -166,6 +167,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
                                     bIsNewFrame);
         }
 #endif
+
         busy_wheel2_show(ptTile, bIsNewFrame);
     }
 
@@ -912,9 +914,14 @@ void disp_adapter0_init(void)
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
             
+            #if __DISP0_CFG_COLOR_SOLUTION__ == 1
                 /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_BLACK}, 
-        
+                .tCanvas = {GLCD_COLOR_BLACK},
+            #else
+                /* the canvas colour */
+                .tCanvas = {GLCD_COLOR_WHITE}, 
+            #endif
+
                 .fnScene        = &__pfb_draw_handler,
                 //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
                 .fnOnFrameStart = &__on_frame_start,

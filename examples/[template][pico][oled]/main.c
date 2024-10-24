@@ -102,7 +102,7 @@ int main(void)
 #   if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
     arm_2d_run_benchmark();
 #else
-    arm_2d_scene0_init(&DISP0_ADAPTER);
+    //arm_2d_scene0_init(&DISP0_ADAPTER);
     //arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #   endif
 
