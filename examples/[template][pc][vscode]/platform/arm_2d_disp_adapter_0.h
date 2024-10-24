@@ -47,7 +47,7 @@ extern "C" {
 // <o> Select the screen colour solution
 //     <0=>     None
 //     <1=>     Monochrome
-// <i> When specify a colour solution, the __DISP0_CFG_COLOUR_DEPTH__ and corresponding options will be configured (overriden) accordingly.
+// <i> When specifying a colour solution, the __DISP0_CFG_COLOUR_DEPTH__ and other corresponding options will be configured (overriden) accordingly.
 #ifndef __DISP0_CFG_COLOR_SOLUTION__
 #   define __DISP0_CFG_COLOR_SOLUTION__                            1
 #endif
