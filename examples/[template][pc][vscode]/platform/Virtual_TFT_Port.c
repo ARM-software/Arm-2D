@@ -9,15 +9,15 @@
 
 #undef main
 
-#define monochrome_2_RGB888(color)                (color?0x000000:0xffffff)
+#define monochrome_2_RGB888(color)                (color < 128 ?0x000000:0xffffff)
 #define GRAY8_2_RGB888(color)                     (((color&0xFF)<<16)+((color&0xFF)<<8)+((color&0xFF)))
 #define RGB565_2_RGB888(color)                    (((color&0xF800)<<8)+((color&0x7E0)<<5)+((color&0x1F)<<3))
 
 
-#define RGB888_2_monochrome(color)                ((color)?0:1)
+
 #define RGB888_2_GRAY8(color)                     (((((color&0xff0000)>>16)) + (((color&0xff00)>>8)) + (((color&0xff)))) / 3)
 #define RGB888_2_RGB565(color)                    ((((color&0xff0000)>>19) << 11) + (((color&0xff00)>>10) << 5) + (((color&0xff)>>3)))
-
+#define RGB888_2_monochrome(color)                ((RGB888_2_GRAY8(color) < 128 )?0:1)
 
 // 1 8(233) 16(565) 24(888) 32(8888)
 #if VT_COLOR_DEPTH == 1

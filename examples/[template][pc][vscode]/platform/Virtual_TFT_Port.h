@@ -19,7 +19,13 @@ extern "C" {
 #   define VT_HEIGHT          __DISP0_CFG_SCEEN_HEIGHT__
 #endif
 
-#define VT_COLOR_DEPTH     __DISP0_CFG_COLOUR_DEPTH__
+#if __DISP0_CFG_COLOR_SOLUTION__ == 0
+#   define VT_COLOR_DEPTH     __DISP0_CFG_COLOUR_DEPTH__
+#elif __DISP0_CFG_COLOR_SOLUTION__ == 1         /* monochrome */
+#   define VT_COLOR_DEPTH     1
+#endif
+
+
 #define VT_VIRTUAL_MACHINE 0                   /*Different rendering should be used if running in a Virtual machine*/
 
 #if VT_COLOR_DEPTH == 1 || VT_COLOR_DEPTH == 8 || VT_COLOR_DEPTH == 16 || VT_COLOR_DEPTH == 24 || VT_COLOR_DEPTH == 32
