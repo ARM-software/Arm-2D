@@ -88,6 +88,10 @@ static void __on_scene_mono_loading_load(arm_2d_scene_t *ptScene)
     user_scene_mono_loading_t *ptThis = (user_scene_mono_loading_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_dirty_region_add_items(
+                            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                            this.tDirtyRegionItems,
+                            dimof(this.tDirtyRegionItems));
 }
 
 static void __after_scene_mono_loading_switching(arm_2d_scene_t *ptScene)
@@ -107,6 +111,11 @@ static void __on_scene_mono_loading_depose(arm_2d_scene_t *ptScene)
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
+
+    arm_2d_helper_dirty_region_remove_items(
+                            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                            this.tDirtyRegionItems,
+                            dimof(this.tDirtyRegionItems));
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -137,14 +146,21 @@ static void __on_scene_mono_loading_frame_start(arm_2d_scene_t *ptScene)
     user_scene_mono_loading_t *ptThis = (user_scene_mono_loading_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    do {
+    if (this.iProgress >= 0) {
         int32_t nResult;
         if (arm_2d_helper_time_half_cos_slider(0, 1000, 10000, &nResult, &this.lTimestamp[1])) {
-            this.lTimestamp[1] = 0; /* reset */
-        }
+            this.iProgress = -1;    /* busy ...*/
+            this.lTimestamp[1] = 0;
 
-        this.iProgress = (int16_t)nResult;
-    } while(0);
+            arm_2d_scene_player_update_scene_background(this.use_as__arm_2d_scene_t.ptPlayer);
+        } else {
+            this.iProgress = (int16_t)nResult;
+        }
+    } else {
+        if (arm_2d_helper_is_time_out(333, &this.lTimestamp[1])) {
+            this.chSpinStickIndex++;
+        }
+    }
 }
 
 static void __on_scene_mono_loading_frame_complete(arm_2d_scene_t *ptScene)
@@ -191,7 +207,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
                     arm_lcd_text_set_draw_region(&__item_region);
                     arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
                     
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "loading...%"PRIi16"%%", this.iProgress / 10);
+                    arm_lcd_text_reset_display_region_tracking();
+                    if (this.iProgress >= 0) {
+                        
+                        arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "loading...%"PRIi16"%%", this.iProgress / 10);
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[0],
+                                                                (arm_2d_tile_t *)ptTile,
+                                                                &__item_region,
+                                                                arm_lcd_text_get_last_display_region());
+                    } else {
+                        static const char c_chSpinStick[] = {"/-\\|"};
+                        arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "loading...%c", c_chSpinStick[this.chSpinStickIndex & 0x03]);
+
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[0],
+                                                                (arm_2d_tile_t *)ptTile,
+                                                                &__item_region,
+                                                                arm_lcd_text_get_last_display_region());
+                    }
                 }
 
                 /* progress bar */
@@ -209,6 +241,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
 
                     arm_2d_fill_colour(ptTile, &tProgressRegion, GLCD_COLOR_WHITE);
                     
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[1],
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__item_region,
+                                                            &tProgressRegion);
+
                     ARM_2D_OP_WAIT_ASYNC();
                 }
 
@@ -274,7 +311,7 @@ user_scene_mono_loading_t *__arm_2d_scene_mono_loading_init(   arm_2d_scene_play
             .fnOnFrameCPL   = &__on_scene_mono_loading_frame_complete,
             .fnDepose       = &__on_scene_mono_loading_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
