@@ -79,38 +79,8 @@
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-
-/*! define dirty regions */
-IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-    /* a dirty region to be specified at runtime*/
-    ADD_REGION_TO_LIST(s_tDirtyRegions,
-        0  /* initialize at runtime later */
-    ),
-    
-    /* add the last region:
-        * it is the top left corner for text display 
-        */
-    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        .tLocation = {
-            .iX = 0,
-            .iY = 0,
-        },
-        .tSize = {
-            .iWidth = 0,
-            .iHeight = 8,
-        },
-    ),
-
-END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_mono_loading_load(arm_2d_scene_t *ptScene)
@@ -167,6 +137,14 @@ static void __on_scene_mono_loading_frame_start(arm_2d_scene_t *ptScene)
     user_scene_mono_loading_t *ptThis = (user_scene_mono_loading_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_half_cos_slider(0, 1000, 10000, &nResult, &this.lTimestamp[1])) {
+            this.lTimestamp[1] = 0; /* reset */
+        }
+
+        this.iProgress = (int16_t)nResult;
+    } while(0);
 }
 
 static void __on_scene_mono_loading_frame_complete(arm_2d_scene_t *ptScene)
@@ -202,61 +180,49 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
     ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {
-    /*-----------------------draw the foreground begin-----------------------*/
-        
-        /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
-                                    255,
-                                    bIsNewFrame);
-            
-            ARM_2D_OP_WAIT_ASYNC();
-            
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
-                                        (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
-                                    
+        arm_2d_dock_vertical(__top_canvas, 10) {
+
+            arm_2d_layout(__vertical_region) {
+
+                __item_line_dock_vertical(8) {
+                    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+                    arm_lcd_text_set_draw_region(&__item_region);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                    
+                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "loading...%"PRIi16"%%", this.iProgress / 10);
+                }
+
+                /* progress bar */
+                __item_line_dock_vertical(1, 10, 10, 2, 2) {
+
+                    q16_t q16Ratio = div_q16(reinterpret_q16_s16(__item_region.tSize.iWidth), reinterpret_q16_s16(1000));
+                    
+                    arm_2d_region_t tProgressRegion = {
+                        .tLocation = __item_region.tLocation,
+                        .tSize = {
+                            .iHeight = 1,
+                            .iWidth = reinterpret_s16_q16(mul_n_q16(q16Ratio, this.iProgress)),
+                        },
+                    };
+
+                    arm_2d_fill_colour(ptTile, &tProgressRegion, GLCD_COLOR_WHITE);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+                }
+
+            }
+
+            /* draw progress */
+            do {
+
+
+                //arm_2d_fill_colour(ptTile, )
+            } while(0);
+
         }
 
-
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
-        }
-    #else
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
-    #endif
-
-        /* draw text at the top-left corner */
-
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-        arm_lcd_text_set_draw_region(NULL);
-        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-        arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene mono_loading");
-
-    /*-----------------------draw the foreground end  -----------------------*/
     }
     ARM_2D_OP_WAIT_ASYNC();
 
@@ -269,24 +235,6 @@ user_scene_mono_loading_t *__arm_2d_scene_mono_loading_init(   arm_2d_scene_play
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
-                                                        = tScreen.tSize.iWidth;
 
     if (NULL == ptThis) {
         ptThis = (user_scene_mono_loading_t *)
@@ -307,7 +255,7 @@ user_scene_mono_loading_t *__arm_2d_scene_mono_loading_init(   arm_2d_scene_play
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_WHITE}, 
+            .tCanvas = {GLCD_COLOR_BLACK}, 
 
             /* Please uncommon the callbacks if you need them
              */
