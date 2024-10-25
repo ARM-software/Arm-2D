@@ -206,9 +206,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene%Instance%_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
-        
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-
         arm_2d_align_centre(__top_canvas, 200, 100 ) {
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
