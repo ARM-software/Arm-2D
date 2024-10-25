@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        24. Sept 2024
- * $Revision:    V.1.11.6
+ * $Date:        25. Oct 2024
+ * $Revision:    V.1.11.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -2878,6 +2878,19 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 
 
             if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
+
+                
+                COLOUR_INT_TYPE tColour = GLCD_COLOR_RED;
+
+            #if 0
+                arm_2d_color_info_t tColourFormat = {
+                    .u7ColourFormat = this.tCFG.FrameBuffer.u7ColourFormat,
+                };
+                if (tColourFormat.u3ColourSZ <= ARM_2D_COLOUR_SZ_8BIT) {
+                    tColour = GLCD_COLOR_WHITE;
+                }
+            #endif
+
                 arm_2d_region_list_item_t *ptRegionListItem 
                     = this.Adapter.OptimizedDirtyRegions.ptWorkingList;
 
@@ -2886,7 +2899,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                         arm_2d_helper_draw_box( this.Adapter.ptFrameBuffer, 
                                                 &ptRegionListItem->tRegion, 
                                                 1,  
-                                                GLCD_COLOR_RED, 255);
+                                                tColour, 255);
                     }
                     
                     ptRegionListItem = ptRegionListItem->ptInternalNext;
