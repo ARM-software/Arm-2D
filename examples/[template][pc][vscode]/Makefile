@@ -21,6 +21,7 @@ CC_SRC  += $(wildcard ../../examples/common/scenes/bubble_charging/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/animate_background/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/knob/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
+CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
 
 CC_INC  := .
 CC_INC  += platform
@@ -42,6 +43,7 @@ CC_INC  += ../../examples/common/scenes/bubble_charging
 CC_INC  += ../../examples/common/scenes/animate_background
 CC_INC  += ../../examples/common/scenes/knob
 CC_INC  += ../../examples/demos
+CC_INC  += ../../examples/demos/monochrome
 
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += _RTE_=1

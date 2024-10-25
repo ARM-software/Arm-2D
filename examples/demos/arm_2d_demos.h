@@ -39,6 +39,9 @@
 #include "./arm_2d_scene_compass.h"
 #include "./arm_2d_scene_user_defined_opcode.h"
 
+/* monochrome demos */
+#include "./monochrome/arm_2d_scene_mono_loading.h"
+
 #ifdef   __cplusplus
 extern "C" {
 #endif

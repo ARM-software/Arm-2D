@@ -218,6 +218,11 @@ void scene_user_defined_opcode_loader(void)
     arm_2d_scene_user_defined_opcode_init(&DISP0_ADAPTER);
 }
 
+void scene_mono_loading_loader(void) 
+{
+    arm_2d_scene_mono_loading_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -236,6 +241,10 @@ typedef void scene_loader_t(void);
 static scene_loader_t * const c_SceneLoaders[] = {
 
 #if 1
+
+#if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
+    scene_mono_loading_loader,
+#else
     scene_basics_loader,
     scene_progress_status_loader,
     scene_fan_loader,
@@ -260,6 +269,8 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     scene_virtual_resource_loader,
     //scene_animate_background_loader,
+#endif
+
 #endif
 
 #else
