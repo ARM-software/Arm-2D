@@ -34,6 +34,14 @@
 #define VT_RGB_2_DEV(color)                 (color)
 #endif
 
+#if VT_WIDTH >= 480 || VT_HEIGHT >= 480
+#   define VT_WINDOW_WIDTH     VT_WIDTH
+#   define VT_WINDOW_HEIGHT    VT_HEIGHT
+#else
+#   define VT_WINDOW_WIDTH      (VT_WIDTH * 2)
+#   define VT_WINDOW_HEIGHT     (VT_HEIGHT * 2)
+#endif
+
 static SDL_Window * window;
 static SDL_Renderer * renderer;
 static SDL_Texture * texture;
@@ -101,15 +109,16 @@ static void monitor_sdl_init(void)
                                 " "
                                 ARM_2D_VERSION_STR
                                 " ("
-                                ARM_TO_STRING(VT_WIDTH)
+                                ARM_TO_STRING(__DISP0_CFG_SCEEN_WIDTH__)
                                 "*"
-                                ARM_TO_STRING(VT_HEIGHT)
+                                ARM_TO_STRING(__DISP0_CFG_SCEEN_HEIGHT__)
                                 " "
                                 ARM_TO_STRING(VT_COLOR_DEPTH)
                                 "bits )"
                                 ,
-                                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                VT_WIDTH, VT_HEIGHT, 0);       /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
+                                SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                                VT_WINDOW_WIDTH, VT_WINDOW_HEIGHT, 
+                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);       /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
 
 #if VT_VIRTUAL_MACHINE
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
@@ -119,6 +128,10 @@ static void monitor_sdl_init(void)
     texture = SDL_CreateTexture(renderer,
                                 SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, VT_WIDTH, VT_HEIGHT);
     SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+
+    SDL_RenderSetLogicalSize(renderer, __DISP0_CFG_SCEEN_WIDTH__, __DISP0_CFG_SCEEN_HEIGHT__);
+
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
     /*Initialize the frame buffer to gray (77 is an empirical value) */
     memset(tft_fb, 77, VT_WIDTH * VT_HEIGHT * sizeof(uint32_t));
