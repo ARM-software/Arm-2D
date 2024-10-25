@@ -228,7 +228,7 @@ div_q16(q16_t q16In0, q16_t q16In1)
         return 0;
     }
 
-    int64_t lTemp = ((int64_t)(q16In0 + (q16In1 / 2)) << 16);
+    int64_t lTemp = ((int64_t)q16In0 << 16);
     return (q16_t)(lTemp / q16In1);
 }
 
@@ -238,9 +238,7 @@ div_n_q16(q16_t q16In0, int32_t nIn1)
     if (0 == nIn1) {
         return 0;
     }
-
-    q16_t q16Temp = (q16In0 + (nIn1 / 2));
-    return (q16_t)(q16Temp / nIn1);
+    return (q16_t)(q16In0 / nIn1);
 }
 
 __STATIC_INLINE q16_t
