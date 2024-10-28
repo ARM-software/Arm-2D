@@ -98,23 +98,20 @@ enum {
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-
 extern const arm_2d_tile_t c_tileECGMask;
 extern const arm_2d_tile_t c_tileECGScanMask;
 extern const arm_2d_tile_t c_tileECGScanLineMask;
 extern const arm_2d_tile_t c_tileECGScanLineMask2;
 /*============================ PROTOTYPES ====================================*/
 extern
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
 } ARM_2D_FONT_ALARM_CLOCK_32_A4;
 
 extern
+const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;

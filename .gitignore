@@ -61,3 +61,4 @@ RTE_Components.h
 tools/inputstring.txt
 *.ttc
 *.uf2
+*.otf
