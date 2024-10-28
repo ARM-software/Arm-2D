@@ -144,7 +144,7 @@ static void __on_scene_mono_histogram_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene mono_histogram                                                                    *
+ * Scene mono_histogram                                                       *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_mono_histogram_background_start(arm_2d_scene_t *ptScene)
@@ -160,7 +160,6 @@ static void __on_scene_mono_histogram_background_complete(arm_2d_scene_t *ptScen
     ARM_2D_UNUSED(ptThis);
 
 }
-
 
 static void __on_scene_mono_histogram_frame_start(arm_2d_scene_t *ptScene)
 {
