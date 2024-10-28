@@ -86,7 +86,7 @@ typedef struct histogram_cfg_t {
         uint8_t                         : 5;
 
         int32_t nMaxValue;
-
+        const arm_2d_tile_t *ptVerticalLineMask;
     } Bin;
 
     struct {
@@ -97,6 +97,7 @@ typedef struct histogram_cfg_t {
     arm_2d_scene_t *ptParent;
 
     histogram_on_get_bin_value_evt_t evtOnGetBinValue;
+    
 
 } histogram_cfg_t;
 
@@ -148,6 +149,9 @@ void histogram_show( histogram_t *ptThis,
                             const arm_2d_region_t *ptRegion,
                             uint8_t chOpacity);
 
+extern
+ARM_NONNULL(1)
+arm_2d_size_t histogram_get_size(histogram_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

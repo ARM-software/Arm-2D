@@ -2214,16 +2214,19 @@ extern "C" {
             arm_using(                                                          \
                 arm_2d_region_t __centre_region,                                \
                 {                                                               \
-                    __centre_region.tSize.iWidth = (__size).iWidth;             \
-                    __centre_region.tSize.iHeight = (__size).iHeight;           \
+                    arm_2d_size_t ARM_2D_SAFE_NAME(tSize) = (__size);           \
+                    __centre_region.tSize.iWidth                                \
+                        = ARM_2D_SAFE_NAME(tSize).iWidth;                       \
+                    __centre_region.tSize.iHeight                               \
+                        = ARM_2D_SAFE_NAME(tSize).iHeight;                      \
                     __centre_region.tLocation                                   \
                         = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                     __centre_region.tLocation.iX                                \
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
-                           -    (__size).iWidth)  >> 1;                         \
+                           -    ARM_2D_SAFE_NAME(tSize).iWidth)  >> 1;          \
                     __centre_region.tLocation.iY                                \
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
-                           -    (__size).iHeight)>> 1;                          \
+                           -    ARM_2D_SAFE_NAME(tSize).iHeight)>> 1;           \
                 },                                                              \
                 {arm_2d_op_wait_async(NULL);})
 

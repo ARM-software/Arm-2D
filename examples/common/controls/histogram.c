@@ -178,6 +178,10 @@ void histogram_init( histogram_t *ptThis,
                                     +  this.tCFG.Bin.chPadding)
                                * this.tCFG.Bin.hwCount;
 
+    if (NULL == this.tCFG.Bin.ptVerticalLineMask) {
+        this.tCFG.Bin.ptVerticalLineMask = &c_tileLineVerticalLineMask;
+    }
+
     if (NULL != this.tCFG.ptParent) {
         this.bUseDirtyRegion = true;
 
@@ -198,6 +202,14 @@ void histogram_depose( histogram_t *ptThis)
                                             &this.DirtyRegion.tDirtyRegionItem,
                                             this.tCFG.ptParent);
     }
+}
+
+ARM_NONNULL(1)
+arm_2d_size_t histogram_get_size(histogram_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.tHistogramSize;
 }
 
 ARM_NONNULL(1)
@@ -290,7 +302,7 @@ void histogram_show(histogram_t *ptThis,
                             arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
                                 &__bin,
                                 &tOriginalRegion,
-                                &c_tileLineVerticalLineMask,
+                                this.tCFG.Bin.ptVerticalLineMask, //&c_tileLineVerticalLineMask,
                                 (__arm_2d_color_t) {ptItem->tColour},
                                 chOpacity);
                         }
@@ -298,7 +310,7 @@ void histogram_show(histogram_t *ptThis,
                         arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
                                 &__panel,
                                 &tBinRegion,
-                                &c_tileLineVerticalLineMask,
+                                this.tCFG.Bin.ptVerticalLineMask, //&c_tileLineVerticalLineMask,
                                 (__arm_2d_color_t) {ptItem->tColour},
                                 chOpacity);
                     }

@@ -41,6 +41,7 @@
 
 /* monochrome demos */
 #include "./monochrome/arm_2d_scene_mono_loading.h"
+#include "./monochrome/arm_2d_scene_mono_histogram.h"
 
 #ifdef   __cplusplus
 extern "C" {

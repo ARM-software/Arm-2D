@@ -176,6 +176,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arial_ascii_font14.c
             examples/common/asset/ClockMarking.c
             examples/common/asset/compass.c
+            examples/common/asset/Earth.c
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls
