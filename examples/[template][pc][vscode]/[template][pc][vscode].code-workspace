@@ -62,7 +62,8 @@
 			"arial_ascii_14": "c",
 			"histogram.h": "c",
 			"arm_2d_utils.h": "c",
-			"arm_2d_user_opcode_template_i_draw.h": "c"
+			"arm_2d_user_opcode_template_i_draw.h": "c",
+			"arm_2d_scene_mono_loading.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

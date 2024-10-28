@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        2. Sept 2024
- * $Revision:    V.1.6.7
+ * $Date:        28. Oct 2024
+ * $Revision:    V.1.6.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -810,7 +810,7 @@ extern "C" {
 #define GLCD_COLOR_ORANGE       __RGB( 255, 128, 0    )
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __declare_tile(__name)                                                  \
@@ -835,7 +835,7 @@ extern "C" {
 #define dcl_fb(__name)                  declare_tile(__name)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __impl_fb(__name, __width, __height, __type, ...)                       \
@@ -883,7 +883,7 @@ extern "C" {
          __tile_name.tInfo.bIsRoot = true;                                      \
          assert(NULL != __tile_name.pchBuffer);                                 \
         }),                                                                     \
-        ({  arm_2d_op_wait_async(NULL);                                         \
+        ({  ARM_2D_OP_WAIT_ASYNC();                                         \
             __arm_2d_free_scratch_memory(                                       \
                 ARM_2D_MEM_TYPE_FAST,                                           \
                 __tile_name.phwBuffer); }) )
@@ -948,7 +948,7 @@ extern "C" {
 //#endif
 
 /*!
- * \brief Please do NOT use this macro directly
+ * \brief Please do NOT use this macro directly directly
  * 
  */
 #define __arm_2d_container( __tile_ptr,                                         \
@@ -1064,7 +1064,7 @@ extern "C" {
                         __region_name.tSize = (__tile_ptr)->tRegion.tSize;      \
                     },                                                          \
                     {                                                           \
-                        arm_2d_op_wait_async(NULL);                             \
+                        ARM_2D_OP_WAIT_ASYNC();                             \
                     })
 
 #if 1
@@ -1285,14 +1285,14 @@ extern "C" {
                 } while(0)
 #endif
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_horizontal1(__size)                                       \
             ____item_line_horizontal5(__size,0, 0, 0, 0)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_horizontal2(__width, __height)                            \
@@ -1300,7 +1300,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_horizontal5(__size, __left, __right, __top, __bottom)     \
@@ -1308,7 +1308,7 @@ extern "C" {
                                         (__left), (__right), (__top), (__bottom))
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_horizontal6(  __width, __height,                          \
@@ -1394,7 +1394,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_dock_horizontal5( __width,                                \
@@ -1449,14 +1449,14 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_dock_horizontal1(__width)                                 \
             ____item_line_dock_horizontal5(__width, 0, 0, 0, 0)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_dock_horizontal0()                                        \
@@ -1495,14 +1495,14 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_vertical1(__size)                                         \
             ____item_line_vertical5(__size, 0, 0, 0, 0)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_vertical2(__width, __height)                              \
@@ -1510,7 +1510,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_vertical5(__size, __left, __right, __top, __bottom)       \
@@ -1518,7 +1518,7 @@ extern "C" {
                                     (__left), (__right), (__top), (__bottom))
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_vertical6(__width, __height,                              \
@@ -1603,7 +1603,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_dock_vertical5(   __height,                               \
@@ -1660,7 +1660,7 @@ extern "C" {
                 })
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_dock_vertical1(__height)                                  \
@@ -1668,7 +1668,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_line_dock_vertical0()                                          \
@@ -1700,14 +1700,14 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_horizontal1(__size, __height)                                  \
             ____item_horizontal5(__size, 0, 0, 0, 0)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_horizontal2(__width, __height)                                 \
@@ -1716,7 +1716,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_horizontal5( __size, __left, __right, __top, __bottom)         \
@@ -1724,7 +1724,7 @@ extern "C" {
                                     (__left), (__right), (__top), (__bottom))
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_horizontal6(  __width, __height,                               \
@@ -1823,14 +1823,14 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_vertical1(__size, __height)                                    \
             ____item_vertical5(__size, 0, 0, 0, 0)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_vertical2(__width, __height)                                   \
@@ -1838,7 +1838,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_vertical5( __size, __left, __right, __top, __bottom)           \
@@ -1846,7 +1846,7 @@ extern "C" {
                                (__left), (__right), (__top), (__bottom))
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define ____item_vertical6( __width, __height,                                  \
@@ -1943,7 +1943,7 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_top_left2(__region, __size)                              \
@@ -1957,10 +1957,10 @@ extern "C" {
                     __top_left_region.tLocation                                 \
                         = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_top_left3(__region, __width, __height)                   \
@@ -1974,7 +1974,7 @@ extern "C" {
                     __top_left_region.tLocation                                 \
                         = ARM_2D_SAFE_NAME(tTempRegion).tLocation;              \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -1998,7 +1998,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_top_centre2(__region, __size)                            \
@@ -2015,10 +2015,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
                            -    (__size).iWidth) >> 1;                          \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_top_centre3(__region, __width, __height)                 \
@@ -2035,7 +2035,7 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
                            -    (__width)) >> 1;                                \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -2059,7 +2059,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_top_right2(__region, __size)                             \
@@ -2076,10 +2076,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth      \
                            -    (__size).iWidth);                               \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_top_right3(__region, __width, __height)                  \
@@ -2096,7 +2096,7 @@ extern "C" {
                             += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth  \
                                -    (__width));                                 \
                     },                                                          \
-                    {arm_2d_op_wait_async(NULL);})
+                    {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -2122,7 +2122,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_mid_left2(__region, __size)                              \
@@ -2139,10 +2139,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__size).iHeight) >> 1;                         \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_mid_left3(__region, __width, __height)                   \
@@ -2159,7 +2159,7 @@ extern "C" {
                             += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight \
                                -    (__height)) >> 1;                           \
                     },                                                          \
-                    {arm_2d_op_wait_async(NULL);})
+                    {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -2205,7 +2205,7 @@ extern "C" {
 #define __left_region               __mid_left_region
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_centre2(__region, __size)                                \
@@ -2228,10 +2228,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    ARM_2D_SAFE_NAME(tSize).iHeight)>> 1;           \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_centre3(__region, __width, __height)                     \
@@ -2251,7 +2251,7 @@ extern "C" {
                             += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight \
                                -    (__height))>> 1;                            \
                     },                                                          \
-                    {arm_2d_op_wait_async(NULL);})
+                    {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -2275,7 +2275,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_mid_right2(__region, __size)                             \
@@ -2295,10 +2295,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__size).iHeight) >> 1;                         \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_mid_right3(__region, __width, __height)                  \
@@ -2318,7 +2318,7 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__height)) >> 1;                               \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with use specified info for
@@ -2365,7 +2365,7 @@ extern "C" {
 #define __right_region               __mid_right_region
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_bottom_left2(__region, __size)                           \
@@ -2382,10 +2382,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__size).iHeight);                              \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_bottom_left3(__region, __width, __height)                \
@@ -2402,7 +2402,7 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__height));                                    \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -2425,7 +2425,7 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_bottom_centre2(__region, __size)                         \
@@ -2445,10 +2445,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__size).iHeight);                              \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_bottom_centre3(__region, __width, __height)              \
@@ -2468,7 +2468,7 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__height));                                    \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -2492,7 +2492,7 @@ extern "C" {
 
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_bottom_right2(__region, __size)                          \
@@ -2512,10 +2512,10 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__size).iHeight);                              \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief Please do NOT use this macro
+ * \brief Please do NOT use this macro directly
  * 
  */
 #define __arm_2d_align_bottom_right3(__region, __width, __height)               \
@@ -2535,7 +2535,7 @@ extern "C" {
                         += (    ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight     \
                            -    (__height));                                    \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
@@ -2558,19 +2558,11 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
 
-
-
 /*!
- * \brief generate a temporary arm_2d_region_t object that docks to the top with 
- *        an user specified height. 
+ * \brief Please do NOT use this macro directly
  * 
- * \note prototype:
- *          arm_2d_dock_top(__region, __height) {
- *              code body that can use __top_region
- *          }
- *          
  */
-#define arm_2d_dock_top(__region, __height)                                     \
+#define __arm_2d_dock_top0(__region, __height)                                  \
             arm_using(                                                          \
                 arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
             arm_using(                                                          \
@@ -2578,19 +2570,89 @@ extern "C" {
                 {                                                               \
                     __top_region.tSize.iHeight = (__height);                    \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object that docks to the bottom
- *        with an user specified height. 
+ * \brief Please do NOT use this macro directly
  * 
- * \note prototype:
- *          arm_2d_dock_bottom(__region, __height) {
- *              code body that can use __bottom_region
- *          }
- *          
  */
-#define arm_2d_dock_bottom(__region, __height)                                  \
+#define __arm_2d_dock_top2(__region, __height, __margin_left, __margin_right)   \
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __top_region = ARM_2D_SAFE_NAME(tTempRegion),   \
+                {                                                               \
+                    __top_region.tSize.iHeight = (__height);                    \
+                    __top_region.tSize.iWidth -= (__margin_left)                \
+                                               + (__margin_right);              \
+                    __top_region.tLocation.iX += (__margin_left);               \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_top1(__region, __height, __margin)                        \
+            __arm_2d_dock_top2((__region), (__height), (__margin), (__margin))
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the top with 
+ *        an user specified height. 
+ * 
+ * \note prototype1:
+ *          arm_2d_dock_top(__region, __height) {
+ *              code body that can use __top_region
+ *          }
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_top(__region, __height, __margin) {
+ *              code body that can use __top_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_top(__region, __height, __margin_left, __margin_right) {
+ *              code body that can use __top_region
+ *          }
+ */
+#define arm_2d_dock_top(__region, __height, ...)                                \
+            ARM_CONNECT2(   __arm_2d_dock_top,                                  \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__height), ##__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_bottom2(__region, __height, __margin_left, __margin_right)\
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __bottom_region = ARM_2D_SAFE_NAME(tTempRegion),\
+                {                                                               \
+                    __bottom_region.tSize.iHeight = (__height);                 \
+                    __bottom_region.tLocation.iY                                \
+                        += ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight          \
+                         - (__height);                                          \
+                    __bottom_region.tSize.iWidth -= (__margin_left)             \
+                                                  + (__margin_right);           \
+                    __bottom_region.tLocation.iX += (__margin_left);            \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_bottom1(__region, __height, __margin)                     \
+            __arm_2d_dock_bottom2((__region), (__height), (__margin), (__margin))
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_bottom0(__region, __height)                               \
             arm_using(                                                          \
                 arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
             arm_using(                                                          \
@@ -2601,19 +2663,62 @@ extern "C" {
                         += ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight          \
                          - (__height);                                          \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
- * \brief generate a temporary arm_2d_region_t object that docks to the left with 
- *        an user specified height. 
+ * \brief generate a temporary arm_2d_region_t object that docks to the bottom
+ *        with an user specified height. 
  * 
- * \note prototype:
- *          arm_2d_dock_left(__region, __width) {
- *              code body that can use __left_region
+ * \note prototype1:
+ *          arm_2d_dock_bottom(__region, __height) {
+ *              code body that can use __bottom_region
  *          }
- *          
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_bottom(__region, __height, __margin) {
+ *              code body that can use __bottom_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_bottom(__region, __height, __margin_left, __margin_right) {
+ *              code body that can use __bottom_region
+ *          }          
  */
-#define arm_2d_dock_left(__region, __width)                                     \
+#define arm_2d_dock_bottom(__region, __height, ...)                             \
+            ARM_CONNECT2(   __arm_2d_dock_bottom,                               \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__height), ##__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_left2(__region, __width, __margin_top, __margin_bottom)   \
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __left_region = ARM_2D_SAFE_NAME(tTempRegion),  \
+                {                                                               \
+                    __left_region.tSize.iWidth = (__width);                     \
+                    __left_region.tSize.iHeight -= (__margin_top)               \
+                                                 + (__margin_bottom);           \
+                    __left_region.tLocation.iY += (__margin_top);               \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_left1(__region, __width, __margin)                        \
+            __arm_2d_dock_left2((__region), (__width), (__margin), (__margin))
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_left0(__region, __width)                                  \
             arm_using(                                                          \
                 arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
             arm_using(                                                          \
@@ -2621,20 +2726,64 @@ extern "C" {
                 {                                                               \
                     __left_region.tSize.iWidth = (__width);                     \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the left with 
+ *        an user specified height. 
+ * 
+ * \note prototype1:
+ *          arm_2d_dock_left(__region, __width) {
+ *              code body that can use __left_region
+ *          }
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_left(__region, __width, __margin) {
+ *              code body that can use __left_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_left(__region, __width, __margin_top, __margin_bottom) {
+ *              code body that can use __left_region
+ *          }            
+ */
+#define arm_2d_dock_left(__region, __width, ...)                                \
+            ARM_CONNECT2(   __arm_2d_dock_left,                                 \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__width), ##__VA_ARGS__)
 
 
 /*!
- * \brief generate a temporary arm_2d_region_t object that docks to the right
- *        with an user specified height. 
+ * \brief Please do NOT use this macro directly
  * 
- * \note prototype:
- *          arm_2d_dock_right(__region, __width) {
- *              code body that can use __right_region
- *          }
- *          
  */
-#define arm_2d_dock_right(__region, __width)                                    \
+#define __arm_2d_dock_right2(__region, __width, __margin_top, __margin_bottom)  \
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __right_region = ARM_2D_SAFE_NAME(tTempRegion), \
+                {                                                               \
+                    __right_region.tSize.iWidth = (__width);                    \
+                    __right_region.tLocation.iX                                 \
+                        += ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth           \
+                         - (__width);                                           \
+                    __right_region.tSize.iHeight -= (__margin_top)              \
+                                                 + (__margin_bottom);           \
+                    __right_region.tLocation.iY += (__margin_top);              \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_right1(__region, __width, __margin)                       \
+            __arm_2d_dock_right2((__region), (__width), (__margin), (__margin))
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_right0(__region, __width)                                 \
             arm_using(                                                          \
                 arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
             arm_using(                                                          \
@@ -2645,20 +2794,72 @@ extern "C" {
                         += ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth           \
                          - (__width);                                           \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 
 /*!
- * \brief generate a temporary arm_2d_region_t object that docks to the region
- *        centre vertically with an user specified __height. 
+ * \brief generate a temporary arm_2d_region_t object that docks to the right
+ *        with an user specified height. 
  * 
- * \note prototype:
- *          arm_2d_dock_vertical(__region, __height) {
- *              code body that can use __vertical_region
+ * \note prototype1:
+ *          arm_2d_dock_right(__region, __width) {
+ *              code body that can use __right_region
  *          }
- *          
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_right(__region, __width, __margin) {
+ *              code body that can use __right_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_right(__region, __width, __margin_top, __margin_bottom) {
+ *              code body that can use __right_region
+ *          }           
  */
-#define arm_2d_dock_vertical(__region, __height)                                \
+#define arm_2d_dock_right(__region, __width, ...)                               \
+            ARM_CONNECT2(   __arm_2d_dock_right,                                \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__width), ##__VA_ARGS__)
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_vertical2(__region,                                       \
+                                __height,                                       \
+                                __margin_left,                                  \
+                                __margin_right)                                 \
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __vertical_region                               \
+                    = ARM_2D_SAFE_NAME(tTempRegion),                            \
+                {                                                               \
+                    __vertical_region.tSize.iHeight = (__height);               \
+                    __vertical_region.tLocation.iY                              \
+                        += (ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight         \
+                         - (__height))>> 1;                                     \
+                    __vertical_region.tSize.iWidth -= (__margin_left)           \
+                                                    + (__margin_right);         \
+                    __vertical_region.tLocation.iX += (__margin_left);          \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_vertical1(__region, __height, __margin)                   \
+            __arm_2d_dock_vertical2((__region),                                 \
+                                    (__height),                                 \
+                                    (__margin),                                 \
+                                    (__margin))
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_vertical0(__region, __height)                             \
             arm_using(                                                          \
                 arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
             arm_using(                                                          \
@@ -2670,20 +2871,71 @@ extern "C" {
                         += (ARM_2D_SAFE_NAME(tTempRegion).tSize.iHeight         \
                          - (__height))>> 1;                                     \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
-
+                {ARM_2D_OP_WAIT_ASYNC();})
 
 /*!
  * \brief generate a temporary arm_2d_region_t object that docks to the region
- *        centre horizontally with an user specified __width. 
+ *        centre vertically with an user specified __height. 
  * 
- * \note prototype:
- *          arm_2d_dock_horizontal(__region, __width) {
- *              code body that can use __horizontal_region
+ * \note prototype1:
+ *          arm_2d_dock_vertical(__region, __height) {
+ *              code body that can use __vertical_region
  *          }
- *          
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_vertical(__region, __width, __margin) {
+ *              code body that can use __vertical_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_vertical(__region, __width, __margin_left, __margin_right) {
+ *              code body that can use __vertical_region
+ *          }          
  */
-#define arm_2d_dock_horizontal(__region, __width)                               \
+#define arm_2d_dock_vertical(__region, __height, ...)                           \
+            ARM_CONNECT2(   __arm_2d_dock_vertical,                             \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__height), ##__VA_ARGS__)
+
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_horizontal2(  __region,                                   \
+                                    __width,                                    \
+                                    __margin_top,                               \
+                                    __margin_bottom)                            \
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __horizontal_region                             \
+                                    = ARM_2D_SAFE_NAME(tTempRegion),            \
+                {                                                               \
+                    __horizontal_region.tSize.iWidth = (__width);               \
+                    __horizontal_region.tLocation.iX                            \
+                        += (ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth          \
+                         - (__width))  >> 1;                                    \
+                    __horizontal_region.tSize.iHeight -= (__margin_top)         \
+                                                       + (__margin_bottom);     \
+                    __horizontal_region.tLocation.iY += (__margin_top);         \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_horizontal1(__region, __width, __margin)                  \
+            __arm_2d_dock_horizontal2(  (__region),                             \
+                                        (__width),                              \
+                                        (__margin_top),                         \
+                                        (__margin_bottom))                      \
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_horizontal0(__region, __width)                            \
             arm_using(                                                          \
                 arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
             arm_using(                                                          \
@@ -2695,7 +2947,32 @@ extern "C" {
                         += (ARM_2D_SAFE_NAME(tTempRegion).tSize.iWidth          \
                          - (__width))  >> 1;                                    \
                 },                                                              \
-                {arm_2d_op_wait_async(NULL);})
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the region
+ *        centre horizontally with an user specified __width. 
+ * 
+ * \note prototype1:
+ *          arm_2d_dock_horizontal(__region, __width) {
+ *              code body that can use __horizontal_region
+ *          }
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_horizontal(__region, __width, __margin) {
+ *              code body that can use __horizontal_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_horizontal(__region, __width, __margin_top, __margin_bottom) {
+ *              code body that can use __horizontal_region
+ *          }   
+ */
+#define arm_2d_dock_horizontal(__region, __width, ...)                          \
+            ARM_CONNECT2(   __arm_2d_dock_horizontal,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__width), ##__VA_ARGS__)
 
 /*!
  * \brief a template for implement a on draw event handler

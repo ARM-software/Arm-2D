@@ -736,15 +736,19 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.1.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.2.0" condition="Arm-2D-Demos">
           <description>An series of demos for monochrome screens, for example OLEDs and e-ink paper devices. </description>
           <files>
             <!-- scene for loading -->
-            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_loading.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_loading.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_loading.c" attr="config" version="1.1.0" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_loading.h" attr="config" version="1.1.0" />
             <!-- scene for histogram -->
             <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_histogram.c" attr="config" version="1.0.0" />
             <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_histogram.h" attr="config" version="1.0.0" />
+            <!-- scene for clock -->
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_clock.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_clock.h" attr="config" version="1.0.0" />
+
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Monochrome
