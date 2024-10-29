@@ -277,14 +277,42 @@ IMPL_PFB_ON_DRAW(__arm_2d_list_draw_cover)
     
     text_list_t *ptThis = (text_list_t *)pTarget;
 
+    uint16_t hwListCount = text_list_get_list_item_count(ptThis);
+    uint16_t hwSelectedID = text_list_get_selected_item_id(ptThis);
+
     arm_2d_canvas(ptTile, __list_cover) {
 
         arm_2d_dock_right(__list_cover, 3) {
+            
             arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
+
+                /* draw bar */
                 arm_2d_fill_colour(ptTile, &__horizontal_region, GLCD_COLOR_WHITE);
+
+                /* draw selection indicator */
+                do {
+                    int16_t iBarHeight = __horizontal_region.tSize.iHeight;
+                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
+
+                    int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
+                    iIndicatorHeight = MAX(2, iIndicatorHeight);
+
+                    arm_2d_region_t tIndicatorRegion = {
+                        .tSize = {
+                            .iHeight = iIndicatorHeight,
+                            .iWidth = 3,
+                        },
+                        .tLocation = {
+                            .iX = __horizontal_region.tLocation.iX - 1,
+                            .iY = __horizontal_region.tLocation.iY
+                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                        },
+                    };
+
+                    arm_2d_fill_colour(ptTile, &tIndicatorRegion, GLCD_COLOR_WHITE);
+                } while(0);
             }
         }
-
     }
 
     ARM_2D_OP_WAIT_ASYNC();
