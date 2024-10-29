@@ -102,7 +102,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          2
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          8
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -231,7 +231,7 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
 #endif
 
 // <o>Maximum number of Virtual Resources used per API

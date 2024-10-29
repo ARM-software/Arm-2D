@@ -104,6 +104,12 @@ int main(void)
 #else
     //arm_2d_scene0_init(&DISP0_ADAPTER);
     //arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
+
+    arm_2d_scene_mono_loading_init(&DISP0_ADAPTER);
+    //arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #   endif
 
 #endif

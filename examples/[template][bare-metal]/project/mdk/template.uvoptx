@@ -2536,7 +2536,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O200710 -C0 -MC"..\..\Program Files\ARM\FVP_Corstone_SSE-300\models\Win64_VC2019\FVP_Corstone_SSE-300_Ethos-U55.exe" -MF -PF -MA"--plugin "C:\Program Files\ARM\FastModelsPortfolio_11.27\plugins\Win64_VC2019\Release\CDELoader.dll" -C cpu0.has_cde=1 -C cpu0.cde_impl_name="ARM_2D_RGB565_ACI" -C CDE.CDELoader.aci_object_files="[.\arm_2d_rgb565_aci_fvp.dll]" -C CDE.CDELoader.aci_parameters="COPRO=1" -C core_clk.mul=10000000"</Name>
+          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O200710 -C0 -MC"\\Mac\Home\Desktop\avh-windows-x86\bin\models\FVP_Corstone_SSE-300_Ethos-U55.exe" -MF -PF -MA"--plugin "C:\Program Files\ARM\FastModelsPortfolio_11.27\plugins\Win64_VC2019\Release\CDELoader.dll" -C cpu0.has_cde=1 -C cpu0.cde_impl_name="ARM_2D_RGB565_ACI" -C CDE.CDELoader.aci_object_files="[.\arm_2d_rgb565_aci_fvp.dll]" -C CDE.CDELoader.aci_parameters="COPRO=1" -C core_clk.mul=10000000"</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -3149,7 +3149,7 @@
 
   <Group>
     <GroupName>::Acceleration</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
