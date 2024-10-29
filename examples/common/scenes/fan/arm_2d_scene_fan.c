@@ -346,11 +346,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
 }
 
 static 
-IMPL_PFB_ON_DRAW(__arm_2d_number_list_draw_cover)
+IMPL_PFB_ON_DRAW(__arm_2d_list_draw_cover)
 {
     ARM_2D_UNUSED(bIsNewFrame);
     
-    number_list_t *ptThis = (number_list_t *)pTarget;
+    text_list_t *ptThis = (text_list_t *)pTarget;
 
     arm_2d_canvas(ptTile, __list_cover) {
         /* draw shadow */
@@ -553,7 +553,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 },
                 .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
                 /* draw list cover */
-                .fnOnDrawListCover = &__arm_2d_number_list_draw_cover,
+                .fnOnDrawListCover = &__arm_2d_list_draw_cover,
 
                 .bUseDirtyRegion = true,
                 .ptTargetScene = &this.use_as__arm_2d_scene_t,

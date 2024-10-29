@@ -43,6 +43,7 @@
 #include "./monochrome/arm_2d_scene_mono_loading.h"
 #include "./monochrome/arm_2d_scene_mono_histogram.h"
 #include "./monochrome/arm_2d_scene_mono_clock.h"
+#include "./monochrome/arm_2d_scene_mono_list.h"
 
 #ifdef   __cplusplus
 extern "C" {

@@ -220,6 +220,10 @@ void scene_user_defined_opcode_loader(void)
 
 void scene_mono_loading_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
+
     arm_2d_scene_mono_loading_init(&DISP0_ADAPTER);
 }
 
@@ -239,6 +243,15 @@ void scene_mono_clock_loader(void)
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
 
     arm_2d_scene_mono_clock_init(&DISP0_ADAPTER);
+}
+
+void scene_mono_list_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
+
+    arm_2d_scene_mono_list_init(&DISP0_ADAPTER);
 }
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
@@ -261,9 +274,10 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
-    scene_mono_loading_loader,
-    scene_mono_histogram_loader,
-    scene_mono_clock_loader,
+    //scene_mono_loading_loader,
+    //scene_mono_histogram_loader,
+    //scene_mono_clock_loader,
+    scene_mono_list_loader,
 #else
     scene_basics_loader,
     scene_progress_status_loader,
@@ -294,12 +308,13 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #endif
 
 #else
+    scene_gas_gauge_loader,
     //scene_meter_loader,
     //scene_transform_compass,
     //scene_basics_loader,
     //scene_fitness_loader,
     //scene_user_defined_opcode_loader,
-    scene_knob_loader,
+    //scene_knob_loader,
     //scene_panel_loader,
 #endif
 

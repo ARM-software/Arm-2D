@@ -3001,6 +3001,89 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__width), ##__VA_ARGS__)
 
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_with_margin4(__region, __left, __right, __top, __bottom)  \
+            arm_using(                                                          \
+                arm_2d_region_t ARM_2D_SAFE_NAME(tTempRegion) = (__region))     \
+            arm_using(                                                          \
+                arm_2d_region_t __dock_region = ARM_2D_SAFE_NAME(tTempRegion),  \
+                {                                                               \
+                    __dock_region.tSize.iWidth -= (__left) + (__right);         \
+                    __dock_region.tLocation.iX += (__left);                     \
+                    __dock_region.tSize.iHeight -= (__top) + (__bottom);        \
+                    __dock_region.tLocation.iY += (__top);                      \
+                },                                                              \
+                {ARM_2D_OP_WAIT_ASYNC();})
+
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_with_margin1(__region, __margin)                          \
+            __arm_2d_dock_with_margin4( (__region),                             \
+                                        (__margin),                             \
+                                        (__margin),                             \
+                                        (__margin),                             \
+                                        (__margin))
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define __arm_2d_dock_with_margin0(__region)                                    \
+            __arm_2d_dock_with_margin4( (__region), 0 ,0, 0, 0)
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the target
+ *        region with given margins
+ * 
+ * \note prototype1:
+ *          arm_2d_dock_with_margin(__region) {
+ *              code body that can use __dock_region
+ *          }
+ * 
+ * \note prototype2:
+ *          arm_2d_dock_with_margin(__region, __margin) {
+ *              code body that can use __dock_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock_with_margin(__region, __left, __right, __top, __bottom) {
+ *              code body that can use __dock_region
+ *          }   
+ */
+#define arm_2d_dock_with_margin(__region, ...)                                  \
+            ARM_CONNECT2(   __arm_2d_dock_with_margin,                          \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), ##__VA_ARGS__)
+
+/*!
+ * \brief generate a temporary arm_2d_region_t object that docks to the target
+ *        region with given margins
+ * 
+ * \note prototype1:
+ *          arm_2d_dock(__region) {
+ *              code body that can use __dock_region
+ *          }
+ * 
+ * \note prototype2:
+ *          arm_2d_dock(__region, __margin) {
+ *              code body that can use __dock_region
+ *          }
+ *
+ * \note prototype3:
+ *          arm_2d_dock(__region, __left, __right, __top, __bottom) {
+ *              code body that can use __dock_region
+ *          }   
+ */
+#define arm_2d_dock(__region, ...)                                              \
+            arm_2d_dock_with_margin(__region, ##__VA_ARGS__)
+
 /*!
  * \brief a template for implement a on draw event handler
  */
