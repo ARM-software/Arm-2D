@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        3. Sept 2024
- * $Revision:    V.2.7.2
+ * $Date:        29. Oct 2024
+ * $Revision:    V.2.7.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -505,7 +505,8 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
     }
 
     if (    (ptFont->tileFont.tColourInfo.chScheme == ARM_2D_COLOUR_BIN)
-        &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)) {
+        &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)
+        &&  (ptFont->tileFont.tInfo.bHasEnforcedColour)) {
         arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
                             s_tLCDTextControl.ptTargetFB, 
                             &tDrawRegion,
