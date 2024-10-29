@@ -92,9 +92,12 @@ const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_SQUARE_DIGITS_24_A1;
+} ARM_2D_FONT_SQUARE_DIGITS_24_A1,
+  ARM_2D_FONT_SQUARE_DIGITS_24_A2,
+  ARM_2D_FONT_SQUARE_DIGITS_24_A4,
+  ARM_2D_FONT_SQUARE_DIGITS_24_A8;
 
-#define CLOCK_FONT      ARM_2D_FONT_SQUARE_DIGITS_24_A1  //ARM_2D_FONT_6x8
+#define CLOCK_FONT      ARM_2D_FONT_SQUARE_DIGITS_24_A1
 
 
 /*============================ PROTOTYPES ====================================*/
@@ -239,9 +242,9 @@ static void __on_scene_mono_clock_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_mono_clock_t *ptThis = (user_scene_mono_clock_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
+#if 1
+    /* switch to next scene after 5s */
+    if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 #endif
@@ -281,17 +284,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_clock_handler)
             arm_2d_size_t tCommaSizeSmall = arm_lcd_get_string_line_box(":", &CLOCK_FONT);
             arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &CLOCK_FONT);
             
-            tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + 
-                                  tCommaSizeSmall.iWidth;
+            tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + tCommaSizeSmall.iWidth;
             
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_font((arm_2d_font_t *)&CLOCK_FONT);
             arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
-
+            arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
             arm_lcd_text_set_scale(1.0f);
             arm_2d_dock_horizontal(__vertical_region, tStringSize.iWidth) {
 
-                arm_2d_layout(__horizontal_region, true) {
+                arm_2d_layout(__horizontal_region) {
 
                     __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
                         arm_lcd_text_set_draw_region(&__item_region);
@@ -326,7 +328,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_clock_handler)
                         arm_lcd_text_set_scale(0.5f);
                         arm_2d_align_centre(__item_region, tTwoDigitsSizeSmall) {
                             arm_lcd_text_set_draw_region(&__centre_region);
+
+                            arm_lcd_text_reset_display_region_tracking();
+
+                            arm_lcd_text_force_char_use_same_width(true);
                             arm_lcd_printf("%02d", this.chTenMs);
+                            arm_lcd_text_force_char_use_same_width(false);
+                            if (bIsNewFrame) {
+                                s_tDirtyRegions[DIRTY_REGION_IDX_TENMS].tRegion = *arm_lcd_text_get_last_display_region();
+                            }
                         }
                     }
                 }
@@ -347,6 +357,78 @@ user_scene_mono_clock_t *__arm_2d_scene_mono_clock_init(   arm_2d_scene_player_t
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
+
+    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
+
+    /* get the screen region */
+    arm_2d_region_t tScreen
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+
+    /*--------------initialize static dirty region items: begin---------------*/
+
+
+    arm_2d_dock_vertical(tScreen, 16, 16) {
+
+        arm_lcd_text_set_scale(1.0f);
+        arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &CLOCK_FONT);
+        
+        arm_2d_size_t tTwoDigitsSizeBig = arm_lcd_get_string_line_box("00", &CLOCK_FONT);
+        arm_2d_size_t tCommaSizeBig = arm_lcd_get_string_line_box(":", &CLOCK_FONT);
+
+        arm_lcd_text_set_scale(0.5f);
+        arm_2d_size_t tCommaSizeSmall = arm_lcd_get_string_line_box(":", &CLOCK_FONT);
+        arm_2d_size_t tTwoDigitsSizeSmall = arm_lcd_get_string_line_box("00", &CLOCK_FONT);
+        
+        tStringSize.iWidth += tTwoDigitsSizeSmall.iWidth + tCommaSizeSmall.iWidth;
+        
+        arm_lcd_text_set_font((arm_2d_font_t *)&CLOCK_FONT);
+        arm_lcd_text_set_scale(1.0f);
+
+        arm_2d_dock_horizontal(__vertical_region, tStringSize.iWidth) {
+
+            arm_2d_layout(__horizontal_region) {
+
+                __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                    
+                    s_tDirtyRegions[DIRTY_REGION_IDX_HOUR].tRegion = __item_region;
+
+                }
+
+                __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
+
+                }
+
+                __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                    s_tDirtyRegions[DIRTY_REGION_IDX_MIN].tRegion = __item_region;
+                }
+
+                __item_line_dock_horizontal(tCommaSizeBig.iWidth) {
+                    
+                }
+
+                __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
+                    s_tDirtyRegions[DIRTY_REGION_IDX_SEC].tRegion = __item_region;
+                }
+
+                __item_line_dock_horizontal(tCommaSizeSmall.iWidth) {
+                }
+
+            #if 0
+                __item_line_dock_horizontal(tTwoDigitsSizeSmall.iWidth) {
+                    arm_2d_align_centre(__item_region, tTwoDigitsSizeSmall) {
+                        s_tDirtyRegions[DIRTY_REGION_IDX_TENMS].tRegion = __centre_region;
+                    }
+                }
+            #endif
+            }
+        }
+
+        arm_lcd_text_set_scale(1.0f);
+    }
+
+
+    /*--------------initialize static dirty region items: end  ---------------*/
 
     if (NULL == ptThis) {
         ptThis = (user_scene_mono_clock_t *)
@@ -376,7 +458,7 @@ user_scene_mono_clock_t *__arm_2d_scene_mono_clock_init(   arm_2d_scene_player_t
             //.fnAfterSwitch  = &__after_scene_mono_clock_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
-            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_mono_clock_background_start,
