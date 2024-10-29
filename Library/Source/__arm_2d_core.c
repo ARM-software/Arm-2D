@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        2 Aug 2024
- * $Revision:    V.1.8.3
+ * $Date:        29 Oct 2024
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2446,6 +2446,8 @@ arm_2d_scratch_mem_t *arm_2d_scratch_memory_new(arm_2d_scratch_mem_t *ptMemory,
         } else if (0 == tSize) {
             break;
         }
+
+        tSize = (tSize + 3) & ~3;
 
         ptMemory->pBuffer 
             = (uintptr_t)__arm_2d_allocate_scratch_memory(  tSize + 4, 
