@@ -152,7 +152,7 @@ static void __on_scene_mono_list_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene mono_list                                                                    *
+ * Scene mono_list                                                            *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_mono_list_background_start(arm_2d_scene_t *ptScene)
