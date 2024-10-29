@@ -504,32 +504,36 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         s_tLCDTextControl.tTextRegion = tDrawRegion;
     }
 
-    if (    (ptFont->tileFont.tColourInfo.chScheme == ARM_2D_COLOUR_BIN)
-        &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)
-        &&  (ptFont->tileFont.tInfo.bHasEnforcedColour)) {
-        arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
-                            s_tLCDTextControl.ptTargetFB, 
-                            &tDrawRegion,
-                            s_tLCDTextControl.wMode,
-                            s_tLCDTextControl.tColour.tForeground,
-                            s_tLCDTextControl.tColour.tBackground);
-    } else if (NULL != ptFont->fnDrawChar) {
-        ptFont->fnDrawChar( s_tLCDTextControl.ptTargetFB,
-                            &tDrawRegion,
-                            ptFont,
-                            &tCharDescriptor.tileChar,
-                            s_tLCDTextControl.tColour.tForeground,
-                            chOpacity,
-                            s_tLCDTextControl.fScale);
+    const arm_2d_tile_t *ptRootFontTile = arm_2d_tile_get_root(&ptFont->tileFont, NULL, NULL );
+    
+    if (NULL != ptRootFontTile) {
+        if (    (ptRootFontTile->tColourInfo.chScheme == ARM_2D_COLOUR_BIN)
+            &&  (ARM_2D_DRW_PATN_MODE_COPY != s_tLCDTextControl.wMode)
+            &&  (ptRootFontTile->tInfo.bHasEnforcedColour)) {
+            arm_2d_draw_pattern(&tCharDescriptor.tileChar, 
+                                s_tLCDTextControl.ptTargetFB, 
+                                &tDrawRegion,
+                                s_tLCDTextControl.wMode,
+                                s_tLCDTextControl.tColour.tForeground,
+                                s_tLCDTextControl.tColour.tBackground);
+        } else if (NULL != ptFont->fnDrawChar) {
+            ptFont->fnDrawChar( s_tLCDTextControl.ptTargetFB,
+                                &tDrawRegion,
+                                ptFont,
+                                &tCharDescriptor.tileChar,
+                                s_tLCDTextControl.tColour.tForeground,
+                                chOpacity,
+                                s_tLCDTextControl.fScale);
 
-        if (s_tLCDTextControl.fScale > 0.0f) {
-            ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, NULL);
+            if (s_tLCDTextControl.fScale > 0.0f) {
+                ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, NULL);
 
-            arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
-                                                this.Target.ptRegion,
-                                                &s_tLCDTextControl.tTextRegion);
-        }
-    } 
+                arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
+                                                    this.Target.ptRegion,
+                                                    &s_tLCDTextControl.tTextRegion);
+            }
+        } 
+    }
 
     ARM_2D_OP_WAIT_ASYNC();
 
