@@ -227,6 +227,12 @@ __disp_string_t text_list_get_item_string(text_list_t *ptThis, uint_fast16_t hwI
     return tString;
 }
 
+ARM_NONNULL(1)
+uint16_t text_list_get_list_item_count(text_list_t *ptThis)
+{
+    return __simple_list_get_list_item_count(&this.use_as____simple_list_t);
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

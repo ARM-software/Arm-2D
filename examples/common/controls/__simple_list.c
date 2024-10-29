@@ -413,6 +413,13 @@ uint16_t __simple_list_get_selected_item_id(__simple_list_t *ptThis)
                                             &this.use_as____arm_2d_list_core_t);
 }
 
+ARM_NONNULL(1)
+uint16_t __simple_list_get_list_item_count(__simple_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.tSimpleListCFG.hwCount;
+}
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

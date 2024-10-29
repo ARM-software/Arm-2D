@@ -160,6 +160,10 @@ extern
 ARM_NONNULL(1)
 int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t hwItemID);
 
+extern
+ARM_NONNULL(1)
+uint16_t number_list_get_list_item_count(number_list_t *ptThis);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

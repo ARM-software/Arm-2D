@@ -215,6 +215,12 @@ int32_t number_list_get_item_number(number_list_t *ptThis, uint_fast16_t hwItemI
     return this.tNumberListCFG.nStart + hwItemID * this.tNumberListCFG.iDelta;
 }
 
+ARM_NONNULL(1)
+uint16_t number_list_get_list_item_count(number_list_t *ptThis)
+{
+    return __simple_list_get_list_item_count(&this.use_as____simple_list_t);
+}
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

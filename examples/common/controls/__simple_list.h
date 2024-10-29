@@ -154,6 +154,10 @@ ARM_PROTECTED_METHOD(
     ARM_NONNULL(1)
     uint16_t __simple_list_get_selected_item_id(__simple_list_t *ptThis);
 
+    extern
+    ARM_NONNULL(1)
+    uint16_t __simple_list_get_list_item_count(__simple_list_t *ptThis);
+
 )
 
 #if defined(__clang__)
