@@ -99,7 +99,7 @@ arm_fsm_rt_t __arm_2d_text_list_draw_list_core_item(
         arm_lcd_text_set_font(ptCFG->ptFont);
 
         arm_lcd_text_set_colour(ptCFG->tFontColour, ptCFG->tBackgroundColour);
-        arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
+        //arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
         
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_scale(0.0f);

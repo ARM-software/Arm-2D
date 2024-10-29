@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        28. Oct 2024
- * $Revision:    V.1.6.8
+ * $Date:        29. Oct 2024
+ * $Revision:    V.1.6.9
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1447,6 +1447,19 @@ extern "C" {
                     __ARM_2D_LAYOUT_ITEM_DEBUG_END__();                         \
                 })
 
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
+#define ____item_line_dock_horizontal4(__left, __right, __top, __bottom)        \
+            ____item_line_dock_horizontal5(                                     \
+                    ( __layout_assistant__.tArea.tLocation.iX                   \
+                    + __layout_assistant__.tArea.tSize.iWidth                   \
+                    * (__layout_assistant__.tAlignTable.Horizontal.sWidth + 1)  \
+                    - __layout_assistant__.tLayout.tLocation.iX                 \
+                    - (__left) - (__right)),                                    \
+                    (__left), (__right), (__top), (__bottom))
+
 
 /*!
  * \brief Please do NOT use this macro directly
@@ -1663,6 +1676,20 @@ extern "C" {
  * \brief Please do NOT use this macro directly
  * 
  */
+#define ____item_line_dock_vertical4(__left, __right, __top, __bottom)          \
+            ____item_line_dock_vertical5(                                       \
+                    ( __layout_assistant__.tArea.tLocation.iY                   \
+                    + __layout_assistant__.tArea.tSize.iHeight                  \
+                    * (__layout_assistant__.tAlignTable.Vertical.sHeight + 1)   \
+                    - __layout_assistant__.tLayout.tLocation.iY                 \
+                    - (__top) - (__bottom)),                                    \
+                    (__left), (__right), (__top), (__bottom))
+
+
+/*!
+ * \brief Please do NOT use this macro directly
+ * 
+ */
 #define ____item_line_dock_vertical1(__height)                                  \
             ____item_line_dock_vertical5(__height, 0, 0, 0, 0)
 
@@ -1675,7 +1702,7 @@ extern "C" {
             ____item_line_dock_vertical5(                                       \
                     ( __layout_assistant__.tArea.tLocation.iY                   \
                     + __layout_assistant__.tArea.tSize.iHeight                  \
-                    * (__layout_assistant__.tAlignTable.Vertical.sHeight + 1) \
+                    * (__layout_assistant__.tAlignTable.Vertical.sHeight + 1)   \
                     - __layout_assistant__.tLayout.tLocation.iY),               \
                     0, 0, 0, 0)
 

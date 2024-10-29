@@ -535,8 +535,6 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
         spin_zoom_widget_init(&this.tFanBlades[2], &tCFG);
     } while(0);
 
-
-
     /* initialize text list */
     do {
         text_list_cfg_t tCFG = {
