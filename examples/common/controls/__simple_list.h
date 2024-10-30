@@ -62,7 +62,11 @@ extern "C" {
 typedef struct __simple_list_cfg_t {
     uint16_t hwCount;
 
-    bool bIgnoreBackground;
+    uint8_t bIgnoreBackground   : 1;
+    uint8_t bUseDirtyRegion     : 1;
+    uint8_t bDisableRingMode    : 1;
+    uint8_t                     : 5;
+
     uint8_t chOpacity;
 
     COLOUR_INT tFontColour;
@@ -75,7 +79,6 @@ typedef struct __simple_list_cfg_t {
     int8_t chNextPadding;
     int16_t hwSwitchingPeriodInMs;
     
-
     arm_2d_draw_list_item_handler_t *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
     arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
     arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
@@ -83,7 +86,6 @@ typedef struct __simple_list_cfg_t {
     arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
     arm_2d_align_t                  tTextAlignment;                             /*!< text alignment in each item*/
 
-    bool bUseDirtyRegion;
     arm_2d_scene_t *ptTargetScene;
 } __simple_list_cfg_t;
 

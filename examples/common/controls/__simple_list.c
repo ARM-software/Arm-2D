@@ -117,56 +117,122 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
 {
     __simple_list_t *ptThis = (__simple_list_t *)ptListView;
     int32_t nIterationIndex;
-    switch (tDirection) {
-        default:
-        case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
-            nIterationIndex = hwID;
-            nIterationIndex %= this.tSimpleListCFG.hwCount;
-            break;
 
-        case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
-            this.nIterationIndex = hwID;
-            this.nIterationIndex %= this.tSimpleListCFG.hwCount;
-            nIterationIndex = this.nIterationIndex;
-            break;
+    if (this.use_as____arm_2d_list_core_t.tCFG.bDisableRingMode) {
+        uint16_t hwItemCount = this.use_as____arm_2d_list_core_t.tCFG.hwItemCount;
+        switch (tDirection) {
+            default:
+            case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
+                if (hwID >= hwItemCount) {
+                    /* out of range */
+                    return NULL;
+                }
+                nIterationIndex = hwID;
+                break;
 
-        case __ARM_2D_LIST_GET_PREVIOUS:
-            if (this.nIterationIndex) {
-                this.nIterationIndex--;
-            } else {
+            case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
+                if (hwID >= hwItemCount) {
+                    /* out of range */
+                    return NULL;
+                }
+
+                this.nIterationIndex = hwID;
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_PREVIOUS:
+                if (this.nIterationIndex) {
+                    this.nIterationIndex--;
+                } else {
+                    /* out of range */
+                    return NULL;
+                }
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_NEXT:
+                if ((this.nIterationIndex + 1) >= hwItemCount) {
+                    /* out of range */
+                    return NULL;
+                }
+                this.nIterationIndex++;
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = 0;
+                break;
+
+            case __ARM_2D_LIST_GET_FIRST_ITEM:
+                this.nIterationIndex = 0;
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_CURRENT:
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = hwItemCount - 1;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM:
+                this.nIterationIndex = hwItemCount - 1;
+                nIterationIndex = this.nIterationIndex;
+                break;
+        }
+    } else {
+        switch (tDirection) {
+            default:
+            case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
+                nIterationIndex = hwID;
+                nIterationIndex %= this.tSimpleListCFG.hwCount;
+                break;
+
+            case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
+                this.nIterationIndex = hwID;
+                this.nIterationIndex %= this.tSimpleListCFG.hwCount;
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_PREVIOUS:
+                if (this.nIterationIndex) {
+                    this.nIterationIndex--;
+                } else {
+                    this.nIterationIndex = this.tSimpleListCFG.hwCount - 1;
+                }
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_NEXT:
+                this.nIterationIndex++;
+                this.nIterationIndex %= this.tSimpleListCFG.hwCount;
+                
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = 0;
+                break;
+
+            case __ARM_2D_LIST_GET_FIRST_ITEM:
+                this.nIterationIndex = 0;
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_CURRENT:
+                nIterationIndex = this.nIterationIndex;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
+                nIterationIndex = this.tSimpleListCFG.hwCount - 1;
+                break;
+
+            case __ARM_2D_LIST_GET_LAST_ITEM:
                 this.nIterationIndex = this.tSimpleListCFG.hwCount - 1;
-            }
-            nIterationIndex = this.nIterationIndex;
-            break;
-
-        case __ARM_2D_LIST_GET_NEXT:
-            this.nIterationIndex++;
-            this.nIterationIndex %= this.tSimpleListCFG.hwCount;
-            
-            nIterationIndex = this.nIterationIndex;
-            break;
-
-        case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
-            nIterationIndex = 0;
-            break;
-
-        case __ARM_2D_LIST_GET_FIRST_ITEM:
-            this.nIterationIndex = 0;
-            nIterationIndex = this.nIterationIndex;
-            break;
-
-        case __ARM_2D_LIST_GET_CURRENT:
-            nIterationIndex = this.nIterationIndex;
-            break;
-
-        case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
-            nIterationIndex = this.tSimpleListCFG.hwCount - 1;
-            break;
-
-        case __ARM_2D_LIST_GET_LAST_ITEM:
-            this.nIterationIndex = this.tSimpleListCFG.hwCount - 1;
-            nIterationIndex = this.nIterationIndex;
-            break;
+                nIterationIndex = this.nIterationIndex;
+                break;
+        }
     }
 
     /* validate item size */
@@ -230,6 +296,7 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
             .hwItemCount = this.tSimpleListCFG.hwCount,
             .nTotalLength = this.tSimpleListCFG.hwCount * iItemHeight,
             .tListSize = ptCFG->tListSize,
+            .bDisableRingMode = ptCFG->bDisableRingMode,
         };
 
         /* you can override the default implementations */
