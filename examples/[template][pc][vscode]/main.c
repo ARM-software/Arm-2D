@@ -274,9 +274,9 @@ static scene_loader_t * const c_SceneLoaders[] = {
 #if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
-    //scene_mono_loading_loader,
-    //scene_mono_histogram_loader,
-    //scene_mono_clock_loader,
+    scene_mono_loading_loader,
+    scene_mono_histogram_loader,
+    scene_mono_clock_loader,
     scene_mono_list_loader,
 #else
     scene_basics_loader,
