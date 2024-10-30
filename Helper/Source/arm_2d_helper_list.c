@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        29. Oct 2024
- * $Revision:    V.1.1.9
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1103,10 +1103,10 @@ ARM_PT_BEGIN(this.chState)
 
         struct {
             int32_t nOffset;
-            arm_2d_list_item_t *ptItem;
+            uint16_t hwID;
         } tTopMost, tBottomMost, tCentreMost = {
             .nOffset = 0,
-            .ptItem = NULL,
+            .hwID = 0,
         };
 
         while(NULL != ptItem) {
@@ -1123,7 +1123,7 @@ ARM_PT_BEGIN(this.chState)
 
             if (nDistance < nMinimalDistance) {
                 nMinimalDistance = nDistance;
-                tCentreMost.ptItem = ptItem;
+                tCentreMost.hwID = ptItem->hwID;
                 tCentreMost.nOffset = nTempOffset;
             }
             
@@ -1155,7 +1155,7 @@ ARM_PT_BEGIN(this.chState)
                     ptThis, 
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    tCentreMost.ptItem->hwID,
+                    tCentreMost.hwID,
                     false,
                     false);
         assert(NULL != ptItem);
@@ -1190,18 +1190,18 @@ ARM_PT_BEGIN(this.chState)
             }
 
             tBottomMost.nOffset = nTempOffset;
-            tBottomMost.ptItem = ptItem;
+            tBottomMost.hwID = ptItem->hwID;
 
         } while(true);
         this.CalMidAligned.iBottomVisibleOffset = (int16_t)tBottomMost.nOffset;
-        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.ptItem->hwID;
+        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.hwID;
 
         /* move to the centre most item */
         ptItem = __arm_2d_list_core_get_item(   
                     ptThis, 
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    tCentreMost.ptItem->hwID,
+                    tCentreMost.hwID,
                     false,
                     false);
         assert(NULL != ptItem);
@@ -1240,11 +1240,11 @@ ARM_PT_BEGIN(this.chState)
             }
 
             tTopMost.nOffset = nTempOffset;
-            tTopMost.ptItem = ptItem;
+            tTopMost.hwID = ptItem->hwID;
 
         } while(true);
         this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
-        this.CalMidAligned.hwTopVisibleItemID = tTopMost.ptItem->hwID;
+        this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
         /* find the first and last visible items */
@@ -1564,10 +1564,10 @@ ARM_PT_BEGIN(this.chState)
 
         struct {
             int32_t nOffset;
-            arm_2d_list_item_t *ptItem;
+            uint16_t hwID;
         } tTopMost, tBottomMost, tCentreMost = {
             .nOffset = 0,
-            .ptItem = NULL,
+            .hwID = 0,
         };
 
         while(NULL != ptItem) {
@@ -1584,7 +1584,7 @@ ARM_PT_BEGIN(this.chState)
 
             if (nDistance < nMinimalDistance) {
                 nMinimalDistance = nDistance;
-                tCentreMost.ptItem = ptItem;
+                tCentreMost.hwID = ptItem->hwID;
                 tCentreMost.nOffset = nTempOffset;
             }
 
@@ -1616,7 +1616,7 @@ ARM_PT_BEGIN(this.chState)
                     ptThis, 
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    tCentreMost.ptItem->hwID,
+                    tCentreMost.hwID,
                     false,
                     false);
         assert(NULL != ptItem);
@@ -1651,18 +1651,18 @@ ARM_PT_BEGIN(this.chState)
             }
 
             tBottomMost.nOffset = nTempOffset;
-            tBottomMost.ptItem = ptItem;
+            tBottomMost.hwID = ptItem->hwID;
 
         } while(true);
         this.CalMidAligned.iBottomVisibleOffset = (int16_t)tBottomMost.nOffset;
-        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.ptItem->hwID;
+        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.hwID;
 
         /* move to the centre most item */
         ptItem = __arm_2d_list_core_get_item(   
                     ptThis, 
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    tCentreMost.ptItem->hwID,
+                    tCentreMost.hwID,
                     false,
                     false);
         assert(NULL != ptItem);
@@ -1701,11 +1701,11 @@ ARM_PT_BEGIN(this.chState)
             }
 
             tTopMost.nOffset = nTempOffset;
-            tTopMost.ptItem = ptItem;
+            tTopMost.hwID = ptItem->hwID;
 
         } while(true);
         this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
-        this.CalMidAligned.hwTopVisibleItemID = tTopMost.ptItem->hwID;
+        this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
         /* find the first and last visible items */
@@ -2027,11 +2027,9 @@ ARM_PT_BEGIN(this.chState)
 
         struct {
             int32_t nOffset;
-            //arm_2d_list_item_t *ptItem;
             uint16_t hwID;
         } tTopMost, tBottomMost, tCentreMost = {
             .nOffset = 0,
-            //.ptItem = NULL,
             .hwID = 0,
         };
 
@@ -2513,10 +2511,10 @@ ARM_PT_BEGIN(this.chState)
 
         struct {
             int32_t nOffset;
-            arm_2d_list_item_t *ptItem;
+            uint16_t hwID;
         } tTopMost, tBottomMost, tCentreMost = {
             .nOffset = 0,
-            .ptItem = NULL,
+            .hwID = 0,
         };
     #if 0
         int16_t iItemActualWidth = ptItem->tSize.iWidth 
@@ -2537,8 +2535,8 @@ ARM_PT_BEGIN(this.chState)
 
             if (nDistance < nMinimalDistance) {
                 nMinimalDistance = nDistance;
-                tCentreMost.ptItem = ptItem;
                 tCentreMost.nOffset = nTempOffset;
+                tCentreMost.hwID = ptItem->hwID;
             }
 
             /* update nTempOffset */
@@ -2570,7 +2568,7 @@ ARM_PT_BEGIN(this.chState)
                     ptThis, 
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    tCentreMost.ptItem->hwID,
+                    tCentreMost.hwID,
                     true,
                     false);
         assert(NULL != ptItem);
@@ -2605,18 +2603,18 @@ ARM_PT_BEGIN(this.chState)
             }
 
             tBottomMost.nOffset = nTempOffset;
-            tBottomMost.ptItem = ptItem;
+            tBottomMost.hwID = ptItem->hwID;
 
         } while(true);
         this.CalMidAligned.iBottomVisibleOffset = (int16_t)tBottomMost.nOffset;
-        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.ptItem->hwID;
+        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.hwID;
 
         /* move to the centre most item */
         ptItem = __arm_2d_list_core_get_item(   
                     ptThis, 
                     fnIterator, 
                     __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    tCentreMost.ptItem->hwID,
+                    tCentreMost.hwID,
                     true,
                     false);
         assert(NULL != ptItem);
@@ -2655,11 +2653,10 @@ ARM_PT_BEGIN(this.chState)
             }
 
             tTopMost.nOffset = nTempOffset;
-            tTopMost.ptItem = ptItem;
-
+            tTopMost.hwID = ptItem->hwID;
         } while(true);
         this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
-        this.CalMidAligned.hwTopVisibleItemID = tTopMost.ptItem->hwID;
+        this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
 
