@@ -189,7 +189,7 @@ static void __on_scene_mono_list_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 1
+#if 0
     /* switch to next scene after 7s */
     if (arm_2d_helper_is_time_out(7000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
@@ -213,12 +213,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_list_handler)
 
     user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
-
     ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {
-
-
         arm_2d_layout(__top_canvas) {
 
             __item_line_dock_vertical(10) {
@@ -261,7 +258,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_list_handler)
                                                     &__dock_region, 
                                                     bIsNewFrame));
                 }
-
             }
         }
     }
@@ -387,6 +383,8 @@ user_scene_mono_list_t *__arm_2d_scene_mono_list_init(   arm_2d_scene_player_t *
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
                 .bIgnoreBackground = true,
+                
+                //.bDisableRingMode = true,     /* you can disable the list ring mode here */
 
                 .chNextPadding = 1,
                 .chPreviousPadding = 1,
