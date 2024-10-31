@@ -463,6 +463,7 @@
             <file category="sourceC"     name="examples/common/controls/__simple_list.c" />
             <file category="sourceC"     name="examples/common/controls/number_list.c" />
             <file category="sourceC"     name="examples/common/controls/text_list.c" />
+            <file category="sourceC"     name="examples/common/controls/icon_list.c" />
             <file category="sourceC"     name="examples/common/controls/list_view.c" />
             <file category="sourceC"     name="examples/common/controls/progress_wheel.c" />
             <file category="sourceC"     name="examples/common/controls/battery_gasgauge.c" />

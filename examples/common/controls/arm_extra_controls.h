@@ -34,6 +34,7 @@
 #include "./__simple_list.h"
 #include "./number_list.h"
 #include "./text_list.h"
+#include "./icon_list.h"
 #include "./progress_wheel.h"
 #include "./list_view.h"
 #include "./battery_gasgauge.h"
@@ -42,6 +43,7 @@
 #include "./spin_zoom_widget.h"
 #include "./cloudy_glass.h"
 #include "./meter_pointer.h"
+
 
 #ifdef   __cplusplus
 extern "C" {
