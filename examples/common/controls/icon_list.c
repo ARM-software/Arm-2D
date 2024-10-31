@@ -101,6 +101,10 @@ arm_fsm_rt_t __arm_2d_icon_list_draw_list_core_item(
             const arm_2d_tile_t *ptileIcon = icon_list_get_item_icon(ptThis, ptItem->hwID);
             if (NULL == ptTile) {
                 break;
+            } else if ( ptTile->tInfo.bHasEnforcedColour 
+                     && ptTile->tInfo.tColourInfo.chScheme != ARM_2D_COLOUR_4BIT) {
+                /* we only draw a4 mask by default */
+                break;
             }
 
             COLOUR_INT_TYPE tColour = ptCFG->tFontColour;
