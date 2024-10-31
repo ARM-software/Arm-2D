@@ -205,7 +205,7 @@ uint16_t icon_list_get_selected_item_id(icon_list_t *ptThis)
 
 
 ARM_NONNULL(1)
-const arm_2d_tile_t * icon_list_get_item_string(icon_list_t *ptThis, uint_fast16_t hwItemID)
+const arm_2d_tile_t * icon_list_get_item_icon(icon_list_t *ptThis, uint_fast16_t hwItemID)
 {
     assert(NULL != ptThis);
     if (hwItemID >= this.use_as____simple_list_t.tSimpleListCFG.hwCount) {
