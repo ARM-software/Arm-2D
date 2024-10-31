@@ -177,6 +177,18 @@ if (ARM2D_CONTROLS)
             examples/common/asset/ClockMarking.c
             examples/common/asset/compass.c
             examples/common/asset/Earth.c
+            examples/common/asset/icon_automobile.c
+            examples/common/asset/icon_compute.c 
+            examples/common/asset/icon_Developer.c 
+            examples/common/asset/icon_drone.c 
+            examples/common/asset/icon_Durability.c 
+            examples/common/asset/icon_enterprise.c 
+            examples/common/asset/icon_healthcare.c 
+            examples/common/asset/icon_mobile.c 
+            examples/common/asset/icon_multicore.c 
+            examples/common/asset/icon_smartmeter.c 
+            examples/common/asset/icon_visual_sensor.c 
+            examples/common/asset/icon_wearables.c
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls
