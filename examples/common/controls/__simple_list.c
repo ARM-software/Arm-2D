@@ -259,7 +259,8 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
 
 ARM_NONNULL(1,2)
 arm_2d_err_t __simple_list_init(__simple_list_t *ptThis, 
-                                __simple_list_cfg_t *ptCFG)
+                                __simple_list_cfg_t *ptCFG,
+                                __arm_2d_list_region_calculator_t *fnCalculator)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
@@ -290,7 +291,8 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
             .fnIterator = &__arm_2d_simple_list_iterator,
             
             /* vertical list, centre aligned style */
-            .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL,
+            .fnCalculator = fnCalculator,
+            //.fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL,
             .fnOnDrawListBackground = &__arm_2d_simple_list_draw_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,
             .hwItemCount = this.tSimpleListCFG.hwCount,

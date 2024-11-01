@@ -102,7 +102,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_mono_clock_t *__arm_2d_scene_mono_clock_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_mono_clock_t *__arm_2d_scene_mono_clock_init(
+                                        arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_mono_clock_t *ptScene);
 
 #if defined(__clang__)

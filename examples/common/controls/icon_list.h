@@ -58,7 +58,7 @@ typedef struct icon_list_cfg_t {
     implement(__simple_list_cfg_t);
 
     struct {
-        const arm_2d_tile_t *ptileMasks;
+        const arm_2d_tile_t **pptileMasks;
         uint16_t hwCount;
     } Icon;
 
@@ -68,7 +68,7 @@ typedef struct icon_list_t {
     implement(__simple_list_t);
 
     struct {
-        const arm_2d_tile_t *ptileMasks;
+        const arm_2d_tile_t **pptileMasks;
         uint16_t hwCount;
     } IconListCFG;
 } icon_list_t;

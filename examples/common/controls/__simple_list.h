@@ -79,12 +79,12 @@ typedef struct __simple_list_cfg_t {
     int8_t chNextPadding;
     int16_t hwSwitchingPeriodInMs;
     
-    arm_2d_draw_list_item_handler_t *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
-    arm_2d_draw_list_item_handler_t *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
-    arm_2d_helper_draw_handler_t    *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
-    arm_2d_helper_draw_handler_t    *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
-    arm_2d_font_t                   *ptFont;                                    /*!< user specified font */
-    arm_2d_align_t                  tTextAlignment;                             /*!< text alignment in each item*/
+    arm_2d_draw_list_item_handler_t     *fnOnDrawListItem;                          /*!< the On-Draw-List-Core-Item event handler */
+    arm_2d_draw_list_item_handler_t     *fnOnDrawListItemBackground;                /*!< the On-Draw-List-Core-Item-Background event handler */
+    arm_2d_helper_draw_handler_t        *fnOnDrawListBackground;                    /*!< the On-Draw-List-Core-Background event handler */
+    arm_2d_helper_draw_handler_t        *fnOnDrawListCover;                         /*!< the On-Draw-List-Core-Cover event handler */
+    arm_2d_font_t                       *ptFont;                                    /*!< user specified font */
+    arm_2d_align_t                      tTextAlignment;                             /*!< text alignment in each item*/
 
     arm_2d_scene_t *ptTargetScene;
 } __simple_list_cfg_t;
@@ -114,8 +114,10 @@ ARM_PROTECTED_METHOD(
 
     extern
     ARM_NONNULL(1,2)
-    arm_2d_err_t __simple_list_init(  __simple_list_t *ptThis, 
-                                    __simple_list_cfg_t *ptCFG);
+    arm_2d_err_t __simple_list_init(
+                                __simple_list_t *ptThis, 
+                                __simple_list_cfg_t *ptCFG,
+                                __arm_2d_list_region_calculator_t *fnCalculator);
 
     extern
     ARM_NONNULL(1,2)

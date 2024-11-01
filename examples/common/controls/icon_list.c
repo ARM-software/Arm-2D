@@ -129,8 +129,10 @@ arm_2d_err_t icon_list_init(  icon_list_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
 
-    arm_2d_err_t tResult =  __simple_list_init(&this.use_as____simple_list_t,
-                            &ptCFG->use_as____simple_list_cfg_t);
+    arm_2d_err_t tResult =  __simple_list_init(
+        &this.use_as____simple_list_t,
+        &ptCFG->use_as____simple_list_cfg_t,
+        &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL);
 
     if (ARM_2D_ERR_NONE != tResult) {
         return tResult;
@@ -143,10 +145,10 @@ arm_2d_err_t icon_list_init(  icon_list_t *ptThis,
                                     &__arm_2d_icon_list_draw_list_core_item);
     }
 
-    this.IconListCFG.ptileMasks = ptCFG->Icon.ptileMasks;
+    this.IconListCFG.pptileMasks = ptCFG->Icon.pptileMasks;
     this.IconListCFG.hwCount = ptCFG->Icon.hwCount;
 
-    if (NULL == this.IconListCFG.ptileMasks || 0 == this.IconListCFG.hwCount) {
+    if (NULL == this.IconListCFG.pptileMasks || 0 == this.IconListCFG.hwCount) {
         return ARM_2D_ERR_INVALID_PARAM;
     } 
 
@@ -212,7 +214,7 @@ const arm_2d_tile_t * icon_list_get_item_icon(icon_list_t *ptThis, uint_fast16_t
         return NULL;
     }
 
-    return &this.IconListCFG.ptileMasks[hwItemID];
+    return this.IconListCFG.pptileMasks[hwItemID];
 }
 
 ARM_NONNULL(1)

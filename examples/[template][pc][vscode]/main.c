@@ -254,6 +254,15 @@ void scene_mono_list_loader(void)
     arm_2d_scene_mono_list_init(&DISP0_ADAPTER);
 }
 
+void scene_mono_icon_menu_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
+
+    arm_2d_scene_mono_icon_menu_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -278,6 +287,7 @@ static scene_loader_t * const c_SceneLoaders[] = {
     scene_mono_histogram_loader,
     scene_mono_clock_loader,
     scene_mono_list_loader,
+    scene_mono_icon_menu_loader,
 #else
     scene_basics_loader,
     scene_progress_status_loader,
