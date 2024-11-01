@@ -245,7 +245,7 @@ static void __on_scene_mono_icon_menu_frame_complete(arm_2d_scene_t *ptScene)
 
 #if 1
     /* switch to next scene after 12s */
-    if (arm_2d_helper_is_time_out(4000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 #endif
