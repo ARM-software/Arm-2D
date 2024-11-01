@@ -20,7 +20,6 @@
 
 #define __USER_SCENE_MONO_LOADING_IMPLEMENT__
 #include "arm_2d_scene_mono_loading.h"
-#include "arm_2d_demos.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
@@ -182,8 +181,6 @@ static void __before_scene_mono_loading_switching_out(arm_2d_scene_t *ptScene)
     user_scene_mono_loading_t *ptThis = (user_scene_mono_loading_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_2d_scene_mono_histogram_init(&DISP0_ADAPTER);
-
 }
 
 static
@@ -205,14 +202,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
                             16) {           /* left and margins of the bar */
 
             /* progress bar */
-            do {
-
+            if (this.iProgress >= 0) {
                 q16_t q16Ratio = div_q16(reinterpret_q16_s16(__vertical_region.tSize.iWidth), reinterpret_q16_s16(1000));
                 
                 arm_2d_region_t tProgressRegion = {
                     .tLocation = __vertical_region.tLocation,
                     .tSize = {
-                        .iHeight = __vertical_region.tSize.iWidth,
+                        .iHeight = __vertical_region.tSize.iHeight,
                         .iWidth = reinterpret_s16_q16(mul_n_q16(q16Ratio, this.iProgress)),
                     },
                 };
@@ -225,7 +221,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
                                                         &tProgressRegion);
 
                 ARM_2D_OP_WAIT_ASYNC();
-            } while(0);
+            }
 
             /* draw text */
             do {
@@ -235,22 +231,41 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
                 //arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
                 arm_lcd_text_set_display_mode(ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR);
                 
-                arm_lcd_text_reset_display_region_tracking();
+                
                 if (this.iProgress >= 0) {
                     
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "loading...%02"PRIi16"%%", this.iProgress / 10);
-                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[0],
-                                                            (arm_2d_tile_t *)ptTile,
-                                                            &__vertical_region,
-                                                            arm_lcd_text_get_last_display_region());
+                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("loading...00%");
+
+                    arm_2d_align_centre(__vertical_region, tStringSize) {
+
+                        arm_lcd_text_set_draw_region(&__centre_region);
+                        arm_lcd_puts("loading...");
+
+                        arm_lcd_text_reset_display_region_tracking();
+                        arm_lcd_printf("%02"PRId16"%%", this.iProgress / 10);
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[0],
+                                                                (arm_2d_tile_t *)ptTile,
+                                                                &__centre_region,
+                                                                arm_lcd_text_get_last_display_region());
+                    }
+                    
                 } else {
                     static const char c_chSpinStick[] = {"/-\\|"};
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "loading...%c", c_chSpinStick[this.chSpinStickIndex & 0x03]);
 
-                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[0],
-                                                            (arm_2d_tile_t *)ptTile,
-                                                            &__vertical_region,
-                                                            arm_lcd_text_get_last_display_region());
+                    arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("loading...-");
+
+                    arm_2d_align_centre(__vertical_region, tStringSize) {
+
+                        arm_lcd_text_set_draw_region(&__centre_region);
+                        arm_lcd_puts("loading...");
+
+                        arm_lcd_text_reset_display_region_tracking();
+                        arm_lcd_printf("%c", c_chSpinStick[this.chSpinStickIndex & 0x03]);
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[0],
+                                                                (arm_2d_tile_t *)ptTile,
+                                                                &__centre_region,
+                                                                arm_lcd_text_get_last_display_region());
+                    }
                 }
             } while(0);
 
@@ -303,7 +318,7 @@ user_scene_mono_loading_t *__arm_2d_scene_mono_loading_init(   arm_2d_scene_play
             //.fnOnBGStart    = &__on_scene_mono_loading_background_start,
             //.fnOnBGComplete = &__on_scene_mono_loading_background_complete,
             .fnOnFrameStart = &__on_scene_mono_loading_frame_start,
-            .fnBeforeSwitchOut = &__before_scene_mono_loading_switching_out,
+            //.fnBeforeSwitchOut = &__before_scene_mono_loading_switching_out,
             .fnOnFrameCPL   = &__on_scene_mono_loading_frame_complete,
             .fnDepose       = &__on_scene_mono_loading_depose,
 

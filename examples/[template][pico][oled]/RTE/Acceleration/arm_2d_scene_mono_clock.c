@@ -20,7 +20,6 @@
 
 #define __USER_SCENE_MONO_CLOCK_IMPLEMENT__
 #include "arm_2d_scene_mono_clock.h"
-#include "arm_2d_demos.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
@@ -256,7 +255,6 @@ static void __before_scene_mono_clock_switching_out(arm_2d_scene_t *ptScene)
     user_scene_mono_clock_t *ptThis = (user_scene_mono_clock_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_2d_scene_mono_loading_init(&DISP0_ADAPTER);
 }
 
 static
@@ -466,7 +464,7 @@ user_scene_mono_clock_t *__arm_2d_scene_mono_clock_init(   arm_2d_scene_player_t
             //.fnOnBGStart    = &__on_scene_mono_clock_background_start,
             //.fnOnBGComplete = &__on_scene_mono_clock_background_complete,
             .fnOnFrameStart = &__on_scene_mono_clock_frame_start,
-            .fnBeforeSwitchOut = &__before_scene_mono_clock_switching_out,
+            //.fnBeforeSwitchOut = &__before_scene_mono_clock_switching_out,
             .fnOnFrameCPL   = &__on_scene_mono_clock_frame_complete,
             .fnDepose       = &__on_scene_mono_clock_depose,
 

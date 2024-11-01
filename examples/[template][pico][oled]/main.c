@@ -83,6 +83,70 @@ static void system_init(void)
 }
 
 
+void scene_mono_loading_loader(void) 
+{
+    arm_2d_scene_mono_loading_init(&DISP0_ADAPTER);
+}
+
+void scene_mono_histogram_loader(void) 
+{
+    arm_2d_scene_mono_histogram_init(&DISP0_ADAPTER);
+}
+
+void scene_mono_clock_loader(void) 
+{
+    arm_2d_scene_mono_clock_init(&DISP0_ADAPTER);
+}
+
+void scene_mono_list_loader(void) 
+{
+    arm_2d_scene_mono_list_init(&DISP0_ADAPTER);
+}
+
+void scene_mono_icon_menu_loader(void) 
+{
+    arm_2d_scene_mono_icon_menu_init(&DISP0_ADAPTER);
+}
+
+typedef void scene_loader_t(void);
+
+static scene_loader_t * const c_SceneLoaders[] = {
+
+    scene_mono_loading_loader,
+    scene_mono_histogram_loader,
+    scene_mono_clock_loader,
+    scene_mono_list_loader,
+    scene_mono_icon_menu_loader,
+};
+
+
+/* load scene one by one */
+void before_scene_switching_handler(void *pTarget,
+                                    arm_2d_scene_player_t *ptPlayer,
+                                    arm_2d_scene_t *ptScene)
+{
+    static int_fast8_t s_chIndex = -1;
+
+    switch (arm_2d_scene_player_get_switching_status(&DISP0_ADAPTER)) {
+        case ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL:
+            s_chIndex--;
+            break;
+        default:
+            s_chIndex++;
+            break;
+    }
+
+    if (s_chIndex >= dimof(c_SceneLoaders)) {
+        s_chIndex = 0;
+    } else if (s_chIndex < 0) {
+        s_chIndex += dimof(c_SceneLoaders);
+    }
+    
+    /* call loader */
+    c_SceneLoaders[s_chIndex]();
+    
+}
+
 int main(void) 
 {
     system_init();
@@ -102,14 +166,14 @@ int main(void)
 #   if defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
     arm_2d_run_benchmark();
 #else
-    //arm_2d_scene0_init(&DISP0_ADAPTER);
-    //arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    arm_2d_scene_player_register_before_switching_event_handler(
+                                            &DISP0_ADAPTER,
+                                            before_scene_switching_handler);
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
                                             ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
     arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
 
-    arm_2d_scene_mono_loading_init(&DISP0_ADAPTER);
-    //arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+    arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #   endif
 
 #endif
