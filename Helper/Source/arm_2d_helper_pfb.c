@@ -4281,19 +4281,16 @@ void arm_2d_helper_dirty_region_remove_items(
         /* find the item in the list*/
         do {
             if (*pptItem == ptItem) {
+
+                /* find the item, remove the ptItem */
+                *pptItem = ptItem->ptNext;
+                memset(ptItem, 0, sizeof(arm_2d_helper_dirty_region_item_t));
+
                 break;
             }
 
             pptItem = &((*pptItem)->ptNext);
         } while(NULL != *pptItem);
-
-        if (*pptItem == ptItem) {
-            /* find the item */
-
-            /* remove the ptItem */
-            *pptItem = ptItem->ptNext;
-            ptItem->ptNext = NULL;
-        }
     }
 }
 
