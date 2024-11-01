@@ -190,6 +190,8 @@ static void __on_scene_mono_icon_menu_depose(arm_2d_scene_t *ptScene)
                                             this.tDirtyRegionItems,
                                             dimof(this.tDirtyRegionItems));
 
+    icon_list_depose(&this.tList);
+
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -225,13 +227,15 @@ static void __on_scene_mono_icon_menu_frame_start(arm_2d_scene_t *ptScene)
         icon_list_move_selection(&this.tList, 1, 100);
     }
 
-        arm_2d_helper_dirty_region_item_suspend_update(
-            &this.tDirtyRegionItems[1],
-            !__arm_2d_list_core_is_list_moving(
-                &this.tList.use_as____simple_list_t.use_as____arm_2d_list_core_t));
+
+    arm_2d_helper_dirty_region_item_suspend_update(
+        &this.tDirtyRegionItems[1],
+        !__arm_2d_list_core_is_list_moving(
+            &this.tList.use_as____simple_list_t.use_as____arm_2d_list_core_t));
 
 
     icon_list_on_frame_start(&this.tList);
+
 }
 
 static void __on_scene_mono_icon_menu_frame_complete(arm_2d_scene_t *ptScene)
@@ -241,7 +245,7 @@ static void __on_scene_mono_icon_menu_frame_complete(arm_2d_scene_t *ptScene)
 
 #if 1
     /* switch to next scene after 12s */
-    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(4000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
 #endif
@@ -268,6 +272,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
         
+
         arm_2d_dock_vertical(__top_canvas, 56, 8) {
 
             arm_2d_layout(__vertical_region) {
@@ -304,15 +309,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
 
                             arm_2d_fill_colour(ptTile, &tIndicatorRegion, GLCD_COLOR_WHITE);
 
+
                             /* update dirty region */
                             arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[1],
                                                                     (arm_2d_tile_t *)ptTile,
                                                                     &__item_region,
                                                                     &tIndicatorRegion);
+
                         } while(0);
                     }
                 }
-                
+            
                 __item_line_dock_vertical(32, 0, 0, 4, 0) {
                     while(arm_fsm_rt_cpl != icon_list_show( &this.tList, 
                                                             ptTile, 
@@ -342,17 +349,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
                             ARM_2D_ALIGN_CENTRE, "%s", 
                             c_pIconNameTable[
                                 icon_list_get_selected_item_id(&this.tList)]);
-                        
+                    
+
                         /* update dirty region */
                         arm_2d_helper_dirty_region_update_item( 
                                         &this.tDirtyRegionItems[0],
                                         (arm_2d_tile_t *)ptTile,
                                         &__item_region,
                                         arm_lcd_text_get_last_display_region());
+
                     } while(0);
                 }
             }
         }
+
     }
     ARM_2D_OP_WAIT_ASYNC();
 
