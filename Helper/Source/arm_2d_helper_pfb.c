@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        25. Oct 2024
- * $Revision:    V.1.11.7
+ * $Date:        1. Nov 2024
+ * $Revision:    V.1.12.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4267,29 +4267,34 @@ void arm_2d_helper_dirty_region_remove_items(
         return ;
     }
 
-    arm_2d_helper_dirty_region_item_t **pptItem = &this.tDefaultItem.ptNext;
-    if (NULL == *pptItem) {
-        /* nothing in the list */
-        return ;
-    }
-
-    /* find the item in the list*/
-    do {
-        if (*pptItem == ptItems) {
-            break;
+    arm_foreach(arm_2d_helper_dirty_region_item_t,
+                ptItems,
+                hwCount,
+                ptItem) {
+        
+        arm_2d_helper_dirty_region_item_t **pptItem = &this.tDefaultItem.ptNext;
+        if (NULL == *pptItem) {
+            /* nothing in the list */
+            return ;
         }
 
-        pptItem = &((*pptItem)->ptNext);
-    } while(NULL != *pptItem);
+        /* find the item in the list*/
+        do {
+            if (*pptItem == ptItem) {
+                break;
+            }
 
-    if (NULL == *pptItem) {
-        /* cannot find the ptItems in the list */
-        return ;
+            pptItem = &((*pptItem)->ptNext);
+        } while(NULL != *pptItem);
+
+        if (*pptItem == ptItem) {
+            /* find the item */
+
+            /* remove the ptItem */
+            *pptItem = ptItem->ptNext;
+            ptItem->ptNext = NULL;
+        }
     }
-    
-    /* remove an array of items */
-    *pptItem = ptItems[hwCount - 1].ptNext;
-    ptItems[hwCount].ptNext = NULL;
 }
 
 ARM_NONNULL(1)

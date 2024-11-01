@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        25. Oct 2024
- * $Revision:    V.1.11.7
+ * $Date:        1. Nov 2024
+ * $Revision:    V.1.12.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
