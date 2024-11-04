@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        29 Oct 2024
- * $Revision:    V.1.8.4
+ * $Date:        04 Nov 2024
+ * $Revision:    V.1.8.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -71,6 +71,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wbad-function-cast"
 #   pragma clang diagnostic ignored "-Wswitch-default"
+#   pragma clang diagnostic ignored "-Wenum-compare"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 174,177,188,68,513
 #elif defined(__IS_COMPILER_IAR__)
