@@ -35,7 +35,6 @@ import math
 import binascii
 
 c_head_string="""
-
 #include "arm_2d_helper.h"
 
 #if defined(__clang__)
