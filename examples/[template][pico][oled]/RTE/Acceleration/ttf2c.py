@@ -35,7 +35,6 @@ import math
 import binascii
 
 c_head_string="""
-
 #include "arm_2d_helper.h"
 
 #if defined(__clang__)
@@ -58,7 +57,7 @@ c_head_string="""
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress=1296,1,64
+#   pragma diag_suppress=1296,1,64,177
 #endif
 
 typedef struct {
@@ -138,6 +137,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a{5}_font_get_char_descriptor)
     return ptDescriptor;
 }}
 
+ARM_SECTION(\"arm2d.asset.FONT.ARM_2D_FONT_{0}_A{5}\")
 const
 struct {{
     implement(arm_2d_user_font_t);
@@ -337,7 +337,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
     with open(output_file, "a") as f:
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\nconst uint8_t c_bmpUTF8{0}A{1}Font[] = {{\n"
+        print("ARM_SECTION(\"arm2d.asset.FONT.c_bmpUTF8{0}A{1}Font\")\nconst uint8_t c_bmpUTF8{0}A{1}Font[] = {{\n"
                 .format(name, font_bit_size), 
                 file=f)
 
@@ -357,8 +357,8 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT\")\n __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
-                .format(name, font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT.c_tUTF8{0}LookUpTableA{1}\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[{2}] = {{\n"
+                .format(name, font_bit_size, len(glyphs_data) + 1), file=f)
 
         last_index = 0;
         last_advance = 0;
@@ -384,7 +384,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.1.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.2.0)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("--index",          type=int,   help="The Font Index in a TTC file",    required=False,     default=0)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
