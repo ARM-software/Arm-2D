@@ -252,7 +252,7 @@
             <file category="doc"         name="documentation/index.html"/>
             <file category="preIncludeGlobal"    name="Library/Include/template/arm_2d_cfg.h"   attr="config" version="1.3.9" />
             <file category="utility"     name="tools/img2c.py"                                  attr="config" version="1.2.5"/>
-            <file category="utility"     name="tools/ttf2c.py"                                  attr="config" version="2.1.0"/>
+            <file category="utility"     name="tools/ttf2c.py"                                  attr="config" version="2.2.0"/>
             <file category="other"       name="tools/README.md" />
             <file category="other"       name="ReleaseNote.md" />
             
