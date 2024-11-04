@@ -357,8 +357,8 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         f.write("0x00, " * (char_max_width * char_max_height))
         f.write("\n};\n\n")
 
-        print("ARM_SECTION(\"arm2d.asset.FONT.c_tUTF8{0}LookUpTableA{1}\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[] = {{\n"
-                .format(name, font_bit_size), file=f)
+        print("ARM_SECTION(\"arm2d.asset.FONT.c_tUTF8{0}LookUpTableA{1}\")\n const __ttf_char_descriptor_t c_tUTF8{0}LookUpTableA{1}[{2}] = {{\n"
+                .format(name, font_bit_size, len(glyphs_data) + 1), file=f)
 
         last_index = 0;
         last_advance = 0;

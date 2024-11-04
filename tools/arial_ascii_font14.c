@@ -1,3 +1,4 @@
+
 #include "arm_2d_helper.h"
 
 #if defined(__clang__)
@@ -499,7 +500,7 @@ ARM_SECTION("arm2d.asset.FONT.c_tUTF8Arial14LookUpTableA1")
     { 831, { 2, 13, }, 4, 1, 10, 1, {0x7c} },
     { 844, { 5, 13, }, 5, 0, 10, 1, {0x7d} },
     { 857, { 8, 3, }, 8, 0, 6, 1, {0x7e} },
-    { 860, { 14, 13, }, 8, 0, 13, 1, {0x20} },
+    { 860, { 14, 13, }, 14, 0, 13, 1, {0x20} },
 };
 
 
@@ -541,16 +542,18 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a1_font_get_char_descriptor)
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
 
-    __ttf_char_descriptor_t *ptUTF8Char = NULL;
-        
-    if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA1[ 
-                pchCharCode[0] - c_tUTF8Arial14LookUpTableA1[0].chUTF8[0]];
-    } else {
-        /* use the white space as the default char */
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA1[dimof(c_tUTF8Arial14LookUpTableA1)-1];
+    /* use the white space as the default char */
+    __ttf_char_descriptor_t *ptUTF8Char =
+        (__ttf_char_descriptor_t *)&c_tUTF8Arial14LookUpTableA1[dimof(c_tUTF8Arial14LookUpTableA1)-1];
+
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8Arial14LookUpTableA1, ptChar) {
+        if (0 == strncmp(   (char *)pchCharCode,
+                            (char *)ptChar->chUTF8,
+                            ptChar->chCodeLength)) {
+            /* found the UTF8 char */
+            ptUTF8Char = ptChar;
+            break;
+        }
     }
 
     ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
@@ -1170,7 +1173,7 @@ ARM_SECTION("arm2d.asset.FONT.c_tUTF8Arial14LookUpTableA2")
     { 831, { 2, 13, }, 4, 1, 10, 1, {0x7c} },
     { 844, { 5, 13, }, 5, 0, 10, 1, {0x7d} },
     { 857, { 8, 3, }, 8, 0, 6, 1, {0x7e} },
-    { 860, { 14, 13, }, 8, 0, 13, 1, {0x20} },
+    { 860, { 14, 13, }, 14, 0, 13, 1, {0x20} },
 };
 
 
@@ -1213,16 +1216,17 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a2_font_get_char_descriptor)
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
 
     /* use the white space as the default char */
-    __ttf_char_descriptor_t *ptUTF8Char = NULL;
-        
-    if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA2[ 
-                pchCharCode[0] - c_tUTF8Arial14LookUpTableA2[0].chUTF8[0]];
-    } else {
-        /* use the white space as the default char */
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA2[dimof(c_tUTF8Arial14LookUpTableA2)-1];
+    __ttf_char_descriptor_t *ptUTF8Char =
+        (__ttf_char_descriptor_t *)&c_tUTF8Arial14LookUpTableA2[dimof(c_tUTF8Arial14LookUpTableA2)-1];
+
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8Arial14LookUpTableA2, ptChar) {
+        if (0 == strncmp(   (char *)pchCharCode,
+                            (char *)ptChar->chUTF8,
+                            ptChar->chCodeLength)) {
+            /* found the UTF8 char */
+            ptUTF8Char = ptChar;
+            break;
+        }
     }
 
     ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
@@ -2006,7 +2010,7 @@ ARM_SECTION("arm2d.asset.FONT.c_tUTF8Arial14LookUpTableA4")
     { 831, { 2, 13, }, 4, 1, 10, 1, {0x7c} },
     { 844, { 5, 13, }, 5, 0, 10, 1, {0x7d} },
     { 857, { 8, 3, }, 8, 0, 6, 1, {0x7e} },
-    { 860, { 14, 13, }, 8, 0, 13, 1, {0x20} },
+    { 860, { 14, 13, }, 14, 0, 13, 1, {0x20} },
 };
 
 
@@ -2049,16 +2053,17 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
 
     /* use the white space as the default char */
-    __ttf_char_descriptor_t *ptUTF8Char = NULL;
-        
-    if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA4[ 
-                pchCharCode[0] - c_tUTF8Arial14LookUpTableA4[0].chUTF8[0]];
-    } else {
-        /* use the white space as the default char */
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA4[dimof(c_tUTF8Arial14LookUpTableA4)-1];
+    __ttf_char_descriptor_t *ptUTF8Char =
+        (__ttf_char_descriptor_t *)&c_tUTF8Arial14LookUpTableA4[dimof(c_tUTF8Arial14LookUpTableA4)-1];
+
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8Arial14LookUpTableA4, ptChar) {
+        if (0 == strncmp(   (char *)pchCharCode,
+                            (char *)ptChar->chUTF8,
+                            ptChar->chCodeLength)) {
+            /* found the UTF8 char */
+            ptUTF8Char = ptChar;
+            break;
+        }
     }
 
     ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
@@ -3260,7 +3265,7 @@ ARM_SECTION("arm2d.asset.FONT.c_tUTF8Arial14LookUpTableA8")
     { 831, { 2, 13, }, 4, 1, 10, 1, {0x7c} },
     { 844, { 5, 13, }, 5, 0, 10, 1, {0x7d} },
     { 857, { 8, 3, }, 8, 0, 6, 1, {0x7e} },
-    { 860, { 14, 13, }, 8, 0, 13, 1, {0x20} },
+    { 860, { 14, 13, }, 14, 0, 13, 1, {0x20} },
 };
 
 
@@ -3303,16 +3308,17 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a8_font_get_char_descriptor)
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
 
     /* use the white space as the default char */
-    __ttf_char_descriptor_t *ptUTF8Char = NULL;
-        
-    if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA8[ 
-                pchCharCode[0] - c_tUTF8Arial14LookUpTableA8[0].chUTF8[0]];
-    } else {
-        /* use the white space as the default char */
-        ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA8[dimof(c_tUTF8Arial14LookUpTableA8)-1];
+    __ttf_char_descriptor_t *ptUTF8Char =
+        (__ttf_char_descriptor_t *)&c_tUTF8Arial14LookUpTableA8[dimof(c_tUTF8Arial14LookUpTableA8)-1];
+
+    arm_foreach(__ttf_char_descriptor_t, c_tUTF8Arial14LookUpTableA8, ptChar) {
+        if (0 == strncmp(   (char *)pchCharCode,
+                            (char *)ptChar->chUTF8,
+                            ptChar->chCodeLength)) {
+            /* found the UTF8 char */
+            ptUTF8Char = ptChar;
+            break;
+        }
     }
 
     ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
