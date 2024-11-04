@@ -72,18 +72,10 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
-#   define c_bmpFire                c_bmpFireGRAY8
-
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
-
-#   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
-#   define c_bmpFire                c_bmpFireRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_bmpFire                c_bmpFireCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -94,12 +86,7 @@
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-extern const COLOUR_INT c_bmpFire[];
+extern const arm_2d_vres_t c_vrFire;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -118,17 +105,6 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
     ),
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
-static arm_2d_vres_t c_tileFire = 
-    disp_adapter0_impl_vres(   
-        ARM_2D_COLOUR, 
-        640, 
-        640, 
-        .pTarget = (uintptr_t)&c_bmpFire
-    );
-
-static arm_2d_helper_film_t s_tileFireFilm = 
-    impl_film(c_tileFire, 80, 160, 8, 32, 33);
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -156,7 +132,7 @@ static void __on_scene_animate_background_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene animate_background                                                                    *
+ * Scene animate_background                                                   *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_animate_background_background_start(arm_2d_scene_t *ptScene)
@@ -179,10 +155,10 @@ static void __on_scene_animate_background_frame_start(arm_2d_scene_t *ptScene)
     user_scene_animate_background_t *ptThis = (user_scene_animate_background_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(  s_tileFireFilm.hwPeriodPerFrame, 
+    if (arm_2d_helper_is_time_out(  this.Resource.tileFireFilm.hwPeriodPerFrame, 
                                     &this.lTimestamp[1])) {
 
-        arm_2d_helper_film_next_frame(&s_tileFireFilm);
+        arm_2d_helper_film_next_frame(&this.Resource.tileFireFilm);
     }
 
 }
@@ -224,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_animate_background_handler)
         arm_2d_align_centre(__top_canvas, 80, 160 ) {
 
             arm_2d_tile_copy_only(
-                (arm_2d_tile_t *)&s_tileFireFilm,
+                (arm_2d_tile_t *)&this.Resource.tileFireFilm,
                 ptTile,
                 &__centre_region
             );
@@ -313,7 +289,20 @@ user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
     };
 
     /* ------------   initialize members of user_scene_animate_background_t begin ---------------*/
-    arm_2d_helper_film_set_frame(&s_tileFireFilm, -1);
+
+    /* initialize the vrFire with const value */
+    this.Resource.vrFire = c_vrFire;
+
+    /* initialize the arm_2d_helper_film_t object */
+    this.Resource.tileFireFilm = (arm_2d_helper_film_t)
+        impl_film(  this.Resource.vrFire, 
+                    80, 
+                    160, 
+                    8, 
+                    32, 
+                    33);
+
+    arm_2d_helper_film_set_frame(&this.Resource.tileFireFilm, -1);
 
     /* ------------   initialize members of user_scene_animate_background_t end   ---------------*/
 

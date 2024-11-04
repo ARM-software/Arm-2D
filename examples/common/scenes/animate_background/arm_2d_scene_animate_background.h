@@ -86,6 +86,10 @@ ARM_PRIVATE(
     int64_t lTimestamp[2];
     bool bUserAllocated;
 
+    struct {
+        arm_2d_helper_film_t tileFireFilm;
+        arm_2d_vres_t        vrFire;
+    } Resource;
 )
     /* place your public member here */
     

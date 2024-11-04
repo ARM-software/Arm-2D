@@ -366,8 +366,9 @@
             <file category="sourceC"     name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.c"   attr="template"  select="Scene Template: Bubble Charging"   version="1.1.0" />
             <file category="header"      name="examples/common/scenes/bubble_charging/arm_2d_scene_bubble_charging.h"   attr="template"  select="Scene Template: Bubble Charging"   version="1.1.0" />
 
-            <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.c"   attr="template"  select="Scene Template: Animate Background"   version="1.0.1" />
-            <file category="header"      name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.h"   attr="template"  select="Scene Template: Animate Background"   version="1.0.1" />
+            <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.c"       attr="template"  select="Scene Template: Animate Background"   version="1.1.0" />
+            <file category="sourceC"     name="examples/common/scenes/animate_background/arm_2d_scene_animate_background_vres.c"  attr="template"  select="Scene Template: Animate Background"   version="1.1.0" />
+            <file category="header"      name="examples/common/scenes/animate_background/arm_2d_scene_animate_background.h"       attr="template"  select="Scene Template: Animate Background"   version="1.1.0" />
           
             <file category="sourceC"     name="examples/common/scenes/knob/arm_2d_scene_knob.c"   attr="template"  select="Scene Template: Knob"   version="2.0.0" />
             <file category="header"      name="examples/common/scenes/knob/arm_2d_scene_knob.h"   attr="template"  select="Scene Template: Knob"   version="2.0.0" />
