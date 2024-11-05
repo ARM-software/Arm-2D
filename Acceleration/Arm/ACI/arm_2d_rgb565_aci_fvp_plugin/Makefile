@@ -48,6 +48,7 @@ ifeq ($(OS),Windows_NT)
 $(BUILD_DIR):
 	@mkdir $(BUILD_DIR)
 else
+$(BUILD_DIR):
 	@mkdir -p $(BUILD_DIR)
 endif
 
