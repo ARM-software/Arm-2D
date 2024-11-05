@@ -44,10 +44,19 @@ $(BUILD_DIR)/$(TARGET): $(OBJSDIR)
 $(BUILD_DIR)/%.o: %.cpp
 	$(CC) $(CXXFLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@
 
+ifeq ($(OS),Windows_NT)
 $(BUILD_DIR):
+	@mkdir $(BUILD_DIR)
+else
 	@mkdir -p $(BUILD_DIR)
+endif
 
+ifeq ($(OS),Windows_NT)
+clean:
+	@rmdir /s /q $(BUILD_DIR)
+else
 clean:
 	@$(RM) -rf $(BUILD_DIR)
+endif
 
 -include $(DEPSDIR)
