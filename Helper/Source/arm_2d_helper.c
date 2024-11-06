@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        07. Sept 2024
- * $Revision:    V.2.0.0
+ * $Date:        06. Nov 2024
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -404,7 +404,7 @@ ARM_NONNULL(1,2)
 arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(  
                                     arm_2d_helper_pi_slider_t *ptThis, 
                                     arm_2d_helper_pi_slider_cfg_t *ptCFG, 
-                                    int32_t nStartPosition)
+                                    int16_t iStartPosition)
 {
     assert(NULL != ptThis);
 
@@ -421,62 +421,55 @@ arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(
 
     memset(ptThis, 0, sizeof(arm_2d_helper_pi_slider_t));
 
-    this.tCFG = *ptCFG;
+    this.nInterval = arm_2d_helper_convert_ms_to_ticks(ptCFG->nInterval);
 
-    this.tCFG.nInterval = arm_2d_helper_convert_ms_to_ticks(this.tCFG.nInterval);
-    this.fCurrent = (float)nStartPosition;
+    this.q16Current = reinterpret_q16_s16(iStartPosition);
+    this.q16Proportion = reinterpret_q16_f32(ptCFG->fProportion);
+    this.q16Integration = reinterpret_q16_f32(ptCFG->fIntegration);
 
     return ptThis;
 }
 
 ARM_NONNULL( 1, 3 )
 bool arm_2d_helper_pi_slider(arm_2d_helper_pi_slider_t *ptThis,
-                             int32_t nTargetPosition,
-                             int32_t *pnResult)
+                             int16_t iTargetPosition,
+                             int16_t *piResult)
 {
     int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
     assert( NULL != ptThis );
-    assert( NULL != pnResult );
+    assert( NULL != piResult );
     bool bResult = false;
 
-#if 0
-    if ( nTargetPosition == this.iCurrent && this.fOP <= 0.01f ) {
+    if ( 0 == this.lTimestamp ) { //first entry init
         this.lTimestamp = lTimestamp;
-        this.fOP = 0.0f;
-        return true;
-    } else 
-#endif
-    {
-        if ( 0 == this.lTimestamp ) { //first entry init
-            this.lTimestamp = lTimestamp;
-            this.fOP = 0.0f;
-        }
-
-        do {
-            int64_t lElapsed = ( lTimestamp - this.lTimestamp ) + this.nTimeResidual;
-            this.lTimestamp = lTimestamp;
-
-            /* perform iterations */
-            while ( lElapsed >= this.tCFG.nInterval ) {
-                lElapsed -= this.tCFG.nInterval;
-
-                float fError = (float)nTargetPosition - this.fCurrent;
-                float fProp = fError * this.tCFG.fProportion;
-                this.fOP +=  fError * this.tCFG.fIntegration;
-                this.fCurrent += (fProp + this.fOP);
-                float fStableCheck = ABS(fProp + this.fOP);
-                if ( fStableCheck <= 0.1f ) {
-                    /* has reached the final value */
-                    //this.iCurrent = nTargetPosition; /* correct the residual error */
-                    //this.fOP = 0.0f;
-                    bResult = true;
-                }
-            }
-            this.nTimeResidual = (int32_t)lElapsed;
-            *pnResult = (int32_t)this.fCurrent;
-
-        } while( 0 );
+        this.q16OP = 0;
     }
+
+    do {
+        int64_t lElapsed = ( lTimestamp - this.lTimestamp ) + this.nTimeResidual;
+        this.lTimestamp = lTimestamp;
+
+        /* perform iterations */
+        while ( lElapsed >= this.nInterval ) {
+            lElapsed -= this.nInterval;
+
+            q16_t q16Error = reinterpret_q16_s16(iTargetPosition) - this.q16Current;
+            q16_t q16Prop = mul_q16(q16Error, this.q16Proportion);
+            this.q16OP += mul_q16(q16Error, this.q16Integration);
+            this.q16Current += (q16Prop + this.q16OP);
+            q16_t q16StableCheck = abs_q16(q16Prop + this.q16OP);
+            if ( q16StableCheck <= reinterpret_q16_f32(0.1f) ) {
+                /* has reached the final value */
+                //this.iCurrent = nTargetPosition; /* correct the residual error */
+                //this.fOP = 0.0f;
+                bResult = true;
+            }
+        }
+        this.nTimeResidual = (int32_t)lElapsed;
+        *piResult = reinterpret_s16_q16(this.q16Current);
+
+    } while( 0 );
+
 
     return bResult;
 }
@@ -486,21 +479,21 @@ void arm_2d_helper_pi_slider_set_current_f32(arm_2d_helper_pi_slider_t *ptThis,
                                             float fCurrent)
 {
     assert( NULL != ptThis );
-    this.fCurrent = fCurrent;
+    this.q16Current = reinterpret_q16_f32(fCurrent);
 
     this.lTimestamp = arm_2d_helper_get_system_timestamp();
-    this.fOP = 0.0f;
+    this.q16OP = 0;
 }
 
 ARM_NONNULL(1)
 void arm_2d_helper_pi_slider_set_current(arm_2d_helper_pi_slider_t *ptThis,
-                                        int32_t nCurrent)
+                                         int16_t iCurrent)
 {
     assert( NULL != ptThis );
-    this.fCurrent = (float)nCurrent;
+    this.q16Current = reinterpret_q16_s16(iCurrent);
 
     this.lTimestamp = arm_2d_helper_get_system_timestamp();
-    this.fOP = 0.0f;
+    this.q16OP = 0;
 }
 
 ARM_NONNULL( 1, 3 )
@@ -513,44 +506,37 @@ bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
     assert( NULL != pfResult );
     bool bResult = false;
 
-#if 0
-    if ( nTargetPosition == this.iCurrent && this.fOP <= 0.01f ) {
+
+    if ( 0 == this.lTimestamp ) { //first entry init
         this.lTimestamp = lTimestamp;
-        this.fOP = 0.0f;
-        return true;
-    } else 
-#endif
-    {
-        if ( 0 == this.lTimestamp ) { //first entry init
-            this.lTimestamp = lTimestamp;
-            this.fOP = 0.0f;
-        }
-
-        do {
-            int64_t lElapsed = ( lTimestamp - this.lTimestamp ) + this.nTimeResidual;
-            this.lTimestamp = lTimestamp;
-
-            /* perform iterations */
-            while ( lElapsed >= this.tCFG.nInterval ) {
-                lElapsed -= this.tCFG.nInterval;
-
-                float fError = fTargetPosition - this.fCurrent;
-                float fProp = fError * this.tCFG.fProportion;
-                this.fOP += fError * this.tCFG.fIntegration;
-                this.fCurrent += (fProp + this.fOP);
-                float fStableCheck = ABS(fProp + this.fOP);
-                if ( fStableCheck <= 0.1f ) {
-                    /* has reached the final value */
-                    //this.iCurrent = nTargetPosition; /* correct the residual error */
-                    //this.fOP = 0.0f;
-                    bResult = true;
-                }
-            }
-            this.nTimeResidual = (int32_t)lElapsed;
-            *pfResult = this.fCurrent;
-
-        } while( 0 );
+        this.q16OP = 0;
     }
+
+    do {
+        int64_t lElapsed = ( lTimestamp - this.lTimestamp ) + this.nTimeResidual;
+        this.lTimestamp = lTimestamp;
+
+        /* perform iterations */
+        while ( lElapsed >= this.nInterval ) {
+            lElapsed -= this.nInterval;
+
+            q16_t q16Error = reinterpret_q16_f32(fTargetPosition) - this.q16Current;
+            q16_t q16Prop = mul_q16(q16Error, this.q16Proportion);
+            this.q16OP += mul_q16(q16Error, this.q16Integration);
+            this.q16Current += (q16Prop + this.q16OP);
+            q16_t q16StableCheck = abs_q16(q16Prop + this.q16OP);
+            if ( q16StableCheck <= reinterpret_q16_f32(0.1f) ) {
+                /* has reached the final value */
+                //this.iCurrent = nTargetPosition; /* correct the residual error */
+                //this.fOP = 0.0f;
+                bResult = true;
+            }
+        }
+        this.nTimeResidual = (int32_t)lElapsed;
+        //*pfResult = this.fCurrent;
+        *pfResult = reinterpret_f32_q16(this.q16Current);
+
+    } while( 0 );
 
     return bResult;
 }

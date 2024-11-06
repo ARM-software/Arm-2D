@@ -262,11 +262,11 @@ static void __on_scene_knob_frame_start(arm_2d_scene_t *ptScene)
     do {
         int16_t iTemp = spin_zoom_widget_get_current_angle(&this.tPointer.use_as__spin_zoom_widget_t) * 10.0f
                       + c_tKnobAngleTable[c_tKnobStartPosition].iProgressWheelOffset;
-        int32_t nResult;
+        int16_t iResult;
         arm_2d_helper_pi_slider(&this.tPISlider, 
                                 iTemp, 
-                                &nResult);
-        this.iActual = nResult;
+                                &iResult);
+        this.iActual = iResult;
     } while(0);
 
     progress_wheel_on_frame_start(&this.tWheel);
