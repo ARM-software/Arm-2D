@@ -966,7 +966,24 @@ Author: Adam Dunkels
                 if (!(__CONDITION)) {                                           \
                     ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_wait_for_res);            \
                 }
-            
+
+#define ARM_PT_DELAY_MS(__MS, ...)                                              \
+            ARM_PT_ENTRY(                                                       \
+                static int64_t ARM_2D_SAFE_NAME(s_lTimestamp);                  \
+            )                                                                   \
+            do {                                                                \
+                int64_t *ARM_2D_SAFE_NAME(plTimestamp)                          \
+                    = (&ARM_2D_SAFE_NAME(s_lTimestamp), ##__VA_ARGS__);         \
+                int64_t ARM_2D_SAFE_NAME(lElapsedMs) =                          \
+                    arm_2d_helper_convert_ticks_to_ms(                          \
+                        arm_2d_helper_get_system_timestamp()                    \
+                    -   *ARM_2D_SAFE_NAME(plTimestamp));                        \
+                if (ARM_2D_SAFE_NAME(lElapsedMs) < (__MS)) {                    \
+                    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);                \
+                }                                                               \
+            } while(0)
+
+
 #define ARM_PT_REPORT_STATUS(...)                                               \
             ARM_PT_ENTRY(                                                       \
                 return __VA_ARGS__;                                             \
