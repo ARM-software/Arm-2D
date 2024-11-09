@@ -583,6 +583,8 @@ Macros</h2></td></tr>
 <tr class="separator:gac2e7ddfc38a45806698bc423a8b97532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeebf5557538fa2757f2a3963ce819c3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaeebf5557538fa2757f2a3963ce819c3f">ARM_PT_WAIT_RESOURCE_UNTIL</a>(__CONDITION, ...)</td></tr>
 <tr class="separator:gaeebf5557538fa2757f2a3963ce819c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e743ccd3cdf716fab2da46613d79fc9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7e743ccd3cdf716fab2da46613d79fc9">ARM_PT_DELAY_MS</a>(__MS, ...)</td></tr>
+<tr class="separator:ga7e743ccd3cdf716fab2da46613d79fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga065818f13e21da2a2c2c8e96656a17b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga065818f13e21da2a2c2c8e96656a17b8">ARM_PT_REPORT_STATUS</a>(...)</td></tr>
 <tr class="separator:ga065818f13e21da2a2c2c8e96656a17b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ac4e790ecdd12214d5114f3e3b6426b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga6ac4e790ecdd12214d5114f3e3b6426b">ARM_PT_RETURN</a>(...)</td></tr>
@@ -7573,6 +7575,48 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <div class="line">                if (!(__CONDITION)) {                                           \</div>
 <div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca562c08f6021b1434f1797ccbe7dfd2e3" title="wait for resource">arm_fsm_rt_wait_for_res</a>);            \</div>
 <div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga7e743ccd3cdf716fab2da46613d79fc9" name="ga7e743ccd3cdf716fab2da46613d79fc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7e743ccd3cdf716fab2da46613d79fc9">&#9670;&nbsp;</a></span>ARM_PT_DELAY_MS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_PT_DELAY_MS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__MS, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY(                                                       \</div>
+<div class="line">                <span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp);                  \</div>
+<div class="line">            )                                                                   \</div>
+<div class="line">            <span class="keywordflow">do</span> {                                                                \</div>
+<div class="line">                int64_t *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp)                          \</div>
+<div class="line">                    = (&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp), ##__VA_ARGS__);         \</div>
+<div class="line">                int64_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(lElapsedMs) =                          \</div>
+<div class="line">                    arm_2d_helper_convert_ticks_to_ms(                          \</div>
+<div class="line">                        <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>()                    \</div>
+<div class="line">                    -   *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp));                        \</div>
+<div class="line">                if (<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(lElapsedMs) &lt; (__MS)) {                    \</div>
+<div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcadcf044fad5c682cf87809bd71d556d84" title="fsm on-going">arm_fsm_rt_on_going</a>);                \</div>
+<div class="line">                }                                                               \</div>
+<div class="line">            } <span class="keywordflow">while</span>(0)</div>
 </div><!-- fragment -->
 </div>
 </div>
