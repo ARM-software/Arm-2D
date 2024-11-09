@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        29. Aug 2024
- * $Revision:    V.1.4.5
+ * $Date:        9. Nov 2024
+ * $Revision:    V.1.4.6
  *
  * -------------------------------------------------------------------- */
 
@@ -946,6 +946,12 @@ Author: Adam Dunkels
 
 #define ARM_PT_GOTO_PREV_ENTRY(...)    return __VA_ARGS__;
 
+#define ARM_PT_WAIT_UNTIL(__CONDITION, ...)                                     \
+            ARM_PT_ENTRY()                                                      \
+                __VA_ARGS__;                                                    \
+                if (!(__CONDITION)) {                                           \
+                    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);                \
+                }
             
 #define ARM_PT_REPORT_STATUS(...)                                               \
             ARM_PT_ENTRY(                                                       \
