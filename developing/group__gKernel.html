@@ -577,6 +577,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga2c4b9c8147e89cb7c70134ecc40342ea"><td class="memItemLeft" align="right" valign="top"><a id="ga2c4b9c8147e89cb7c70134ecc40342ea" name="ga2c4b9c8147e89cb7c70134ecc40342ea"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_PT_GOTO_PREV_ENTRY</b>(...)&#160;&#160;&#160;return __VA_ARGS__;</td></tr>
 <tr class="separator:ga2c4b9c8147e89cb7c70134ecc40342ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f0776209a2772c09ea7a5bd4f38805b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga4f0776209a2772c09ea7a5bd4f38805b">ARM_PT_WAIT_UNTIL</a>(__CONDITION, ...)</td></tr>
+<tr class="separator:ga4f0776209a2772c09ea7a5bd4f38805b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga065818f13e21da2a2c2c8e96656a17b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga065818f13e21da2a2c2c8e96656a17b8">ARM_PT_REPORT_STATUS</a>(...)</td></tr>
 <tr class="separator:ga065818f13e21da2a2c2c8e96656a17b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ac4e790ecdd12214d5114f3e3b6426b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga6ac4e790ecdd12214d5114f3e3b6426b">ARM_PT_RETURN</a>(...)</td></tr>
@@ -7468,6 +7470,39 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            (*ptPTState) = 0;                                                   \</div>
 <div class="line">            break;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga4f0776209a2772c09ea7a5bd4f38805b" name="ga4f0776209a2772c09ea7a5bd4f38805b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4f0776209a2772c09ea7a5bd4f38805b">&#9670;&nbsp;</a></span>ARM_PT_WAIT_UNTIL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_PT_WAIT_UNTIL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__CONDITION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY()                                                      \</div>
+<div class="line">                __VA_ARGS__;                                                    \</div>
+<div class="line">                if (!(__CONDITION)) {                                           \</div>
+<div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcadcf044fad5c682cf87809bd71d556d84" title="fsm on-going">arm_fsm_rt_on_going</a>);                \</div>
+<div class="line">                }</div>
 </div><!-- fragment -->
 </div>
 </div>
