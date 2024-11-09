@@ -293,7 +293,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
         arm_2d_dock_vertical(__top_canvas, 64+c_tileECGMask.tRegion.tSize.iHeight) {
 
-            arm_2d_layout(__vertical_region, true) {
+            arm_2d_layout(__vertical_region, DEFAULT, true) {
 
                 /* Draw Clock */
                 __item_line_dock_vertical(64) {
@@ -311,7 +311,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_alarm_clock_handler)
 
                     arm_2d_dock_horizontal(__item_region, tStringSize.iWidth) {
 
-                        arm_2d_layout(__horizontal_region, true) {
+                        arm_2d_layout(__horizontal_region, DEFAULT, true) {
 
                             __item_line_dock_horizontal(tTwoDigitsSizeBig.iWidth) {
                                 arm_lcd_text_set_draw_region(&__item_region);

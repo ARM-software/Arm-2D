@@ -189,7 +189,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
     #endif
 
         arm_2d_align_centre(__top_canvas, 240, 120 ) {
-            arm_2d_layout(__centre_region, true) {
+            arm_2d_layout(__centre_region, DEFAULT, true) {
 
                 __item_line_dock_vertical(c_tileCMSISLogoA4Mask.tRegion.tSize.iHeight, 0, 0, 0, 5) {
                     draw_round_corner_box(  ptTile, 

@@ -237,7 +237,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
         arm_2d_op_wait_async(NULL);
 
         arm_2d_align_centre(__top_canvas, 84, 80 ) {
-            arm_2d_layout(__centre_region, true) {
+            arm_2d_layout(__centre_region, DEFAULT, true) {
 
                 __item_line_horizontal(28, 80) {
                     while(arm_fsm_rt_cpl != number_list_show(   

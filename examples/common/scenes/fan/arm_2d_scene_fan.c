@@ -304,7 +304,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
         /* draw fan*/
         arm_2d_align_centre(__top_canvas, 140, 220) {
 
-            arm_2d_layout(__centre_region, true) {
+            arm_2d_layout(__centre_region, DEFAULT, true) {
 
                 __item_line_dock_vertical(160) {
                 

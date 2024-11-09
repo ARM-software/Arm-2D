@@ -406,7 +406,7 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
                 }
             }
 
-            arm_2d_layout(__horizontal_region, BOTTOM_UP, false) {
+            arm_2d_layout(__horizontal_region, BOTTOM_UP) {
 
                 __item_line_vertical(s_tDirtyRegions[DIRTY_REGION_LIST_SMALL_3].tRegion.tSize,
                                     0, 0, 10, 11

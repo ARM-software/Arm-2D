@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        29. Oct 2024
- * $Revision:    V.1.6.9
+ * $Date:        09. Nov 2024
+ * $Revision:    V.1.6.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -883,7 +883,7 @@ extern "C" {
          __tile_name.tInfo.bIsRoot = true;                                      \
          assert(NULL != __tile_name.pchBuffer);                                 \
         }),                                                                     \
-        ({  ARM_2D_OP_WAIT_ASYNC();                                         \
+        ({  ARM_2D_OP_WAIT_ASYNC();                                             \
             __arm_2d_free_scratch_memory(                                       \
                 ARM_2D_MEM_TYPE_FAST,                                           \
                 __tile_name.phwBuffer); }) )
@@ -1064,7 +1064,7 @@ extern "C" {
                         __region_name.tSize = (__tile_ptr)->tRegion.tSize;      \
                     },                                                          \
                     {                                                           \
-                        ARM_2D_OP_WAIT_ASYNC();                             \
+                        ARM_2D_OP_WAIT_ASYNC();                                 \
                     })
 
 #if 1
@@ -1156,6 +1156,18 @@ extern "C" {
 
 #endif
 
+/* this is an ugly fix for backward compatibility, this should be removed in 
+ * the future.
+ */
+#define ARM_2D_LAYOUT_ALIGN_1                                                   \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN
+
+/* this is an ugly fix for backward compatibility, this should be removed in 
+ * the future.
+ */
+#define ARM_2D_LAYOUT_ALIGN_0                                                   \
+            ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN
+
 #define ARM_2D_LAYOUT_ALIGN_DEFAULT                                             \
             ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN
 
@@ -1206,6 +1218,30 @@ extern "C" {
                         __ARM_2D_LAYOUT_DEBUG_END__();                          \
                     }                                                           \
                 )
+
+#define arm_2d_layout2(__region, __align)                                       \
+            arm_using(  __arm_2d_layout_t __layout_assistant__ = {              \
+                            .tAlignTable                                        \
+                                = ARM_2D_LAYOUT_ALIGN_##__align                 \
+                        },                                                      \
+                        {                                                       \
+                            __layout_assistant__.tLayout.tLocation              \
+                                = (__region).tLocation;                         \
+                            __layout_assistant__.tArea = (__region);            \
+                                                                                \
+                            __layout_assistant__.tLayout.tLocation.iX -=        \
+                                __layout_assistant__.tArea.tSize.iWidth *       \
+                                __layout_assistant__.tAlignTable                \
+                                    .Horizontal.sWidth;                         \
+                            __layout_assistant__.tLayout.tLocation.iY -=        \
+                                __layout_assistant__.tArea.tSize.iHeight *      \
+                                __layout_assistant__.tAlignTable                \
+                                    .Vertical.sHeight;                          \
+                        },                                                      \
+                        {                                                       \
+                            ARM_2D_OP_WAIT_ASYNC();                             \
+                        }                                                       \
+                    )
 
 #define arm_2d_layout3(__region, __align, __bool_debug)                         \
             arm_using(  __arm_2d_layout_t __layout_assistant__ = {              \

@@ -414,7 +414,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
 
             arm_2d_align_centre(__top_canvas,  tTextSize) {
                 
-                arm_2d_layout(__centre_region, true) {
+                arm_2d_layout(__centre_region, DEFAULT, true) {
                 
                     arm_lcd_text_set_target_framebuffer(ptTile);
                     /* print speed */

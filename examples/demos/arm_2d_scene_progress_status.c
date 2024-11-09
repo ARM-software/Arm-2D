@@ -216,7 +216,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                 tScreenSize.iWidth, 
                                 120+tWiFiLogoSize.iHeight) {
                 
-                arm_2d_layout(__centre_region, true) {
+                arm_2d_layout(__centre_region, DEFAULT, true) {
                     __item_line_vertical(__centre_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
                         arm_2d_align_centre(__item_region, tWiFiLogoSize) {
                             
