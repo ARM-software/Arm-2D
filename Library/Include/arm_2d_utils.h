@@ -952,6 +952,20 @@ Author: Adam Dunkels
                 if (!(__CONDITION)) {                                           \
                     ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);                \
                 }
+
+#define ARM_PT_WAIT_OBJ_UNTIL(__CONDITION, ...)                                 \
+            ARM_PT_ENTRY()                                                      \
+                __VA_ARGS__;                                                    \
+                if (!(__CONDITION)) {                                           \
+                    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_wait_for_obj);            \
+                }
+
+#define ARM_PT_WAIT_RESOURCE_UNTIL(__CONDITION, ...)                            \
+            ARM_PT_ENTRY()                                                      \
+                __VA_ARGS__;                                                    \
+                if (!(__CONDITION)) {                                           \
+                    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_wait_for_res);            \
+                }
             
 #define ARM_PT_REPORT_STATUS(...)                                               \
             ARM_PT_ENTRY(                                                       \
