@@ -23,7 +23,7 @@
  *               arm-2d helper services
  *
  * $Date:        09. Nov 2024
- * $Revision:    V.1.6.10
+ * $Revision:    V.1.6.11
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1285,7 +1285,7 @@ extern "C" {
  *          }
  * 
  * \note prototype 2:
- *          arm_2d_layout(__region, __is_debug) {
+ *          arm_2d_layout(__region, __alignment) {
  *              ...
  *          }
  *
