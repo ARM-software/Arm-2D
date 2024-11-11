@@ -123,6 +123,7 @@ extern "C" {
             |   ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION                        \
             |   ARM_2D_LOG_CHN_STATISTICS                                       \
             |   ARM_2D_LOG_CHN_CONTROLS                                         \
+            |   ARM_2D_LOG_CHN_GUI_STACK                                        \
             |   ARM_2D_LOG_CHN_APP)
 #endif
 

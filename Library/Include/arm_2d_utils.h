@@ -1046,6 +1046,9 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
 #define ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION            _BV(5)              //!< the channel dedicated to the dirty region optimization services
 #define ARM_2D_LOG_CHN_STATISTICS                           _BV(6)              //!< the channel dedicated to show statistics
 #define ARM_2D_LOG_CHN_CONTROLS                             _BV(7)              //!< the channel dedicated to example controls
+
+#define ARM_2D_LOG_CHN_GUI_STACK                            _BV(16)             //!< the channel dedicated to USER defined GUI stack
+
 #define ARM_2D_LOG_CHN_APP                                  _BV(24)             //!< the channel dedicated to applications and examples
 
 
@@ -1128,6 +1131,13 @@ const __arm_2d_low_level_io_t LOW_LEVEL_IO##__NAME = {                          
  * \brief the log printf entry dedicated to example controls
  */
 #   define __ARM_2D_LOG_PRINTF_CONTROLS     __arm_2d_log_printf
+#endif
+
+#ifndef __ARM_2D_LOG_PRINTF_GUI_STACK
+/*!
+ * \brief the log printf entry dedicated to applications and examples
+ */
+#   define __ARM_2D_LOG_PRINTF_GUI_STACK    __arm_2d_log_printf
 #endif
 
 #ifndef __ARM_2D_LOG_PRINTF_APP
