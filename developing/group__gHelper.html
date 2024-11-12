@@ -322,6 +322,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga0c896791f09bdcbb1115746844ddba2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b">arm_2d_scene_player_register_before_switching_event_handler</a>( __SCENE_PLAYER_PTR,  __HANDLER,  ...)</td></tr>
 <tr class="memdesc:ga0c896791f09bdcbb1115746844ddba2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtBeforeSwitching event handler. You can use this event to prepare next scenes.  <a href="group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b">More...</a><br /></td></tr>
 <tr class="separator:ga0c896791f09bdcbb1115746844ddba2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f4c61376afba8c5d0dc6f237542aee3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga6f4c61376afba8c5d0dc6f237542aee3">arm_2d_scene_player_register_before_deposing_event_handler</a>( __SCENE_PLAYER_PTR,  __HANDLER,  ...)</td></tr>
+<tr class="memdesc:ga6f4c61376afba8c5d0dc6f237542aee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">register / update the evtBeforeDeposing event handler.  <a href="group__gHelper.html#ga6f4c61376afba8c5d0dc6f237542aee3">More...</a><br /></td></tr>
+<tr class="separator:ga6f4c61376afba8c5d0dc6f237542aee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga31d44d0cf7fe5bb395622d23784c87c7"><td class="memItemLeft" align="right" valign="top"><a id="ga31d44d0cf7fe5bb395622d23784c87c7" name="ga31d44d0cf7fe5bb395622d23784c87c7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_FPS_MODE_RENDER_ONLY</b>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:ga31d44d0cf7fe5bb395622d23784c87c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5373,6 +5376,55 @@ nTimeResidual</td>
 <div class="line">                                                        (NULL,##__VA_ARGS__))</div>
 </div><!-- fragment -->
 <p>register / update the evtBeforeSwitching event handler. You can use this event to prepare next scenes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fnHandler</td><td>the event handler </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>optional, the address of an user specified object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="ga6f4c61376afba8c5d0dc6f237542aee3" name="ga6f4c61376afba8c5d0dc6f237542aee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6f4c61376afba8c5d0dc6f237542aee3">&#9670;&nbsp;</a></span>arm_2d_scene_player_register_before_deposing_event_handler</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_scene_player_register_before_deposing_event_handler</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SCENE_PLAYER_PTR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__HANDLER, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#ga55afbf6d19d541ab4dbeb6b0efb60467" title="register / update the evtBeforeDeposing event handler. You can use this event to prepare next scenes.">__arm_2d_scene_player_register_before_deposing_event_handler</a>(       \</div>
+<div class="line">                                                        (__SCENE_PLAYER_PTR),   \</div>
+<div class="line">                                                        (__HANDLER),            \</div>
+<div class="line">                                                        (NULL,##__VA_ARGS__))</div>
+</div><!-- fragment -->
+<p>register / update the evtBeforeDeposing event handler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target scene player </td></tr>
