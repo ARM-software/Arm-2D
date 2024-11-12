@@ -24,9 +24,9 @@ var group__gHelper =
       [ "fnBeforeSwitchOut", "group__gHelper.html#a971eef026e3cd95397424c681451880d", null ],
       [ "fnDepose", "group__gHelper.html#a6e8ca4e93825c26bd94310188d54f462", null ]
     ] ],
-    [ "arm_2d_scene_before_scene_switching_evt_t", "group__gHelper.html#structarm__2d__scene__before__scene__switching__evt__t", [
-      [ "fnHandler", "group__gHelper.html#a551aa1393ca48917f03bce3d661909b9", null ],
-      [ "pTarget", "group__gHelper.html#ac663af80502072ef0d7dca267ecc8e37", null ]
+    [ "arm_2d_scene_evt_t", "group__gHelper.html#structarm__2d__scene__evt__t", [
+      [ "fnHandler", "group__gHelper.html#a7bf85c2bf06499c1b82503262d215616", null ],
+      [ "pTarget", "group__gHelper.html#a9249b2a854c952f0565e78b277cf405f", null ]
     ] ],
     [ "arm_2d_scene_player_t", "group__gHelper.html#structarm__2d__scene__player__t", [
       [ "arm_2d_helper_pfb_t", "group__gHelper.html#ad4ca22fba198472e3ebc789888c507d7", null ],
@@ -246,7 +246,7 @@ var group__gHelper =
     [ "arm_2d_helper_time_cos_slider", "group__gHelper.html#ga687e4765c7e7085b14e53845dcd5e5ae", null ],
     [ "arm_2d_helper_time_half_cos_slider", "group__gHelper.html#ga807958c36a0f078fb7494df5ef005344", null ],
     [ "impl_film", "group__gHelper.html#gaaa9f4d36caf6a8a5b456a9bd8122169b", null ],
-    [ "arm_2d_scene_before_scene_switching_handler_t", "group__gHelper.html#ga3ebdd610af011bf6094c0f60721a2424", null ],
+    [ "arm_2d_scene_evt_handler_t", "group__gHelper.html#ga9be1d5e5f595e5a508e7092c61acc8c2", null ],
     [ "arm_2d_draw_list_item_handler_t", "group__gHelper.html#ga9f0651d2b31254292c76ea8b7cb70ef3", null ],
     [ "__arm_2d_list_item_iterator", "group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c", null ],
     [ "__arm_2d_list_region_calculator_t", "group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af", null ],
@@ -322,7 +322,8 @@ var group__gHelper =
     [ "__arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70", null ],
     [ "arm_2d_scene_player_hide_navigation_layer", "group__gHelper.html#ga401b363d3f7120e56a1494d26e3c2af7", null ],
     [ "arm_2d_scene_player_show_navigation_layer", "group__gHelper.html#ga3bac12004dcc0fb152f54118497f2d34", null ],
-    [ "__arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293", null ],
+    [ "__arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga5228b63f6a1c3ba273d465f8ec6df648", null ],
+    [ "__arm_2d_scene_player_register_before_deposing_event_handler", "group__gHelper.html#ga55afbf6d19d541ab4dbeb6b0efb60467", null ],
     [ "arm_2d_scene_player_task", "group__gHelper.html#ga9d3b273bce58d135be740ba682ec11b7", null ],
     [ "arm_2d_scene_player_append_dirty_regions", "group__gHelper.html#ga17f0592eb6eabcb8fd5ae12e4d425d71", null ],
     [ "arm_2d_scene_player_remove_dirty_regions", "group__gHelper.html#ga15bd874fcd36767c9ff8acf1955e8afe", null ],

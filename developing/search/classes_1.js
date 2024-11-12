@@ -203,7 +203,7 @@ var searchData=
   ['arm_5f2d_5fregion_5ft_200',['arm_2d_region_t',['../group__gKernel.html#structarm__2d__region__t',1,'']]],
   ['arm_5f2d_5frot_5flinear_5fregr_5ft_201',['arm_2d_rot_linear_regr_t',['../group__gKernel.html#structarm__2d__rot__linear__regr__t',1,'']]],
   ['arm_5f2d_5fruntime_5ffeature_5ft_202',['arm_2d_runtime_feature_t',['../group__gKernel.html#structarm__2d__runtime__feature__t',1,'']]],
-  ['arm_5f2d_5fscene_5fbefore_5fscene_5fswitching_5fevt_5ft_203',['arm_2d_scene_before_scene_switching_evt_t',['../group__gHelper.html#structarm__2d__scene__before__scene__switching__evt__t',1,'']]],
+  ['arm_5f2d_5fscene_5fevt_5ft_203',['arm_2d_scene_evt_t',['../group__gHelper.html#structarm__2d__scene__evt__t',1,'']]],
   ['arm_5f2d_5fscene_5fplayer_5ft_204',['arm_2d_scene_player_t',['../group__gHelper.html#structarm__2d__scene__player__t',1,'']]],
   ['arm_5f2d_5fscene_5fplayer_5ft_2e_5f_5funnamed193_5f_5f_205',['arm_2d_scene_player_t.__unnamed193__',['../group__gHelper.html#structarm__2d__scene__player__t_8____unnamed193____',1,'']]],
   ['arm_5f2d_5fscene_5fplayer_5ft_2e_5f_5funnamed193_5f_5f_2eevents_206',['arm_2d_scene_player_t.__unnamed193__.Events',['../group__gHelper.html#structarm__2d__scene__player__t_8____unnamed193_____8Events',1,'']]],

@@ -43,8 +43,9 @@ var searchData=
   ['_5f_5farm_5f2d_5flog_5fprintf_40',['__arm_2d_log_printf',['../group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0',1,'arm_2d_utils.h']]],
   ['_5f_5farm_5f2d_5frgb565_5fpack_41',['__arm_2d_rgb565_pack',['../group__gConversion.html#gad741f60e362467e251ef35febec37c28',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5frgb565_5funpack_42',['__arm_2d_rgb565_unpack',['../group__gConversion.html#ga0dac4bd927c28a54130bfe279542065c',1,'arm_2d_conversion.h']]],
-  ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fbefore_5fswitching_5fevent_5fhandler_43',['__arm_2d_scene_player_register_before_switching_event_handler',['../group__gHelper.html#gadaa72d1d1c3baf5db91070008c238293',1,'arm_2d_helper_scene.h']]],
-  ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fon_5fdraw_5fnavigation_5fevent_5fhandler_44',['__arm_2d_scene_player_register_on_draw_navigation_event_handler',['../group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70',1,'arm_2d_helper_scene.h']]],
-  ['_5f_5farm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fmode_45',['__arm_2d_scene_player_set_switching_mode',['../group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc',1,'arm_2d_helper_scene.h']]],
-  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_46',['__arm_2d_tile_get_virtual_screen_or_root',['../group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0',1,'arm_2d_tile.h']]]
+  ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fbefore_5fdeposing_5fevent_5fhandler_43',['__arm_2d_scene_player_register_before_deposing_event_handler',['../group__gHelper.html#ga55afbf6d19d541ab4dbeb6b0efb60467',1,'arm_2d_helper_scene.h']]],
+  ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fbefore_5fswitching_5fevent_5fhandler_44',['__arm_2d_scene_player_register_before_switching_event_handler',['../group__gHelper.html#ga5228b63f6a1c3ba273d465f8ec6df648',1,'arm_2d_helper_scene.h']]],
+  ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fon_5fdraw_5fnavigation_5fevent_5fhandler_45',['__arm_2d_scene_player_register_on_draw_navigation_event_handler',['../group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70',1,'arm_2d_helper_scene.h']]],
+  ['_5f_5farm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fmode_46',['__arm_2d_scene_player_set_switching_mode',['../group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc',1,'arm_2d_helper_scene.h']]],
+  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_47',['__arm_2d_tile_get_virtual_screen_or_root',['../group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0',1,'arm_2d_tile.h']]]
 ];
