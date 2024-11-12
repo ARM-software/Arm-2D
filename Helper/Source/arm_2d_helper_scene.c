@@ -339,9 +339,16 @@ static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
         }
 
         arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
-        if (NULL != ptScene->fnDepose) {
-            ptScene->fnDepose(ptScene);
-        }
+
+        ARM_2D_INVOKE_RT_VOID(this.Events.evtBeforeDeposing.fnHandler,
+            ARM_2D_PARAM(
+                this.Events.evtBeforeDeposing.pTarget, 
+                ptThis, 
+                ptScene
+            ));
+
+        ARM_2D_INVOKE_RT_VOID(ptScene->fnDepose, ARM_2D_PARAM(ptScene));
+
     } while(false);
 }
 

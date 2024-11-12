@@ -123,6 +123,23 @@ extern "C" {
                                                         (NULL,##__VA_ARGS__))
 
 
+/*!
+ * \brief register / update the evtBeforeDeposing event handler.
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] fnHandler the event handler
+ * \param[in] ... optional, the address of an user specified object.
+ * \return arm_2d_err_t the operation result
+ */
+#define arm_2d_scene_player_register_before_deposing_event_handler(             \
+                                                            __SCENE_PLAYER_PTR, \
+                                                            __HANDLER,          \
+                                                            ...)                \
+            __arm_2d_scene_player_register_before_deposing_event_handler(       \
+                                                        (__SCENE_PLAYER_PTR),   \
+                                                        (__HANDLER),            \
+                                                        (NULL,##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 
 /*!
