@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        25. July 2024
- * $Revision:    V.1.8.2
+ * $Date:        12. Nov 2024
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -566,17 +566,32 @@ void arm_2d_scene_player_show_navigation_layer(arm_2d_scene_player_t *ptThis)
     arm_2d_helper_show_navigation_layer(&this.use_as__arm_2d_helper_pfb_t);
 }
 
+ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(
-                    arm_2d_scene_player_t *ptThis,
-                    arm_2d_scene_before_scene_switching_handler_t *fnHandler,
-                    void *pTarget
-                )
+                                    arm_2d_scene_player_t *ptThis,
+                                    arm_2d_scene_evt_handler_t *fnHandler,
+                                    void *pTarget)
 {
     assert(NULL != ptThis);
     assert(NULL != fnHandler);
     
     this.Events.evtBeforeSwitching.fnHandler = fnHandler;
     this.Events.evtBeforeSwitching.pTarget = pTarget;
+    
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_scene_player_register_before_deposing_event_handler(
+                                    arm_2d_scene_player_t *ptThis,
+                                    arm_2d_scene_evt_handler_t *fnHandler,
+                                    void *pTarget)
+{
+    assert(NULL != ptThis);
+    assert(NULL != fnHandler);
+    
+    this.Events.evtBeforeDeposing.fnHandler = fnHandler;
+    this.Events.evtBeforeDeposing.pTarget = pTarget;
     
     return ARM_2D_ERR_NONE;
 }

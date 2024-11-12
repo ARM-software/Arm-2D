@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        25. July 2024
- * $Revision:    V.1.8.2
+ * $Date:        12. Nov 2024
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -273,7 +273,7 @@ ARM_PRIVATE(
  * \param[in] ptPlayer the scene player 
  * \param[in] ptScene the old scene that is to be switched out
  */
-typedef void arm_2d_scene_before_scene_switching_handler_t(
+typedef void arm_2d_scene_evt_handler_t(
                                             void *pTarget,
                                             arm_2d_scene_player_t *ptPlayer,
                                             arm_2d_scene_t *ptScene);
@@ -281,10 +281,10 @@ typedef void arm_2d_scene_before_scene_switching_handler_t(
 /*!
  * \brief on low level render event 
  */
-typedef struct arm_2d_scene_before_scene_switching_evt_t {
-    arm_2d_scene_before_scene_switching_handler_t *fnHandler;                   //!< event handler function
+typedef struct arm_2d_scene_evt_t {
+    arm_2d_scene_evt_handler_t *fnHandler;                                      //!< event handler function
     void *pTarget;                                                              //!< user attached target
-} arm_2d_scene_before_scene_switching_evt_t;
+} arm_2d_scene_evt_t;
 
 /*!
  * \brief a class to manage scenes
@@ -370,7 +370,8 @@ struct arm_2d_scene_player_t {
             /*!
              * \note We can use this event to initialize/generate the new(next) scene
              */
-            arm_2d_scene_before_scene_switching_evt_t  evtBeforeSwitching;      //!< before-scene-switch-out event handler
+            arm_2d_scene_evt_t  evtBeforeSwitching;                             //!< before-scene-switch-out event handler
+            arm_2d_scene_evt_t  evtBeforeDeposing;                              //!< before-scene-deposing event handler
         } Events;
     )
 };
@@ -612,10 +613,25 @@ void arm_2d_scene_player_show_navigation_layer(arm_2d_scene_player_t *ptThis);
 extern
 ARM_NONNULL(1)
 arm_2d_err_t __arm_2d_scene_player_register_before_switching_event_handler(
-                    arm_2d_scene_player_t *ptThis,
-                    arm_2d_scene_before_scene_switching_handler_t *fnHandler,
-                    void *pTarget
-                );
+                                        arm_2d_scene_player_t *ptThis,
+                                        arm_2d_scene_evt_handler_t *fnHandler,
+                                        void *pTarget);
+
+/*!
+ * \brief register / update the evtBeforeDeposing event handler. You can use 
+ *        this event to prepare next scenes.
+ *
+ * \param[in] ptThis the target scene player
+ * \param[in] fnHandler the event handler
+ * \param[in] pTarget the address of an user specified object.
+ * \return arm_2d_err_t the operation result
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_err_t __arm_2d_scene_player_register_before_deposing_event_handler(
+                                        arm_2d_scene_player_t *ptThis,
+                                        arm_2d_scene_evt_handler_t *fnHandler,
+                                        void *pTarget);
 
 /*!
  * \brief the scene player task function
