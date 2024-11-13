@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        9. Nov 2024
- * $Revision:    V.1.4.6
+ * $Date:        13. Nov 2024
+ * $Revision:    V.1.4.7
  *
  * -------------------------------------------------------------------- */
 
@@ -853,6 +853,9 @@ extern "C" {
             if (NULL == (__HEAD)) {                                             \
                 (__TAIL) = NULL;                                                \
             }                                                                   \
+        }                                                                       \
+        if (NULL != (__ITEM)) {                                                 \
+            ((__arm_slist_node_t *)(__ITEM))->ptNext = NULL;                    \
         }                                                                       \
     } while(0)
 
