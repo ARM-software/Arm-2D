@@ -7290,6 +7290,9 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <div class="line">                (__TAIL) = NULL;                                                \</div>
 <div class="line">            }                                                                   \</div>
 <div class="line">        }                                                                       \</div>
+<div class="line">        if (NULL != (__ITEM)) {                                                 \</div>
+<div class="line">            ((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM))-&gt;ptNext = NULL;                    \</div>
+<div class="line">        }                                                                       \</div>
 <div class="line">    } <span class="keywordflow">while</span>(0)</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
 
