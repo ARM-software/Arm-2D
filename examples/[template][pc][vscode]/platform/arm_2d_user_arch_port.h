@@ -59,7 +59,10 @@
 
 #undef arm_irq_safe
 #undef arm_exit_irq_safe
-#define arm_irq_safe  arm_using(  uint32_t ARM_2D_SAFE_NAME(temp) = 0 )
+#define arm_irq_safe  arm_using( uint32_t ARM_2D_SAFE_NAME(temp) = 0,         \
+                                 {  ARM_2D_UNUSED(ARM_2D_SAFE_NAME(temp));    \
+                                    VT_enter_global_mutex();},                \
+                                 {  VT_leave_global_mutex();} )
 #define arm_exit_irq_safe    continue
 
 
@@ -76,6 +79,9 @@ __STATIC_FORCEINLINE uint32_t __REV16(uint32_t wValue)
 
     return (wHigh >> 8) | (wLow << 8);
 }
+
+extern void VT_enter_global_mutex(void);
+extern void VT_leave_global_mutex(void);
 
 
 #endif  /* end of __ARM_2D_USER_ARCH_PORT_H__ */

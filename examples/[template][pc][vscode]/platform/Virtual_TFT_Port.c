@@ -84,8 +84,70 @@ int quit_filter(void * userdata, SDL_Event * event)
     return 1;
 }
 
+typedef struct RecursiveMutex {
+    SDL_mutex *mutex;
+    SDL_threadID owner;
+    int lock_count;
+} RecursiveMutex;
+
+RecursiveMutex* RecursiveMutex_Create(void) {
+    RecursiveMutex* rmutex = (RecursiveMutex*)malloc(sizeof(RecursiveMutex));
+    rmutex->mutex = SDL_CreateMutex();
+    rmutex->owner = 0;
+    rmutex->lock_count = 0;
+    return rmutex;
+}
+
+void RecursiveMutex_Lock(RecursiveMutex* rmutex) {
+    assert(NULL != rmutex);
+
+    SDL_threadID tid = SDL_ThreadID();
+    if (rmutex->owner == tid) {
+        // 如果是同一线程，增加锁计数
+        rmutex->lock_count++;
+    } else {
+        // 不同线程则锁定
+        SDL_LockMutex(rmutex->mutex);
+        rmutex->owner = tid;
+        rmutex->lock_count = 1;
+    }
+}
+
+void RecursiveMutex_Unlock(RecursiveMutex* rmutex) {
+    assert(NULL != rmutex);
+    if (rmutex->owner == SDL_ThreadID()) {
+        rmutex->lock_count--;
+        if (rmutex->lock_count == 0) {
+            rmutex->owner = 0;
+            SDL_UnlockMutex(rmutex->mutex);
+        }
+    }
+}
+
+void RecursiveMutex_Destroy(RecursiveMutex* rmutex) {
+    assert(NULL != rmutex);
+    SDL_DestroyMutex(rmutex->mutex);
+    free(rmutex);
+}
+
+static 
+RecursiveMutex *s_ptGlobalMutex = NULL;
+
+void VT_enter_global_mutex(void)
+{
+    RecursiveMutex_Lock(s_ptGlobalMutex);
+}
+
+void VT_leave_global_mutex(void)
+{
+    RecursiveMutex_Unlock(s_ptGlobalMutex);
+}
+
+
 static void monitor_sdl_clean_up(void)
 {
+    RecursiveMutex_Destroy(s_ptGlobalMutex);
+
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -97,6 +159,8 @@ static void monitor_sdl_init(void)
 
     /*Initialize the SDL*/
     SDL_Init(SDL_INIT_VIDEO);
+
+    s_ptGlobalMutex = RecursiveMutex_Create();
 
     SDL_SetEventFilter(quit_filter, NULL);
 
