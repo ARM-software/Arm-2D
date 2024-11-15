@@ -565,6 +565,11 @@ Macros</h2></td></tr>
 <tr class="memitem:gae655d62f3c3810b420c874a7af11b09f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gae655d62f3c3810b420c874a7af11b09f">ARM_LIST_QUEUE_PEEK</a>(__HEAD,  __TAIL,  __ITEM)&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#ga6cbb9b0bb402a670b8fa5a5f1a47f59a">__ARM_LIST_QUEUE_PEEK</a>((__HEAD), (__TAIL), (__ITEM))                 \</td></tr>
 <tr class="memdesc:gae655d62f3c3810b420c874a7af11b09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">peek a node from a queue  <a href="group__gKernel.html#gae655d62f3c3810b420c874a7af11b09f">More...</a><br /></td></tr>
 <tr class="separator:gae655d62f3c3810b420c874a7af11b09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5cf3e9d4dce6e8bf5a2446acdcf5bec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">__ARM_LIST_QUEUE_IS_EMPTY</a>(__HEAD,  __TAIL)&#160;&#160;&#160;    ((__HEAD) == NULL)</td></tr>
+<tr class="separator:gaf5cf3e9d4dce6e8bf5a2446acdcf5bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac88355d24f05a1b35d406d32c6bf96fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gac88355d24f05a1b35d406d32c6bf96fc">ARM_LIST_QUEUE_IS_EMPTY</a>(__HEAD,  __TAIL)&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">__ARM_LIST_QUEUE_IS_EMPTY</a>((__HEAD), (__TAIL))</td></tr>
+<tr class="memdesc:gac88355d24f05a1b35d406d32c6bf96fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a list FIFO is empty or not  <a href="group__gKernel.html#gac88355d24f05a1b35d406d32c6bf96fc">More...</a><br /></td></tr>
+<tr class="separator:gac88355d24f05a1b35d406d32c6bf96fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe3c1382ff4755d987d4860565dbd0a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gabe3c1382ff4755d987d4860565dbd0a9">ARM_PT_BEGIN</a>(__STATE)</td></tr>
 <tr class="separator:gabe3c1382ff4755d987d4860565dbd0a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7fc82a8ece39848b3c4b74b1006e82ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7fc82a8ece39848b3c4b74b1006e82ba">ARM_PT_ENTRY</a>(...)</td></tr>
@@ -7418,6 +7423,79 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
     <tr><td class="paramdir">[in]</td><td class="paramname">__HEAD</td><td>a pointer points to the queue head </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">__TAIL</td><td>a pointer points to the queue tail </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">__ITEM</td><td>a pointer variable for the node </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaf5cf3e9d4dce6e8bf5a2446acdcf5bec" name="gaf5cf3e9d4dce6e8bf5a2446acdcf5bec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">&#9670;&nbsp;</a></span>__ARM_LIST_QUEUE_IS_EMPTY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __ARM_LIST_QUEUE_IS_EMPTY</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__HEAD, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__TAIL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;    ((__HEAD) == NULL)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
+
+</div>
+</div>
+<a id="gac88355d24f05a1b35d406d32c6bf96fc" name="gac88355d24f05a1b35d406d32c6bf96fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac88355d24f05a1b35d406d32c6bf96fc">&#9670;&nbsp;</a></span>ARM_LIST_QUEUE_IS_EMPTY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_LIST_QUEUE_IS_EMPTY</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__HEAD, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__TAIL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">__ARM_LIST_QUEUE_IS_EMPTY</a>((__HEAD), (__TAIL))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>check whether a list FIFO is empty or not </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__HEAD</td><td>a pointer points to the queue head </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__TAIL</td><td>a pointer points to the queue tail </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the list FIFO is empty </td></tr>
+    <tr><td class="paramname">false</td><td>the list FIFO is not empty </td></tr>
   </table>
   </dd>
 </dl>

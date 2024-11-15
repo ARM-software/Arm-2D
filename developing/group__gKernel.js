@@ -342,6 +342,8 @@ var group__gKernel =
     [ "ARM_LIST_QUEUE_DEQUEUE", "group__gKernel.html#ga414fd4c148fd220c3c9d561893c3335e", null ],
     [ "__ARM_LIST_QUEUE_PEEK", "group__gKernel.html#ga6cbb9b0bb402a670b8fa5a5f1a47f59a", null ],
     [ "ARM_LIST_QUEUE_PEEK", "group__gKernel.html#gae655d62f3c3810b420c874a7af11b09f", null ],
+    [ "__ARM_LIST_QUEUE_IS_EMPTY", "group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec", null ],
+    [ "ARM_LIST_QUEUE_IS_EMPTY", "group__gKernel.html#gac88355d24f05a1b35d406d32c6bf96fc", null ],
     [ "__def_low_lv_io", "group__gKernel.html#gabc8b934afc268be48156430da4208ff8", null ],
     [ "__ref_low_lv_io", "group__gKernel.html#ga99a7784b6212b1a4acd93bee3eb51998", null ],
     [ "ref_low_lv_io", "group__gKernel.html#gae3cfa68806c0c6c9fa7bb2a36453eef5", null ],
