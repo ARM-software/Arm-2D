@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        13. Nov 2024
- * $Revision:    V.1.4.7
+ * $Date:        14. Nov 2024
+ * $Revision:    V.1.4.8
  *
  * -------------------------------------------------------------------- */
 
@@ -885,6 +885,22 @@ extern "C" {
 #define ARM_LIST_QUEUE_PEEK(__HEAD, __TAIL, __ITEM)                             \
             __ARM_LIST_QUEUE_PEEK((__HEAD), (__TAIL), (__ITEM))                 \
 
+/*!
+ * \note do NOT use this macro directly
+ */
+#define __ARM_LIST_QUEUE_IS_EMPTY(__HEAD, __TAIL)                               \
+    ((__HEAD) == NULL)
+
+
+/*! 
+ * \brief check whether a list FIFO is empty or not
+ * \param[in] __HEAD a pointer points to the queue head
+ * \param[in] __TAIL a pointer points to the queue tail
+ * \retval true the list FIFO is empty
+ * \retval false the list FIFO is not empty
+ */
+#define ARM_LIST_QUEUE_IS_EMPTY(__HEAD, __TAIL)                                 \
+            __ARM_LIST_QUEUE_IS_EMPTY((__HEAD), (__TAIL))
 /*----------------------------------------------------------------------------*
  * PT Operations                                                              *
  *----------------------------------------------------------------------------*/
