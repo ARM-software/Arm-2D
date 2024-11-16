@@ -717,7 +717,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask)(
         const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
         uint8_t *__RESTRICT pchTarget = pchTargetBase;
         uint8_t *__RESTRICT pwSourceMaskLine = ( uint8_t *__RESTRICT)pwSourceMask;
-#ifdef USE_MVE_INTRINSICSs
+#ifdef USE_MVE_INTRINSICS
         int32_t         blkCnt = iWidth;
         uint16x8_t      vStride4Offs = vidupq_n_u16(0, 4);
 
