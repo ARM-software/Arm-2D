@@ -51,7 +51,7 @@ var group__gHelper =
       [ "tParam", "group__gHelper.html#a1433bc4e8532711ae843a50f3e39e8f0", null ],
       [ "tDirection", "group__gHelper.html#a7cb2dee12ae53adb466e49351e9dbf45", null ]
     ] ],
-    [ "__arm_2d_list_region_calculator_t", "group__gHelper.html#struct____arm__2d__list__region__calculator__t", null ],
+    [ "arm_2d_i_list_region_calculator_t", "group__gHelper.html#structarm__2d__i__list__region__calculator__t", null ],
     [ "__arm_2d_list_core_cfg_t", "group__gHelper.html#struct____arm__2d__list__core__cfg__t", [
       [ "tListSize", "group__gHelper.html#ab819d6694c9134bddb53e86d5b249819", null ],
       [ "fnIterator", "group__gHelper.html#ac10b78bf5e41921ce593e273cdc49b6a", null ],
@@ -463,10 +463,10 @@ var group__gHelper =
     [ "arm_2d_byte_fifo_reset_peeked", "group__gHelper.html#ga9a0bb323933baa059f65eb2bd62608be", null ],
     [ "arm_2d_helper_swap_rgb16", "group__gHelper.html#gaf07a91ddd548e926e5737db7800c16a9", null ],
     [ "arm_2d_helper_fill_tile_colour", "group__gHelper.html#gad463890671cef394edd5dbc33e34a3bc", null ],
-    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL", "group__gHelper.html#gab5dba585d0d04b6e9ab0aa523f307599", null ],
-    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL", "group__gHelper.html#ga181cf77611f1311782f7a4826504cc7e", null ],
-    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL", "group__gHelper.html#ga069605cacc9a8b1412f81f7266fc517e", null ],
-    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL", "group__gHelper.html#gaa630be50222997f2ad230c49fa98e9a7", null ],
+    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL", "group__gHelper.html#ga75ce25b9d28d4b6673914a354eef043b", null ],
+    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL", "group__gHelper.html#ga7acfb7f14271dc58c11034660479263f", null ],
+    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL", "group__gHelper.html#ga3bba055a091df5fa1bd9726913ac4b90", null ],
+    [ "ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL", "group__gHelper.html#gaf414f8a017e29e9a7c3905039cb0afe0", null ],
     [ "ARM_2D_LIST_ITERATOR_ARRAY", "group__gHelper.html#gaca10c08e0da40d9b8917fcaba134c07d", null ],
     [ "ARM_2D_CONTROL_ENUMERATION_POLICY_PREORDER_TRAVERSAL", "group__gHelper.html#ga9afb4b9ea690f720217cf505d889eece", null ],
     [ "ARM_2D_CONTROL_ENUMERATION_POLICY_POSTORDER_TRAVERSAL", "group__gHelper.html#ga14b8f1abf7eaf3e5c039a04e359f5d77", null ],
