@@ -419,6 +419,7 @@ ARM_PT_END()
     return arm_fsm_rt_cpl;
 }
 
+#if 0
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
                                     int16_t iOffset)
@@ -430,6 +431,7 @@ void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis,
         this.Runtime.nTargetOffset = this.Runtime.nOffset;
     }
 }
+#endif
 
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis, 
@@ -2440,8 +2442,6 @@ ARM_PT_END()
 
     return NULL;
 }
-
-
 
 
 __arm_2d_list_work_area_t *

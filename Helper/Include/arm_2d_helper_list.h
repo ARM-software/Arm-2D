@@ -399,6 +399,7 @@ void __arm_2d_list_core_move_request(   __arm_2d_list_core_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs);
 
+#if 0
 /*!
  * \brief move selection with specified pixel offset
  * \param[in] ptThis the target list core object
@@ -412,6 +413,7 @@ extern
 ARM_NONNULL(1)
 void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis, 
                                     int16_t iOffset);
+#endif
 
 /*!
  * \brief get the currently selected item id
