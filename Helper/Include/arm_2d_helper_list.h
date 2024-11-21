@@ -128,8 +128,10 @@ ARM_PROTECTED(
             uint16_t                                            : 8;            /*!< reserved */
         };
     };
+
     __arm_2d_list_core_t                            *ptListView;                /*!< the parent list core */
-    
+    arm_2d_draw_list_item_handler_t                *fnOnDrawItem;               /*!< on-draw-list-view-item event handler */
+
     struct {
         int8_t chPrevious;                                                      /*!< padding between this item and the previous one */
         int8_t chNext;                                                          /*!< padding between this item and the next one */
@@ -139,7 +141,6 @@ ARM_PROTECTED(
     arm_2d_size_t                                   tSize;                      /*!< the size of the item */
 
     uintptr_t                                       pTarget;                    /*!< user specified object */
-    arm_2d_draw_list_item_handler_t                *fnOnDrawItem;               /*!< on-draw-list-view-item event handler */
 };
 
 
