@@ -111,7 +111,7 @@ void list_view_init(list_view_t *ptThis,
             .fnIterator = ptCFG->fnIterator,
             
             /* vertical list, centre aligned style */
-            .fnCalculator = ptCFG->fnCalculator,
+            .ptCalculator = ptCFG->fnCalculator,
             .fnOnDrawListBackground = &__arm_2d_list_view_draw_background,
             //.fnOnDrawListItemBackground =       &__arm_2d_number_list_draw_list_core_item_background,
             .hwSwitchingPeriodInMs = ptCFG->hwSwitchingPeriodInMs,

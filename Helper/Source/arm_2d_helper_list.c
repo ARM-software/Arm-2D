@@ -93,7 +93,7 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
-    assert(NULL != ptCFG->fnCalculator);
+    assert(NULL != ptCFG->ptCalculator);
     assert(NULL != ptCFG->fnIterator);
 
     memset(ptThis, 0, sizeof(__arm_2d_list_core_t));
@@ -182,7 +182,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
         if (bIsNewFrame) {
 
             if (!this.Runtime.bIsRegCalInit) {
-                ARM_2D_INVOKE(  this.tCFG.fnCalculator->fnCalculator,
+                ARM_2D_INVOKE(  this.tCFG.ptCalculator->fnCalculator,
                             ARM_2D_PARAM(
                                 ptThis, 
                                 this.tCFG.fnIterator,
@@ -253,12 +253,12 @@ ARM_PT_BEGIN(this.Runtime.chState)
     } while(0);
 
 
-    assert(NULL != this.tCFG.fnCalculator);
+    assert(NULL != this.tCFG.ptCalculator);
     
     /* loop until finishing drawing all visiable area */
     do {
         /* call calculator: it should handle the padding */
-        if (NULL == ARM_2D_INVOKE(  this.tCFG.fnCalculator->fnCalculator,
+        if (NULL == ARM_2D_INVOKE(  this.tCFG.ptCalculator->fnCalculator,
                         ARM_2D_PARAM(
                             ptThis, 
                             this.tCFG.fnIterator,
