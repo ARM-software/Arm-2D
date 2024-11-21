@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        29. Oct 2024
- * $Revision:    V.1.2.0
+ * $Date:        21. Nov 2024
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -757,7 +757,7 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
     }
 
     do {
-        if ((ptItem->bIsEnabled && ptItem->bIsVisible) || bIgnoreStatusCheck) {
+        if (ptItem->bIsVisible || bIgnoreStatusCheck) {
             break;
         }
         
