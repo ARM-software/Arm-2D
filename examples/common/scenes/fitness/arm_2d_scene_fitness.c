@@ -189,11 +189,12 @@ static void __on_scene_fitness_frame_complete(arm_2d_scene_t *ptScene)
         this.iProgress = (int16_t)nResult;
     } while(0);
 
-
+#if 0
     /* switch to next scene after 20s */
     if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_fitness_switching_out(arm_2d_scene_t *ptScene)

@@ -161,11 +161,13 @@ static void __on_scene_gas_gauge_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    /* switch to next scene after 3s */
+
+#if 0
+    /* switch to next scene after 29s */
     if (arm_2d_helper_is_time_out(29000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static

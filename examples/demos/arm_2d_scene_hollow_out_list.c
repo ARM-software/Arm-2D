@@ -244,10 +244,12 @@ static void __on_scene_hollow_out_list_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* switch to next scene after 3s */
+#if 0
+    /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 
 }
 
@@ -424,8 +426,6 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
         }
         
     }
-
-    
 
     if (NULL == ptThis) {
         ptThis = (user_scene_hollow_out_list_t *)

@@ -322,10 +322,12 @@ static void __on_scene_virtual_resource_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_virtual_resource_t *ptThis = (user_scene_virtual_resource_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_virtual_resource_switching_out(arm_2d_scene_t *ptScene)

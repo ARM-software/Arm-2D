@@ -183,13 +183,17 @@ static void __on_scene_panel_frame_complete(arm_2d_scene_t *ptScene)
             this.iProgress = 0;
         }
     }
-    
+
+#if 0
     /* switch to next scene after 20s */
     if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[4])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
+
 }
 
+#if 0
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_background_handler)
 {
@@ -201,10 +205,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_background_handler)
 
 
     /*-----------------------draw back ground end  -----------------------*/
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC(NULL);
 
     return arm_fsm_rt_cpl;
 }
+#endif
 
 static void draw_buttom(const arm_2d_tile_t *ptTile, 
                         arm_2d_region_t *ptRegion,

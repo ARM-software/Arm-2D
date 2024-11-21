@@ -178,13 +178,15 @@ static void __on_scene_bubble_charging_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+    arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
+
+#if 0
     /* switch to next scene after 30s */
     if (arm_2d_helper_is_time_out(30000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
-
-    arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
+#endif
 
 }
 

@@ -160,10 +160,12 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    /* switch to next scene after 3s */
+#if 0
+    /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 
@@ -175,12 +177,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_background_handler)
     user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)pTarget;
     ARM_2D_UNUSED(bIsNewFrame);
     ARM_2D_UNUSED(ptTile);
-    /*-----------------------draw back ground begin-----------------------*/
 
-
-
-    /*-----------------------draw back ground end  -----------------------*/
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }

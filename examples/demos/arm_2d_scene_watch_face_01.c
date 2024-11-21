@@ -273,10 +273,12 @@ static void __on_scene_watch_face_01_frame_complete(arm_2d_scene_t *ptScene)
         spin_zoom_widget_on_frame_complete(ptPointer);
     }
 
+#if 0
     /* switch to next scene after 30s */
     if (arm_2d_helper_is_time_out(30000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_watch_face_01_switching_out(arm_2d_scene_t *ptScene)

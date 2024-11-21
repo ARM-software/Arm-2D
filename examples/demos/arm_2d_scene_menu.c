@@ -483,15 +483,19 @@ static void __on_scene_menu_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-    
+
     if (arm_2d_helper_is_time_out(1500, &this.lTimestamp[1])) {
         list_view_move_selection(&this.tListView, 1, 300);
     }
+
+#if 0
+    /* switch to next scene after 12s */
+    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
+#endif
+
+
 }
 
 static

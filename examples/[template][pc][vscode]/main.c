@@ -203,7 +203,7 @@ void scene_transform_loader(void)
     arm_2d_scene_transform_init(&DISP0_ADAPTER);
 }
 
-void scene_transform_compass(void) 
+void scene_compass_loader(void) 
 {
     arm_2d_scene_compass_init(&DISP0_ADAPTER);
 }
@@ -307,43 +307,115 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_mono_icon_menu_loader,
     }
 #else
-    scene_basics_loader,
-    scene_progress_status_loader,
-    scene_fan_loader,
-    scene_console_window_loader,
-    scene_meter_loader,
-    scene_watch_face_01_loader,
-    scene_watch_loader,
-    scene_transform_compass,
-    scene_alarm_clock_loader,
-    scene_atom_loader,
-    scene_histogram_loader,
-    scene_bubble_charging_loader,
-    scene_gas_gauge_loader,
-    scene_listview_loader,
-    scene_menu_loader,
-    scene_ruler_loader,
-    scene_hollow_out_list_loader,
-    scene_panel_loader,
-    scene_fitness_loader,
-    scene_transform_loader,
-    scene_audiomark_loader,
+    {
+        3000,
+        scene_basics_loader,
+    },
+    {
+        10000,
+        scene_progress_status_loader,
+    },
+    {
+        13000,
+        scene_fan_loader,
+    },
+    {
+        10000,
+        scene_console_window_loader,
+    },
+    {
+        15000,
+        scene_meter_loader,
+    },
+    {
+        30000,
+        scene_watch_face_01_loader,
+    },
+    {
+        30000,
+        scene_watch_loader,
+    },
+    {
+        20000,
+        scene_compass_loader,
+    },
+    {
+        10000,
+        scene_alarm_clock_loader,
+    },
+    {
+        5000,
+        scene_atom_loader,
+    },
+    {
+        10000,
+        scene_histogram_loader,
+    },
+    {
+        30000,
+        scene_bubble_charging_loader,
+    },
+    {
+        29000,
+        scene_gas_gauge_loader,
+    },
+    {
+        12000,
+        scene_listview_loader,
+    },
+    {
+        12000,
+        scene_menu_loader,
+    },
+    {
+        10000,
+        scene_ruler_loader,
+    },
+    {
+        10000,
+        scene_hollow_out_list_loader,
+    },
+    {
+        20000,
+        scene_panel_loader,
+    },
+    {
+        20000,
+        scene_fitness_loader,
+    },
+    {
+        15000,
+        scene_transform_loader,
+    },
+    {
+        10000,
+        scene_audiomark_loader,
+    },
+    
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-    scene_virtual_resource_loader,
-    //scene_animate_background_loader,
+    {
+        3000,
+        scene_virtual_resource_loader,
+    },
+    {
+        5000,
+        scene_animate_background_loader,
+    },
 #endif
 
 #endif
 
 #else
-    scene_gas_gauge_loader,
-    //scene_meter_loader,
-    //scene_transform_compass,
-    //scene_basics_loader,
-    //scene_fitness_loader,
-    //scene_user_defined_opcode_loader,
-    //scene_knob_loader,
-    //scene_panel_loader,
+    {
+        scene_gas_gauge_loader,
+        //scene_meter_loader,
+        //scene_compass_loader,
+        //scene_basics_loader,
+        //scene_fitness_loader,
+        //scene_user_defined_opcode_loader,
+        //scene_knob_loader,
+        //scene_panel_loader,
+    },
 #endif
 
 
@@ -383,13 +455,13 @@ void before_scene_switching_handler(void *pTarget,
     
     /* call loader */
     arm_with(const demo_scene_t, &c_SceneLoaders[s_tDemoCTRL.chIndex]) {
-        s_tDemoCTRL.bIsTimeout = false;
-        s_tDemoCTRL.lTimeStamp = 0;
-        s_tDemoCTRL.nDelay = _->nLastInMS;
+        if (_->nLastInMS > 0) {
+            s_tDemoCTRL.bIsTimeout = false;
+            s_tDemoCTRL.lTimeStamp = 0;
+            s_tDemoCTRL.nDelay = _->nLastInMS;
+        }
         _->fnLoader();
     }
-
-    
 }
 
 #if __DISP0_CFG_SCEEN_WIDTH__ == 480                                            \
