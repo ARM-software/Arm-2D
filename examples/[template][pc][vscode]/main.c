@@ -276,18 +276,36 @@ void scene_virtual_resource_loader(void)
 }
 #endif
 
-typedef void scene_loader_t(void);
+typedef struct demo_scene_t {
+    int32_t nLastInMS;
+    void (*fnLoader)(void);
+} demo_scene_t;
 
-static scene_loader_t * const c_SceneLoaders[] = {
+static demo_scene_t const c_SceneLoaders[] = {
 
 #if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
-    scene_mono_loading_loader,
-    scene_mono_histogram_loader,
-    scene_mono_clock_loader,
-    scene_mono_list_loader,
-    scene_mono_icon_menu_loader,
+    {
+        13000,
+        scene_mono_loading_loader,
+    },
+    {
+        5000,
+        scene_mono_histogram_loader,
+    },
+    {
+        5000,
+        scene_mono_clock_loader,
+    },
+    {
+        7000,
+        scene_mono_list_loader,
+    },
+    {
+        12000,
+        scene_mono_icon_menu_loader,
+    }
 #else
     scene_basics_loader,
     scene_progress_status_loader,
@@ -331,31 +349,46 @@ static scene_loader_t * const c_SceneLoaders[] = {
 
 };
 
+static
+struct {
+    int8_t chIndex;
+    bool bIsTimeout;
+    int32_t nDelay;
+    int64_t lTimeStamp;
+    
+} s_tDemoCTRL = {
+    .chIndex = -1,
+};
 
 /* load scene one by one */
 void before_scene_switching_handler(void *pTarget,
                                     arm_2d_scene_player_t *ptPlayer,
                                     arm_2d_scene_t *ptScene)
 {
-    static int_fast8_t s_chIndex = -1;
 
     switch (arm_2d_scene_player_get_switching_status(&DISP0_ADAPTER)) {
         case ARM_2D_SCENE_SWITCH_STATUS_MANUAL_CANCEL:
-            s_chIndex--;
+            s_tDemoCTRL.chIndex--;
             break;
         default:
-            s_chIndex++;
+            s_tDemoCTRL.chIndex++;
             break;
     }
 
-    if (s_chIndex >= dimof(c_SceneLoaders)) {
-        s_chIndex = 0;
-    } else if (s_chIndex < 0) {
-        s_chIndex += dimof(c_SceneLoaders);
+    if (s_tDemoCTRL.chIndex >= dimof(c_SceneLoaders)) {
+        s_tDemoCTRL.chIndex = 0;
+    } else if (s_tDemoCTRL.chIndex < 0) {
+        s_tDemoCTRL.chIndex += dimof(c_SceneLoaders);
     }
     
     /* call loader */
-    c_SceneLoaders[s_chIndex]();
+    arm_with(const demo_scene_t, &c_SceneLoaders[s_tDemoCTRL.chIndex]) {
+        s_tDemoCTRL.bIsTimeout = false;
+        s_tDemoCTRL.lTimeStamp = 0;
+        s_tDemoCTRL.nDelay = _->nLastInMS;
+        _->fnLoader();
+    }
+
     
 }
 
@@ -436,6 +469,15 @@ int app_2d_main_thread (void *argument)
     while(1) {
         if (arm_fsm_rt_cpl == disp_adapter0_task()) {
             VT_sdl_flush(1);
+        }
+
+        if (!s_tDemoCTRL.bIsTimeout) {
+
+            if (arm_2d_helper_is_time_out(s_tDemoCTRL.nDelay, &s_tDemoCTRL.lTimeStamp)) {
+                s_tDemoCTRL.bIsTimeout = true;
+
+                arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
+            }
         }
 
         if (arm_2d_scene_player_is_switching(&DISP0_ADAPTER)) {
