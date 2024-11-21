@@ -194,11 +194,12 @@ ARM_PT_BEGIN(this.Runtime.chState)
             bool bUpdateOffset = false;
             if (0 == this.Runtime.MoveReq.nFinishInMs && 0 != this.Runtime.MoveReq.iSteps) {
                 bUpdateOffset = true;
-            } else if (__arm_2d_helper_time_liner_slider(this.Runtime.nStartOffset, /* from */
-                                                    this.Runtime.nTargetOffset,     /* to */
-                                                    this.Runtime.lPeriod,           /* finish in specified period */
-                                                    &this.Runtime.nOffset,          /* output offset */
-                                                    &this.Runtime.lTimestamp)) {    /* timestamp */
+            } else if (__arm_2d_helper_time_liner_slider(   
+                                                    this.Runtime.nStartOffset,  /* from */
+                                                    this.Runtime.nTargetOffset, /* to */
+                                                    this.Runtime.lPeriod,       /* finish in specified period */
+                                                    &this.Runtime.nOffset,      /* output offset */
+                                                    &this.Runtime.lTimestamp)) {/* timestamp */
                 if (this.tCFG.nTotalLength) {
                     this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
                 }
@@ -211,6 +212,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
             }
 
             if (bUpdateOffset) {
+                /* check whether there are new request or not */
                 if (this.Runtime.MoveReq.iSteps && this.Runtime.bIsRegCalInit) {
                     __arm_2d_list_core_move_selection(
                         ptThis, 
@@ -817,7 +819,7 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
 }
 
 static
-bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
+bool __arm_2d_list_core_update_mid_aligned( __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator)
 {
     arm_2d_list_item_t *ptItem = NULL;
@@ -916,7 +918,7 @@ bool __arm_2d_list_core_update( __arm_2d_list_core_t *ptThis,
 
 
 static
-bool __arm_2d_list_core_update_fixed_size_no_status_check( 
+bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check( 
                                         __arm_2d_list_core_t *ptThis,
                                         __arm_2d_list_item_iterator *fnIterator)
 {
@@ -1055,7 +1057,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update(ptThis, fnIterator)) {
+    if (!__arm_2d_list_core_update_mid_aligned(ptThis, fnIterator)) {
         ARM_PT_RETURN(NULL)
     }
 
@@ -1516,7 +1518,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL (
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update(ptThis, fnIterator)) {
+    if (!__arm_2d_list_core_update_mid_aligned(ptThis, fnIterator)) {
         ARM_PT_RETURN(NULL)
     }
 
@@ -1978,7 +1980,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL 
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update_fixed_size_no_status_check(  ptThis, 
+    if (!__arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(  ptThis, 
                                                                 fnIterator)) {
         ARM_PT_RETURN(NULL)
     }
@@ -2462,7 +2464,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTA
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update_fixed_size_no_status_check(  ptThis, 
+    if (!__arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(  ptThis, 
                                                                 fnIterator)) {
         ARM_PT_RETURN(NULL)
     }

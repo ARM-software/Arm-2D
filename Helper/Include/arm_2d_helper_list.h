@@ -87,6 +87,7 @@ typedef struct arm_2d_list_item_t arm_2d_list_item_t;
 typedef struct arm_2d_list_item_param_t {
     uint8_t     bIsChecked   : 1;       /*!< is this item checked */
     uint8_t     bIsSelected  : 1;       /*!< is this item seleteced */
+    uint8_t                  : 6;       /*!< reserved */
     uint8_t     chOpacity;              /*!< opacity proposal */
     uint16_t    hwRatio;                /*!< other ratio proposal */
 } arm_2d_list_item_param_t;
@@ -214,6 +215,7 @@ typedef struct __arm_2d_list_core_cfg_t {
     arm_2d_draw_list_item_handler_t         *fnOnDrawListItemBackground;        /*!< the On-Draw-List-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListBackground;            /*!< the On-Draw-List-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListCover;                 /*!< the On-Draw-List-Cover event handler */
+
     int32_t nTotalLength;                                                       /*!< the total length of the list in pixel, 0 means update later */
     arm_2d_list_item_t                      *ptItems;                           /*!< an optional pointer for items (array/list) */
     uint16_t hwItemSizeInByte;                                                  /*!< the size of the item (in byte) */
@@ -222,7 +224,8 @@ typedef struct __arm_2d_list_core_cfg_t {
 
     uint16_t bDisableRingMode               : 1;                                /*!< whether disable ring mode */
     uint16_t bDisableStatusCheck            : 1;                                /*!< whether disable the item status */
-
+    uint16_t                                : 6;
+    uint16_t                                : 8;
 } __arm_2d_list_core_cfg_t;
 
 /*!
@@ -280,13 +283,16 @@ ARM_PROTECTED(
 
     union {
         struct {
-
             int16_t iTopVisiableOffset;
             uint16_t hwTopVisibleItemID;
             
             int16_t iBottomVisibleOffset;
             uint16_t hwBottomVisibleItemID;
         } CalMidAligned;
+        struct {
+            int16_t iTopVisiableOffset;
+            uint16_t hwTopVisibleItemID;
+        } CalNormal;
     };
 )
 
