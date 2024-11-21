@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        21. Nov 2024
- * $Revision:    V.1.2.1
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -608,7 +608,7 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             return ARM_2D_ERR_OUT_OF_REGION;
         }
 
-
+    #if 0
         /* calculate compensation for iStartOffset */
         do {
             int16_t iStartOffset;
@@ -627,6 +627,10 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
         
             nOffsetChange += iStartOffset - this.iStartOffset;
         } while(0);
+    #else
+        nOffsetChange += ARM_2D_INVOKE(this.tCFG.ptCalculator->fnSelectionCompensation,
+                            ARM_2D_PARAM(ptThis, ptItem));
+    #endif
 
         /* resume id */
         ARM_2D_INVOKE(fnIterator, 
@@ -700,11 +704,6 @@ bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis)
 
     return this.Runtime.bIsMoving;
 }
-
-/*----------------------------------------------------------------------------*
- * Region Calculator                                                          *
- *----------------------------------------------------------------------------*/
-
 
 
 ARM_NONNULL(1,2)
@@ -817,6 +816,31 @@ arm_2d_list_item_t *__arm_2d_list_core_get_item(
     } while(true);
 
     return ptItem;
+}
+
+/*----------------------------------------------------------------------------*
+ * Region Calculator                                                          *
+ *----------------------------------------------------------------------------*/
+
+static
+int16_t __selection_compensation_mid_aligned(__arm_2d_list_core_t *ptThis,
+                                             arm_2d_list_item_t *ptItem)
+{
+    int16_t iStartOffset;
+    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_VERTICAL) {
+        iStartOffset
+                    = (     this.Runtime.tileList.tRegion.tSize.iHeight 
+                        -   ptItem->tSize.iHeight) 
+                    >> 1;
+    } else {
+        iStartOffset
+                    = (     this.Runtime.tileList.tRegion.tSize.iWidth 
+                        -   ptItem->tSize.iWidth) 
+                    >> 1;
+    }
+    iStartOffset -= ptItem->Padding.chPrevious;
+
+    return iStartOffset - this.iStartOffset;
 }
 
 static
@@ -1502,6 +1526,7 @@ __arm_2d_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_vertical,
+    .fnSelectionCompensation = &__selection_compensation_mid_aligned,
 };
 
 
@@ -1971,6 +1996,7 @@ __arm_2d_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_horizontal,
+    .fnSelectionCompensation = &__selection_compensation_mid_aligned,
 };
 
 
@@ -2460,6 +2486,7 @@ __arm_2d_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical,
+    .fnSelectionCompensation = &__selection_compensation_mid_aligned,
 };
 
 
@@ -2945,6 +2972,7 @@ __arm_2d_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal,
+    .fnSelectionCompensation = &__selection_compensation_mid_aligned,
 };
 
 

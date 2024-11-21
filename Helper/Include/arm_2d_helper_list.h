@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        21. Nov 2024
- * $Revision:    V.1.2.1
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -204,6 +204,8 @@ typedef const struct __arm_2d_list_region_calculator_t {
                                     __arm_2d_list_item_iterator *fnIterator,
                                     int32_t nOffset
                                 );
+    int16_t (*fnSelectionCompensation)(__arm_2d_list_core_t *ptThis,
+                                       arm_2d_list_item_t *ptItem);
 } __arm_2d_list_region_calculator_t;
 
 /*!
