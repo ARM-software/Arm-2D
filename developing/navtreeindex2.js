@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__gHelper.html#ada5ebe34cc1e12b0d9ac77d0ba1e983b":[11,7,15,1],
 "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca":[11,7,20,0],
 "group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37":[11,7,34,0],
 "group__gHelper.html#ade9b2e9c72254515f26b03877dab61a1":[11,7,4,1],
@@ -11,7 +12,6 @@ var NAVTREEINDEX2 =
 "group__gHelper.html#af254e0d0732d2f294e93c0499f6246be":[11,7,13,2],
 "group__gHelper.html#af3a87c9aafaaf4dd80597bed4c9d8e32":[11,7,54,0],
 "group__gHelper.html#afa4eefd559eb1d11d3e871aa7b35cff1":[11,7,2,10],
-"group__gHelper.html#afacca3a4ae318cf3c9ac2f439eb69450":[11,7,9,2],
 "group__gHelper.html#afcd507aa1aef13e25c183d920b598ffc":[11,7,34,4],
 "group__gHelper.html#afd82638ab5387c6ebcdb2fbf59d3a40e":[11,7,30,1],
 "group__gHelper.html#afe89e6263d786fd9e987ef38545c0265":[11,7,6,0],

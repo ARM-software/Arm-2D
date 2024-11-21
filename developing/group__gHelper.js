@@ -55,7 +55,7 @@ var group__gHelper =
     [ "__arm_2d_list_core_cfg_t", "group__gHelper.html#struct____arm__2d__list__core__cfg__t", [
       [ "tListSize", "group__gHelper.html#ab819d6694c9134bddb53e86d5b249819", null ],
       [ "fnIterator", "group__gHelper.html#ac10b78bf5e41921ce593e273cdc49b6a", null ],
-      [ "fnCalculator", "group__gHelper.html#afacca3a4ae318cf3c9ac2f439eb69450", null ],
+      [ "ptCalculator", "group__gHelper.html#a006c6719c85322d8b94f971c8ca532b8", null ],
       [ "fnOnDrawListItemBackground", "group__gHelper.html#a513a7e05045f5646c46f9f7c1b85afc9", null ],
       [ "fnOnDrawListBackground", "group__gHelper.html#a3765c30e3191e2a56ad7a79ac8f4b702", null ],
       [ "fnOnDrawListCover", "group__gHelper.html#aba0e055db89848191a010aa69d77a061", null ],
