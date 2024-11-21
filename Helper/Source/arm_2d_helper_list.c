@@ -182,7 +182,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
         if (bIsNewFrame) {
 
             if (!this.Runtime.bIsRegCalInit) {
-                ARM_2D_INVOKE(  this.tCFG.fnCalculator,
+                ARM_2D_INVOKE(  this.tCFG.fnCalculator->fnCalculator,
                             ARM_2D_PARAM(
                                 ptThis, 
                                 this.tCFG.fnIterator,
@@ -258,7 +258,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
     /* loop until finishing drawing all visiable area */
     do {
         /* call calculator: it should handle the padding */
-        if (NULL == ARM_2D_INVOKE(  this.tCFG.fnCalculator,
+        if (NULL == ARM_2D_INVOKE(  this.tCFG.fnCalculator->fnCalculator,
                         ARM_2D_PARAM(
                             ptThis, 
                             this.tCFG.fnIterator,
@@ -1037,9 +1037,9 @@ bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(
     return true;
 }
 
-
+static
 __arm_2d_list_work_area_t *
-ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL (
+__calculator_mid_aligned_vertical (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
                                 int32_t nOffset
@@ -1498,9 +1498,16 @@ ARM_PT_END()
     return NULL;
 }
 
+__arm_2d_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL = {
+    .fnCalculator = 
+        &__calculator_mid_aligned_vertical,
+};
 
+
+static
 __arm_2d_list_work_area_t *
-ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL (
+__calculator_mid_aligned_horizontal (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
                                 int32_t nOffset
@@ -1960,9 +1967,16 @@ ARM_PT_END()
     return NULL;
 }
 
+__arm_2d_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL = {
+    .fnCalculator = 
+        &__calculator_mid_aligned_horizontal,
+};
 
+
+static
 __arm_2d_list_work_area_t *
-ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL (
+__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
                                 int32_t nOffset
@@ -2442,9 +2456,16 @@ ARM_PT_END()
     return NULL;
 }
 
+__arm_2d_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL = {
+    .fnCalculator = 
+        &__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical,
+};
 
+
+static
 __arm_2d_list_work_area_t *
-ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL(
+__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
                                 int32_t nOffset
@@ -2919,6 +2940,12 @@ ARM_PT_END()
 
     return NULL;
 }
+
+__arm_2d_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL = {
+    .fnCalculator = 
+        &__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal,
+};
 
 
 

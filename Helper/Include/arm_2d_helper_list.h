@@ -198,12 +198,13 @@ typedef struct __arm_2d_list_work_area_t {
  * \param[in] iOffset the offset in the list core
  * \return __arm_2d_list_core_target_area_t* the working area for a target list core item
  */
-typedef
-__arm_2d_list_work_area_t *__arm_2d_list_region_calculator_t(
-                                __arm_2d_list_core_t *ptThis,
-                                __arm_2d_list_item_iterator *fnIterator,
-                                int32_t nOffset
-                            );
+typedef const struct __arm_2d_list_region_calculator_t {
+    __arm_2d_list_work_area_t *(*fnCalculator)(
+                                    __arm_2d_list_core_t *ptThis,
+                                    __arm_2d_list_item_iterator *fnIterator,
+                                    int32_t nOffset
+                                );
+} __arm_2d_list_region_calculator_t;
 
 /*!
  *  \brief list core configuration structure
@@ -309,7 +310,7 @@ ARM_PROTECTED(
  *  \brief a list calculator for vertical lists, which puts selected item
  *         in the centre of the target list
  */
-extern 
+extern
 __arm_2d_list_region_calculator_t 
     ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
 
