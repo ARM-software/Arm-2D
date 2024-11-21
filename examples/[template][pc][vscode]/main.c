@@ -408,7 +408,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_mono_list_loader,
+        scene_listview_loader,
+        //scene_mono_list_loader,
         //scene_gas_gauge_loader,
         //scene_meter_loader,
         //scene_compass_loader,
@@ -432,6 +433,7 @@ struct {
     
 } s_tDemoCTRL = {
     .chIndex = -1,
+    .bIsTimeout = true,
 };
 
 /* load scene one by one */
