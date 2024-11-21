@@ -746,9 +746,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa1854cd09847862f747d03736d467c6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa1854cd09847862f747d03736d467c6f">__arm_2d_list_core_move_request</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, int16_t iSteps, int32_t nFinishInMs)</td></tr>
 <tr class="memdesc:gaa1854cd09847862f747d03736d467c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">request to move selection with specified steps  <a href="group__gHelper.html#gaa1854cd09847862f747d03736d467c6f">More...</a><br /></td></tr>
 <tr class="separator:gaa1854cd09847862f747d03736d467c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga263f3e14194ec8fa2fc491efbe20344b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga263f3e14194ec8fa2fc491efbe20344b">__arm_2d_list_core_move_offset</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, int16_t iOffset)</td></tr>
-<tr class="memdesc:ga263f3e14194ec8fa2fc491efbe20344b"><td class="mdescLeft">&#160;</td><td class="mdescRight">move selection with specified pixel offset  <a href="group__gHelper.html#ga263f3e14194ec8fa2fc491efbe20344b">More...</a><br /></td></tr>
-<tr class="separator:ga263f3e14194ec8fa2fc491efbe20344b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9caef22a65c6d72cffa7ba9691a01a7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac9caef22a65c6d72cffa7ba9691a01a7">__arm_2d_list_core_get_selected_item_id</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gac9caef22a65c6d72cffa7ba9691a01a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the currently selected item id  <a href="group__gHelper.html#gac9caef22a65c6d72cffa7ba9691a01a7">More...</a><br /></td></tr>
 <tr class="separator:gac9caef22a65c6d72cffa7ba9691a01a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -8298,45 +8295,6 @@ false the scene player stays in tge current scene. </dd></dl>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="ga263f3e14194ec8fa2fc491efbe20344b" name="ga263f3e14194ec8fa2fc491efbe20344b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga263f3e14194ec8fa2fc491efbe20344b">&#9670;&nbsp;</a></span>__arm_2d_list_core_move_offset()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void __arm_2d_list_core_move_offset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *&#160;</td>
-          <td class="paramname"><em>ptThis</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>iOffset</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>move selection with specified pixel offset </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iOffset</td><td>number of pixels, here negative value means move to previous items and positive value means move to next items </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>for current stage, ring mode is permanently enabled.</dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>arm_2d_err_t the operation result </dd></dl>
 
 </div>
 </div>
