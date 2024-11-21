@@ -62,7 +62,10 @@ typedef struct list_view_cfg_t {
     arm_2d_helper_draw_handler_t        *fnOnDrawListCover;                     /*!< the On-Draw-List-Core-Cover event handler */
 
     __arm_2d_list_item_iterator         *fnIterator;
-    __arm_2d_list_region_calculator_t   *fnCalculator;
+    union {
+        __arm_2d_list_region_calculator_t   *fnCalculator;                      /*!< deprecated alias */
+        __arm_2d_list_region_calculator_t   *ptCalculator;                      
+    };
     arm_2d_list_item_t *ptItems;
     uint16_t hwCount;
     uint16_t hwItemSizeInByte;

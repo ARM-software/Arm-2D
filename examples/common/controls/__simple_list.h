@@ -117,7 +117,7 @@ ARM_PROTECTED_METHOD(
     arm_2d_err_t __simple_list_init(
                                 __simple_list_t *ptThis, 
                                 __simple_list_cfg_t *ptCFG,
-                                __arm_2d_list_region_calculator_t *fnCalculator);
+                                __arm_2d_list_region_calculator_t *ptCalculator);
 
     extern
     ARM_NONNULL(1,2)
