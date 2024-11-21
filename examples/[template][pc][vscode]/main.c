@@ -407,7 +407,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 
 #else
     {
-        scene_gas_gauge_loader,
+        .fnLoader = 
+        scene_mono_list_loader,
+        //scene_gas_gauge_loader,
         //scene_meter_loader,
         //scene_compass_loader,
         //scene_basics_loader,
