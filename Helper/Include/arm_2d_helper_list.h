@@ -212,7 +212,10 @@ typedef const struct __arm_2d_list_region_calculator_t {
 typedef struct __arm_2d_list_core_cfg_t {
     arm_2d_size_t tListSize;                                                    /*!< the size of the list */
     __arm_2d_list_item_iterator             *fnIterator;                        /*!< the item iterator */
-    __arm_2d_list_region_calculator_t       *ptCalculator;                      /*!< the region calculator */
+    union {
+        __arm_2d_list_region_calculator_t   *ptCalculator;                      /*!< the region calculator */
+        __arm_2d_list_region_calculator_t   *fnCalculator;                      /*!< deprecated alias */
+    };
     arm_2d_draw_list_item_handler_t         *fnOnDrawListItemBackground;        /*!< the On-Draw-List-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListBackground;            /*!< the On-Draw-List-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListCover;                 /*!< the On-Draw-List-Cover event handler */
