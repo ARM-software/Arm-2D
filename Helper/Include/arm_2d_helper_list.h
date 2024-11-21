@@ -67,6 +67,9 @@ extern "C" {
 #define ARM_2D_LIST_VIEW_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL                   \
             ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL
 
+#define __arm_2d_list_region_calculator_t                                       \
+            arm_2d_i_list_region_calculator_t
+
 /*! @} */
 
 /*!
