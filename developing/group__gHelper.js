@@ -41,9 +41,9 @@ var group__gHelper =
     [ "arm_2d_list_item_t", "group__gHelper.html#structarm__2d__list__item__t", [
       [ "ARM_PROTECTED", "group__gHelper.html#afe89e6263d786fd9e987ef38545c0265", null ],
       [ "ptListView", "group__gHelper.html#aa08b110b88b03a63760577d4ac9dfbbb", null ],
+      [ "fnOnDrawItem", "group__gHelper.html#a197d719a798339948f3c62098d09810f", null ],
       [ "tSize", "group__gHelper.html#a3169b2593cba09c104848d881340e3a1", null ],
-      [ "pTarget", "group__gHelper.html#a7173bd79d6065cf60f37b6eff8281c8b", null ],
-      [ "fnOnDrawItem", "group__gHelper.html#a197d719a798339948f3c62098d09810f", null ]
+      [ "pTarget", "group__gHelper.html#a7173bd79d6065cf60f37b6eff8281c8b", null ]
     ] ],
     [ "__arm_2d_list_work_area_t", "group__gHelper.html#struct____arm__2d__list__work__area__t", [
       [ "ptItem", "group__gHelper.html#a1622a78cb139621ed3ffb30219e2cd6d", null ],
