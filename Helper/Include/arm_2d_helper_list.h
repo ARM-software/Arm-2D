@@ -198,7 +198,7 @@ typedef struct __arm_2d_list_work_area_t {
  * \param[in] iOffset the offset in the list core
  * \return __arm_2d_list_core_target_area_t* the working area for a target list core item
  */
-typedef const struct __arm_2d_list_region_calculator_t {
+typedef const struct arm_2d_i_list_region_calculator_t {
     __arm_2d_list_work_area_t *(*fnCalculator)(
                                     __arm_2d_list_core_t *ptThis,
                                     __arm_2d_list_item_iterator *fnIterator,
@@ -206,7 +206,7 @@ typedef const struct __arm_2d_list_region_calculator_t {
                                 );
     int16_t (*fnSelectionCompensation)(__arm_2d_list_core_t *ptThis,
                                        arm_2d_list_item_t *ptItem);
-} __arm_2d_list_region_calculator_t;
+} arm_2d_i_list_region_calculator_t;
 
 /*!
  *  \brief list core configuration structure
@@ -215,8 +215,8 @@ typedef struct __arm_2d_list_core_cfg_t {
     arm_2d_size_t tListSize;                                                    /*!< the size of the list */
     __arm_2d_list_item_iterator             *fnIterator;                        /*!< the item iterator */
     union {
-        __arm_2d_list_region_calculator_t   *ptCalculator;                      /*!< the region calculator */
-        __arm_2d_list_region_calculator_t   *fnCalculator;                      /*!< deprecated alias */
+        arm_2d_i_list_region_calculator_t   *ptCalculator;                      /*!< the region calculator */
+        arm_2d_i_list_region_calculator_t   *fnCalculator;                      /*!< deprecated alias */
     };
     arm_2d_draw_list_item_handler_t         *fnOnDrawListItemBackground;        /*!< the On-Draw-List-Item-Background event handler */
     arm_2d_helper_draw_handler_t            *fnOnDrawListBackground;            /*!< the On-Draw-List-Background event handler */
@@ -316,7 +316,7 @@ ARM_PROTECTED(
  *         in the centre of the target list
  */
 extern
-__arm_2d_list_region_calculator_t 
+arm_2d_i_list_region_calculator_t 
     ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL;
 
 /*!
@@ -324,7 +324,7 @@ __arm_2d_list_region_calculator_t
  *         in the centre of the target list
  */
 extern
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
     ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL;
     
 /*!
@@ -333,7 +333,7 @@ __arm_2d_list_region_calculator_t
  *         checking (i.e. visible or enabled).
  */
 extern
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL;
 
 /*!
@@ -342,7 +342,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL;
  *         checking (i.e. visible or enabled).
  */
 extern
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL;
 
 /*!

@@ -260,7 +260,7 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
 ARM_NONNULL(1,2)
 arm_2d_err_t __simple_list_init(__simple_list_t *ptThis, 
                                 __simple_list_cfg_t *ptCFG,
-                                __arm_2d_list_region_calculator_t *ptCalculator)
+                                arm_2d_i_list_region_calculator_t *ptCalculator)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);

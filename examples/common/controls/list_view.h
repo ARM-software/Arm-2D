@@ -63,8 +63,8 @@ typedef struct list_view_cfg_t {
 
     __arm_2d_list_item_iterator         *fnIterator;
     union {
-        __arm_2d_list_region_calculator_t   *fnCalculator;                      /*!< deprecated alias */
-        __arm_2d_list_region_calculator_t   *ptCalculator;                      
+        arm_2d_i_list_region_calculator_t   *fnCalculator;                      /*!< deprecated alias */
+        arm_2d_i_list_region_calculator_t   *ptCalculator;                      
     };
     arm_2d_list_item_t *ptItems;
     uint16_t hwCount;

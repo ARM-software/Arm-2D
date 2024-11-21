@@ -1522,7 +1522,7 @@ ARM_PT_END()
     return NULL;
 }
 
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_vertical,
@@ -1992,7 +1992,7 @@ ARM_PT_END()
     return NULL;
 }
 
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_horizontal,
@@ -2482,7 +2482,7 @@ ARM_PT_END()
     return NULL;
 }
 
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical,
@@ -2968,7 +2968,7 @@ ARM_PT_END()
     return NULL;
 }
 
-__arm_2d_list_region_calculator_t
+arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal,
