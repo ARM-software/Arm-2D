@@ -258,9 +258,13 @@ ARM_PROTECTED(
             arm_2d_tile_t                   tileItem;                           /*!< the target tile for list items */
             int64_t                         lPeriod;                            /*!< time to run target distance */
             int64_t                         lTimestamp;                         /*!< timestamp used by animation */
-            int32_t                         nOffset;                            /*!< list offset */
-            int32_t                         nStartOffset;                       /*!< the start offset */
-            int32_t                         nTargetOffset;                      /*!< the target list offset */
+
+            struct {
+                int32_t                     nOffset;                            /*!< list offset */
+                int32_t                     nStartOffset;                       /*!< the start offset */
+                int32_t                     nTargetOffset;                      /*!< the target list offset */
+            } Selection;
+
             uint16_t                        hwSelection;                        /*!< item selection */
             uint8_t                         chState;                            /*!< state used by list core task */
             uint8_t                         bIsMoving   : 1;                    /*!< a flag to indicate whether the list is moving */

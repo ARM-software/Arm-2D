@@ -186,25 +186,25 @@ ARM_PT_BEGIN(this.Runtime.chState)
                             ARM_2D_PARAM(
                                 ptThis, 
                                 this.tCFG.fnIterator,
-                                this.Runtime.nOffset));
+                                this.Runtime.Selection.nOffset));
                 this.chState = 0;
             }
 
-            int32_t nOldOffset = this.Runtime.nOffset;
+            int32_t nOldOffset = this.Runtime.Selection.nOffset;
             bool bUpdateOffset = false;
             if (0 == this.Runtime.MoveReq.nFinishInMs && 0 != this.Runtime.MoveReq.iSteps) {
                 bUpdateOffset = true;
             } else if (__arm_2d_helper_time_liner_slider(   
-                                                    this.Runtime.nStartOffset,  /* from */
-                                                    this.Runtime.nTargetOffset, /* to */
+                                                    this.Runtime.Selection.nStartOffset,  /* from */
+                                                    this.Runtime.Selection.nTargetOffset, /* to */
                                                     this.Runtime.lPeriod,       /* finish in specified period */
-                                                    &this.Runtime.nOffset,      /* output offset */
+                                                    &this.Runtime.Selection.nOffset,      /* output offset */
                                                     &this.Runtime.lTimestamp)) {/* timestamp */
                 if (this.tCFG.nTotalLength) {
-                    this.Runtime.nOffset = this.Runtime.nOffset % this.tCFG.nTotalLength;
+                    this.Runtime.Selection.nOffset = this.Runtime.Selection.nOffset % this.tCFG.nTotalLength;
                 }
-                this.Runtime.nTargetOffset = this.Runtime.nOffset;
-                this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
+                this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
+                this.Runtime.Selection.nStartOffset = this.Runtime.Selection.nTargetOffset;
 
                 this.Runtime.bIsMoving = false;     /* update flag to indicate moving complete */
 
@@ -224,7 +224,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                 }
             }
 
-            if (nOldOffset != this.Runtime.nOffset) {
+            if (nOldOffset != this.Runtime.Selection.nOffset) {
                 this.Runtime.bNeedRedraw = true;    /* update the sticky bit, it is cleared by user */
             }
         }
@@ -262,7 +262,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         ARM_2D_PARAM(
                             ptThis, 
                             this.tCFG.fnIterator,
-                            this.Runtime.nOffset))) {
+                            this.Runtime.Selection.nOffset))) {
             /* finish: use the unified exist point */
             //goto label_end_of_list_core_task;
             break;
@@ -427,8 +427,8 @@ void __arm_2d_list_core_move_offset(__arm_2d_list_core_t *ptThis,
     assert(NULL != ptThis);
 
     arm_irq_safe {
-        this.Runtime.nOffset += iOffset;
-        this.Runtime.nTargetOffset = this.Runtime.nOffset;
+        this.Runtime.Selection.nOffset += iOffset;
+        this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
     }
 }
 #endif
@@ -628,7 +628,6 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             nOffsetChange += iStartOffset - this.iStartOffset;
         } while(0);
 
-
         /* resume id */
         ARM_2D_INVOKE(fnIterator, 
                     ARM_2D_PARAM(
@@ -641,19 +640,19 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
     if (0 == nFinishInMs) {
         /* jump to the new position immediately */
         arm_irq_safe {
-            int32_t nNewOffset = this.Runtime.nTargetOffset + nOffsetChange;
+            int32_t nNewOffset = this.Runtime.Selection.nTargetOffset + nOffsetChange;
 
             if (this.tCFG.nTotalLength) {
                 nNewOffset = nNewOffset % this.tCFG.nTotalLength;
             }
 
-            if (this.Runtime.nOffset != nNewOffset) {
+            if (this.Runtime.Selection.nOffset != nNewOffset) {
                 this.Runtime.bNeedRedraw = true;
             }
-            this.Runtime.nOffset = nNewOffset;
+            this.Runtime.Selection.nOffset = nNewOffset;
 
-            this.Runtime.nTargetOffset = this.Runtime.nOffset;
-            this.Runtime.nStartOffset = this.Runtime.nTargetOffset;
+            this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
+            this.Runtime.Selection.nStartOffset = this.Runtime.Selection.nTargetOffset;
             this.Runtime.bIsMoving = false;  /* update flag to indicate the list is moving */
             this.Runtime.hwSelection = hwTargetID;
 
@@ -665,8 +664,8 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
     } else {
         arm_irq_safe {
             this.Runtime.hwSelection = hwTargetID;
-            this.Runtime.nStartOffset = this.Runtime.nOffset;
-            this.Runtime.nTargetOffset += nOffsetChange;
+            this.Runtime.Selection.nStartOffset = this.Runtime.Selection.nOffset;
+            this.Runtime.Selection.nTargetOffset += nOffsetChange;
             this.Runtime.lPeriod = lPeriod;
             this.Runtime.lTimestamp = 0;
             this.Runtime.bIsMoving = true;  /* update flag to indicate the list is moving */
