@@ -751,7 +751,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.4.1" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.4.2" condition="Arm-2D-Demos">
           <description>An series of demos for monochrome screens, for example OLEDs and e-ink paper devices. </description>
           <files>
             <!-- scene for loading -->
