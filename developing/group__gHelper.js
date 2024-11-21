@@ -51,6 +51,7 @@ var group__gHelper =
       [ "tParam", "group__gHelper.html#a1433bc4e8532711ae843a50f3e39e8f0", null ],
       [ "tDirection", "group__gHelper.html#a7cb2dee12ae53adb466e49351e9dbf45", null ]
     ] ],
+    [ "__arm_2d_list_region_calculator_t", "group__gHelper.html#struct____arm__2d__list__region__calculator__t", null ],
     [ "__arm_2d_list_core_cfg_t", "group__gHelper.html#struct____arm__2d__list__core__cfg__t", [
       [ "tListSize", "group__gHelper.html#ab819d6694c9134bddb53e86d5b249819", null ],
       [ "fnIterator", "group__gHelper.html#ac10b78bf5e41921ce593e273cdc49b6a", null ],
@@ -250,7 +251,6 @@ var group__gHelper =
     [ "arm_2d_scene_evt_handler_t", "group__gHelper.html#ga9be1d5e5f595e5a508e7092c61acc8c2", null ],
     [ "arm_2d_draw_list_item_handler_t", "group__gHelper.html#ga9f0651d2b31254292c76ea8b7cb70ef3", null ],
     [ "__arm_2d_list_item_iterator", "group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c", null ],
-    [ "__arm_2d_list_region_calculator_t", "group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af", null ],
     [ "arm_2d_helper_2d_copy_handler_t", "group__gHelper.html#gaaab8492558fc9281237e674a44b599fe", null ],
     [ "arm_2d_helper_dma_copy_handler_t", "group__gHelper.html#gae9d5b9ed784066838051d514da062d09", null ],
     [ "arm_2d_helper_render_handler_t", "group__gHelper.html#ga03c2991d31bd58c8a1d5303fb9460f39", null ],

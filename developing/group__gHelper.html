@@ -141,6 +141,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:struct____arm__2d__list__work__area__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#struct____arm__2d__list__work__area__t">__arm_2d_list_work_area_t</a></td></tr>
 <tr class="memdesc:struct____arm__2d__list__work__area__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the target working area for one list core item  <a href="group__gHelper.html#struct____arm__2d__list__work__area__t">More...</a><br /></td></tr>
 <tr class="separator:struct____arm__2d__list__work__area__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:struct____arm__2d__list__region__calculator__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a></td></tr>
+<tr class="memdesc:struct____arm__2d__list__region__calculator__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the list region calculaor prototype  <a href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">More...</a><br /></td></tr>
+<tr class="separator:struct____arm__2d__list__region__calculator__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct____arm__2d__list__core__cfg__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#struct____arm__2d__list__core__cfg__t">__arm_2d_list_core_cfg_t</a></td></tr>
 <tr class="memdesc:struct____arm__2d__list__core__cfg__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">list core configuration structure  <a href="group__gHelper.html#struct____arm__2d__list__core__cfg__t">More...</a><br /></td></tr>
 <tr class="separator:struct____arm__2d__list__core__cfg__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -491,9 +494,6 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga9386fa1f341f20129ee0287d2b6b6e5c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__gHelper.html#structarm__2d__list__item__t">arm_2d_list_item_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a>(<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b">arm_2d_list_iterator_dir_t</a> tDirection, uint_fast16_t hwID)</td></tr>
 <tr class="memdesc:ga9386fa1f341f20129ee0287d2b6b6e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">the list core interator prototype  <a href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">More...</a><br /></td></tr>
 <tr class="separator:ga9386fa1f341f20129ee0287d2b6b6e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2cb33a1a276c172c7bac125fc554d9af"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group__gHelper.html#struct____arm__2d__list__work__area__t">__arm_2d_list_work_area_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a>(<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a> *fnIterator, int32_t nOffset)</td></tr>
-<tr class="memdesc:ga2cb33a1a276c172c7bac125fc554d9af"><td class="mdescLeft">&#160;</td><td class="mdescRight">the list region calculaor prototype  <a href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">More...</a><br /></td></tr>
-<tr class="separator:ga2cb33a1a276c172c7bac125fc554d9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaab8492558fc9281237e674a44b599fe"><td class="memItemLeft" align="right" valign="top">typedef bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaaab8492558fc9281237e674a44b599fe">arm_2d_helper_2d_copy_handler_t</a>(<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, void *pObj, uintptr_t pnSource, uint32_t wSourceStride, uintptr_t pnTarget, uint32_t wTargetStride, int16_t iWidth, int16_t iHeight, uint_fast8_t chBytePerPixel)</td></tr>
 <tr class="memdesc:gaaab8492558fc9281237e674a44b599fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">An interface for 2D-Copy.  <a href="group__gHelper.html#gaaab8492558fc9281237e674a44b599fe">More...</a><br /></td></tr>
 <tr class="separator:gaaab8492558fc9281237e674a44b599fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1225,16 +1225,16 @@ Variables</h2></td></tr>
 <tr class="memitem:ga2f6dfd79f2a585af7af2fc4088985f6a"><td class="memItemLeft" align="right" valign="top"><a id="ga2f6dfd79f2a585af7af2fc4088985f6a" name="ga2f6dfd79f2a585af7af2fc4088985f6a"></a>
 <a class="el" href="group__gHelper.html#structarm__2d__scene__switch__mode__t">arm_2d_scene_switch_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_SCENE_SWITCH_MODE_FLY_IN_FROM_BOTTOM</b></td></tr>
 <tr class="separator:ga2f6dfd79f2a585af7af2fc4088985f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5dba585d0d04b6e9ab0aa523f307599"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab5dba585d0d04b6e9ab0aa523f307599">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL</a></td></tr>
+<tr class="memitem:gab5dba585d0d04b6e9ab0aa523f307599"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab5dba585d0d04b6e9ab0aa523f307599">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL</a></td></tr>
 <tr class="memdesc:gab5dba585d0d04b6e9ab0aa523f307599"><td class="mdescLeft">&#160;</td><td class="mdescRight">a list calculator for vertical lists, which puts selected item in the centre of the target list  <a href="group__gHelper.html#gab5dba585d0d04b6e9ab0aa523f307599">More...</a><br /></td></tr>
 <tr class="separator:gab5dba585d0d04b6e9ab0aa523f307599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga181cf77611f1311782f7a4826504cc7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga181cf77611f1311782f7a4826504cc7e">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL</a></td></tr>
+<tr class="memitem:ga181cf77611f1311782f7a4826504cc7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga181cf77611f1311782f7a4826504cc7e">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL</a></td></tr>
 <tr class="memdesc:ga181cf77611f1311782f7a4826504cc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">a list calculator for horizontal lists, which puts selected item in the centre of the target list  <a href="group__gHelper.html#ga181cf77611f1311782f7a4826504cc7e">More...</a><br /></td></tr>
 <tr class="separator:ga181cf77611f1311782f7a4826504cc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga069605cacc9a8b1412f81f7266fc517e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga069605cacc9a8b1412f81f7266fc517e">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL</a></td></tr>
+<tr class="memitem:ga069605cacc9a8b1412f81f7266fc517e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga069605cacc9a8b1412f81f7266fc517e">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL</a></td></tr>
 <tr class="memdesc:ga069605cacc9a8b1412f81f7266fc517e"><td class="mdescLeft">&#160;</td><td class="mdescRight">a list calculator for vertical lists, which puts selected item in the centre of the target list, item size is fixed and no status checking (i.e. visible or enabled).  <a href="group__gHelper.html#ga069605cacc9a8b1412f81f7266fc517e">More...</a><br /></td></tr>
 <tr class="separator:ga069605cacc9a8b1412f81f7266fc517e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa630be50222997f2ad230c49fa98e9a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa630be50222997f2ad230c49fa98e9a7">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL</a></td></tr>
+<tr class="memitem:gaa630be50222997f2ad230c49fa98e9a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa630be50222997f2ad230c49fa98e9a7">ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL</a></td></tr>
 <tr class="memdesc:gaa630be50222997f2ad230c49fa98e9a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">a list calculator for horizontal lists, which puts selected item in the centre of the target list, item size is fixed and no status checking (i.e. visible or enabled).  <a href="group__gHelper.html#gaa630be50222997f2ad230c49fa98e9a7">More...</a><br /></td></tr>
 <tr class="separator:gaa630be50222997f2ad230c49fa98e9a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaca10c08e0da40d9b8917fcaba134c07d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaca10c08e0da40d9b8917fcaba134c07d">ARM_2D_LIST_ITERATOR_ARRAY</a></td></tr>
@@ -2004,6 +2004,35 @@ tDirection</td>
 
 </div>
 </div>
+<a name="struct____arm__2d__list__region__calculator__t" id="struct____arm__2d__list__region__calculator__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#struct____arm__2d__list__region__calculator__t">&#9670;&nbsp;</a></span>__arm_2d_list_region_calculator_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct __arm_2d_list_region_calculator_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >the list region calculaor prototype </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">iOffset</td><td>the offset in the list core </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>__arm_2d_list_core_target_area_t* the working area for a target list core item </dd></dl>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ad276ffa6a7bdd56967d414394dd8b52a"><td class="memItemLeft" align="right" valign="top"><a id="ad276ffa6a7bdd56967d414394dd8b52a" name="ad276ffa6a7bdd56967d414394dd8b52a"></a>
+<a class="el" href="group__gHelper.html#struct____arm__2d__list__work__area__t">__arm_2d_list_work_area_t</a> *(*&#160;</td><td class="memItemRight" valign="bottom"><b>fnCalculator</b> )(<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a> *fnIterator, int32_t nOffset)</td></tr>
+<tr class="separator:ad276ffa6a7bdd56967d414394dd8b52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
 <a name="struct____arm__2d__list__core__cfg__t" id="struct____arm__2d__list__core__cfg__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#struct____arm__2d__list__core__cfg__t">&#9670;&nbsp;</a></span>__arm_2d_list_core_cfg_t</h2>
 
@@ -2033,7 +2062,7 @@ fnIterator</td>
 <p >the item iterator </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a id="afacca3a4ae318cf3c9ac2f439eb69450" name="afacca3a4ae318cf3c9ac2f439eb69450"></a><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a> *</td>
+<a id="afacca3a4ae318cf3c9ac2f439eb69450" name="afacca3a4ae318cf3c9ac2f439eb69450"></a><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a> *</td>
 <td class="fieldname">
 fnCalculator</td>
 <td class="fielddoc">
@@ -6949,30 +6978,6 @@ nTimeResidual</td>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_list_item_t* a list item </dd></dl>
-
-</div>
-</div>
-<a id="ga2cb33a1a276c172c7bac125fc554d9af" name="ga2cb33a1a276c172c7bac125fc554d9af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2cb33a1a276c172c7bac125fc554d9af">&#9670;&nbsp;</a></span>__arm_2d_list_region_calculator_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="group__gHelper.html#struct____arm__2d__list__work__area__t">__arm_2d_list_work_area_t</a> * __arm_2d_list_region_calculator_t(<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c">__arm_2d_list_item_iterator</a> *fnIterator, int32_t nOffset)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>the list region calculaor prototype </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">iOffset</td><td>the offset in the list core </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>__arm_2d_list_core_target_area_t* the working area for a target list core item </dd></dl>
 
 </div>
 </div>
@@ -13016,7 +13021,7 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL</td>
+          <td class="memname"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL</td>
         </tr>
       </table>
   </td>
@@ -13040,7 +13045,7 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL</td>
+          <td class="memname"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL</td>
         </tr>
       </table>
   </td>
@@ -13064,7 +13069,7 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL</td>
+          <td class="memname"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL</td>
         </tr>
       </table>
   </td>
@@ -13088,7 +13093,7 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL</td>
+          <td class="memname"><a class="el" href="group__gHelper.html#struct____arm__2d__list__region__calculator__t">__arm_2d_list_region_calculator_t</a> ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL</td>
         </tr>
       </table>
   </td>

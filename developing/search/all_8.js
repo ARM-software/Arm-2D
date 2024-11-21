@@ -67,7 +67,7 @@ var searchData=
   ['_5f_5farm_5f2d_5flist_5fcore_5fshow_64',['__arm_2d_list_core_show',['../group__gHelper.html#gaa8b5edc78d3535a1795bff6c024685ac',1,'arm_2d_helper_list.h']]],
   ['_5f_5farm_5f2d_5flist_5fcore_5ft_65',['__arm_2d_list_core_t',['../group__gHelper.html#struct____arm__2d__list__core__t',1,'']]],
   ['_5f_5farm_5f2d_5flist_5fitem_5fiterator_66',['__arm_2d_list_item_iterator',['../group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c',1,'arm_2d_helper_list.h']]],
-  ['_5f_5farm_5f2d_5flist_5fregion_5fcalculator_5ft_67',['__arm_2d_list_region_calculator_t',['../group__gHelper.html#ga2cb33a1a276c172c7bac125fc554d9af',1,'arm_2d_helper_list.h']]],
+  ['_5f_5farm_5f2d_5flist_5fregion_5fcalculator_5ft_67',['__arm_2d_list_region_calculator_t',['../group__gHelper.html#struct____arm__2d__list__region__calculator__t',1,'']]],
   ['_5f_5farm_5f2d_5flist_5fwork_5farea_5ft_68',['__arm_2d_list_work_area_t',['../group__gHelper.html#struct____arm__2d__list__work__area__t',1,'']]],
   ['_5f_5farm_5f2d_5flog_5fchannel_5fmask_5ffilter_5f_5f_69',['__ARM_2D_LOG_CHANNEL_MASK_FILTER__',['../group__gKernel.html#gabb97f095c1b7008ddc040dd2e4ee8956',1,'arm_2d_utils.h']]],
   ['_5f_5farm_5f2d_5flog_5fmax_5fstring_5flen_5f_5f_70',['__ARM_2D_LOG_MAX_STRING_LEN__',['../group__gKernel.html#gaccb1514908427de165810b052fc7fcc6',1,'arm_2d_utils.h']]],
