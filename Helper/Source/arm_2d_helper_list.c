@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        21. Nov 2024
- * $Revision:    V.1.3.0
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -333,6 +333,12 @@ ARM_PT_BEGIN(this.Runtime.chState)
         /* update selected field */
         this.Runtime.tWorkingArea.tParam.bIsSelected 
             = (this.Runtime.hwSelection == ptItem->hwID);
+
+        if (!arm_2d_helper_pfb_is_region_active(&this.Runtime.tileList, 
+                                                &this.Runtime.tWorkingArea.tRegion, 
+                                                true)) {
+            continue;
+        }
 
         if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileList, 
                                                &this.Runtime.tWorkingArea.tRegion,
