@@ -51,6 +51,12 @@ extern "C" {
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+#define text_list_init(__TEXT_LIST_PTR, __CFG_PTR, ...)                         \
+            __text_list_init(   (__TEXT_LIST_PTR),                              \
+                                (__CFG_PTR),                                    \
+                                (&ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL, ##__VA_ARGS__))
+
+
 /*============================ TYPES =========================================*/
 
 typedef char * __disp_string_t ;
@@ -77,9 +83,10 @@ typedef struct text_list_t {
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1,2)
-arm_2d_err_t text_list_init(  text_list_t *ptThis, 
-                                text_list_cfg_t *ptCFG);
+ARM_NONNULL(1,2,3)
+arm_2d_err_t __text_list_init(  text_list_t *ptThis, 
+                                text_list_cfg_t *ptCFG,
+                                arm_2d_i_list_region_calculator_t *ptCalculator);
 
 extern
 ARM_NONNULL(1)

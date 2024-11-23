@@ -119,18 +119,21 @@ arm_fsm_rt_t __arm_2d_text_list_draw_list_core_item(
     return arm_fsm_rt_cpl;
 }
 
-ARM_NONNULL(1,2)
-arm_2d_err_t text_list_init(  text_list_t *ptThis, 
-                        text_list_cfg_t *ptCFG)
+ARM_NONNULL(1,2,3)
+arm_2d_err_t __text_list_init(  text_list_t *ptThis, 
+                                text_list_cfg_t *ptCFG,
+                                arm_2d_i_list_region_calculator_t *ptCalculator)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
     assert(NULL != ptCFG->ptStrings);
+    assert(NULL != ptCalculator);
 
     arm_2d_err_t tResult =  __simple_list_init(
         &this.use_as____simple_list_t,
         &ptCFG->use_as____simple_list_cfg_t,
-        &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL);
+        ptCalculator);
+        //&ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL);
 
     if (ARM_2D_ERR_NONE != tResult) {
         return tResult;
