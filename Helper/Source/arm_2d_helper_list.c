@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        21. Nov 2024
- * $Revision:    V.1.3.1
+ * $Date:        24. Nov 2024
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -186,7 +186,9 @@ ARM_PT_BEGIN(this.Runtime.chState)
                             ARM_2D_PARAM(
                                 ptThis, 
                                 this.tCFG.fnIterator,
-                                this.Runtime.Selection.nOffset));
+                                //this.Runtime.Selection.nOffset
+                                this.nOffset
+                                ));
                 this.chState = 0;
             }
 
@@ -201,8 +203,16 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                                     &this.Runtime.Selection.nOffset,      /* output offset */
                                                     &this.Runtime.lTimestamp)) {/* timestamp */
                 if (this.tCFG.nTotalLength) {
-                    this.Runtime.Selection.nOffset = this.Runtime.Selection.nOffset % this.tCFG.nTotalLength;
+                    int32_t nModeResult = this.Runtime.Selection.nOffset % this.tCFG.nTotalLength;
+                    if (ABS(this.Runtime.Selection.nOffset) > this.tCFG.nTotalLength) {
+                        if (this.Runtime.Selection.nOffset > 0) {
+                            this.Runtime.Selection.nOffset = nModeResult + this.tCFG.nTotalLength;
+                        } else {
+                            this.Runtime.Selection.nOffset = nModeResult - this.tCFG.nTotalLength;
+                        }
+                    }
                 }
+
                 this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
                 this.Runtime.Selection.nStartOffset = this.Runtime.Selection.nTargetOffset;
 
@@ -262,7 +272,9 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         ARM_2D_PARAM(
                             ptThis, 
                             this.tCFG.fnIterator,
-                            this.Runtime.Selection.nOffset))) {
+                            //this.Runtime.Selection.nOffset
+                            this.nOffset
+                            ))) {
             /* finish: use the unified exist point */
             //goto label_end_of_list_core_task;
             break;
@@ -653,7 +665,14 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
             int32_t nNewOffset = this.Runtime.Selection.nTargetOffset + nOffsetChange;
 
             if (this.tCFG.nTotalLength) {
-                nNewOffset = nNewOffset % this.tCFG.nTotalLength;
+                int32_t nModeResult = nNewOffset % this.tCFG.nTotalLength;
+                if (ABS(nNewOffset) > this.tCFG.nTotalLength) {
+                    if (nNewOffset > 0) {
+                        nNewOffset = nModeResult + this.tCFG.nTotalLength;
+                    } else {
+                        nNewOffset = nModeResult - this.tCFG.nTotalLength;
+                    }
+                }
             }
 
             if (this.Runtime.Selection.nOffset != nNewOffset) {
@@ -850,8 +869,10 @@ int16_t __selection_compensation_mid_aligned(__arm_2d_list_core_t *ptThis,
 }
 
 static
-bool __arm_2d_list_core_update_mid_aligned( __arm_2d_list_core_t *ptThis,
-                                __arm_2d_list_item_iterator *fnIterator)
+bool __arm_2d_list_core_update_normal( 
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                bool bMidAligned)
 {
     arm_2d_list_item_t *ptItem = NULL;
     
@@ -872,16 +893,20 @@ bool __arm_2d_list_core_update_mid_aligned( __arm_2d_list_core_t *ptThis,
             return false;
         }
 
-        if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.iStartOffset
-            = (     this.Runtime.tileList.tRegion.tSize.iWidth 
-                -   ptItem->tSize.iWidth) 
-            >> 1;
+        if (bMidAligned) {
+            if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                this.iStartOffset
+                = (     this.Runtime.tileList.tRegion.tSize.iWidth 
+                    -   ptItem->tSize.iWidth) 
+                >> 1;
+            } else {
+                this.iStartOffset
+                = (     this.Runtime.tileList.tRegion.tSize.iHeight 
+                    -   ptItem->tSize.iHeight) 
+                >> 1;
+            }
         } else {
-            this.iStartOffset
-            = (     this.Runtime.tileList.tRegion.tSize.iHeight 
-                -   ptItem->tSize.iHeight) 
-            >> 1;
+            this.iStartOffset = 0;
         }
         
         this.iStartOffset -= ptItem->Padding.chPrevious;
@@ -949,12 +974,14 @@ bool __arm_2d_list_core_update_mid_aligned( __arm_2d_list_core_t *ptThis,
 
 
 static
-bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check( 
+bool __arm_2d_list_core_update_fixed_size_no_status_check( 
                                         __arm_2d_list_core_t *ptThis,
-                                        __arm_2d_list_item_iterator *fnIterator)
+                                        __arm_2d_list_item_iterator *fnIterator,
+                                        bool bMidAligned)
 {
     arm_2d_list_item_t *ptItem = NULL;
     
+
     /* update start-offset */
     if (this.bListSizeChanged) {
         this.bListSizeChanged = false;
@@ -972,16 +999,20 @@ bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(
             return false;
         }
 
-        if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.iStartOffset
-            = (     this.Runtime.tileList.tRegion.tSize.iWidth 
-                -   ptItem->tSize.iWidth) 
-            >> 1;
+        if (bMidAligned) {
+            if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                this.iStartOffset
+                = (     this.Runtime.tileList.tRegion.tSize.iWidth 
+                    -   ptItem->tSize.iWidth) 
+                >> 1;
+            } else {
+                this.iStartOffset
+                = (     this.Runtime.tileList.tRegion.tSize.iHeight 
+                    -   ptItem->tSize.iHeight) 
+                >> 1;
+            }
         } else {
-            this.iStartOffset
-            = (     this.Runtime.tileList.tRegion.tSize.iHeight 
-                -   ptItem->tSize.iHeight) 
-            >> 1;
+            this.iStartOffset = 0;
         }
         
         this.iStartOffset -= ptItem->Padding.chPrevious;
@@ -992,7 +1023,6 @@ bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(
         uint16_t hwItemCount = 0; 
         uint32_t nTotalLength = 0;
         
-        /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
                             ptThis, 
                             fnIterator, 
@@ -1038,7 +1068,7 @@ bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(
         this.tCFG.nTotalLength = nTotalLength;
         this.tCFG.hwItemCount = hwItemCount;
     } else if (0 == this.tCFG.nTotalLength){
-        /* update the iStartOffset */
+
         ptItem = __arm_2d_list_core_get_item(   
                             ptThis, 
                             fnIterator, 
@@ -1068,12 +1098,11 @@ bool __arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(
 }
 
 static
-__arm_2d_list_work_area_t *
-__calculator_mid_aligned_vertical (
-                                __arm_2d_list_core_t *ptThis,
-                                __arm_2d_list_item_iterator *fnIterator,
-                                int32_t nOffset
-                            )
+__arm_2d_list_work_area_t * __calculator_vertical (
+                                    __arm_2d_list_core_t *ptThis,
+                                    __arm_2d_list_item_iterator *fnIterator,
+                                    int32_t nOffset,
+                                    bool bMidAligned)
 {
 
     arm_2d_list_item_t *ptItem = NULL;
@@ -1088,13 +1117,20 @@ __calculator_mid_aligned_vertical (
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update_mid_aligned(ptThis, fnIterator)) {
+    if (!__arm_2d_list_core_update_normal(ptThis, fnIterator, bMidAligned)) {
         ARM_PT_RETURN(NULL)
+    }
+
+    if (bMidAligned) {
+        this.nOffset = this.Runtime.Selection.nOffset;
+        nOffset = this.nOffset;
     }
 
     if (this.tCFG.nTotalLength) {
         nOffset = nOffset % this.tCFG.nTotalLength;
-        nOffset -= this.tCFG.nTotalLength;
+        if (nOffset >= 0) {
+            nOffset -= this.tCFG.nTotalLength;
+        }
     }
 
     /* no ring mode */
@@ -1124,9 +1160,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -1276,7 +1309,7 @@ ARM_PT_BEGIN(this.chState)
             tTopMost.hwID = ptItem->hwID;
 
         } while(true);
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)tTopMost.nOffset;
         this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
@@ -1306,9 +1339,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -1343,7 +1373,7 @@ ARM_PT_BEGIN(this.chState)
         }
         
         /* mark the first visible item on top */
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)nTempOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)nTempOffset;
         this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
 
         /* mark the last visible item on bottom */
@@ -1399,7 +1429,7 @@ ARM_PT_BEGIN(this.chState)
         this.Runtime.tWorkingArea.ptItem = ptItem;
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY 
-            = this.CalMidAligned.iTopVisiableOffset 
+            = this.CalMidAligned.iTopVisibleOffset 
             + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
@@ -1426,7 +1456,7 @@ ARM_PT_BEGIN(this.chState)
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -1435,7 +1465,7 @@ ARM_PT_BEGIN(this.chState)
 
         /* update top visiable item id and offset */
         do {
-            this.CalMidAligned.iTopVisiableOffset += ptItem->tSize.iHeight 
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iHeight 
                                                   + ptItem->Padding.chPrevious
                                                   + ptItem->Padding.chNext;
             
@@ -1493,7 +1523,7 @@ ARM_PT_BEGIN(this.chState)
 
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -1528,6 +1558,16 @@ ARM_PT_END()
     return NULL;
 }
 
+static
+__arm_2d_list_work_area_t *
+__calculator_mid_aligned_vertical (
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                int32_t nOffset)
+{
+    return __calculator_vertical(ptThis, fnIterator, nOffset, true);
+}
+
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL = {
     .fnCalculator = 
@@ -1537,12 +1577,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL = {
 
 
 static
-__arm_2d_list_work_area_t *
-__calculator_mid_aligned_horizontal (
+__arm_2d_list_work_area_t *__calculator_horizontal (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
-                                int32_t nOffset
-                            )
+                                int32_t nOffset,
+                                bool bMidAligned)
 {
 
     arm_2d_list_item_t *ptItem = NULL;
@@ -1557,13 +1596,20 @@ __calculator_mid_aligned_horizontal (
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update_mid_aligned(ptThis, fnIterator)) {
+    if (!__arm_2d_list_core_update_normal(ptThis, fnIterator, bMidAligned)) {
         ARM_PT_RETURN(NULL)
+    }
+
+    if (bMidAligned) {
+        this.nOffset = this.Runtime.Selection.nOffset;
+        nOffset = this.nOffset;
     }
 
     if (this.tCFG.nTotalLength) {
         nOffset = nOffset % this.tCFG.nTotalLength;
-        nOffset -= this.tCFG.nTotalLength;
+        if (nOffset >= 0) {
+            nOffset -= this.tCFG.nTotalLength;
+        }
     }
 
     /* no ring mode */
@@ -1593,9 +1639,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -1745,7 +1788,7 @@ ARM_PT_BEGIN(this.chState)
             tTopMost.hwID = ptItem->hwID;
 
         } while(true);
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)tTopMost.nOffset;
         this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
@@ -1776,9 +1819,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -1813,7 +1853,7 @@ ARM_PT_BEGIN(this.chState)
         }
         
         /* mark the first visible item on top */
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)nTempOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)nTempOffset;
         this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
 
         /* mark the last visible item on bottom */
@@ -1869,7 +1909,7 @@ ARM_PT_BEGIN(this.chState)
         this.Runtime.tWorkingArea.ptItem = ptItem;
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
-            = this.CalMidAligned.iTopVisiableOffset 
+            = this.CalMidAligned.iTopVisibleOffset 
             + this.iStartOffset 
             + ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
@@ -1896,7 +1936,7 @@ ARM_PT_BEGIN(this.chState)
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -1905,7 +1945,7 @@ ARM_PT_BEGIN(this.chState)
 
         /* update top visiable item id and offset */
         do {
-            this.CalMidAligned.iTopVisiableOffset += ptItem->tSize.iWidth 
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iWidth 
                                                   + ptItem->Padding.chPrevious
                                                   + ptItem->Padding.chNext;
             
@@ -1961,9 +2001,8 @@ ARM_PT_BEGIN(this.chState)
 
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
-
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -1998,6 +2037,17 @@ ARM_PT_END()
     return NULL;
 }
 
+static
+__arm_2d_list_work_area_t *
+__calculator_mid_aligned_horizontal (
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                int32_t nOffset
+                            )
+{
+    return __calculator_horizontal(ptThis, fnIterator, nOffset, true);
+}
+
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL = {
     .fnCalculator = 
@@ -2008,11 +2058,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL = {
 
 static
 __arm_2d_list_work_area_t *
-__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical (
+__calculator_fixed_sized_item_no_status_checking_vertical (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
-                                int32_t nOffset
-                            )
+                                int32_t nOffset,
+                                bool bMidAligned)
 {
 
     arm_2d_list_item_t *ptItem = NULL;
@@ -2027,14 +2077,22 @@ __calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical (
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(  ptThis, 
-                                                                fnIterator)) {
+    if (!__arm_2d_list_core_update_fixed_size_no_status_check(  ptThis, 
+                                                                fnIterator,
+                                                                bMidAligned)) {
         ARM_PT_RETURN(NULL)
+    }
+
+    if (bMidAligned) {
+        this.nOffset = this.Runtime.Selection.nOffset;
+        nOffset = this.nOffset;
     }
 
     if (this.tCFG.nTotalLength) {
         nOffset = nOffset % this.tCFG.nTotalLength;
-        nOffset -= this.tCFG.nTotalLength;
+        if (nOffset >= 0) {
+            nOffset -= this.tCFG.nTotalLength;
+        }
     }
 
     /* no ring mode */
@@ -2064,9 +2122,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
 
@@ -2224,7 +2279,7 @@ ARM_PT_BEGIN(this.chState)
             tTopMost.hwID = ptItem->hwID;
 
         } while(true);
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)tTopMost.nOffset;
         this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
@@ -2254,9 +2309,7 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
+
 
         int32_t nTempOffset = nOffset;
         
@@ -2303,7 +2356,7 @@ ARM_PT_BEGIN(this.chState)
         } while(0);
 
         /* mark the first visible item on top */
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)nTempOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)nTempOffset;
         this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
 
         /* mark the last visible item on bottom */
@@ -2359,7 +2412,7 @@ ARM_PT_BEGIN(this.chState)
         this.Runtime.tWorkingArea.ptItem = ptItem;
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY 
-            = this.CalMidAligned.iTopVisiableOffset 
+            = this.CalMidAligned.iTopVisibleOffset 
             + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
@@ -2386,7 +2439,7 @@ ARM_PT_BEGIN(this.chState)
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -2395,7 +2448,7 @@ ARM_PT_BEGIN(this.chState)
 
         /* update top visiable item id and offset */
         do {
-            this.CalMidAligned.iTopVisiableOffset += ptItem->tSize.iHeight 
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iHeight 
                                                   + ptItem->Padding.chPrevious
                                                   + ptItem->Padding.chNext;
             
@@ -2453,7 +2506,7 @@ ARM_PT_BEGIN(this.chState)
 
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -2488,6 +2541,20 @@ ARM_PT_END()
     return NULL;
 }
 
+static
+__arm_2d_list_work_area_t *
+__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical (
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                int32_t nOffset)
+{
+    return __calculator_fixed_sized_item_no_status_checking_vertical(
+                                                                ptThis,
+                                                                fnIterator,
+                                                                nOffset,
+                                                                true);
+}
+
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL = {
     .fnCalculator = 
@@ -2498,11 +2565,11 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL 
 
 static
 __arm_2d_list_work_area_t *
-__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal (
+__calculator_fixed_sized_item_no_status_checking_horizontal (
                                 __arm_2d_list_core_t *ptThis,
                                 __arm_2d_list_item_iterator *fnIterator,
-                                int32_t nOffset
-                            )
+                                int32_t nOffset,
+                                bool bMidAligned)
 {
 
     arm_2d_list_item_t *ptItem = NULL;
@@ -2517,14 +2584,22 @@ __calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal (
 
 ARM_PT_BEGIN(this.chState)
 
-    if (!__arm_2d_list_core_update_mid_aligned_fixed_size_no_status_check(  ptThis, 
-                                                                fnIterator)) {
+    if (!__arm_2d_list_core_update_fixed_size_no_status_check(  ptThis, 
+                                                                fnIterator,
+                                                                bMidAligned)) {
         ARM_PT_RETURN(NULL)
+    }
+
+    if (bMidAligned) {
+        this.nOffset = this.Runtime.Selection.nOffset;
+        nOffset = this.nOffset;
     }
 
     if (this.tCFG.nTotalLength) {
         nOffset = nOffset % this.tCFG.nTotalLength;
-        nOffset -= this.tCFG.nTotalLength;
+        if (nOffset >= 0) {
+            nOffset -= this.tCFG.nTotalLength;
+        }
     }
 
     /* no ring mode */
@@ -2554,9 +2629,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
 
@@ -2710,7 +2782,7 @@ ARM_PT_BEGIN(this.chState)
             tTopMost.nOffset = nTempOffset;
             tTopMost.hwID = ptItem->hwID;
         } while(true);
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)tTopMost.nOffset;
         this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
 
     } else {
@@ -2741,9 +2813,6 @@ ARM_PT_BEGIN(this.chState)
             } 
             nOffset -= this.tCFG.nTotalLength;
         } while(true);
-        
-        /* get the inital offset */
-        this.nOffset = nOffset;
 
         int32_t nTempOffset = nOffset;
         
@@ -2789,7 +2858,7 @@ ARM_PT_BEGIN(this.chState)
         } while(0);
 
         /* mark the first visible item on top */
-        this.CalMidAligned.iTopVisiableOffset = (int16_t)nTempOffset;
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)nTempOffset;
         this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
 
         /* mark the last visible item on bottom */
@@ -2845,7 +2914,7 @@ ARM_PT_BEGIN(this.chState)
         this.Runtime.tWorkingArea.ptItem = ptItem;
         this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
         this.Runtime.tWorkingArea.tRegion.tLocation.iX 
-            = this.CalMidAligned.iTopVisiableOffset 
+            = this.CalMidAligned.iTopVisibleOffset 
             + this.iStartOffset 
             +   ptItem->Padding.chPrevious;
         this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
@@ -2872,7 +2941,7 @@ ARM_PT_BEGIN(this.chState)
     ARM_PT_YIELD( &this.Runtime.tWorkingArea )
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -2881,7 +2950,7 @@ ARM_PT_BEGIN(this.chState)
 
         /* update top visiable item id and offset */
         do {
-            this.CalMidAligned.iTopVisiableOffset += ptItem->tSize.iWidth 
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iWidth 
                                                   + ptItem->Padding.chPrevious
                                                   + ptItem->Padding.chNext;
             
@@ -2939,7 +3008,7 @@ ARM_PT_BEGIN(this.chState)
 
 
         if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisiableOffset) {
+            <=  this.CalMidAligned.iTopVisibleOffset) {
             break;
         }
 
@@ -2974,12 +3043,575 @@ ARM_PT_END()
     return NULL;
 }
 
+static
+__arm_2d_list_work_area_t *
+__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal (
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                int32_t nOffset)
+{
+    return __calculator_fixed_sized_item_no_status_checking_horizontal(
+                                                                    ptThis,
+                                                                    fnIterator,
+                                                                    nOffset,
+                                                                    true);
+}
+
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal,
     .fnSelectionCompensation = &__selection_compensation_mid_aligned,
 };
+
+
+
+static
+__arm_2d_list_work_area_t *
+__calculator_normal_fixed_sized_item_no_status_checking_vertical (
+                                __arm_2d_list_core_t *ptThis,
+                                __arm_2d_list_item_iterator *fnIterator,
+                                int32_t nOffset
+                            )
+{
+
+    arm_2d_list_item_t *ptItem = NULL;
+
+    /* reset the calculator */
+    if (!this.Runtime.bIsRegCalInit) {
+        this.Runtime.bIsRegCalInit = true;
+        this.chState = 0;
+        this.Runtime.tWorkingArea.tDirection = ARM_2D_LIST_VERTICAL;
+        this.tCFG.bDisableStatusCheck = true;
+    }
+
+ARM_PT_BEGIN(this.chState)
+
+    if (!__arm_2d_list_core_update_fixed_size_no_status_check(  
+                                                                ptThis, 
+                                                                fnIterator,
+                                                                false)) {
+        ARM_PT_RETURN(NULL)
+    }
+
+#if 0
+    this.nOffset = this.Runtime.Selection.nOffset;
+    nOffset = this.nOffset;
+#endif
+
+    if (this.tCFG.nTotalLength) {
+        nOffset = nOffset % this.tCFG.nTotalLength;
+        if (nOffset >= 0) {
+            nOffset -= this.tCFG.nTotalLength;
+        }
+    }
+
+#if 1
+    do {
+        int32_t nSelectionOffset = -this.Runtime.Selection.nOffset;
+
+        if (this.tCFG.nTotalLength) {
+            int32_t nModeResult = nSelectionOffset % this.tCFG.nTotalLength;
+
+            if (ABS(nSelectionOffset) > this.tCFG.nTotalLength) {
+                if (nSelectionOffset > 0) {
+                    nSelectionOffset = nModeResult + this.tCFG.nTotalLength;
+                } else {
+                    nSelectionOffset = nModeResult - this.tCFG.nTotalLength;
+                }
+            }
+        }
+
+        int16_t nVisualWindowStart = (-nOffset) % this.tCFG.nTotalLength;
+
+        if (nSelectionOffset < nVisualWindowStart) {
+            /* move visual window */
+            int32_t nDelta = nVisualWindowStart - nSelectionOffset;
+            this.nOffset += nDelta;
+
+            nOffset += nDelta;
+        } else {
+
+            /* move to the first item */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_FIRST_ITEM,
+                                0,
+                                true,
+                                false);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+
+            int16_t iItemActualHeight = ptItem->tSize.iHeight 
+                                    + ptItem->Padding.chPrevious;
+                                    //+ ptItem->Padding.chNext;
+
+            int16_t iItemBottomBoarder = nSelectionOffset + iItemActualHeight - 1;
+            int16_t iVisualWindowBottomBoarder = nVisualWindowStart + this.Runtime.tileList.tRegion.tSize.iHeight - 1;
+            if (iItemBottomBoarder > iVisualWindowBottomBoarder) {
+                /* move visual window */
+
+                /* move visual window */
+                int32_t nDelta = iItemBottomBoarder - iVisualWindowBottomBoarder;
+                this.nOffset -= nDelta;
+
+                nOffset -= nDelta;
+            }
+        }
+
+    } while(0);
+#endif
+
+    /* no ring mode */
+    if (this.tCFG.bDisableRingMode) {
+        
+        /* move to the first item */
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0,
+                            true,
+                            false);
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+        
+        /* move the nOffset to the top invisible area */
+        do {
+            int32_t nStartY = nOffset 
+                            + this.iStartOffset 
+                            + ptItem->Padding.chPrevious;
+                    
+            if (nStartY <= 0) {
+                break;
+            } 
+            nOffset -= this.tCFG.nTotalLength;
+        } while(true);
+
+        int32_t nTempOffset = nOffset;
+
+        /* find the centre most item */
+        int32_t nCentreLocation = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+        int32_t nMinimalDistance = nCentreLocation;
+
+        struct {
+            int32_t nOffset;
+            uint16_t hwID;
+        } tTopMost, tBottomMost, tCentreMost = {
+            .nOffset = 0,
+            .hwID = 0,
+        };
+
+        while(NULL != ptItem) {
+            int32_t nY1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+        
+            int32_t nDistance = nCentreLocation - nY1;
+            
+            if (nDistance < 0) {
+                /* cross the centre */
+                break;
+            }
+
+            if (nDistance < nMinimalDistance) {
+                nMinimalDistance = nDistance;
+                //tCentreMost.ptItem = ptItem;
+                tCentreMost.nOffset = nTempOffset;
+                tCentreMost.hwID = ptItem->hwID;
+            }
+
+            /* update nTempOffset */
+            nTempOffset += ptItem->tSize.iHeight 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_NEXT,
+                                0,
+                                true,
+                                true);  /* force to use ring mode */
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+        }
+
+        /* with centre most item, we start to find the bottom most item*/
+        tBottomMost = tCentreMost;
+        nTempOffset = tBottomMost.nOffset;
+
+        /* move to the centre most item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    tCentreMost.hwID,
+                    true,
+                    false);
+        assert(NULL != ptItem);
+
+        do {
+            /* update nTempOffset */
+            nTempOffset += ptItem->tSize.iHeight 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_NEXT,
+                    0,
+                    true,
+                    false);
+
+            if (NULL == ptItem) {
+                /* end of the list */
+                break;
+            }
+            
+            int32_t nY1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+            
+            if (nY1 >= this.Runtime.tileList.tRegion.tSize.iHeight) {
+                /* this item is not visible */
+                break;
+            }
+
+            tBottomMost.nOffset = nTempOffset;
+            //tBottomMost.ptItem = ptItem;
+            tBottomMost.hwID = ptItem->hwID;
+
+        } while(true);
+        this.CalMidAligned.iBottomVisibleOffset = (int16_t)tBottomMost.nOffset;
+        this.CalMidAligned.hwBottomVisibleItemID = tBottomMost.hwID;
+
+        /* move to the centre most item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    tCentreMost.hwID,
+                    true,
+                    false);
+        assert(NULL != ptItem);
+
+        /* with centre most item, we start to find the top most item*/
+        tTopMost = tCentreMost;
+        nTempOffset = tTopMost.nOffset;
+        do {
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_PREVIOUS,
+                    0,
+                    true,
+                    false);
+
+            if (NULL == ptItem) {
+                /* end of the list */
+                break;
+            }
+
+            /* update nTempOffset */
+            nTempOffset -= ptItem->tSize.iHeight 
+                        + ptItem->Padding.chPrevious
+                        + ptItem->Padding.chNext;
+
+            int32_t nY1 = nTempOffset 
+                        + this.iStartOffset 
+                        + ptItem->Padding.chPrevious;
+            int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
+
+            if (nY2 <= 0) {
+                /* this item is not visible */
+                break;
+            }
+
+            tTopMost.nOffset = nTempOffset;
+            //tTopMost.ptItem = ptItem;
+            tTopMost.hwID = ptItem->hwID;
+
+        } while(true);
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)tTopMost.nOffset;
+        this.CalMidAligned.hwTopVisibleItemID = tTopMost.hwID;
+
+    } else {
+        /* find the first and last visible items */
+
+        /* move to the first item */
+        ptItem = __arm_2d_list_core_get_item(   
+                            ptThis, 
+                            fnIterator, 
+                            __ARM_2D_LIST_GET_FIRST_ITEM,
+                            0,
+                            true,
+                            false);
+        if (NULL == ptItem) {
+            /* no valid item, return NULL */
+            ARM_PT_RETURN(NULL)
+        }
+        
+        /* move the nOffset to the top invisible area */
+        do {
+            int32_t nStartY = nOffset 
+                            +   this.iStartOffset 
+                            +   ptItem->Padding.chPrevious;
+                    
+            if (nStartY <= 0) {
+                break;
+            } 
+            nOffset -= this.tCFG.nTotalLength;
+        } while(true);
+
+        int32_t nTempOffset = nOffset;
+        
+        do {
+            int16_t iItemActualHeight = ptItem->tSize.iHeight 
+                                      + ptItem->Padding.chPrevious
+                                      + ptItem->Padding.chNext;
+            
+            int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
+            int32_t nCount = nLength / iItemActualHeight;
+            
+            nTempOffset += nCount * iItemActualHeight;
+            
+            do {
+                int32_t nY1 = nTempOffset 
+                                +   this.iStartOffset 
+                                +   ptItem->Padding.chPrevious;
+                int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
+                
+                if (nY1 >= 0 || nY2 >=0) {
+                    /* we find the top item */
+                    break;
+                }
+                nTempOffset += iItemActualHeight;
+                nCount++;
+            } while(true);
+            
+            uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
+            
+            
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                                ptThis, 
+                                fnIterator, 
+                                __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                                hwTempID,
+                                true,
+                                false);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+            
+        } while(0);
+
+        /* mark the first visible item on top */
+        this.CalMidAligned.iTopVisibleOffset = (int16_t)nTempOffset;
+        this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
+
+        /* mark the last visible item on bottom */
+        do {
+            this.CalMidAligned.iBottomVisibleOffset = (int16_t)nTempOffset;
+            this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
+            
+            /* update nTempOffset */
+            nTempOffset += ptItem->tSize.iHeight 
+                         + ptItem->Padding.chPrevious
+                         + ptItem->Padding.chNext;
+
+            /* move to the next */
+            ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_NEXT,
+                    0,
+                    true,
+                    false);
+
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+            
+            int32_t nY1 = nTempOffset 
+                        +   this.iStartOffset 
+                        +   ptItem->Padding.chPrevious;
+            
+            if (nY1 >= this.Runtime.tileList.tRegion.tSize.iHeight) {
+                /* this item is not visible */
+                break;
+            }
+        } while(true);
+    }
+
+
+    /* start draw items */
+    do {
+        /* move to the top item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwTopVisibleItemID,
+                    true,
+                    false);
+
+        assert(NULL != ptItem);
+        
+        /* prepare working area */
+        this.Runtime.tWorkingArea.ptItem = ptItem;
+        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY 
+            = this.CalMidAligned.iTopVisibleOffset 
+            + this.iStartOffset 
+            +   ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
+        
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iY
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iHeight >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+            
+            iDistance = iCentre - iDistance;
+            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisibleOffset) {
+            break;
+        }
+
+        /* resume local context */
+        ptItem = this.Runtime.tWorkingArea.ptItem;
+
+        /* update top visiable item id and offset */
+        do {
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iHeight 
+                                                  + ptItem->Padding.chPrevious
+                                                  + ptItem->Padding.chNext;
+            
+            /* move to the top item */
+            ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_NEXT,
+                        0,
+                        true,
+                        false);
+
+            this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
+        } while(0);
+
+        /* move to the bottom item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwBottomVisibleItemID,
+                    true,
+                    false);
+        assert(NULL != ptItem);
+        
+        /* prepare working area */
+        this.Runtime.tWorkingArea.ptItem = ptItem;
+        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY 
+            = this.CalMidAligned.iBottomVisibleOffset 
+            + this.iStartOffset 
+            +   ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
+        
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iY
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iHeight >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+            
+            iDistance = iCentre - iDistance;
+            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisibleOffset) {
+            break;
+        }
+
+        /* update bottom visiable item id and offset */
+        do {
+            /* move to the top item */
+            ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_PREVIOUS,
+                        0,
+                        true,
+                        false);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+
+            this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
+            
+            this.CalMidAligned.iBottomVisibleOffset 
+                -= ptItem->tSize.iHeight 
+                 + ptItem->Padding.chPrevious
+                 + ptItem->Padding.chNext;
+
+        } while(0);
+
+    } while(true);
+
+ARM_PT_END()
+
+    return NULL;
+}
+
+arm_2d_i_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL = {
+    .fnCalculator = 
+        &__calculator_normal_fixed_sized_item_no_status_checking_vertical,
+    //.fnSelectionCompensation = &__selection_compensation_mid_aligned,
+};
+
 
 
 

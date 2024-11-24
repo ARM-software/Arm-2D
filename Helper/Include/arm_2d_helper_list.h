@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        23. Nov 2024
- * $Revision:    V.1.3.1
+ * $Date:        24. Nov 2024
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -296,14 +296,14 @@ ARM_PROTECTED(
 
     union {
         struct {
-            int16_t iTopVisiableOffset;
+            int16_t iTopVisibleOffset;
             uint16_t hwTopVisibleItemID;
             
             int16_t iBottomVisibleOffset;
             uint16_t hwBottomVisibleItemID;
         } CalMidAligned;
         struct {
-            int16_t iTopVisiableOffset;
+            int16_t iTopVisibleOffset;
             uint16_t hwTopVisibleItemID;
         } CalNormal;
     };
@@ -347,6 +347,10 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL;
 extern
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL;
+
+extern
+arm_2d_i_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL;
 
 /*!
  *  \brief a list iterator for the list that stores items in an array
