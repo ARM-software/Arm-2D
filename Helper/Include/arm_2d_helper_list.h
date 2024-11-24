@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        24. Nov 2024
- * $Revision:    V.1.4.0
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -348,9 +348,39 @@ extern
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL;
 
+/*!
+ *  \brief a list calculator for vertical lists, which uses the normal water 
+ *         fall style
+ */
+extern
+arm_2d_i_list_region_calculator_t 
+    ARM_2D_LIST_CALCULATOR_NORMAL_VERTICAL;
+
+/*!
+ *  \brief a list calculator for horizontal lists, which uses the normal water 
+ *         fall style
+ */
+extern
+arm_2d_i_list_region_calculator_t
+    ARM_2D_LIST_CALCULATOR_NORMAL_HORIZONTAL;
+
+/*!
+ *  \brief a list calculator for vertical lists, which uses the normal water 
+ *         fall style, item size is fixed and no status checking (i.e. visible 
+ *         or enabled).
+ */
 extern
 arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL;
+
+/*!
+ *  \brief a list calculator for horizontal lists, which uses the normal water 
+ *         fall style, item size is fixed and no status checking (i.e. visible 
+ *         or enabled).
+ */
+extern
+arm_2d_i_list_region_calculator_t
+ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL;
 
 /*!
  *  \brief a list iterator for the list that stores items in an array
