@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        24. Nov 2024
- * $Revision:    V.2.0.0
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -59,6 +59,7 @@
 #   pragma clang diagnostic ignored "-Wcovered-switch-default"
 #   pragma clang diagnostic ignored "-Wswitch-enum"
 #   pragma clang diagnostic ignored "-Wswitch-default"
+#   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 188,546
 #elif defined(__IS_COMPILER_GCC__)
@@ -1124,7 +1125,7 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
 
 static
 ARM_NONNULL(1,2,3)
-arm_2d_err_t __calculator_normal_offset_update( __arm_2d_list_core_t *ptThis, 
+arm_2d_err_t __calculator_offset_update( __arm_2d_list_core_t *ptThis, 
                                                 __arm_2d_list_item_iterator *fnIterator,
                                                 int32_t *pnOffset)
 {
@@ -1146,6 +1147,21 @@ arm_2d_err_t __calculator_normal_offset_update( __arm_2d_list_core_t *ptThis,
         nVisualWindowStart = __arm_2d_list_safe_mod(nVisualWindowStart, this.tCFG.nTotalLength, false);
     }
 
+    /* move to the first item */
+    arm_2d_list_item_t *ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER,
+                        this.Runtime.hwSelection,
+                        true,
+                        false);
+    if (NULL == ptItem) {
+        /* no valid item, return NULL */
+        return ARM_2D_ERR_NOT_AVAILABLE;
+    }
+
+    this.Runtime.Selection.tRegion.tSize = ptItem->tSize;
+
     if (nSelectionOffset < nVisualWindowStart) {
         /* move visual window */
         int32_t nDelta = nVisualWindowStart - nSelectionOffset;
@@ -1154,19 +1170,6 @@ arm_2d_err_t __calculator_normal_offset_update( __arm_2d_list_core_t *ptThis,
 
         nOffset += nDelta;
     } else {
-
-        /* move to the first item */
-        arm_2d_list_item_t *ptItem = __arm_2d_list_core_get_item(   
-                            ptThis, 
-                            fnIterator, 
-                            __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER,
-                            this.Runtime.hwSelection,
-                            true,
-                            false);
-        if (NULL == ptItem) {
-            /* no valid item, return NULL */
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
 
         int16_t iItemSize = 0;
         int16_t iListRegionSize = 0;
@@ -1179,9 +1182,9 @@ arm_2d_err_t __calculator_normal_offset_update( __arm_2d_list_core_t *ptThis,
             iListRegionSize = this.Runtime.tileList.tRegion.tSize.iHeight;
         }
 
-        int16_t iItemActualHeight = iItemSize + ptItem->Padding.chPrevious;
+        int16_t iItemActualSize = iItemSize + ptItem->Padding.chPrevious;
 
-        int16_t iItemBottomBoarder = nSelectionOffset + iItemActualHeight - 1;
+        int16_t iItemBottomBoarder = nSelectionOffset + iItemActualSize - 1;
 
         int16_t iVisualWindowBottomBoarder = nVisualWindowStart + iListRegionSize - 1;
         if (iItemBottomBoarder > iVisualWindowBottomBoarder) {
@@ -1194,10 +1197,36 @@ arm_2d_err_t __calculator_normal_offset_update( __arm_2d_list_core_t *ptThis,
         }
     }
 
+    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+        this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset - nVisualWindowStart;
+        this.Runtime.Selection.tRegion.tLocation.iY = 0;
+    } else {
+        this.Runtime.Selection.tRegion.tLocation.iX = 0;
+        this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset - nVisualWindowStart;
+    }
+
     (*pnOffset) = nOffset;
 
     return ARM_2D_ERR_NONE;
 }
+
+ARM_NONNULL(1,2)
+arm_2d_region_t *__arm_2d_list_core_get_selection_region(__arm_2d_list_core_t *ptThis,
+                                                         arm_2d_region_t *ptRegionBuffer)
+{
+    assert(NULL != ptThis);
+
+    do {
+        if (NULL == ptRegionBuffer) {
+            break;
+        }
+
+        *ptRegionBuffer = this.Runtime.Selection.tRegion;
+    } while(0);
+
+    return ptRegionBuffer;
+}
+
 
 static
 __arm_2d_list_work_area_t * __calculator_vertical (
@@ -1236,7 +1265,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_normal_offset_update(ptThis, fnIterator, &nOffset)) {
+        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
         }
@@ -1705,7 +1734,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_normal_offset_update(ptThis, fnIterator, &nOffset)) {
+        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
         }
@@ -2176,7 +2205,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_normal_offset_update(ptThis, fnIterator, &nOffset)) {
+        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
         }
@@ -2668,7 +2697,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_normal_offset_update(ptThis, fnIterator, &nOffset)) {
+        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
             /* no valid item, return NULL */
             ARM_PT_RETURN(NULL)
         }

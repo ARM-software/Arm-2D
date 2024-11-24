@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        24. Nov 2024
- * $Revision:    V.2.0.0
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -272,6 +272,7 @@ ARM_PROTECTED(
                 int32_t                     nOffset;                            /*!< list offset */
                 int32_t                     nStartOffset;                       /*!< the start offset */
                 int32_t                     nTargetOffset;                      /*!< the target list offset */
+                arm_2d_region_t             tRegion;
             } Selection;
 
             uint16_t                        hwSelection;                        /*!< item selection */
@@ -401,15 +402,28 @@ ARM_NONNULL(1,2)
 arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
                                         __arm_2d_list_core_cfg_t *ptCFG);
 
-extern
-ARM_NONNULL(1)
 /*!
  * \brief get the size of the target list
  * 
  * \param[in] ptThis the target list core object
  * \return arm_2d_size_t the list size
  */
+extern
+ARM_NONNULL(1)
 arm_2d_size_t __arm_2d_list_core_get_list_size(__arm_2d_list_core_t *ptThis);
+
+/*!
+ * \brief get the region for drawing the item selection indicator
+ * 
+ * \param[in] ptThis the target list core object
+ * \param[in] ptRegionBuffer a region object for reading the result
+ * \return arm_2d_region_t* the address of the region buffer
+ */
+extern
+ARM_NONNULL(1,2)
+arm_2d_region_t *__arm_2d_list_core_get_selection_region(
+                                                __arm_2d_list_core_t *ptThis,
+                                                arm_2d_region_t *ptRegionBuffer);
 
 /*!
  * \brief show a given list core
