@@ -1202,23 +1202,6 @@ extern "C" {
                     }                                                           \
                 )
 
-#define arm_2d_layout2(__region, __bool_debug)                                  \
-        arm_using(  __arm_2d_layout_t __layout_assistant__ = {                  \
-                            .tAlignTable                                        \
-                                = ARM_2D_LAYOUT_ALIGN_LEFT_TO_RIGHT_TOP_DOWN    \
-                        },                                                      \
-                    {                                                           \
-                        __layout_assistant__.tLayout.tLocation                  \
-                            = (__region).tLocation;                             \
-                        __layout_assistant__.tArea = (__region);                \
-                        __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug);            \
-                    },                                                          \
-                    {                                                           \
-                        ARM_2D_OP_WAIT_ASYNC();                                 \
-                        __ARM_2D_LAYOUT_DEBUG_END__();                          \
-                    }                                                           \
-                )
-
 #define arm_2d_layout2(__region, __align)                                       \
             arm_using(  __arm_2d_layout_t __layout_assistant__ = {              \
                             .tAlignTable                                        \
