@@ -151,7 +151,7 @@ extern "C" {
 // <i> Configure the default navigation layer of this display adapter. 
 // <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
-#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                      0
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                      1
 #endif
 
 // <o>Number of iterations <0-2000>
