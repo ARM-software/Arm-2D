@@ -224,23 +224,6 @@ ARM_PT_BEGIN(this.Runtime.chState)
                                                     this.Runtime.lPeriod,       /* finish in specified period */
                                                     &this.Runtime.Selection.nOffset,      /* output offset */
                                                     &this.Runtime.lTimestamp)) {/* timestamp */
-            #if 0
-                if (this.tCFG.nTotalLength) {
-                    this.Runtime.Selection.nOffset = __arm_2d_list_safe_mod(this.Runtime.Selection.nOffset, 
-                                                                            this.tCFG.nTotalLength);
-                #if 0                                                            
-                    int32_t nModeResult = this.Runtime.Selection.nOffset % this.tCFG.nTotalLength;
-                    if (ABS(this.Runtime.Selection.nOffset) > this.tCFG.nTotalLength) {
-                        if (this.Runtime.Selection.nOffset > 0) {
-                            this.Runtime.Selection.nOffset = nModeResult + this.tCFG.nTotalLength;
-                        } else {
-                            this.Runtime.Selection.nOffset = nModeResult - this.tCFG.nTotalLength;
-                        }
-                    }
-                #endif
-                }
-            #endif
-
 
                 this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
                 this.Runtime.Selection.nStartOffset = this.Runtime.Selection.nTargetOffset;
@@ -685,22 +668,6 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
         arm_irq_safe {
             int32_t nNewOffset = this.Runtime.Selection.nTargetOffset + nOffsetChange;
 
-        #if 0
-            if (this.tCFG.nTotalLength) {
-                nNewOffset = __arm_2d_list_safe_mod(nNewOffset, this.tCFG.nTotalLength);
-            #if 0
-                int32_t nModeResult = nNewOffset % this.tCFG.nTotalLength;
-                if (ABS(nNewOffset) > this.tCFG.nTotalLength) {
-                    if (nNewOffset > 0) {
-                        nNewOffset = nModeResult + this.tCFG.nTotalLength;
-                    } else {
-                        nNewOffset = nModeResult - this.tCFG.nTotalLength;
-                    }
-                }
-            #endif
-            }
-        #endif
-
             if (this.Runtime.Selection.nOffset != nNewOffset) {
                 this.Runtime.bNeedRedraw = true;
             }
@@ -1125,9 +1092,10 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
 
 static
 ARM_NONNULL(1,2,3)
-arm_2d_err_t __calculator_offset_update( __arm_2d_list_core_t *ptThis, 
-                                                __arm_2d_list_item_iterator *fnIterator,
-                                                int32_t *pnOffset)
+arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis, 
+                                        __arm_2d_list_item_iterator *fnIterator,
+                                        int32_t *pnOffset,
+                                        bool bMidAligned)
 {
     assert(NULL != pnOffset);
     assert(NULL != ptThis);
@@ -1162,47 +1130,57 @@ arm_2d_err_t __calculator_offset_update( __arm_2d_list_core_t *ptThis,
 
     this.Runtime.Selection.tRegion.tSize = ptItem->tSize;
 
-    if (nSelectionOffset < nVisualWindowStart) {
-        /* move visual window */
-        int32_t nDelta = nVisualWindowStart - nSelectionOffset;
+    if (!bMidAligned) {
+        if (nSelectionOffset < nVisualWindowStart) {
+            /* move visual window */
+            int32_t nDelta = nVisualWindowStart - nSelectionOffset;
 
-        this.nOffset += nDelta;
+            this.nOffset += nDelta;
 
-        nOffset += nDelta;
-    } else {
+            nOffset += nDelta;
+        } else {
 
-        int16_t iItemSize = 0;
-        int16_t iListRegionSize = 0;
+            int16_t iItemSize = 0;
+            int16_t iListRegionSize = 0;
+
+            if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                iItemSize = ptItem->tSize.iWidth;
+                iListRegionSize = this.Runtime.tileList.tRegion.tSize.iWidth;
+            } else {
+                iItemSize = ptItem->tSize.iHeight;
+                iListRegionSize = this.Runtime.tileList.tRegion.tSize.iHeight;
+            }
+
+            int16_t iItemActualSize = iItemSize + ptItem->Padding.chPrevious;
+
+            int16_t iItemBottomBoarder = nSelectionOffset + iItemActualSize - 1;
+
+            int16_t iVisualWindowBottomBoarder = nVisualWindowStart + iListRegionSize - 1;
+            if (iItemBottomBoarder > iVisualWindowBottomBoarder) {
+                /* move visual window */
+                int32_t nDelta = iItemBottomBoarder - iVisualWindowBottomBoarder;
+
+                this.nOffset -= nDelta;
+
+                nOffset -= nDelta;
+            }
+        }
 
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            iItemSize = ptItem->tSize.iWidth;
-            iListRegionSize = this.Runtime.tileList.tRegion.tSize.iWidth;
+            this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset - nVisualWindowStart;
+            this.Runtime.Selection.tRegion.tLocation.iY = 0;
         } else {
-            iItemSize = ptItem->tSize.iHeight;
-            iListRegionSize = this.Runtime.tileList.tRegion.tSize.iHeight;
+            this.Runtime.Selection.tRegion.tLocation.iX = 0;
+            this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset - nVisualWindowStart;
         }
-
-        int16_t iItemActualSize = iItemSize + ptItem->Padding.chPrevious;
-
-        int16_t iItemBottomBoarder = nSelectionOffset + iItemActualSize - 1;
-
-        int16_t iVisualWindowBottomBoarder = nVisualWindowStart + iListRegionSize - 1;
-        if (iItemBottomBoarder > iVisualWindowBottomBoarder) {
-            /* move visual window */
-            int32_t nDelta = iItemBottomBoarder - iVisualWindowBottomBoarder;
-
-            this.nOffset -= nDelta;
-
-            nOffset -= nDelta;
-        }
-    }
-
-    if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-        this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset - nVisualWindowStart;
-        this.Runtime.Selection.tRegion.tLocation.iY = 0;
     } else {
-        this.Runtime.Selection.tRegion.tLocation.iX = 0;
-        this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset - nVisualWindowStart;
+        if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+            this.Runtime.Selection.tRegion.tLocation.iX = this.iStartOffset + ptItem->Padding.chPrevious;
+            this.Runtime.Selection.tRegion.tLocation.iY = 0;
+        } else {
+            this.Runtime.Selection.tRegion.tLocation.iX = 0;
+            this.Runtime.Selection.tRegion.tLocation.iY = this.iStartOffset + ptItem->Padding.chPrevious;
+        }
     }
 
     (*pnOffset) = nOffset;
@@ -1264,11 +1242,9 @@ ARM_PT_BEGIN(this.chState)
         }
     }
 
-    if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
-            /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
-        }
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
     }
 
     /* no ring mode */
@@ -1733,11 +1709,9 @@ ARM_PT_BEGIN(this.chState)
         }
     }
 
-    if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
-            /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
-        }
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
     }
 
     /* no ring mode */
@@ -2204,12 +2178,11 @@ ARM_PT_BEGIN(this.chState)
         }
     }
 
-    if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
-            /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
-        }
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
     }
+
 
     /* no ring mode */
     if (this.tCFG.bDisableRingMode) {
@@ -2696,11 +2669,9 @@ ARM_PT_BEGIN(this.chState)
         }
     }
 
-    if (!bMidAligned) {
-        if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset)) {
-            /* no valid item, return NULL */
-            ARM_PT_RETURN(NULL)
-        }
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
     }
 
     /* no ring mode */
