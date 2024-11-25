@@ -86,6 +86,8 @@ typedef struct __simple_list_cfg_t {
     arm_2d_font_t                       *ptFont;                                    /*!< user specified font */
     arm_2d_align_t                      tTextAlignment;                             /*!< text alignment in each item*/
 
+    arm_2d_helper_pi_slider_cfg_t       *ptPISliderCFG;
+
     arm_2d_scene_t *ptTargetScene;
 } __simple_list_cfg_t;
 

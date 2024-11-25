@@ -22,7 +22,7 @@
  * Description:  The source code for arm-2d helper utilities
  *
  * $Date:        25. Nov 2024
- * $Revision:    V.2.2.0
+ * $Revision:    V.2.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -458,11 +458,22 @@ bool arm_2d_helper_pi_slider(arm_2d_helper_pi_slider_t *ptThis,
             q16_t q16Prop = mul_q16(q16Error, this.q16Proportion);
             this.q16OP += mul_q16(q16Error, this.q16Integration);
             this.q16Current += (q16Prop + this.q16OP);
+
             q16_t q16StableCheck = abs_q16(q16Prop + this.q16OP);
-            if ( q16StableCheck <= reinterpret_q16_f32(0.1f) ) {
+
+        #if 0
+            printf( "Error : %f,  Delta: %f \r\n", 
+                    reinterpret_f32_q16(q16Error),
+                    reinterpret_f32_q16(q16StableCheck)
+                    );
+        #endif
+
+            if (    (q16StableCheck <= reinterpret_q16_f32(0.050f)) 
+              &&    (abs_q16(q16Error) < reinterpret_q16_f32(1.0f)) ) {
+                
                 /* has reached the final value */
-                //this.iCurrent = nTargetPosition; /* correct the residual error */
-                //this.fOP = 0.0f;
+                this.q16Current = reinterpret_q16_s16(iTargetPosition); /* correct the residual error */
+                this.q16OP = 0;
                 bResult = true;
             }
         }
@@ -526,10 +537,13 @@ bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
             this.q16OP += mul_q16(q16Error, this.q16Integration);
             this.q16Current += (q16Prop + this.q16OP);
             q16_t q16StableCheck = abs_q16(q16Prop + this.q16OP);
-            if ( q16StableCheck <= reinterpret_q16_f32(0.1f) ) {
+        
+            if (    (q16StableCheck <= reinterpret_q16_f32(0.050f)) 
+              &&    (abs_q16(q16Error) < reinterpret_q16_f32(1.0f)) ) {
                 /* has reached the final value */
-                //this.iCurrent = nTargetPosition; /* correct the residual error */
-                //this.fOP = 0.0f;
+                this.q16Current = reinterpret_q16_f32(fTargetPosition); /* correct the residual error */
+                this.q16OP = 0;
+
                 bResult = true;
             }
         }

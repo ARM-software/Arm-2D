@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        25. Nov 2024
- * $Revision:    V.2.1.1
+ * $Revision:    V.2.1.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -131,6 +131,13 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
     if (this.tCFG.hwItemSizeInByte < sizeof(arm_2d_list_item_t)) {
         this.tCFG.hwItemSizeInByte = sizeof(arm_2d_list_item_t);
     }
+
+    /* PI slider selection indicator */
+    if (this.tCFG.bUsePISliderForSelectionIndicator) {
+        arm_2d_helper_pi_slider_init(   &this.Runtime.tPISlider, 
+                                        this.tCFG.ptPISliderCFG, 
+                                        0);
+    }
     
     this.bListSizeChanged = true;
     this.Runtime.bIsRegCalInit = false;
@@ -218,6 +225,20 @@ ARM_PT_BEGIN(this.Runtime.chState)
             bool bUpdateOffset = false;
             if (0 == this.Runtime.MoveReq.nFinishInMs && 0 != this.Runtime.MoveReq.iSteps) {
                 bUpdateOffset = true;
+            } else if (this.tCFG.bUsePISliderForSelectionIndicator) {
+                int16_t iCurrentOffset = 0;
+                if (arm_2d_helper_pi_slider(&this.Runtime.tPISlider, 
+                                            this.Runtime.Selection.nTargetOffset, 
+                                            &iCurrentOffset)) {
+
+                    this.Runtime.bIsMoving = false;     /* update flag to indicate moving complete */
+                    //this.Runtime.Selection.nTargetOffset = iCurrentOffset;
+                    this.Runtime.Selection.nStartOffset = iCurrentOffset;
+
+                }
+                this.Runtime.Selection.nOffset = iCurrentOffset;
+                bUpdateOffset = true;
+            
             } else if (__arm_2d_helper_time_liner_slider(   
                                                     this.Runtime.Selection.nStartOffset,  /* from */
                                                     this.Runtime.Selection.nTargetOffset, /* to */
@@ -448,12 +469,15 @@ ARM_PT_BEGIN(this.Runtime.chState)
         if (this.tCFG.nTotalLength > 0) {
             int32_t nModeResult = this.nOffset % this.tCFG.nTotalLength;
 
-            this.Runtime.Selection.nOffset -= this.nOffset;
+            int32_t nDelta = this.Runtime.Selection.nOffset - this.nOffset;
+
             this.nOffset = nModeResult;
-            this.Runtime.Selection.nOffset += nModeResult;
+            this.Runtime.Selection.nOffset = this.nOffset + nDelta;
 
             this.Runtime.Selection.nStartOffset = this.Runtime.Selection.nOffset;
             this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
+
+            arm_2d_helper_pi_slider_set_current(&this.Runtime.tPISlider, this.Runtime.Selection.nOffset);
         }
     }
 
@@ -522,14 +546,16 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
     uint16_t hwTargetID;
     
     /* update nPeriod */
-    if (nFinishInMs > 0) {
-        lPeriod = arm_2d_helper_convert_ms_to_ticks(nFinishInMs);
-    } else if (nFinishInMs < 0) {
-        if (this.tCFG.hwSwitchingPeriodInMs) {
-            lPeriod 
-                = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
-        } else {
-            lPeriod = arm_2d_helper_convert_ms_to_ticks(500);
+    if (!this.tCFG.bUsePISliderForSelectionIndicator) {
+        if (nFinishInMs > 0) {
+            lPeriod = arm_2d_helper_convert_ms_to_ticks(nFinishInMs);
+        } else if (nFinishInMs < 0) {
+            if (this.tCFG.hwSwitchingPeriodInMs) {
+                lPeriod 
+                    = arm_2d_helper_convert_ms_to_ticks(this.tCFG.hwSwitchingPeriodInMs);
+            } else {
+                lPeriod = arm_2d_helper_convert_ms_to_ticks(500);
+            }
         }
     }
 
@@ -665,7 +691,7 @@ arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis,
 
     } while(0);
 
-    if (0 == nFinishInMs) {
+    if (0 == nFinishInMs && !this.tCFG.bUsePISliderForSelectionIndicator) {
         /* jump to the new position immediately */
         arm_irq_safe {
             int32_t nNewOffset = this.Runtime.Selection.nTargetOffset + nOffsetChange;

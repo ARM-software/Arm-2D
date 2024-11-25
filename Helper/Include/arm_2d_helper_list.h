@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        25. Nov 2024
- * $Revision:    V.2.1.1
+ * $Revision:    V.2.1.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -231,10 +231,13 @@ typedef struct __arm_2d_list_core_cfg_t {
     uint16_t hwItemCount;                                                       /*!< the total number of items, 0 means update later */
     uint16_t hwSwitchingPeriodInMs;                                             /*!< A constant period (in ms) for switching item, zero means using default value */
 
-    uint16_t bDisableRingMode               : 1;                                /*!< whether disable ring mode */
-    uint16_t bDisableStatusCheck            : 1;                                /*!< whether disable the item status */
-    uint16_t                                : 6;
-    uint16_t                                : 8;
+    uint16_t bDisableRingMode                       : 1;                        /*!< whether disable ring mode */
+    uint16_t bDisableStatusCheck                    : 1;                        /*!< whether disable the item status */
+    uint16_t bUsePISliderForSelectionIndicator      : 1;
+    uint16_t                                        : 5;
+    uint16_t                                        : 8;
+
+    arm_2d_helper_pi_slider_cfg_t           *ptPISliderCFG;                     /*!< the configuration for PI slider */
 } __arm_2d_list_core_cfg_t;
 
 /*!
@@ -267,6 +270,8 @@ ARM_PROTECTED(
             arm_2d_tile_t                   tileItem;                           /*!< the target tile for list items */
             int64_t                         lPeriod;                            /*!< time to run target distance */
             int64_t                         lTimestamp;                         /*!< timestamp used by animation */
+
+            arm_2d_helper_pi_slider_t       tPISlider;                          /*!< PI slider for generating movement animation */
 
             struct {
                 int32_t                     nOffset;                            /*!< list offset */

@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        09. Nov 2024
- * $Revision:    V.1.6.11
+ * $Date:        25. Nov 2024
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3198,6 +3198,7 @@ ARM_PRIVATE (
     q16_t q16Proportion;
     q16_t q16Integration;
     q16_t q16Current;
+
     q16_t q16OP;
     int32_t nInterval;
 
