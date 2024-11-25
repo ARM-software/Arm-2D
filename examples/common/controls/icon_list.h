@@ -51,6 +51,12 @@ extern "C" {
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define icon_list_init(__ICON_LIST_PTR, __CFG_PTR, ...)                         \
+            __icon_list_init(   (__ICON_LIST_PTR),                              \
+                                (__CFG_PTR),                                    \
+                                (&ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL, ##__VA_ARGS__))
+
 /*============================ TYPES =========================================*/
 
 typedef struct icon_list_cfg_t {
@@ -77,9 +83,11 @@ typedef struct icon_list_t {
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1,2)
-arm_2d_err_t icon_list_init(icon_list_t *ptThis, 
-                            icon_list_cfg_t *ptCFG);
+ARM_NONNULL(1, 2, 3)
+arm_2d_err_t __icon_list_init(
+                            icon_list_t *ptThis, 
+                            icon_list_cfg_t *ptCFG,
+                            arm_2d_i_list_region_calculator_t *ptCalculator);
 
 extern
 ARM_NONNULL(1)
