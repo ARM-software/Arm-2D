@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        24. Nov 2024
- * $Revision:    V.2.1.0
+ * $Date:        25. Nov 2024
+ * $Revision:    V.2.1.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -442,6 +442,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
         } 
     } while(0);
 
+
     /* finish drawing */
     if (!this.Runtime.bIsMoving) {
         if (this.tCFG.nTotalLength > 0) {
@@ -455,6 +456,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
             this.Runtime.Selection.nTargetOffset = this.Runtime.Selection.nOffset;
         }
     }
+
 
 label_end_of_list_core_task:
 ARM_PT_END()
@@ -1235,16 +1237,16 @@ ARM_PT_BEGIN(this.chState)
         nOffset = this.nOffset;
     }
 
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
+    }
+
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
         if (nOffset >= 0) {
             nOffset -= this.tCFG.nTotalLength;
         }
-    }
-
-    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
-        /* no valid item, return NULL */
-        ARM_PT_RETURN(NULL)
     }
 
     /* no ring mode */
@@ -1702,16 +1704,16 @@ ARM_PT_BEGIN(this.chState)
         nOffset = this.nOffset;
     }
 
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
+    }
+
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
         if (nOffset >= 0) {
             nOffset -= this.tCFG.nTotalLength;
         }
-    }
-
-    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
-        /* no valid item, return NULL */
-        ARM_PT_RETURN(NULL)
     }
 
     /* no ring mode */
@@ -2171,18 +2173,17 @@ ARM_PT_BEGIN(this.chState)
         nOffset = this.nOffset;
     }
 
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
+    }
+
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
         if (nOffset >= 0) {
             nOffset -= this.tCFG.nTotalLength;
         }
     }
-
-    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
-        /* no valid item, return NULL */
-        ARM_PT_RETURN(NULL)
-    }
-
 
     /* no ring mode */
     if (this.tCFG.bDisableRingMode) {
@@ -2662,16 +2663,16 @@ ARM_PT_BEGIN(this.chState)
         nOffset = this.nOffset;
     }
 
+    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
+        /* no valid item, return NULL */
+        ARM_PT_RETURN(NULL)
+    }
+
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
         if (nOffset >= 0) {
             nOffset -= this.tCFG.nTotalLength;
         }
-    }
-
-    if (ARM_2D_ERR_NONE != __calculator_offset_update(ptThis, fnIterator, &nOffset, bMidAligned)) {
-        /* no valid item, return NULL */
-        ARM_PT_RETURN(NULL)
     }
 
     /* no ring mode */
