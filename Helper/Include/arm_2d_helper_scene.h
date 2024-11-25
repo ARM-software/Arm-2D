@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        12. Nov 2024
- * $Revision:    V.1.8.3
+ * $Date:        25. Nov 2024
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -45,6 +45,16 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #endif
+
+/* OOC header, please DO NOT modify  */
+#ifdef __ARM_2D_HELPER_SCENE_IMPLEMENT__
+#   define __ARM_2D_IMPL__
+#   undef __ARM_2D_HELPER_SCENE_IMPLEMENT__
+#elif defined(__ARM_2D_HELPER_SCENE_INHERIT__)
+#   undef __ARM_2D_HELPER_SCENE_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
+#include "arm_2d_utils.h"
 
 /*============================ MACROS ========================================*/
 

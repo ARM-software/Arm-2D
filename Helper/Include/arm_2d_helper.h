@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        06. Nov 2024
- * $Revision:    V.2.1.0
+ * $Date:        25. Nov 2024
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -66,7 +66,6 @@ extern "C" {
 #ifdef __ARM_2D_HELPER_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #elif defined(__ARM_2D_HELPER_INHERIT__)
-#   undef __ARM_2D_HELPER_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -223,34 +222,6 @@ typedef struct arm_2d_helper_film_t {
     uint16_t hwPeriodPerFrame;                                                  /*!< the period per frame (optional, used as a reference) */
     uint16_t hwFrameIndex;                                                      /*!< the frame index used at runtime */
 } arm_2d_helper_film_t;
-
-/*!
- * \brief the configuration structure for the Proportional-Integral Control
- * 
- */
-typedef struct arm_2d_helper_pi_slider_cfg_t {
-    int32_t nInterval;
-    float fProportion;
-    float fIntegration;
-} arm_2d_helper_pi_slider_cfg_t;
-
-/*!
- * \brief a helper class for Proportional-Integral Control
- */
-typedef struct arm_2d_helper_pi_slider_t {
-
-ARM_PRIVATE (
-    q16_t q16Proportion;
-    q16_t q16Integration;
-    q16_t q16Current;
-    q16_t q16OP;
-    int32_t nInterval;
-
-    int64_t lTimestamp;
-    int32_t nTimeResidual;
-)
-
-} arm_2d_helper_pi_slider_t;
 
 struct __arm_2d_fifo_reader_pointer {
     uint16_t hwPointer;
@@ -448,70 +419,6 @@ uint32_t __arm_2d_helper_colour_slider( uint32_t wFrom,
                                         uint32_t wTo,
                                         int32_t nDistance,
                                         int32_t nOffset);
-
-/*!
- * \brief initialize the Proportional-Integral Control helper
- * \param[in] the target helper control block
- * \param[in] the configuration structure, NULL means using the default
- *            parameters, i.e P = 5.0f, I = 3.0f and Interval = 20ms
- * \param[in] iStartPosition the start postion
- * \return arm_2d_helper_pi_slider_t* the control block
- */
-extern
-ARM_NONNULL(1)
-arm_2d_helper_pi_slider_t *arm_2d_helper_pi_slider_init(  
-                                    arm_2d_helper_pi_slider_t *ptThis, 
-                                    arm_2d_helper_pi_slider_cfg_t *ptCFG, 
-                                    int16_t iStartPosition);
-
-/*!
- * \brief A helper function for Proportional-Integral Control
- * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
- * \param[in] iTargetPosition the new target position 
- * \param[in] piResult a int32_t buffer for reading the current postion
- * \retval true the slider has reached the target postion
- * \retval false the slider is still moving
- */
-extern
-ARM_NONNULL( 1, 3 )
-bool arm_2d_helper_pi_slider(   arm_2d_helper_pi_slider_t *ptThis,
-                                int16_t iTargetPosition,
-                                int16_t *piResult);
-
-/*!
- * \brief reset the PI slider and set the current value
- * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
- * \param[in] iCurrent the new current value
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_pi_slider_set_current(arm_2d_helper_pi_slider_t *ptThis,
-                                        int16_t iCurrent);
-
-/*!
- * \brief A helper function for Proportional-Integral Control
- * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
- * \param[in] fTargetPosition the new target position 
- * \param[in] pfResult a int32_t buffer for reading the current postion
- * \retval true the slider has reached the target postion
- * \retval false the slider is still moving
- */
-extern
-ARM_NONNULL( 1, 3 )
-bool arm_2d_helper_pi_slider_f32(arm_2d_helper_pi_slider_t *ptThis,
-                                 float fTargetPosition,
-                                 float *pfResult);
-
-/*!
- * \brief reset the PI slider and set the current value
- * \param[in] ptThis the control block (arm_2d_helper_pi_slider_t)
- * \param[in] fCurrent the new current value
- */
-extern
-ARM_NONNULL(1)
-void arm_2d_helper_pi_slider_set_current_f32(
-                                arm_2d_helper_pi_slider_t *ptThis,
-                                float fCurrent);
 
 /*!
  * \brier draw a box with specified colour, border width and opacity

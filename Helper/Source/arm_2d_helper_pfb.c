@@ -21,14 +21,15 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        1. Nov 2024
- * $Revision:    V.1.12.0
+ * $Date:        25. Nov 2024
+ * $Revision:    V.1.12.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
 /*============================ INCLUDES ======================================*/
-#define __ARM_2D_IMPL__
+
+#define __ARM_2D_HELPER_PFB_IMPLEMENT__
 
 #include <stdbool.h>
 #include <stdint.h>

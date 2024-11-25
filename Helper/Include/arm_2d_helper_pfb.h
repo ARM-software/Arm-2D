@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        1. Nov 2024
- * $Revision:    V.1.12.0
+ * $Date:        25. Nov 2024
+ * $Revision:    V.1.12.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -47,6 +47,16 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
+
+/* OOC header, please DO NOT modify  */
+#ifdef __ARM_2D_HELPER_PFB_IMPLEMENT__
+#   define __ARM_2D_IMPL__
+#   undef __ARM_2D_HELPER_PFB_IMPLEMENT__
+#elif defined(__ARM_2D_HELPER_PFB_INHERIT__)
+#   undef __ARM_2D_HELPER_PFB_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
+#include "arm_2d_utils.h"
 
 /*!
  * \addtogroup gHelper 8 Helper Services

@@ -21,15 +21,15 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        12. Nov 2024
- * $Revision:    V.1.8.3
+ * $Date:        25. Nov 2024
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
 /*============================ INCLUDES ======================================*/
+#define __ARM_2D_HELPER_SCENE_IMPLEMENT__
 
-#define __ARM_2D_IMPL__
 #include <stdbool.h>
 #include <stdint.h>
 #include <assert.h>
