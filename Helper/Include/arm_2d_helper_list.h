@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        25. Nov 2024
- * $Revision:    V.2.1.2
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -255,7 +255,9 @@ ARM_PROTECTED(
             arm_2d_tile_t                   tileTarget;                         /*!< the target draw area */
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
             __arm_2d_list_work_area_t       tWorkingArea;                       /*!< the working area */
-            uint8_t                         bIsRegCalInit;                      /*!< indicate whether the region calcluator is initialized or not */
+            uint8_t                         bIsRegCalInit       : 1;            /*!< indicate whether the region calcluator is initialized or not */
+            uint8_t                         u1RedrawRegionIdx   : 1;
+            uint8_t                                             : 6;
             union {
                 struct {
                     uint16_t hwIndex;                                           /*!< array iterator index */
@@ -264,6 +266,18 @@ ARM_PROTECTED(
                  * ...
                  */
             } Iterator;                                                         /*!< iterator control block */
+
+            union {
+                arm_2d_region_t tRegions[2];
+                struct {
+                    arm_2d_region_t tNewRegion;
+                    union {
+                        arm_2d_region_t tOldRegion;
+                        arm_2d_region_t tEnclosureArea;
+                    };
+                };
+            } RedrawRegion;
+
         )
 
         ARM_PRIVATE(
@@ -308,10 +322,6 @@ ARM_PROTECTED(
             int16_t iBottomVisibleOffset;
             uint16_t hwBottomVisibleItemID;
         } CalMidAligned;
-        struct {
-            int16_t iTopVisibleOffset;
-            uint16_t hwTopVisibleItemID;
-        } CalNormal;
     };
 )
 
@@ -429,6 +439,26 @@ ARM_NONNULL(1,2)
 arm_2d_region_t *__arm_2d_list_core_get_selection_region(
                                                 __arm_2d_list_core_t *ptThis,
                                                 arm_2d_region_t *ptRegionBuffer);
+
+/*!
+ * \brief get the minimal redraw region 
+ * 
+ * \param[in] ptThis the target list core object
+ * \return arm_2d_region_t* a pointer points to the redraw region
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_region_t *__arm_2d_list_core_get_redraw_region(__arm_2d_list_core_t *ptThis);
+
+/*!
+ * \brief get the inner list tile
+ * 
+ * \param[in] ptThis the target list core object
+ * \return arm_2d_tile_t* the inner list tile
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_tile_t *__arm_2d_list_core_get_inner_tile(__arm_2d_list_core_t *ptThis);
 
 /*!
  * \brief show a given list core

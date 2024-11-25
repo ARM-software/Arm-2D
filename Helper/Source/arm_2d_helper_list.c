@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        25. Nov 2024
- * $Revision:    V.2.1.2
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -305,7 +305,6 @@ ARM_PT_BEGIN(this.Runtime.chState)
                         ARM_2D_PARAM(
                             ptThis, 
                             this.tCFG.fnIterator,
-                            //this.Runtime.Selection.nOffset
                             this.nOffset
                             ))) {
             /* finish: use the unified exist point */
@@ -1129,6 +1128,8 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != fnIterator);
 
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(&this.Runtime.tileList);
+
     int32_t nOffset = *pnOffset;
     int32_t nSelectionOffset = -this.Runtime.Selection.nOffset;
 
@@ -1157,6 +1158,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     }
 
     this.Runtime.Selection.tRegion.tSize = ptItem->tSize;
+    bool bWindowMoved = false;
 
     if (!bMidAligned) {
         if (nSelectionOffset < nVisualWindowStart) {
@@ -1166,6 +1168,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
             this.nOffset += nDelta;
 
             nOffset += nDelta;
+            bWindowMoved = true;
         } else {
 
             int16_t iItemSize = 0;
@@ -1183,7 +1186,9 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
 
             int16_t iItemBottomBoarder = nSelectionOffset + iItemActualSize - 1;
 
-            int16_t iVisualWindowBottomBoarder = nVisualWindowStart + iListRegionSize - 1;
+            int16_t iVisualWindowBottomBoarder  = nVisualWindowStart 
+                                                + iListRegionSize 
+                                                - 1;
             if (iItemBottomBoarder > iVisualWindowBottomBoarder) {
                 /* move visual window */
                 int32_t nDelta = iItemBottomBoarder - iVisualWindowBottomBoarder;
@@ -1191,29 +1196,89 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
                 this.nOffset -= nDelta;
 
                 nOffset -= nDelta;
+                bWindowMoved = true;
             }
         }
 
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset - nVisualWindowStart;
+            this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset 
+                                                        - nVisualWindowStart;
             this.Runtime.Selection.tRegion.tLocation.iY = 0;
         } else {
             this.Runtime.Selection.tRegion.tLocation.iX = 0;
-            this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset - nVisualWindowStart;
+            this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset 
+                                                        - nVisualWindowStart;
         }
     } else {
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.Runtime.Selection.tRegion.tLocation.iX = this.iStartOffset + ptItem->Padding.chPrevious;
+            this.Runtime.Selection.tRegion.tLocation.iX 
+                                                = this.iStartOffset 
+                                                + ptItem->Padding.chPrevious;
             this.Runtime.Selection.tRegion.tLocation.iY = 0;
         } else {
             this.Runtime.Selection.tRegion.tLocation.iX = 0;
-            this.Runtime.Selection.tRegion.tLocation.iY = this.iStartOffset + ptItem->Padding.chPrevious;
+            this.Runtime.Selection.tRegion.tLocation.iY 
+                                                = this.iStartOffset 
+                                                + ptItem->Padding.chPrevious;
         }
     }
+
+    if (bIsNewFrame) {
+
+        if (bMidAligned) {
+            arm_2d_region_t tNewRegion = {
+                .tSize = this.Runtime.tileList.tRegion.tSize,
+            };
+            this.Runtime.RedrawRegion.tNewRegion = tNewRegion;
+            this.Runtime.u1RedrawRegionIdx = 0;
+        } else {
+            /* keep the old region */
+            this.Runtime.RedrawRegion.tOldRegion 
+                = this.Runtime.RedrawRegion.tNewRegion;
+
+            if (bWindowMoved) {
+                arm_2d_region_t tNewRegion = {
+                    .tSize = this.Runtime.tileList.tRegion.tSize,
+                };
+                this.Runtime.RedrawRegion.tNewRegion = tNewRegion;
+
+                this.Runtime.u1RedrawRegionIdx = 0;
+            } else {
+                this.Runtime.RedrawRegion.tNewRegion 
+                                            = this.Runtime.Selection.tRegion;
+                
+                /* update enclosure area */
+                arm_2d_region_get_minimal_enclosure(
+                                &this.Runtime.RedrawRegion.tNewRegion, 
+                                &this.Runtime.RedrawRegion.tOldRegion,
+                                &this.Runtime.RedrawRegion.tEnclosureArea);
+                
+                this.Runtime.u1RedrawRegionIdx = 1;
+            }
+        }
+
+    }
+
 
     (*pnOffset) = nOffset;
 
     return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+arm_2d_region_t *__arm_2d_list_core_get_redraw_region(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return &this.Runtime.RedrawRegion.tRegions[this.Runtime.u1RedrawRegionIdx];
+}
+
+ARM_NONNULL(1)
+arm_2d_tile_t *__arm_2d_list_core_get_inner_tile(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return &this.Runtime.tileList;
 }
 
 ARM_NONNULL(1,2)

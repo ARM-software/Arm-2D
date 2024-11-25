@@ -408,15 +408,18 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
             case SIMPLE_LIST_DIRTY_REGION_START:
                 if (__arm_2d_list_core_need_redraw(ptList, true)) {
 
-                    arm_2d_tile_t *ptTargetTile = &(ptList->Runtime.tileList);
-                    /* get the canvas for the list inner tile */
-                    arm_2d_canvas(ptTargetTile, __list_canvas) {
+                    arm_2d_tile_t *ptTargetTile 
+                        = __arm_2d_list_core_get_inner_tile(
+                                            &this.use_as____arm_2d_list_core_t);
+                    arm_2d_region_t *ptRedrawRegion 
+                        = __arm_2d_list_core_get_redraw_region(
+                                    &this.use_as____arm_2d_list_core_t);
+
                         arm_2d_dynamic_dirty_region_update(
                                         &this.tDirtyRegion,                     /* the dirty region */
                                         ptTargetTile,                           /* the target tile */
-                                        &__list_canvas,                         /* the redraw region */
+                                        ptRedrawRegion,                         /* the redraw region */
                                         SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE);  /* next state */
-                    }
                 } else {
                     /* nothing to redraw, update state to DONE */
                     arm_2d_dynamic_dirty_region_change_user_region_index_only(
