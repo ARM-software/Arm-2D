@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"group__gKernel.html#structarm__2d__op__src__msk__opc__t":[11,0,36],
 "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Mask":[11,0,91],
 "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Source":[11,0,90],
 "group__gKernel.html#structarm__2d__op__src__msk__opc__t_8Target":[11,0,89],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "md_how_to_deploy_the_arm_2d_library.html#autotoc_md61":[4,1,2],
 "md_how_to_deploy_the_arm_2d_library.html#autotoc_md62":[4,1,3],
 "md_how_to_deploy_the_arm_2d_library.html#autotoc_md63":[4,2],
-"md_how_to_deploy_the_arm_2d_library.html#autotoc_md64":[4,2,0],
-"md_how_to_deploy_the_arm_2d_library.html#autotoc_md65":[4,2,1]
+"md_how_to_deploy_the_arm_2d_library.html#autotoc_md64":[4,2,0]
 };

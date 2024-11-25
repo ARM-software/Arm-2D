@@ -64,7 +64,8 @@ var group__gHelper =
       [ "hwItemCount", "group__gHelper.html#a5c74c727a62e6a923d36e9ef87f57e54", null ],
       [ "hwSwitchingPeriodInMs", "group__gHelper.html#ae23248f400d7df52de3fddfb21192680", null ],
       [ "bDisableRingMode", "group__gHelper.html#abe070f2cdda1f9c4b3e386de04c369e9", null ],
-      [ "bDisableStatusCheck", "group__gHelper.html#ac2f489b8f7e0e3c6f75bb3a00b4bf862", null ]
+      [ "bDisableStatusCheck", "group__gHelper.html#ac2f489b8f7e0e3c6f75bb3a00b4bf862", null ],
+      [ "ptPISliderCFG", "group__gHelper.html#a21778e60efaffcfa47b2ebd6f9120fd8", null ]
     ] ],
     [ "__arm_2d_list_core_t", "group__gHelper.html#struct____arm__2d__list__core__t", [
       [ "ARM_PROTECTED", "group__gHelper.html#a45ae8c2f126445c158944db2938719e6", null ],

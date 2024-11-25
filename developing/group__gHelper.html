@@ -2135,10 +2135,23 @@ bDisableStatusCheck: 1</td>
 <p >whether disable the item status </p>
 </td></tr>
 <tr><td class="fieldtype">
+<a id="aa12e03a90492ea33d0ed573932018940" name="aa12e03a90492ea33d0ed573932018940"></a>uint16_t</td>
+<td class="fieldname">
+bUsePISliderForSelectionIndicator: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="aa772daf5fcb9bdf33d3c3af7afcb384d" name="aa772daf5fcb9bdf33d3c3af7afcb384d"></a>uint16_t</td>
 <td class="fieldname">
 __pad1__: 8</td>
 <td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a21778e60efaffcfa47b2ebd6f9120fd8" name="a21778e60efaffcfa47b2ebd6f9120fd8"></a>arm_2d_helper_pi_slider_cfg_t *</td>
+<td class="fieldname">
+ptPISliderCFG</td>
+<td class="fielddoc">
+<p >the configuration for PI slider </p>
 </td></tr>
 </table>
 
@@ -2198,6 +2211,7 @@ __pad1__: 8</td>
 <p >&lt; the target tile for list items</p>
 <p >&lt; time to run target distance</p>
 <p >&lt; timestamp used by animation</p>
+<p >&lt; PI slider for generating movement animation</p>
 <p >&lt; list offset</p>
 <p >&lt; the start offset</p>
 <p >&lt; the target list offset</p>
