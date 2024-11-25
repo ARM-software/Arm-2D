@@ -737,6 +737,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaadad613d5766675f08a9c677f3671f51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaadad613d5766675f08a9c677f3671f51">__arm_2d_list_core_get_selection_region</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegionBuffer)</td></tr>
 <tr class="memdesc:gaadad613d5766675f08a9c677f3671f51"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the region for drawing the item selection indicator  <a href="group__gHelper.html#gaadad613d5766675f08a9c677f3671f51">More...</a><br /></td></tr>
 <tr class="separator:gaadad613d5766675f08a9c677f3671f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0a79e5df84eec1b17ea332d57199acd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf0a79e5df84eec1b17ea332d57199acd">__arm_2d_list_core_get_redraw_region</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaf0a79e5df84eec1b17ea332d57199acd"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the minimal redraw region  <a href="group__gHelper.html#gaf0a79e5df84eec1b17ea332d57199acd">More...</a><br /></td></tr>
+<tr class="separator:gaf0a79e5df84eec1b17ea332d57199acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf247e12548b28b213cfdd8552e69c06b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf247e12548b28b213cfdd8552e69c06b">__arm_2d_list_core_get_inner_tile</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gaf247e12548b28b213cfdd8552e69c06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the inner list tile  <a href="group__gHelper.html#gaf247e12548b28b213cfdd8552e69c06b">More...</a><br /></td></tr>
+<tr class="separator:gaf247e12548b28b213cfdd8552e69c06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8b5edc78d3535a1795bff6c024685ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa8b5edc78d3535a1795bff6c024685ac">__arm_2d_list_core_show</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, bool bIsNewFrame)</td></tr>
 <tr class="memdesc:gaa8b5edc78d3535a1795bff6c024685ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">show a given list core  <a href="group__gHelper.html#gaa8b5edc78d3535a1795bff6c024685ac">More...</a><br /></td></tr>
 <tr class="separator:gaa8b5edc78d3535a1795bff6c024685ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -8152,6 +8158,60 @@ false the scene player stays in tge current scene. </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_2d_region_t* the address of the region buffer </dd></dl>
+
+</div>
+</div>
+<a id="gaf0a79e5df84eec1b17ea332d57199acd" name="gaf0a79e5df84eec1b17ea332d57199acd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf0a79e5df84eec1b17ea332d57199acd">&#9670;&nbsp;</a></span>__arm_2d_list_core_get_redraw_region()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> * __arm_2d_list_core_get_redraw_region </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the minimal redraw region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_region_t* a pointer points to the redraw region </dd></dl>
+
+</div>
+</div>
+<a id="gaf247e12548b28b213cfdd8552e69c06b" name="gaf247e12548b28b213cfdd8552e69c06b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf247e12548b28b213cfdd8552e69c06b">&#9670;&nbsp;</a></span>__arm_2d_list_core_get_inner_tile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> * __arm_2d_list_core_get_inner_tile </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the inner list tile </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_2d_tile_t* the inner list tile </dd></dl>
 
 </div>
 </div>
