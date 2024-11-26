@@ -41,6 +41,7 @@
 #include "./spin_zoom_widget.h"
 #include "./cloudy_glass.h"
 #include "./meter_pointer.h"
+#include "./text_tracking_list.h"
 
 #ifdef   __cplusplus
 extern "C" {

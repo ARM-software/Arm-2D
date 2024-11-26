@@ -128,6 +128,18 @@ ARM_PROTECTED_METHOD(
                                         arm_2d_draw_list_item_handler_t *fnHandler);
 
     extern
+    ARM_NONNULL(1,2)
+    void __simple_list_set_draw_list_background_handler(
+                                        __simple_list_t *ptThis,
+                                        arm_2d_helper_draw_handler_t *fnHandler);
+
+    extern
+    ARM_NONNULL(1,2)
+    void __simple_list_set_draw_list_cover_handler(
+                                        __simple_list_t *ptThis,
+                                        arm_2d_helper_draw_handler_t *fnHandler);
+
+    extern
     ARM_NONNULL(1)
     void __simple_list_depose(__simple_list_t *ptThis);
 

@@ -16,13 +16,12 @@
  * limitations under the License.
  */
 
-#ifndef __TEXT_LIST_H__
-#define __TEXT_LIST_H__
+#ifndef __TEXT_TRACKING_LIST_H__
+#define __TEXT_TRACKING_LIST_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
-#include "arm_2d_helper_list.h"
-#include "__simple_list.h"
+#include "text_list.h"
 
 #include "./__common.h"
 
@@ -40,89 +39,86 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __TEXT_LIST_IMPLEMENT__
-#   undef   __TEXT_LIST_IMPLEMENT__
+#ifdef __TEXT_TRACKING_LIST_IMPLEMENT__
+#   undef   __TEXT_TRACKING_LIST_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
-#elif defined(__TEXT_LIST_INHERIT__)
-#   undef   __TEXT_LIST_INHERIT__
+#elif defined(__TEXT_TRACKING_LIST_INHERIT__)
+#   undef   __TEXT_TRACKING_LIST_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
-#define text_list_init(__TEXT_LIST_PTR, __CFG_PTR, ...)                         \
-            __text_list_init(   (__TEXT_LIST_PTR),                              \
-                                (__CFG_PTR),                                    \
-                                (&ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL, ##__VA_ARGS__))
+#define text_tracking_list_init(__TEXT_TRACKING_LIST_PTR, __CFG_PTR, ...)       \
+            __text_tracking_list_init(                                          \
+                (__TEXT_TRACKING_LIST_PTR),                                     \
+                (__CFG_PTR),                                                    \
+                (&ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL, ##__VA_ARGS__))
 
 
 /*============================ TYPES =========================================*/
 
 typedef char * __disp_string_t ;
 
-typedef struct text_list_cfg_t {
+typedef struct text_tracking_list_cfg_t {
+    implement(text_list_cfg_t);
 
-    implement(__simple_list_cfg_t);
+} text_tracking_list_cfg_t;
 
-    const char *pchFormatString;
-    __disp_string_t *ptStrings;
-
-} text_list_cfg_t;
-
-typedef struct text_list_t {
-    implement(__simple_list_t);
-
-ARM_PROTECTED(
-    struct {
-        const char *pchFormatString;
-        __disp_string_t *ptString;
-    } tTextListCFG;
+typedef struct text_tracking_list_t {
+    implement(text_list_t);
+ARM_PRIVATE(
+    int64_t lTimestamp;
+    int16_t iStringWidth;
+    arm_2d_size_t tLastStringSize;
+    arm_2d_region_t tIndicatorRegion;
 )
-} text_list_t;
+
+} text_tracking_list_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 extern
 ARM_NONNULL(1,2,3)
-arm_2d_err_t __text_list_init(  text_list_t *ptThis, 
-                                text_list_cfg_t *ptCFG,
+arm_2d_err_t __text_tracking_list_init(  text_tracking_list_t *ptThis, 
+                                text_tracking_list_cfg_t *ptCFG,
                                 arm_2d_i_list_region_calculator_t *ptCalculator);
 
 extern
 ARM_NONNULL(1)
-void text_list_depose(text_list_t *ptThis);
+void text_tracking_list_depose(text_tracking_list_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)
-arm_fsm_rt_t text_list_show(  text_list_t *ptThis,
+arm_fsm_rt_t text_tracking_list_show(  text_tracking_list_t *ptThis,
                                 const arm_2d_tile_t *ptTile, 
                                 const arm_2d_region_t *ptRegion, 
                                 bool bIsNewFrame);
 
 extern
 ARM_NONNULL(1)
-void text_list_move_selection( text_list_t *ptThis,
+void text_tracking_list_move_selection( text_tracking_list_t *ptThis,
                                         int16_t iSteps,
                                         int32_t nFinishInMs);
 
 extern 
 ARM_NONNULL(1)
-void text_list_on_frame_start(text_list_t *ptThis);
+void text_tracking_list_on_frame_start(text_tracking_list_t *ptThis);
 
 
 extern
 ARM_NONNULL(1)
-uint16_t text_list_get_selected_item_id(text_list_t *ptThis);
+uint16_t text_tracking_list_get_selected_item_id(text_tracking_list_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-__disp_string_t text_list_get_item_string(text_list_t *ptThis, uint_fast16_t hwItemID);
+__disp_string_t text_tracking_list_get_item_string(text_tracking_list_t *ptThis, uint_fast16_t hwItemID);
 
 extern
 ARM_NONNULL(1)
-uint16_t text_list_get_list_item_count(text_list_t *ptThis);
+uint16_t text_tracking_list_get_list_item_count(text_tracking_list_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
