@@ -400,7 +400,18 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptTile);
 
+    arm_fsm_rt_t tResult = arm_fsm_rt_on_going;
+
+    if (!arm_2d_helper_pfb_is_region_active(ptTile, ptRegion, true)) {
+        return arm_fsm_rt_cpl;
+    }
+
     __arm_2d_list_core_t *ptList = &this.use_as____arm_2d_list_core_t;
+
+    tResult =  __arm_2d_list_core_show(ptList,
+                            ptTile,
+                            ptRegion,
+                            bIsNewFrame);
 
     /* process the dynamic dirty region */
     if (this.tSimpleListCFG.bUseDirtyRegion) {
@@ -434,14 +445,8 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
         }
     }
 
-    if (!arm_2d_helper_pfb_is_region_being_drawing(ptTile, ptRegion, NULL) && !bIsNewFrame) {
-        return arm_fsm_rt_cpl;
-    }
-
-    return __arm_2d_list_core_show(ptList,
-                            ptTile,
-                            ptRegion,
-                            bIsNewFrame);
+    return tResult;
+    
 }
 
 ARM_NONNULL(1,2,4)

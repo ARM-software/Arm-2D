@@ -273,6 +273,18 @@ ARM_PT_BEGIN(this.Runtime.chState)
         }
     } while(0);
 
+    /* call calculator before drawing the background */
+    if (NULL == ARM_2D_INVOKE(  this.tCFG.ptCalculator->fnCalculator,
+                    ARM_2D_PARAM(
+                        ptThis, 
+                        this.tCFG.fnIterator,
+                        this.nOffset
+                        ))) {
+        /* finish: use the unified exist point */
+        goto label_end_of_list_core_task;
+        //break;
+    }
+
     /* draw background */
     do {
     ARM_PT_ENTRY()
@@ -300,17 +312,7 @@ ARM_PT_BEGIN(this.Runtime.chState)
     
     /* loop until finishing drawing all visiable area */
     do {
-        /* call calculator: it should handle the padding */
-        if (NULL == ARM_2D_INVOKE(  this.tCFG.ptCalculator->fnCalculator,
-                        ARM_2D_PARAM(
-                            ptThis, 
-                            this.tCFG.fnIterator,
-                            this.nOffset
-                            ))) {
-            /* finish: use the unified exist point */
-            //goto label_end_of_list_core_task;
-            break;
-        }
+
         arm_2d_list_item_t *ptItem = this.Runtime.tWorkingArea.ptItem;
         assert(NULL != ptItem);
         
@@ -365,13 +367,13 @@ ARM_PT_BEGIN(this.Runtime.chState)
         this.Runtime.tWorkingArea.tRegion.tSize.iWidth 
             -= ptItem->Margin.chLeft + ptItem->Margin.chRight;
         if (0 == this.Runtime.tWorkingArea.tRegion.tSize.iWidth) {
-            continue;
+            goto label_next_list_item;
         }
         
         this.Runtime.tWorkingArea.tRegion.tSize.iHeight 
             -= ptItem->Margin.chTop + ptItem->Margin.chBottom;
         if (0 == this.Runtime.tWorkingArea.tRegion.tSize.iHeight) {
-            continue;
+            goto label_next_list_item;
         }
 
         /* update selected field */
@@ -381,14 +383,14 @@ ARM_PT_BEGIN(this.Runtime.chState)
         if (!arm_2d_helper_pfb_is_region_active(&this.Runtime.tileList, 
                                                 &this.Runtime.tWorkingArea.tRegion, 
                                                 true)) {
-            continue;
+            goto label_next_list_item;
         }
 
         if (NULL == arm_2d_tile_generate_child(&this.Runtime.tileList, 
                                                &this.Runtime.tWorkingArea.tRegion,
                                                &this.Runtime.tileItem,
                                                false)) {
-            continue;
+            goto label_next_list_item;
         }
 
         /* draw list core item background */
@@ -439,6 +441,20 @@ ARM_PT_BEGIN(this.Runtime.chState)
             } 
         ARM_PT_YIELD(arm_fsm_rt_on_going)
         } while(0);
+
+label_next_list_item:
+
+        /* call calculator: it should handle the padding */
+        if (NULL == ARM_2D_INVOKE(  this.tCFG.ptCalculator->fnCalculator,
+                        ARM_2D_PARAM(
+                            ptThis, 
+                            this.tCFG.fnIterator,
+                            this.nOffset
+                            ))) {
+            /* finish: use the unified exist point */
+            //goto label_end_of_list_core_task;
+            break;
+        }
 
     } while(true);
 
@@ -1128,7 +1144,9 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != fnIterator);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(&this.Runtime.tileList);
+    arm_2d_err_t tResult = arm_2d_target_tile_is_new_frame(&this.Runtime.tileList);
+    printf("is new frame result: %d \r\n", tResult);
+    bool bIsNewFrame = (ARM_2D_RT_TRUE == tResult);
 
     int32_t nOffset = *pnOffset;
     int32_t nSelectionOffset = -this.Runtime.Selection.nOffset;
@@ -1157,7 +1175,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
         return ARM_2D_ERR_NOT_AVAILABLE;
     }
 
-    this.Runtime.Selection.tRegion.tSize = ptItem->tSize;
+    
     bool bWindowMoved = false;
 
     if (!bMidAligned) {
@@ -1200,16 +1218,21 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
             }
         }
 
-        if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
-            this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset 
-                                                        - nVisualWindowStart;
-            this.Runtime.Selection.tRegion.tLocation.iY = 0;
-        } else {
-            this.Runtime.Selection.tRegion.tLocation.iX = 0;
-            this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset 
-                                                        - nVisualWindowStart;
+        if (bIsNewFrame) {
+            this.Runtime.Selection.tRegion.tSize = ptItem->tSize;
+            if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
+                this.Runtime.Selection.tRegion.tLocation.iX = nSelectionOffset 
+                                                            - nVisualWindowStart;
+                this.Runtime.Selection.tRegion.tLocation.iY = 0;
+            } else {
+                this.Runtime.Selection.tRegion.tLocation.iX = 0;
+                this.Runtime.Selection.tRegion.tLocation.iY = nSelectionOffset 
+                                                            - nVisualWindowStart;
+            }
         }
-    } else {
+
+    } else if (bIsNewFrame) {
+        this.Runtime.Selection.tRegion.tSize = ptItem->tSize;
         if (this.Runtime.tWorkingArea.tDirection == ARM_2D_LIST_HORIZONTAL) {
             this.Runtime.Selection.tRegion.tLocation.iX 
                                                 = this.iStartOffset 
@@ -1224,7 +1247,6 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     }
 
     if (bIsNewFrame) {
-
         if (bMidAligned) {
             arm_2d_region_t tNewRegion = {
                 .tSize = this.Runtime.tileList.tRegion.tSize,
@@ -1232,7 +1254,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
             this.Runtime.RedrawRegion.tNewRegion = tNewRegion;
             this.Runtime.u1RedrawRegionIdx = 0;
         } else {
-            /* keep the old region */
+            /* keep the previous region */
             this.Runtime.RedrawRegion.tOldRegion 
                 = this.Runtime.RedrawRegion.tNewRegion;
 
@@ -1246,17 +1268,20 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
             } else {
                 this.Runtime.RedrawRegion.tNewRegion 
                                             = this.Runtime.Selection.tRegion;
-                
+            
+            
+                arm_2d_region_t tEnclosureRegion;
                 /* update enclosure area */
                 arm_2d_region_get_minimal_enclosure(
                                 &this.Runtime.RedrawRegion.tNewRegion, 
                                 &this.Runtime.RedrawRegion.tOldRegion,
-                                &this.Runtime.RedrawRegion.tEnclosureArea);
+                                &tEnclosureRegion);
                 
+                this.Runtime.RedrawRegion.tEnclosureArea = tEnclosureRegion;
+
                 this.Runtime.u1RedrawRegionIdx = 1;
             }
         }
-
     }
 
 
