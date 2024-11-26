@@ -1144,9 +1144,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != fnIterator);
 
-    arm_2d_err_t tResult = arm_2d_target_tile_is_new_frame(&this.Runtime.tileList);
-    printf("is new frame result: %d \r\n", tResult);
-    bool bIsNewFrame = (ARM_2D_RT_TRUE == tResult);
+    bool bIsNewFrame = (ARM_2D_RT_TRUE == arm_2d_target_tile_is_new_frame(&this.Runtime.tileList));
 
     int32_t nOffset = *pnOffset;
     int32_t nSelectionOffset = -this.Runtime.Selection.nOffset;
