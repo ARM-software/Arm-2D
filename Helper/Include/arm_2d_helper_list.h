@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        25. Nov 2024
- * $Revision:    V.2.2.1
+ * $Date:        27. Nov 2024
+ * $Revision:    V.2.2.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -256,8 +256,7 @@ ARM_PROTECTED(
             arm_2d_tile_t                   tileList;                           /*!< the target tile for the list */
             __arm_2d_list_work_area_t       tWorkingArea;                       /*!< the working area */
             uint8_t                         bIsRegCalInit       : 1;            /*!< indicate whether the region calcluator is initialized or not */
-            uint8_t                         u1RedrawRegionIdx   : 1;
-            uint8_t                                             : 6;
+            uint8_t                                             : 7;
             union {
                 struct {
                     uint16_t hwIndex;                                           /*!< array iterator index */
@@ -266,17 +265,6 @@ ARM_PROTECTED(
                  * ...
                  */
             } Iterator;                                                         /*!< iterator control block */
-
-            union {
-                arm_2d_region_t tRegions[2];
-                struct {
-                    arm_2d_region_t tNewRegion;
-                    union {
-                        arm_2d_region_t tOldRegion;
-                        arm_2d_region_t tEnclosureArea;
-                    };
-                };
-            } RedrawRegion;
 
         )
 
@@ -298,7 +286,9 @@ ARM_PROTECTED(
             uint8_t                         chState;                            /*!< state used by list core task */
             uint8_t                         bIsMoving   : 1;                    /*!< a flag to indicate whether the list is moving */
             uint8_t                         bNeedRedraw : 1;                    /*!< a flag to indicate whether a redraw is requested, this is a sticky flag */
-            uint8_t                                     : 6;                    /*!< reserved */
+            uint8_t                         bScrolling  : 1;                    /*!< a flag to indicate whether the list is scrolling or not */
+            uint8_t                                     : 5;                    /*!< reserved */
+
             struct {
                 int16_t iSteps;                                                 /*!< steps to move */
                 int32_t nFinishInMs;                                            /*!< finish in ms */
@@ -441,16 +431,6 @@ arm_2d_region_t *__arm_2d_list_core_get_selection_region(
                                                 arm_2d_region_t *ptRegionBuffer);
 
 /*!
- * \brief get the minimal redraw region 
- * 
- * \param[in] ptThis the target list core object
- * \return arm_2d_region_t* a pointer points to the redraw region
- */
-extern
-ARM_NONNULL(1)
-arm_2d_region_t *__arm_2d_list_core_get_redraw_region(__arm_2d_list_core_t *ptThis);
-
-/*!
  * \brief get the inner list tile
  * 
  * \param[in] ptThis the target list core object
@@ -554,6 +534,17 @@ bool __arm_2d_list_core_need_redraw(__arm_2d_list_core_t *ptThis, bool bAutorese
 extern
 ARM_NONNULL(1)
 bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis);
+
+/*!
+ * \brief check whether the list is scrolling or not
+ * 
+ * \param[in] ptThis the target list core object
+ * \return true the list is scrolling
+ * \return false the list isn't scrolling.
+ */
+extern
+ARM_NONNULL(1)
+bool __arm_2d_list_core_is_list_scrolling(__arm_2d_list_core_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

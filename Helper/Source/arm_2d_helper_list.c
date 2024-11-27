@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        25. Nov 2024
- * $Revision:    V.2.2.0
+ * $Date:        27. Nov 2024
+ * $Revision:    V.2.2.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -766,6 +766,14 @@ bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis)
     return this.Runtime.bIsMoving;
 }
 
+ARM_NONNULL(1)
+bool __arm_2d_list_core_is_list_scrolling(__arm_2d_list_core_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.Runtime.bScrolling;
+}
+
 
 ARM_NONNULL(1,2)
 arm_2d_list_item_t *__arm_2d_list_core_get_item(
@@ -1144,7 +1152,9 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != fnIterator);
 
-    bool bIsNewFrame = (ARM_2D_RT_TRUE == arm_2d_target_tile_is_new_frame(&this.Runtime.tileList));
+    arm_2d_err_t tResult = arm_2d_target_tile_is_new_frame(&this.Runtime.tileList);
+    printf("is new frame result: %d \r\n", tResult);
+    bool bIsNewFrame = (ARM_2D_RT_TRUE == tResult);
 
     int32_t nOffset = *pnOffset;
     int32_t nSelectionOffset = -this.Runtime.Selection.nOffset;
@@ -1246,39 +1256,9 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
 
     if (bIsNewFrame) {
         if (bMidAligned) {
-            arm_2d_region_t tNewRegion = {
-                .tSize = this.Runtime.tileList.tRegion.tSize,
-            };
-            this.Runtime.RedrawRegion.tNewRegion = tNewRegion;
-            this.Runtime.u1RedrawRegionIdx = 0;
+            this.Runtime.bScrolling = true;
         } else {
-            /* keep the previous region */
-            this.Runtime.RedrawRegion.tOldRegion 
-                = this.Runtime.RedrawRegion.tNewRegion;
-
-            if (bWindowMoved) {
-                arm_2d_region_t tNewRegion = {
-                    .tSize = this.Runtime.tileList.tRegion.tSize,
-                };
-                this.Runtime.RedrawRegion.tNewRegion = tNewRegion;
-
-                this.Runtime.u1RedrawRegionIdx = 0;
-            } else {
-                this.Runtime.RedrawRegion.tNewRegion 
-                                            = this.Runtime.Selection.tRegion;
-            
-            
-                arm_2d_region_t tEnclosureRegion;
-                /* update enclosure area */
-                arm_2d_region_get_minimal_enclosure(
-                                &this.Runtime.RedrawRegion.tNewRegion, 
-                                &this.Runtime.RedrawRegion.tOldRegion,
-                                &tEnclosureRegion);
-                
-                this.Runtime.RedrawRegion.tEnclosureArea = tEnclosureRegion;
-
-                this.Runtime.u1RedrawRegionIdx = 1;
-            }
+            this.Runtime.bScrolling = !!bWindowMoved;
         }
     }
 
@@ -1286,14 +1266,6 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
     (*pnOffset) = nOffset;
 
     return ARM_2D_ERR_NONE;
-}
-
-ARM_NONNULL(1)
-arm_2d_region_t *__arm_2d_list_core_get_redraw_region(__arm_2d_list_core_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    return &this.Runtime.RedrawRegion.tRegions[this.Runtime.u1RedrawRegionIdx];
 }
 
 ARM_NONNULL(1)

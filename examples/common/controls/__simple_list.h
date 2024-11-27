@@ -101,9 +101,10 @@ ARM_PROTECTED(
 ARM_PRIVATE(
     arm_2d_list_item_t tTempItem;
     
-    int32_t nIterationIndex;
+    uint16_t hwIterationIndex;
+    uint16_t bIsOnLoad;
 
-    arm_2d_region_list_item_t tDirtyRegion;
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
 )
 
 } __simple_list_t;

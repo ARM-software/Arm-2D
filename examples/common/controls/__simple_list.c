@@ -116,7 +116,7 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
                                     )
 {
     __simple_list_t *ptThis = (__simple_list_t *)ptListView;
-    int32_t nIterationIndex;
+    int32_t hwIterationIndex;
 
     if (this.use_as____arm_2d_list_core_t.tCFG.bDisableRingMode) {
         uint16_t hwItemCount = this.use_as____arm_2d_list_core_t.tCFG.hwItemCount;
@@ -127,7 +127,7 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
                     /* out of range */
                     return NULL;
                 }
-                nIterationIndex = hwID;
+                hwIterationIndex = hwID;
                 break;
 
             case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
@@ -136,101 +136,101 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
                     return NULL;
                 }
 
-                this.nIterationIndex = hwID;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex = hwID;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_PREVIOUS:
-                if (this.nIterationIndex) {
-                    this.nIterationIndex--;
+                if (this.hwIterationIndex) {
+                    this.hwIterationIndex--;
                 } else {
                     /* out of range */
                     return NULL;
                 }
-                nIterationIndex = this.nIterationIndex;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_NEXT:
-                if ((this.nIterationIndex + 1) >= hwItemCount) {
+                if ((this.hwIterationIndex + 1) >= hwItemCount) {
                     /* out of range */
                     return NULL;
                 }
-                this.nIterationIndex++;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex++;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
-                nIterationIndex = 0;
+                hwIterationIndex = 0;
                 break;
 
             case __ARM_2D_LIST_GET_FIRST_ITEM:
-                this.nIterationIndex = 0;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex = 0;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_CURRENT:
-                nIterationIndex = this.nIterationIndex;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
-                nIterationIndex = hwItemCount - 1;
+                hwIterationIndex = hwItemCount - 1;
                 break;
 
             case __ARM_2D_LIST_GET_LAST_ITEM:
-                this.nIterationIndex = hwItemCount - 1;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex = hwItemCount - 1;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
         }
     } else {
         switch (tDirection) {
             default:
             case __ARM_2D_LIST_GET_ITEM_WITH_ID_WITHOUT_MOVE_POINTER:
-                nIterationIndex = hwID;
-                nIterationIndex %= this.tSimpleListCFG.hwCount;
+                hwIterationIndex = hwID;
+                hwIterationIndex %= this.tSimpleListCFG.hwCount;
                 break;
 
             case __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER:
-                this.nIterationIndex = hwID;
-                this.nIterationIndex %= this.tSimpleListCFG.hwCount;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex = hwID;
+                this.hwIterationIndex %= this.tSimpleListCFG.hwCount;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_PREVIOUS:
-                if (this.nIterationIndex) {
-                    this.nIterationIndex--;
+                if (this.hwIterationIndex) {
+                    this.hwIterationIndex--;
                 } else {
-                    this.nIterationIndex = this.tSimpleListCFG.hwCount - 1;
+                    this.hwIterationIndex = this.tSimpleListCFG.hwCount - 1;
                 }
-                nIterationIndex = this.nIterationIndex;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_NEXT:
-                this.nIterationIndex++;
-                this.nIterationIndex %= this.tSimpleListCFG.hwCount;
+                this.hwIterationIndex++;
+                this.hwIterationIndex %= this.tSimpleListCFG.hwCount;
                 
-                nIterationIndex = this.nIterationIndex;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_FIRST_ITEM_WITHOUT_MOVE_POINTER:
-                nIterationIndex = 0;
+                hwIterationIndex = 0;
                 break;
 
             case __ARM_2D_LIST_GET_FIRST_ITEM:
-                this.nIterationIndex = 0;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex = 0;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_CURRENT:
-                nIterationIndex = this.nIterationIndex;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
 
             case __ARM_2D_LIST_GET_LAST_ITEM_WITHOUT_MOVE_POINTER:
-                nIterationIndex = this.tSimpleListCFG.hwCount - 1;
+                hwIterationIndex = this.tSimpleListCFG.hwCount - 1;
                 break;
 
             case __ARM_2D_LIST_GET_LAST_ITEM:
-                this.nIterationIndex = this.tSimpleListCFG.hwCount - 1;
-                nIterationIndex = this.nIterationIndex;
+                this.hwIterationIndex = this.tSimpleListCFG.hwCount - 1;
+                hwIterationIndex = this.hwIterationIndex;
                 break;
         }
     }
@@ -245,10 +245,10 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
                 .Runtime.tileList.tRegion.tSize.iWidth;
     }
 
-    nIterationIndex %= this.tSimpleListCFG.hwCount;
+    hwIterationIndex %= this.tSimpleListCFG.hwCount;
 
     /* update item id : pretend that this is a different list core item */
-    this.tTempItem.hwID = (uint16_t)nIterationIndex;
+    this.tTempItem.hwID = (uint16_t)hwIterationIndex;
 
     /* target scene */
     this.tTempItem.pTarget = (uintptr_t)this.tSimpleListCFG.ptTargetScene;
@@ -344,14 +344,13 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
         this.tTempItem.fnOnDrawItem = ptCFG->fnOnDrawListItem;
     }
 
-    if (    (this.tSimpleListCFG.bUseDirtyRegion) 
-        &&  (NULL != this.tSimpleListCFG.ptTargetScene)) {
-        arm_2d_scene_player_dynamic_dirty_region_init(  
-                                                &this.tDirtyRegion, 
-                                                this.tSimpleListCFG.ptTargetScene);
-    } else {
+    if (!(    (this.tSimpleListCFG.bUseDirtyRegion) 
+        &&  (NULL != this.tSimpleListCFG.ptTargetScene))) {
+
         this.tSimpleListCFG.bUseDirtyRegion = false;
     }
+
+    this.bIsOnLoad = true;
 
     return ARM_2D_ERR_NONE;
 }
@@ -397,8 +396,11 @@ void __simple_list_depose(__simple_list_t *ptThis)
 
     if (    (this.tSimpleListCFG.bUseDirtyRegion) 
         &&  (NULL != this.tSimpleListCFG.ptTargetScene)) {
-        arm_2d_scene_player_dynamic_dirty_region_depose(&this.tDirtyRegion, 
-                                                        this.tSimpleListCFG.ptTargetScene);
+        
+        arm_2d_helper_dirty_region_remove_items(
+                        &this.tSimpleListCFG.ptTargetScene->tDirtyRegionHelper,
+                        &this.tDirtyRegionItem,
+                        1);
     }
 }
 
@@ -408,9 +410,21 @@ void __simple_list_on_frame_start(__simple_list_t *ptThis)
     assert(NULL != ptThis);
 
     if (this.tSimpleListCFG.bUseDirtyRegion) {
-        arm_2d_dynamic_dirty_region_on_frame_start(
-                                                &this.tDirtyRegion, 
-                                                SIMPLE_LIST_DIRTY_REGION_START);
+        
+        if (this.bIsOnLoad) {
+            this.bIsOnLoad = false;
+
+            arm_2d_helper_dirty_region_add_items(
+                        &this.tSimpleListCFG.ptTargetScene->tDirtyRegionHelper,
+                        &this.tDirtyRegionItem,
+                        1);
+            
+            arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure(
+                                                        &this.tDirtyRegionItem,
+                                                        true);
+        }
+
+
     }
 }
 
@@ -436,36 +450,34 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
                             ptRegion,
                             bIsNewFrame);
 
+    if (bIsNewFrame) {
     /* process the dynamic dirty region */
     if (this.tSimpleListCFG.bUseDirtyRegion) {
-        switch (arm_2d_dynamic_dirty_region_wait_next(&this.tDirtyRegion)) {
-            case SIMPLE_LIST_DIRTY_REGION_START:
-                if (__arm_2d_list_core_need_redraw(ptList, true)) {
 
-                    arm_2d_tile_t *ptTargetTile 
+        
+        if (__arm_2d_list_core_need_redraw(ptList, false)) {
+
+            arm_2d_tile_t *ptTargetTile 
                         = __arm_2d_list_core_get_inner_tile(
                                             &this.use_as____arm_2d_list_core_t);
-                    arm_2d_region_t *ptRedrawRegion 
-                        = __arm_2d_list_core_get_redraw_region(
-                                    &this.use_as____arm_2d_list_core_t);
 
-                        arm_2d_dynamic_dirty_region_update(
-                                        &this.tDirtyRegion,                     /* the dirty region */
-                                        ptTargetTile,                           /* the target tile */
-                                        ptRedrawRegion,                         /* the redraw region */
-                                        SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE);  /* next state */
-                } else {
-                    /* nothing to redraw, update state to DONE */
-                    arm_2d_dynamic_dirty_region_change_user_region_index_only(
-                                        &this.tDirtyRegion,
-                                        SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE);
-                }
-                break;
-            case SIMPLE_LIST_DIRTY_REGION_REDRAW_DONE:
-                break;
-            default:    /* 0xFF */
-                break;
+            arm_2d_region_t tRedrawRegion = {
+                .tSize = ptTargetTile->tRegion.tSize,
+            };
+
+            if (!__arm_2d_list_core_is_list_scrolling(&this.use_as____arm_2d_list_core_t)) {
+                __arm_2d_list_core_get_selection_region(
+                    &this.use_as____arm_2d_list_core_t, 
+                    &tRedrawRegion);
+            }
+            
+            arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                    (arm_2d_tile_t *)ptTargetTile,
+                                                    NULL,
+                                                    &tRedrawRegion);
         }
+
+    }
     }
 
     return tResult;
