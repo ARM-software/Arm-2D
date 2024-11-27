@@ -752,25 +752,28 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.4.2" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.5.0" condition="Arm-2D-Demos">
           <description>An series of demos for monochrome screens, for example OLEDs and e-ink paper devices. </description>
           <files>
             <!-- scene for loading -->
-            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_loading.c"   attr="config" version="1.2.1" />
-            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_loading.h"   attr="config" version="1.2.1" />
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_loading.c"           attr="config" version="1.2.1" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_loading.h"           attr="config" version="1.2.1" />
             <!-- scene for histogram -->
-            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_histogram.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_histogram.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_histogram.c"         attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_histogram.h"         attr="config" version="1.0.1" />
             <!-- scene for clock -->
-            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_clock.c"     attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_clock.h"     attr="config" version="1.0.1" />
-            <file category="sourceC"     name="examples/demos/monochrome/SquareDigits.c"                attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_clock.c"             attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_clock.h"             attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/monochrome/SquareDigits.c"                        attr="config" version="1.0.1" />
             <!-- scene for list -->
-            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_list.c"      attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_list.h"      attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_list.c"              attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_list.h"              attr="config" version="1.0.1" />
+            <!-- scene for text tracking list -->
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_tracking_list.c"     attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_tracking_list.h"     attr="config" version="1.0.0" />
             <!-- scene for icon menu -->
-            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_icon_menu.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_icon_menu.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/monochrome/arm_2d_scene_mono_icon_menu.c"         attr="config" version="1.0.1" />
+            <file category="header"      name="examples/demos/monochrome/arm_2d_scene_mono_icon_menu.h"         attr="config" version="1.0.1" />
           </files>
 
           <RTE_Components_h>
