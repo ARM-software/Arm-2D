@@ -322,7 +322,6 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover)
                                                     (__arm_2d_color_t){this.tSettings.ScrollingBar.wValue}, 
                                                     128);
 
-
                     arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
                                                         (arm_2d_tile_t *)ptTile,
                                                         &__right_region,

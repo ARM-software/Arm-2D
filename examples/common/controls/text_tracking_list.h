@@ -89,7 +89,35 @@ typedef struct text_tracking_list_setting_t {
 
 typedef struct text_tracking_list_cfg_t {
     implement(text_list_cfg_t);
-    implement_ex(text_tracking_list_setting_t, tSettings);
+
+    union {
+        /* please ensure the anonymous structure is identical to tSettings */
+        text_tracking_list_setting_t tSettings;
+        struct {
+            uint8_t bUsePIMode              : 1;
+
+            /*! \note Auto Size mode only works with text left alignment */
+            uint8_t bIndicatorAutoSize      : 1;
+
+            uint8_t bDisableScrollingBar    : 1;
+            uint8_t bUseMonochromeMode      : 1;         
+
+            union {
+                uint8_t chValue;
+                uint16_t hwValue;
+                uint32_t wValue;
+                COLOUR_INT_TYPE tValue;
+            } IndicatorColour;
+
+            union {
+                uint8_t chValue;
+                uint16_t hwValue;
+                uint32_t wValue;
+                COLOUR_INT_TYPE tValue;
+            } ScrollingBar;
+        };
+    };
+
 } text_tracking_list_cfg_t;
 
 typedef struct text_tracking_list_t {
