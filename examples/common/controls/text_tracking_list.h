@@ -61,14 +61,35 @@ extern "C" {
 
 typedef char * __disp_string_t ;
 
-typedef struct text_tracking_list_cfg_t {
-    implement(text_list_cfg_t);
+typedef struct text_tracking_list_setting_t {
+
     uint8_t bUsePIMode              : 1;
 
     /*! \note Auto Size mode only works with text left alignment */
     uint8_t bIndicatorAutoSize      : 1;
 
     uint8_t bDisableScrollingBar    : 1;
+    uint8_t bUseMonochromeMode      : 1;         
+
+    union {
+        uint8_t chValue;
+        uint16_t hwValue;
+        uint32_t wValue;
+        COLOUR_INT_TYPE tValue;
+    } IndicatorColour;
+
+    union {
+        uint8_t chValue;
+        uint16_t hwValue;
+        uint32_t wValue;
+        COLOUR_INT_TYPE tValue;
+    } ScrollingBar;
+
+} text_tracking_list_setting_t;
+
+typedef struct text_tracking_list_cfg_t {
+    implement(text_list_cfg_t);
+    implement_ex(text_tracking_list_setting_t, tSettings);
 } text_tracking_list_cfg_t;
 
 typedef struct text_tracking_list_t {
@@ -81,12 +102,9 @@ ARM_PRIVATE(
 
     arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
 
-    uint8_t bUsePIMode              : 1;
-    uint8_t bIndicatorAutoSize      : 1;
-    uint8_t bDisableScrollingBar    : 1;
-    uint8_t                         : 4;
-    uint8_t bIsOnLoad               : 1;
+    text_tracking_list_setting_t tSettings;
 
+    bool bIsOnLoad;
 )
 
 } text_tracking_list_t;

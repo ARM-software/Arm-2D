@@ -106,6 +106,8 @@ arm_2d_err_t __text_tracking_list_init(
     assert(NULL != ptCFG);
     assert(NULL != ptCalculator);
 
+    this.tSettings = ptCFG->tSettings;
+
     arm_2d_err_t tResult = __text_list_init(&this.use_as__text_list_t, 
                                             &ptCFG->use_as__text_list_cfg_t,
                                             ptCalculator);
@@ -118,9 +120,7 @@ arm_2d_err_t __text_tracking_list_init(
                             &__arm_2d_text_tracking_list_draw_background);
     }
 
-    this.bDisableScrollingBar = ptCFG->bDisableScrollingBar;
-
-    if (!this.bDisableScrollingBar) {
+    if (!this.tSettings.bDisableScrollingBar) {
         if (NULL == ptCFG->use_as__text_list_cfg_t
                                 .use_as____simple_list_cfg_t
                                     .fnOnDrawListCover) {
@@ -131,28 +131,26 @@ arm_2d_err_t __text_tracking_list_init(
     }
 
     /* config the PI mode */
-    this.bUsePIMode = ptCFG->bUsePIMode;
-    if (this.bUsePIMode 
+    if (this.tSettings.bUsePIMode 
     &&  (NULL == ptCFG->use_as__text_list_cfg_t.use_as____simple_list_cfg_t.ptPISliderCFG)) {
         __arm_2d_list_core_indicator_pi_mode_config(
             &this.use_as__text_list_t.use_as____simple_list_t.use_as____arm_2d_list_core_t,
-            this.bUsePIMode,
+            this.tSettings.bUsePIMode,
             (arm_2d_helper_pi_slider_cfg_t *)&c_tDefaultPICFG
         );
     } else {
         __arm_2d_list_core_indicator_pi_mode_config(
             &this.use_as__text_list_t.use_as____simple_list_t.use_as____arm_2d_list_core_t,
-            this.bUsePIMode,
+            this.tSettings.bUsePIMode,
             NULL
         );
     }
 
-    this.bIndicatorAutoSize = ptCFG->bIndicatorAutoSize;
     if (0 == (  ARM_2D_ALIGN_LEFT 
              &  ptCFG->use_as__text_list_cfg_t
                     .use_as____simple_list_cfg_t
                         .tTextAlignment)) {
-        this.bIndicatorAutoSize = false;
+        this.tSettings.bIndicatorAutoSize = false;
     }
 
     this.bIsOnLoad = true;
@@ -176,7 +174,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
     arm_2d_size_t tStringSize;
     ARM_2D_UNUSED(tStringSize);
 
-    if (this.bIndicatorAutoSize) {
+    if (this.tSettings.bIndicatorAutoSize) {
         tStringSize = 
             __arm_lcd_get_string_line_box(
                         text_tracking_list_get_item_string(ptThis, hwSelectedID), 
@@ -188,7 +186,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
             &tSelectionRegion);
 
     if (bIsNewFrame) {
-        if (this.bIndicatorAutoSize) {
+        if (this.tSettings.bIndicatorAutoSize) {
             if (0 == this.tLastStringSize.iWidth) {
                 this.tLastStringSize = tStringSize;
                 this.iStringWidth = tStringSize.iWidth;
@@ -207,7 +205,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
         }
     }
 
-    if (this.bIndicatorAutoSize) {
+    if (this.tSettings.bIndicatorAutoSize) {
         tSelectionRegion.tSize.iWidth = this.iStringWidth + 4;
     } else {
         tSelectionRegion.tSize.iWidth -= 8;
@@ -224,7 +222,9 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
 
     arm_2d_canvas(ptTile, __list_cover) {
 
-        arm_2d_fill_colour(ptTile, &tSelectionRegion, GLCD_COLOR_WHITE);
+        arm_2d_fill_colour( ptTile, 
+                            &tSelectionRegion, 
+                            (COLOUR_INT_TYPE)this.tSettings.IndicatorColour.wValue);
     }
 
     ARM_2D_OP_WAIT_ASYNC();
@@ -246,41 +246,89 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover)
 
         arm_2d_dock_right(__list_cover, 3) {
             
-            arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
+            if (this.tSettings.bUseMonochromeMode) {
+                arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
 
-                /* draw bar */
-                arm_2d_fill_colour(ptTile, &__horizontal_region, GLCD_COLOR_WHITE);
+                    /* draw bar */
+                    arm_2d_fill_colour( ptTile, 
+                                        &__horizontal_region, 
+                                        (COLOUR_INT_TYPE)this.tSettings.ScrollingBar.wValue);
 
-                /* draw selection indicator */
-                if (bIsNewFrame) {
-                    int16_t iBarHeight = __horizontal_region.tSize.iHeight;
-                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
+                    /* draw selection indicator */
+                    if (bIsNewFrame) {
+                        int16_t iBarHeight = __horizontal_region.tSize.iHeight;
+                        q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
 
-                    int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
-                    iIndicatorHeight = MAX(2, iIndicatorHeight);
+                        int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
+                        iIndicatorHeight = MAX(2, iIndicatorHeight);
 
-                    arm_2d_region_t tIndicatorRegion = {
-                        .tSize = {
-                            .iHeight = iIndicatorHeight,
-                            .iWidth = 3,
-                        },
-                        .tLocation = {
-                            .iX = __horizontal_region.tLocation.iX - 1,
-                            .iY = __horizontal_region.tLocation.iY
-                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
-                        },
-                    };
+                        arm_2d_region_t tIndicatorRegion = {
+                            .tSize = {
+                                .iHeight = iIndicatorHeight,
+                                .iWidth = 3,
+                            },
+                            .tLocation = {
+                                .iX = __horizontal_region.tLocation.iX - 1,
+                                .iY = __horizontal_region.tLocation.iY
+                                    + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                            },
+                        };
 
-                    this.tIndicatorRegion = tIndicatorRegion;
+                        this.tIndicatorRegion = tIndicatorRegion;
+                    }
+
+                    arm_2d_fill_colour( ptTile, 
+                                        &this.tIndicatorRegion, 
+                                        (COLOUR_INT_TYPE)this.tSettings.ScrollingBar.wValue);
+
+
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                        (arm_2d_tile_t *)ptTile,
+                                                        &__right_region,
+                                                        &this.tIndicatorRegion);
                 }
+            } else {
+                arm_2d_dock_horizontal(__right_region, 2, 4, 4) {
+                    arm_2d_fill_colour_with_opacity(ptTile, 
+                                                    &__horizontal_region, 
+                                                    (__arm_2d_color_t){this.tSettings.ScrollingBar.wValue}, 
+                                                    128);
 
-                arm_2d_fill_colour(ptTile, &this.tIndicatorRegion, GLCD_COLOR_WHITE);
+                    /* draw selection indicator */
+                    if (bIsNewFrame) {
+                        int16_t iBarHeight = __horizontal_region.tSize.iHeight;
+                        q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
+
+                        int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
+                        iIndicatorHeight = MAX(2, iIndicatorHeight);
+
+                        arm_2d_region_t tIndicatorRegion = {
+                            .tSize = {
+                                .iHeight = iIndicatorHeight,
+                                .iWidth = 2,
+                            },
+                            .tLocation = {
+                                .iX = __horizontal_region.tLocation.iX,
+                                .iY = __horizontal_region.tLocation.iY
+                                    + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                            },
+                        };
+
+                        this.tIndicatorRegion = tIndicatorRegion;
+                    }
+
+                    arm_2d_fill_colour_with_opacity(ptTile, 
+                                                    &this.tIndicatorRegion, 
+                                                    (__arm_2d_color_t){this.tSettings.ScrollingBar.wValue}, 
+                                                    128);
 
 
-                arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
-                                                    (arm_2d_tile_t *)ptTile,
-                                                    &__right_region,
-                                                    &this.tIndicatorRegion);
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                        (arm_2d_tile_t *)ptTile,
+                                                        &__right_region,
+                                                        &this.tIndicatorRegion);
+
+                }
             }
         }
     }
@@ -320,7 +368,7 @@ void text_tracking_list_on_frame_start(text_tracking_list_t *ptThis)
         this.bIsOnLoad = false;
 
         if (    base.tSimpleListCFG.bUseDirtyRegion
-           &&   !this.bDisableScrollingBar
+           &&   !this.tSettings.bDisableScrollingBar
            &&   (NULL != base.tSimpleListCFG.ptTargetScene)) {
             
             arm_2d_helper_dirty_region_add_items(
