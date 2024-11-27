@@ -774,6 +774,31 @@ bool __arm_2d_list_core_is_list_scrolling(__arm_2d_list_core_t *ptThis)
     return this.Runtime.bScrolling;
 }
 
+ARM_NONNULL(1)
+bool __arm_2d_list_core_indicator_pi_mode_config(
+                                    __arm_2d_list_core_t *ptThis, 
+                                    bool bEnable, 
+                                    arm_2d_helper_pi_slider_cfg_t *ptNewCFG)
+{
+    assert(NULL != ptThis);
+    bool bPrevious = this.tCFG.bUsePISliderForSelectionIndicator;
+
+    if (!bEnable) {
+        this.tCFG.bUsePISliderForSelectionIndicator = false;
+    } else if (NULL != ptNewCFG) {
+
+        this.tCFG.bUsePISliderForSelectionIndicator = true;
+
+        if (NULL != ptNewCFG) {
+            /* we cannot trust this pointer, because the address could be a temporary one*/
+            this.tCFG.ptPISliderCFG = ptNewCFG;   
+
+            arm_2d_helper_pi_slider_init(&this.Runtime.tPISlider, ptNewCFG, this.nOffset);
+        }
+    }
+
+    return bPrevious;
+}
 
 ARM_NONNULL(1,2)
 arm_2d_list_item_t *__arm_2d_list_core_get_item(

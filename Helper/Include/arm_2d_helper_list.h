@@ -441,6 +441,25 @@ ARM_NONNULL(1)
 arm_2d_tile_t *__arm_2d_list_core_get_inner_tile(__arm_2d_list_core_t *ptThis);
 
 /*!
+ * \brief enable or disable the PI mode for the indicator
+ * 
+ * \param[in] ptThis the target list core object
+ * \param[in] bEnable a boolean value to enable or disable the PI mode
+ * \param[in] ptNewCFG an optional new PI configuration
+ * \note If the PI mode has never been enabled before, when the first time of calling
+ *       this function, the ptNewCFG must point to a valid configuration structure
+ * 
+ * \return true the PI mode was previously enabled
+ * \return false the PI mode was previously disabled
+ */
+extern
+ARM_NONNULL(1)
+bool __arm_2d_list_core_indicator_pi_mode_config(
+                                    __arm_2d_list_core_t *ptThis, 
+                                    bool bEnable, 
+                                    arm_2d_helper_pi_slider_cfg_t *ptNewCFG);
+
+/*!
  * \brief show a given list core
  * \param[in] ptThis the target list core object
  * \param[in] ptTarget the target framebuffer
