@@ -175,11 +175,17 @@ static void __on_scene_mono_tracking_list_frame_start(arm_2d_scene_t *ptScene)
     user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
+    do {
+        /* generate a new position every 2000 sec */
+        if (arm_2d_helper_is_time_out(1000,  &this.lTimestamp[1])) {
+            int32_t nSteps = 0;
+            this.lTimestamp[1] = 0;
+            srand(arm_2d_helper_get_system_timestamp());
+            nSteps = rand() % 10;
 
-        /* move list */
-        text_tracking_list_move_selection(&this.tList, 1, 100);
-    }
+            text_tracking_list_move_selection(&this.tList, nSteps - 5, 200);
+        }
+    } while(0);
 
     text_tracking_list_on_frame_start(&this.tList);
 }

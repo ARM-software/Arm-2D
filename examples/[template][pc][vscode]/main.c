@@ -312,7 +312,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_mono_list_loader,
     },
     {
-        10000,
+        15000,
         scene_mono_tracking_list_loader,
     },
     {
