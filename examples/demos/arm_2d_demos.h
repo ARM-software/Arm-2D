@@ -44,6 +44,7 @@
 #include "./monochrome/arm_2d_scene_mono_histogram.h"
 #include "./monochrome/arm_2d_scene_mono_clock.h"
 #include "./monochrome/arm_2d_scene_mono_list.h"
+#include "./monochrome/arm_2d_scene_mono_tracking_list.h"
 #include "./monochrome/arm_2d_scene_mono_icon_menu.h"
 
 #ifdef   __cplusplus

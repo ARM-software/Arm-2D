@@ -55,7 +55,7 @@ extern "C" {
 #define icon_list_init(__ICON_LIST_PTR, __CFG_PTR, ...)                         \
             __icon_list_init(   (__ICON_LIST_PTR),                              \
                                 (__CFG_PTR),                                    \
-                                (&ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL, ##__VA_ARGS__))
+                                (&ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 

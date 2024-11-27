@@ -254,6 +254,15 @@ void scene_mono_list_loader(void)
     arm_2d_scene_mono_list_init(&DISP0_ADAPTER);
 }
 
+void scene_mono_tracking_list_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 300);
+
+    arm_2d_scene_mono_tracking_list_init(&DISP0_ADAPTER);
+}
+
 void scene_mono_icon_menu_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
