@@ -454,7 +454,7 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
     if (this.tSimpleListCFG.bUseDirtyRegion) {
 
         
-        if (__arm_2d_list_core_need_redraw(ptList, false)) {
+        if (__arm_2d_list_core_need_redraw(ptList, true)) {
 
             arm_2d_tile_t *ptTargetTile 
                         = __arm_2d_list_core_get_inner_tile(

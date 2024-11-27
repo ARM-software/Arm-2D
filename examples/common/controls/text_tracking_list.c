@@ -196,8 +196,8 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
                                                     tStringSize.iWidth, 
                                                     200, 
                                                     &nResult, 
-                                                    &this.lTimestamp)) {
-                    this.lTimestamp = 0;
+                                                    &this.lTimestamp[0])) {
+                    this.lTimestamp[0] = 0;
                     this.tLastStringSize = tStringSize;
                 }
                 this.iStringWidth = nResult;
@@ -244,15 +244,12 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover)
 
     arm_2d_canvas(ptTile, __list_cover) {
 
+        
         arm_2d_dock_right(__list_cover, 3) {
             
             if (this.tSettings.bUseMonochromeMode) {
-                arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
 
-                    /* draw bar */
-                    arm_2d_fill_colour( ptTile, 
-                                        &__horizontal_region, 
-                                        (COLOUR_INT_TYPE)this.tSettings.ScrollingBar.wValue);
+                arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
 
                     /* draw selection indicator */
                     if (bIsNewFrame) {
@@ -277,22 +274,40 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover)
                         this.tIndicatorRegion = tIndicatorRegion;
                     }
 
-                    arm_2d_fill_colour( ptTile, 
-                                        &this.tIndicatorRegion, 
-                                        (COLOUR_INT_TYPE)this.tSettings.ScrollingBar.wValue);
+                    if (this.chScrollingBarOpacity > 0) {
+                        /* draw bar */
+                        arm_2d_fill_colour( ptTile, 
+                                            &__horizontal_region, 
+                                            (COLOUR_INT_TYPE)this.tSettings.ScrollingBar.wValue);
 
+                        arm_2d_fill_colour( ptTile, 
+                                            &this.tIndicatorRegion, 
+                                            (COLOUR_INT_TYPE)this.tSettings.ScrollingBar.wValue);
+                    }
 
-                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
-                                                        (arm_2d_tile_t *)ptTile,
-                                                        &__right_region,
-                                                        &this.tIndicatorRegion);
+                    if (this.bRedrawTheScrollingBar) {
+                        this.bRedrawTheScrollingBar = false;
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__list_cover,
+                                                            &__right_region);
+                    } else if (this.bSelectionChanged) {
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__right_region,
+                                                            &this.tIndicatorRegion);
+                    }
                 }
+
             } else {
+
+                uint8_t chScrollingBarOpacity = arm_2d_helper_alpha_mix(128, this.chScrollingBarOpacity);
+
                 arm_2d_dock_horizontal(__right_region, 2, 4, 4) {
                     arm_2d_fill_colour_with_opacity(ptTile, 
                                                     &__horizontal_region, 
                                                     (__arm_2d_color_t){this.tSettings.ScrollingBar.wValue}, 
-                                                    128);
+                                                    chScrollingBarOpacity);
 
                     /* draw selection indicator */
                     if (bIsNewFrame) {
@@ -320,12 +335,20 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover)
                     arm_2d_fill_colour_with_opacity(ptTile, 
                                                     &this.tIndicatorRegion, 
                                                     (__arm_2d_color_t){this.tSettings.ScrollingBar.wValue}, 
-                                                    128);
+                                                    chScrollingBarOpacity);
 
-                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
-                                                        (arm_2d_tile_t *)ptTile,
-                                                        &__right_region,
-                                                        &this.tIndicatorRegion);
+                    if (this.bRedrawTheScrollingBar) {
+                        this.bRedrawTheScrollingBar = false;
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__horizontal_region,
+                                                            &__right_region);
+                    } else if (this.bSelectionChanged) {
+                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__horizontal_region,
+                                                            &this.tIndicatorRegion);
+                    }
 
                 }
             }
@@ -376,6 +399,45 @@ void text_tracking_list_on_frame_start(text_tracking_list_t *ptThis)
                         1);
         }
     }
+
+    this.bSelectionChanged = __arm_2d_list_core_is_list_moving(
+                                            &base.use_as____arm_2d_list_core_t);
+
+    do {
+        int64_t lCurrent = arm_2d_helper_get_system_timestamp();
+        if (this.bSelectionChanged) {
+            /* reset timer */
+            this.lTimestamp[1] = lCurrent;
+
+            this.chScrollingBarOpacity = 255;
+            this.bRedrawTheScrollingBar = true;
+
+        } else if ((this.tSettings.chScrollingBarAutoDisappearTimeX100Ms > 0)
+            &&  (this.chScrollingBarOpacity > 0)) {
+
+            int32_t nTimeoutMS 
+                = this.tSettings.chScrollingBarAutoDisappearTimeX100Ms * 100ul;
+            int32_t lElapsedMS = arm_2d_helper_convert_ticks_to_ms(
+                                                lCurrent - this.lTimestamp[1]);
+
+            if (lElapsedMS > nTimeoutMS) {
+                if (this.tSettings.bUseMonochromeMode) {
+                    this.chScrollingBarOpacity = 0;
+                    this.bRedrawTheScrollingBar = true;
+                } else {
+                    int32_t nOpacity = 255 - ((int32_t)(lElapsedMS - nTimeoutMS) >> 1);
+
+                    if (nOpacity > 0) {
+                        this.chScrollingBarOpacity = (uint8_t)nOpacity;
+                        this.bRedrawTheScrollingBar = true;
+                    } else {
+                        this.chScrollingBarOpacity = 0;
+                        this.bRedrawTheScrollingBar = true;
+                    }
+                }
+            }
+        }
+    } while(0);
 
     text_list_on_frame_start(&this.use_as__text_list_t);
 }

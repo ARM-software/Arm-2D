@@ -69,7 +69,11 @@ typedef struct text_tracking_list_setting_t {
     uint8_t bIndicatorAutoSize      : 1;
 
     uint8_t bDisableScrollingBar    : 1;
-    uint8_t bUseMonochromeMode      : 1;         
+    uint8_t bUseMonochromeMode      : 1;
+    uint8_t                         : 4;
+
+    /*! \note  0 means always-on. The unit is 100ms */
+    uint8_t chScrollingBarAutoDisappearTimeX100Ms;
 
     union {
         uint8_t chValue;
@@ -102,6 +106,9 @@ typedef struct text_tracking_list_cfg_t {
             uint8_t bDisableScrollingBar    : 1;
             uint8_t bUseMonochromeMode      : 1;         
 
+            /*! \note  0 means always-on */
+            uint8_t chScrollingBarAutoDisappearTimeX100Ms;
+
             union {
                 uint8_t chValue;
                 uint16_t hwValue;
@@ -123,8 +130,16 @@ typedef struct text_tracking_list_cfg_t {
 typedef struct text_tracking_list_t {
     implement(text_list_t);
 ARM_PRIVATE(
-    int64_t lTimestamp;
-    int16_t iStringWidth;
+    int64_t lTimestamp[2];
+
+    int16_t     iStringWidth;
+    uint8_t    bIsOnLoad                : 1;
+    uint8_t    bRedrawTheScrollingBar   : 1;
+    uint8_t    bSelectionChanged        : 1;
+    uint8_t                             : 5;
+    uint8_t    chScrollingBarOpacity;
+
+
     arm_2d_size_t tLastStringSize;
     arm_2d_region_t tIndicatorRegion;
 
@@ -132,7 +147,7 @@ ARM_PRIVATE(
 
     text_tracking_list_setting_t tSettings;
 
-    bool bIsOnLoad;
+    
 )
 
 } text_tracking_list_t;
