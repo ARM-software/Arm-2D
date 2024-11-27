@@ -421,7 +421,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_listview_loader,
+        //scene_listview_loader,
+        scene_mono_tracking_list_loader
         //scene_mono_list_loader,
         //scene_gas_gauge_loader,
         //scene_meter_loader,
