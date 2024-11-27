@@ -177,6 +177,9 @@ ARM_PROTECTED_METHOD(
     ARM_NONNULL(1)
     uint16_t __simple_list_get_list_item_count(__simple_list_t *ptThis);
 
+    extern
+    IMPL_ON_DRAW_EVT(__arm_2d_simple_list_draw_background);
+
 )
 
 #if defined(__clang__)

@@ -81,8 +81,7 @@ enum {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-
-static 
+ 
 IMPL_ON_DRAW_EVT(__arm_2d_simple_list_draw_background)
 {
     ARM_2D_UNUSED(bIsNewFrame);

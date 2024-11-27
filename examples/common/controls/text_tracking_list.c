@@ -83,6 +83,12 @@ static
 IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover);
 
 /*============================ LOCAL VARIABLES ===============================*/
+static const arm_2d_helper_pi_slider_cfg_t c_tDefaultPICFG = {
+    .fProportion = 0.030f,
+    .fIntegration = 0.0115f,
+    .nInterval = 5,
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
@@ -112,13 +118,44 @@ arm_2d_err_t __text_tracking_list_init(
                             &__arm_2d_text_tracking_list_draw_background);
     }
 
-    if (NULL == ptCFG->use_as__text_list_cfg_t
-                            .use_as____simple_list_cfg_t
-                                .fnOnDrawListCover) {
-        __simple_list_set_draw_list_cover_handler(
-                            &this.use_as__text_list_t.use_as____simple_list_t,
-                            &__arm_2d_text_tracking_list_draw_cover);
+    this.bDisableScrollingBar = ptCFG->bDisableScrollingBar;
+
+    if (!this.bDisableScrollingBar) {
+        if (NULL == ptCFG->use_as__text_list_cfg_t
+                                .use_as____simple_list_cfg_t
+                                    .fnOnDrawListCover) {
+            __simple_list_set_draw_list_cover_handler(
+                                &this.use_as__text_list_t.use_as____simple_list_t,
+                                &__arm_2d_text_tracking_list_draw_cover);
+        }
     }
+
+    /* config the PI mode */
+    this.bUsePIMode = ptCFG->bUsePIMode;
+    if (this.bUsePIMode 
+    &&  (NULL == ptCFG->use_as__text_list_cfg_t.use_as____simple_list_cfg_t.ptPISliderCFG)) {
+        __arm_2d_list_core_indicator_pi_mode_config(
+            &this.use_as__text_list_t.use_as____simple_list_t.use_as____arm_2d_list_core_t,
+            this.bUsePIMode,
+            (arm_2d_helper_pi_slider_cfg_t *)&c_tDefaultPICFG
+        );
+    } else {
+        __arm_2d_list_core_indicator_pi_mode_config(
+            &this.use_as__text_list_t.use_as____simple_list_t.use_as____arm_2d_list_core_t,
+            this.bUsePIMode,
+            NULL
+        );
+    }
+
+    this.bIndicatorAutoSize = ptCFG->bIndicatorAutoSize;
+    if (0 == (  ARM_2D_ALIGN_LEFT 
+             &  ptCFG->use_as__text_list_cfg_t
+                    .use_as____simple_list_cfg_t
+                        .tTextAlignment)) {
+        this.bIndicatorAutoSize = false;
+    }
+
+    this.bIsOnLoad = true;
 
     return tResult;
 }
@@ -136,34 +173,54 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
 
     arm_2d_region_t tSelectionRegion;
 
-    arm_2d_size_t tStringSize = 
-        __arm_lcd_get_string_line_box(
-                    text_tracking_list_get_item_string(ptThis, hwSelectedID), 
-                    NULL);
+    arm_2d_size_t tStringSize;
+    ARM_2D_UNUSED(tStringSize);
+
+    if (this.bIndicatorAutoSize) {
+        tStringSize = 
+            __arm_lcd_get_string_line_box(
+                        text_tracking_list_get_item_string(ptThis, hwSelectedID), 
+                        NULL);
+    }
 
     __arm_2d_list_core_get_selection_region(
             &base.use_as____simple_list_t.use_as____arm_2d_list_core_t, 
             &tSelectionRegion);
 
     if (bIsNewFrame) {
-        if (0 == this.tLastStringSize.iWidth) {
-            this.tLastStringSize = tStringSize;
-            this.iStringWidth = tStringSize.iWidth;
-        } else {
-            int32_t nResult;
-            if (arm_2d_helper_time_liner_slider(this.tLastStringSize.iWidth, 
-                                                tStringSize.iWidth, 
-                                                200, 
-                                                &nResult, 
-                                                &this.lTimestamp)) {
-                this.lTimestamp = 0;
+        if (this.bIndicatorAutoSize) {
+            if (0 == this.tLastStringSize.iWidth) {
                 this.tLastStringSize = tStringSize;
+                this.iStringWidth = tStringSize.iWidth;
+            } else {
+                int32_t nResult;
+                if (arm_2d_helper_time_liner_slider(this.tLastStringSize.iWidth, 
+                                                    tStringSize.iWidth, 
+                                                    200, 
+                                                    &nResult, 
+                                                    &this.lTimestamp)) {
+                    this.lTimestamp = 0;
+                    this.tLastStringSize = tStringSize;
+                }
+                this.iStringWidth = nResult;
             }
-            this.iStringWidth = nResult;
         }
     }
 
-    tSelectionRegion.tSize.iWidth = this.iStringWidth + 4;
+    if (this.bIndicatorAutoSize) {
+        tSelectionRegion.tSize.iWidth = this.iStringWidth + 4;
+    } else {
+        tSelectionRegion.tSize.iWidth -= 8;
+    }
+
+    if (!base.use_as____simple_list_t.tSimpleListCFG.bIgnoreBackground) {
+
+        /* call the base method  */
+        __arm_2d_simple_list_draw_background(&this.use_as__text_list_t,
+                                             ptTile, 
+                                             bIsNewFrame);
+    }
+
 
     arm_2d_canvas(ptTile, __list_cover) {
 
@@ -218,6 +275,12 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_cover)
                 }
 
                 arm_2d_fill_colour(ptTile, &this.tIndicatorRegion, GLCD_COLOR_WHITE);
+
+
+                arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                    (arm_2d_tile_t *)ptTile,
+                                                    &__right_region,
+                                                    &this.tIndicatorRegion);
             }
         }
     }
@@ -232,6 +295,17 @@ void text_tracking_list_depose(text_tracking_list_t *ptThis)
 {
     assert(NULL != ptThis);
 
+    __simple_list_t *ptBase = &this.use_as__text_list_t.use_as____simple_list_t;
+
+    if (    base.tSimpleListCFG.bUseDirtyRegion 
+        &&   (NULL != base.tSimpleListCFG.ptTargetScene)) {
+        
+        arm_2d_helper_dirty_region_remove_items(
+                    &base.tSimpleListCFG.ptTargetScene->tDirtyRegionHelper,
+                    &this.tDirtyRegionItem,
+                    1);
+    }
+
     text_list_depose(&this.use_as__text_list_t);
 }
 
@@ -240,6 +314,21 @@ ARM_NONNULL(1)
 void text_tracking_list_on_frame_start(text_tracking_list_t *ptThis)
 {
     assert(NULL != ptThis);
+    __simple_list_t *ptBase = &this.use_as__text_list_t.use_as____simple_list_t;
+
+    if (this.bIsOnLoad) {
+        this.bIsOnLoad = false;
+
+        if (    base.tSimpleListCFG.bUseDirtyRegion
+           &&   !this.bDisableScrollingBar
+           &&   (NULL != base.tSimpleListCFG.ptTargetScene)) {
+            
+            arm_2d_helper_dirty_region_add_items(
+                        &base.tSimpleListCFG.ptTargetScene->tDirtyRegionHelper,
+                        &this.tDirtyRegionItem,
+                        1);
+        }
+    }
 
     text_list_on_frame_start(&this.use_as__text_list_t);
 }

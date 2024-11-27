@@ -63,7 +63,12 @@ typedef char * __disp_string_t ;
 
 typedef struct text_tracking_list_cfg_t {
     implement(text_list_cfg_t);
+    uint8_t bUsePIMode              : 1;
 
+    /*! \note Auto Size mode only works with text left alignment */
+    uint8_t bIndicatorAutoSize      : 1;
+
+    uint8_t bDisableScrollingBar    : 1;
 } text_tracking_list_cfg_t;
 
 typedef struct text_tracking_list_t {
@@ -73,6 +78,15 @@ ARM_PRIVATE(
     int16_t iStringWidth;
     arm_2d_size_t tLastStringSize;
     arm_2d_region_t tIndicatorRegion;
+
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+
+    uint8_t bUsePIMode              : 1;
+    uint8_t bIndicatorAutoSize      : 1;
+    uint8_t bDisableScrollingBar    : 1;
+    uint8_t                         : 4;
+    uint8_t bIsOnLoad               : 1;
+
 )
 
 } text_tracking_list_t;
