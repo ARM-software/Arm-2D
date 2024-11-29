@@ -406,7 +406,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_GRAY8 = {
             .bHasSource     = false,
             .bHasTarget     = true,
         },
-        .chOpIndex      = __ARM_2D_OP_IDX_FILETER_IIR_BLUR,
+        .chOpIndex      = __ARM_2D_OP_IDX_FILTER_IIR_BLUR,
         
         .LowLevelIO = {
             .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_IIR_BLUR_GRAY8),
@@ -762,7 +762,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_RGB565 = {
             .bHasSource     = false,
             .bHasTarget     = true,
         },
-        .chOpIndex      = __ARM_2D_OP_IDX_FILETER_IIR_BLUR,
+        .chOpIndex      = __ARM_2D_OP_IDX_FILTER_IIR_BLUR,
         
         .LowLevelIO = {
             .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_IIR_BLUR_RGB565),
@@ -1110,7 +1110,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_CCCN888 = {
             .bHasSource     = false,
             .bHasTarget     = true,
         },
-        .chOpIndex      = __ARM_2D_OP_IDX_FILETER_IIR_BLUR,
+        .chOpIndex      = __ARM_2D_OP_IDX_FILTER_IIR_BLUR,
         
         .LowLevelIO = {
             .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_IIR_BLUR_CCCN888),

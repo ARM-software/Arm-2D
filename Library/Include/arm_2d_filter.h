@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d.h"
  * Description:  Public header file for filters header files
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.0.0
+ * $Date:        29. Nov 2024
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -34,6 +34,7 @@
 #include "arm_2d_types.h"
 
 #include "__arm_2d_filter_iir_blur.h"
+#include "__arm_2d_filter_reverse_colour.h"
 
 #ifdef   __cplusplus
 extern "C" {
