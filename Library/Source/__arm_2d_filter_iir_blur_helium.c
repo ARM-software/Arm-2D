@@ -44,7 +44,7 @@
 #include "__arm_2d_impl.h"
 
 #ifdef   __cplusplus
-extern          "C" {
+extern "C" {
 #endif
 
 #if defined(__clang__)
