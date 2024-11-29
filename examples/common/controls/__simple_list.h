@@ -102,7 +102,11 @@ ARM_PRIVATE(
     arm_2d_list_item_t tTempItem;
     
     uint16_t hwIterationIndex;
-    uint16_t bIsOnLoad;
+
+    uint16_t bIsOnLoad          : 1;
+    uint16_t bRedrawListReq     : 1;
+    uint16_t bRedrawCurrentItem : 1;
+    uint16_t                    : 13;
 
     arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
 )

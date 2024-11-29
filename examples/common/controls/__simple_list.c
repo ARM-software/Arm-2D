@@ -450,33 +450,48 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
                             bIsNewFrame);
 
     if (bIsNewFrame) {
-    /* process the dynamic dirty region */
-    if (this.tSimpleListCFG.bUseDirtyRegion) {
+        /* process the dynamic dirty region */
+        if (this.tSimpleListCFG.bUseDirtyRegion) {
 
-        
-        if (__arm_2d_list_core_need_redraw(ptList, true)) {
+            bool bRedrawList = false;
+            bool bRedrawCurrentItem = false;
 
-            arm_2d_tile_t *ptTargetTile 
-                        = __arm_2d_list_core_get_inner_tile(
-                                            &this.use_as____arm_2d_list_core_t);
+            arm_irq_safe {
+                bRedrawList = this.bRedrawListReq;
+                bRedrawCurrentItem = this.bRedrawCurrentItem;
 
-            arm_2d_region_t tRedrawRegion = {
-                .tSize = ptTargetTile->tRegion.tSize,
-            };
-
-            if (!__arm_2d_list_core_is_list_scrolling(&this.use_as____arm_2d_list_core_t)) {
-                __arm_2d_list_core_get_selection_region(
-                    &this.use_as____arm_2d_list_core_t, 
-                    &tRedrawRegion);
+                this.bRedrawListReq = false;
+                this.bRedrawCurrentItem = false;
             }
             
-            arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
-                                                    (arm_2d_tile_t *)ptTargetTile,
-                                                    NULL,
-                                                    &tRedrawRegion);
-        }
+            if (    __arm_2d_list_core_need_redraw(ptList, true)
+                ||  bRedrawList
+                ||  bRedrawCurrentItem) {
 
-    }
+                arm_2d_tile_t *ptTargetTile 
+                            = __arm_2d_list_core_get_inner_tile(
+                                                &this.use_as____arm_2d_list_core_t);
+
+                arm_2d_region_t tRedrawRegion = {
+                    .tSize = ptTargetTile->tRegion.tSize,
+                };
+
+                if (    (   !__arm_2d_list_core_is_list_scrolling(&this.use_as____arm_2d_list_core_t)
+                        ||  bRedrawCurrentItem)
+                  &&    !bRedrawList) {
+                    __arm_2d_list_core_get_selection_region(
+                        &this.use_as____arm_2d_list_core_t, 
+                        &tRedrawRegion);
+                }
+
+                arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem,
+                                                        (arm_2d_tile_t *)ptTargetTile,
+                                                        NULL,
+                                                        &tRedrawRegion);
+                
+            }
+
+        }
     }
 
     return tResult;
