@@ -168,6 +168,14 @@ ARM_PROTECTED_METHOD(
                                     int16_t iSteps,
                                     int32_t nFinishInMs);
 
+    extern
+    ARM_NONNULL(1)
+    void __simple_list_request_redraw_list(__simple_list_t *ptThis);
+
+    extern
+    ARM_NONNULL(1)
+    void __simple_list_request_redraw_selected_item(__simple_list_t *ptThis);
+
     extern 
     ARM_NONNULL(1)
     void __simple_list_on_frame_start(__simple_list_t *ptThis);

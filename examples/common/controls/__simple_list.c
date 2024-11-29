@@ -549,6 +549,25 @@ uint16_t __simple_list_get_list_item_count(__simple_list_t *ptThis)
     return this.tSimpleListCFG.hwCount;
 }
 
+ARM_NONNULL(1)
+void __simple_list_request_redraw_list(__simple_list_t *ptThis) 
+{
+    assert(NULL != ptThis);
+    arm_irq_safe {
+        this.bRedrawListReq = true;
+    }
+}
+
+ARM_NONNULL(1)
+void __simple_list_request_redraw_selected_item(__simple_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+    arm_irq_safe {
+        this.bRedrawCurrentItem = true;
+    }
+}
+
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
