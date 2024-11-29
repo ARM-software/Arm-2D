@@ -119,7 +119,7 @@ void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
 {
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++){
-            phwTarget[x] = ~phwTarget[x];
+            phwTarget[x] ^= __UINT16_MAX__;
         }
         phwTarget += iTargetStride;
     }

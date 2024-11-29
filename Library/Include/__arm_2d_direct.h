@@ -9563,7 +9563,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
 
 void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
-                                        arm_2d_size_t *__RESTRICT ptCopySize)
+                                        arm_2d_size_t *__RESTRICT ptCopySize);
 
 void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
                                             int16_t iTargetStride,
