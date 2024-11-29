@@ -22,7 +22,7 @@
  * Description:  APIs for colour-reversing
  *
  * $Date:        29. Nov 2024
- * $Revision:    V.0.3.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -56,16 +56,33 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define arm_2d_gray8_filter_reverse_colour(__TARGET_ADDR,  /* target tile */   \
+                                            __REGION_ADDR)  /* target region */ \
+            arm_2dp_gray8_filter_reverse_colour(NULL,                          \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR))
+
+#define arm_2d_rgb565_filter_reverse_colour(__TARGET_ADDR,  /* target tile */   \
+                                            __REGION_ADDR)  /* target region */ \
+            arm_2dp_rgb565_filter_reverse_colour(NULL,                          \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR))
+
+#define arm_2d_cccn888_filter_reverse_colour(__TARGET_ADDR,  /* target tile */   \
+                                            __REGION_ADDR)  /* target region */ \
+            arm_2dp_cccn888_filter_reverse_colour(NULL,                          \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR))
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
-
 extern
 ARM_NONNULL(2)
 /*!
- *  \brief reverse the colour of the target region
+ *  \brief reverse the colour of the target region for gray8
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
@@ -73,10 +90,40 @@ ARM_NONNULL(2)
  *  \param[in] tColour the target colour
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_rgb565_reverse_colour( arm_2d_op_fill_cl_msk_t *ptOP,
+arm_fsm_rt_t arm_2dp_gray8_filter_reverse_colour( 
+                                            arm_2d_op_fill_cl_msk_t *ptOP,
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion);
-
+extern
+ARM_NONNULL(2)
+/*!
+ *  \brief reverse the colour of the target region for rgb565
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] ptLineMsk the target line mask
+ *  \param[in] tColour the target colour
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_rgb565_filter_reverse_colour( 
+                                            arm_2d_op_fill_cl_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion);
+extern
+ARM_NONNULL(2)
+/*!
+ *  \brief reverse the colour of the target region for cccn888
+ *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptTarget the target tile
+ *  \param[in] ptRegion the target region
+ *  \param[in] ptLineMsk the target line mask
+ *  \param[in] tColour the target colour
+ *  \return arm_fsm_rt_t the operations result
+ */
+arm_fsm_rt_t arm_2dp_cccn888_filter_reverse_colour( 
+                                            arm_2d_op_fill_cl_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion);
 /*! @} */
 
 #if defined(__clang__)

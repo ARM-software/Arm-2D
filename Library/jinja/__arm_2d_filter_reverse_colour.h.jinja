@@ -22,7 +22,7 @@
  * Description:  APIs for colour-reversing
  *
  * $Date:        29. Nov 2024
- * $Revision:    V.0.3.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -56,16 +56,37 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8BIT' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+    ] 
+%}
+
+#define arm_2d_{{colour_name}}_filter_reverse_colour(__TARGET_ADDR,  /* target tile */   \
+                                            __REGION_ADDR)  /* target region */ \
+            arm_2dp_{{colour_name}}_filter_reverse_colour(NULL,                          \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR))
+
+{%- endfor %}
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8BIT' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+    ] 
+%}
 extern
 ARM_NONNULL(2)
 /*!
- *  \brief reverse the colour of the target region
+ *  \brief reverse the colour of the target region for {{colour_name}}
  *  \param[in] ptOP the control block, NULL means using the default control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
@@ -73,10 +94,12 @@ ARM_NONNULL(2)
  *  \param[in] tColour the target colour
  *  \return arm_fsm_rt_t the operations result
  */
-arm_fsm_rt_t arm_2dp_rgb565_reverse_colour( arm_2d_op_fill_cl_msk_t *ptOP,
+arm_fsm_rt_t arm_2dp_{{colour_name}}_filter_reverse_colour( 
+                                            arm_2d_op_fill_cl_msk_t *ptOP,
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion);
 
+{%- endfor %}
 /*! @} */
 
 #if defined(__clang__)

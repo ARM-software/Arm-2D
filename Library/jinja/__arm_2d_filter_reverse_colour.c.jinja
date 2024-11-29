@@ -22,7 +22,7 @@
  * Description:  the source code of the colour-reversing
  *
  * $Date:        29. Nov 2024
- * $Revision:    V.0.3.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -77,21 +77,27 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern
-const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_RGB565;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8' ),
+    ('rgb565', 'uint16_t', 'hw', '16' ),
+    ('cccn888', 'uint32_t', 'w', '32' ),
+    ] 
+%}
 
 /*
  * the Frontend API
  */
 
 ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_rgb565_reverse_colour( arm_2d_op_fill_cl_msk_t *ptOP,
-                                            const arm_2d_tile_t *ptTarget,
-                                            const arm_2d_region_t *ptRegion)
+arm_fsm_rt_t arm_2dp_{{colour_name}}_filter_reverse_colour(  
+                                                arm_2d_op_fill_cl_msk_t *ptOP,
+                                                const arm_2d_tile_t *ptTarget,
+                                                const arm_2d_region_t *ptRegion)
 {
     assert(NULL != ptTarget);
 
@@ -101,7 +107,7 @@ arm_fsm_rt_t arm_2dp_rgb565_reverse_colour( arm_2d_op_fill_cl_msk_t *ptOP,
         return arm_fsm_rt_on_going;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILTER_REVERSE_COLOUR_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILTER_REVERSE_COLOUR_{{colour_name|upper}};
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
@@ -113,27 +119,33 @@ arm_fsm_rt_t arm_2dp_rgb565_reverse_colour( arm_2d_op_fill_cl_msk_t *ptOP,
 /* default low level implementation */
 
 __WEAK
-void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
+void __arm_2d_impl_{{colour_name}}_reverse_colour(   {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
                                             int16_t iTargetStride,
                                             arm_2d_size_t *__RESTRICT ptCopySize)
 {
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+
+        {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
         for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++){
-            phwTarget[x] ^= __UINT16_MAX__;
+        {%- if colour_name == "cccn888"  %}
+            *pwTargetLine++ ^= 0x00FFFFFF;
+        {%- else %}
+            *p{{colour_int_prefix}}TargetLine++ ^= __UINT{{colour_int_no_bits}}_MAX__;
+        {%- endif %}
         }
-        phwTarget += iTargetStride;
+        p{{colour_int_prefix}}Target += iTargetStride;
     }
 }
 
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_rgb565_sw_filter_reverse_colour( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_{{colour_name}}_sw_filter_reverse_colour( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_t, ptTask->ptOP);
-    assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}}BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-    __arm_2d_impl_rgb565_reverse_colour(
+    __arm_2d_impl_{{colour_name}}_reverse_colour(
                     ptTask->Param.tTileProcess.pBuffer,
                     ptTask->Param.tTileProcess.iStride,
                     &(ptTask->Param.tTileProcess.tValidRegion.tSize));
@@ -145,18 +157,18 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_filter_reverse_colour( __arm_2d_sub_task_t *ptTa
  * OPCODE Low Level Implementation Entries
  */
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_FILTER_REVERSE_COLOUR_RGB565,
-                __arm_2d_rgb565_sw_filter_reverse_colour); /* Default SW Implementation */
+def_low_lv_io(  __ARM_2D_IO_FILTER_REVERSE_COLOUR_{{colour_name|upper}},
+                __arm_2d_{{colour_name}}_sw_filter_reverse_colour); /* Default SW Implementation */
 
 
 /*
  * OPCODE
  */
 
-const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_{{colour_name|upper}} = {
     .Info = {
         .Colour = {
-            .chScheme   = ARM_2D_COLOUR_RGB565,
+            .chScheme   = ARM_2D_COLOUR_{{colour_name|upper}},
         },
         .Param = {
             .bHasSource     = false,
@@ -165,12 +177,12 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_RGB565 = {
         .chOpIndex      = __ARM_2D_OP_IDX_FILTER_REVERSE_COLOUR,
         
         .LowLevelIO = {
-            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_REVERSE_COLOUR_RGB565),
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_FILTER_REVERSE_COLOUR_{{colour_name|upper}}),
         },
     },
 };
 
-
+{%- endfor %}
 
 #ifdef   __cplusplus
 }
