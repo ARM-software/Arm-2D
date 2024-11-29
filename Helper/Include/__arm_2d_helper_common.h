@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        25. Nov 2024
- * $Revision:    V.1.7.0
+ * $Date:        29. Nov 2024
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -313,6 +313,7 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask
 #   define arm_2d_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity   \
         arm_2d_gray8_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity
+#   define arm_2d_filter_reverse_colour     arm_2d_gray8_filter_reverse_colour
 
 #   define arm_2d_draw_point        arm_2d_gray8_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
@@ -543,6 +544,7 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_horizontal_alpha_gradient_and_mask
 #   define arm_2d_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity   \
         arm_2d_rgb565_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity
+#   define arm_2d_filter_reverse_colour     arm_2d_rgb565_filter_reverse_colour
 
 #   define arm_2d_draw_point        arm_2d_rgb565_draw_point
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
@@ -772,6 +774,7 @@ extern "C" {
             arm_2d_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask
 #   define arm_2d_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity   \
     arm_2d_cccn888_fill_colour_with_horizontal_alpha_gradient_mask_and_opacity
+#   define arm_2d_filter_reverse_colour     arm_2d_cccn888_filter_reverse_colour
 
 #   define arm_2d_draw_point        arm_2d_cccn888_draw_point
 #else
