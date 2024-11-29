@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        22. July 2024
- * $Revision:    V.1.6.10
+ * $Date:        29. Nov 2024
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -854,6 +854,16 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_RGB565;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_CCCN888;
+
 /*============================ PROTOTYPES ====================================*/
 
 

@@ -9561,6 +9561,18 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
                             uint8_t chBlurDegree,
                             arm_2d_scratch_mem_t *ptScratchMemory);
 
+void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize)
+
+void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *__RESTRICT ptCopySize);
+
+void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
+                                            int16_t iTargetStride,
+                                            arm_2d_size_t *__RESTRICT ptCopySize);
+
 void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
