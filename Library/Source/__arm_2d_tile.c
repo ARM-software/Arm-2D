@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        03. Sept 2024
- * $Revision:    V.1.4.8
+ * $Date:        30. Nov 2024
+ * $Revision:    V.1.4.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -197,30 +197,40 @@ arm_2d_region_t *arm_2d_region_get_minimal_enclosure(const arm_2d_region_t *ptIn
     assert(NULL != ptInput1);
     assert(NULL != ptOutput);
 
-    int16_t x00, y00, x01, y01, x10, y10, x11, y11;
-    x00 = ptInput0->tLocation.iX;
-    y00 = ptInput0->tLocation.iY;
-    x10 = ptInput1->tLocation.iX;
-    y10 = ptInput1->tLocation.iY;
+    do {
+        if ((ptInput0->tSize.iWidth == 0) || (ptInput0->tSize.iHeight == 0)) {
+            *ptOutput = *ptInput1;
+            break;
+        } else if ((ptInput1->tSize.iWidth == 0) || (ptInput1->tSize.iHeight == 0)) {
+            *ptOutput = *ptInput0;
+            break;
+        }
 
-    arm_2d_location_t tTopLeft = {
-            .iX = MIN(x00, x10),
-            .iY = MIN(y00, y10),
-        };
+        int16_t x00, y00, x01, y01, x10, y10, x11, y11;
+        x00 = ptInput0->tLocation.iX;
+        y00 = ptInput0->tLocation.iY;
+        x10 = ptInput1->tLocation.iX;
+        y10 = ptInput1->tLocation.iY;
 
-    x01 = x00 + ptInput0->tSize.iWidth - 1;
-    y01 = y00 + ptInput0->tSize.iHeight - 1;
-    x11 = x10 + ptInput1->tSize.iWidth - 1;
-    y11 = y10 + ptInput1->tSize.iHeight - 1; 
-    
-    arm_2d_location_t tBottomRight = {
-            .iX = MAX(x01, x11),
-            .iY = MAX(y01, y11),
-        };
+        arm_2d_location_t tTopLeft = {
+                .iX = MIN(x00, x10),
+                .iY = MIN(y00, y10),
+            };
 
-    ptOutput->tLocation = tTopLeft;
-    ptOutput->tSize.iWidth = tBottomRight.iX - tTopLeft.iX + 1;
-    ptOutput->tSize.iHeight = tBottomRight.iY - tTopLeft.iY + 1;
+        x01 = x00 + ptInput0->tSize.iWidth - 1;
+        y01 = y00 + ptInput0->tSize.iHeight - 1;
+        x11 = x10 + ptInput1->tSize.iWidth - 1;
+        y11 = y10 + ptInput1->tSize.iHeight - 1; 
+        
+        arm_2d_location_t tBottomRight = {
+                .iX = MAX(x01, x11),
+                .iY = MAX(y01, y11),
+            };
+
+        ptOutput->tLocation = tTopLeft;
+        ptOutput->tSize.iWidth = tBottomRight.iX - tTopLeft.iX + 1;
+        ptOutput->tSize.iHeight = tBottomRight.iY - tTopLeft.iY + 1;
+    } while(0);
 
     return ptOutput;
 }

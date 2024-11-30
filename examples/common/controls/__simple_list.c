@@ -350,6 +350,7 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
     }
 
     this.bIsOnLoad = true;
+    this.bRedrawCurrentItem = true;
 
     return ARM_2D_ERR_NONE;
 }
