@@ -325,6 +325,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
                                                             ptTile, 
                                                             &__item_region, 
                                                             bIsNewFrame));
+                    
+                    arm_2d_align_centre(__item_region, 32, 32) {
+
+                        arm_2d_filter_reverse_colour(ptTile, &__centre_region);
+
+                    }
                 }
 
                 __item_line_dock_vertical(10, 0, 0, 4, 0) {
@@ -397,21 +403,10 @@ arm_fsm_rt_t __arm_2d_icon_list_draw_list_core_item(
 
             arm_2d_align_centre(__item_canvas, ptileIcon->tRegion.tSize) {
 
-                if (ptParam->bIsSelected) {
-                    arm_2d_fill_colour(ptTile, &__item_canvas, GLCD_COLOR_WHITE);
-                    //draw_round_corner_box(ptTile, &__item_canvas, GLCD_COLOR_WHITE, 255, bIsNewFrame);
-                    //arm_2d_draw_box(ptTile, &__item_canvas, 1, GLCD_COLOR_WHITE, 255);
-
-                    arm_2d_fill_colour_with_a1_mask(ptTile, 
-                                                &__centre_region, 
-                                                ptileIcon, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK});
-                } else {
-                    arm_2d_fill_colour_with_a1_mask(ptTile, 
-                                                &__centre_region, 
-                                                ptileIcon, 
-                                                (__arm_2d_color_t){GLCD_COLOR_WHITE});
-                }
+                arm_2d_fill_colour_with_a1_mask(ptTile, 
+                                            &__centre_region, 
+                                            ptileIcon, 
+                                            (__arm_2d_color_t){GLCD_COLOR_WHITE});
                 
             }
 
