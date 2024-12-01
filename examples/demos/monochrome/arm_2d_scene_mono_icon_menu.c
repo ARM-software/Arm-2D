@@ -273,67 +273,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
         
 
-        arm_2d_dock_vertical(__top_canvas, 56, 8) {
+        arm_2d_dock_vertical(__top_canvas, 64, 8) {
 
-            arm_2d_layout(__vertical_region) {
-                
-                /* draw selection indicator */
-                __item_line_dock_vertical(3) {
-                    
-                    uint16_t hwListCount = icon_list_get_list_item_count(&this.tList);
-                    uint16_t hwSelectedID = icon_list_get_selected_item_id(&this.tList);
+            arm_2d_layout(__vertical_region, BOTTOM_UP) {
 
-                    arm_2d_dock_vertical(__item_region, 1, 24, 24) {
-                        arm_2d_fill_colour(ptTile, &__vertical_region, GLCD_COLOR_WHITE);
-
-
-                        /* draw selection indicator */
-                        do {
-                            int16_t iBarWidth = __vertical_region.tSize.iWidth;
-                            q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarWidth), hwListCount);
-
-                            int16_t iIndicatorWidth = reinterpret_s16_q16(q16Step);
-                            iIndicatorWidth = MAX(2, iIndicatorWidth);
-
-                            arm_2d_region_t tIndicatorRegion = {
-                                .tSize = {
-                                    .iHeight = 3,
-                                    .iWidth = iIndicatorWidth,
-                                },
-                                .tLocation = {
-                                    .iY = __vertical_region.tLocation.iY - 1,
-                                    .iX = __vertical_region.tLocation.iX
-                                        + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
-                                },
-                            };
-
-                            arm_2d_fill_colour(ptTile, &tIndicatorRegion, GLCD_COLOR_WHITE);
-
-
-                            /* update dirty region */
-                            arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[1],
-                                                                    (arm_2d_tile_t *)ptTile,
-                                                                    &__item_region,
-                                                                    &tIndicatorRegion);
-
-                        } while(0);
-                    }
-                }
-            
-                __item_line_dock_vertical(32, 0, 0, 4, 0) {
-                    while(arm_fsm_rt_cpl != icon_list_show( &this.tList, 
-                                                            ptTile, 
-                                                            &__item_region, 
-                                                            bIsNewFrame));
-                    
-                    arm_2d_align_centre(__item_region, 32, 32) {
-
-                        arm_2d_filter_reverse_colour(ptTile, &__centre_region);
-
-                    }
-                }
-
-                __item_line_dock_vertical(10, 0, 0, 4, 0) {
+                __item_line_dock_vertical(10, 0, 0, 0, 4) {
 
                     do {
                         if (__arm_2d_list_core_is_list_moving(
@@ -366,6 +310,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
 
                     } while(0);
                 }
+
+                __item_line_dock_vertical(0, 0, 4, 0) {
+                    
+                    while(arm_fsm_rt_cpl != icon_list_show( &this.tList, 
+                                                            ptTile, 
+                                                            &__item_region, 
+                                                            bIsNewFrame));
+                    
+                    arm_2d_align_centre(__item_region, 32, 32) {
+                        arm_2d_filter_reverse_colour(ptTile, &__centre_region);
+                    }
+                }
+
+
             }
         }
 
@@ -483,7 +441,13 @@ user_scene_mono_icon_menu_t *__arm_2d_scene_mono_icon_menu_init(   arm_2d_scene_
                 
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
-                .bIgnoreBackground = true,
+                //.bIgnoreBackground = true,
+
+                .bUseMonochromeMode = true,
+                .bShowScrollingBar = true,
+                .chScrollingBarAutoDisappearTimeX100Ms = 10,
+                .ScrollingBar.tColour = GLCD_COLOR_WHITE,
+                .bPlaceScrollingBarOnTopOrLeft = true,
                 
                 //.bDisableRingMode = true,     /* you can disable the list ring mode here */
 
@@ -499,9 +463,6 @@ user_scene_mono_icon_menu_t *__arm_2d_scene_mono_icon_menu_init(   arm_2d_scene_
                 },
                 .tTextAlignment = ARM_2D_ALIGN_MIDDLE_LEFT,
                 .fnOnDrawListItem = &__arm_2d_icon_list_draw_list_core_item,
-
-                /* draw list cover */
-                //.fnOnDrawListCover = &__arm_2d_list_draw_cover,
 
                 .bUseDirtyRegion = true,
                 .ptTargetScene = &this.use_as__arm_2d_scene_t,

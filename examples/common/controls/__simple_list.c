@@ -102,9 +102,135 @@ IMPL_ON_DRAW_EVT(__arm_2d_simple_list_draw_background)
     return arm_fsm_rt_cpl;
 }
 
+static
+void __arm_2d_simple_list_draw_scrolling_bar_horizontal(
+                                                __simple_list_t *ptThis, 
+                                                const arm_2d_tile_t *ptTile, 
+                                                arm_2d_region_t *ptCanvas, 
+                                                bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+    assert(NULL != ptCanvas);
+
+    uint16_t hwListCount = __simple_list_get_list_item_count(ptThis);
+    uint16_t hwSelectedID = __simple_list_get_selected_item_id(ptThis);
+
+    arm_2d_canvas(ptTile, __list_cover) {
+
+        if (this.tSimpleListCFG.bUseMonochromeMode) {
+
+            arm_2d_dock_horizontal(*ptCanvas, 1, 4, 4) {
+
+                /* draw selection indicator */
+                if (bIsNewFrame) {
+                    int16_t iBarHeight = __horizontal_region.tSize.iHeight;
+                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
+
+                    int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
+                    iIndicatorHeight = MAX(2, iIndicatorHeight);
+
+                    arm_2d_region_t tIndicatorRegion = {
+                        .tSize = {
+                            .iHeight = iIndicatorHeight,
+                            .iWidth = 3,
+                        },
+                        .tLocation = {
+                            .iX = __horizontal_region.tLocation.iX - 1,
+                            .iY = __horizontal_region.tLocation.iY
+                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                        },
+                    };
+
+                    this.tIndicatorRegion = tIndicatorRegion;
+                }
+
+                if (this.chScrollingBarOpacity > 0) {
+                    /* draw bar */
+                    arm_2d_fill_colour( ptTile, 
+                                        &__horizontal_region, 
+                                        (COLOUR_INT)this.tSimpleListCFG.ScrollingBar.wColour);
+
+                    arm_2d_fill_colour( ptTile, 
+                                        &this.tIndicatorRegion, 
+                                        (COLOUR_INT)this.tSimpleListCFG.ScrollingBar.wColour);
+                }
+
+                if (this.bRedrawTheScrollingBar) {
+                    this.bRedrawTheScrollingBar = false;
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[1],
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__list_cover,
+                                                            ptCanvas);
+                } else if (this.bSelectionChanged) {
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[1],
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            ptCanvas,
+                                                            &this.tIndicatorRegion);
+                }
+            }
+
+        } else {
+
+            uint8_t chScrollingBarOpacity = arm_2d_helper_alpha_mix(128, this.chScrollingBarOpacity);
+
+            arm_2d_dock_horizontal(*ptCanvas, 2, 4, 4) {
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                                &__horizontal_region, 
+                                                (__arm_2d_color_t){this.tSimpleListCFG.ScrollingBar.wColour}, 
+                                                chScrollingBarOpacity);
+
+                /* draw selection indicator */
+                if (bIsNewFrame) {
+                    int16_t iBarHeight = __horizontal_region.tSize.iHeight;
+                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
+
+                    int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
+                    iIndicatorHeight = MAX(2, iIndicatorHeight);
+
+                    arm_2d_region_t tIndicatorRegion = {
+                        .tSize = {
+                            .iHeight = iIndicatorHeight,
+                            .iWidth = 2,
+                        },
+                        .tLocation = {
+                            .iX = __horizontal_region.tLocation.iX,
+                            .iY = __horizontal_region.tLocation.iY
+                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                        },
+                    };
+
+                    this.tIndicatorRegion = tIndicatorRegion;
+                }
+
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                                &this.tIndicatorRegion, 
+                                                (__arm_2d_color_t){this.tSimpleListCFG.ScrollingBar.wColour}, 
+                                                chScrollingBarOpacity);
+
+                if (this.bRedrawTheScrollingBar) {
+                    this.bRedrawTheScrollingBar = false;
+                    arm_2d_helper_dirty_region_update_item( 
+                                                &this.tDirtyRegionItem[1],
+                                                (arm_2d_tile_t *)ptTile,
+                                                &__horizontal_region,
+                                                ptCanvas);
+                } else if (this.bSelectionChanged) {
+                    arm_2d_helper_dirty_region_update_item( 
+                                                &this.tDirtyRegionItem[1],
+                                                (arm_2d_tile_t *)ptTile,
+                                                &__horizontal_region,
+                                                &this.tIndicatorRegion);
+                }
+
+            }
+        }
+
+    }
+}
 
 static 
-IMPL_PFB_ON_DRAW(__arm_2d_simple_list_draw_cover)
+IMPL_PFB_ON_DRAW(__arm_2d_simple_list_draw_cover_vertical)
 {
     ARM_2D_UNUSED(bIsNewFrame);
     
@@ -115,114 +241,179 @@ IMPL_PFB_ON_DRAW(__arm_2d_simple_list_draw_cover)
 
     arm_2d_canvas(ptTile, __list_cover) {
 
-        arm_2d_dock_right(__list_cover, 3) {
-            
-            if (this.tSimpleListCFG.bUseMonochromeMode) {
-
-                arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
-
-                    /* draw selection indicator */
-                    if (bIsNewFrame) {
-                        int16_t iBarHeight = __horizontal_region.tSize.iHeight;
-                        q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
-
-                        int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
-                        iIndicatorHeight = MAX(2, iIndicatorHeight);
-
-                        arm_2d_region_t tIndicatorRegion = {
-                            .tSize = {
-                                .iHeight = iIndicatorHeight,
-                                .iWidth = 3,
-                            },
-                            .tLocation = {
-                                .iX = __horizontal_region.tLocation.iX - 1,
-                                .iY = __horizontal_region.tLocation.iY
-                                    + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
-                            },
-                        };
-
-                        this.tIndicatorRegion = tIndicatorRegion;
-                    }
-
-                    if (this.chScrollingBarOpacity > 0) {
-                        /* draw bar */
-                        arm_2d_fill_colour( ptTile, 
-                                            &__horizontal_region, 
-                                            (COLOUR_INT)this.tSimpleListCFG.ScrollingBar.wColour);
-
-                        arm_2d_fill_colour( ptTile, 
-                                            &this.tIndicatorRegion, 
-                                            (COLOUR_INT)this.tSimpleListCFG.ScrollingBar.wColour);
-                    }
-
-                    if (this.bRedrawTheScrollingBar) {
-                        this.bRedrawTheScrollingBar = false;
-                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[1],
-                                                                (arm_2d_tile_t *)ptTile,
-                                                                &__list_cover,
-                                                                &__right_region);
-                    } else if (this.bSelectionChanged) {
-                        arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[1],
-                                                                (arm_2d_tile_t *)ptTile,
+        if (this.tSimpleListCFG.bPlaceScrollingBarOnTopOrLeft) {
+            arm_2d_dock_left(__list_cover, 3) {
+                __arm_2d_simple_list_draw_scrolling_bar_horizontal( 
+                                                                ptThis,
+                                                                ptTile,
+                                                                &__left_region,
+                                                                bIsNewFrame);
+            }
+        } else {
+            arm_2d_dock_right(__list_cover, 3) {
+                __arm_2d_simple_list_draw_scrolling_bar_horizontal( 
+                                                                ptThis,
+                                                                ptTile,
                                                                 &__right_region,
-                                                                &this.tIndicatorRegion);
-                    }
+                                                                bIsNewFrame); 
+            }
+        }
+    }
+
+    ARM_2D_OP_WAIT_ASYNC();
+    
+    return arm_fsm_rt_cpl;
+}
+
+
+static
+void __arm_2d_simple_list_draw_scrolling_bar_vertical(
+                                                __simple_list_t *ptThis, 
+                                                const arm_2d_tile_t *ptTile, 
+                                                arm_2d_region_t *ptCanvas, 
+                                                bool bIsNewFrame)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+    assert(NULL != ptCanvas);
+
+    uint16_t hwListCount = __simple_list_get_list_item_count(ptThis);
+    uint16_t hwSelectedID = __simple_list_get_selected_item_id(ptThis);
+
+    arm_2d_canvas(ptTile, __list_cover) {
+        if (this.tSimpleListCFG.bUseMonochromeMode) {
+
+            arm_2d_dock_vertical(*ptCanvas, 1, (ptCanvas->tSize.iWidth >> 2)) {
+
+                /* draw selection indicator */
+                if (bIsNewFrame) {
+                    int16_t iBarWidth = __vertical_region.tSize.iWidth;
+                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarWidth), hwListCount);
+
+                    int16_t iIndicatorWidth = reinterpret_s16_q16(q16Step);
+                    iIndicatorWidth = MAX(2, iIndicatorWidth);
+
+                    arm_2d_region_t tIndicatorRegion = {
+                        .tSize = {
+                            .iHeight = 3,
+                            .iWidth = iIndicatorWidth,
+                        },
+                        .tLocation = {
+                            .iY = __vertical_region.tLocation.iY - 1,
+                            .iX = __vertical_region.tLocation.iX
+                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                        },
+                    };
+
+                    this.tIndicatorRegion = tIndicatorRegion;
                 }
 
-            } else {
+                if (this.chScrollingBarOpacity > 0) {
+                    /* draw bar */
+                    arm_2d_fill_colour( ptTile, 
+                                        &__vertical_region, 
+                                        (COLOUR_INT)this.tSimpleListCFG.ScrollingBar.wColour);
 
-                uint8_t chScrollingBarOpacity = arm_2d_helper_alpha_mix(128, this.chScrollingBarOpacity);
-
-                arm_2d_dock_horizontal(__right_region, 2, 4, 4) {
-                    arm_2d_fill_colour_with_opacity(ptTile, 
-                                                    &__horizontal_region, 
-                                                    (__arm_2d_color_t){this.tSimpleListCFG.ScrollingBar.wColour}, 
-                                                    chScrollingBarOpacity);
-
-                    /* draw selection indicator */
-                    if (bIsNewFrame) {
-                        int16_t iBarHeight = __horizontal_region.tSize.iHeight;
-                        q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
-
-                        int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
-                        iIndicatorHeight = MAX(2, iIndicatorHeight);
-
-                        arm_2d_region_t tIndicatorRegion = {
-                            .tSize = {
-                                .iHeight = iIndicatorHeight,
-                                .iWidth = 2,
-                            },
-                            .tLocation = {
-                                .iX = __horizontal_region.tLocation.iX,
-                                .iY = __horizontal_region.tLocation.iY
-                                    + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
-                            },
-                        };
-
-                        this.tIndicatorRegion = tIndicatorRegion;
-                    }
-
-                    arm_2d_fill_colour_with_opacity(ptTile, 
-                                                    &this.tIndicatorRegion, 
-                                                    (__arm_2d_color_t){this.tSimpleListCFG.ScrollingBar.wColour}, 
-                                                    chScrollingBarOpacity);
-
-                    if (this.bRedrawTheScrollingBar) {
-                        this.bRedrawTheScrollingBar = false;
-                        arm_2d_helper_dirty_region_update_item( 
-                                                    &this.tDirtyRegionItem[1],
-                                                    (arm_2d_tile_t *)ptTile,
-                                                    &__horizontal_region,
-                                                    &__right_region);
-                    } else if (this.bSelectionChanged) {
-                        arm_2d_helper_dirty_region_update_item( 
-                                                    &this.tDirtyRegionItem[1],
-                                                    (arm_2d_tile_t *)ptTile,
-                                                    &__horizontal_region,
-                                                    &this.tIndicatorRegion);
-                    }
-
+                    arm_2d_fill_colour( ptTile, 
+                                        &this.tIndicatorRegion, 
+                                        (COLOUR_INT)this.tSimpleListCFG.ScrollingBar.wColour);
                 }
+
+                if (this.bRedrawTheScrollingBar) {
+                    this.bRedrawTheScrollingBar = false;
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[1],
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__list_cover,
+                                                            ptCanvas);
+                } else if (this.bSelectionChanged) {
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[1],
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            ptCanvas,
+                                                            &this.tIndicatorRegion);
+                }
+            }
+
+        } else {
+
+            uint8_t chScrollingBarOpacity = arm_2d_helper_alpha_mix(128, this.chScrollingBarOpacity);
+
+            arm_2d_dock_vertical(*ptCanvas, 2, (ptCanvas->tSize.iWidth >> 2)) {
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                                &__vertical_region, 
+                                                (__arm_2d_color_t){this.tSimpleListCFG.ScrollingBar.wColour}, 
+                                                chScrollingBarOpacity);
+
+                /* draw selection indicator */
+                if (bIsNewFrame) {
+                    int16_t iBarWidth = __vertical_region.tSize.iWidth;
+                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarWidth), hwListCount);
+
+                    int16_t iIndicatorWidth = reinterpret_s16_q16(q16Step);
+                    iIndicatorWidth = MAX(2, iIndicatorWidth);
+
+                    arm_2d_region_t tIndicatorRegion = {
+                        .tSize = {
+                            .iHeight = 2,
+                            .iWidth = iIndicatorWidth,
+                        },
+                        .tLocation = {
+                            .iY = __vertical_region.tLocation.iY - 1,
+                            .iX = __vertical_region.tLocation.iX
+                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
+                        },
+                    };
+
+                    this.tIndicatorRegion = tIndicatorRegion;
+                }
+
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                                &this.tIndicatorRegion, 
+                                                (__arm_2d_color_t){this.tSimpleListCFG.ScrollingBar.wColour}, 
+                                                chScrollingBarOpacity);
+
+                if (this.bRedrawTheScrollingBar) {
+                    this.bRedrawTheScrollingBar = false;
+                    arm_2d_helper_dirty_region_update_item( 
+                                                &this.tDirtyRegionItem[1],
+                                                (arm_2d_tile_t *)ptTile,
+                                                &__vertical_region,
+                                                ptCanvas);
+                } else if (this.bSelectionChanged) {
+                    arm_2d_helper_dirty_region_update_item( 
+                                                &this.tDirtyRegionItem[1],
+                                                (arm_2d_tile_t *)ptTile,
+                                                &__vertical_region,
+                                                &this.tIndicatorRegion);
+                }
+
+            }
+        }
+    }
+        
+}
+
+static 
+IMPL_PFB_ON_DRAW(__arm_2d_simple_list_draw_cover_horizontal)
+{
+    ARM_2D_UNUSED(bIsNewFrame);
+    
+    __simple_list_t *ptThis = (__simple_list_t *)pTarget;
+
+    arm_2d_canvas(ptTile, __list_cover) {
+
+        if (this.tSimpleListCFG.bPlaceScrollingBarOnTopOrLeft) {
+            arm_2d_dock_top(__list_cover, 3) {
+                __arm_2d_simple_list_draw_scrolling_bar_vertical(ptThis,
+                                                                ptTile,
+                                                                &__top_region,
+                                                                bIsNewFrame);
+            }
+        } else {
+            arm_2d_dock_bottom(__list_cover, 3) {
+                __arm_2d_simple_list_draw_scrolling_bar_vertical(ptThis,
+                                                                ptTile,
+                                                                &__bottom_region,
+                                                                bIsNewFrame);
             }
         }
     }
@@ -439,9 +630,12 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
         }
         if (NULL != ptCFG->fnOnDrawListCover) {
             tCFG.fnOnDrawListCover = ptCFG->fnOnDrawListCover;
+        } else if (ptCalculator->tDirection == ARM_2D_LIST_HORIZONTAL) {
+            tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover_horizontal;
         } else {
-            tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover;
+            tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover_vertical;
         }
+    
         if (NULL != ptCFG->fnOnDrawListItemBackground) {
             tCFG.fnOnDrawListItemBackground = ptCFG->fnOnDrawListItemBackground;
         }
