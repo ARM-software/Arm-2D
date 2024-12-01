@@ -107,7 +107,7 @@ arm_fsm_rt_t __arm_2d_icon_list_draw_list_core_item(
                 break;
             }
 
-            COLOUR_INT_TYPE tColour = ptCFG->tFontColour;
+            COLOUR_INT tColour = ptCFG->tFontColour;
             arm_2d_align_centre(__item_canvas, ptileIcon->tRegion.tSize) {
                 arm_2d_fill_colour_with_a4_mask_and_opacity(ptTile, 
                                                             &__centre_region, 

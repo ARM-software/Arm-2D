@@ -124,7 +124,7 @@ void meter_pointer_show(meter_pointer_t *ptThis,
 extern
 ARM_NONNULL(1)
 void meter_pointer_set_colour(  meter_pointer_t *ptThis, 
-                                COLOUR_INT_TYPE tColour);
+                                COLOUR_INT tColour);
 
 extern
 ARM_NONNULL(1)

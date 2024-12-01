@@ -248,7 +248,7 @@ static void __on_scene_watch_face_01_frame_start(arm_2d_scene_t *ptScene)
             nResult = 0;
         }
 
-        COLOUR_INT_TYPE tColour = arm_2d_pixel_from_brga8888(
+        COLOUR_INT tColour = arm_2d_pixel_from_brga8888(
                                             __arm_2d_helper_colour_slider(
                                                 this.wPreviousColour, 
                                                 c_wColourTable[this.chColourTableIndex],

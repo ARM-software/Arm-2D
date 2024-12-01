@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        29. Nov 2024
- * $Revision:    V.1.7.1
+ * $Date:        01. Dec 2024
+ * $Revision:    V.1.7.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3124,6 +3124,13 @@ extern "C" {
                                 bool bIsNewFrame)
 
 /*============================ TYPES =========================================*/
+
+typedef union COLOUR_TYPE_T {
+    uint8_t chColour;
+    uint16_t hwColour;
+    uint32_t wColour;
+    COLOUR_INT tColour;
+} COLOUR_TYPE_T;
 
 typedef struct __arm_2d_layout_debug_t {
     const arm_2d_tile_t *ptTile;

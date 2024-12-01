@@ -391,7 +391,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
 
     float fRatio = ((float)(iHalfLength - ptParam->hwRatio) / (float)iHalfLength);
 
-    COLOUR_INT_TYPE tColour =  arm_2d_pixel_from_brga8888( 
+    COLOUR_INT tColour =  arm_2d_pixel_from_brga8888( 
                                             __arm_2d_helper_colour_slider(
                                                 __RGB32(0xFF, 0x80, 0), 
                                                 __RGB32(0x80, 0x40, 0),

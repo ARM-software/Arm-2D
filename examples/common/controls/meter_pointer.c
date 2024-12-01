@@ -220,7 +220,7 @@ void meter_pointer_show(meter_pointer_t *ptThis,
 
 ARM_NONNULL(1)
 void meter_pointer_set_colour(  meter_pointer_t *ptThis, 
-                                COLOUR_INT_TYPE tColour)
+                                COLOUR_INT tColour)
 {
     assert(NULL != ptThis);
     spin_zoom_widget_set_colour(&this.use_as__spin_zoom_widget_t, tColour);

@@ -198,7 +198,7 @@ void cloudy_glass_on_frame_start( cloudy_glass_t *ptThis)
 
 ARM_NONNULL(1)
 void cloudy_glass_set_colour( cloudy_glass_t *ptThis, 
-                                COLOUR_INT_TYPE tColour)
+                                COLOUR_INT tColour)
 {
     assert(NULL != ptThis);
     this.tCFG.tColour = tColour;

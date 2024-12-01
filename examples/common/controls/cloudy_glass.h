@@ -62,7 +62,7 @@ typedef struct cloudy_glass_cfg_t {
     uint16_t hwParticleCount;
     
 
-    COLOUR_INT_TYPE tColour;
+    COLOUR_INT tColour;
     bool bEnableBlur; 
 
 } cloudy_glass_cfg_t;
@@ -115,7 +115,7 @@ void cloudy_glass_on_frame_complete( cloudy_glass_t *ptThis);
 extern
 ARM_NONNULL(1)
 void cloudy_glass_set_colour( cloudy_glass_t *ptThis, 
-                                COLOUR_INT_TYPE tColour);
+                                COLOUR_INT tColour);
 
 extern
 ARM_NONNULL(1)

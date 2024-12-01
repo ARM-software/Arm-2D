@@ -70,8 +70,8 @@ typedef struct spin_zoom_widget_cfg_t {
         const arm_2d_tile_t     *ptSource;
         arm_2d_location_t       tCentre;
         union {
-            COLOUR_INT_TYPE     tColourForKeying;
-            COLOUR_INT_TYPE     tColourToFill;
+            COLOUR_INT     tColourForKeying;
+            COLOUR_INT     tColourToFill;
         };
     } Source;
 
@@ -171,7 +171,7 @@ void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
                             uint8_t chOpacity);
 extern
 ARM_NONNULL(1)
-void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT_TYPE tColour);
+void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT tColour);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

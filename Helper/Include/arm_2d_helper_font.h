@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        29. Oct 2024
- * $Revision:    V.2.7.3
+ * $Date:        01. Dec 2024
+ * $Revision:    V.2.7.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -53,10 +53,6 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
-/*!
- * \addtogroup gHelper 8 Helper Services
- * @{
- */
 
 /*============================ MACROS ========================================*/
 #ifndef __GLCD_CFG_COLOUR_DEPTH__
@@ -64,6 +60,11 @@ extern "C" {
 #   define __GLCD_CFG_COLOUR_DEPTH__      16
 #endif
 
+/*!
+ * \addtogroup Deprecated
+ * @{
+ */
+/*! todo: COLOUR_INT_TYPE is deprecated, should be removed in the future */
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 #   define COLOUR_INT_TYPE         uint8_t 
 
@@ -77,6 +78,9 @@ extern "C" {
 #   error Unsupported colour depth!
 #endif
 
+/*! @} */
+
+
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
 #warning Please specify the screen width by defining the macro __GLCD_CFG_SCEEN_WIDTH__, default value 320 is used for now
 #define __GLCD_CFG_SCEEN_WIDTH__                            320
@@ -87,6 +91,11 @@ extern "C" {
 #   define __GLCD_CFG_SCEEN_HEIGHT__                        320
 #endif
 
+
+/*!
+ * \addtogroup gHelper 8 Helper Services
+ * @{
+ */
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 #if 0 // TODO in the future version when string alignment feature is available
@@ -321,8 +330,8 @@ extern
 void arm_lcd_putchar(const char *str);
 
 extern 
-void arm_lcd_text_set_colour(   COLOUR_INT_TYPE wForeground, 
-                                COLOUR_INT_TYPE wBackground);
+void arm_lcd_text_set_colour(   COLOUR_INT wForeground, 
+                                COLOUR_INT wBackground);
 
 extern
 void arm_lcd_text_set_opacity(uint8_t chOpacity);

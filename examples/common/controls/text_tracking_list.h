@@ -67,27 +67,14 @@ typedef struct text_tracking_list_setting_t {
 
     /*! \note Auto Size mode only works with text left alignment */
     uint8_t bIndicatorAutoSize      : 1;
-
-    uint8_t bShowScrollingBar       : 1;
-    uint8_t bUseMonochromeMode      : 1;
-    uint8_t                         : 4;
-
-    /*! \note  0 means always-on. The unit is 100ms */
-    uint8_t chScrollingBarAutoDisappearTimeX100Ms;
+    uint8_t                         : 6;
 
     union {
         uint8_t chValue;
         uint16_t hwValue;
         uint32_t wValue;
-        COLOUR_INT_TYPE tValue;
+        COLOUR_INT tValue;
     } IndicatorColour;
-
-    union {
-        uint8_t chValue;
-        uint16_t hwValue;
-        uint32_t wValue;
-        COLOUR_INT_TYPE tValue;
-    } ScrollingBar;
 
 } text_tracking_list_setting_t;
 
@@ -102,27 +89,14 @@ typedef struct text_tracking_list_cfg_t {
 
             /*! \note Auto Size mode only works with text left alignment */
             uint8_t bIndicatorAutoSize      : 1;
-
-            uint8_t bShowScrollingBar       : 1;
-            uint8_t bUseMonochromeMode      : 1;  
-            uint8_t                         : 4;       
-
-            /*! \note  0 means always-on */
-            uint8_t chScrollingBarAutoDisappearTimeX100Ms;
+            uint8_t                         : 6;       
 
             union {
                 uint8_t chValue;
                 uint16_t hwValue;
                 uint32_t wValue;
-                COLOUR_INT_TYPE tValue;
+                COLOUR_INT tValue;
             } IndicatorColour;
-
-            union {
-                uint8_t chValue;
-                uint16_t hwValue;
-                uint32_t wValue;
-                COLOUR_INT_TYPE tValue;
-            } ScrollingBar;
         };
     };
 
@@ -131,24 +105,13 @@ typedef struct text_tracking_list_cfg_t {
 typedef struct text_tracking_list_t {
     implement(text_list_t);
 ARM_PRIVATE(
-    int64_t lTimestamp[2];
+    int64_t lTimestamp;
 
     int16_t iStringWidth;
-    uint8_t bIsOnLoad                : 1;
-    uint8_t bRedrawTheScrollingBar   : 1;
-    uint8_t bSelectionChanged        : 1;
-    uint8_t                          : 5;
-    uint8_t chScrollingBarOpacity;
-
 
     arm_2d_size_t tLastStringSize;
-    arm_2d_region_t tIndicatorRegion;
-
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
 
     text_tracking_list_setting_t tSettings;
-
-    
 )
 
 } text_tracking_list_t;

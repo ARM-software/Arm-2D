@@ -329,10 +329,7 @@ user_scene_mono_tracking_list_t *__arm_2d_scene_mono_tracking_list_init(
                 .bUsePIMode = true,
                 .bIndicatorAutoSize = true,
                 .IndicatorColour.tValue = GLCD_COLOR_WHITE,
-                .ScrollingBar.tValue = GLCD_COLOR_WHITE,
-                .chScrollingBarAutoDisappearTimeX100Ms = 10,
-                .bUseMonochromeMode = true,
-                //.bDisableScrollingBar = true,
+                
             //},
 
             .use_as__text_list_cfg_t = {
@@ -343,6 +340,12 @@ user_scene_mono_tracking_list_t *__arm_2d_scene_mono_tracking_list_init(
                     
                     .tFontColour = GLCD_COLOR_WHITE,
                     .tBackgroundColour = GLCD_COLOR_BLACK,
+
+                    .bUseMonochromeMode = true,
+                    .bShowScrollingBar = true,
+                    .chScrollingBarAutoDisappearTimeX100Ms = 10,
+                    .ScrollingBar.tColour = GLCD_COLOR_WHITE,
+
                     //.bIgnoreBackground = true,
                     
                     //.bDisableRingMode = true,     /* you can disable the list ring mode here */

@@ -65,12 +65,25 @@ typedef struct __simple_list_cfg_t {
     uint8_t bIgnoreBackground   : 1;
     uint8_t bUseDirtyRegion     : 1;
     uint8_t bDisableRingMode    : 1;
-    uint8_t                     : 5;
+    uint8_t bShowScrollingBar   : 1;
+    uint8_t bUseMonochromeMode  : 1;
+    uint8_t                     : 3;
+
+    /*! \note  0 means always-on. The unit is 100ms */
+    uint8_t chScrollingBarAutoDisappearTimeX100Ms;
 
     uint8_t chOpacity;
 
-    COLOUR_INT tFontColour;
-    COLOUR_INT tBackgroundColour;
+    union {
+        COLOUR_INT tFontColour;
+        COLOUR_TYPE_T tFont;
+    };
+    union {
+        COLOUR_INT tBackgroundColour;
+        COLOUR_TYPE_T tBackground;
+    };
+
+    COLOUR_TYPE_T ScrollingBar;
 
     arm_2d_size_t tItemSize;
     arm_2d_size_t tListSize;
@@ -103,12 +116,20 @@ ARM_PRIVATE(
     
     uint16_t hwIterationIndex;
 
-    uint16_t bIsOnLoad          : 1;
-    uint16_t bRedrawListReq     : 1;
-    uint16_t bRedrawCurrentItem : 1;
-    uint16_t                    : 13;
+    uint8_t bIsOnLoad              : 1;
+    uint8_t bRedrawListReq         : 1;
+    uint8_t bRedrawCurrentItem     : 1;
+    uint8_t bRedrawTheScrollingBar : 1;
+    uint8_t bSelectionChanged      : 1;
+    uint8_t                        : 3;
 
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+    uint8_t chScrollingBarOpacity;
+
+    arm_2d_region_t tIndicatorRegion;
+
+    int64_t lTimestamp;
+
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem[2];
 )
 
 } __simple_list_t;

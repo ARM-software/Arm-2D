@@ -248,7 +248,7 @@ void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT_TYPE tColour)
+void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT tColour)
 {
     assert(NULL != ptThis);
     this.tCFG.Source.tColourToFill = tColour;

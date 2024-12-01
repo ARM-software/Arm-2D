@@ -2881,7 +2881,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
 
                 
-                COLOUR_INT_TYPE tColour = GLCD_COLOR_RED;
+                COLOUR_INT tColour = GLCD_COLOR_RED;
 
             #if 0
                 arm_2d_color_info_t tColourFormat = {

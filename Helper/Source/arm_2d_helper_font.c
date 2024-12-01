@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        29. Oct 2024
- * $Revision:    V.2.7.3
+ * $Date:        01. Dec 2024
+ * $Revision:    V.2.7.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -86,8 +86,8 @@ static struct {
     arm_2d_location_t   tDrawOffset;
     
     struct {
-        COLOUR_INT_TYPE     tForeground;
-        COLOUR_INT_TYPE     tBackground;
+        COLOUR_INT     tForeground;
+        COLOUR_INT     tBackground;
     } tColour;
     uint8_t chOpacity;
 
@@ -264,7 +264,7 @@ arm_2d_region_t *arm_lcd_text_get_last_display_region(void)
 }
 
 
-void arm_lcd_text_set_colour(COLOUR_INT_TYPE wForeground, COLOUR_INT_TYPE wBackground)
+void arm_lcd_text_set_colour(COLOUR_INT wForeground, COLOUR_INT wBackground)
 {
     s_tLCDTextControl.tColour.tForeground = wForeground;
     s_tLCDTextControl.tColour.tBackground = wBackground;
