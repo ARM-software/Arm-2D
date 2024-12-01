@@ -8,5 +8,5 @@ var modules =
     [ "6 Conversion Operations", "group__gConversion.html", "group__gConversion" ],
     [ "7 Filter Operations", "group__gFilter.html", "group__gFilter" ],
     [ "8 Helper Services", "group__gHelper.html", "group__gHelper" ],
-    [ "Deprecated", "group__Deprecated.html", null ]
+    [ "Deprecated", "group__Deprecated.html", "group__Deprecated" ]
 ];

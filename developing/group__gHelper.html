@@ -431,18 +431,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ga31d8f3a1479fcbb4764221f695f7939c"><td class="memItemLeft" align="right" valign="top"><a id="ga31d8f3a1479fcbb4764221f695f7939c" name="ga31d8f3a1479fcbb4764221f695f7939c"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_CTRL_FOREACH</b>&#160;&#160;&#160;ARM_CONTROL_ENUMERATE</td></tr>
 <tr class="separator:ga31d8f3a1479fcbb4764221f695f7939c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa3a6cb990b47297ba0f34fa772bf625"><td class="memItemLeft" align="right" valign="top"><a id="gafa3a6cb990b47297ba0f34fa772bf625" name="gafa3a6cb990b47297ba0f34fa772bf625"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__GLCD_CFG_COLOUR_DEPTH__</b>&#160;&#160;&#160;16</td></tr>
-<tr class="separator:gafa3a6cb990b47297ba0f34fa772bf625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf61c3f14247136587b3a7539f0d87656"><td class="memItemLeft" align="right" valign="top"><a id="gaf61c3f14247136587b3a7539f0d87656" name="gaf61c3f14247136587b3a7539f0d87656"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>COLOUR_INT_TYPE</b>&#160;&#160;&#160;uint16_t</td></tr>
-<tr class="separator:gaf61c3f14247136587b3a7539f0d87656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga25182be89de9d65ace310d1d10a2dc93"><td class="memItemLeft" align="right" valign="top"><a id="ga25182be89de9d65ace310d1d10a2dc93" name="ga25182be89de9d65ace310d1d10a2dc93"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__GLCD_CFG_SCEEN_WIDTH__</b>&#160;&#160;&#160;320</td></tr>
-<tr class="separator:ga25182be89de9d65ace310d1d10a2dc93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9378418f32f262128d58dadd4715130f"><td class="memItemLeft" align="right" valign="top"><a id="ga9378418f32f262128d58dadd4715130f" name="ga9378418f32f262128d58dadd4715130f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>__GLCD_CFG_SCEEN_HEIGHT__</b>&#160;&#160;&#160;320</td></tr>
-<tr class="separator:ga9378418f32f262128d58dadd4715130f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga54a2b702bf1aa5e29cdc2c0890770920"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga54a2b702bf1aa5e29cdc2c0890770920">__arm_print_banner3</a>(__STR,  __REGION,  __FONT_PTR)</td></tr>
 <tr class="separator:ga54a2b702bf1aa5e29cdc2c0890770920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb1eb69a5c125c855b4e871c5ca6fe31"><td class="memItemLeft" align="right" valign="top"><a id="gabb1eb69a5c125c855b4e871c5ca6fe31" name="gabb1eb69a5c125c855b4e871c5ca6fe31"></a>
@@ -1046,9 +1034,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_reset_di
 <tr class="memitem:gadc957ea40a4b2dbb662fab47501a127e"><td class="memItemLeft" align="right" valign="top"><a id="gadc957ea40a4b2dbb662fab47501a127e" name="gadc957ea40a4b2dbb662fab47501a127e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_putchar</b> (const char *str)</td></tr>
 <tr class="separator:gadc957ea40a4b2dbb662fab47501a127e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2ea9b74c0e621cce564c02f5231951ab"><td class="memItemLeft" align="right" valign="top"><a id="ga2ea9b74c0e621cce564c02f5231951ab" name="ga2ea9b74c0e621cce564c02f5231951ab"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_colour</b> (COLOUR_INT_TYPE wForeground, COLOUR_INT_TYPE wBackground)</td></tr>
-<tr class="separator:ga2ea9b74c0e621cce564c02f5231951ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ea02ccc714f67d953c61df19fe98041"><td class="memItemLeft" align="right" valign="top"><a id="ga7ea02ccc714f67d953c61df19fe98041" name="ga7ea02ccc714f67d953c61df19fe98041"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_colour</b> (COLOUR_INT wForeground, COLOUR_INT wBackground)</td></tr>
+<tr class="separator:ga7ea02ccc714f67d953c61df19fe98041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14b64e00468e3e3cf861ede0a0b7bd7b"><td class="memItemLeft" align="right" valign="top"><a id="ga14b64e00468e3e3cf861ede0a0b7bd7b" name="ga14b64e00468e3e3cf861ede0a0b7bd7b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_opacity</b> (uint8_t chOpacity)</td></tr>
 <tr class="separator:ga14b64e00468e3e3cf861ede0a0b7bd7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
