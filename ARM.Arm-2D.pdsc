@@ -318,7 +318,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.4.9" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.4.10" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />

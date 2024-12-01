@@ -209,6 +209,7 @@ typedef const struct arm_2d_i_list_region_calculator_t {
                                 );
     int16_t (*fnSelectionCompensation)(__arm_2d_list_core_t *ptThis,
                                        arm_2d_list_item_t *ptItem);
+    arm_2d_list_dir_t tDirection;
 } arm_2d_i_list_region_calculator_t;
 
 /*!

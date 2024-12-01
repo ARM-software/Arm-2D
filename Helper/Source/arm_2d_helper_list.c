@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        27. Nov 2024
- * $Revision:    V.2.2.2
+ * $Date:        1. Dec 2024
+ * $Revision:    V.2.2.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3241,6 +3241,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_horizontal,
     .fnSelectionCompensation = &__selection_compensation_mid_aligned,
+    .tDirection = ARM_2D_LIST_HORIZONTAL,
 };
 
 static
@@ -3258,6 +3259,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_VERTICAL = {
     .fnCalculator = 
         &__calculator_mid_aligned_vertical,
     .fnSelectionCompensation = &__selection_compensation_mid_aligned,
+    .tDirection = ARM_2D_LIST_VERTICAL,
 };
 
 static
@@ -3279,6 +3281,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL 
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_vertical,
     .fnSelectionCompensation = &__selection_compensation_mid_aligned,
+    .tDirection = ARM_2D_LIST_VERTICAL,
 };
 
 static
@@ -3300,6 +3303,7 @@ ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTA
     .fnCalculator = 
         &__calculator_mid_aligned_fixed_sized_item_no_status_checking_horizontal,
     .fnSelectionCompensation = &__selection_compensation_mid_aligned,
+    .tDirection = ARM_2D_LIST_HORIZONTAL,
 };
 
 static
@@ -3316,6 +3320,7 @@ arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_NORMAL_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_normal_horizontal,
+    .tDirection = ARM_2D_LIST_HORIZONTAL,
 };
 
 
@@ -3332,6 +3337,7 @@ arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_NORMAL_VERTICAL = {
     .fnCalculator = 
         &__calculator_normal_vertical,
+    .tDirection = ARM_2D_LIST_VERTICAL,
 };
 
 static
@@ -3352,6 +3358,7 @@ arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_HORIZONTAL = {
     .fnCalculator = 
         &__calculator_normal_fixed_sized_item_no_status_checking_horizontal,
+    .tDirection = ARM_2D_LIST_HORIZONTAL,
 };
 
 static
@@ -3372,6 +3379,7 @@ arm_2d_i_list_region_calculator_t
 ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL = {
     .fnCalculator = 
         &__calculator_normal_fixed_sized_item_no_status_checking_vertical,
+    .tDirection = ARM_2D_LIST_VERTICAL,
 };
 
 
