@@ -123,6 +123,14 @@ extern
 ARM_NONNULL(1)
 uint16_t icon_list_get_list_item_count(icon_list_t *ptThis);
 
+extern
+ARM_NONNULL(1)
+void icon_list_request_redraw_list(icon_list_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void icon_list_request_redraw_selected_item(icon_list_t *ptThis);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

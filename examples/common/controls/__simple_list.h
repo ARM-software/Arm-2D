@@ -76,7 +76,7 @@ typedef struct __simple_list_cfg_t {
 
     union {
         COLOUR_INT tFontColour;
-        COLOUR_TYPE_T tFont;
+        COLOUR_TYPE_T tForeground;
     };
     union {
         COLOUR_INT tBackgroundColour;

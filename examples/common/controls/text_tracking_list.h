@@ -159,6 +159,14 @@ extern
 ARM_NONNULL(1)
 uint16_t text_tracking_list_get_list_item_count(text_tracking_list_t *ptThis);
 
+extern
+ARM_NONNULL(1)
+void text_tracking_list_request_redraw_list(text_tracking_list_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void text_tracking_list_request_redraw_selected_item(text_tracking_list_t *ptThis);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

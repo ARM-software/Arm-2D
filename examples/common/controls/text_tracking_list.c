@@ -282,6 +282,20 @@ uint16_t text_tracking_list_get_list_item_count(text_tracking_list_t *ptThis)
     return text_list_get_list_item_count(&this.use_as__text_list_t);
 }
 
+ARM_NONNULL(1)
+void text_tracking_list_request_redraw_list(text_tracking_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+    text_list_request_redraw_list(&this.use_as__text_list_t);
+}
+
+ARM_NONNULL(1)
+void text_tracking_list_request_redraw_selected_item(text_tracking_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+    text_list_request_redraw_selected_item(&this.use_as__text_list_t);
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

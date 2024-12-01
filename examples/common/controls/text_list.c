@@ -237,6 +237,20 @@ uint16_t text_list_get_list_item_count(text_list_t *ptThis)
     return __simple_list_get_list_item_count(&this.use_as____simple_list_t);
 }
 
+ARM_NONNULL(1)
+void text_list_request_redraw_list(text_list_t *ptThis) 
+{
+    assert(NULL != ptThis);
+    __simple_list_request_redraw_list(&this.use_as____simple_list_t);
+}
+
+ARM_NONNULL(1)
+void text_list_request_redraw_selected_item(text_list_t *ptThis)
+{
+    assert(NULL != ptThis);
+    __simple_list_request_redraw_selected_item(&this.use_as____simple_list_t);
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
