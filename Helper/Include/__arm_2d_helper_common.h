@@ -23,7 +23,7 @@
  *               arm-2d helper services
  *
  * $Date:        01. Dec 2024
- * $Revision:    V.1.7.2
+ * $Revision:    V.1.7.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1484,10 +1484,11 @@ extern "C" {
  */
 #define ____item_line_dock_horizontal4(__left, __right, __top, __bottom)        \
             ____item_line_dock_horizontal5(                                     \
-                    ( __layout_assistant__.tArea.tLocation.iX                   \
+                    ((( __layout_assistant__.tArea.tLocation.iX                 \
                     + __layout_assistant__.tArea.tSize.iWidth                   \
                     * (__layout_assistant__.tAlignTable.Horizontal.sWidth + 1)  \
-                    - __layout_assistant__.tLayout.tLocation.iX                 \
+                    - __layout_assistant__.tLayout.tLocation.iX) *              \
+                    __layout_assistant__.tAlignTable.Horizontal.sAdvance)       \
                     - (__left) - (__right)),                                    \
                     (__left), (__right), (__top), (__bottom))
 
@@ -1505,10 +1506,11 @@ extern "C" {
  */
 #define ____item_line_dock_horizontal0()                                        \
             ____item_line_dock_horizontal5(                                     \
-                    ( __layout_assistant__.tArea.tLocation.iX                   \
+                    (( __layout_assistant__.tArea.tLocation.iX                  \
                     + __layout_assistant__.tArea.tSize.iWidth                   \
                     * (__layout_assistant__.tAlignTable.Horizontal.sWidth + 1)  \
-                    - __layout_assistant__.tLayout.tLocation.iX),               \
+                    - __layout_assistant__.tLayout.tLocation.iX) *              \
+                    __layout_assistant__.tAlignTable.Horizontal.sAdvance),      \
                     0, 0, 0, 0)
 
 /*!
@@ -1709,10 +1711,11 @@ extern "C" {
  */
 #define ____item_line_dock_vertical4(__left, __right, __top, __bottom)          \
             ____item_line_dock_vertical5(                                       \
-                    ( __layout_assistant__.tArea.tLocation.iY                   \
+                    ((( __layout_assistant__.tArea.tLocation.iY                 \
                     + __layout_assistant__.tArea.tSize.iHeight                  \
                     * (__layout_assistant__.tAlignTable.Vertical.sHeight + 1)   \
-                    - __layout_assistant__.tLayout.tLocation.iY                 \
+                    - __layout_assistant__.tLayout.tLocation.iY) *              \
+                    __layout_assistant__.tAlignTable.Vertical.sAdvance)         \
                     - (__top) - (__bottom)),                                    \
                     (__left), (__right), (__top), (__bottom))
 
@@ -1731,10 +1734,11 @@ extern "C" {
  */
 #define ____item_line_dock_vertical0()                                          \
             ____item_line_dock_vertical5(                                       \
-                    ( __layout_assistant__.tArea.tLocation.iY                   \
+                    (( __layout_assistant__.tArea.tLocation.iY                  \
                     + __layout_assistant__.tArea.tSize.iHeight                  \
                     * (__layout_assistant__.tAlignTable.Vertical.sHeight + 1)   \
-                    - __layout_assistant__.tLayout.tLocation.iY),               \
+                    - __layout_assistant__.tLayout.tLocation.iY) *              \
+                    __layout_assistant__.tAlignTable.Vertical.sAdvance),        \
                     0, 0, 0, 0)
 
 /*!
