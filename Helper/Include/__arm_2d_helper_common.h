@@ -2941,12 +2941,12 @@ extern "C" {
  *          }
  * 
  * \note prototype2:
- *          arm_2d_dock_vertical(__region, __width, __margin) {
+ *          arm_2d_dock_vertical(__region, __height, __margin) {
  *              code body that can use __vertical_region
  *          }
  *
  * \note prototype3:
- *          arm_2d_dock_vertical(__region, __width, __margin_left, __margin_right) {
+ *          arm_2d_dock_vertical(__region, __height, __margin_left, __margin_right) {
  *              code body that can use __vertical_region
  *          }          
  */
