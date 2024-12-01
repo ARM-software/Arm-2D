@@ -221,18 +221,12 @@ static void __on_scene_mono_icon_menu_frame_start(arm_2d_scene_t *ptScene)
     user_scene_mono_icon_menu_t *ptThis = (user_scene_mono_icon_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
+    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[0])) {
 
         /* move list */
         icon_list_move_selection(&this.tList, 1, 200);
+        this.bRedrawLabel = true;
     }
-
-
-    arm_2d_helper_dirty_region_item_suspend_update(
-        &this.tDirtyRegionItems[1],
-        !__arm_2d_list_core_is_list_moving(
-            &this.tList.use_as____simple_list_t.use_as____arm_2d_list_core_t));
-
 
     icon_list_on_frame_start(&this.tList);
 
@@ -243,12 +237,6 @@ static void __on_scene_mono_icon_menu_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_mono_icon_menu_t *ptThis = (user_scene_mono_icon_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* switch to next scene after 12s */
-    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
 static void __before_scene_mono_icon_menu_switching_out(arm_2d_scene_t *ptScene)
@@ -301,13 +289,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
                                 icon_list_get_selected_item_id(&this.tList)]);
                     
 
-                        /* update dirty region */
-                        arm_2d_helper_dirty_region_update_item( 
-                                        &this.tDirtyRegionItems[0],
-                                        (arm_2d_tile_t *)ptTile,
-                                        &__item_region,
-                                        arm_lcd_text_get_last_display_region());
-
+                        if (this.bRedrawLabel) {
+                            this.bRedrawLabel = false;
+                        
+                            /* update dirty region */
+                            arm_2d_helper_dirty_region_update_item( 
+                                            &this.tDirtyRegionItems[0],
+                                            (arm_2d_tile_t *)ptTile,
+                                            &__item_region,
+                                            arm_lcd_text_get_last_display_region());
+                        }
                     } while(0);
                 }
 

@@ -84,11 +84,12 @@ struct user_scene_mono_icon_menu_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
-    bool bUserAllocated;
+    int64_t lTimestamp[1];
+    uint8_t bUserAllocated  : 1;
+    uint8_t bRedrawLabel    : 1;
 
     icon_list_t tList;
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[2];
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[1];
 )
     /* place your public member here */
     
