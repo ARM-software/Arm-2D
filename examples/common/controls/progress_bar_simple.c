@@ -116,6 +116,8 @@ void __progress_bar_simple_show(const arm_2d_tile_t *ptTarget,
     assert(NULL != ptTarget);
     if (iProgress > 1000) {
         iProgress = 0;
+    } else if (iProgress < 0) {
+        iProgress = 0;
     }
 
     arm_2d_region_t tTargetRegion = {.tSize = ptTarget->tRegion.tSize,};

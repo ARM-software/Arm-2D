@@ -160,7 +160,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
 
     ARM_2D_OP_WAIT_ASYNC();
 
-    if (iProgress > 0) {
+    if (iProgress >= 0) {
         //! calculate the width of the inner stripe 
         tBarRegion.tSize.iWidth = tBarRegion.tSize.iWidth * (int16_t)iProgress / 1000;
     } 
