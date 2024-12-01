@@ -79,7 +79,7 @@ extern "C" {
 /*============================ MACROS ========================================*/
 #undef OP_CORE
 #define OP_CORE this.use_as__arm_2d_op_t.use_as__arm_2d_op_core_t
-
+#undef OPCODE
 #define OPCODE this.use_as__arm_2d_op_t
 
 #define __ARM_2D_PIXEL_AVERAGE_INIT_GRAY8       uint16_t tPixel = 0;

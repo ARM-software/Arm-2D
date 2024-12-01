@@ -59,7 +59,7 @@ extern "C" {
 /*============================ MACROS ========================================*/
 #undef OP_CORE
 #define OP_CORE this.use_as__arm_2d_op_t.use_as__arm_2d_op_core_t
-
+#undef OPCODE
 #define OPCODE this.use_as__arm_2d_op_t
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
