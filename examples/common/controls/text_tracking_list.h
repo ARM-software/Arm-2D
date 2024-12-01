@@ -63,8 +63,6 @@ typedef char * __disp_string_t ;
 
 typedef struct text_tracking_list_setting_t {
 
-    uint8_t bUsePIMode              : 1;
-
     /*! \note Auto Size mode only works with text left alignment */
     uint8_t bIndicatorAutoSize      : 1;
     uint8_t                         : 6;
@@ -85,11 +83,10 @@ typedef struct text_tracking_list_cfg_t {
         /* please ensure the anonymous structure is identical to tSettings */
         text_tracking_list_setting_t tSettings;
         struct {
-            uint8_t bUsePIMode              : 1;
 
             /*! \note Auto Size mode only works with text left alignment */
             uint8_t bIndicatorAutoSize      : 1;
-            uint8_t                         : 6;       
+            uint8_t                         : 7;       
 
             union {
                 uint8_t chValue;

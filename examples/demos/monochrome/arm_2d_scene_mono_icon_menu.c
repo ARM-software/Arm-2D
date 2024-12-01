@@ -224,7 +224,7 @@ static void __on_scene_mono_icon_menu_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
 
         /* move list */
-        icon_list_move_selection(&this.tList, 1, 100);
+        icon_list_move_selection(&this.tList, 1, 200);
     }
 
 
@@ -448,6 +448,7 @@ user_scene_mono_icon_menu_t *__arm_2d_scene_mono_icon_menu_init(   arm_2d_scene_
                 .chScrollingBarAutoDisappearTimeX100Ms = 10,
                 .ScrollingBar.tColour = GLCD_COLOR_WHITE,
                 .bPlaceScrollingBarOnTopOrLeft = true,
+                //.bUsePIMode = true,
                 
                 //.bDisableRingMode = true,     /* you can disable the list ring mode here */
 

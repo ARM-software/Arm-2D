@@ -65,10 +65,11 @@ typedef struct __simple_list_cfg_t {
     uint8_t bIgnoreBackground               : 1;
     uint8_t bUseDirtyRegion                 : 1;
     uint8_t bDisableRingMode                : 1;
+    uint8_t bUsePIMode                      : 1;
     uint8_t bUseMonochromeMode              : 1;
     uint8_t bShowScrollingBar               : 1;
     uint8_t bPlaceScrollingBarOnTopOrLeft   : 1;
-    uint8_t                                 : 2;
+    uint8_t                                 : 1;
 
     /*! \note  0 means always-on. The unit is 100ms */
     uint8_t chScrollingBarAutoDisappearTimeX100Ms;

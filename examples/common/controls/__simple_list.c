@@ -621,7 +621,7 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
             .bDisableRingMode = ptCFG->bDisableRingMode,
             
             .ptPISliderCFG = ptCFG->ptPISliderCFG,
-            .bUsePISliderForSelectionIndicator = (ptCFG->ptPISliderCFG != NULL),
+            .bUsePISliderForSelectionIndicator = ptCFG->bUsePIMode,
         };
 
         /* you can override the default implementations */

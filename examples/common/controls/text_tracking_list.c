@@ -80,12 +80,6 @@ static
 IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background);
 
 /*============================ LOCAL VARIABLES ===============================*/
-static const arm_2d_helper_pi_slider_cfg_t c_tDefaultPICFG = {
-    .fProportion = 0.030f,
-    .fIntegration = 0.0115f,
-    .nInterval = 5,
-};
-
 /*============================ IMPLEMENTATION ================================*/
 
 #if defined(__IS_COMPILER_IAR__) && __IS_COMPILER_IAR__
@@ -119,21 +113,6 @@ arm_2d_err_t __text_tracking_list_init(
                             &__arm_2d_text_tracking_list_draw_background);
     }
 
-    /* config the PI mode */
-    if (this.tSettings.bUsePIMode 
-    &&  (NULL == ptCFG->use_as__text_list_cfg_t.use_as____simple_list_cfg_t.ptPISliderCFG)) {
-        __arm_2d_list_core_indicator_pi_mode_config(
-            &this.use_as__text_list_t.use_as____simple_list_t.use_as____arm_2d_list_core_t,
-            this.tSettings.bUsePIMode,
-            (arm_2d_helper_pi_slider_cfg_t *)&c_tDefaultPICFG
-        );
-    } else {
-        __arm_2d_list_core_indicator_pi_mode_config(
-            &this.use_as__text_list_t.use_as____simple_list_t.use_as____arm_2d_list_core_t,
-            this.tSettings.bUsePIMode,
-            NULL
-        );
-    }
 
     if (0 == (  ARM_2D_ALIGN_LEFT 
              &  ptCFG->use_as__text_list_cfg_t

@@ -78,7 +78,6 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/*============================ LOCAL VARIABLES ===============================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
@@ -86,6 +85,13 @@ static
 arm_2d_err_t __arm_2d_list_core_move_selection( __arm_2d_list_core_t *ptThis, 
                                                 int16_t iSteps,
                                                 int32_t nFinishInMs);
+/*============================ LOCAL VARIABLES ===============================*/
+static const arm_2d_helper_pi_slider_cfg_t c_tDefaultPICFG = {
+    .fProportion = 0.030f,
+    .fIntegration = 0.0115f,
+    .nInterval = 5,
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 __STATIC_INLINE
@@ -134,9 +140,16 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
 
     /* PI slider selection indicator */
     if (this.tCFG.bUsePISliderForSelectionIndicator) {
-        arm_2d_helper_pi_slider_init(   &this.Runtime.tPISlider, 
-                                        this.tCFG.ptPISliderCFG, 
-                                        0);
+        if (NULL == this.tCFG.ptPISliderCFG) {
+            arm_2d_helper_pi_slider_init(   &this.Runtime.tPISlider, 
+                                            (arm_2d_helper_pi_slider_cfg_t *)&c_tDefaultPICFG, 
+                                            0);
+            
+        } else {
+            arm_2d_helper_pi_slider_init(   &this.Runtime.tPISlider, 
+                                            this.tCFG.ptPISliderCFG, 
+                                            0);
+        }
     }
     
     this.bListSizeChanged = true;

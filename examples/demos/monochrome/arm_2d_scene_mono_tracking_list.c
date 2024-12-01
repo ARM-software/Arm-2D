@@ -326,7 +326,7 @@ user_scene_mono_tracking_list_t *__arm_2d_scene_mono_tracking_list_init(
 
         text_tracking_list_cfg_t tCFG = {
             //.tSettings = {
-                .bUsePIMode = true,
+                
                 .bIndicatorAutoSize = true,
                 .IndicatorColour.tValue = GLCD_COLOR_WHITE,
                 
@@ -345,6 +345,8 @@ user_scene_mono_tracking_list_t *__arm_2d_scene_mono_tracking_list_init(
                     .bShowScrollingBar = true,
                     .chScrollingBarAutoDisappearTimeX100Ms = 10,
                     .ScrollingBar.tColour = GLCD_COLOR_WHITE,
+                    .bUsePIMode = true,
+                    
 
                     //.bIgnoreBackground = true,
                     
