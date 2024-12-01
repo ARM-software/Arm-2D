@@ -68,7 +68,7 @@ typedef struct text_tracking_list_setting_t {
     /*! \note Auto Size mode only works with text left alignment */
     uint8_t bIndicatorAutoSize      : 1;
 
-    uint8_t bDisableScrollingBar    : 1;
+    uint8_t bShowScrollingBar       : 1;
     uint8_t bUseMonochromeMode      : 1;
     uint8_t                         : 4;
 
@@ -103,8 +103,9 @@ typedef struct text_tracking_list_cfg_t {
             /*! \note Auto Size mode only works with text left alignment */
             uint8_t bIndicatorAutoSize      : 1;
 
-            uint8_t bDisableScrollingBar    : 1;
-            uint8_t bUseMonochromeMode      : 1;         
+            uint8_t bShowScrollingBar       : 1;
+            uint8_t bUseMonochromeMode      : 1;  
+            uint8_t                         : 4;       
 
             /*! \note  0 means always-on */
             uint8_t chScrollingBarAutoDisappearTimeX100Ms;
@@ -132,12 +133,12 @@ typedef struct text_tracking_list_t {
 ARM_PRIVATE(
     int64_t lTimestamp[2];
 
-    int16_t     iStringWidth;
-    uint8_t    bIsOnLoad                : 1;
-    uint8_t    bRedrawTheScrollingBar   : 1;
-    uint8_t    bSelectionChanged        : 1;
-    uint8_t                             : 5;
-    uint8_t    chScrollingBarOpacity;
+    int16_t iStringWidth;
+    uint8_t bIsOnLoad                : 1;
+    uint8_t bRedrawTheScrollingBar   : 1;
+    uint8_t bSelectionChanged        : 1;
+    uint8_t                          : 5;
+    uint8_t chScrollingBarOpacity;
 
 
     arm_2d_size_t tLastStringSize;

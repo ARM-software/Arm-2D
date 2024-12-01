@@ -120,7 +120,7 @@ arm_2d_err_t __text_tracking_list_init(
                             &__arm_2d_text_tracking_list_draw_background);
     }
 
-    if (!this.tSettings.bDisableScrollingBar) {
+    if (this.tSettings.bShowScrollingBar) {
         if (NULL == ptCFG->use_as__text_list_cfg_t
                                 .use_as____simple_list_cfg_t
                                     .fnOnDrawListCover) {
@@ -390,7 +390,7 @@ void text_tracking_list_on_frame_start(text_tracking_list_t *ptThis)
         this.bIsOnLoad = false;
 
         if (    base.tSimpleListCFG.bUseDirtyRegion
-           &&   !this.tSettings.bDisableScrollingBar
+           &&   this.tSettings.bShowScrollingBar
            &&   (NULL != base.tSimpleListCFG.ptTargetScene)) {
             
             arm_2d_helper_dirty_region_add_items(
