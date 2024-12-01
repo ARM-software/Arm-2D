@@ -328,7 +328,7 @@ user_scene_mono_tracking_list_t *__arm_2d_scene_mono_tracking_list_init(
             //.tSettings = {
                 
                 .bIndicatorAutoSize = true,
-                .IndicatorColour.tValue = GLCD_COLOR_WHITE,
+                .tIndicator.tColour = GLCD_COLOR_WHITE,
                 
             //},
 

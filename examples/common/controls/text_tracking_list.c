@@ -190,7 +190,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
 
         arm_2d_fill_colour( ptTile, 
                             &tSelectionRegion, 
-                            (COLOUR_INT)this.tSettings.IndicatorColour.wValue);
+                            (COLOUR_INT)this.tSettings.tIndicator.wColour);
     }
 
     ARM_2D_OP_WAIT_ASYNC();

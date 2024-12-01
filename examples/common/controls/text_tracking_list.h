@@ -65,14 +65,9 @@ typedef struct text_tracking_list_setting_t {
 
     /*! \note Auto Size mode only works with text left alignment */
     uint8_t bIndicatorAutoSize      : 1;
-    uint8_t                         : 6;
+    uint8_t                         : 7;
 
-    union {
-        uint8_t chValue;
-        uint16_t hwValue;
-        uint32_t wValue;
-        COLOUR_INT tValue;
-    } IndicatorColour;
+    COLOUR_TYPE_T tIndicator;
 
 } text_tracking_list_setting_t;
 
@@ -88,12 +83,7 @@ typedef struct text_tracking_list_cfg_t {
             uint8_t bIndicatorAutoSize      : 1;
             uint8_t                         : 7;       
 
-            union {
-                uint8_t chValue;
-                uint16_t hwValue;
-                uint32_t wValue;
-                COLOUR_INT tValue;
-            } IndicatorColour;
+            COLOUR_TYPE_T tIndicator;
         };
     };
 
