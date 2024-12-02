@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        01. Dec 2024
- * $Revision:    V.2.7.4
+ * $Date:        02. Dec 2024
+ * $Revision:    V.2.7.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -870,12 +870,12 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
                                                              (uint8_t *)str);
 
             if (NULL != ptDescriptor) {
-                int16_t tCharNewHeight = (tCharSize.iHeight - tCharDescriptor.iBearingY) + tCharSize.iHeight;
+                int16_t tCharNewHeight = (tCharSize.iHeight - tCharDescriptor.iBearingY) 
+                                       + tCharDescriptor.tileChar.tRegion.tSize.iHeight;
 
                 tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tCharNewHeight);
             }
 
-            
             tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str);
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
