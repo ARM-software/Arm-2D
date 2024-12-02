@@ -327,27 +327,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
                         arm_2d_region_t tCoverRegion = __centre_region;
                         tCoverRegion.tSize.iHeight += 1;
 
-                        arm_2d_fill_colour_with_opacity(ptTile, 
-                                &tCoverRegion,
-                                    (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
-                                128);
+                        arm_2d_fill_colour_with_opacity(
+                                        ptTile, 
+                                        &tCoverRegion,
+                                        (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                        128);
                     }
                     break;
                 case KNOB_START_POINT_LEFT: {
                         arm_2d_region_t tCoverRegion = __centre_region;
                         tCoverRegion.tSize.iWidth += 1;
 
-                        arm_2d_fill_colour_with_opacity(ptTile, 
-                                &tCoverRegion,
-                                    (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
-                                128);
+                        arm_2d_fill_colour_with_opacity(
+                                        ptTile, 
+                                        &tCoverRegion,
+                                        (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                                        128);
                     }
                     break;
                 default:
-                    arm_2d_fill_colour_with_opacity(ptTile, 
-                                &__centre_region,
-                                    (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
-                                128);
+                    arm_2d_fill_colour_with_opacity(
+                                        ptTile, 
+                                        &__centre_region,
+                                        (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                                        128);
                     break;
             }
 
@@ -385,15 +388,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
                     };
 
                     arm_2dp_fill_colour_with_mask_opacity_and_transform(
-                                &this.tCoverRotateOP,
-                                &c_tileRadialLineCoverMask,
-                                ptTile,
-                                NULL,
-                                tCoverCentre,
-                                ARM_2D_ANGLE(c_tKnobAngleTable[c_tKnobStartPosition].iCoverAngle / 10),
-                                1.01f,
-                                GLCD_COLOR_BLACK,
-                                255);
+                        &this.tCoverRotateOP,
+                        &c_tileRadialLineCoverMask,
+                        ptTile,
+                        NULL,
+                        tCoverCentre,
+                        ARM_2D_ANGLE(
+                            c_tKnobAngleTable[c_tKnobStartPosition]
+                                                            .iCoverAngle / 10),
+                        1.01f,
+                        GLCD_COLOR_BLACK,
+                        255);
                     }
                     break;
             }
