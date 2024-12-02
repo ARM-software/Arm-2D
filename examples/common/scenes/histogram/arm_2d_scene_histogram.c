@@ -297,7 +297,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             .fnOnFrameCPL   = &__on_scene_histogram_frame_complete,
             .fnDepose       = &__on_scene_histogram_depose,
 
-            .bUseDirtyRegionHelper = false;
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };

@@ -437,7 +437,7 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
 
             .tPISliderCFG = {
                 .fProportion = 0.3000f,
-                .fIntegration = 0.150f,
+                .fIntegration = 0.30f,
                 .nInterval = 10,
             }
 
