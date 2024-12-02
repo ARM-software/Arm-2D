@@ -724,12 +724,10 @@
         <targetInfos/>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\Earth.c" version="1.0.0">
-        <instance index="0">RTE\Acceleration\Earth.c</instance>
+        <instance index="0" removed="1">RTE\Acceleration\Earth.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="STM32F746G-Discovery-GCC"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="sourceC" name="examples\common\controls\GLCD_Fonts.c" version="1.0.0">
         <instance index="0" removed="1">RTE\Acceleration\GLCD_Fonts.c</instance>
@@ -1041,7 +1039,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_virtual_resource.c" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_virtual_resource.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
@@ -1049,7 +1047,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_virtual_resource.h" version="1.0.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_virtual_resource.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Virtual Resources" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-GCC"/>
