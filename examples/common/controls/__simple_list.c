@@ -630,10 +630,12 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
         }
         if (NULL != ptCFG->fnOnDrawListCover) {
             tCFG.fnOnDrawListCover = ptCFG->fnOnDrawListCover;
-        } else if (ptCalculator->tDirection == ARM_2D_LIST_HORIZONTAL) {
-            tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover_horizontal;
-        } else {
-            tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover_vertical;
+        } else if (this.tSimpleListCFG.bShowScrollingBar) {
+            if (ptCalculator->tDirection == ARM_2D_LIST_HORIZONTAL) {
+                tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover_horizontal;
+            } else {
+                tCFG.fnOnDrawListCover = &__arm_2d_simple_list_draw_cover_vertical;
+            }
         }
     
         if (NULL != ptCFG->fnOnDrawListItemBackground) {
@@ -754,7 +756,7 @@ void __simple_list_on_frame_start(__simple_list_t *ptThis)
     this.bSelectionChanged = __arm_2d_list_core_is_list_moving(
                                             &this.use_as____arm_2d_list_core_t);
 
-    do {
+    if (this.tSimpleListCFG.bShowScrollingBar) {
         int64_t lCurrent = arm_2d_helper_get_system_timestamp();
         if (this.bSelectionChanged) {
             /* reset timer */
@@ -788,7 +790,7 @@ void __simple_list_on_frame_start(__simple_list_t *ptThis)
                 }
             }
         }
-    } while(0);
+    }
 }
 
 ARM_NONNULL(1,2)
