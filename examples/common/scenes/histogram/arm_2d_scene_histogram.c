@@ -221,7 +221,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
-    arm_2d_op_wait_async(NULL);
+
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -295,6 +296,8 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             .fnBeforeSwitchOut = &__before_scene_histogram_switching_out,
             .fnOnFrameCPL   = &__on_scene_histogram_frame_complete,
             .fnDepose       = &__on_scene_histogram_depose,
+
+            .bUseDirtyRegionHelper = false;
         },
         .bUserAllocated = bUserAllocated,
     };
