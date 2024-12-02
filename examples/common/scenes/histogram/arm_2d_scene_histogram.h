@@ -102,11 +102,15 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-ARM_NONNULL(1)
 extern
+ARM_NONNULL(1)
 user_scene_histogram_t *__arm_2d_scene_histogram_init(   arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_histogram_t *ptScene);
 
+extern
+ARM_NONNULL(1)
+void user_scene_histogram_enqueue_new_value(user_scene_histogram_t *ptThis, 
+                                            int_fast16_t iValue);
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_GCC__

@@ -148,10 +148,7 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
         int32_t nResult;
         arm_2d_helper_time_cos_slider(0, 1000, 1000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[1]);
 
-        this.WindowFIFO.iBuffer[this.WindowFIFO.hwPointer++] = nResult;
-        if (this.WindowFIFO.hwPointer >= dimof(this.WindowFIFO.iBuffer)) {
-            this.WindowFIFO.hwPointer = 0;
-        }
+        user_scene_histogram_enqueue_new_value(ptThis, nResult);
     } while(0);
 
     histogram_on_frame_start(&this.tHistogram);
@@ -205,7 +202,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     #endif
         
         arm_2d_align_centre(__top_canvas, 240, 200) {
-    #if 1
+    #if 0
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
                                     GLCD_COLOR_BLACK, 
@@ -227,6 +224,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     arm_2d_op_wait_async(NULL);
 
     return arm_fsm_rt_cpl;
+}
+
+ARM_NONNULL(1)
+void user_scene_histogram_enqueue_new_value(user_scene_histogram_t *ptThis, 
+                                            int_fast16_t iValue)
+{
+    assert(NULL != ptThis);
+
+    arm_irq_safe {  /* ensure the enqueue access thread-safe */
+        this.WindowFIFO.iBuffer[this.WindowFIFO.hwPointer++] = iValue;
+        if (this.WindowFIFO.hwPointer >= dimof(this.WindowFIFO.iBuffer)) {
+            this.WindowFIFO.hwPointer = 0;
+        }
+    }
 }
 
 static
@@ -309,7 +320,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
                 .wTo =      __RGB32(0xFF, 0, 0), 
             },
 
-            .ptParent = &this.use_as__arm_2d_scene_t,
+            //.ptParent = &this.use_as__arm_2d_scene_t,
 
             .evtOnGetBinValue = {
                 .fnHandler = &histogram_get_bin_value,
