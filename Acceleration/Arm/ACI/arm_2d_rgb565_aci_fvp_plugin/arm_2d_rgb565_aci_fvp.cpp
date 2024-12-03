@@ -62,11 +62,15 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
     uint16_t        maskGpk = 0x00fc;
     uint8_t         r1, g1, b1;
     uint8_t         r2, g2, b2;
-    /* ratio encoded with 7-bit*/
-    uint16_t        ratioScal = ((*ratio & 0x7f) << 1) ;
+    
+    
 
     blkCnt = 2;
     do {
+    
+        /* ratio encoded with 7-bit*/
+        uint16_t        ratioScal = (*ratio++ & 0x7f);
+    
         uint16_t        packedIn;
         uint8_t         R, B, G;
         int32_t         tmp;
@@ -96,23 +100,23 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
 
 
         /* merge */
-        tmp = (r1 * ratioScal) + (r2 * (256 - ratioScal));
-        r1 = (uint8_t) (tmp >> 8);
+        tmp = (r1 * ratioScal) + (r2 * (127 - ratioScal));
+        r1 = (uint8_t) (tmp >> 7);
 
-        tmp = (g1 * ratioScal) + (g2 * (256 - ratioScal));
-        g1 = (uint8_t) (tmp >> 8);
+        tmp = (g1 * ratioScal) + (g2 * (127 - ratioScal));
+        g1 = (uint8_t) (tmp >> 7);
 
-        tmp = (b1 * ratioScal) + (b2 * (256 - ratioScal));
-        b1 = (uint8_t) (tmp >> 8);
+        tmp = (b1 * ratioScal) + (b2 * (127 - ratioScal));
+        b1 = (uint8_t) (tmp >> 7);
 
         /* pack merged stream */
         *out = (r1 >> 3) | ((g1 & maskGpk) << 3) | ((b1 & maskRpk) << 8);
         out++;
-        ratio++;
 
         blkCnt -= 1;
     }
     while (blkCnt > 0);
+
 }
 
 
