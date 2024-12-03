@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        02. Dec 2024
- * $Revision:    V.2.7.5
+ * $Date:        03. Dec 2024
+ * $Revision:    V.2.7.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

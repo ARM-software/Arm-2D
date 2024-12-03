@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        30. Nov 2024
- * $Revision:    V.1.4.9
+ * $Date:        03. Dec 2024
+ * $Revision:    V.1.4.10
  *
  * Target Processor:  Cortex-M cores
  *
@@ -198,10 +198,10 @@ arm_2d_region_t *arm_2d_region_get_minimal_enclosure(const arm_2d_region_t *ptIn
     assert(NULL != ptOutput);
 
     do {
-        if ((ptInput0->tSize.iWidth == 0) || (ptInput0->tSize.iHeight == 0)) {
+        if ((ptInput0->tSize.iWidth <= 0) || (ptInput0->tSize.iHeight <= 0)) {
             *ptOutput = *ptInput1;
             break;
-        } else if ((ptInput1->tSize.iWidth == 0) || (ptInput1->tSize.iHeight == 0)) {
+        } else if ((ptInput1->tSize.iWidth <= 0) || (ptInput1->tSize.iHeight <= 0)) {
             *ptOutput = *ptInput0;
             break;
         }

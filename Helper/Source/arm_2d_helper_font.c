@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        02. Dec 2024
- * $Revision:    V.2.7.5
+ * $Date:        03. Dec 2024
+ * $Revision:    V.2.7.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -495,14 +495,14 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         .tSize = tCharDescriptor.tileChar.tRegion.tSize,
     };
 
-    if (    (s_tLCDTextControl.tTextRegion.tSize.iHeight > 0)
-       &&   (s_tLCDTextControl.tTextRegion.tSize.iWidth > 0)) {
+    //if (    (s_tLCDTextControl.tTextRegion.tSize.iHeight > 0)
+    //   &&   (s_tLCDTextControl.tTextRegion.tSize.iWidth > 0)) {
         arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
                                             &tDrawRegion,
                                             &s_tLCDTextControl.tTextRegion);
-    } else {
-        s_tLCDTextControl.tTextRegion = tDrawRegion;
-    }
+    //} else {
+    //    s_tLCDTextControl.tTextRegion = tDrawRegion;
+    //}
 
     const arm_2d_tile_t *ptRootFontTile = arm_2d_tile_get_root(&ptFont->tileFont, NULL, NULL );
     
