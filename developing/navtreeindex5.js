@@ -210,7 +210,7 @@ var NAVTREEINDEX5 =
 "md_contribution.html":[10],
 "md_contribution.html#autotoc_md178":[10,0],
 "md_contribution.html#autotoc_md179":[10,0,0],
-"md_getting_started_as_a_professional_user.html":[3],
+"md_getting_started_as_a_gui_stack_developer.html":[3],
 "md_getting_started_as_an_application_designer.html":[2],
 "md_getting_started_as_an_application_designer.html#autotoc_md40":[2,0],
 "md_getting_started_as_an_application_designer.html#autotoc_md41":[2,0,0],
