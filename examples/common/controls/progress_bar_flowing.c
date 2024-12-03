@@ -47,6 +47,10 @@
 #   define PROGRESS_BAR_WAVE_SPEED     15
 #endif
 
+#ifndef PROGRESS_BAR_REPEAT_INTERVAL
+#   define PROGRESS_BAR_REPEAT_INTERVAL 3000
+#endif
+
 #define MASK_HEIGHT   20
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -121,7 +125,7 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
         int32_t nElapsed = (int32_t)((lClocks - s_lLastTime));
 
         if (lClocks >= s_lWavingTime) {
-            s_lWavingTime = lClocks + arm_2d_helper_convert_ms_to_ticks(3000);
+            s_lWavingTime = lClocks + arm_2d_helper_convert_ms_to_ticks(PROGRESS_BAR_REPEAT_INTERVAL);
             s_bWaving = true;
         }
 
