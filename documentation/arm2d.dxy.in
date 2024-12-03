@@ -874,7 +874,7 @@ WARN_LOGFILE           =
 INPUT                  = ../README.md \
                          ../ReleaseNote.md \
                          ./getting_started_as_an_application_designer.md \
-                         ./getting_started_as_a_professional_user.md \
+                         ./getting_started_as_a_gui_stack_developer.md \
                          ./how_to_deploy_the_arm_2d_library.md \
                          ./introduction.md \
                          ./how_to_use_layout_assistant.md \

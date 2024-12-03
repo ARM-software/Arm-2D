@@ -68,7 +68,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 	In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, so such systems cannot afford the cost of a decent GUI stack.
 	Meanwhile, such a low-cost system usually won't have a complex graphical user interface, hence application developers can directly use the arm-2d APIs to draw the panels and scenes.
 
-- [Getting Started as a Professional User](./documentation/getting_started_as_a_professional_user.md)
+- [Getting Started as a GUI Stack Developer](./documentation/getting_started_as_a_gui_stack_developer.md)
 
     Application engineers from silicon vendors often need to write drivers for proprietary hardware accelerators. System engineers from GUI software providers may wish to use the APIs provided by Arm-2D to accelerate low-level operations. Engineers focused on embedded video processing may try using the Arm-2D APIs to process the frame buffer just captured from the camera. People from the open-source community may find something interesting to contribute.
     All developers mentioned above are seen as professional users.
