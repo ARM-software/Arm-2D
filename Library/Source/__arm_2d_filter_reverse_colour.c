@@ -111,9 +111,9 @@ arm_fsm_rt_t arm_2dp_gray8_filter_reverse_colour(
 /* default low level implementation */
 
 __WEAK
-void __arm_2d_impl_gray8_reverse_colour(   uint8_t *__RESTRICT pchTarget,
-                                            int16_t iTargetStride,
-                                            arm_2d_size_t *__RESTRICT ptCopySize)
+void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
+                                        int16_t iTargetStride,
+                                        arm_2d_size_t *__RESTRICT ptCopySize)
 {
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
 

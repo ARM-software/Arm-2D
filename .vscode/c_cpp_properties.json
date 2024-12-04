@@ -8,7 +8,8 @@
                 "Helper/Include",
                 "Library/Include",
                 "Library/Source",
-                "examples/porting/[non-arm][no-arm_math][generic]",
+                "examples/[template][pc][vscode]/platform",
+                "examples/[template][pc][vscode]/platform/math",
                 "examples/common/benchmark",
                 "examples/common/controls",
                 "examples/common/opcodes",
@@ -31,19 +32,24 @@
                 "_UNICODE",
                 "ARM_SECTION(x)=  ",
                 "__va_list=va_list",
-                "RTE_Acceleration_Arm_2D_Helper_PFB"
+                "RTE_Acceleration_Arm_2D_Helper_PFB",
+                "__ARM_2D_COMPILATION_UNIT"
             ],
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
-            "macFrameworkPath": ["/System/Library/Frameworks", "/Library/Frameworks"]
-          },
-          {
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ]
+        },
+        {
             "name": "Win32",
             "includePath": [
                 "Helper/Include",
                 "Library/Include",
                 "Library/Source",
-                "examples/porting/[non-arm][no-arm_math][generic]",
+                "examples/[template][pc][vscode]/platform",
+                "examples/[template][pc][vscode]/platform/math",
                 "examples/common/benchmark",
                 "examples/common/controls",
                 "examples/common/opcodes",
@@ -66,7 +72,9 @@
                 "_UNICODE",
                 "ARM_SECTION(x)=  ",
                 "__va_list=va_list",
-                "RTE_Acceleration_Arm_2D_Helper_PFB"
+                "RTE_Acceleration_Arm_2D_Helper_PFB",
+                "__ARM_2D_COMPILATION_UNIT",
+                "___ARM_2D_CFG_SKIP_HEADER___"
             ],
             "compilerPath": "gcc.exe",
             "cStandard": "gnu11",
