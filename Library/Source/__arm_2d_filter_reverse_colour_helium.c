@@ -90,7 +90,7 @@ extern "C" {
 /*============================ IMPLEMENTATION ================================*/
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
+void __MVE_WRAPPER(__arm_2d_impl_gray8_reverse_colour)(uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize)
 {
@@ -121,7 +121,7 @@ void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
 }
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
+void __MVE_WRAPPER(__arm_2d_impl_rgb565_reverse_colour)(   uint16_t *__RESTRICT phwTarget,
                                             int16_t iTargetStride,
                                             arm_2d_size_t *__RESTRICT ptCopySize)
 {
@@ -152,7 +152,7 @@ void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
 }
 
 __OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
+void __MVE_WRAPPER(__arm_2d_impl_cccn888_reverse_colour)(  uint32_t *__RESTRICT pwTarget,
                                             int16_t iTargetStride,
                                             arm_2d_size_t *__RESTRICT ptCopySize)
 {
