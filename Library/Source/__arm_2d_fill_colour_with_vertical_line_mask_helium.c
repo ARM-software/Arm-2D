@@ -80,7 +80,8 @@ extern "C" {
 
 
 /* default low level implementation */
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask)(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
