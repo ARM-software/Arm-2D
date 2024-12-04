@@ -158,7 +158,7 @@ void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
                                             int16_t iTargetStride,
                                             arm_2d_size_t *__RESTRICT ptCopySize)
 {
-    uint32x4_t vFFFFFFFF = vdupq_n_u32(__UINT32_MAX__);
+    uint32x4_t v00FFFFFF = vdupq_n_u32(0x00FFFFFF);
     int16_t iHeight = ptCopySize->iHeight;
     int16_t iWidth = ptCopySize->iWidth;
 
@@ -173,7 +173,7 @@ void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
 
             uint32x4_t vTarget = vld1q_z_u32(pwTargetLine, vp);
 
-            vTarget ^= vFFFFFFFF;
+            vTarget ^= v00FFFFFF;
 
             vst1q_p_u32(pwTargetLine, vTarget, vp);
             pwTargetLine += (128 / sizeof(uint32_t));
