@@ -112,8 +112,8 @@ void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
             vTarget ^= vFF;
 
             vst1q_p_u8(pchTargetLine, vTarget, vp);
-            pchTargetLine += (128 / sizeof(uint8_t));
-            iStrideWidth -= (128 / sizeof(uint8_t));
+            pchTargetLine += (16 / sizeof(uint8_t));
+            iStrideWidth -= (16 / sizeof(uint8_t));
         } while(iStrideWidth > 0);
 
         pchTarget += iTargetStride;
@@ -143,8 +143,8 @@ void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
             vTarget ^= vFFFF;
 
             vst1q_p_u16(phwTargetLine, vTarget, vp);
-            phwTargetLine += (128 / sizeof(uint16_t));
-            iStrideWidth -= (128 / sizeof(uint16_t));
+            phwTargetLine += (16 / sizeof(uint16_t));
+            iStrideWidth -= (16 / sizeof(uint16_t));
         } while(iStrideWidth > 0);
 
         phwTarget += iTargetStride;
@@ -174,8 +174,8 @@ void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
             vTarget ^= v00FFFFFF;
 
             vst1q_p_u32(pwTargetLine, vTarget, vp);
-            pwTargetLine += (128 / sizeof(uint32_t));
-            iStrideWidth -= (128 / sizeof(uint32_t));
+            pwTargetLine += (16 / sizeof(uint32_t));
+            iStrideWidth -= (16 / sizeof(uint32_t));
         } while(iStrideWidth > 0);
 
         pwTarget += iTargetStride;
