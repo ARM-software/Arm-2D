@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        9. July 2024
- * $Revision:    V.1.2.2
+ * $Date:        4. Dec 2024
+ * $Revision:    V.1.2.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -362,6 +362,10 @@ arm_fsm_rt_t __arm_2d_gray8_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
 
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+
+    if (0 == this.chBlurDegree) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
         tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
@@ -719,6 +723,10 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
 
+    if (0 == this.chBlurDegree) {
+        return arm_fsm_rt_cpl;
+    }
+
     if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
         tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
     } else {
@@ -1066,6 +1074,10 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+
+    if (0 == this.chBlurDegree) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
         tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;

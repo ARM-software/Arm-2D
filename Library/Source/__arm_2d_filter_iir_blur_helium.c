@@ -21,8 +21,8 @@
 * Title:        __arm_2d_filter_iir_blur_helium.c
 * Description:  APIs for IIR Blur
 *
-* $Date:        6. June 2024
-* $Revision:    V.1.0.0
+* $Date:        4. Dec 2024
+* $Revision:    V.1.0.1
 *
 * Target Processor:  Cortex-M cores with helium
 *
@@ -94,10 +94,15 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (uint8_t * __RESTRICT pc
                                                          int16_t iTargetStride,
                                                          arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
                                                          arm_2d_region_t * ptTargetRegionOnVirtualScreen,
-                                                         uint8_t chBlurDegree, arm_2d_scratch_mem_t * ptScratchMemory)
+                                                         uint8_t chBlurDegree, 
+                                                         arm_2d_scratch_mem_t * ptScratchMemory)
 {
     int_fast16_t    iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t    iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+    if (0 == chBlurDegree) {
+        return ;
+    }
 
     int32_t         iY, iX;
     /* pre-scaled ratio to take into account doubling + high-part extraction of vqdmulhq */
@@ -283,10 +288,15 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
                                                           int16_t iTargetStride,
                                                           arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
                                                           arm_2d_region_t * ptTargetRegionOnVirtualScreen,
-                                                          uint8_t chBlurDegree, arm_2d_scratch_mem_t * ptScratchMemory)
+                                                          uint8_t chBlurDegree, 
+                                                          arm_2d_scratch_mem_t * ptScratchMemory)
 {
     int_fast16_t    iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t    iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+    if (0 == chBlurDegree) {
+        return ;
+    }
 
     int32_t         iY, iX;
     /* pre-scaled ratio to take into account doubling + high-part extraction of vqdmulhq */
@@ -545,10 +555,15 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT
                                                            int16_t iTargetStride,
                                                            arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
                                                            arm_2d_region_t * ptTargetRegionOnVirtualScreen,
-                                                           uint8_t chBlurDegree, arm_2d_scratch_mem_t * ptScratchMemory)
+                                                           uint8_t chBlurDegree, 
+                                                           arm_2d_scratch_mem_t * ptScratchMemory)
 {
     int_fast16_t    iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t    iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+
+    if (0 == chBlurDegree) {
+        return ;
+    }
 
     int32_t         iY, iX;
     /* pre-scaled ratio to take into account doubling + high-part extraction of vqdmulhq */

@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        9. July 2024
- * $Revision:    V.1.2.2
+ * $Date:        4. Dec 2024
+ * $Revision:    V.1.2.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -425,6 +425,10 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur( __arm_2d_sub_t
 
     assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits | upper}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+
+    if (0 == this.chBlurDegree) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (NULL == this.use_as__arm_2d_op_t.Target.ptRegion) {
         tTargetRegion.tSize = this.use_as__arm_2d_op_t.Target.ptTile->tRegion.tSize;
