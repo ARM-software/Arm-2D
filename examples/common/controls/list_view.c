@@ -122,6 +122,8 @@ void list_view_init(list_view_t *ptThis,
             .ptItems = ptCFG->ptItems,
             .bDisableRingMode = ptCFG->bDisableRingMode,
             .bDisableStatusCheck = ptCFG->bDisableStatusCheck,
+            .bUsePISliderForSelectionIndicator = ptCFG->bUsePIMode,
+            .ptPISliderCFG = ptCFG->ptPISliderCFG,
         };
 
         /* you can override the default implementations */

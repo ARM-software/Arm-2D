@@ -71,12 +71,20 @@ typedef struct list_view_cfg_t {
     uint16_t hwItemSizeInByte;
 
     int16_t hwSwitchingPeriodInMs;
-    uint8_t bIgnoreBackground;
+
+    uint8_t bIgnoreBackground              : 1;
     uint8_t bDisableRingMode               : 1;                                /*!< whether disable ring mode */
     uint8_t bDisableStatusCheck            : 1;                                /*!< whether disable the item status */
+    uint8_t bUsePIMode                     : 1;
+    uint8_t                                : 4;
     uint8_t chOpacity;
 
-    COLOUR_INT tBackgroundColour;
+    union {
+        COLOUR_INT tBackgroundColour;
+        COLOUR_TYPE_T tBackground;
+    };
+
+    arm_2d_helper_pi_slider_cfg_t *ptPISliderCFG;
 
 } list_view_cfg_t;
 
