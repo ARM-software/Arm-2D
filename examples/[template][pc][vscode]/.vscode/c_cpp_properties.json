@@ -40,6 +40,9 @@
             ],
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
+            "compilerArgs": [
+                "--include=arm_mve.h"
+            ],
             "macFrameworkPath": ["/System/Library/Frameworks", "/Library/Frameworks"]
           },
           {
@@ -82,7 +85,9 @@
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
             "intelliSenseMode": "windows-gcc-x86",
-            "compilerArgs": [],
+            "compilerArgs": [
+                "--include=arm_mve.h"
+            ],
             "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],

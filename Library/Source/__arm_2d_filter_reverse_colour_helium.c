@@ -43,8 +43,6 @@
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
 
-#include <arm_mve.h>
-
 #ifdef   __cplusplus
 extern "C" {
 #endif
