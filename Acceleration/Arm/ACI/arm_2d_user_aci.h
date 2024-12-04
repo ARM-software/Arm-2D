@@ -84,6 +84,9 @@
 #define __arm_2d_impl_rgb565_src_msk_copy                                       \
     __arm_2d_impl_rgb565_src_msk_copy_orig
 
+#define __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity                \
+    __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity_orig
+
 #define __arm_2d_impl_rgb565_transform_with_opacity                             \
     __arm_2d_impl_rgb565_transform_with_opacity_orig
 
