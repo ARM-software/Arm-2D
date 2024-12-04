@@ -178,6 +178,10 @@ if (ARM2D_CONTROLS)
             examples/common/asset/ClockMarking.c
             examples/common/asset/compass.c
             examples/common/asset/Earth.c
+            examples/common/asset/knob_circle_quater.c
+            examples/common/asset/radial_line_cover.c
+            examples/common/asset/radial_line_pattern.c
+
             examples/common/asset/icon_automobile.c
             examples/common/asset/icon_compute.c 
             examples/common/asset/icon_Developer.c 
@@ -190,6 +194,8 @@ if (ARM2D_CONTROLS)
             examples/common/asset/icon_smartmeter.c 
             examples/common/asset/icon_visual_sensor.c 
             examples/common/asset/icon_wearables.c
+            
+
           )
     target_compile_options(ARM2D PUBLIC
           -DRTE_Acceleration_Arm_2D_Extra_Controls

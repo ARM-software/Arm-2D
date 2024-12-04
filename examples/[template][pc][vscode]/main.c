@@ -406,7 +406,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_transform_loader,
     },
     {
-        50000,
+        10000,
         scene_filters_loader,
     },
     {

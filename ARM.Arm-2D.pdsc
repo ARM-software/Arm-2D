@@ -523,6 +523,9 @@
             <file category="sourceC"     name="examples/common/asset/ClockMarking.c" />
             <file category="sourceC"     name="examples/common/asset/compass.c" />
             <file category="sourceC"     name="examples/common/asset/Earth.c" />
+            <file category="sourceC"     name="examples/common/asset/knob_circle_quater.c" />
+            <file category="sourceC"     name="examples/common/asset/radial_line_cover.c" />
+            <file category="sourceC"     name="examples/common/asset/radial_line_pattern.c" />
 
             <!-- icons -->
             <file category="sourceC"     name="examples/common/asset/icon_automobile.c" />
