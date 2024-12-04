@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_shape.c"
  * Description:  the helper service source code for drawing simple shapes
  *
- * $Date:        20. June 2024
- * $Revision:    V.1.12.0
+ * $Date:        04. Dec 2024
+ * $Revision:    V.1.13.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -551,6 +551,64 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
             }
         }
     }
+}
+
+
+ARM_NONNULL(1)
+void draw_glass_bar(const arm_2d_tile_t *ptTarget,
+                    const arm_2d_region_t *ptRegion,
+                    uint8_t chOpacity,
+                    bool bIsReflectionOnTop)
+{
+    uint8_t chOPA128 = arm_2d_helper_alpha_mix(chOpacity, 128);
+    uint8_t chOPA255 = arm_2d_helper_alpha_mix(chOpacity, 255);
+
+
+    arm_2d_container(ptTarget, __glass_bar, ptRegion) {
+
+        int16_t iReflectionHeight = __glass_bar_canvas.tSize.iHeight >> 1;
+
+        if (bIsReflectionOnTop) {
+            arm_2d_dock_top(__glass_bar_canvas, iReflectionHeight) {
+
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                            &__glass_bar,
+                            &__top_region, 
+                            (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                            (arm_2d_alpha_samples_2pts_t){chOPA255, chOPA128});
+
+            }
+
+            arm_2d_dock_bottom( __glass_bar_canvas, iReflectionHeight) {
+
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                            &__glass_bar,
+                            &__bottom_region, 
+                            (__arm_2d_color_t){GLCD_COLOR_BLACK}, 
+                            (arm_2d_alpha_samples_2pts_t){0, chOPA128});
+
+            }
+        } else {
+            arm_2d_dock_top(__glass_bar_canvas, iReflectionHeight) {
+
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                            &__glass_bar,
+                            &__top_region, 
+                            (__arm_2d_color_t){GLCD_COLOR_BLACK}, 
+                            (arm_2d_alpha_samples_2pts_t){0, chOPA128});
+            }
+
+            arm_2d_dock_bottom( __glass_bar_canvas, iReflectionHeight) {
+
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                            &__glass_bar,
+                            &__bottom_region, 
+                            (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
+                            (arm_2d_alpha_samples_2pts_t){chOPA255, chOPA128});
+            }
+        }
+    }
+
 }
 
 #if defined(__clang__)

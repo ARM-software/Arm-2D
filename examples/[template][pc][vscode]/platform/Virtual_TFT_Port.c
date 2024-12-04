@@ -34,7 +34,7 @@
 #define VT_RGB_2_DEV(color)                 (color)
 #endif
 
-#if VT_WIDTH >= 480 || VT_HEIGHT >= 480
+#if VT_WIDTH >= 240 || VT_HEIGHT >= 240
 #   define VT_WINDOW_WIDTH     VT_WIDTH
 #   define VT_WINDOW_HEIGHT    VT_HEIGHT
 #else

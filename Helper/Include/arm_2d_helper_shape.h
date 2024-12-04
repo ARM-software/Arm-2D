@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_shape.h"
  * Description:  the helper service header file for drawing simple shapes
  *
- * $Date:        20. June 2024
- * $Revision:    V.1.12.0
+ * $Date:        04. Dec 2024
+ * $Revision:    V.1.13.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -195,6 +195,14 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                                 arm_2d_border_opacity_t Opacity,
                                 arm_2d_corner_opacity_t CornerOpacity,
                                 const arm_2d_tile_t *ptCircleMask);
+
+extern
+ARM_NONNULL(1)
+void draw_glass_bar(const arm_2d_tile_t *ptTarget,
+                    const arm_2d_region_t *ptRegion,
+                    uint8_t chOpacity,
+                    bool bIsReflectionOnTop);
+
 #ifdef   __cplusplus
 }
 #endif

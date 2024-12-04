@@ -203,6 +203,11 @@ void scene_transform_loader(void)
     arm_2d_scene_transform_init(&DISP0_ADAPTER);
 }
 
+void scene_filters_loader(void) 
+{
+    arm_2d_scene_filters_init(&DISP0_ADAPTER);
+}
+
 void scene_compass_loader(void) 
 {
     arm_2d_scene_compass_init(&DISP0_ADAPTER);
@@ -292,7 +297,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -401,6 +406,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_transform_loader,
     },
     {
+        50000,
+        scene_filters_loader,
+    },
+    {
         10000,
         scene_audiomark_loader,
     },
@@ -421,8 +430,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        scene_filters_loader,
         //scene_listview_loader,
-        scene_mono_tracking_list_loader
+        //scene_mono_tracking_list_loader
         //scene_mono_list_loader,
         //scene_gas_gauge_loader,
         //scene_meter_loader,

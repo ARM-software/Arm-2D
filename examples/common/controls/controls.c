@@ -54,7 +54,6 @@ void arm_extra_controls_init(void)
     progress_bar_simple_init();
 }
 
-
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

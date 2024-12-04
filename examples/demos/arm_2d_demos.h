@@ -38,6 +38,7 @@
 #include "./arm_2d_scene_watch_face_01.h"
 #include "./arm_2d_scene_compass.h"
 #include "./arm_2d_scene_user_defined_opcode.h"
+#include "./arm_2d_scene_filters.h"
 
 /* monochrome demos */
 #include "./monochrome/arm_2d_scene_mono_loading.h"
