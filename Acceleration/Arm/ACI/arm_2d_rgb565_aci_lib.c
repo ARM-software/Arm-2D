@@ -2038,7 +2038,57 @@ void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __RESTRICT pSourceBase,
     }
 }
 
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
+                                       int16_t iSourceStride,
+                                       uint8_t * __restrict ptSourceMaskBase,
+                                       int16_t iSourceMaskStride,
+                                       arm_2d_size_t *
+                                       __restrict ptSourceMaskSize,
+                                       uint16_t * __restrict pTargetBase,
+                                       int16_t iTargetStride,
+                                       arm_2d_size_t * __restrict ptCopySize)
+{
+    int_fast16_t    iHeight = ptCopySize->iHeight;
+    int_fast16_t    iWidth = ptCopySize->iWidth;
+    uint16x8_t      v127 = vdupq_n_u16(127);
+    uint8_t        *ptSourceMask = ptSourceMaskBase;
 
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+
+        uint16_t       *__RESTRICT ptSrc = pSourceBase;
+        uint16_t       *__RESTRICT ptTargetCur = pTargetBase;
+        uint8_t        *__RESTRICT ptSourceMaskCur = ptSourceMask;
+
+        int32_t         blkCnt = iWidth;
+
+        do {
+            mve_pred16_t    p = vctp16q((uint32_t) blkCnt);
+            uint16x8_t      vecTarget = vld1q_z(ptTargetCur, p);
+            uint16x8_t      vecSource = vld1q_z(ptSrc, p);
+            uint16x8_t      vecTargetMask = vldrbq_z_u16(ptSourceMaskCur, p);
+            
+            vecTargetMask = v127 - (vecTargetMask >> 1);
+
+            vecTarget = vblda7q_m_rgb565(   vecTarget, 
+                                            vecSource, 
+                                            vecTargetMask, 
+                                            vcmpneq(vecTargetMask, v127));
+
+            vst1q_p(ptTargetCur, vecTarget, p);
+
+            ptSourceMaskCur += (128 / 16);
+            ptTargetCur += (128 / 16);
+            ptSrc += (128 / 16);
+            blkCnt -= (128 / 16);
+        } while (blkCnt > 0);
+
+        pSourceBase += (iSourceStride);
+        pTargetBase += (iTargetStride);
+        ptSourceMask += (iSourceMaskStride);
+    }
+}
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror(uint16_t * __RESTRICT pSourceBase,
