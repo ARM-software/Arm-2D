@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        01. Dec 2024
- * $Revision:    V.1.7.3
+ * $Date:        04. Dec 2024
+ * $Revision:    V.1.7.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1765,7 +1765,7 @@ extern "C" {
  * \brief Please do NOT use this macro directly
  * 
  */
-#define ____item_horizontal1(__size, __height)                                  \
+#define ____item_horizontal1(__size)                                            \
             ____item_horizontal5(__size, 0, 0, 0, 0)
 
 /*!
@@ -1888,7 +1888,7 @@ extern "C" {
  * \brief Please do NOT use this macro directly
  * 
  */
-#define ____item_vertical1(__size, __height)                                    \
+#define ____item_vertical1(__size)                                              \
             ____item_vertical5(__size, 0, 0, 0, 0)
 
 /*!
