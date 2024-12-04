@@ -37,6 +37,7 @@
             ],
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
+            "compilerArgs": [],
             "macFrameworkPath": [
                 "/System/Library/Frameworks",
                 "/Library/Frameworks"
