@@ -150,10 +150,11 @@ static void __on_scene_console_window_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
-
+#endif
 }
 
 static void __before_scene_console_window_switching_out(arm_2d_scene_t *ptScene)

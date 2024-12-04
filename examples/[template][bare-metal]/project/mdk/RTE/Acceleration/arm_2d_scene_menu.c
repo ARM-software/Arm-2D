@@ -47,9 +47,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wdouble-promotion"
-#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_GCC__
@@ -232,12 +230,12 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -289,12 +287,12 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
     }
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -349,12 +347,12 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -403,12 +401,12 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, (int16_t)nSize, (int16_t)nSize) {
+        arm_2d_align_top_centre(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
                 float fYOffset =  (float)ptParam->hwRatio;
-                fYOffset = (float)iRadius - (float)sqrt(iRadius * iRadius - fYOffset * fYOffset);
+                fYOffset = iRadius - sqrt(iRadius * iRadius - fYOffset * fYOffset);
 
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
@@ -472,7 +470,7 @@ static void __on_scene_menu_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
 
-    int32_t nResult;
+    int nResult;
     if (arm_2d_helper_time_liner_slider(0, 1000, 10000, &nResult, &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
     }
@@ -485,15 +483,19 @@ static void __on_scene_menu_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-    
+
     if (arm_2d_helper_is_time_out(1500, &this.lTimestamp[1])) {
         list_view_move_selection(&this.tListView, 1, 300);
     }
+
+#if 0
+    /* switch to next scene after 12s */
+    if (arm_2d_helper_is_time_out(12000, &this.lTimestamp[0])) {
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
+#endif
+
+
 }
 
 static

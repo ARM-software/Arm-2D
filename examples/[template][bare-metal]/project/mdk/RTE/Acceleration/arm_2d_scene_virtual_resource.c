@@ -97,6 +97,16 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+typedef struct {
+    uint16_t      hwIndex;
+    arm_2d_size_t tCharSize;
+    int16_t       iAdvance;
+    int16_t       iBearingX;
+    int16_t       iBearingY;
+    uint8_t       chCodeLength;
+    uint8_t       chUTF8[4];
+} const __ttf_char_descriptor_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
@@ -107,26 +117,17 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 extern const COLOUR_INT c_bmpHelium[];
 extern const arm_2d_tile_t c_tileHelium;
 extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
-extern const uint8_t c_bmpDigitsFontA4Alpha[];
 
+extern const uint8_t c_bmpUTF8Arial14A4Font[];
+extern const __ttf_char_descriptor_t c_tUTF8Arial14LookUpTableA4[95];
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
-/*! define dirty regions */
-IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-    /* add the last region:
-        * it is the top left corner for text display 
-        */
-    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        0
-    ),
-
-END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 /*-----------------------------------------------------------------------------*
  * Virtual Resources                                                           *
  *-----------------------------------------------------------------------------*/
+/* NOTE: arm_2d_vres_t object should always be placed in RAM */
 static arm_2d_vres_t s_tBigImage = 
     disp_adapter0_impl_vres(   
         ARM_2D_COLOUR, 
@@ -145,12 +146,13 @@ const arm_2d_tile_t c_tChildImage =
         128
     );
 
+/* NOTE: arm_2d_vres_t object should always be placed in RAM */
 static arm_2d_vres_t s_vresA4Font = 
     disp_adapter0_impl_vres(   
         ARM_2D_COLOUR_MASK_A4, 
-        15, 
-        336, 
-        .pTarget = (uintptr_t)c_bmpDigitsFontA4Alpha,
+        14, 
+        1222, 
+        .pTarget = (uintptr_t)c_bmpUTF8Arial14A4Font,
     );
 
 /*============================ IMPLEMENTATION ================================*/
@@ -189,134 +191,78 @@ uintptr_t __disp_adapter0_vres_get_asset_address(   uintptr_t pObj,
  *----------------------------------------------------------------------------*/
 
 static
-IMPL_FONT_DRAW_CHAR(__digit_font_a4_draw_char)
-{
-    ARM_2D_UNUSED(fScale);
-    return arm_2d_fill_colour_with_a4_mask_and_opacity( ptTile, 
-                                            ptRegion,
-                                            ptileChar,
-                                            (__arm_2d_color_t){tForeColour},
-                                            (uint8_t)chOpacity);
-}
-
-static
-IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor);
-
-struct {
-    implement(arm_2d_user_font_t);
-
-    arm_2d_char_idx_t tNumbers;
-    arm_2d_char_idx_t tABCDEF;
-    arm_2d_char_idx_t tMinor;
-    arm_2d_char_idx_t tPlus;
-    arm_2d_char_idx_t tDot;
-    arm_2d_char_idx_t tE;
-    arm_2d_char_idx_t tBlank;
-} ARM_2D_FONT_VRES_A4_DIGITS_ONLY = {
-
-    .use_as__arm_2d_user_font_t = {
-        .use_as__arm_2d_font_t = {
-            .tileFont = impl_child_tile(
-                s_vresA4Font,
-                0,          /* x offset */
-                0,          /* y offset */
-                15,         /* width */
-                336         /* height */
-            ),
-            .tCharSize = {
-                .iWidth = 15,
-                .iHeight = 16,
-            },
-            .nCount =  20,                             //!< Character count
-            .fnGetCharDescriptor = &__digit_font_get_char_descriptor,
-            .fnDrawChar = &__digit_font_a4_draw_char,
-        },
-        .hwCount = 7,
-        .hwDefaultCharIndex = 6, /* tBlank */
-    },
-    
-    .tNumbers = {
-        .chStartCode = {'0'},
-        .hwCount = 10,
-        .hwOffset = 0,
-    },
-    
-    .tABCDEF = {
-        .chStartCode = {'A'},
-        .hwCount = 6,
-        .hwOffset = 10,
-    },
-    
-    .tMinor = {
-        .chStartCode = {'-'},
-        .hwCount = 1,
-        .hwOffset = 16,
-    },
-    
-    .tPlus = {
-        .chStartCode = {'+'},
-        .hwCount = 1,
-        .hwOffset = 17,
-    },
-
-    .tDot = {
-        .chStartCode = {'.'},
-        .hwCount = 1,
-        .hwOffset = 18,
-    },
-
-    .tE = {
-        .chStartCode = {'e'},
-        .hwCount = 1,
-        .hwOffset = 20,
-    },
-    .tBlank = {
-        .chStartCode = {' '},
-        .hwCount = 1,
-        .hwOffset = 19,
-    },
-};
-
-
-
-static
-IMPL_FONT_GET_CHAR_DESCRIPTOR(__digit_font_get_char_descriptor)
+IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
 {
     assert(NULL != ptFont);
     assert(NULL != ptDescriptor);
     assert(NULL != pchCharCode);
-    
+
     arm_2d_user_font_t *ptThis = (arm_2d_user_font_t *)ptFont;
-    
+    ARM_2D_UNUSED(ptThis);
+
     memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
-    
-    ptDescriptor->tileChar.tRegion.tSize = ptFont->tCharSize;
+
     ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
     ptDescriptor->tileChar.tInfo.bDerivedResource = true;
-    ptDescriptor->chCodeLength = 1;
 
-    ptDescriptor->iBearingX = 0;
-    ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
-    ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
-    
-    arm_foreach( arm_2d_char_idx_t, &ARM_2D_FONT_VRES_A4_DIGITS_ONLY.tNumbers, this.hwCount, ptItem) {
-        if (    *pchCharCode >= ptItem->chStartCode[0] 
-            &&  *pchCharCode < (ptItem->chStartCode[0] + ptItem->hwCount)) {
-            int16_t iOffset = *pchCharCode - ptItem->chStartCode[0];
-            
-            ptDescriptor->tileChar.tRegion.tLocation.iY 
-                = (int16_t)((ptItem->hwOffset + iOffset) * ptFont->tCharSize.iHeight);
-            return ptDescriptor;
-        }
+    /* use the white space as the default char */
+    __ttf_char_descriptor_t *ptUTF8Char = NULL;
+        
+    if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {
+        ptUTF8Char = (__ttf_char_descriptor_t *)
+            &c_tUTF8Arial14LookUpTableA4[ 
+                pchCharCode[0] - c_tUTF8Arial14LookUpTableA4[0].chUTF8[0]];
+    } else {
+        /* use the white space as the default char */
+        ptUTF8Char = (__ttf_char_descriptor_t *)
+            &c_tUTF8Arial14LookUpTableA4[dimof(c_tUTF8Arial14LookUpTableA4)-1];
     }
 
-    /* default: use blank */
-    ptDescriptor->tileChar.tRegion.tLocation.iY 
-        = (int16_t)(   this.tLookUpTable[this.hwDefaultCharIndex].hwOffset 
-                   *   ptFont->tCharSize.iHeight);
+    ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
+    ptDescriptor->tileChar.tRegion.tSize = ptUTF8Char->tCharSize;
+    ptDescriptor->tileChar.tRegion.tLocation.iY = (int16_t)ptUTF8Char->hwIndex;
+
+    ptDescriptor->iAdvance = ptUTF8Char->iAdvance;
+    ptDescriptor->iBearingX= ptUTF8Char->iBearingX;
+    ptDescriptor->iBearingY= ptUTF8Char->iBearingY;
 
     return ptDescriptor;
 }
+
+ARM_SECTION("arm2d.asset.FONT.ARM_2D_FONT_Arial14_A4")
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_VRES_ARIAL14_A4 = {
+
+    .use_as__arm_2d_user_font_t = {
+        .use_as__arm_2d_font_t = {
+            .tileFont = impl_child_tile(
+                s_vresA4Font,               /* use virtual resource here */
+                0,          /* x offset */
+                0,          /* y offset */
+                14,        /* width */
+                1222         /* height */
+            ),
+            .tCharSize = {
+                .iWidth = 14,
+                .iHeight = 13,
+            },
+            .nCount =  94,                             //!< Character count
+            .fnGetCharDescriptor = &__utf8_a4_font_get_char_descriptor,
+            .fnDrawChar = &__arm_2d_lcd_text_default_a4_font_draw_char,
+        },
+        .hwCount = 1,
+        .hwDefaultCharIndex = 1, /* tBlank */
+    },
+
+    .tUTF8Table = {
+        .hwCount = 94,
+        .hwOffset = 0,
+    },
+};
+
 
 /*----------------------------------------------------------------------------*
  * Scene                                                                      *
@@ -369,9 +315,6 @@ static void __on_scene_virtual_resource_frame_start(arm_2d_scene_t *ptScene)
     user_scene_virtual_resource_t *ptThis = (user_scene_virtual_resource_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* just refresh once */
-    arm_2d_dirty_region_item_ignore_set(&s_tDirtyRegions[0], true);
-
 }
 
 static void __on_scene_virtual_resource_frame_complete(arm_2d_scene_t *ptScene)
@@ -379,10 +322,12 @@ static void __on_scene_virtual_resource_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_virtual_resource_t *ptThis = (user_scene_virtual_resource_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_virtual_resource_switching_out(arm_2d_scene_t *ptScene)
@@ -422,36 +367,35 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_virtual_resource_handler)
                                 &__centre_region, 
                                 ARM_2D_CP_MODE_XY_MIRROR);
         #endif
-        }
-        
-        arm_2d_size_t tCharSize = ARM_2D_FONT_VRES_A4_DIGITS_ONLY
-                                    .use_as__arm_2d_user_font_t
-                                        .use_as__arm_2d_font_t.tCharSize;
 
-        /* draw a white bar */
-        arm_2d_align_centre(__canvas, 
-                            ptTile->tRegion.tSize.iWidth, 
-                            tCharSize.iHeight * 3 ) {
-            arm_2d_fill_colour_with_opacity(ptTile, 
-                                            &__centre_region,
+            arm_2d_size_t tCharSize = ARM_2D_FONT_VRES_ARIAL14_A4
+                                        .use_as__arm_2d_user_font_t
+                                            .use_as__arm_2d_font_t.tCharSize;
+
+            /* draw a white bar */
+            arm_2d_dock_vertical(__centre_region, tCharSize.iHeight * 3) {
+                arm_2d_fill_colour_with_opacity(ptTile, 
+                                            &__vertical_region,
                                             (__arm_2d_color_t){GLCD_COLOR_WHITE}, 
                                             255 - 32);
+            }
+
+        #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ > 1
+            /* draw A4 fonts that stored as a virtual resource */
+
+            arm_2d_dock_vertical(__centre_region, tCharSize.iHeight * 2, 32) {
+                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_ARIAL14_A4);
+                arm_lcd_text_set_draw_region(&__vertical_region);
+                arm_lcd_text_set_colour(GLCD_COLOR_DARK_GREY, GLCD_COLOR_WHITE);
+
+                arm_lcd_printf("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            }
+        #endif
+
+
         }
 
-    #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ > 1
-        /* draw A4 fonts that stored as a virtual resource */
-        arm_2d_align_centre(__canvas, 
-                            tCharSize.iWidth * 8, 
-                            tCharSize.iHeight * 2 ) {
-
-            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-            arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_A4_DIGITS_ONLY);
-            arm_lcd_text_set_draw_region(&__centre_region);
-            arm_lcd_text_set_colour(GLCD_COLOR_DARK_GREY, GLCD_COLOR_WHITE);
-            arm_lcd_puts("0123456789ABCDEF");
-        }
-    #endif
-    
         /* display info */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -472,15 +416,6 @@ user_scene_virtual_resource_t *__arm_2d_scene_virtual_resource_init(   arm_2d_sc
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    s_tDirtyRegions[0].tRegion = tScreen;
 
     if (NULL == ptThis) {
         ptThis = (user_scene_virtual_resource_t *)
@@ -507,7 +442,7 @@ user_scene_virtual_resource_t *__arm_2d_scene_virtual_resource_init(   arm_2d_sc
              */
             .fnOnLoad       = &__on_scene_virtual_resource_load,
             .fnScene        = &__pfb_draw_scene_virtual_resource_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_virtual_resource_background_start,

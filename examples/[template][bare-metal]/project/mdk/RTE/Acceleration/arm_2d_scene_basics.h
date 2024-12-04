@@ -39,8 +39,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wpadded"
-#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 1296,174,64,177,1
+#elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="

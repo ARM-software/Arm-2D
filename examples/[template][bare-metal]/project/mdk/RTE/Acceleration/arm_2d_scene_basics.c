@@ -144,11 +144,13 @@ static void __on_scene_basics_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+#if 0
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_basics_switching_out(arm_2d_scene_t *ptScene)
@@ -189,7 +191,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
     #endif
 
         arm_2d_align_centre(__top_canvas, 240, 120 ) {
-            arm_2d_layout(__centre_region, true) {
+            arm_2d_layout(__centre_region, DEFAULT, true) {
 
                 __item_line_dock_vertical(c_tileCMSISLogoA4Mask.tRegion.tSize.iHeight, 0, 0, 0, 5) {
                     draw_round_corner_box(  ptTile, 
@@ -240,7 +242,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                         arm_2d_fill_colour_with_4pts_alpha_gradient_mask_and_opacity(
                                             ptTile, 
                                             &__centre_region,
-                                            &c_tileCMSISLogoMask2,
+                                            &c_tileCMSISLogoMask,
                                             (__arm_2d_color_t){GLCD_COLOR_BLUE},
                                             255,
                                             (arm_2d_alpha_samples_4pts_t) {
@@ -302,7 +304,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                             arm_lcd_printf("%d", n);
                         }
                     }
-
                 }
             }                
         }

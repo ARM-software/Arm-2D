@@ -244,10 +244,12 @@ static void __on_scene_hollow_out_list_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* switch to next scene after 3s */
+#if 0
+    /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 
 }
 
@@ -406,7 +408,7 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
                 }
             }
 
-            arm_2d_layout(__horizontal_region, BOTTOM_UP, false) {
+            arm_2d_layout(__horizontal_region, BOTTOM_UP) {
 
                 __item_line_vertical(s_tDirtyRegions[DIRTY_REGION_LIST_SMALL_3].tRegion.tSize,
                                     0, 0, 10, 11
@@ -424,8 +426,6 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
         }
         
     }
-
-    
 
     if (NULL == ptThis) {
         ptThis = (user_scene_hollow_out_list_t *)

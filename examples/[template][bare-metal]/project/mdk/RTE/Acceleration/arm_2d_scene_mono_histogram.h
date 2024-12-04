@@ -16,18 +16,19 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_MENU_H__
-#define __ARM_2D_SCENE_MENU_H__
+#ifndef __ARM_2D_SCENE_MONO_HISTOGRAM_H__
+#define __ARM_2D_SCENE_MONO_HISTOGRAM_H__
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#include "arm_2d_helper_scene.h"
-#include "list_view.h"
-#include "progress_wheel.h"
+#include "arm_2d_helper.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -50,42 +51,50 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_MENU_IMPLEMENT__
-#   undef __USER_SCENE_MENU_IMPLEMENT__
+#ifdef __USER_SCENE_MONO_HISTOGRAM_IMPLEMENT__
 #   define __ARM_2D_IMPL__
+#endif
+#ifdef __USER_SCENE_MONO_HISTOGRAM_INHERIT__
+#   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene5 and add it to a user specified scene player
- * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \brief initalize scene_mono_histogram and add it to a user specified scene player
+ * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_menu_t will be allocated from HEAP and freed on
+ *            user_scene_mono_histogram_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_menu_t* the user_scene_menu_t instance
+ * \return user_scene_mono_histogram_t* the user_scene_mono_histogram_t instance
  */
-#define arm_2d_scene_menu_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_menu_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_mono_histogram_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_mono_histogram_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene 3
+ * \brief a user class for scene mono_histogram
  */
-typedef struct user_scene_menu_t user_scene_menu_t;
+typedef struct user_scene_mono_histogram_t user_scene_mono_histogram_t;
 
-struct user_scene_menu_t {
+struct user_scene_mono_histogram_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t             lTimestamp[3];
-    bool                bUserAllocated;
-    list_view_t         tListView;
-    progress_wheel_t    tWheel;
-    int16_t             iProgress;
+    int64_t lTimestamp[2];
+    bool bUserAllocated;
+
+    histogram_t tHistogram;
+    histogram_bin_item_t tBins[14];
+
+    struct {
+        int16_t iBuffer[14];
+        uint16_t hwPointer; 
+    } WindowFIFO; 
+
 )
     /* place your public member here */
     
@@ -94,16 +103,25 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-ARM_NONNULL(1)
 extern
-user_scene_menu_t *__arm_2d_scene_menu_init(arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_menu_t *ptScene);
+ARM_NONNULL(1)
+user_scene_mono_histogram_t *__arm_2d_scene_mono_histogram_init(   
+                                        arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_mono_histogram_t *ptScene);
+
+extern
+ARM_NONNULL(1)
+void histogram_enqueue_new_value(user_scene_mono_histogram_t *ptThis, 
+                                 int_fast16_t iValue);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic pop
 #endif
+
+#undef __USER_SCENE_MONO_HISTOGRAM_IMPLEMENT__
+#undef __USER_SCENE_MONO_HISTOGRAM_INHERIT__
 
 #ifdef   __cplusplus
 }

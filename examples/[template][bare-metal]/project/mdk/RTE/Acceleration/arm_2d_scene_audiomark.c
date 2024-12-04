@@ -49,9 +49,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wsign-compare"
-#   pragma clang diagnostic ignored "-Wunreachable-code-break" 
+#   pragma clang diagnostic ignored "-Wmissing-declarations"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
@@ -211,11 +209,13 @@ static void __on_scene_audiomark_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_audiomark_t *ptThis = (user_scene_audiomark_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+#if 0
     /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_audiomark_switching_out(arm_2d_scene_t *ptScene)

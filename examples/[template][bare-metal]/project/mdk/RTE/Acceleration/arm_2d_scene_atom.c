@@ -206,10 +206,12 @@ static void __on_scene_atom_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_atom_t *ptThis = (user_scene_atom_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+#if 0
     /* switch to next scene after 5s */
     if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 }
 
 static void __before_scene_atom_switching_out(arm_2d_scene_t *ptScene)
@@ -246,7 +248,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
         /* draw atom core */
         arm_2d_align_centre(__top_canvas, tAtomCoreSize) {
 
-            arm_2d_layout(__centre_region, true) {
+            arm_2d_layout(__centre_region, DEFAULT, true) {
             
                 __item_line_dock_vertical(c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight * 2) {
                     
@@ -258,7 +260,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     tDirtyRegion.tSize.iHeight += tCharSize.iHeight;
 
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_item(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                    arm_2d_helper_dirty_region_update_item( &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
                                                             (arm_2d_tile_t *)ptTile,
                                                             &__top_canvas,
                                                             &tDirtyRegion);

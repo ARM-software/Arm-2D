@@ -110,11 +110,13 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileEarth;
 extern const arm_2d_tile_t c_tilePictureSun;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
+extern const arm_2d_tile_t c_tileCMSISLogoMask2;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileGlassBallMask;
+extern const arm_2d_tile_t c_tileGlassBallMask2;
 
 extern
 const arm_2d_tile_t c_tileGear01;
@@ -232,7 +234,7 @@ static void __on_scene_transform_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     int32_t tAngle;
-    arm_2d_helper_time_cos_slider(0, 3600, 8000, 0, &tAngle, &this.lTimestamp[1]);
+    arm_2d_helper_time_cos_slider(0, 3600, 5000, 0, &tAngle, &this.lTimestamp[1]);
 
     arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
         arm_2d_helper_dirty_region_transform_update_value(&ptObjects->tHelper, ARM_2D_ANGLE((float)tAngle / 10.0f), 0.0f);
@@ -248,10 +250,13 @@ static void __on_scene_transform_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* switch to next scene after 3s */
+
+#if 0
+    /* switch to next scene after 15s */
     if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
     }
+#endif
 
 }
 
@@ -318,10 +323,10 @@ void __draw_transform_object_handler( void *pObj,
 
     bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
 
-//    arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
+    arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
 
-//    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
-//    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
+    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
+    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
 
     float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 2.0f;
 
@@ -358,8 +363,8 @@ void __draw_transform_object_handler( void *pObj,
         case TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY: {
 
                 arm_2d_location_t tCentre = {
-                    .iX = c_tileGlassBallMask.tRegion.tSize.iWidth >> 1,
-                    .iY = c_tileGlassBallMask.tRegion.tSize.iHeight >> 1,
+                    .iX = c_tileCMSISLogo.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileCMSISLogo.tRegion.tSize.iHeight >> 1,
                 };
 
                 arm_2dp_tile_transform_with_src_mask_and_opacity(
@@ -517,7 +522,7 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
     do {
         int16_t iRadius = MIN(tScreen.tSize.iHeight, tScreen.tSize.iWidth) / 2;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.2f,
+            .fSpeed = 0.6f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius,
             .hwParticleCount = dimof(this.tObjects),
