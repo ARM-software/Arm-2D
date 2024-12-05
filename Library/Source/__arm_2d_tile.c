@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        03. Dec 2024
- * $Revision:    V.1.4.10
+ * $Date:        05. Dec 2024
+ * $Revision:    V.1.4.11
  *
  * Target Processor:  Cortex-M cores
  *
@@ -750,16 +750,7 @@ const arm_2d_tile_t * arm_2d_tile_get_absolute_location(
     ptLocation->iX = 0;
     ptLocation->iY = 0;
 
-#if 0
-    while( !ptTile->tInfo.bIsRoot ) {
-        ptLocation->iX += ptTile->tRegion.tLocation.iX;
-        ptLocation->iY += ptTile->tRegion.tLocation.iY;
-        
-        ptTile = ptTile->ptParent;
-    }
-#else
     *ptLocation = arm_2d_get_absolute_location(ptTile, *ptLocation, false);
-#endif
     
     return ptTile;
 }
