@@ -319,11 +319,11 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
 
             .Colour = {
-                .wFrom =    __RGB32(0, 0xFF, 0),
-                .wTo =      __RGB32(0xFF, 0, 0), 
+                .wFrom =  __RGB32(0, 0xFF, 0),
+                .wTo =    __RGB32(0xFF, 0, 0), 
             },
 
-            //.ptParent = &this.use_as__arm_2d_scene_t,
+            .ptParent = &this.use_as__arm_2d_scene_t,
 
             .evtOnGetBinValue = {
                 .fnHandler = &histogram_get_bin_value,
