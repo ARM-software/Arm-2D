@@ -130,7 +130,7 @@ arm_2d_list_item_t s_tListArray[] = {
         .bIsVisible = true,
         .bIsReadOnly = true,    /* indicate this is a const item */
 
-        .tSize = { 240, 80 },
+        .tSize = { 240, 70 },
         .fnOnDrawItem = &__list_view_item_0_draw_item,
     },
 
@@ -140,7 +140,7 @@ arm_2d_list_item_t s_tListArray[] = {
         .bIsVisible = true,
         .bIsReadOnly = true,    /* indicate this is a const item */
 
-        .tSize = { 240, 80 },
+        .tSize = { 240, 70 },
         .fnOnDrawItem = &__list_view_item_1_draw_item,
     },
 
@@ -150,7 +150,7 @@ arm_2d_list_item_t s_tListArray[] = {
         .bIsVisible = true,
         .bIsReadOnly = true,    /* indicate this is a const item */
 
-        .tSize = { 240, 80 },
+        .tSize = { 240, 70 },
         .fnOnDrawItem = &__list_view_item_2_draw_item,
     },
 
@@ -160,7 +160,7 @@ arm_2d_list_item_t s_tListArray[] = {
         .bIsVisible = true,
         .bIsReadOnly = true,    /* indicate this is a const item */
 
-        .tSize = { 240, 80 },
+        .tSize = { 240, 70 },
         .fnOnDrawItem = &__list_view_item_3_draw_item,
     },
 };
@@ -180,20 +180,20 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
-    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-    arm_lcd_text_set_opacity(255);
-    arm_lcd_text_set_scale(1.0f);
-
     arm_2d_canvas(ptTile, __list_item_canvas) {
 
-        arm_2d_dock(__list_item_canvas, 4) {
+        arm_2d_container(ptTile, __bar, &__list_item_canvas, 3, 3, 3, 3) {
 
-            arm_2d_layout(__dock_region) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__bar);
+            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+            arm_lcd_text_set_opacity(255);
+            arm_lcd_text_set_scale(1.0f);
+
+            arm_2d_layout(__bar_canvas) {
                 __item_line_dock_horizontal(64) {
 
-                    arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                    arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
                     arm_lcd_text_set_draw_region(&__item_region);
                     arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Reference");
@@ -205,13 +205,13 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
                         arm_2d_tile_copy_with_src_mask_only(
                                                     &c_tileCMSISLogo,
                                                     &c_tileCMSISLogoMask,
-                                                    ptTile,
+                                                    &__bar,
                                                     &__centre_region);
                     }
                 }
             }
 
-            arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
+            arm_2d_draw_box(&__bar, &__bar_canvas, 1, GLCD_COLOR_DARK_GREY, 255);
         }
 
     }
@@ -232,20 +232,20 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
-    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-    arm_lcd_text_set_opacity(255);
-    arm_lcd_text_set_scale(1.0f);
-
     arm_2d_canvas(ptTile, __list_item_canvas) {
 
-        arm_2d_dock(__list_item_canvas, 4) {
+        arm_2d_container(ptTile, __bar, &__list_item_canvas, 3, 3, 3, 3) {
 
-            arm_2d_layout(__dock_region) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__bar);
+            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+            arm_lcd_text_set_opacity(255);
+            arm_lcd_text_set_scale(1.0f);
+
+            arm_2d_layout(__bar_canvas) {
                 __item_line_dock_horizontal(64) {
 
-                    arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                    arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
                     arm_lcd_text_set_draw_region(&__item_region);
                     arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Glass Bar");
@@ -257,17 +257,16 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                         arm_2d_tile_copy_with_src_mask_only(
                                                     &c_tileCMSISLogo,
                                                     &c_tileCMSISLogoMask,
-                                                    ptTile,
+                                                    &__bar,
                                                     &__centre_region);
                     }
                 }
             }
 
-            draw_glass_bar(ptTile, &__dock_region, 255, true);
+            draw_glass_bar(&__bar, &__bar_canvas, 255, true);
 
-            arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
+            arm_2d_draw_box(&__bar, &__bar_canvas, 1, GLCD_COLOR_DARK_GREY, 255);
         }
-
     }
     
     return arm_fsm_rt_cpl;
@@ -287,51 +286,45 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
-    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-    arm_lcd_text_set_opacity(255);
-    arm_lcd_text_set_scale(1.0f);
-
     arm_2d_canvas(ptTile, __list_item_canvas) {
-        arm_2d_dock(__list_item_canvas, 4) {
 
-            arm_2d_layout(__dock_region) {
+        arm_2d_container(ptTile, __bar, &__list_item_canvas, 3, 3, 3, 3) {
+
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__bar);
+            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+            arm_lcd_text_set_opacity(255);
+            arm_lcd_text_set_scale(1.0f);
+
+            arm_2d_layout(__bar_canvas) {
                 __item_line_dock_horizontal(64) {
 
-                    arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                    arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
-                    int16_t iLabelYOffset = (__item_region.tSize.iHeight - 16) >> 1;
-
-                    arm_2d_dock(__item_region, 8, 8, iLabelYOffset, iLabelYOffset) {
-                        arm_lcd_text_set_draw_region(&__dock_region);
-                        arm_lcd_printf("Reverse Colour");
-                    }
+                    arm_lcd_text_set_draw_region(&__item_region);
+                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Glass Bar");
                 }
 
                 __item_line_dock_horizontal() {
                     arm_2d_align_centre(__item_region, 
                                         c_tileCMSISLogo.tRegion.tSize) {
-                        
                         arm_2d_tile_copy_with_src_mask_only(
                                                     &c_tileCMSISLogo,
                                                     &c_tileCMSISLogoMask,
-                                                    ptTile,
+                                                    &__bar,
                                                     &__centre_region);
                         
-                        arm_2d_filter_reverse_colour(ptTile, &__centre_region);
-
+                        arm_2d_filter_reverse_colour(&__bar, &__centre_region);
                     }
                 }
             }
 
-            draw_glass_bar(ptTile, &__dock_region, 255, true);
+            draw_glass_bar(&__bar, &__bar_canvas, 255, true);
 
-            arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
+            arm_2d_draw_box(&__bar, &__bar_canvas, 1, GLCD_COLOR_DARK_GREY, 255);
         }
-
     }
-    
+ 
     return arm_fsm_rt_cpl;
 }
 
@@ -348,23 +341,23 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(ptParam);
 
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
-    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-    arm_lcd_text_set_opacity(255);
-    arm_lcd_text_set_scale(1.0f);
-
     arm_2d_canvas(ptTile, __list_item_canvas) {
 
-        arm_2d_dock(__list_item_canvas, 4) {
+        arm_2d_container(ptTile, __bar, &__list_item_canvas, 3, 3, 3, 3) {
 
-            arm_2d_layout(__dock_region) {
+            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__bar);
+            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+            arm_lcd_text_set_opacity(255);
+            arm_lcd_text_set_scale(1.0f);
+
+            arm_2d_layout(__bar_canvas) {
                 __item_line_dock_horizontal(64) {
 
-                    arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                    arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
                     arm_lcd_text_set_draw_region(&__item_region);
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "IIR Blur");
+                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Glass Bar");
                 }
 
                 __item_line_dock_horizontal() {
@@ -373,12 +366,12 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
                         arm_2d_tile_copy_with_src_mask_only(
                                                     &c_tileCMSISLogo,
                                                     &c_tileCMSISLogoMask,
-                                                    ptTile,
+                                                    &__bar,
                                                     &__centre_region);
                     }
 
                     arm_2dp_filter_iir_blur(&this.tBlurOP,
-                                            ptTile,
+                                            &__bar,
                                             &__item_region,
                                             this.chBlurDegree);
 
@@ -388,23 +381,21 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
 
                         arm_2d_helper_dirty_region_update_item(
                             &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
-                            ptTile,
-                            &__dock_region, 
+                            &__bar,
+                            &__bar_canvas, 
                             &__item_region);
                     }        
-
 
                     ARM_2D_OP_WAIT_ASYNC(&this.tBlurOP);
                 }
             }
 
-            draw_glass_bar(ptTile, &__dock_region, 255, true);
+            draw_glass_bar(&__bar, &__bar_canvas, 255, true);
 
-            arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
+            arm_2d_draw_box(&__bar, &__bar_canvas, 1, GLCD_COLOR_DARK_GREY, 255);
         }
-
     }
-    
+
     return arm_fsm_rt_cpl;
 }
 
@@ -540,6 +531,22 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_filters_handler)
                                                     &__centre_region, 
                                                     bIsNewFrame));
 
+            arm_2d_dock_top(__centre_region, 60) {
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                                        ptTile, 
+                                        &__top_region,
+                                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                        (arm_2d_alpha_samples_2pts_t){255, 0});
+            }
+
+            arm_2d_dock_bottom(__centre_region, 60) {
+                arm_2d_fill_colour_with_vertical_alpha_gradient(
+                                        ptTile, 
+                                        &__bottom_region,
+                                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                        (arm_2d_alpha_samples_2pts_t){0, 255});
+            }
+
             /* update dirty regions */
             if (__arm_2d_list_core_is_list_scrolling(
                     &this.tListView.use_as____arm_2d_list_core_t)) {
@@ -555,22 +562,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_filters_handler)
         }
 
         arm_2d_align_centre(__top_canvas, 260, 200) {
-
-            arm_2d_dock_top(__centre_region, 50) {
-                arm_2d_fill_colour_with_vertical_alpha_gradient(
-                                        ptTile, 
-                                        &__top_region,
-                                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                        (arm_2d_alpha_samples_2pts_t){255, 0});
-            }
-
-            arm_2d_dock_bottom(__centre_region, 50) {
-                arm_2d_fill_colour_with_vertical_alpha_gradient(
-                                        ptTile, 
-                                        &__bottom_region,
-                                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                        (arm_2d_alpha_samples_2pts_t){0, 255});
-            }
 
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
