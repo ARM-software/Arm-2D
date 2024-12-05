@@ -459,8 +459,11 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
         }
         
         if (bQuitWhenFindVirtualScreen) {
+
             if (NULL != ptValidRegion) {
                 *ptValidRegion = tValidRegion;
+                ptValidRegion->tLocation.iX = 0;
+                ptValidRegion->tLocation.iY = 0;
             }
             return ptTile;
         }

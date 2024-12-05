@@ -4430,6 +4430,27 @@ void __arm_2d_helper_dirty_region_item_update(
             }
         }
 
+        /* clip the valid region */
+        {
+            arm_2d_region_t tValidRegionOnVirtualScreen = {0};
+            if (NULL == __arm_2d_tile_get_virtual_screen_or_root((arm_2d_tile_t *)ptTargetTile,
+                                                                 &tValidRegionOnVirtualScreen,
+                                                                 NULL, 
+                                                                 NULL,
+                                                                 true)) {
+                /* output visual area */
+                this.bIgnore = true;
+                break;
+            }
+
+            if (!arm_2d_region_intersect(   &tNewRegion, 
+                                            &tValidRegionOnVirtualScreen,
+                                            &tNewRegion)) {
+                this.bIgnore = true;
+                break;
+            }
+        }
+
         /* keep the old region */
         this.tOldRegion = this.tNewRegion;
 
