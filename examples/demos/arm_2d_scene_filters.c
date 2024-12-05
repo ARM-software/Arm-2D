@@ -302,7 +302,7 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
                     arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
                     arm_lcd_text_set_draw_region(&__item_region);
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Glass Bar");
+                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Reverse Colour");
                 }
 
                 __item_line_dock_horizontal() {
@@ -357,7 +357,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
                     arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
                     arm_lcd_text_set_draw_region(&__item_region);
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Glass Bar");
+                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "IIR Blur");
                 }
 
                 __item_line_dock_horizontal() {
@@ -458,12 +458,12 @@ static void __on_scene_filters_frame_start(arm_2d_scene_t *ptScene)
 
     if (LIST_ITEM_ID_IIR_BLUR == list_view_get_selected_item_id(&this.tListView)) {
         if (arm_2d_helper_is_time_out(6000, &this.lTimestamp[1])) {
-            list_view_move_selection(&this.tListView, 1, 200);
+            list_view_move_selection(&this.tListView, 1, 1000);
             this.lTimestamp[1] = 0;
         }
     } else {
-        if (arm_2d_helper_is_time_out(2000, &this.lTimestamp[1])) {
-            list_view_move_selection(&this.tListView, 1, 200);
+        if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[1])) {
+            list_view_move_selection(&this.tListView, 1, 1000);
             this.lTimestamp[1] = 0;
         }
     }
@@ -636,6 +636,11 @@ user_scene_filters_t *__arm_2d_scene_filters_init(   arm_2d_scene_player_t *ptDi
     ARM_2D_OP_INIT(this.tBlurOP);
 
     do {
+        static const arm_2d_helper_pi_slider_cfg_t c_tPIHelperCFG = {
+            .fProportion = 0.040f,
+            .fIntegration = 0.00300f,
+            .nInterval = 10,
+        };
         list_view_cfg_t tCFG = {
             .fnIterator = &ARM_2D_LIST_ITERATOR_ARRAY,
             .fnCalculator = &ARM_2D_LIST_CALCULATOR_MIDDLE_ALIGNED_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL,
@@ -644,6 +649,7 @@ user_scene_filters_t *__arm_2d_scene_filters_init(   arm_2d_scene_player_t *ptDi
                 0, 240
             },
             .bUsePIMode = true,
+            .ptPISliderCFG = (arm_2d_helper_pi_slider_cfg_t *)&c_tPIHelperCFG,
 
             .ptItems = (arm_2d_list_item_t *)s_tListArray,
             .hwCount = dimof(s_tListArray),
@@ -676,5 +682,3 @@ user_scene_filters_t *__arm_2d_scene_filters_init(   arm_2d_scene_player_t *ptDi
 #endif
 
 #endif
-
-
