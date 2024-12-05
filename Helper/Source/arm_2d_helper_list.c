@@ -1292,7 +1292,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
 
     if (bIsNewFrame) {
         if (bMidAligned) {
-            this.Runtime.bScrolling = true;
+            this.Runtime.bScrolling = this.Runtime.bIsMoving;
         } else {
             this.Runtime.bScrolling = !!bWindowMoved;
         }
