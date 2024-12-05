@@ -190,139 +190,147 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_filters_handler)
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     int16_t iBarHeight = 80;
+    arm_2d_size_t tDisplaySize = tScreenSize;
+    tDisplaySize.iWidth = MIN(tDisplaySize.iWidth, 320);
+    tDisplaySize.iWidth = MAX(tDisplaySize.iWidth, 240);
+
+    tDisplaySize.iHeight = 240;
 
     ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
 
-        arm_2d_layout(__top_canvas) {
+        arm_2d_align_centre(__top_canvas, tDisplaySize) {
 
-            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
-            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-            arm_lcd_text_set_opacity(255);
-            arm_lcd_text_set_scale(1.0f);
+            arm_2d_layout(__centre_region) {
 
-            /* reference */
-            __item_line_dock_vertical(iBarHeight) {
-                
-                arm_2d_dock(__item_region, 4) {
+                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                arm_lcd_text_set_opacity(255);
+                arm_lcd_text_set_scale(1.0f);
 
-                    arm_2d_layout(__dock_region) {
-                        __item_line_dock_horizontal(80) {
+                /* reference */
+                __item_line_dock_vertical(iBarHeight) {
+                    
+                    arm_2d_dock(__item_region, 4) {
 
-                            arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                        arm_2d_layout(__dock_region) {
+                            __item_line_dock_horizontal(64) {
 
-                            arm_lcd_text_set_draw_region(&__item_region);
-                            arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Reference");
-                        }
+                                arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
 
-                        __item_line_dock_horizontal() {
-                            arm_2d_align_centre(__item_region, 
-                                                c_tileCMSISLogo.tRegion.tSize) {
-                                arm_2d_tile_copy_with_src_mask_only(
-                                                            &c_tileCMSISLogo,
-                                                            &c_tileCMSISLogoMask,
-                                                            ptTile,
-                                                            &__centre_region);
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Reference");
+                            }
+
+                            __item_line_dock_horizontal() {
+                                arm_2d_align_centre(__item_region, 
+                                                    c_tileCMSISLogo.tRegion.tSize) {
+                                    arm_2d_tile_copy_with_src_mask_only(
+                                                                &c_tileCMSISLogo,
+                                                                &c_tileCMSISLogoMask,
+                                                                ptTile,
+                                                                &__centre_region);
+                                }
                             }
                         }
+
+                        draw_glass_bar(ptTile, &__dock_region, 255, true);
+
+                        arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
                     }
 
-                    draw_glass_bar(ptTile, &__dock_region, 255, true);
-
-                    arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
                 }
 
-            }
+                /* reverse colour */
+                __item_line_dock_vertical(iBarHeight) {
+                    
+                    arm_2d_dock(__item_region, 4) {
 
-            /* reverse colour */
-            __item_line_dock_vertical(iBarHeight) {
-                
-                arm_2d_dock(__item_region, 4) {
+                        arm_2d_layout(__dock_region) {
+                            __item_line_dock_horizontal(64) {
 
-                    arm_2d_layout(__dock_region) {
-                        __item_line_dock_horizontal(80) {
+                                arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
 
-                            arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                                int16_t iLabelYOffset = (__item_region.tSize.iHeight - 16) >> 1;
 
-                            int16_t iLabelYOffset = (__item_region.tSize.iHeight - 16) >> 1;
+                                arm_2d_dock(__item_region, 8, 8, iLabelYOffset, iLabelYOffset) {
+                                    arm_lcd_text_set_draw_region(&__dock_region);
+                                    arm_lcd_printf("Reverse Colour");
+                                }
+                            }
 
-                            arm_2d_dock(__item_region, 8, 30, iLabelYOffset, iLabelYOffset) {
-                                arm_lcd_text_set_draw_region(&__dock_region);
-                                arm_lcd_printf("ReverseColour");
+                            __item_line_dock_horizontal() {
+                                arm_2d_align_centre(__item_region, 
+                                                    c_tileCMSISLogo.tRegion.tSize) {
+                                    
+                                    arm_2d_tile_copy_with_src_mask_only(
+                                                                &c_tileCMSISLogo,
+                                                                &c_tileCMSISLogoMask,
+                                                                ptTile,
+                                                                &__centre_region);
+                                    
+                                    arm_2d_filter_reverse_colour(ptTile, &__centre_region);
+
+                                }
                             }
                         }
 
-                        __item_line_dock_horizontal() {
-                            arm_2d_align_centre(__item_region, 
-                                                c_tileCMSISLogo.tRegion.tSize) {
-                                
-                                arm_2d_tile_copy_with_src_mask_only(
-                                                            &c_tileCMSISLogo,
-                                                            &c_tileCMSISLogoMask,
-                                                            ptTile,
-                                                            &__centre_region);
-                                
-                                arm_2d_filter_reverse_colour(ptTile, &__centre_region);
+                        draw_glass_bar(ptTile, &__dock_region, 255, true);
 
-                            }
-                        }
+                        arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
                     }
-
-                    draw_glass_bar(ptTile, &__dock_region, 255, true);
-
-                    arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
                 }
-            }
 
-            /* reference */
-            __item_line_dock_vertical(iBarHeight) {
-                
-                arm_2d_dock(__item_region, 4) {
+                /* reference */
+                __item_line_dock_vertical(iBarHeight) {
+                    
+                    arm_2d_dock(__item_region, 4) {
 
-                    arm_2d_layout(__dock_region) {
-                        __item_line_dock_horizontal(80) {
+                        arm_2d_layout(__dock_region) {
+                            __item_line_dock_horizontal(64) {
 
-                            arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+                                arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
 
-                            arm_lcd_text_set_draw_region(&__item_region);
-                            arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "IIR Blur");
-                        }
-
-                        __item_line_dock_horizontal() {
-                            arm_2d_align_centre(__item_region, 
-                                                c_tileCMSISLogo.tRegion.tSize) {
-                                arm_2d_tile_copy_with_src_mask_only(
-                                                            &c_tileCMSISLogo,
-                                                            &c_tileCMSISLogoMask,
-                                                            ptTile,
-                                                            &__centre_region);
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "IIR Blur");
                             }
 
-                            arm_2dp_filter_iir_blur(&this.tBlurOP,
-                                                    ptTile,
-                                                    &__item_region,
-                                                    this.chBlurDegree);
+                            __item_line_dock_horizontal() {
+                                arm_2d_align_centre(__item_region, 
+                                                    c_tileCMSISLogo.tRegion.tSize) {
+                                    arm_2d_tile_copy_with_src_mask_only(
+                                                                &c_tileCMSISLogo,
+                                                                &c_tileCMSISLogoMask,
+                                                                ptTile,
+                                                                &__centre_region);
+                                }
+
+                                arm_2dp_filter_iir_blur(&this.tBlurOP,
+                                                        ptTile,
+                                                        &__item_region,
+                                                        this.chBlurDegree);
+                                    
+                                ARM_2D_OP_WAIT_ASYNC(&this.tBlurOP);
                                 
-                            ARM_2D_OP_WAIT_ASYNC(&this.tBlurOP);
-                            
-                            arm_2d_helper_dirty_region_update_item(
-                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
-                                ptTile,
-                                &__dock_region,
-                                &__item_region);
+                                arm_2d_helper_dirty_region_update_item(
+                                    &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                                    ptTile,
+                                    &__dock_region,
+                                    &__item_region);
+                            }
                         }
+
+                        draw_glass_bar(ptTile, &__dock_region, 255, true);
+
+                        arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
                     }
-
-                    draw_glass_bar(ptTile, &__dock_region, 255, true);
-
-                    arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
                 }
+
+
             }
-
-
         }
 
     /*-----------------------draw the foreground end  -----------------------*/
