@@ -301,8 +301,12 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
 
                     arm_2d_fill_colour(&__bar, &__item_region, GLCD_COLOR_DARK_GREY);
 
-                    arm_lcd_text_set_draw_region(&__item_region);
-                    arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "Reverse Colour");
+                    int16_t iLabelYOffset = (__item_region.tSize.iHeight - 16) >> 1;
+
+                    arm_2d_dock(__item_region, 8, 8, iLabelYOffset, iLabelYOffset) {
+                        arm_lcd_text_set_draw_region(&__dock_region);
+                        arm_lcd_printf("Reverse Colour");
+                    }
                 }
 
                 __item_line_dock_horizontal() {
