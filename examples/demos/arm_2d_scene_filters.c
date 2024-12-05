@@ -147,7 +147,7 @@ static void __on_scene_filters_frame_start(arm_2d_scene_t *ptScene)
     int32_t nResult;
     if (arm_2d_helper_time_cos_slider(  0, 
                                         (255-16),
-                                        10000,
+                                        5000,
                                         0,
                                         &nResult, 
                                         &this.lTimestamp[0])) {
