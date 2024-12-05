@@ -28,6 +28,7 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -83,9 +84,11 @@ struct user_scene_filters_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
     uint8_t chBlurDegree;
+
+    list_view_t tListView;
 
     arm_2d_filter_iir_blur_descriptor_t tBlurOP;
 )
@@ -98,7 +101,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_filters_t *__arm_2d_scene_filters_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_filters_t *__arm_2d_scene_filters_init(
+                                        arm_2d_scene_player_t *ptDispAdapter,
                                         user_scene_filters_t *ptScene);
 
 #if defined(__clang__)
