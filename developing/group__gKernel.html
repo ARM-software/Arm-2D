@@ -7692,9 +7692,13 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY(                                                       \</div>
 <div class="line">                <span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp);                  \</div>
+<div class="line">                int64_t *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp)                          \</div>
+<div class="line">                    = (&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp), ##__VA_ARGS__);         \</div>
+<div class="line">                *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp) =                                \</div>
+<div class="line">                    arm_2d_helper_get_system_timestamp();                       \</div>
 <div class="line">            )                                                                   \</div>
 <div class="line">            <span class="keywordflow">do</span> {                                                                \</div>
-<div class="line">                int64_t *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp)                          \</div>
+<div class="line">                ARM_2D_SAFE_NAME(plTimestamp)                                   \</div>
 <div class="line">                    = (&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp), ##__VA_ARGS__);         \</div>
 <div class="line">                int64_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(lElapsedMs) =                          \</div>
 <div class="line">                    arm_2d_helper_convert_ticks_to_ms(                          \</div>
