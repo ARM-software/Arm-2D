@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        14. Nov 2024
- * $Revision:    V.1.4.8
+ * $Date:        08. Dec 2024
+ * $Revision:    V.1.4.9
  *
  * -------------------------------------------------------------------- */
 
@@ -989,9 +989,13 @@ Author: Adam Dunkels
 #define ARM_PT_DELAY_MS(__MS, ...)                                              \
             ARM_PT_ENTRY(                                                       \
                 static int64_t ARM_2D_SAFE_NAME(s_lTimestamp);                  \
+                int64_t *ARM_2D_SAFE_NAME(plTimestamp)                          \
+                    = (&ARM_2D_SAFE_NAME(s_lTimestamp), ##__VA_ARGS__);         \
+                *ARM_2D_SAFE_NAME(plTimestamp) =                                \
+                    arm_2d_helper_get_system_timestamp();                       \
             )                                                                   \
             do {                                                                \
-                int64_t *ARM_2D_SAFE_NAME(plTimestamp)                          \
+                ARM_2D_SAFE_NAME(plTimestamp)                                   \
                     = (&ARM_2D_SAFE_NAME(s_lTimestamp), ##__VA_ARGS__);         \
                 int64_t ARM_2D_SAFE_NAME(lElapsedMs) =                          \
                     arm_2d_helper_convert_ticks_to_ms(                          \
