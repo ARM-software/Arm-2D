@@ -63,11 +63,8 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
     uint8_t         r1, g1, b1;
     uint8_t         r2, g2, b2;
     
-    
-
     blkCnt = 2;
     do {
-    
         /* ratio encoded with 7-bit*/
         uint16_t        ratioScal = (*ratio++ & 0x7f);
     
@@ -86,7 +83,6 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
         G = ((packedIn >> 5) & maskGunpk);
         g1 = G << 2;
 
-
         /* unpack 2nd stream */
         packedIn = *in2++;
         R = packedIn & maskRunpk;
@@ -97,7 +93,6 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
 
         G = ((packedIn >> 5) & maskGunpk);
         g2 = G << 2;
-
 
         /* merge */
         tmp = (r1 * ratioScal) + (r2 * (127 - ratioScal));
