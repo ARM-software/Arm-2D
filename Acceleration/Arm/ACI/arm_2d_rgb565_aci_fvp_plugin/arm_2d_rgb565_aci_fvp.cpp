@@ -54,7 +54,6 @@ uint32_t uint32x4_to_uint32x1(std::valarray < uint8_t > v)
 void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t * in2,
                             const uint16_t * ratio)
 {
-
     int32_t         blkCnt;
     uint16_t        maskRunpk = 0x001f;
     uint16_t        maskGunpk = 0x003f;
@@ -109,8 +108,7 @@ void arm_mix_rgb16_uint16x2(uint16_t * out, const uint16_t * in1, const uint16_t
         out++;
 
         blkCnt -= 1;
-    }
-    while (blkCnt > 0);
+    } while (blkCnt > 0);
 
 }
 
@@ -150,8 +148,7 @@ void arm_pack_rgb16_uint16x2(uint16_t * out, uint16_t * in_r, const uint16_t * i
         in_g++;
         in_b++;
         blkCnt -= 1;
-    }
-    while (blkCnt > 0);
+    } while (blkCnt > 0);
 }
 
 void arm_mix_unpack_blue_uint16x2(uint16_t * out, const uint16_t * in1, bool is_bottom)
@@ -169,8 +166,7 @@ void arm_mix_unpack_blue_uint16x2(uint16_t * out, const uint16_t * in1, bool is_
         *out++ = is_bottom ? R : R << 8;
 
         blkCnt -= 1;
-    }
-    while (blkCnt > 0);
+    } while (blkCnt > 0);
 }
 
 void arm_mix_unpack_green_uint16x2(uint16_t * out, const uint16_t * in1, bool is_bottom)
@@ -188,8 +184,7 @@ void arm_mix_unpack_green_uint16x2(uint16_t * out, const uint16_t * in1, bool is
         *out++ = is_bottom ? G : G << 8;
 
         blkCnt -= 1;
-    }
-    while (blkCnt > 0);
+    } while (blkCnt > 0);
 }
 
 void arm_mix_unpack_red_uint16x2(uint16_t * out, const uint16_t * in1, bool is_bottom)
@@ -207,8 +202,7 @@ void arm_mix_unpack_red_uint16x2(uint16_t * out, const uint16_t * in1, bool is_b
         *out++ = is_bottom ? B : B << 8;
 
         blkCnt -= 1;
-    }
-    while (blkCnt > 0);
+    } while (blkCnt > 0);
 }
 
 ACI_Status arm_2d_rgb565_aci_fvp::exec_cx1(const ACICX1DecodeInfo * decode_info,
@@ -359,9 +353,9 @@ ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_beatwise(const ACIVCX3DecodeInfo * d
                                                      uint32_t * result)
 {
 
-    if (!isCDECoprocessorValid(decode_info->coproc))
+    if (!isCDECoprocessorValid(decode_info->coproc)) {
         return ACI_STATUS_NOT_IMPLEMENTED;
-
+    }
 
 
 
@@ -377,7 +371,8 @@ ACI_Status arm_2d_rgb565_aci_fvp::exec_vcx3_beatwise(const ACIVCX3DecodeInfo * d
 
         *result = *(uint32_t *) & d_val;
         return ACI_STATUS_OK;
-    } else
-        return ACI_STATUS_NOT_IMPLEMENTED;
+    }
+
+    return ACI_STATUS_NOT_IMPLEMENTED;
 
 }
