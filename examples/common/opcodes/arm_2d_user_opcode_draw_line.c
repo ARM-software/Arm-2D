@@ -109,8 +109,8 @@ arm_2d_err_t arm_2dp_rgb565_user_draw_line_prepare(
         this.tParams = *ptParams;
     }
 
-    q16_t q16DeltaX = reinterpret_q16_s16( this.tParams.tEnd.iX - this.tParams.tStart.iX + 1 );
-    q16_t q16DeltaY = reinterpret_q16_s16( this.tParams.tEnd.iY - this.tParams.tStart.iY + 1 );
+    q16_t q16DeltaX = reinterpret_q16_s16( this.tParams.tEnd.iX - this.tParams.tStart.iX);
+    q16_t q16DeltaY = reinterpret_q16_s16( this.tParams.tEnd.iY - this.tParams.tStart.iY);
 
     // update brush
     float fBrushWidth = ptParams->fBrushWidth;
@@ -130,6 +130,13 @@ arm_2d_err_t arm_2dp_rgb565_user_draw_line_prepare(
     if (0 == q16DeltaX) {
         this.bVerticalLine = true;
     }
+
+    do {
+        float fSigma = atan2f( reinterpret_f32_q16(q16DeltaY), reinterpret_f32_q16(q16DeltaX));
+        float fKSigma = tanf(fSigma / 2.0f);
+        float fXWithdraw = fBrushWidth * fKSigma / 2.0f;
+        this.q16XWithdraw = reinterpret_q16_f32(fXWithdraw);
+    } while(0);
 
     if (this.bHorizontalLine && this.bVerticalLine ) {
         return ARM_2D_ERR_INVALID_PARAM;
@@ -483,6 +490,21 @@ __STATIC_INLINE void __fill_line_stride(int16_t iXStart,
 
 #include "arm_2d_helper.h"
 
+__STATIC_INLINE 
+void __draw_point(int16_t iY, int16_t iXStart, q16_t q16X, uint16_t *phwTarget, uint16_t hwColour, uint8_t chOpacity)
+{
+    arm_2d_location_t tPoint = {
+        .iY = iY,
+        .iX = reinterpret_s16_q16(q16X),
+    };
+    int16_t iXOffset = tPoint.iX - iXStart;
+    uint16_t hwTransparency = 256 - chOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
+    __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, &phwTarget[iXOffset], hwTransparency);
+}
+
+
 /* default low level implementation */
 __WEAK
 void __arm_2d_impl_rgb565_user_draw_line(
@@ -627,7 +649,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
                 iHeight = tEnd.iY - tStart.iY + 1 - reinterpret_s16_q16(this.q16Yend + 0x8000);
             #endif
             }
-        } while(0);
+        } while(0); 
     }
 
 
@@ -644,6 +666,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
 
         for (int_fast16_t iY = 0; iY < iHeight; iY++) {
 
+        #if 0
             q16_t q16StrideStartX = q16XStart - q16XOffset;
             __fill_line_stride( iXStart, 
                                 iYStart, 
@@ -656,6 +679,74 @@ void __arm_2d_impl_rgb565_user_draw_line(
                                 q8StrideTotalAlpha,
                                 chOpacity, 
                                 hwColour);
+        #else
+            do {
+                int16_t iYOffset = iY + iYStart;
+
+                q16_t q161PixelXLeftMiddle = q16XStart - div_n_q16(this.q161divK, 2);
+                q16_t q16XLeftStart = q161PixelXLeftMiddle - div_n_q16(this.q16L, 2);
+                
+
+                int16_t iLeftWidth = reinterpret_s16_q16( abs_q16(q16XLeftStart - q16XStart) + 0xFFFF );
+                q16_t q16XLeftOffset = q16XLeftStart;
+                if (q16XLeftOffset >= 0) {
+                    q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
+                } else {
+                    q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
+                }
+                q16XLeftOffset = reinterpret_q16_s16(q16XLeftOffset);
+
+
+                for (int16_t iX = 0; iX < iLeftWidth; iX++) {
+                    q16_t q16Delta = q16XLeftOffset - q16XLeftStart;
+                    if (q16Delta > 0) {
+                        q16_t q16Height = mul_q16(q16Delta, this.q16K);
+                        
+                        q16Height = MIN(q16Height, this.q16BrushWidth);
+                        q16Height = MIN(q16Height, 0xFF00);
+
+                        uint16_t hwOpacity = (q16Height & 0xFF00) >> 8;
+
+                        __draw_point(iYOffset, iXStart, q16XLeftOffset, phwTarget, hwColour, hwOpacity);
+                    }
+                    q16XLeftOffset += reinterpret_q16_s16(1);
+                }
+
+
+                q16_t q161PixelXRightMiddle = q16XStart + div_n_q16(this.q161divK, 2);
+                q16_t q16XRightEnd = q161PixelXRightMiddle + div_n_q16(this.q16L, 2);
+
+                int16_t iRightWidth = reinterpret_s16_q16( abs_q16(q16XRightEnd - q16XStart) + 0xFFFF);
+
+                q16XLeftOffset = q16XStart;
+                if (q16XLeftOffset >= 0) {
+                    q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
+                } else {
+                    q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
+                }
+                q16XLeftOffset = reinterpret_q16_s16(q16XLeftOffset);
+
+                for (int16_t iX = 0; iX < iRightWidth; iX++) {
+                    q16_t q16Delta = q16XRightEnd - q16XLeftOffset;
+                    if (q16Delta > 0) {
+                        q16_t q16Height = mul_q16(q16Delta, this.q16K);
+                        
+                        q16Height = MIN(q16Height, this.q16BrushWidth);
+                        q16Height = MIN(q16Height, 0xFF00);
+
+                        uint16_t hwOpacity = (q16Height & 0xFF00) >> 8;
+
+                        __draw_point(iYOffset, iXStart, q16XLeftOffset, phwTarget, hwColour, hwOpacity);
+                    }
+                    q16XLeftOffset += reinterpret_q16_s16(1);
+                }
+
+                
+
+            } while(0);
+
+
+        #endif
             q16XStart += this.q16dX;
             phwTarget += iTargetStride;
         }

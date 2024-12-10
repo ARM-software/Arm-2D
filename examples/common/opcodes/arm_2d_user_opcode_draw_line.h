@@ -82,6 +82,7 @@ typedef struct arm_2d_user_draw_line_descriptor_t {
     };
     q16_t q16abs_Kp_1divK_;
     q16_t q16PixelCompensate;
+    q16_t q16XWithdraw;
 
     union {
         q16_t q16K;
