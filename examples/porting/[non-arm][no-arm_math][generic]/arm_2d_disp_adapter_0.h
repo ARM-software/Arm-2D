@@ -44,6 +44,14 @@ extern "C" {
 // <h>Screen and Framebuffer
 // =======================
 
+// <o> Select the screen colour solution
+//     <0=>     None
+//     <1=>     Monochrome
+// <i> When specifying a colour solution, the __DISP0_CFG_COLOUR_DEPTH__ and other corresponding options will be configured (overriden) accordingly.
+#ifndef __DISP0_CFG_COLOR_SOLUTION__
+#   define __DISP0_CFG_COLOR_SOLUTION__                            0
+#endif
+
 // <o> Select the screen colour depth
 //     <8=>     8 Bits
 //     <16=>    16Bits
@@ -88,13 +96,13 @@ extern "C" {
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           32  //__DISP0_CFG_SCEEN_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           __DISP0_CFG_SCEEN_WIDTH__
 #endif
 
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          32   //__DISP0_CFG_SCEEN_HEIGHT__
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__ / 10)
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -249,6 +257,12 @@ extern "C" {
 // </h>
 
 // <<< end of configuration section >>>
+
+#if __DISP0_CFG_COLOR_SOLUTION__ == 1
+/* the colour solution for monochrome screen */
+#   undef __DISP0_CFG_COLOUR_DEPTH__
+#   define __DISP0_CFG_COLOUR_DEPTH__                               8
+#endif
 
 #ifndef __DISP0_COLOUR_FORMAT__
 #   if      __DISP0_CFG_COLOUR_DEPTH__ == 8
