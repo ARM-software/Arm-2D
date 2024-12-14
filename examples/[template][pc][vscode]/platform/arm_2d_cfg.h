@@ -25,6 +25,8 @@
 #   include "RTE_Components.h"
 #endif
 
+#include <stdio.h>
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
