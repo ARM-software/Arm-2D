@@ -211,10 +211,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
     /*-----------------------draw the foreground begin-----------------------*/
 
 
-        arm_2d_align_centre(__top_canvas, 100, 50 ) {
+        arm_2d_align_centre(__top_canvas, 300, 100 ) {
 
             arm_2d_draw_box(ptTile, &__centre_region, 1, GLCD_COLOR_RED, 255 - 64);
-        #if 0
+        #if 1
             /* draw line*/
             do {
                 arm_2d_user_draw_line_api_params_t tParam = {
@@ -239,7 +239,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
             } while(0);
         #endif
     
-        #if 1
+        #if 0
             /* draw line*/
             do {
                 arm_2d_user_draw_line_api_params_t tParam = {
@@ -251,7 +251,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
                         .iX = __centre_region.tLocation.iX + __centre_region.tSize.iWidth - 1,
                         .iY = __centre_region.tLocation.iY + __centre_region.tSize.iHeight - 1,
                     },
-                    .fBrushWidth = 20.0f,
+                    .fBrushWidth = 10.0f,
                     .wColour = GLCD_COLOR_GREEN,
                     .bHorizontallyChoppedEndpoints = true,
                 };

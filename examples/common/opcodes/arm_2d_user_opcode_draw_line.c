@@ -491,13 +491,8 @@ __STATIC_INLINE void __fill_line_stride(int16_t iXStart,
 #include "arm_2d_helper.h"
 
 __STATIC_INLINE 
-void __draw_point(int16_t iY, int16_t iXStart, q16_t q16X, uint16_t *phwTarget, uint16_t hwColour, uint8_t chOpacity)
+void __draw_point(int16_t iXOffset, uint16_t *phwTarget, uint16_t hwColour, uint8_t chOpacity)
 {
-    arm_2d_location_t tPoint = {
-        .iY = iY,
-        .iX = reinterpret_s16_q16(q16X),
-    };
-    int16_t iXOffset = tPoint.iX - iXStart;
     uint16_t hwTransparency = 256 - chOpacity;
     hwTransparency -= (hwTransparency == 1);
 
@@ -572,6 +567,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
     int16_t iNormalBodyYEnd = 0, iNormalBodyYStart = 0;
     int16_t iYEnd = 0;
 
+#if 0
     if (!this.tParams.bHorizontallyChoppedEndpoints) {
         /* chop the start terminal */
         do {
@@ -641,7 +637,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
             iNormalBodyYEnd = tEnd.iY - reinterpret_s16_q16(div_n_q16(this.q16Yend, 2) + 0x8000);
             iYEnd = iYStart + iHeight - 1;
             if (iYEnd > iNormalBodyYEnd) {
-            #if 0
+            #if 1
                 int16_t iStopEndpointHeight = iYEnd - iNormalBodyYEnd;
                 /* update height */
                 iHeight -= iStopEndpointHeight;
@@ -651,6 +647,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
             }
         } while(0); 
     }
+#endif
 
 
     /* draw the normal part*/
@@ -666,87 +663,233 @@ void __arm_2d_impl_rgb565_user_draw_line(
 
         for (int_fast16_t iY = 0; iY < iHeight; iY++) {
 
-        #if 0
-            q16_t q16StrideStartX = q16XStart - q16XOffset;
-            __fill_line_stride( iXStart, 
-                                iYStart, 
-                                iY, 
-                                q16StrideStartX,
-                                this.q16K,
-                                this.q16K,
-                                phwTarget, 
-                                ptValidRegionOnVirtualScreen, 
-                                q8StrideTotalAlpha,
-                                chOpacity, 
-                                hwColour);
-        #else
+            /* draw a stride for anti-alias */
             do {
                 int16_t iYOffset = iY + iYStart;
 
                 q16_t q161PixelXLeftMiddle = q16XStart - div_n_q16(this.q161divK, 2);
                 q16_t q16XLeftStart = q161PixelXLeftMiddle - div_n_q16(this.q16L, 2);
                 
-
-                int16_t iLeftWidth = reinterpret_s16_q16( abs_q16(q16XLeftStart - q16XStart) + 0xFFFF );
+                int16_t iLeftWidth = reinterpret_s16_q16( abs_q16(q16XLeftStart - q16XStart) + 0xFF00);
                 q16_t q16XLeftOffset = q16XLeftStart;
                 if (q16XLeftOffset >= 0) {
                     q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
+                    q16XLeftOffset = reinterpret_q16_s16(q16XLeftOffset) + 0x8000;
                 } else {
                     q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
+                    q16XLeftOffset = reinterpret_q16_s16(q16XLeftOffset) - 0x8000;
                 }
-                q16XLeftOffset = reinterpret_q16_s16(q16XLeftOffset);
+                
+                //printf("Width : %d\r\n", iLeftWidth);
 
-
-                for (int16_t iX = 0; iX < iLeftWidth; iX++) {
+                /* draw the first point of the left wing */
+                q16_t q16Square;
+                if (iLeftWidth > 0){
+                    
                     q16_t q16Delta = q16XLeftOffset - q16XLeftStart;
-                    if (q16Delta > 0) {
-                        q16_t q16Height = mul_q16(q16Delta, this.q16K);
+                    int16_t iX = reinterpret_s16_q16(q16XLeftOffset);
+                    q16_t q16XLeftOffsetTemp = q16XLeftOffset;
+                    q16_t q16NextDotOffset = 0;
+
+                    if (q16Delta < 0) {
+                        q16NextDotOffset = abs_q16(q16Delta);
+                        q16Delta += reinterpret_q16_s16(1);
+                        q16XLeftOffset += reinterpret_q16_s16(2);
+                        iX += 1;
+                        iLeftWidth -= 2;
                         
-                        q16Height = MIN(q16Height, this.q16BrushWidth);
-                        q16Height = MIN(q16Height, 0xFF00);
-
-                        uint16_t hwOpacity = (q16Height & 0xFF00) >> 8;
-
-                        __draw_point(iYOffset, iXStart, q16XLeftOffset, phwTarget, hwColour, hwOpacity);
+                    } else {
+                        q16XLeftOffset += reinterpret_q16_s16(1);
+                        iLeftWidth -= 1;
                     }
+
+                    q16_t q16Height = mul_q16(q16Delta, this.q16K);
+                    q16Height = MIN(q16Height, 0xFFFF);
+                    
+                    /* calculate the first point area */
+                    if (abs_q16(this.q16K) > reinterpret_q16_s16(1) && q16NextDotOffset != 0) {
+                        /* calculate the area of ​​the trapezoid where the first point is located */
+
+                        q16NextDotOffset += mul_q16(q16Height, this.q161divK);
+                        q16NextDotOffset = reinterpret_q16_s16(1) - q16NextDotOffset;
+
+                        q16NextDotOffset = MIN(q16NextDotOffset, this.q16BrushWidth);
+                        q16Delta = MIN(q16Delta, this.q16BrushWidth);
+
+                        q16Square = mul_q16 (q16Height, (q16NextDotOffset + q16Delta));
+
+                    } else {
+                        /* Calculate the area of ​​the triangle where the first point lies */
+                        q16Height = MIN(q16Height, this.q16BrushWidth);
+                        q16Square = mul_q16 (q16Height, q16Delta);
+                    }
+                    q16Square = div_n_q16(q16Square, 2); 
+
+                    arm_2d_location_t tDrawPoint = {
+                        .iX = iX,
+                        .iY = iYOffset,
+                    };
+                    if (arm_2d_is_point_inside_region(ptValidRegionOnVirtualScreen, &tDrawPoint)) {
+                        /* use the pixel area as the opacity */
+                        uint16_t hwOpacity = (q16Square & 0xFF00) >> 8;
+                        __draw_point(iX - iXStart, phwTarget, hwColour, hwOpacity);
+                    }
+
+                #if 0
+                    printf("[%f][%f][%f][%d][%f][Delta:%f][%f][%02x]\r\n", 
+                            reinterpret_f32_q16(q16XStart),
+                            reinterpret_f32_q16(q16XLeftStart),
+                            reinterpret_f32_q16(q16XLeftOffsetTemp),
+                            iX,
+                            reinterpret_f32_q16(q16Square),
+                            reinterpret_f32_q16(q16Delta),
+                            reinterpret_f32_q16(q16Height),
+                            hwOpacity);
+                #endif
+                }
+
+                /* reset of the left wing */
+                for (int16_t n = 0; n < iLeftWidth; n++) {
+                    q16Square += this.q16K;
+                    q16Square = MIN(q16Square, this.q16BrushWidth);
+                    q16Square = MIN(q16Square, 0xFF00);
+                    int16_t iX = reinterpret_s16_q16(q16XLeftOffset);
+
+                    arm_2d_location_t tDrawPoint = {
+                        .iX = iX,
+                        .iY = iYOffset,
+                    };
+                    if (arm_2d_is_point_inside_region(ptValidRegionOnVirtualScreen, &tDrawPoint)) {
+                        uint16_t hwOpacity = (q16Square & 0xFF00) >> 8;
+                        __draw_point(iX - iXStart, phwTarget, hwColour, hwOpacity);
+                    }
+                #if 0
+                    printf("[%f][%f][%d][%f][%02x]\r\n", 
+                            reinterpret_f32_q16(q16XStart),
+                            reinterpret_f32_q16(q16XLeftOffset),
+                            iX,
+                            //reinterpret_f32_q16(q16Delta),
+                            reinterpret_f32_q16(q16Square),
+                            hwOpacity);
+                    
+                #endif
                     q16XLeftOffset += reinterpret_q16_s16(1);
                 }
-
 
                 q16_t q161PixelXRightMiddle = q16XStart + div_n_q16(this.q161divK, 2);
                 q16_t q16XRightEnd = q161PixelXRightMiddle + div_n_q16(this.q16L, 2);
 
-                int16_t iRightWidth = reinterpret_s16_q16( abs_q16(q16XRightEnd - q16XStart) + 0xFFFF);
+                q16_t q16XRightDrawingStart = q16XLeftOffset - reinterpret_q16_s16(1);
+                int16_t iRightWidth = reinterpret_s16_q16( abs_q16(q16XRightEnd - q16XRightDrawingStart) + 0xFF00);
 
-                q16XLeftOffset = q16XStart;
-                if (q16XLeftOffset >= 0) {
-                    q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
-                } else {
-                    q16XLeftOffset = reinterpret_s16_q16( q16XLeftOffset);
-                }
-                q16XLeftOffset = reinterpret_q16_s16(q16XLeftOffset);
-
-                for (int16_t iX = 0; iX < iRightWidth; iX++) {
-                    q16_t q16Delta = q16XRightEnd - q16XLeftOffset;
-                    if (q16Delta > 0) {
-                        q16_t q16Height = mul_q16(q16Delta, this.q16K);
-                        
-                        q16Height = MIN(q16Height, this.q16BrushWidth);
-                        q16Height = MIN(q16Height, 0xFF00);
-
-                        uint16_t hwOpacity = (q16Height & 0xFF00) >> 8;
-
-                        __draw_point(iYOffset, iXStart, q16XLeftOffset, phwTarget, hwColour, hwOpacity);
-                    }
-                    q16XLeftOffset += reinterpret_q16_s16(1);
-                }
-
+                //printf("Right: %d\r\n", iRightWidth);
                 
+                q16_t q16XRightOffset = q16XRightEnd;
+                if (q16XRightOffset >= 0) {
+                    q16XRightOffset += 0x8000;
+                    q16XRightOffset = reinterpret_s16_q16( q16XRightOffset);
+                    q16XRightOffset = reinterpret_q16_s16(q16XRightOffset) - 0x8000;
+                } else {
+                    q16XRightOffset -= 0x8000;
+                    q16XRightOffset = reinterpret_s16_q16( q16XRightOffset);
+                    q16XRightOffset = reinterpret_q16_s16(q16XRightOffset) + 0x8000;
+                }
 
+
+                /* draw the first point of the right wing endpoint*/
+                //q16_t q16Square;
+                int16_t iX;
+                if (iRightWidth > 0){
+                    
+                    q16_t q16Delta = q16XRightEnd - q16XRightOffset;
+                    iX = reinterpret_s16_q16(q16XRightOffset) + 1;
+
+                    //q16_t q16XRightOffsetTemp = q16XRightOffset;
+
+                    assert(q16Delta >= 0);
+
+                    q16XRightOffset -= reinterpret_q16_s16(1);
+                    iRightWidth -= 1;
+
+                    q16_t q16Height = mul_q16(q16Delta, this.q16K);
+                    q16Height = MIN(q16Height, 0xFFFF);
+
+                    /* calculate the first point area */
+                    q16_t q16NextDotOffset = q16Delta - mul_q16(q16Height, this.q161divK);
+                    if ( abs_q16(this.q16K) > reinterpret_q16_s16(1) && q16NextDotOffset > 0) {
+                        /* calculate the area of ​​the trapezoid where the first point is located */
+
+                        q16NextDotOffset = MIN(q16NextDotOffset, this.q16BrushWidth);
+                        q16Delta = MIN(q16Delta, this.q16BrushWidth);
+
+                        q16Square = mul_q16 (q16Height, (q16NextDotOffset + q16Delta));
+
+                    } else {
+                        /* Calculate the area of ​​the triangle where the first point lies */
+                        q16Height = MIN(q16Height, this.q16BrushWidth);
+                        q16Square = mul_q16 (q16Height, q16Delta);
+                    }
+
+                    q16Square = div_n_q16(q16Square, 2); 
+
+                    arm_2d_location_t tDrawPoint = {
+                        .iX = iX,
+                        .iY = iYOffset,
+                    };
+                    if (arm_2d_is_point_inside_region(ptValidRegionOnVirtualScreen, &tDrawPoint)) {
+                        /* use the pixel area as the opacity */
+                        uint16_t hwOpacity = (q16Square & 0xFF00) >> 8;
+                        __draw_point(iX - iXStart, phwTarget, hwColour, hwOpacity);
+                    }
+
+                #if 0
+                    printf("[%f][%f][%f][%d][%f][Delta:%f][%f][%02x]\r\n", 
+                            reinterpret_f32_q16(q16XStart),
+                            reinterpret_f32_q16(q16XRightEnd),
+                            reinterpret_f32_q16(q16XRightOffsetTemp),
+                            iX,
+                            reinterpret_f32_q16(q16Square),
+                            reinterpret_f32_q16(q16Delta),
+                            reinterpret_f32_q16(q16Height),
+                            hwOpacity);
+                #endif
+                    iX--;
+                }
+
+                /* reset of the right wing */
+                for (int16_t n = 0; n < iRightWidth; n++) {
+                    q16Square += this.q16K;
+                    q16Square = MIN(q16Square, 0xFF00);
+                    q16Square = MIN(q16Square, this.q16BrushWidth);
+                    
+                    arm_2d_location_t tDrawPoint = {
+                        .iX = iX,
+                        .iY = iYOffset,
+                    };
+
+                    if (arm_2d_is_point_inside_region(ptValidRegionOnVirtualScreen, &tDrawPoint)) {
+                        uint16_t hwOpacity = (q16Square & 0xFF00) >> 8;
+                        __draw_point(iX - iXStart, phwTarget, hwColour, hwOpacity);
+                    }
+                
+                #if 0
+                    printf("[%f][%f][%d][%f][%02x]\r\n", 
+                            reinterpret_f32_q16(q16XStart),
+                            reinterpret_f32_q16(q16XRightOffset),
+                            iX,
+                            //reinterpret_f32_q16(q16Delta),
+                            reinterpret_f32_q16(q16Square),
+                            hwOpacity);
+
+                    q16XRightOffset += reinterpret_q16_s16(1);
+                #endif
+                    iX--;
+                }
+
+                //printf("\r\n");
             } while(0);
 
 
-        #endif
             q16XStart += this.q16dX;
             phwTarget += iTargetStride;
         }
@@ -754,6 +897,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
         iYStart += iHeight;
     }
 
+#if 0
     if (!this.tParams.bHorizontallyChoppedEndpoints) {
         /* draw the stop endpoint*/
         if (iYEnd > iNormalBodyYEnd) {
@@ -791,7 +935,8 @@ void __arm_2d_impl_rgb565_user_draw_line(
             }
         }
     }
-
+#endif
+    //printf("\r\nEnd of Drawing\r\n");
 }
 
 /*
