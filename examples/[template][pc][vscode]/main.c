@@ -410,6 +410,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_filters_loader,
     },
     {
+        5000,
+        scene_user_defined_opcode_loader,
+    },
+    {
         10000,
         scene_audiomark_loader,
     },

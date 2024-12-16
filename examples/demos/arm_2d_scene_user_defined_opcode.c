@@ -90,23 +90,12 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*! define dirty regions */
 IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
-    /* a dirty region to be specified at runtime*/
-    ADD_REGION_TO_LIST(s_tDirtyRegions,
-        0  /* initialize at runtime later */
-    ),
     
     /* add the last region:
         * it is the top left corner for text display 
         */
     ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        .tLocation = {
-            .iX = 0,
-            .iY = 0,
-        },
-        .tSize = {
-            .iWidth = 0,
-            .iHeight = 8,
-        },
+        0,
     ),
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
@@ -181,10 +170,7 @@ static void __on_scene_user_defined_opcode_frame_start(arm_2d_scene_t *ptScene)
     }
     this.iStartOffset -= 4;
 
-    //if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
-
-        console_box_printf(&this.tConsole, "%d\r\n",rand());
-    //}
+    console_box_printf(&this.tConsole, "%d\r\n",rand());
 
     console_box_on_frame_start(&this.tConsole);
 }
