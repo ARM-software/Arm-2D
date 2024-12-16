@@ -635,6 +635,7 @@ void console_box_show(  console_box_t *ptThis,
             arm_lcd_text_set_draw_region(&__centre_region);
             arm_lcd_text_set_colour(this.tColor, GLCD_COLOR_BLACK);
 
+            arm_lcd_text_set_opacity(chOpacity);
             /* force all char use the same with in display */
             arm_using(bool bOriginal = arm_lcd_text_force_char_use_same_width(true),
                       /* on leave resume the original configuration */

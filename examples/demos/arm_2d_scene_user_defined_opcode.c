@@ -138,6 +138,8 @@ static void __on_scene_user_defined_opcode_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
+    console_box_depose(&this.tConsole);
+
     /* draw line */
     do {
         arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
@@ -178,6 +180,13 @@ static void __on_scene_user_defined_opcode_frame_start(arm_2d_scene_t *ptScene)
         this.iStartOffset = 100;
     }
     this.iStartOffset -= 4;
+
+    //if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
+
+        console_box_printf(&this.tConsole, "%d\r\n",rand());
+    //}
+
+    console_box_on_frame_start(&this.tConsole);
 }
 
 static void __on_scene_user_defined_opcode_frame_complete(arm_2d_scene_t *ptScene)
@@ -300,12 +309,33 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
                     255,
                     (arm_2d_alpha_samples_2pts_t){255, 0}
                 );
+            }
+        }
 
+        arm_2d_align_centre(__top_canvas, 140, 128) {
+
+            arm_2d_dock(__centre_region, 10, 10, 32, 0) {
+                console_box_show(
+                                &this.tConsole,
+                                ptTile,
+                                &__dock_region,
+                                bIsNewFrame,
+                                128);
+                
+                
+            }
+
+            arm_2d_dock(__centre_region, 0, 0, 32, 10) {
+                draw_round_corner_border(   ptTile, 
+                                            &__dock_region, 
+                                            GLCD_COLOR_GREEN, 
+                                            (arm_2d_border_opacity_t)
+                                                {64, 64, 64, 64},
+                                            (arm_2d_corner_opacity_t)
+                                                {64, 64, 64, 64});
             }
 
         }
-
-
 
         /* draw text at the top-left corner */
 
@@ -341,8 +371,8 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
      * this demo shows that we create a region in the centre of a screen(320*240)
      * for a image stored in the tile c_tileCMSISLogoMask
      */
-    arm_2d_align_centre(tScreen, c_tileCMSISLogoMask.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
+    arm_2d_dock_bottom(tScreen, tScreen.tSize.iHeight >> 1) {
+        s_tDirtyRegions[0].tRegion = __bottom_region;
     }
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
@@ -376,7 +406,7 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
             //.fnAfterSwitch  = &__after_scene_user_defined_opcode_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
-            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_user_defined_opcode_background_start,
@@ -397,6 +427,32 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
         arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
             ARM_2D_OP_INIT(*ptLineOP);
         }
+    } while(0);
+
+    do {
+    #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
+        static uint8_t s_chInputBuffer[__DISP0_CFG_CONSOLE_INPUT_BUFFER__];
+    #endif
+        static uint8_t s_chConsoleBuffer[(__DISP0_CFG_SCEEN_WIDTH__ / 6) * (__DISP0_CFG_SCEEN_HEIGHT__ / 8)];
+        console_box_cfg_t tCFG = {
+            .tBoxSize = {
+                120, 64
+            },
+            
+            .pchConsoleBuffer = s_chConsoleBuffer,
+            .hwConsoleBufferSize = sizeof(s_chConsoleBuffer),
+
+        #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
+            .pchInputBuffer = s_chInputBuffer,
+            .hwInputBufferSize = sizeof(s_chInputBuffer),
+        #endif
+            .tColor = GLCD_COLOR_GREEN,
+            .bUseDirtyRegion = true,
+        };
+
+        console_box_init(   &this.tConsole, 
+                            &this.use_as__arm_2d_scene_t, 
+                            &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_user_defined_opcode_t end   ---------------*/
