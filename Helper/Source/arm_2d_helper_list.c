@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        16. Dec 2024
- * $Revision:    V.2.2.4
+ * $Revision:    V.2.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1366,8 +1366,11 @@ ARM_PT_BEGIN(this.chState)
 
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
-        if (nOffset >= 0) {
-            nOffset -= this.tCFG.nTotalLength;
+
+        if (!this.tCFG.bDisableRingMode) {
+            if (nOffset >= 0) {
+                nOffset -= this.tCFG.nTotalLength;
+            }
         }
     }
 
@@ -1566,21 +1569,28 @@ ARM_PT_BEGIN(this.chState)
             ARM_PT_RETURN(NULL)
         }
         
-        /* move the nOffset to the top invisible area */
-        do {
-            int32_t nStartY = nOffset 
-                            + this.iStartOffset 
-                            + ptItem->Padding.chPrevious;
-                    
-            if (nStartY <= 0) {
-                break;
-            } 
-            nOffset -= this.tCFG.nTotalLength;
-        } while(true);
+        if (!this.tCFG.bDisableRingMode) {
+            /* move the nOffset to the top invisible area */
+            do {
+                int32_t nStartY = nOffset 
+                                + this.iStartOffset 
+                                + ptItem->Padding.chPrevious;
+                        
+                if (nStartY <= 0) {
+                    break;
+                } 
+                nOffset -= this.tCFG.nTotalLength;
+            } while(true);
+        }
 
         int32_t nTempOffset = nOffset;
         
         while(NULL != ptItem) {
+            if (nTempOffset >= 0) {
+                assert(this.tCFG.bDisableRingMode);
+                break;
+            }
+
             int32_t nY1 = nTempOffset 
                         + this.iStartOffset 
                         + ptItem->Padding.chPrevious;
@@ -1837,8 +1847,10 @@ ARM_PT_BEGIN(this.chState)
 
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
-        if (nOffset >= 0) {
-            nOffset -= this.tCFG.nTotalLength;
+        if (!this.tCFG.bDisableRingMode) {
+            if (nOffset >= 0) {
+                nOffset -= this.tCFG.nTotalLength;
+            }
         }
     }
 
@@ -2038,21 +2050,30 @@ ARM_PT_BEGIN(this.chState)
             ARM_PT_RETURN(NULL)
         }
         
-        /* move the nOffset to the top invisible area */
-        do {
-            int32_t nStartX = nOffset 
-                            +   this.iStartOffset 
-                            +   ptItem->Padding.chPrevious;
-                    
-            if (nStartX <= 0) {
-                break;
-            } 
-            nOffset -= this.tCFG.nTotalLength;
-        } while(true);
+        if (!this.tCFG.bDisableRingMode) {
+            /* move the nOffset to the top invisible area */
+            do {
+                int32_t nStartX = nOffset 
+                                +   this.iStartOffset 
+                                +   ptItem->Padding.chPrevious;
+                        
+                if (nStartX <= 0) {
+                    break;
+                } 
+                nOffset -= this.tCFG.nTotalLength;
+            } while(true);
+        }
 
         int32_t nTempOffset = nOffset;
         
+        
         while(NULL != ptItem) {
+
+            if (nTempOffset >= 0) {
+                assert(this.tCFG.bDisableRingMode);
+                break;
+            }
+
             int32_t nX1 = nTempOffset 
                             +   this.iStartOffset 
                             +   ptItem->Padding.chPrevious;
@@ -2310,8 +2331,10 @@ ARM_PT_BEGIN(this.chState)
 
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
-        if (nOffset >= 0) {
-            nOffset -= this.tCFG.nTotalLength;
+        if (!this.tCFG.bDisableRingMode) {
+            if (nOffset >= 0) {
+                nOffset -= this.tCFG.nTotalLength;
+            }
         }
     }
 
@@ -2514,43 +2537,50 @@ ARM_PT_BEGIN(this.chState)
         }
         
         /* move the nOffset to the top invisible area */
-        do {
-            int32_t nStartY = nOffset 
-                            +   this.iStartOffset 
-                            +   ptItem->Padding.chPrevious;
-                    
-            if (nStartY <= 0) {
-                break;
-            } 
-            nOffset -= this.tCFG.nTotalLength;
-        } while(true);
+        if (!this.tCFG.bDisableRingMode) {
+            do {
+                int32_t nStartY = nOffset 
+                                +   this.iStartOffset 
+                                +   ptItem->Padding.chPrevious;
+                        
+                if (nStartY <= 0) {
+                    break;
+                } 
+                nOffset -= this.tCFG.nTotalLength;
+            } while(true);
+        }
 
 
         int32_t nTempOffset = nOffset;
         
         do {
-            int16_t iItemActualHeight = ptItem->tSize.iHeight 
+            int32_t nCount = 0;
+
+            if (nTempOffset < 0) {
+                int16_t iItemActualHeight = ptItem->tSize.iHeight 
                          + ptItem->Padding.chPrevious
                          + ptItem->Padding.chNext;
-            
-            int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
-            int32_t nCount = nLength / iItemActualHeight;
-            
-            nTempOffset += nCount * iItemActualHeight;
-            
-            do {
-                int32_t nY1 = nTempOffset 
-                                +   this.iStartOffset 
-                                +   ptItem->Padding.chPrevious;
-                int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
+
+                int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
+                nCount = nLength / iItemActualHeight;
+                nTempOffset += nCount * iItemActualHeight;
                 
-                if (nY1 >= 0 || nY2 >=0) {
-                    /* we find the top item */
-                    break;
-                }
-                nTempOffset += iItemActualHeight;
-                nCount++;
-            } while(true);
+                do {
+                    int32_t nY1 = nTempOffset 
+                                    +   this.iStartOffset 
+                                    +   ptItem->Padding.chPrevious;
+                    int32_t nY2 = nY1 + ptItem->tSize.iHeight - 1;
+                    
+                    if (nY1 >= 0 || nY2 >=0) {
+                        /* we find the top item */
+                        break;
+                    }
+                    nTempOffset += iItemActualHeight;
+                    nCount++;
+                } while(true);
+            } else {
+                assert(this.tCFG.bDisableRingMode);
+            }
             
             uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
             
@@ -2799,8 +2829,10 @@ ARM_PT_BEGIN(this.chState)
 
     if (this.tCFG.nTotalLength) {
         nOffset = __arm_2d_list_safe_mod(nOffset, this.tCFG.nTotalLength, bMidAligned);
-        if (nOffset >= 0) {
-            nOffset -= this.tCFG.nTotalLength;
+        if (!this.tCFG.bDisableRingMode) {
+            if (nOffset >= 0) {
+                nOffset -= this.tCFG.nTotalLength;
+            }
         }
     }
 
@@ -3000,43 +3032,50 @@ ARM_PT_BEGIN(this.chState)
             ARM_PT_RETURN(NULL)
         }
         
-        /* move the nOffset to the top invisible area */
-        do {
-            int32_t nStartX = nOffset 
-                            +   this.iStartOffset 
-                            +   ptItem->Padding.chPrevious;
-                    
-            if (nStartX <= 0) {
-                break;
-            } 
-            nOffset -= this.tCFG.nTotalLength;
-        } while(true);
+        if (!this.tCFG.bDisableRingMode) {
+            /* move the nOffset to the top invisible area */
+            do {
+                int32_t nStartX = nOffset 
+                                +   this.iStartOffset 
+                                +   ptItem->Padding.chPrevious;
+                        
+                if (nStartX <= 0) {
+                    break;
+                } 
+                nOffset -= this.tCFG.nTotalLength;
+            } while(true);
+        }
 
         int32_t nTempOffset = nOffset;
         
         do {
-            int16_t iItemActualWidth = ptItem->tSize.iWidth 
+            int32_t nCount = 0;
+
+            if (nTempOffset < 0) {
+                int16_t iItemActualWidth = ptItem->tSize.iWidth 
                          + ptItem->Padding.chPrevious
                          + ptItem->Padding.chNext;
             
-            int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
-            int32_t nCount = nLength / iItemActualWidth;
-            
-            nTempOffset += nCount * iItemActualWidth;
+                int32_t nLength = ABS(nTempOffset) - this.iStartOffset;
+                nCount = nLength / iItemActualWidth;
+                nTempOffset += nCount * iItemActualWidth;
 
-            do {
-                int32_t nX1 = nTempOffset 
-                                +   this.iStartOffset 
-                                +   ptItem->Padding.chPrevious;
-                int32_t nX2 = nX1 + ptItem->tSize.iWidth - 1;
-                
-                if (nX1 >= 0 || nX2 >=0) {
-                    /* we find the top item */
-                    break;
-                }
-                nTempOffset += iItemActualWidth;
-                nCount++;
-            } while(true);
+                do {
+                    int32_t nX1 = nTempOffset 
+                                    +   this.iStartOffset 
+                                    +   ptItem->Padding.chPrevious;
+                    int32_t nX2 = nX1 + ptItem->tSize.iWidth - 1;
+                    
+                    if (nX1 >= 0 || nX2 >=0) {
+                        /* we find the top item */
+                        break;
+                    }
+                    nTempOffset += iItemActualWidth;
+                    nCount++;
+                } while(true);
+            } else {
+                assert(this.tCFG.bDisableRingMode);
+            }
             
             uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
             
