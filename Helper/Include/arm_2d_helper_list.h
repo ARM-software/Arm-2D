@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        1. Dec 2024
- * $Revision:    V.2.2.3
+ * $Date:        16. Dec 2024
+ * $Revision:    V.2.2.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

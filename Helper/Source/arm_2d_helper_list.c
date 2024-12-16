@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        1. Dec 2024
- * $Revision:    V.2.2.3
+ * $Date:        16. Dec 2024
+ * $Revision:    V.2.2.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1372,7 +1372,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     /* no ring mode */
-    if (this.tCFG.bDisableRingMode) {
+    if (this.tCFG.bDisableRingMode && bMidAligned) {
         
         /* move to the first item */
         ptItem = __arm_2d_list_core_get_item(   
@@ -1634,8 +1634,12 @@ ARM_PT_BEGIN(this.chState)
                     false);
 
             if (NULL == ptItem) {
-                /* no valid item, return NULL */
-                ARM_PT_RETURN(NULL)
+                if (this.tCFG.bDisableRingMode) {
+                    break;
+                } else {
+                    /* no valid item, return NULL */
+                    ARM_PT_RETURN(NULL)
+                }
             }
             
             int32_t nY1 = nTempOffset 
@@ -1839,7 +1843,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     /* no ring mode */
-    if (this.tCFG.bDisableRingMode) {
+    if (this.tCFG.bDisableRingMode && bMidAligned) {
         
         /* move to the first item */
         ptItem = __arm_2d_list_core_get_item(   
@@ -2102,8 +2106,12 @@ ARM_PT_BEGIN(this.chState)
                     false);
 
             if (NULL == ptItem) {
-                /* no valid item, return NULL */
-                ARM_PT_RETURN(NULL)
+                if (this.tCFG.bDisableRingMode) {
+                    break;
+                } else {
+                    /* no valid item, return NULL */
+                    ARM_PT_RETURN(NULL)
+                }
             }
             
             int32_t nX1 = nTempOffset 
@@ -2308,7 +2316,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     /* no ring mode */
-    if (this.tCFG.bDisableRingMode) {
+    if (this.tCFG.bDisableRingMode && bMidAligned) {
         
         /* move to the first item */
         ptItem = __arm_2d_list_core_get_item(   
@@ -2349,11 +2357,6 @@ ARM_PT_BEGIN(this.chState)
             .hwID = 0,
         };
 
-    #if 0
-        int16_t iItemActualWidth = ptItem->tSize.iHeight 
-                         + ptItem->Padding.chPrevious
-                         + ptItem->Padding.chNext;
-    #endif
         while(NULL != ptItem) {
             int32_t nY1 = nTempOffset 
                         + this.iStartOffset 
@@ -2591,8 +2594,12 @@ ARM_PT_BEGIN(this.chState)
                     false);
 
             if (NULL == ptItem) {
-                /* no valid item, return NULL */
-                ARM_PT_RETURN(NULL)
+                if (this.tCFG.bDisableRingMode) {
+                    break;
+                } else {
+                    /* no valid item, return NULL */
+                    ARM_PT_RETURN(NULL)
+                }
             }
             
             int32_t nY1 = nTempOffset 
@@ -2798,7 +2805,7 @@ ARM_PT_BEGIN(this.chState)
     }
 
     /* no ring mode */
-    if (this.tCFG.bDisableRingMode) {
+    if (this.tCFG.bDisableRingMode && bMidAligned) {
         
         /* move to the first item */
         ptItem = __arm_2d_list_core_get_item(   
@@ -2838,11 +2845,7 @@ ARM_PT_BEGIN(this.chState)
             .nOffset = 0,
             .hwID = 0,
         };
-    #if 0
-        int16_t iItemActualWidth = ptItem->tSize.iWidth 
-                         + ptItem->Padding.chPrevious
-                         + ptItem->Padding.chNext;
-    #endif
+
         while(NULL != ptItem) {
             int32_t nX1 = nTempOffset 
                         + this.iStartOffset 
@@ -3076,8 +3079,12 @@ ARM_PT_BEGIN(this.chState)
                     false);
 
             if (NULL == ptItem) {
-                /* no valid item, return NULL */
-                ARM_PT_RETURN(NULL)
+                if (this.tCFG.bDisableRingMode) {
+                    break;
+                } else {
+                    /* no valid item, return NULL */
+                    ARM_PT_RETURN(NULL)
+                }
             }
             
             int32_t nX1 = nTempOffset 
