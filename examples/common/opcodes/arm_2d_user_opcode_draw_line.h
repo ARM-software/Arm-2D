@@ -51,7 +51,6 @@ typedef struct arm_2d_user_draw_line_api_params_t {
     arm_2d_location_t tStart;
     arm_2d_location_t tEnd;
 
-    COLOUR_TYPE_T tLine;
 } arm_2d_user_draw_line_api_params_t;
 
 
@@ -62,16 +61,20 @@ typedef struct arm_2d_user_draw_line_descriptor_t {
     arm_2d_region_t tDrawRegion;
 
     union {
+        //union {
         q16_t q16dX;
         q16_t q161divK;
-    };
+        //};
 
-    union {
+        //union {
         q16_t q16K;
         q16_t q16dY;
+        //};
     };
 
     uint8_t chOpacity;
+    bool bUseYAdvance;
+    uint16_t hwColour;
 
 }arm_2d_user_draw_line_descriptor_t;
 
@@ -92,6 +95,7 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_line(
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
                     const arm_2d_user_draw_line_api_params_t *ptParams,
+                    arm_2d_color_rgb565_t tColour,
                     uint8_t chOpacity);
 
 

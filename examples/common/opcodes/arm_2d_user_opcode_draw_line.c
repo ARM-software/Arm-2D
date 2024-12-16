@@ -131,15 +131,23 @@ arm_2d_err_t arm_2dp_rgb565_user_draw_line_prepare(
     } else if (bHorizontalLine) {
         fK = 0.0f;
         this.q16K = 0;
-        this.q16dX = __INT32_MAX__;
+        this.bUseYAdvance = false;
+        //this.q16dX = __INT32_MAX__;
     } else if (bVerticalLine) {
 
-        this.q16K = __INT32_MAX__;
+        //this.q16K = __INT32_MAX__;
         this.q16dX = 0;
+        this.bUseYAdvance = true;
     } else {
         fK = (float)q16DeltaY / (float)q16DeltaX;
-        this.q16K = reinterpret_q16_f32(fK);
-        this.q16dX = reinterpret_q16_f32(1.0f / fK);
+
+        if (abs_q16(fK) >= reinterpret_q16_f32(1)) {
+            this.bUseYAdvance = true;
+            this.q16dX = reinterpret_q16_f32(1.0f / fK);
+        } else {
+            this.bUseYAdvance = false;
+            this.q16K = reinterpret_q16_f32(fK);
+        }
     }
 
     /* clip the line with the given region */
@@ -196,6 +204,7 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_line(
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
                             const arm_2d_user_draw_line_api_params_t *ptParams,
+                            arm_2d_color_rgb565_t tColour,
                             uint8_t chOpacity)
 {
 
@@ -224,6 +233,7 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_line(
                 }
 
                 this.chOpacity = chOpacity;
+                this.hwColour = tColour.tValue;
 
             } while(0);
             break;
@@ -355,9 +365,9 @@ void __arm_2d_impl_rgb565_user_draw_line(
      * iYStart is the starting point for the horizontal scanning 
      */
     int16_t iYStart = ptValidRegionOnVirtualScreen->tLocation.iY;
-    uint16_t hwColour = this.tParams.tLine.hwColour;
+    uint16_t hwColour = this.hwColour;
 
-    if (abs_q16(this.q16K) >= reinterpret_q16_s16(1)) {
+    if (this.bUseYAdvance) {
         q16_t q16XStart = mul_n_q16(this.q161divK, (iYStart - tStart.iY)) + reinterpret_q16_s16(tStart.iX);
         arm_2d_location_t tDrawPoint = {
             .iY = iYStart,

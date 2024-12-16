@@ -88,8 +88,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+    int16_t iStartOffset;
 
-    arm_2d_user_draw_line_descriptor_t tDrawLineOP[2];
+    arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
 
 )
     /* place your public member here */
