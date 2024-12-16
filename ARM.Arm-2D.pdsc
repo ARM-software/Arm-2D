@@ -753,13 +753,13 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cversion="1.0.1" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cversion="1.1.0" condition="Arm-2D-Demos">
           <description>An example for showing user define OPCODE(s)</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_user_defined_opcode.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/demos/arm_2d_scene_user_defined_opcode.h" attr="config" version="1.0.1" />
-            <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_line.c" attr="config" version="1.0.1" />
-            <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_line.h" attr="config" version="1.0.1" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_user_defined_opcode.c" attr="config" version="1.1.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_user_defined_opcode.h" attr="config" version="1.1.0" />
+            <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_line.c" attr="config" version="1.1.0" />
+            <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_line.h" attr="config" version="1.1.0" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_User_Defined_OPCODE
