@@ -22,6 +22,8 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d_types.h"
 
+#include "arm_2d_helper.h"
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -48,16 +50,8 @@ typedef struct arm_2d_user_draw_line_api_params_t {
     
     arm_2d_location_t tStart;
     arm_2d_location_t tEnd;
-    float_t fBrushWidth;
 
-    bool bHorizontallyChoppedEndpoints;
-
-    union {
-        uint8_t chColour;
-        uint16_t hwColour;
-        uint32_t wColour;
-    };
-    
+    COLOUR_TYPE_T tLine;
 } arm_2d_user_draw_line_api_params_t;
 
 
@@ -67,30 +61,15 @@ typedef struct arm_2d_user_draw_line_descriptor_t {
     arm_2d_user_draw_line_api_params_t tParams;
     arm_2d_region_t tDrawRegion;
 
-    
-    q16_t q16L;
-    union {
-        q16_t q161PixelL;
-        q16_t q16_SqrtKKp1_divK;
-    };
-    q16_t q16BrushWidth;
-    q16_t q16Xend;
-    q16_t q16Yend;
     union {
         q16_t q16dX;
         q16_t q161divK;
     };
-    q16_t q16abs_Kp_1divK_;
-    q16_t q16PixelCompensate;
-    q16_t q16XWithdraw;
 
     union {
         q16_t q16K;
         q16_t q16dY;
     };
-
-    uint8_t bHorizontalLine : 1;
-    uint8_t bVerticalLine : 1;
 
     uint8_t chOpacity;
 
