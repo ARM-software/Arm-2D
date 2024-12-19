@@ -18,8 +18,8 @@
 
 /*============================ INCLUDES ======================================*/
 
-#define __USER_SCENE_MONO_LIST_IMPLEMENT__
-#include "arm_2d_scene_mono_list.h"
+#define __USER_SCENE_MONO_TRACKING_LIST_IMPLEMENT__
+#include "arm_2d_scene_mono_tracking_list.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
@@ -119,32 +119,32 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 /*============================ IMPLEMENTATION ================================*/
 
-static void __on_scene_mono_list_load(arm_2d_scene_t *ptScene)
+static void __on_scene_mono_tracking_list_load(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __after_scene_mono_list_switching(arm_2d_scene_t *ptScene)
+static void __after_scene_mono_tracking_list_switching(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_mono_list_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_mono_tracking_list_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
     ptScene->ptPlayer = NULL;
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    text_list_depose(&this.tList);
+    text_tracking_list_depose(&this.tList);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -152,41 +152,47 @@ static void __on_scene_mono_list_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene mono_list                                                            *
+ * Scene mono_tracking_list                                                            *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene_mono_list_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_mono_tracking_list_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_mono_list_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_mono_tracking_list_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene_mono_list_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_mono_tracking_list_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(1000, &this.lTimestamp[1])) {
+    do {
+        /* generate a new position every 2000 sec */
+        if (arm_2d_helper_is_time_out(1000,  &this.lTimestamp[1])) {
+            int32_t nSteps = 0;
+            this.lTimestamp[1] = 0;
+            srand(arm_2d_helper_get_system_timestamp());
+            nSteps = rand() % 10;
 
-        /* move list */
-        text_list_move_selection(&this.tList, 1, 100);
-    }
+            text_tracking_list_move_selection(&this.tList, nSteps - 5, 200);
+        }
+    } while(0);
 
-    text_list_on_frame_start(&this.tList);
+    text_tracking_list_on_frame_start(&this.tList);
 }
 
-static void __on_scene_mono_list_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_mono_tracking_list_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 #if 0
@@ -197,21 +203,21 @@ static void __on_scene_mono_list_frame_complete(arm_2d_scene_t *ptScene)
 #endif
 }
 
-static void __before_scene_mono_list_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_mono_tracking_list_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)ptScene;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_list_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_tracking_list_handler)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(ptTile);
     ARM_2D_PARAM(bIsNewFrame);
 
-    user_scene_mono_list_t *ptThis = (user_scene_mono_list_t *)pTarget;
+    user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
     ARM_2D_UNUSED(tScreenSize);
 
@@ -228,7 +234,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_list_handler)
                 arm_lcd_text_set_draw_region(&__item_region);
                 arm_lcd_text_set_display_mode(ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR);
                 
-                arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_LEFT, " weekday");
+                arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_LEFT, " Month");
                 arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "_x");
             }
 
@@ -237,23 +243,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_list_handler)
                                       2,    /* top margin */
                                       2) {  /* bottom margin */
 
-                /* draw the centre bar (selection bar) */
-                arm_2d_dock_vertical(__item_region, 
-                                    10,     /* height */
-                                    0,      /* left margin */
-                                    10) {   /* right margin */
-                    arm_2d_fill_colour(ptTile, &__vertical_region, GLCD_COLOR_WHITE);
-                }
-
                 /* draw text list */
                 arm_2d_dock_with_margin(__item_region, 
-                                        8,  /* left margin */
+                                        0,  /* left margin */
                                         0,  /* right margin */
                                         0,  /* top margin */
                                         0) {/* bottom margin */
 
                     arm_lcd_text_set_display_mode(ARM_2D_DRW_PATH_MODE_COMP_FG_COLOUR);
-                    while(arm_fsm_rt_cpl != text_list_show( &this.tList, 
+                    while(arm_fsm_rt_cpl != text_tracking_list_show( &this.tList, 
                                                     ptTile, 
                                                     &__dock_region, 
                                                     bIsNewFrame));
@@ -266,67 +264,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_list_handler)
     return arm_fsm_rt_cpl;
 }
 
-static 
-IMPL_PFB_ON_DRAW(__arm_2d_list_draw_cover)
-{
-    ARM_2D_UNUSED(bIsNewFrame);
-    
-    text_list_t *ptThis = (text_list_t *)pTarget;
-
-    uint16_t hwListCount = text_list_get_list_item_count(ptThis);
-    uint16_t hwSelectedID = text_list_get_selected_item_id(ptThis);
-
-    arm_2d_canvas(ptTile, __list_cover) {
-
-        arm_2d_dock_right(__list_cover, 3) {
-            
-            arm_2d_dock_horizontal(__right_region, 1, 4, 4) {
-
-                /* draw bar */
-                arm_2d_fill_colour(ptTile, &__horizontal_region, GLCD_COLOR_WHITE);
-
-                /* draw selection indicator */
-                do {
-                    int16_t iBarHeight = __horizontal_region.tSize.iHeight;
-                    q16_t q16Step = div_n_q16(reinterpret_q16_s16(iBarHeight), hwListCount);
-
-                    int16_t iIndicatorHeight = reinterpret_s16_q16(q16Step);
-                    iIndicatorHeight = MAX(2, iIndicatorHeight);
-
-                    arm_2d_region_t tIndicatorRegion = {
-                        .tSize = {
-                            .iHeight = iIndicatorHeight,
-                            .iWidth = 3,
-                        },
-                        .tLocation = {
-                            .iX = __horizontal_region.tLocation.iX - 1,
-                            .iY = __horizontal_region.tLocation.iY
-                                + reinterpret_s16_q16(mul_n_q16(q16Step, hwSelectedID)),
-                        },
-                    };
-
-                    arm_2d_fill_colour(ptTile, &tIndicatorRegion, GLCD_COLOR_WHITE);
-                } while(0);
-            }
-        }
-    }
-
-    ARM_2D_OP_WAIT_ASYNC();
-    
-    return arm_fsm_rt_cpl;
-}
-
 ARM_NONNULL(1)
-user_scene_mono_list_t *__arm_2d_scene_mono_list_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_mono_list_t *ptThis)
+user_scene_mono_tracking_list_t *__arm_2d_scene_mono_tracking_list_init(
+                                        arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_mono_tracking_list_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_mono_list_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_mono_list_t),
-                                                        __alignof__(user_scene_mono_list_t),
+        ptThis = (user_scene_mono_tracking_list_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_mono_tracking_list_t),
+                                                        __alignof__(user_scene_mono_tracking_list_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -336,9 +285,9 @@ user_scene_mono_list_t *__arm_2d_scene_mono_list_init(   arm_2d_scene_player_t *
         bUserAllocated = true;
     }
 
-    memset(ptThis, 0, sizeof(user_scene_mono_list_t));
+    memset(ptThis, 0, sizeof(user_scene_mono_tracking_list_t));
 
-    *ptThis = (user_scene_mono_list_t){
+    *ptThis = (user_scene_mono_tracking_list_t){
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
@@ -346,68 +295,88 @@ user_scene_mono_list_t *__arm_2d_scene_mono_list_init(   arm_2d_scene_player_t *
 
             /* Please uncommon the callbacks if you need them
              */
-            .fnOnLoad       = &__on_scene_mono_list_load,
-            .fnScene        = &__pfb_draw_scene_mono_list_handler,
-            //.fnAfterSwitch  = &__after_scene_mono_list_switching,
+            .fnOnLoad       = &__on_scene_mono_tracking_list_load,
+            .fnScene        = &__pfb_draw_scene_mono_tracking_list_handler,
+            //.fnAfterSwitch  = &__after_scene_mono_tracking_list_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
-            //.fnOnBGStart    = &__on_scene_mono_list_background_start,
-            //.fnOnBGComplete = &__on_scene_mono_list_background_complete,
-            .fnOnFrameStart = &__on_scene_mono_list_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_mono_list_switching_out,
-            .fnOnFrameCPL   = &__on_scene_mono_list_frame_complete,
-            .fnDepose       = &__on_scene_mono_list_depose,
+            //.fnOnBGStart    = &__on_scene_mono_tracking_list_background_start,
+            //.fnOnBGComplete = &__on_scene_mono_tracking_list_background_complete,
+            .fnOnFrameStart = &__on_scene_mono_tracking_list_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene_mono_tracking_list_switching_out,
+            .fnOnFrameCPL   = &__on_scene_mono_tracking_list_frame_complete,
+            .fnDepose       = &__on_scene_mono_tracking_list_depose,
 
             .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
-    /* ------------   initialize members of user_scene_mono_list_t begin ---------------*/
+    /* ------------   initialize members of user_scene_mono_tracking_list_t begin ---------------*/
 
     /* initialize text list */
     do {
         const static __disp_string_t c_strListItemStrings[] = {
-            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+            "  1 January", "  2 February", "  3 March", "  4 April", "  5 May", "  6 June", 
+            "  7 July", "  8 August", "  9 September", " 10 October", " 11 November", " 12 December",
         };
 
-        text_list_cfg_t tCFG = {
-            .ptStrings = (__disp_string_t *)c_strListItemStrings,
-
-            .use_as____simple_list_cfg_t = {
-                .hwCount = dimof(c_strListItemStrings),
+        text_tracking_list_cfg_t tCFG = {
+            //.tSettings = {
                 
-                .tFontColour = GLCD_COLOR_WHITE,
-                .tBackgroundColour = GLCD_COLOR_BLACK,
-                .bIgnoreBackground = true,
+                .bIndicatorAutoSize = true,
+                .tIndicator.tColour = GLCD_COLOR_WHITE,
                 
-                //.bDisableRingMode = true,     /* you can disable the list ring mode here */
+            //},
 
-                .chNextPadding = 1,
-                .chPreviousPadding = 1,
-                .tListSize = {
-                    .iHeight = 0,           /* automatically set the height */
-                    .iWidth = 0,            /* automatically set the width */
+            .use_as__text_list_cfg_t = {
+                .ptStrings = (__disp_string_t *)c_strListItemStrings,
+
+                .use_as____simple_list_cfg_t = {
+                    .hwCount = dimof(c_strListItemStrings),
+                    
+                    .tFontColour = GLCD_COLOR_WHITE,
+                    .tBackgroundColour = GLCD_COLOR_BLACK,
+
+                    .bUseMonochromeMode = true,
+                    .bShowScrollingBar = true,
+                    .chScrollingBarAutoDisappearTimeX100Ms = 10,
+                    .ScrollingBar.tColour = GLCD_COLOR_WHITE,
+                    .bUsePIMode = true,
+                    
+
+                    //.bIgnoreBackground = true,
+                    
+                    //.bDisableRingMode = true,     /* you can disable the list ring mode here */
+
+                    .chNextPadding = 1,
+                    .chPreviousPadding = 1,
+                    .tListSize = {
+                        .iHeight = 0,           /* automatically set the height */
+                        .iWidth = 0,            /* automatically set the width */
+                    },
+                    .tTextAlignment = ARM_2D_ALIGN_MIDDLE_LEFT,
+
+                    .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8,
+
+                    .bUseDirtyRegion = true,
+                    .ptTargetScene = &this.use_as__arm_2d_scene_t,
                 },
-                .tTextAlignment = ARM_2D_ALIGN_MIDDLE_LEFT,
-
-                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8,
-                /* draw list cover */
-                .fnOnDrawListCover = &__arm_2d_list_draw_cover,
-
-                .bUseDirtyRegion = true,
-                .ptTargetScene = &this.use_as__arm_2d_scene_t,
-            }
+            },
         };
-        text_list_init(&this.tList, &tCFG);
+        text_tracking_list_init( 
+            &this.tList, 
+            &tCFG,
+            &ARM_2D_LIST_CALCULATOR_NORMAL_FIXED_SIZED_ITEM_NO_STATUS_CHECK_VERTICAL);
 
-        text_list_move_selection(&this.tList, 0, 0);
+        //text_tracking_list_move_selection(&this.tList, 0, 0);
+
     } while(0);
 
-    /* ------------   initialize members of user_scene_mono_list_t end   ---------------*/
+    /* ------------   initialize members of user_scene_mono_tracking_list_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
