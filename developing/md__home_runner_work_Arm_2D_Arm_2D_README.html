@@ -129,13 +129,13 @@ Overview</h1>
 <p ><img src="./documentation/pictures/ReadmeOverview.png" alt="PositionInEcosystem" style="zoom:67%;" class="inline"/></p>
 <p ><b>Position in Ecosystem:</b></p>
 <ul>
-<li><b>Focus on low-level</b> and works as <b>a hardware abstraction layer</b> for 2.5D image processing</li>
+<li><b>Focus on low-level</b> and works as <b>a hardware abstraction layer</b> for 2.5D image processing.</li>
 <li><b>Arm-2D is NOT a GUI.</b><ul>
 <li>No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support</li>
 </ul>
 </li>
-<li><b>Provide conveniences for Arm eco-partners to create value through differentiation</b><ul>
-<li>Provide the default implementation for commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application-specific algorithms</b></li>
+<li><b>Provide conveniences for Arm eco-partners to create value through differentiation.</b><ul>
+<li>Provide the default implementation for commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application-specific algorithms.</b></li>
 </ul>
 </li>
 </ul>
@@ -145,8 +145,8 @@ Overview</h1>
 <li>Guidance for integration of Arm-2D into graphic stacks</li>
 </ul>
 </li>
-<li><b>Optimization for ultra-small memory footprint</b><ul>
-<li>Enable existing Cortex-M processors to use modernized GUI with no or few cost increases.</li>
+<li><b>Optimisation for ultra-small memory footprint</b><ul>
+<li>Enable existing Cortex-M processors to use modernised GUI with no or few cost increases.</li>
 <li>Helping customers to cost-down</li>
 </ul>
 </li>
@@ -236,7 +236,7 @@ Table of Content</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Features</h1>
 <h2><a class="anchor" id="autotoc_md6"></a>
-In this version (v1.2.1-dev)</h2>
+In this version (v1.2.1)</h2>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
 <li><b>CMSIS-Pack is available.</b></li>
@@ -244,7 +244,7 @@ In this version (v1.2.1-dev)</h2>
 <li>With or without Colour-Keying</li>
 <li>Filling-Colour with a mask and an optional opacity<ul>
 <li>For drawing anti-alias icons/texts in a specified colour</li>
-<li>Supports <b>A1</b>(<b>new</b>), A2, A4 and A8 masks</li>
+<li>Supports A1, A2, A4 and A8 masks</li>
 <li>Supports horizontal and vertical line masks</li>
 <li>Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.<ul>
 <li>Supports Mask</li>
@@ -255,7 +255,7 @@ In this version (v1.2.1-dev)</h2>
 </li>
 </ul>
 </li>
-<li><b>Image Copy (Tiling)</b><ul>
+<li><b>Image Copy (Blit)</b><ul>
 <li>With or without Colour-Keying</li>
 <li>Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring</li>
 <li>Supports <b>masks</b> on the source side and/or the target side</li>
@@ -272,6 +272,7 @@ In this version (v1.2.1-dev)</h2>
 </li>
 <li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>e-ink displays</b> (the 2bits and 4bits colour formats)<ul>
 <li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside the Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
+<li><b>[new]</b> Provides a dedicated colour solution in the display adapter service for monochrome display devices.</li>
 </ul>
 </li>
 </ul>
@@ -282,7 +283,7 @@ In this version (v1.2.1-dev)</h2>
 <li>No limitation on screen resolution **(See note 1)**</li>
 <li>Flexible in PFB size and shape (it could be a line or a rectangular with any size) **(See note 2)**</li>
 <li>Supports PFB alignment for both width and height. <blockquote class="doxtable">
-<p ><b>NOTE</b>:</p>
+<p >[!NOTE]</p>
 </blockquote>
 </li>
 </ul>
@@ -290,8 +291,8 @@ In this version (v1.2.1-dev)</h2>
 </ul>
 </li>
 </ul>
-<p >As long as the size is smaller than 32767 * 32767.</p>
 <ol type="1">
+<li>As long as the size is smaller than 32767 * 32767.</li>
 <li>As long as the total pixel numebr is smaller than 16M pixels. </li>
 </ol>
 <p ><br  />
@@ -322,8 +323,8 @@ In this version (v1.2.1-dev)</h2>
 </ul>
 <p ><b>Filters</b></p>
 <ul>
-<li>Generic Anti-alias</li>
-<li>Fast IIR-Blur</li>
+<li>Generic Anti-alias and Fast IIR-Blur</li>
+<li><b>[new]</b> Colour Inversion</li>
 </ul>
 <p ><b>An Unified and User-Friendly Programmers' Model</b></p><ul>
 <li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic Blocking-code</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
@@ -380,6 +381,7 @@ In this version (v1.2.1-dev)</h2>
 <li><b>Demos</b><ul>
 <li>Demos for various scenarios</li>
 <li>A dedicated demo for Helium-ACI acceleration.</li>
+<li><b>[new]</b> A set of demos for monochrome devices</li>
 </ul>
 </li>
 </ul>
@@ -424,8 +426,8 @@ New Features Planned in the Future</h2>
 <li>Armv8-M processors: Cortex-M23/M33/Star-MC1/M35P</li>
 <li>Armv8.1-M processors: Cortex-M55/M85/M52</li>
 </ul>
-<p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.</p>
-<p ><b>The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.</b> Accelerators can be supported easily without modifying the existing Arm-2D library or upper-layer software.</p>
+<p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily as software extensions and it is transparent for upper-layer software.</p>
+<p ><b>The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.</b> The support for 2DGPU (or other Accelerators) can be easily added as software extensions and it is transparent for upper-layer software.</p>
 <p ><b>The library is designed with resource constraints in mind.</b> <b>For Cortex-M processors with 8K~32K SRAM that cannot afford a complete framebuffer</b>, Arm-2D introduces a feature called <b>Generic Partial Framebuffer</b>, enabling those existing MCUs to run GUI applications in a decent frame rate.</p>
 <h2><a class="anchor" id="autotoc_md13"></a>
 2.2 Dependency</h2>
@@ -455,6 +457,8 @@ New Features Planned in the Future</h2>
 <td class="markdownTableBodyNone">[template][pc][vscode]   </td><td class="markdownTableBodyNone">It is a project template for PC (i.e. <b>MacOS</b>, <b>Windows</b> and <b>Linux</b>) using <b>VS Code + SDL2</b>   </td><td class="markdownTableBodyNone">examples/[template][pc][vscode]   </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">[template][csolution]   </td><td class="markdownTableBodyNone">It is a csolution project template.   </td><td class="markdownTableBodyNone">examples/[template][csolution]   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">[template][pico][oled]   </td><td class="markdownTableBodyNone">An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display.   </td><td class="markdownTableBodyNone">examples/[template][pico][oled]   </td><td class="markdownTableBodyNone"><b>New</b>   </td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md16"></a>
 3.2 Benchmark</h2>
@@ -508,8 +512,11 @@ New Features Planned in the Future</h2>
 </ul>
 </li>
 <li>The library focus on <b>Accelerating Low Level Pixel Processing</b><ul>
-<li>In principle, the library will <b>NOT</b> provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.</li>
-<li>In principle, the library will <b>NOT</b> provide data structures or algorithms essential for creating a GUI, such as the element tree, the GUI message handling and the tree traversal algorithms.</li>
+<li>In principle, the library will <b>NOT</b> provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.<ul>
+<li><b>[new]</b> We provides demos to illustrate how to draw basic shapes using User-Defined-OPCODE.</li>
+</ul>
+</li>
+<li>In principle, the library will <b>NOT</b> provide a ready-to-use element tree, or GUI message handling, but some meta data structrues that homebrew GUI developers can use or take as references.</li>
 </ul>
 </li>
 </ul>
@@ -554,7 +561,7 @@ New Features Planned in the Future</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b><a class="el" href="md_getting_started_as_an_application_designer.html">getting_started_as_an_application_designer.md</a></b>   </td><td class="markdownTableBodyNone">A guidance for GUI application designers.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><b>getting_started_as_a_professional_user</b>   </td><td class="markdownTableBodyNone">A guidance for professional users.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
+<td class="markdownTableBodyNone"><b><a class="el" href="md_getting_started_as_a_gui_stack_developer.html">getting_started_as_a_gui_stack_developer</a></b>   </td><td class="markdownTableBodyNone">A guidance for GUI stack developers.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b><a class="el" href="md_how_to_deploy_the_arm_2d_library.html">how_to_deploy_the_arm_2d_library.md</a></b>   </td><td class="markdownTableBodyNone">A step by step guide that helps you to deploy the library to your existing or new projects.   </td><td class="markdownTableBodyNone">documentation    </td></tr>
 <tr class="markdownTableRowEven">
@@ -593,7 +600,7 @@ New Features Planned in the Future</h2>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >9 Sept 2024 </p>
+<p >20 Dec 2024 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
