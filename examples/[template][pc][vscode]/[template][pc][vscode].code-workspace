@@ -69,7 +69,8 @@
 			"__arm_2d_utils_helium.h": "c",
 			"arm_2d_scene_watch_face_01.h": "c",
 			"arm_2d_scene_user_defined_opcode.h": "c",
-			"math.h": "c"
+			"math.h": "c",
+			"arm_2d_user_opcode_draw_circle.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

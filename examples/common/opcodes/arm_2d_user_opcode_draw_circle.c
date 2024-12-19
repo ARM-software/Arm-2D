@@ -21,9 +21,11 @@
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
+#include "__arm_2d_example_opcodes_common.h"
 
-#include "arm_2d_user_opcode_<user opcode template>.h"
+#include "arm_2d_user_opcode_draw_circle.h"
 #include "arm_2d_helper.h"
+
 
 #ifdef   __cplusplus
 extern "C" {
@@ -65,18 +67,11 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-
-enum {
-    __ARM_2D_OP_IDX_USER_<USER OPCODE TEMPLATE> = __ARM_2D_OP_IDX_USER_OP_START,
-
-};
-
-
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 extern
-void __arm_2d_impl_rgb565_user_<user opcode template>(
-                            arm_2d_user_<user opcode template>_descriptor_t *ptThis,
+void __arm_2d_impl_rgb565_user_draw_circle(
+                            arm_2d_user_draw_circle_descriptor_t *ptThis,
                             uint16_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -85,32 +80,17 @@ void __arm_2d_impl_rgb565_user_<user opcode template>(
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-static
-arm_2d_err_t arm_2dp_rgb565_user_<user opcode template>_prepare(
-                            arm_2d_user_<user opcode template>_descriptor_t *ptThis,
-                            const arm_2d_tile_t *ptTarget,
-                            const arm_2d_region_t *ptRegion,
-                            const arm_2d_user_<user opcode template>_api_params_t *ptParams)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ptParams);
-
-    /* some preparation work */
-
-    return ARM_2D_ERR_NONE;
-}
-
 
 /*
  * the Frontend API
  */
 
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_rgb565_user_<user opcode template>(  
-                            arm_2d_user_<user opcode template>_descriptor_t *ptOP,
+arm_fsm_rt_t arm_2dp_rgb565_user_draw_circle(  
+                            arm_2d_user_draw_circle_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
-                            const arm_2d_user_<user opcode template>_api_params_t *ptParams,
+                            const arm_2d_user_draw_circle_api_params_t *ptParams,
                             arm_2d_color_rgb565_t tColour,
                             uint8_t chOpacity)
 {
@@ -118,48 +98,20 @@ arm_fsm_rt_t arm_2dp_rgb565_user_<user opcode template>(
     assert(NULL != ptTarget);
     assert(NULL != ptParams);
 
-    ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptOP);
-
-    switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
-        case ARM_2D_RT_FALSE:
-            
-            break;
-        case ARM_2D_RT_TRUE:
-            do {
-                if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
-                    return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
-                }
-
-                arm_2d_err_t ret = arm_2dp_rgb565_user_<user opcode template>_prepare(   ptThis, 
-                                                                            ptTarget, 
-                                                                            ptRegion, 
-                                                                            ptParams);
-
-                if (ARM_2D_ERR_NONE != ret) {
-                    return (arm_fsm_rt_t)ret;
-                }
-
-                /* update parameters */
-                this.chOpacity = chOpacity;
-                this.tForeground.hwColour = tColour.tValue;
-
-            } while(0);
-            break;
-        case ARM_2D_ERR_INVALID_PARAM:
-        default:
-            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    }
+    ARM_2D_IMPL(arm_2d_user_draw_circle_descriptor_t, ptOP);
 
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }
-    
-    OP_CORE.ptOp = &ARM_2D_OP_USER_<USER OPCODE TEMPLATE>;
+
+    OP_CORE.ptOp = &ARM_2D_OP_USER_DRAW_CIRCLE;
     OPCODE.Target.ptTile = ptTarget;
     OPCODE.Target.ptRegion = ptRegion;
 
     /* this is updated in prepare function */
     this.tParams = *ptParams;
+    this.chOpacity = chOpacity;
+    this.tForeground.hwColour = tColour.tValue;
     
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
@@ -168,9 +120,9 @@ arm_fsm_rt_t arm_2dp_rgb565_user_<user opcode template>(
 /*
  * The backend entry
  */
-arm_fsm_rt_t __arm_2d_rgb565_sw_user_<user opcode template>( __arm_2d_sub_task_t *ptTask)
+arm_fsm_rt_t __arm_2d_rgb565_sw_user_draw_circle( __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptTask->ptOP);
+    ARM_2D_IMPL(arm_2d_user_draw_circle_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
@@ -187,7 +139,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_user_<user opcode template>( __arm_2d_sub_task_t
                                         tTargetRegion.tLocation,
                                         true);
 
-    __arm_2d_impl_rgb565_user_<user opcode template>(ptThis,
+    __arm_2d_impl_rgb565_user_draw_circle(ptThis,
                                         ptTask->Param.tTileProcess.pBuffer,
                                         ptTask->Param.tTileProcess.iStride,
                                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
@@ -200,8 +152,8 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_user_<user opcode template>( __arm_2d_sub_task_t
 
 /* default low level implementation */
 __WEAK
-void __arm_2d_impl_rgb565_user_<user opcode template>(
-                                    arm_2d_user_<user opcode template>_descriptor_t *ptThis,
+void __arm_2d_impl_rgb565_user_draw_circle(
+                                    arm_2d_user_draw_circle_descriptor_t *ptThis,
                                     uint16_t *__RESTRICT phwTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -266,13 +218,13 @@ void __arm_2d_impl_rgb565_user_<user opcode template>(
  * OPCODE Low Level Implementation Entries
  */
 __WEAK
-def_low_lv_io(  __ARM_2D_IO_USER_<USER OPCODE TEMPLATE>_RGB565,
-                __arm_2d_rgb565_sw_user_<user opcode template>);      /* Default SW Implementation */
+def_low_lv_io(  __ARM_2D_IO_USER_DRAW_CIRCLE_RGB565,
+                __arm_2d_rgb565_sw_user_draw_circle);      /* Default SW Implementation */
 
 /*
  * OPCODE
  */
-const __arm_2d_op_info_t ARM_2D_OP_USER_<USER OPCODE TEMPLATE> = {
+const __arm_2d_op_info_t ARM_2D_OP_USER_DRAW_CIRCLE = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -280,10 +232,10 @@ const __arm_2d_op_info_t ARM_2D_OP_USER_<USER OPCODE TEMPLATE> = {
         .Param = {
             .bHasTarget     = true,
         },
-        .chOpIndex      = __ARM_2D_OP_IDX_USER_<USER OPCODE TEMPLATE>,
+        .chOpIndex      = __ARM_2D_OP_IDX_USER_DRAW_CIRCLE,
         
         .LowLevelIO = {
-            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_USER_<USER OPCODE TEMPLATE>_RGB565),
+            .ptTileProcessLike = ref_low_lv_io(__ARM_2D_IO_USER_DRAW_CIRCLE_RGB565),
         },
     },
 };

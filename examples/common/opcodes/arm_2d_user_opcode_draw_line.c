@@ -21,6 +21,7 @@
 
 #include "arm_2d.h"
 #include "__arm_2d_impl.h"
+#include "__arm_2d_example_opcodes_common.h"
 
 #include "arm_2d_user_opcode_draw_line.h"
 #include "arm_2d_helper.h"
@@ -65,13 +66,6 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-
-enum {
-    __ARM_2D_OP_IDX_USER_DRAW_LINE = __ARM_2D_OP_IDX_USER_OP_START,
-
-};
-
-
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 extern

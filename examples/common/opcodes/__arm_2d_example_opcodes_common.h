@@ -16,21 +16,26 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_EXAMPLE_OPCODES_H__
-#define __ARM_2D_EXAMPLE_OPCODES_H__
+#ifndef __ARM_2D_EXAMPLE_OPCODES_COMMON_H__
+#define __ARM_2D_EXAMPLE_OPCODES_COMMON_H__
 
 /*============================ INCLUDES ======================================*/
-
-#include "./arm_2d_user_opcode_draw_line.h"
-#include "./arm_2d_user_opcode_draw_circle.h"
 
 #ifdef   __cplusplus
 extern "C" {
 #endif
 
+#include "arm_2d.h"
+
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+enum {
+    __ARM_2D_OP_IDX_USER_DRAW_LINE = __ARM_2D_OP_IDX_USER_OP_START,
+    __ARM_2D_OP_IDX_USER_DRAW_CIRCLE,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
