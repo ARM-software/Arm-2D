@@ -49,6 +49,7 @@ typedef struct arm_2d_user_draw_circle_api_params_t {
     
     arm_2d_location_t *ptPivot;
     int16_t iRadius;
+    bool bAntiAlias;
 
 } arm_2d_user_draw_circle_api_params_t;
 
@@ -57,10 +58,9 @@ typedef struct arm_2d_user_draw_circle_descriptor_t {
     implement(arm_2d_op_t);      /* inherit from base class arm_2d_op_t*/
 
     arm_2d_user_draw_circle_api_params_t tParams;
-    //arm_2d_region_t tDrawRegion;
+    arm_2d_location_t tPivot;
 
     uint8_t chOpacity;
-
     COLOUR_TYPE_T tForeground;
 
 }arm_2d_user_draw_circle_descriptor_t;

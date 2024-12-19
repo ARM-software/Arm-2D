@@ -112,6 +112,20 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_circle(
     this.tParams = *ptParams;
     this.chOpacity = chOpacity;
     this.tForeground.hwColour = tColour.tValue;
+
+    /* calculate the pivot */
+    do {
+        if (this.tParams.ptPivot) {
+            this.tPivot = *this.tParams.ptPivot;
+        } else if (NULL != ptRegion) {
+            this.tPivot.iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth >> 1);
+            this.tPivot.iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight >> 1);
+        } else {
+            this.tPivot.iX = (ptTarget->tRegion.tSize.iWidth >> 1);
+            this.tPivot.iY = (ptTarget->tRegion.tSize.iHeight >> 1);
+        }
+        this.tPivot = arm_2d_get_absolute_location(ptTarget, this.tPivot, true );
+    } while(0);
     
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
@@ -195,18 +209,51 @@ void __arm_2d_impl_rgb565_user_draw_circle(
                   contains a valid buffer.
      */
 
-    int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
-    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
+    int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth + ptValidRegionOnVirtualScreen->tLocation.iX;
+    int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight + ptValidRegionOnVirtualScreen->tLocation.iY;
 
-    for (int_fast16_t iY = 0; iY < iHeight; iY++) {
+    uint32_t wRadius2 = (uint32_t)this.tParams.iRadius * (uint32_t)this.tParams.iRadius;
+    uint32_t wRadiusBorder2 = (uint32_t)(this.tParams.iRadius + 1) * (uint32_t)(this.tParams.iRadius + 1);
+    q16_t q16Radius = reinterpret_q16_s16(this.tParams.iRadius);
+
+    for (int_fast16_t iY = ptValidRegionOnVirtualScreen->tLocation.iY; iY < iHeight; iY++) {
 
         uint16_t *phwTargetLine = phwTarget;
+        int16_t iYOffset = iY - this.tPivot.iY;
+        iYOffset = ABS(iYOffset);
 
-        for (int_fast16_t iX = 0; iX < iWidth; iX++) {
+        for (int_fast16_t iX = ptValidRegionOnVirtualScreen->tLocation.iX; iX < iWidth; iX++) {
 
-            /* a simple example */
-            __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chOpacity);
+            int16_t iXOffset = iX - this.tPivot.iX;
+            iXOffset = ABS(iXOffset);
+            
+            /* calculate the distance */
+            uint32_t wDistance2 = (uint32_t)iXOffset * (uint32_t)iXOffset + (uint32_t)iYOffset * (uint32_t)iYOffset;
+            
+            if (wDistance2 >= wRadiusBorder2) {
+                phwTargetLine++;
+                continue;
+            } else if (wDistance2 <= wRadius2) {
+                /* fill colour with opacity */
+                __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chOpacity);
+                continue;
+            } else if (!this.tParams.bAntiAlias) {
+                phwTargetLine++;
+                continue;
+            }
 
+            /* anti alias */
+            float fDistance;
+            arm_sqrt_f32((float)wDistance2, &fDistance);
+            q16_t q16Fraction = reinterpret_q16_f32(fDistance);
+
+            /* get the residual */
+            q16Fraction -= q16Radius;
+
+            uint16_t hwOpacity = (q16Fraction & 0xFF00) >> 8;
+            uint8_t chPointOpacity = arm_2d_helper_alpha_mix(0xFF - hwOpacity, chOpacity);
+            
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chPointOpacity);
         }
 
         phwTarget += iTargetStride;

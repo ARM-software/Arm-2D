@@ -79,11 +79,6 @@
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-
-extern const arm_2d_tile_t c_tileCMSISLogo;
-extern const arm_2d_tile_t c_tileCMSISLogoMask;
-extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
-extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -127,8 +122,6 @@ static void __on_scene_user_defined_opcode_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
-    console_box_depose(&this.tConsole);
-
     /* draw line */
     do {
         arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
@@ -169,10 +162,6 @@ static void __on_scene_user_defined_opcode_frame_start(arm_2d_scene_t *ptScene)
         this.iStartOffset = 100;
     }
     this.iStartOffset -= 4;
-
-    console_box_printf(&this.tConsole, "%d\r\n",rand());
-
-    console_box_on_frame_start(&this.tConsole);
 }
 
 static void __on_scene_user_defined_opcode_frame_complete(arm_2d_scene_t *ptScene)
@@ -283,54 +272,29 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
             }
         }
 
-        arm_2d_dock_top(__top_canvas, (tScreenSize.iHeight >> 1)) {
+        arm_2d_align_centre(__top_canvas, 100, 100) {
 
-            arm_2d_align_centre(__top_region, c_tileCMSISLogoMask.tRegion.tSize) {
+            /* draw circle */
+            do {
+                arm_2d_user_draw_circle_api_params_t tParam = {
+                    .iRadius = 25,
+                    .bAntiAlias = true,
+                };
 
-                arm_2d_fill_colour_with_vertical_alpha_gradient_mask_and_opacity(
-                    ptTile, 
-                    &__centre_region,
-                    &c_tileCMSISLogoMask,
-                    (__arm_2d_color_t){GLCD_COLOR_GREEN},
-                    255,
-                    (arm_2d_alpha_samples_2pts_t){255, 0}
-                );
-            }
-        }
-
-        arm_2d_align_centre(__top_canvas, 140, 128) {
-
-            arm_2d_dock(__centre_region, 10, 10, 32, 0) {
-                console_box_show(
-                                &this.tConsole,
+                arm_2dp_rgb565_user_draw_circle(
+                                NULL,
                                 ptTile,
-                                &__dock_region,
-                                bIsNewFrame,
-                                128);
+                                &__centre_region,
+                                &tParam,
+                                (arm_2d_color_rgb565_t){__RGB( 255, 200, 0)},
+                                255);
                 
-                
-            }
+                ARM_2D_OP_WAIT_ASYNC();
+            } while(0);
 
-            arm_2d_dock(__centre_region, 0, 0, 32, 10) {
-                draw_round_corner_border(   ptTile, 
-                                            &__dock_region, 
-                                            GLCD_COLOR_GREEN, 
-                                            (arm_2d_border_opacity_t)
-                                                {64, 64, 64, 64},
-                                            (arm_2d_corner_opacity_t)
-                                                {64, 64, 64, 64});
-            }
 
         }
 
-        /* draw text at the top-left corner */
-
-        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-        arm_lcd_text_set_draw_region(NULL);
-        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-        arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene user_defined_opcode");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -345,6 +309,19 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
+
+#if __GLCD_CFG_COLOUR_DEPTH__ != 16
+    /* this demo only works for rgb565*/
+
+    ARM_2D_LOG_ERROR(
+        APP, 
+        0, 
+        "Demo", 
+        "The User Defined Opcode Demo currently only works for RGB565, i.e. __GLCD_CFG_COLOUR_DEPTH__ equals 16"
+    );
+
+    return NULL;
+#endif
 
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
@@ -413,32 +390,6 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
         arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
             ARM_2D_OP_INIT(*ptLineOP);
         }
-    } while(0);
-
-    do {
-    #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
-        static uint8_t s_chInputBuffer[__DISP0_CFG_CONSOLE_INPUT_BUFFER__];
-    #endif
-        static uint8_t s_chConsoleBuffer[(__DISP0_CFG_SCEEN_WIDTH__ / 6) * (__DISP0_CFG_SCEEN_HEIGHT__ / 8)];
-        console_box_cfg_t tCFG = {
-            .tBoxSize = {
-                120, 64
-            },
-            
-            .pchConsoleBuffer = s_chConsoleBuffer,
-            .hwConsoleBufferSize = sizeof(s_chConsoleBuffer),
-
-        #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
-            .pchInputBuffer = s_chInputBuffer,
-            .hwInputBufferSize = sizeof(s_chInputBuffer),
-        #endif
-            .tColor = GLCD_COLOR_GREEN,
-            .bUseDirtyRegion = true,
-        };
-
-        console_box_init(   &this.tConsole, 
-                            &this.use_as__arm_2d_scene_t, 
-                            &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_user_defined_opcode_t end   ---------------*/

@@ -31,7 +31,7 @@
 #include "arm_2d_helper.h"
 
 #include "arm_2d_user_opcode_draw_line.h"
-#include "arm_2d_example_controls.h"
+#include "arm_2d_user_opcode_draw_circle.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -92,7 +92,6 @@ ARM_PRIVATE(
     int16_t iStartOffset;
 
     arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
-    console_box_t tConsole;
 
 )
     /* place your public member here */
