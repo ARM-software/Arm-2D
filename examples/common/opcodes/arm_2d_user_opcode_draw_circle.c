@@ -143,10 +143,6 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_circle(
 
         this.tPivot = arm_2d_get_absolute_location(ptTarget, this.tPivot, true );
     } while(0);
-
-    
-
-
     
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
