@@ -22,18 +22,18 @@
 
 **Position in Ecosystem:**
 
-- **Focus on low-level** and works as **a hardware abstraction layer** for 2.5D image processing
+- **Focus on low-level** and works as **a hardware abstraction layer** for 2.5D image processing.
 - **Arm-2D is NOT a GUI.**
   - No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support
-- **Provide conveniences for Arm eco-partners to create value through differentiation**
-  - Provide the default implementation for commonly used 2.5D operations and **enable 3rd-parties to accelerate application-specific algorithms**
+- **Provide conveniences for Arm eco-partners to create value through differentiation.**
+  - Provide the default implementation for commonly used 2.5D operations and **enable 3rd-parties to accelerate application-specific algorithms.**
 
 **Current Focus and Objectives:**
 
 - **Help industry partners with technology adoption**
   - Guidance for integration of Arm-2D into graphic stacks
-- **Optimization for ultra-small memory footprint**
-  - Enable existing Cortex-M processors to use modernized GUI with no or few cost increases.
+- **Optimisation for ultra-small memory footprint**
+  - Enable existing Cortex-M processors to use modernised GUI with no or few cost increases.
   - Helping customers to cost-down
 
 ## Key Messages for You
@@ -100,7 +100,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (v1.2.1-dev)
+### In this version (v1.2.1)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -110,19 +110,20 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - With or without Colour-Keying
   - Filling-Colour with a mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
-    - Supports **A1**(**new**), A2, A4 and A8 masks
+    - Supports A1, A2, A4 and A8 masks
     - Supports horizontal and vertical line masks
     - Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.
       - Supports Mask
       - Supports an optional Opacity
   
-- **Image Copy (Tiling)**
+- **Image Copy (Blit)**
+  
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
   - Provides API variants that accept **Opacity** as arguments.
   -  Implicit colour conversion for **ARGB8888** (**ccca8888**)
-
+  
 - **Supported Colour formats**
 
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
@@ -131,18 +132,20 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Implicit colour conversion for **ARGB8888** (**ccca8888**)
   - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside the Display Adapter, e.g. `Disp0_DrawBitmap`
+    - **[new]** Provides a dedicated colour solution in the display adapter service for monochrome display devices.
 
 - **Display Adapter Service for connecting LCD**
+  
   - Generic Partial Frame-buffer (PFB)
     - Easy to Use: transparent for applications
     - No limitation on screen resolution **(See note 1)**
     - Flexible in PFB size and shape (it could be a line or a rectangular with any size)  **(See note 2)**
     - Supports PFB alignment for both width and height.
-    >  **NOTE**: 
+    > [!NOTE]
     >
-    >  1. As long as the size is smaller than 32767 * 32767. 
+    > 1. As long as the size is smaller than 32767 * 32767. 
     >
-    >  2. As long as the total pixel numebr is smaller than 16M pixels.
+    > 2. As long as the total pixel numebr is smaller than 16M pixels.
     
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
@@ -150,14 +153,14 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Provides dirty region helper services for ease of use.
     
   - Supports swapping high and low bytes for RGB16 pixels
-
+  
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-
+  
   - Supports various buffering Modes with a built-in frame buffer pool.
     - Single Buffer/Double-Buffers
     - Provides a helper service for Direct Mode
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
-
+  
 - **Transform** (i.e. rotation and scaling)
   - With/Without Colour-keying
   - Supports an optional **Opacity** ratio
@@ -167,8 +170,8 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - **Filters**
 
-  - Generic Anti-alias
-  - Fast IIR-Blur
+  - Generic Anti-alias and Fast IIR-Blur
+  - **[new]** Colour Inversion
 
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
@@ -221,12 +224,11 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - **Demos**
     - Demos for various scenarios
     - A dedicated demo for Helium-ACI acceleration. 
+    - **[new]** A set of demos for monochrome devices
 
 - **Ready and Welcome 3rd party adoption**
 
   - Successful story: accelerating LVGL as soft-GPU when Helium is ready
-
-
 
 ### New Features Planned in the Future
 
@@ -276,9 +278,9 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 - Armv8-M processors: Cortex-M23/M33/Star-MC1/M35P
 - Armv8.1-M processors: Cortex-M55/M85/M52
 
-**The library is designed with ACI (Arm Custom Instructions) in mind.** Accelerations implemented with user-defined instructions can be integrated into the library easily without modifying the existing Arm-2D library or upper-layer software.
+**The library is designed with ACI (Arm Custom Instructions) in mind.** Accelerations implemented with user-defined instructions can be integrated into the library easily as software extensions and it is transparent for upper-layer software.
 
-**The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.**  Accelerators can be supported easily without modifying the existing Arm-2D library or upper-layer software.
+**The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.**  The support for 2DGPU (or other Accelerators) can be easily added as software extensions and it is transparent for upper-layer software.
 
 **The library is designed with resource constraints in mind.** **For Cortex-M processors with 8K~32K SRAM that cannot afford a complete framebuffer**, Arm-2D introduces a feature called **Generic Partial Framebuffer**, enabling those existing MCUs to run GUI applications in a decent frame rate.
 
@@ -294,12 +296,13 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 ### 3.1 Summary
 
-| Projects                     | Description                                                  | Folder                                | Note |
-| ---------------------------- | ------------------------------------------------------------ | ------------------------------------- | ---- |
-| \[template\]\[bare-metal\]   | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]   |      |
-| \[template\]\[cmsis-rtos2\]  | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]  |      |
-| \[template\]\[pc\]\[vscode\] | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\] |      |
-| \[template\]\[csolution\]    | It is a csolution project template.                          | examples/\[template\]\[csolution\]    |      |
+| Projects                     | Description                                                  | Folder                                | Note    |
+| ---------------------------- | ------------------------------------------------------------ | ------------------------------------- | ------- |
+| \[template\]\[bare-metal\]   | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]   |         |
+| \[template\]\[cmsis-rtos2\]  | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]  |         |
+| \[template\]\[pc\]\[vscode\] | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\] |         |
+| \[template\]\[csolution\]    | It is a csolution project template.                          | examples/\[template\]\[csolution\]    |         |
+| \[template\]\[pico\]\[oled]  | An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display. | examples/\[template\]\[pico\]\[oled]  | **New** |
 
 ### 3.2 Benchmark
 
@@ -351,7 +354,8 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - IAR
 - The library focus on **Accelerating Low Level Pixel Processing**
   - In principle, the library will **NOT** provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.
-  - In principle, the library will **NOT** provide data structures or algorithms essential for creating a GUI, such as the element tree, the GUI message handling and the tree traversal algorithms.
+    - **[new]** We provides demos to illustrate how to draw basic shapes using User-Defined-OPCODE.
+  - In principle, the library will **NOT** provide a ready-to-use element tree, or GUI message handling, but some meta data structrues that homebrew GUI developers can use or take as references. 
 
 ### 4.2 The Temporary Limitations
 
@@ -378,7 +382,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | API Manual                                                   | An API manual generated by Doxygen                           | * ![GitHub release](https://img.shields.io/github/v/release/ARM-software/Arm-2D) : [Documentation for latest official release](https://arm-software.github.io/Arm-2D/latest) <br/>* [Documentation for latest development release](https://arm-software.github.io/Arm-2D/developing) |
 | **README.md**                                                | It is the document that you are reading. It provides basic information and guidance for the arm-2d library. | (root)                                                       |
 | **[getting_started_as_an_application_designer.md](./documentation/getting_started_as_an_application_designer.md)** | A guidance for GUI application designers.                    | documentation                                                |
-| **[getting_started_as_a_professional_user](./documentation/getting_started_as_a_professional_user.md)** | A guidance for professional users.                           | documentation                                                |
+| **[getting_started_as_a_gui_stack_developer](./documentation/getting_started_as_a_gui_stack_developer.md)** | A guidance for GUI stack developers.                         | documentation                                                |
 | **[how_to_deploy_the_arm_2d_library.md](./documentation/how_to_deploy_the_arm_2d_library.md)** | A step by step guide that helps you to deploy the library to your existing or new projects. | documentation                                                |
 | **[introduction.md](./documentation/introduction.md)**       | A relatively detailed introduction for the library, including basic concepts, programmers' mode etc. | documentation                                                |
 | **[how_to_use_layout_assistant.md](/documentation/how_to_use_layout_assistant.md)** | A detailed document introduce the layout assistant helper service. | documentation                                                |
@@ -409,4 +413,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-9 Sept 2024
+20 Dec 2024
