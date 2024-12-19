@@ -59,6 +59,7 @@ typedef struct arm_2d_user_draw_circle_descriptor_t {
 
     arm_2d_user_draw_circle_api_params_t tParams;
     arm_2d_location_t tPivot;
+    arm_2d_region_t tDrawRegion;
 
     uint8_t chOpacity;
     COLOUR_TYPE_T tForeground;

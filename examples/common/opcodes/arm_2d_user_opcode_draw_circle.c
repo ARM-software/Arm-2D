@@ -113,19 +113,40 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_circle(
     this.chOpacity = chOpacity;
     this.tForeground.hwColour = tColour.tValue;
 
+    arm_2d_region_t tTargetRegion = {0};
+    if (NULL == ptRegion) {
+        tTargetRegion.tSize = ptTarget->tRegion.tSize;
+        ptRegion = &tTargetRegion;
+    }
+
     /* calculate the pivot */
     do {
         if (this.tParams.ptPivot) {
             this.tPivot = *this.tParams.ptPivot;
-        } else if (NULL != ptRegion) {
+        } else {
             this.tPivot.iX = ptRegion->tLocation.iX + (ptRegion->tSize.iWidth >> 1);
             this.tPivot.iY = ptRegion->tLocation.iY + (ptRegion->tSize.iHeight >> 1);
-        } else {
-            this.tPivot.iX = (ptTarget->tRegion.tSize.iWidth >> 1);
-            this.tPivot.iY = (ptTarget->tRegion.tSize.iHeight >> 1);
         }
+
+        this.tDrawRegion.tSize.iHeight = this.tParams.iRadius * 2 + 2;
+        this.tDrawRegion.tSize.iWidth = this.tDrawRegion.tSize.iHeight + 2;
+
+        this.tDrawRegion.tLocation.iX = this.tPivot.iX - this.tParams.iRadius - 1;
+        this.tDrawRegion.tLocation.iY = this.tPivot.iY - this.tParams.iRadius - 1;
+
+        if (!arm_2d_region_intersect(ptRegion, &this.tDrawRegion, &this.tDrawRegion)) {
+            /* nothing to draw */
+            return __arm_2d_op_depose((arm_2d_op_core_t *)ptThis, arm_fsm_rt_cpl);
+        }
+
+        OPCODE.Target.ptRegion = &this.tDrawRegion;
+
         this.tPivot = arm_2d_get_absolute_location(ptTarget, this.tPivot, true );
     } while(0);
+
+    
+
+
     
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
