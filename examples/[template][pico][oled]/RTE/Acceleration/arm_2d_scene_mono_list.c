@@ -92,31 +92,6 @@ struct {
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-
-/*! define dirty regions */
-IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-    /* a dirty region to be specified at runtime*/
-    ADD_REGION_TO_LIST(s_tDirtyRegions,
-        0  /* initialize at runtime later */
-    ),
-    
-    /* add the last region:
-        * it is the top left corner for text display 
-        */
-    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        .tLocation = {
-            .iX = 0,
-            .iY = 0,
-        },
-        .tSize = {
-            .iWidth = 0,
-            .iHeight = 8,
-        },
-    ),
-
-END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_mono_list_load(arm_2d_scene_t *ptScene)
