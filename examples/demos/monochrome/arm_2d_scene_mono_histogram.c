@@ -133,6 +133,8 @@ static void __on_scene_mono_histogram_depose(arm_2d_scene_t *ptScene)
         *ptItem = 0;
     }
 
+    histogram_depose(&this.tHistogram);
+
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -206,7 +208,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_histogram_handler)
     ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {
-
 
         arm_2d_align_centre(__top_canvas, 128 - 16, 64 - 8) { 
 
