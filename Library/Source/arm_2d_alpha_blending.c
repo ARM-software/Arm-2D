@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        22 July 2024
- * $Revision:    V.1.8.2
+ * $Date:        19 Dec 2024
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1405,7 +1405,8 @@ void __arm_2d_impl_rgb565_tile_copy_opacity(   uint16_t *__RESTRICT phwSourceBas
     
     for (uint32_t y = 0; y < iHeight; y++) {
 
-#if (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1) && !__IS_COMPILER_IAR__)
+#if (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1)) \
+ && (__IS_COMPILER_LLVM__ || __IS_COMPILER_ARM__)
         /* M55 NOMVE optimization */
         register unsigned loopCnt  __asm("lr");
         loopCnt = iWidth;
