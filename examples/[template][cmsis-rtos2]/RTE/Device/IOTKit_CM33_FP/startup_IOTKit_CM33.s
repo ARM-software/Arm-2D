@@ -31,7 +31,7 @@
 ;   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 ;   POSSIBILITY OF SUCH DAMAGE.
 ;   ---------------------------------------------------------------------------*/
-;/*
+;
 
 ; Vector Table Mapped to Address 0 at Reset
 
@@ -133,8 +133,8 @@ __Vectors       DCD     |Image$$ARM_LIB_STACK$$ZI$$Limit|
                 DCD     GPIO1_Handler                   ;  69 GPIO 1 Combined Handler
                 DCD     GPIO2_Handler                   ;  70 GPIO 2 Combined Handler
                 DCD     GPIO3_Handler                   ;  71 GPIO 3 Combined Handler
-                DCD     GPIO0_0_Handler                 ;  72       /* All P0 I/O pins used as irq source    */
-                DCD     GPIO0_1_Handler                 ;  73       /* There are 16 pins in total            */
+                DCD     GPIO0_0_Handler                 ;  72 All P0 I/O pins used as irq source
+                DCD     GPIO0_1_Handler                 ;  73 There are 16 pins in total
                 DCD     GPIO0_2_Handler                 ;  74
                 DCD     GPIO0_3_Handler                 ;  75
                 DCD     GPIO0_4_Handler                 ;  76
@@ -149,8 +149,8 @@ __Vectors       DCD     |Image$$ARM_LIB_STACK$$ZI$$Limit|
                 DCD     GPIO0_13_Handler                ;  85
                 DCD     GPIO0_14_Handler                ;  86
                 DCD     GPIO0_15_Handler                ;  87
-                DCD     GPIO1_0_Handler                 ;  88       /* All P1 I/O pins used as irq source    */
-                DCD     GPIO1_1_Handler                 ;  89       /* There are 16 pins in total            */
+                DCD     GPIO1_0_Handler                 ;  88  All P1 I/O pins used as irq source
+                DCD     GPIO1_1_Handler                 ;  89  There are 16 pins in total
                 DCD     GPIO1_2_Handler                 ;  90
                 DCD     GPIO1_3_Handler                 ;  91
                 DCD     GPIO1_4_Handler                 ;  92
@@ -165,8 +165,8 @@ __Vectors       DCD     |Image$$ARM_LIB_STACK$$ZI$$Limit|
                 DCD     GPIO1_13_Handler                ; 101
                 DCD     GPIO1_14_Handler                ; 102
                 DCD     GPIO1_15_Handler                ; 103
-                DCD     GPIO2_0_Handler                 ; 104       /* All P2 I/O pins used as irq source    */
-                DCD     GPIO2_1_Handler                 ; 105       /* There are 16 pins in total            */
+                DCD     GPIO2_0_Handler                 ; 104  All P2 I/O pins used as irq source
+                DCD     GPIO2_1_Handler                 ; 105  There are 16 pins in total
                 DCD     GPIO2_2_Handler                 ; 106
                 DCD     GPIO2_3_Handler                 ; 107
                 DCD     GPIO2_4_Handler                 ; 108
@@ -181,8 +181,8 @@ __Vectors       DCD     |Image$$ARM_LIB_STACK$$ZI$$Limit|
                 DCD     GPIO2_13_Handler                ; 117
                 DCD     GPIO2_14_Handler                ; 118
                 DCD     GPIO2_15_Handler                ; 119
-                DCD     GPIO3_0_Handler                 ; 120       /* All P3 I/O pins used as irq source    */
-                DCD     GPIO3_1_Handler                 ; 121       /* There are 4 pins in total            */
+                DCD     GPIO3_0_Handler                 ; 120  All P3 I/O pins used as irq source
+                DCD     GPIO3_1_Handler                 ; 121  There are 4 pins in total
                 DCD     GPIO3_2_Handler                 ; 122
                 DCD     GPIO3_3_Handler                 ; 123
 __Vectors_End

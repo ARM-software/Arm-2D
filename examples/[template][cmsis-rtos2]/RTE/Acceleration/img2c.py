@@ -284,13 +284,13 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.4)')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.5)')
 
     parser.add_argument('-i', nargs='?', type = str,  required=False, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
     parser.add_argument('--name', nargs='?',type = str, required=False, help="A specified array name")
-    parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, all)")
+    parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, mask, all)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
     parser.add_argument('--a1', action='store_true', help="Generate 1bit alpha-mask")
@@ -317,6 +317,7 @@ def main(argv):
     if args.format != 'rgb565' and \
         args.format != 'rgb32' and \
         args.format != 'gray8' and \
+        args.format != 'mask' and \
         args.format != 'all':
         parser.print_help()
         exit(1)
@@ -410,7 +411,7 @@ def main(argv):
             print('};\r\n', file=o)
 
             # 1-bit Alpha channel
-            if args.a1 or args.format == 'all':
+            if args.a1 or args.format == 'all' or args.format == 'mask':
 
                 def RevBitPairPerByte(byteArr):
                     return ((byteArr & 0x01) << 7) | ((byteArr & 0x80) >> 7) | ((byteArr & 0x40) >> 5) | ((byteArr & 0x02) << 5) | \
@@ -445,7 +446,7 @@ def main(argv):
                 print('};\n', file=o)
 
             # 2-bit Alpha channel
-            if args.a2 or args.format == 'all':
+            if args.a2 or args.format == 'all' or args.format == 'mask':
 
                 def RevBitPairPerByte(byteArr):
                     return ((byteArr & 0x03) << 6) |  ((byteArr & 0xc0) >> 6) | ((byteArr & 0x30) >> 2 ) | ((byteArr & 0x0c) << 2)
@@ -479,7 +480,7 @@ def main(argv):
                 print('};\r\n', file=o)
 
             # 4-bit Alpha channel
-            if args.a4 or args.format == 'all':
+            if args.a4 or args.format == 'all' or args.format == 'mask':
 
                 def RevBitQuadPerByte(byteArr):
                     return ((byteArr & 0x0f) << 4) |  ((byteArr & 0xf0) >> 4)
@@ -633,13 +634,13 @@ def main(argv):
         if mode == "RGBA":
             print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
 
-            if args.a1 or args.format == 'all':
+            if args.a1 or args.format == 'all' or args.format == 'mask':
                 print(tail1BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
-            if args.a2 or args.format == 'all':
+            if args.a2 or args.format == 'all' or args.format == 'mask':
                 print(tail2BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
-            if args.a4 or args.format == 'all':
+            if args.a4 or args.format == 'all' or args.format == 'mask':
                 print(tail4BitAlpha.format(arr_name, str(row), str(col)), file=o)
 
 

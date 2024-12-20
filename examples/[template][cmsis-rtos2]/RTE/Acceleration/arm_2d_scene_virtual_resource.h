@@ -16,18 +16,20 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D__SCENE_LISTVIEW_H__
-#define __ARM_2D__SCENE_LISTVIEW_H__
+#ifndef __ARM_2D_SCENE_VIRTUAL_RESOURCE_H__
+#define __ARM_2D_SCENE_VIRTUAL_RESOURCE_H__
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
+#include "arm_2d.h"
+
 #include "arm_2d_helper_scene.h"
-#include "list_view.h"
-#include "progress_wheel.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -50,8 +52,8 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_LISTVIEW_IMPLEMENT__
-#   undef __USER_SCENE_LISTVIEW_IMPLEMENT__
+#ifdef __USER_SCENE_VIRTUAL_RESOURCE_IMPLEMENT__
+#   undef __USER_SCENE_VIRTUAL_RESOURCE_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
@@ -59,35 +61,31 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize _listview and add it to a user specified scene player
- * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \brief initalize scene_virtual_resource and add it to a user specified scene player
+ * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_listview_t will be allocated from HEAP and freed on
+ *            user_scene_virtual_resource_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_listview_t* the user_scene_listview_t instance
+ * \return user_scene_virtual_resource_t* the user_scene_virtual_resource_t instance
  */
-#define arm_2d_scene_listview_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_listview_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_virtual_resource_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_virtual_resource_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene 3
+ * \brief a user class for scene virtual_resource
  */
-typedef struct user_scene_listview_t user_scene_listview_t;
+typedef struct user_scene_virtual_resource_t user_scene_virtual_resource_t;
 
-struct user_scene_listview_t {
+struct user_scene_virtual_resource_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t             lTimestamp[3];
-    bool                bUserAllocated;
-    int16_t             iProgress;
-    
-    list_view_t         tListView;
-    progress_wheel_t    tWheel;
-    
+    int64_t lTimestamp[1];
+    bool bUserAllocated;
+
 )
     /* place your public member here */
     
@@ -98,8 +96,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_listview_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_listview_t *ptScene);
+user_scene_virtual_resource_t *__arm_2d_scene_virtual_resource_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_virtual_resource_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

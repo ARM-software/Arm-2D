@@ -16,18 +16,19 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D__SCENE_LISTVIEW_H__
-#define __ARM_2D__SCENE_LISTVIEW_H__
+#ifndef __ARM_2D_SCENE_MONO_LIST_H__
+#define __ARM_2D_SCENE_MONO_LIST_H__
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#include "arm_2d_helper_scene.h"
-#include "list_view.h"
-#include "progress_wheel.h"
+#include "arm_2d_helper.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -50,44 +51,43 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_LISTVIEW_IMPLEMENT__
-#   undef __USER_SCENE_LISTVIEW_IMPLEMENT__
+#ifdef __USER_SCENE_MONO_LIST_IMPLEMENT__
 #   define __ARM_2D_IMPL__
+#endif
+#ifdef __USER_SCENE_MONO_LIST_INHERIT__
+#   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize _listview and add it to a user specified scene player
- * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \brief initalize scene_mono_list and add it to a user specified scene player
+ * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_listview_t will be allocated from HEAP and freed on
+ *            user_scene_mono_list_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_listview_t* the user_scene_listview_t instance
+ * \return user_scene_mono_list_t* the user_scene_mono_list_t instance
  */
-#define arm_2d_scene_listview_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_listview_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_mono_list_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_mono_list_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene 3
+ * \brief a user class for scene mono_list
  */
-typedef struct user_scene_listview_t user_scene_listview_t;
+typedef struct user_scene_mono_list_t user_scene_mono_list_t;
 
-struct user_scene_listview_t {
+struct user_scene_mono_list_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t             lTimestamp[3];
-    bool                bUserAllocated;
-    int16_t             iProgress;
-    
-    list_view_t         tListView;
-    progress_wheel_t    tWheel;
-    
+    int64_t lTimestamp[2];
+    bool bUserAllocated;
+
+    text_list_t tList;
 )
     /* place your public member here */
     
@@ -98,14 +98,18 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_listview_t *__arm_2d_scene_listview_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_listview_t *ptScene);
+user_scene_mono_list_t *__arm_2d_scene_mono_list_init(
+                                        arm_2d_scene_player_t *ptDispAdapter,
+                                        user_scene_mono_list_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic pop
 #endif
+
+#undef __USER_SCENE_MONO_LIST_IMPLEMENT__
+#undef __USER_SCENE_MONO_LIST_INHERIT__
 
 #ifdef   __cplusplus
 }

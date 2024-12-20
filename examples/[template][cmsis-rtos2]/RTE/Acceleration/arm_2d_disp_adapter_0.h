@@ -44,6 +44,14 @@ extern "C" {
 // <h>Screen and Framebuffer
 // =======================
 
+// <o> Select the screen colour solution
+//     <0=>     None
+//     <1=>     Monochrome
+// <i> When specifying a colour solution, the __DISP0_CFG_COLOUR_DEPTH__ and other corresponding options will be configured (overriden) accordingly.
+#ifndef __DISP0_CFG_COLOR_SOLUTION__
+#   define __DISP0_CFG_COLOR_SOLUTION__                            0
+#endif
+
 // <o> Select the screen colour depth
 //     <8=>     8 Bits
 //     <16=>    16Bits
@@ -249,6 +257,12 @@ extern "C" {
 // </h>
 
 // <<< end of configuration section >>>
+
+#if __DISP0_CFG_COLOR_SOLUTION__ == 1
+/* the colour solution for monochrome screen */
+#   undef __DISP0_CFG_COLOUR_DEPTH__
+#   define __DISP0_CFG_COLOUR_DEPTH__                               8
+#endif
 
 #ifndef __DISP0_COLOUR_FORMAT__
 #   if      __DISP0_CFG_COLOUR_DEPTH__ == 8

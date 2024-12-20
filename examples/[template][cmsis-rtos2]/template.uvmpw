@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName>C:\Work\Git\Arm-2D\examples\[template][cmsis-rtos2]\template.uvmpw</WorkspaceName>
+  <WorkspaceName>Y:\Work\git\Arm-2D\examples\[template][cmsis-rtos2]\template.uvmpw</WorkspaceName>
 
   <project>
     <PathAndName>.\template.uvprojx</PathAndName>
