@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        25. Nov 2024
- * $Revision:    V.1.8.4
+ * $Date:        20. Dec 2024
+ * $Revision:    V.1.8.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -326,7 +326,7 @@ void arm_2d_scene_player_switch_to_next_scene(arm_2d_scene_player_t *ptThis)
 static void __arm_2d_scene_player_next_scene(arm_2d_scene_player_t *ptThis)
 {
     arm_2d_scene_t *ptScene = NULL;
-    this.Runtime.bNextSceneReq = false;
+    //this.Runtime.bNextSceneReq = false;
     
     do {
         arm_irq_safe {
@@ -2530,6 +2530,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             }
 
             if (this.Runtime.bNextSceneReq) {
+                this.Runtime.bNextSceneReq = false;
                 /* call the before-scene-switch-out event handler if present */
                 ARM_2D_INVOKE_RT_VOID(ptScene->fnBeforeSwitchOut, ptScene);
                 
