@@ -214,14 +214,12 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_fan_t *ptThis = (user_scene_fan_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    bool bMoveToStop = false;
 
     /* demo code */
     if (arm_2d_helper_is_time_out(4000, &this.lTimestamp[1])) {
         this.chLevel++;
         if (this.chLevel >= 4) {
             this.chLevel = 0;
-            bMoveToStop = true;
         }
 
         text_list_move_selection(&this.tLevelList, 1, 300);

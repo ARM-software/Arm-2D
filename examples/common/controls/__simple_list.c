@@ -236,8 +236,8 @@ IMPL_PFB_ON_DRAW(__arm_2d_simple_list_draw_cover_vertical)
     
     __simple_list_t *ptThis = (__simple_list_t *)pTarget;
 
-    uint16_t hwListCount = __simple_list_get_list_item_count(ptThis);
-    uint16_t hwSelectedID = __simple_list_get_selected_item_id(ptThis);
+    //uint16_t hwListCount = __simple_list_get_list_item_count(ptThis);
+    //uint16_t hwSelectedID = __simple_list_get_selected_item_id(ptThis);
 
     arm_2d_canvas(ptTile, __list_cover) {
 

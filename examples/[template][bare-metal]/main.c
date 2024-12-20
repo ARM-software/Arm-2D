@@ -55,6 +55,7 @@
 #   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wunused-parameter"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
+#   pragma clang diagnostic ignored "-Wsign-compare"
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
@@ -361,7 +362,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 0
+#if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -417,10 +418,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         30000,
         scene_watch_loader,
     },
-    {
-        20000,
-        scene_compass_loader,
-    },
+//    {
+//        20000,
+//        scene_compass_loader,
+//    },
     {
         10000,
         scene_alarm_clock_loader,
@@ -449,14 +450,14 @@ static demo_scene_t const c_SceneLoaders[] = {
         12000,
         scene_menu_loader,
     },
-    {
-        10000,
-        scene_ruler_loader,
-    },
-    {
-        10000,
-        scene_hollow_out_list_loader,
-    },
+//    {
+//        10000,
+//        scene_ruler_loader,
+//    },
+//    {
+//        10000,
+//        scene_hollow_out_list_loader,
+//    },
     {
         20000,
         scene_panel_loader,
@@ -465,18 +466,18 @@ static demo_scene_t const c_SceneLoaders[] = {
         20000,
         scene_fitness_loader,
     },
-    {
-        15000,
-        scene_transform_loader,
-    },
+//    {
+//        15000,
+//        scene_transform_loader,
+//    },
     {
         50000,
         scene_filters_loader,
     },
-    {
-        10000,
-        scene_audiomark_loader,
-    },
+//    {
+//        10000,
+//        scene_audiomark_loader,
+//    },
     
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     {

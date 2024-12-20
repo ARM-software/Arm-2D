@@ -50,7 +50,8 @@
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wsign-compare"  
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
@@ -293,6 +294,8 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
                         const arm_2d_region_t *ptRegion, 
                         user_scene_watch_face_01_t *ptThis)
 {
+    ARM_2D_UNUSED(ptThis);
+
     arm_2d_container(ptTile, __panel, ptRegion) {
 
         arm_2d_align_centre(__panel_canvas, 200, 200) {

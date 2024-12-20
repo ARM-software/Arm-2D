@@ -340,7 +340,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1051,7 +1051,7 @@
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1381,7 +1381,7 @@
               <MiscControls></MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,ITERATION_CNT=10</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2421,7 +2421,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3063,7 +3063,7 @@
       <TargetName>V2M-MPS3-CM55_Deprecated</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
+      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -3393,7 +3393,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes;..\..\..\common\scenes\histogram</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4035,7 +4035,7 @@
       <TargetName>V2M-MPS2-CM0+</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -4365,7 +4365,7 @@
               <MiscControls>-Omax</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;..\mdk</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;..\mdk;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5406,7 +5406,7 @@
               <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps2;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6117,7 +6117,7 @@
       <TargetName>STM32F746G-Discovery</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -6447,7 +6447,7 @@
               <MiscControls>-Wno-nonportable-include-path</MiscControls>
               <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=28</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7212,7 +7212,7 @@
             <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
+            <Capability>0</Capability>
             <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -7393,7 +7393,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>6</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -7416,10 +7416,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-padded -Omax</MiscControls>
+              <MiscControls>-Wno-padded</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8460,7 +8460,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9102,7 +9102,7 @@
       <TargetName>V2M-MPS3-CM85</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -9432,7 +9432,7 @@
               <MiscControls>-Omax -Wno-invalid-utf8</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10447,7 +10447,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>6</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -10470,10 +10470,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-padded -mcpu=cortex-m55+cdecp0 -Omax</MiscControls>
+              <MiscControls>-Wno-padded -mcpu=cortex-m55+cdecp0</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\..\Acceleration\Arm\ACI;..\..\..\common\scenes\bubble_charging;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background</IncludePath>
+              <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\..\Acceleration\Arm\ACI;..\..\..\common\scenes\bubble_charging;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -11335,7 +11335,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11415,7 +11415,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11463,7 +11463,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.2.9" condition="Arm-2D-Controls">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-Controls">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11511,7 +11511,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="2.4.11" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="2.5.0" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11527,7 +11527,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.2.1-dev" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11543,7 +11543,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1-dev" condition="CMSIS-DSP">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1" condition="CMSIS-DSP">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11559,7 +11559,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.2.1-dev" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11575,7 +11575,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.2.1-dev" condition="Arm-2D-CORE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-CORE">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11736,11 +11736,16 @@
       <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.3.3" condition="CMSIS-CORE">
         <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.3.3"/>
         <targetInfos>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.4.0" condition="CMSIS-CORE">
+        <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.4.0"/>
+        <targetInfos>
           <targetInfo name="AN547-AN556"/>
           <targetInfo name="AN552_Cortex-M55"/>
           <targetInfo name="FastModel"/>
           <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
           <targetInfo name="V2M-MPS2-CM0+"/>
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -12007,9 +12012,9 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\SquareDigits.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\SquareDigits.c" version="1.0.2">
         <instance index="0">RTE\Acceleration\SquareDigits.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12039,7 +12044,7 @@
       </file>
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.4.2">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12057,7 +12062,7 @@
       </file>
       <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.3.11">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12541,9 +12546,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_clock.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_clock.c" version="1.0.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_clock.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12559,9 +12564,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_clock.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_clock.h" version="1.0.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_clock.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12577,9 +12582,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_histogram.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12595,9 +12600,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_histogram.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12613,9 +12618,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.c" version="1.2.0">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.c" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_icon_menu.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12631,9 +12636,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.h" version="1.2.0">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.h" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_icon_menu.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12649,9 +12654,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_list.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_list.c" version="1.0.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12667,9 +12672,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_list.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_list.h" version="1.0.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12685,9 +12690,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_loading.c" version="1.2.1">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_loading.c" version="1.2.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_loading.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12703,9 +12708,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_loading.h" version="1.2.1">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_loading.h" version="1.2.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_loading.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12721,9 +12726,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.c" version="1.1.0">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.c" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12739,9 +12744,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.h" version="1.1.0">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.h" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.5.4" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12901,9 +12906,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_user_defined_opcode.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_user_defined_opcode.c" version="2.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_user_defined_opcode.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12919,9 +12924,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_user_defined_opcode.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_user_defined_opcode.h" version="2.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_user_defined_opcode.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13009,9 +13014,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.0.1">
-        <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13027,9 +13032,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552_Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.2.1">
+        <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552_Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13065,7 +13106,7 @@
       </file>
       <file attr="config" category="utility" name="tools\img2c.py" version="1.2.5">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13083,7 +13124,7 @@
       </file>
       <file attr="config" category="utility" name="tools\ttf2c.py" version="2.2.0">
         <instance index="0">RTE\Acceleration\ttf2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.1" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>

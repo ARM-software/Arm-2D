@@ -31,6 +31,7 @@
 #include "arm_2d_helper.h"
 
 #include "arm_2d_user_opcode_draw_line.h"
+#include "arm_2d_user_opcode_draw_circle.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -88,8 +89,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+    int16_t iStartOffset;
 
-    arm_2d_user_draw_line_descriptor_t tDrawLineOP[2];
+    arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
 
 )
     /* place your public member here */

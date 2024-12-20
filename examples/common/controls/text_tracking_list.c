@@ -97,7 +97,7 @@ arm_2d_err_t __text_tracking_list_init(
     assert(NULL != ptCFG);
     assert(NULL != ptCalculator);
 
-    __simple_list_t *ptBase = &this.use_as__text_list_t.use_as____simple_list_t;
+    //__simple_list_t *ptBase = &this.use_as__text_list_t.use_as____simple_list_t;
 
     this.tSettings = ptCFG->tSettings;
 
@@ -132,7 +132,7 @@ IMPL_PFB_ON_DRAW(__arm_2d_text_tracking_list_draw_background)
     text_tracking_list_t *ptThis = (text_tracking_list_t *)pTarget;
     text_list_t *ptBase = &this.use_as__text_list_t;
 
-    uint16_t hwListCount = text_tracking_list_get_list_item_count(ptThis);
+    //uint16_t hwListCount = text_tracking_list_get_list_item_count(ptThis);
     uint16_t hwSelectedID = text_tracking_list_get_selected_item_id(ptThis);
 
     arm_2d_region_t tSelectionRegion;
@@ -211,7 +211,7 @@ ARM_NONNULL(1)
 void text_tracking_list_on_frame_start(text_tracking_list_t *ptThis)
 {
     assert(NULL != ptThis);
-    __simple_list_t *ptBase = &this.use_as__text_list_t.use_as____simple_list_t;
+    //__simple_list_t *ptBase = &this.use_as__text_list_t.use_as____simple_list_t;
 
     text_list_on_frame_start(&this.use_as__text_list_t);
 }

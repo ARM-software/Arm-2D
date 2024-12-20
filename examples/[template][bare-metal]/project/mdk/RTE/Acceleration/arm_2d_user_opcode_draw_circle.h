@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_USER_DRAW_LINE_H__
-#define __ARM_2D_USER_DRAW_LINE_H__
+#ifndef __ARM_2D_USER_DRAW_CIRCLE_H__
+#define __ARM_2D_USER_DRAW_CIRCLE_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d_types.h"
@@ -45,44 +45,32 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 
-typedef struct arm_2d_user_draw_line_api_params_t {
-    /* add your parameters here */
+typedef struct arm_2d_user_draw_circle_api_params_t {
     
-    arm_2d_location_t tStart;
-    arm_2d_location_t tEnd;
+    arm_2d_location_t *ptPivot;
+    int16_t iRadius;
+    bool bAntiAlias;
 
-} arm_2d_user_draw_line_api_params_t;
+} arm_2d_user_draw_circle_api_params_t;
 
 
-typedef struct arm_2d_user_draw_line_descriptor_t {
+typedef struct arm_2d_user_draw_circle_descriptor_t {
     implement(arm_2d_op_t);      /* inherit from base class arm_2d_op_t*/
 
-    arm_2d_user_draw_line_api_params_t tParams;
+    arm_2d_user_draw_circle_api_params_t tParams;
+    arm_2d_location_t tPivot;
     arm_2d_region_t tDrawRegion;
 
-    union {
-        //union {
-        q16_t q16dX;
-        q16_t q161divK;
-        //};
-
-        //union {
-        q16_t q16K;
-        q16_t q16dY;
-        //};
-    };
-
     uint8_t chOpacity;
-    bool bUseYAdvance;
-    uint16_t hwColour;
+    COLOUR_TYPE_T tForeground;
 
-}arm_2d_user_draw_line_descriptor_t;
+}arm_2d_user_draw_circle_descriptor_t;
 
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_USER_DRAW_LINE;
+const __arm_2d_op_info_t ARM_2D_OP_USER_DRAW_CIRCLE;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -90,11 +78,11 @@ const __arm_2d_op_info_t ARM_2D_OP_USER_DRAW_LINE;
 
 extern
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_rgb565_user_draw_line(  
-                    arm_2d_user_draw_line_descriptor_t *ptOP,
+arm_fsm_rt_t arm_2dp_rgb565_user_draw_circle(  
+                    arm_2d_user_draw_circle_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
                     const arm_2d_region_t *ptRegion,
-                    const arm_2d_user_draw_line_api_params_t *ptParams,
+                    const arm_2d_user_draw_circle_api_params_t *ptParams,
                     arm_2d_color_rgb565_t tColour,
                     uint8_t chOpacity);
 
@@ -108,4 +96,4 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_line(
 #endif
 
 
-#endif /* __ARM_2D_USER_DRAW_LINE_H__ */
+#endif /* __ARM_2D_USER_DRAW_CIRCLE_H__ */

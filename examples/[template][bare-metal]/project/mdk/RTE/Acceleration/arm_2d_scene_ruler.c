@@ -42,7 +42,8 @@
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wimplicit-int-conversion" 
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wsign-compare" 
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
@@ -332,7 +333,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                         &__ruler,
                         &__top_region,
                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                        (arm_2d_alpha_samples_2pts_t) {128, 0,});
+                        (arm_2d_alpha_samples_2pts_t) {{128, 0,}});
                 }
 
                 arm_2d_dock_bottom(__ruler_canvas, 60) {
@@ -340,7 +341,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                         &__ruler,
                         &__bottom_region,
                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                        (arm_2d_alpha_samples_2pts_t) {0, 128,});
+                        (arm_2d_alpha_samples_2pts_t) {{0, 128,}});
                 }
             }
         }

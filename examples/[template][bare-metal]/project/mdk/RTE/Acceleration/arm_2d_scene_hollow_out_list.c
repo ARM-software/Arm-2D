@@ -302,8 +302,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_hollow_out_list_handler)
                                             &c_tileBackgroundMaskGRAY8,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
                                             (arm_2d_alpha_samples_4pts_t) {
-                                                255, 128,
-                                                128, 255,
+                                                {255, 128,
+                                                128, 255,},
                                             });
 
         }
