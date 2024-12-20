@@ -2,6 +2,104 @@
 
 
 
+## Release v1.2.1 (20 December 2024)
+
+### Core and Library
+
+* Introduces a dedicated data type  `q16_t` and corresponding operations for Q15.16 fix point number.
+
+* Fixes a memory alignment issue in the scratch memory management. 
+
+* Improves the protoThread macro templates.
+
+* Improves the log system
+
+* Improves the GCC support for Armv8.1-M processors
+
+* Adds a new set of filter operations that reverse the pixel colours of a user-specified region for the target tile
+
+* Fixes a display issue in IIR-Helium implementation when the blur degree is zero. 
+
+  
+
+### Helper Services
+
+* Adds a new User-Defined-OPCODE template for drawing on the target tile
+* Fixes a dirty-region debug issue that keeps the old indication in skipped frames. 
+* Fixes a memory leaking issue in Dirty Region Helper Services. 
+* Improves dirty region helper services
+  * During the dirty region item update, users can specify an extra region for minimal enclosure region calculation in addition to the standard Old-plus-New region calculation.
+  * Improves the region clipping schema in the dirty-region-item-update.
+* Improves layout assistant
+  * Adds new prototypes for existing macro APIs
+  * Some minor fixes
+* Improves the support for monochrome devices in the display adapter service.
+* Improves the PIHelper performance (using fixed point to replace floating point)
+* Improves the Scene Player
+  * Adds a new Before-Deposing event to each scene
+* Enhance the List helper services.
+  * Adds tracking mode for selected item indication
+  * Adds PIHelper for selected item indication
+  * Adds new region calculator for water-fall style of lists.
+  * Fixes issues in region calculation 
+* Fixes some issues in the font helper service
+* Improves the list helper service
+  * Improves the support for non-ring mode
+  * Adds new region calculators for water-fall style
+  * Adds new APIs for selection indication, list status indication, redraw, etc.
+  * Adds PIHelper for selection indication
+  * Remove `__arm_2d_list_core_move_offset()`
+  * Improves the list performance
+* Improve `__simple_list_t`
+  * Updates the built-in dirty region schema
+  * Adds a scrolling bar for selection indication, which supports auto-fading
+* Improves the shape helper services
+  * Adds an API for drawing the glass-bar effect
+
+### Examples and Templates
+
+* Removes a deprecated header file: `arm_2d_extra_controls.h`. Please use `arm_2d_example_controls.h` instead.
+* Introduces a new scene-loading schema for demonstration. 
+* Improves the ACI example and allows MDK to use the ACI plugin during Fast Model Debugging.
+  * Accelerate rgb565 tile copy with source mask
+* Implement `arm_irq_safe` for the PC platform using the SDL2 mutex.
+* Adds PC project template to cmsis-pack.
+* Allows users to resize the SDL2 window in the PC project.
+* Adds a dedicated project template for OLED monochrome devices using Raspberry Pi Pico as the hardware platform.
+* Adds new demos
+  * A demo for compass
+  * A set of demos for monochrome display devices showing the typical application scenarios.
+    * Line progress bar
+    * histogram
+    * Text List
+    * Tracking List
+    * Icon List
+    * Clock
+  * A demo for User-Defined-OPCODEs (i.e. drawing lines and circles)
+  * A demo for filters
+* Improves virtual resource-related demos.
+* Adds new scene templates
+  * A scene template for knobs. 
+* Fixes a typo in `spin_zoom_widgets`
+* Improves the example control Progress-Wheel and adds new features
+  * Improves the built-in dirty region calculation algorithm
+  * Allows users to specify the Progress-Wheel orientation (the starting and ending point), i.e. Top, Bottom, Left or Right.
+* Adds new example controls
+  * Icon List (`icon_list_t`)
+* Fixes some minor issues found in the font helper service.
+* Adds demos for User-Defined-OPCODE
+  * A demo OPCODE for drawing lines.
+  * A demo OPCODE for drawing circles.
+  * A demo for how to use those User-Defined-OPCODE. 
+
+### Documentation and Misc
+
+* Fixes the `__REV16` in `arm_2d_user_arch_port.h` 
+* Improves Python scripts in the `tools` folder.
+* rename `getting_started_as_a_professional_user.md` to `getting_started_as_a_gui_stack_developer.md`
+
+
+
 ## Release v1.2.0 (9 September 2024)
 
 ### Core and Library
@@ -16,19 +114,19 @@
 
 - Fixes a potential issue found in the pixel-pipeline 
 
-  - In some rare case when the target region pointer is NULL, the operation behaviour is UNDEFINED
+  - In some rare cases when the target region pointer is NULL, the operation behaviour is UNDEFINED
 
 - Adds new series APIs for colour-filling-with-alpha-gradient
 
-  - Adds variants for defining alpha gradient with 4-sample-points, 3-sample-points, vertial mode and horizontal mode
-  - Adds varients for specifying a source mask
-  - Adds varients for specifying an optional opacity
+  - Adds variants for defining alpha gradient with 4-sample-points, 3-sample-points, vertical mode and horizontal mode
+  - Adds variants for specifying a source mask
+  - Adds variants for specifying an optional opacity
 
-- Significantly improves the performance of transform operations
+- Significantly improves the performance of transform operations.
 
   - ~80% performance uplift for non-Helium powered Cortex-M processors
   - ~20% performance uplift for the helium version of colour-filling-with-mask-opacity-and-transform
-  - Introduces an assumption that **ALL masks and pictures should contains a 1-pixel width boarder when applied to the transform operations.** The colour of the boarder should be same with the background of the picture or the corresponding alpha is always zero.
+  - Introduces an assumption that **ALL masks and pictures should contain a 1-pixel width border when applied to the transform operations.** The border's colour should be the same as the picture's background, or the corresponding alpha should always be zero.
 
 - Adds an experimental 2x Super-Sampling-Anti-Alias (2xSSAA) transform implementation
 
@@ -41,48 +139,48 @@
 - Improves the Layout Assistant
   - Updates the layout assistant to improve the performance of user applications
   - Allows users to specify the layout alignment
-- Adds a helper service for fonts and lcd display
-  - Simplifies the support for user defined fonts.
+- Adds a helper service for fonts and LCD display
+  - Simplifies the support for user-defined fonts.
   - Adds the scaling support to A1, A2 and A4 fonts
   - Improves the font display performance
   - Fixes some char size calculation issues
-  - Adds a new API `arm_lcd_puts_label` to display a label with an user specified aligment requirement. 
+  - Adds a new API `arm_lcd_puts_label` to display a label with a user-specified alignment requirement. 
 - Updates the scene player service
-  - Adds a manual switching mode and allows user to cancel an on-going switching
+  - Adds a manual switching mode and allows users to cancel an on-going switching
   - Adds new switching mode, Fly-In, and adds an optional background blur effects to Fly-In mode
-- Adds a helper services for user defined controls (user defined element tree)
+- Adds a helper service for user-defined controls (user-defined element tree)
   - Adds traversal algorithms: pre-order traversal, post-order traversal and bottom-up traversal
   - Adds a dedicated API for finding the top-most control with the coordinate of an user touch event
-- Improves the helper service for list
-  - Fixes some list-item-selection related issues
+- Improves the list helper service
+  - Fixes some list-item-selection-related issues
   - Adds the Non-Ring mode
 - Improves the accuracy and behaviour of the PIHelper
 
 ### Examples and Templates
 
-- Adds a new scene template `animate background`for the new virtual resource background-image-loading mode
+- Adds a new scene template `animate background` for the new virtual resource background-image-loading mode
 - Update the Benchmarks
   - Adds a 4-sample-point alpha gradient to the Generic Benchmark
   - Replaces the clock-pointer rotation transform operation from tile-transform-with-source-mask to colour-filling-with-mask-opacity-and-transform.
   - Updates the benchmark table
 - Improves the overall performance and reduces the memory footprint
 - Adds an background-only mode to the bubble charging scene template
-- Updates the demo scene `arm_2d_scene_basics` to demonstarte the colour-filling-with-alpha-gradient operations.
+- Updates the demo scene `arm_2d_scene_basics` to demonstrate the colour-filling-with-alpha-gradient operations.
 - Improves the `progress_bar_flowing`, `progress_bar_drill` and `progress_bar_simple`
-- Update list related controls
+- Update list-related controls
   - Adds a base class `__simple_list_t`  
   - Re-factories the `number_list_t` to inherit from the `__simple_list_t`
   - Adds a new control `text_list_t` which is derived from `__simple_list_t`
-  - Allows users to customize a `number_list_t` instance.
+  - Allows users to customise a `number_list_t` instance.
   - Adds new demos for list: Ruler and Hallow-Out List
   - Updates the scene template Fan to demonstrate the use of the `text_list_t`.
-- Adds a new demo scene for testing tranform operations
+- Adds a new demo scene for testing transform operations
 - Updates the example control: nebula
   - Improves the performance
   - Adds support for the inside-out movement
 - Improves the performance of the example Helium-ACI library
-- Adds built-in fonts for a subset of the ASCII: `ARM_2D_FONT_Arial14_A8`, `ARM_2D_FONT_Arial14_A4` ,`ARM_2D_FONT_Arial14_A2` and  `ARM_2D_FONT_Arial14_A1`
-- Updates the asset `c_tileSpinWheelMask` to fulfill the requirement of the updated transform operations.
+- Adds built-in fonts for a subset of the ASCII: `ARM_2D_FONT_Arial14_A8`, `ARM_2D_FONT_Arial14_A4`, `ARM_2D_FONT_Arial14_A2` and  `ARM_2D_FONT_Arial14_A1`
+- Updates the asset `c_tileSpinWheelMask` to fulfil the requirement of the updated transform operations.
 - Adds a new example control: `spin_zoom_widget_t`
   - Updates `arm_2d_scene_fan` and `arm_2d_scene_watch` to demonstrate the usage of `spin_zoom_widget_t`
 - Adds a new example control: `meter_pointer_t`
@@ -94,11 +192,11 @@
 
 ### Documentation and Misc
 
-- Improves python scripts in the `tools` folder.
+- Improves Python scripts in the `tools` folder.
   - Adds support for `FT_PIXEL_MODE_MONO`, `FT_PIXEL_MODE_GRAY2` and `FT_PIXEL_MODE_GRAY4` font in ttf2c.py
-  - Allows adding an user defined header file in `arm_2d_cfg.h` by defining the macro `__ARM_2D_USER_APP_CFG_H__`.
+  - Allows adding a user-defined header file in `arm_2d_cfg.h` by defining the macro `__ARM_2D_USER_APP_CFG_H__`.
   - Adds support for generating A1 mask to img2c.py
-- Updates README.md and the doxygen script
+- Updates README.md and the Doxygen script
 - Updates the copy-right
 - Improves the support for IAR
 
