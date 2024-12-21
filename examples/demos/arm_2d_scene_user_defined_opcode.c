@@ -61,17 +61,14 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
-#   define c_tileBattleship         c_tileBattleshipGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
-#   define c_tileBattleship         c_tileBattleshipRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_tileBattleship         c_tileBattleshipCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -95,7 +92,6 @@ enum {
 
 extern const arm_2d_tile_t c_tileBattleshipA4Mask;
 extern const arm_2d_tile_t c_tileBattleshipMask;
-extern const arm_2d_tile_t c_tileBattleship;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -181,7 +177,7 @@ static void __on_scene_user_defined_opcode_frame_start(arm_2d_scene_t *ptScene)
     }
     this.iStartOffset -= 4;
 
-    arm_2d_size_t tBattleZone = c_tileBattleship.tRegion.tSize;
+    arm_2d_size_t tBattleZone = c_tileBattleshipA4Mask.tRegion.tSize;
 
     switch(this.chBattleshipState) {
 
@@ -417,23 +413,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
 
             arm_2d_dock_bottom(__top_region, 60, 50, 0) {
 
-                arm_2d_align_centre(__bottom_region, c_tileBattleship.tRegion.tSize) {
+                arm_2d_align_centre(__bottom_region, c_tileBattleshipA4Mask.tRegion.tSize) {
 
                     if (BATTLESHIP_VANISH !=  this.chBattleshipState && this.chBattleshipState != BATTLESHIP_IDLE) {
-                    #if 0
+
                         arm_2d_fill_colour_with_a4_mask_and_opacity(ptTile,
                                                                     &__centre_region,
                                                                     &c_tileBattleshipA4Mask,
                                                                     (__arm_2d_color_t){ __RGB(0, 64, 0)},
                                                                     255);
-                    #else
-                        arm_2d_tile_copy_with_src_mask_and_opacity_only(&c_tileBattleship,
-                                                                        &c_tileBattleshipMask,
-                                                                        ptTile,
-                                                                        &__centre_region,
-                                                                        255);
-                        
-                    #endif
                     }
 
 
