@@ -77,6 +77,13 @@ extern "C" {
             __arm_2d_scene_user_defined_opcode_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+typedef struct __explosion_halo_t {
+    arm_2d_location_t tPivot;
+    int16_t iRadius;
+    uint8_t chOpacity;
+} __explosion_halo_t;
+
 /*!
  * \brief a user class for scene user_defined_opcode
  */
@@ -89,10 +96,15 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+    uint8_t chHyperJumpOpacity;
+    uint8_t chBattleshipState;
     int16_t iStartOffset;
+    int16_t iExplosionRadius;
+    COLOUR_TYPE_T tExplosion;
 
     arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
 
+    __explosion_halo_t tHalos[16];
 )
     /* place your public member here */
     
