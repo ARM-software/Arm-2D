@@ -761,7 +761,7 @@
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_user_defined_opcode.c" attr="config" version="2.0.0" />
             <file category="header"      name="examples/demos/arm_2d_scene_user_defined_opcode.h" attr="config" version="2.0.0" />
-            <file category="header"      name="examples/demos/__arm_2d_example_opcodes_common.h" attr="config" version="2.0.0" />
+            <file category="header"      name="examples/common/opcodes/__arm_2d_example_opcodes_common.h" />
 
             <file category="sourceC"     name="examples/demos/Battleship.c" attr="config" version="2.0.0" />
             <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_line.c" attr="config" version="1.2.1" />
