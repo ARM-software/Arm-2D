@@ -565,6 +565,11 @@ Macros</h2></td></tr>
 <tr class="memitem:gae655d62f3c3810b420c874a7af11b09f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gae655d62f3c3810b420c874a7af11b09f">ARM_LIST_QUEUE_PEEK</a>(__HEAD,  __TAIL,  __ITEM)&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#ga6cbb9b0bb402a670b8fa5a5f1a47f59a">__ARM_LIST_QUEUE_PEEK</a>((__HEAD), (__TAIL), (__ITEM))                 \</td></tr>
 <tr class="memdesc:gae655d62f3c3810b420c874a7af11b09f"><td class="mdescLeft">&#160;</td><td class="mdescRight">peek a node from a queue  <a href="group__gKernel.html#gae655d62f3c3810b420c874a7af11b09f">More...</a><br /></td></tr>
 <tr class="separator:gae655d62f3c3810b420c874a7af11b09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5cf3e9d4dce6e8bf5a2446acdcf5bec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">__ARM_LIST_QUEUE_IS_EMPTY</a>(__HEAD,  __TAIL)&#160;&#160;&#160;    ((__HEAD) == NULL)</td></tr>
+<tr class="separator:gaf5cf3e9d4dce6e8bf5a2446acdcf5bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac88355d24f05a1b35d406d32c6bf96fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gac88355d24f05a1b35d406d32c6bf96fc">ARM_LIST_QUEUE_IS_EMPTY</a>(__HEAD,  __TAIL)&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">__ARM_LIST_QUEUE_IS_EMPTY</a>((__HEAD), (__TAIL))</td></tr>
+<tr class="memdesc:gac88355d24f05a1b35d406d32c6bf96fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a list FIFO is empty or not  <a href="group__gKernel.html#gac88355d24f05a1b35d406d32c6bf96fc">More...</a><br /></td></tr>
+<tr class="separator:gac88355d24f05a1b35d406d32c6bf96fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe3c1382ff4755d987d4860565dbd0a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gabe3c1382ff4755d987d4860565dbd0a9">ARM_PT_BEGIN</a>(__STATE)</td></tr>
 <tr class="separator:gabe3c1382ff4755d987d4860565dbd0a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7fc82a8ece39848b3c4b74b1006e82ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7fc82a8ece39848b3c4b74b1006e82ba">ARM_PT_ENTRY</a>(...)</td></tr>
@@ -577,6 +582,14 @@ Macros</h2></td></tr>
 <tr class="memitem:ga2c4b9c8147e89cb7c70134ecc40342ea"><td class="memItemLeft" align="right" valign="top"><a id="ga2c4b9c8147e89cb7c70134ecc40342ea" name="ga2c4b9c8147e89cb7c70134ecc40342ea"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_PT_GOTO_PREV_ENTRY</b>(...)&#160;&#160;&#160;return __VA_ARGS__;</td></tr>
 <tr class="separator:ga2c4b9c8147e89cb7c70134ecc40342ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f0776209a2772c09ea7a5bd4f38805b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga4f0776209a2772c09ea7a5bd4f38805b">ARM_PT_WAIT_UNTIL</a>(__CONDITION, ...)</td></tr>
+<tr class="separator:ga4f0776209a2772c09ea7a5bd4f38805b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2e7ddfc38a45806698bc423a8b97532"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gac2e7ddfc38a45806698bc423a8b97532">ARM_PT_WAIT_OBJ_UNTIL</a>(__CONDITION, ...)</td></tr>
+<tr class="separator:gac2e7ddfc38a45806698bc423a8b97532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeebf5557538fa2757f2a3963ce819c3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaeebf5557538fa2757f2a3963ce819c3f">ARM_PT_WAIT_RESOURCE_UNTIL</a>(__CONDITION, ...)</td></tr>
+<tr class="separator:gaeebf5557538fa2757f2a3963ce819c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e743ccd3cdf716fab2da46613d79fc9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7e743ccd3cdf716fab2da46613d79fc9">ARM_PT_DELAY_MS</a>(__MS, ...)</td></tr>
+<tr class="separator:ga7e743ccd3cdf716fab2da46613d79fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga065818f13e21da2a2c2c8e96656a17b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga065818f13e21da2a2c2c8e96656a17b8">ARM_PT_REPORT_STATUS</a>(...)</td></tr>
 <tr class="separator:ga065818f13e21da2a2c2c8e96656a17b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ac4e790ecdd12214d5114f3e3b6426b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga6ac4e790ecdd12214d5114f3e3b6426b">ARM_PT_RETURN</a>(...)</td></tr>
@@ -624,6 +637,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa501a39d35ff17ba9ca23557de435a57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaa501a39d35ff17ba9ca23557de435a57">ARM_2D_LOG_CHN_CONTROLS</a>&#160;&#160;&#160;_BV(7)</td></tr>
 <tr class="memdesc:gaa501a39d35ff17ba9ca23557de435a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">the channel dedicated to example controls  <a href="group__gKernel.html#gaa501a39d35ff17ba9ca23557de435a57">More...</a><br /></td></tr>
 <tr class="separator:gaa501a39d35ff17ba9ca23557de435a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed50e4a18d2a28f3c0818853472c60cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaed50e4a18d2a28f3c0818853472c60cb">ARM_2D_LOG_CHN_GUI_STACK</a>&#160;&#160;&#160;_BV(16)</td></tr>
+<tr class="memdesc:gaed50e4a18d2a28f3c0818853472c60cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">the channel dedicated to USER defined GUI stack  <a href="group__gKernel.html#gaed50e4a18d2a28f3c0818853472c60cb">More...</a><br /></td></tr>
+<tr class="separator:gaed50e4a18d2a28f3c0818853472c60cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga69ee2461c9d2e7e18fb3c8ffb813ab0b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga69ee2461c9d2e7e18fb3c8ffb813ab0b">ARM_2D_LOG_CHN_APP</a>&#160;&#160;&#160;_BV(24)</td></tr>
 <tr class="memdesc:ga69ee2461c9d2e7e18fb3c8ffb813ab0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">the channel dedicated to applications and examples  <a href="group__gKernel.html#ga69ee2461c9d2e7e18fb3c8ffb813ab0b">More...</a><br /></td></tr>
 <tr class="separator:ga69ee2461c9d2e7e18fb3c8ffb813ab0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -672,6 +688,9 @@ Macros</h2></td></tr>
 <tr class="memitem:ga86262bdff45a415faef5c39b964fd16b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga86262bdff45a415faef5c39b964fd16b">__ARM_2D_LOG_PRINTF_CONTROLS</a>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0">__arm_2d_log_printf</a></td></tr>
 <tr class="memdesc:ga86262bdff45a415faef5c39b964fd16b"><td class="mdescLeft">&#160;</td><td class="mdescRight">the log printf entry dedicated to example controls  <a href="group__gKernel.html#ga86262bdff45a415faef5c39b964fd16b">More...</a><br /></td></tr>
 <tr class="separator:ga86262bdff45a415faef5c39b964fd16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga544bd41e124d19f5c329f238cd49b667"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga544bd41e124d19f5c329f238cd49b667">__ARM_2D_LOG_PRINTF_GUI_STACK</a>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0">__arm_2d_log_printf</a></td></tr>
+<tr class="memdesc:ga544bd41e124d19f5c329f238cd49b667"><td class="mdescLeft">&#160;</td><td class="mdescRight">the log printf entry dedicated to applications and examples  <a href="group__gKernel.html#ga544bd41e124d19f5c329f238cd49b667">More...</a><br /></td></tr>
+<tr class="separator:ga544bd41e124d19f5c329f238cd49b667"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c7e6681cf34e44da15d7a0ecc5a8757"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga0c7e6681cf34e44da15d7a0ecc5a8757">__ARM_2D_LOG_PRINTF_APP</a>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0">__arm_2d_log_printf</a></td></tr>
 <tr class="memdesc:ga0c7e6681cf34e44da15d7a0ecc5a8757"><td class="mdescLeft">&#160;</td><td class="mdescRight">the log printf entry dedicated to applications and examples  <a href="group__gKernel.html#ga0c7e6681cf34e44da15d7a0ecc5a8757">More...</a><br /></td></tr>
 <tr class="separator:ga0c7e6681cf34e44da15d7a0ecc5a8757"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -909,7 +928,7 @@ Macros</h2></td></tr>
 <tr class="memitem:ga17fea46439a9f655a68d9b186838163e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga17fea46439a9f655a68d9b186838163e">ARM_2D_VERSION_MINOR</a>&#160;&#160;&#160;2</td></tr>
 <tr class="memdesc:ga17fea46439a9f655a68d9b186838163e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minor version.  <a href="group__gKernel.html#ga17fea46439a9f655a68d9b186838163e">More...</a><br /></td></tr>
 <tr class="separator:ga17fea46439a9f655a68d9b186838163e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84adc455ac15b1574d66130d661dbd7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e">ARM_2D_VERSION_PATCH</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memitem:ga84adc455ac15b1574d66130d661dbd7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e">ARM_2D_VERSION_PATCH</a>&#160;&#160;&#160;1</td></tr>
 <tr class="memdesc:ga84adc455ac15b1574d66130d661dbd7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Patch number.  <a href="group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e">More...</a><br /></td></tr>
 <tr class="separator:ga84adc455ac15b1574d66130d661dbd7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga717a4db05af2c6d8e4ee171f6ba53d52"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga717a4db05af2c6d8e4ee171f6ba53d52">ARM_2D_VERSION_STR</a>&#160;&#160;&#160;&quot;&quot;</td></tr>
@@ -1145,7 +1164,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3aa83cca52e52516bc594ec82dcd757f44">ARM_2D_ALIGN_BOTTOM_MIDDLE</a>
 , <br />
-&#160;&#160;<b>ARM_2D_ALIGN_BOTTOM_CENTRE</b> = ARM_2D_ALIGN_TOP_MIDDLE
+&#160;&#160;<b>ARM_2D_ALIGN_BOTTOM_CENTRE</b> = ARM_2D_ALIGN_BOTTOM_MIDDLE
 , <br />
 &#160;&#160;<a class="el" href="group__gKernel.html#gga5a759b205152a054a4abea10c8ff01b3a9109160f671822e70755dad6b656e931">ARM_2D_ALIGN_MIDDLE_LEFT</a>
 , <br />
@@ -7276,6 +7295,9 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <div class="line">                (__TAIL) = NULL;                                                \</div>
 <div class="line">            }                                                                   \</div>
 <div class="line">        }                                                                       \</div>
+<div class="line">        if (NULL != (__ITEM)) {                                                 \</div>
+<div class="line">            ((<a class="code hl_struct" href="group__gKernel.html#struct____arm__slist__node__t" title="a type for generic list">__arm_slist_node_t</a> *)(__ITEM))-&gt;ptNext = NULL;                    \</div>
+<div class="line">        }                                                                       \</div>
 <div class="line">    } <span class="keywordflow">while</span>(0)</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
 
@@ -7407,6 +7429,79 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 
 </div>
 </div>
+<a id="gaf5cf3e9d4dce6e8bf5a2446acdcf5bec" name="gaf5cf3e9d4dce6e8bf5a2446acdcf5bec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">&#9670;&nbsp;</a></span>__ARM_LIST_QUEUE_IS_EMPTY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __ARM_LIST_QUEUE_IS_EMPTY</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__HEAD, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__TAIL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;    ((__HEAD) == NULL)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>do NOT use this macro directly </dd></dl>
+
+</div>
+</div>
+<a id="gac88355d24f05a1b35d406d32c6bf96fc" name="gac88355d24f05a1b35d406d32c6bf96fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac88355d24f05a1b35d406d32c6bf96fc">&#9670;&nbsp;</a></span>ARM_LIST_QUEUE_IS_EMPTY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_LIST_QUEUE_IS_EMPTY</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__HEAD, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__TAIL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gaf5cf3e9d4dce6e8bf5a2446acdcf5bec">__ARM_LIST_QUEUE_IS_EMPTY</a>((__HEAD), (__TAIL))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>check whether a list FIFO is empty or not </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__HEAD</td><td>a pointer points to the queue head </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__TAIL</td><td>a pointer points to the queue tail </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the list FIFO is empty </td></tr>
+    <tr><td class="paramname">false</td><td>the list FIFO is not empty </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="gabe3c1382ff4755d987d4860565dbd0a9" name="gabe3c1382ff4755d987d4860565dbd0a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gabe3c1382ff4755d987d4860565dbd0a9">&#9670;&nbsp;</a></span>ARM_PT_BEGIN</h2>
 
@@ -7468,6 +7563,151 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">            (*ptPTState) = 0;                                                   \</div>
 <div class="line">            break;}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga4f0776209a2772c09ea7a5bd4f38805b" name="ga4f0776209a2772c09ea7a5bd4f38805b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4f0776209a2772c09ea7a5bd4f38805b">&#9670;&nbsp;</a></span>ARM_PT_WAIT_UNTIL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_PT_WAIT_UNTIL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__CONDITION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY()                                                      \</div>
+<div class="line">                __VA_ARGS__;                                                    \</div>
+<div class="line">                if (!(__CONDITION)) {                                           \</div>
+<div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcadcf044fad5c682cf87809bd71d556d84" title="fsm on-going">arm_fsm_rt_on_going</a>);                \</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="gac2e7ddfc38a45806698bc423a8b97532" name="gac2e7ddfc38a45806698bc423a8b97532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2e7ddfc38a45806698bc423a8b97532">&#9670;&nbsp;</a></span>ARM_PT_WAIT_OBJ_UNTIL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_PT_WAIT_OBJ_UNTIL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__CONDITION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY()                                                      \</div>
+<div class="line">                __VA_ARGS__;                                                    \</div>
+<div class="line">                if (!(__CONDITION)) {                                           \</div>
+<div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca4e8025cf61b9b22f9abc6fe918f80e6b" title="fsm wait for IPC object">arm_fsm_rt_wait_for_obj</a>);            \</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="gaeebf5557538fa2757f2a3963ce819c3f" name="gaeebf5557538fa2757f2a3963ce819c3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeebf5557538fa2757f2a3963ce819c3f">&#9670;&nbsp;</a></span>ARM_PT_WAIT_RESOURCE_UNTIL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_PT_WAIT_RESOURCE_UNTIL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__CONDITION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY()                                                      \</div>
+<div class="line">                __VA_ARGS__;                                                    \</div>
+<div class="line">                if (!(__CONDITION)) {                                           \</div>
+<div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca562c08f6021b1434f1797ccbe7dfd2e3" title="wait for resource">arm_fsm_rt_wait_for_res</a>);            \</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga7e743ccd3cdf716fab2da46613d79fc9" name="ga7e743ccd3cdf716fab2da46613d79fc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7e743ccd3cdf716fab2da46613d79fc9">&#9670;&nbsp;</a></span>ARM_PT_DELAY_MS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_PT_DELAY_MS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__MS, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            ARM_PT_ENTRY(                                                       \</div>
+<div class="line">                <span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp);                  \</div>
+<div class="line">                int64_t *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp)                          \</div>
+<div class="line">                    = (&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp), ##__VA_ARGS__);         \</div>
+<div class="line">                *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp) =                                \</div>
+<div class="line">                    arm_2d_helper_get_system_timestamp();                       \</div>
+<div class="line">            )                                                                   \</div>
+<div class="line">            <span class="keywordflow">do</span> {                                                                \</div>
+<div class="line">                ARM_2D_SAFE_NAME(plTimestamp)                                   \</div>
+<div class="line">                    = (&amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(s_lTimestamp), ##__VA_ARGS__);         \</div>
+<div class="line">                int64_t <a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(lElapsedMs) =                          \</div>
+<div class="line">                    arm_2d_helper_convert_ticks_to_ms(                          \</div>
+<div class="line">                        <a class="code hl_function" href="group__gHelper.html#gaf92c1f5d41f75d4a8514ab79c34f1185" title="get the current system stamp from the reference clock">arm_2d_helper_get_system_timestamp</a>()                    \</div>
+<div class="line">                    -   *<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(plTimestamp));                        \</div>
+<div class="line">                if (<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(lElapsedMs) &lt; (__MS)) {                    \</div>
+<div class="line">                    ARM_PT_GOTO_PREV_ENTRY(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcadcf044fad5c682cf87809bd71d556d84" title="fsm on-going">arm_fsm_rt_on_going</a>);                \</div>
+<div class="line">                }                                                               \</div>
+<div class="line">            } <span class="keywordflow">while</span>(0)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -7783,6 +8023,22 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 
 </div>
 </div>
+<a id="gaed50e4a18d2a28f3c0818853472c60cb" name="gaed50e4a18d2a28f3c0818853472c60cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaed50e4a18d2a28f3c0818853472c60cb">&#9670;&nbsp;</a></span>ARM_2D_LOG_CHN_GUI_STACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_2D_LOG_CHN_GUI_STACK&#160;&#160;&#160;_BV(16)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>the channel dedicated to USER defined GUI stack </p>
+
+</div>
+</div>
 <a id="ga69ee2461c9d2e7e18fb3c8ffb813ab0b" name="ga69ee2461c9d2e7e18fb3c8ffb813ab0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga69ee2461c9d2e7e18fb3c8ffb813ab0b">&#9670;&nbsp;</a></span>ARM_2D_LOG_CHN_APP</h2>
 
@@ -7940,6 +8196,22 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 </div><div class="memdoc">
 
 <p>the log printf entry dedicated to example controls </p>
+
+</div>
+</div>
+<a id="ga544bd41e124d19f5c329f238cd49b667" name="ga544bd41e124d19f5c329f238cd49b667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga544bd41e124d19f5c329f238cd49b667">&#9670;&nbsp;</a></span>__ARM_2D_LOG_PRINTF_GUI_STACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __ARM_2D_LOG_PRINTF_GUI_STACK&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0">__arm_2d_log_printf</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>the log printf entry dedicated to applications and examples </p>
 
 </div>
 </div>
@@ -9144,7 +9416,7 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_2D_VERSION_PATCH&#160;&#160;&#160;0</td>
+          <td class="memname">#define ARM_2D_VERSION_PATCH&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
