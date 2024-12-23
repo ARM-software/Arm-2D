@@ -86,8 +86,8 @@ extern "C" {
 /*  arm-2d version */
 #define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
 #define ARM_2D_VERSION_MINOR        2                                           //!< Minor version
-#define ARM_2D_VERSION_PATCH        1                                           //!< Patch number
-#define ARM_2D_VERSION_STR          ""                                          //!< tag
+#define ARM_2D_VERSION_PATCH        2                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "dev"                                       //!< tag
 
 /*!
  * \brief arm-2d version number in decimal
