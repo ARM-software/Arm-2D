@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        03. Dec 2024
- * $Revision:    V.2.7.6
+ * $Date:        24. Dec 2024
+ * $Revision:    V.2.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -158,7 +158,7 @@ extern "C" {
                                 arm_2d_tile_t *ptileChar,                       \
                                 COLOUR_INT tForeColour,                         \
                                 uint_fast8_t chOpacity,                         \
-                                float fScale)
+                                q16_t q16Scale)
 
 #define IMPL_FONT_GET_CHAR_DESCRIPTOR(__NAME)                                   \
             arm_2d_char_descriptor_t *__NAME(                                   \
@@ -191,7 +191,7 @@ typedef arm_fsm_rt_t arm_2d_font_draw_char_handler_t(
                                             arm_2d_tile_t *ptileChar,
                                             COLOUR_INT tForeColour,
                                             uint_fast8_t chOpacity,
-                                            float fScale);
+                                            q16_t q16Scale);
 
 /* Font definitions */
 struct arm_2d_font_t {

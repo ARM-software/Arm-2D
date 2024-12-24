@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        03. Dec 2024
- * $Revision:    V.2.7.6
+ * $Date:        24. Dec 2024
+ * $Revision:    V.2.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -93,7 +93,8 @@ static struct {
 
     arm_2d_tile_t *ptTargetFB;
     uint32_t       wMode;
-    float          fScale;
+    //float          fScale;
+    q16_t q16Scale;
 
     uint32_t  bForceAllCharUseSameWidth : 1;
     uint32_t                            : 31;
@@ -319,12 +320,14 @@ static void __arm_lcd_text_update_char_buffer(void)
 
 void arm_lcd_text_set_scale(float fScale)
 {
-    if ((fScale != 0.0f) && ABS(fScale - 1.0f) > 0.01f) {
-        s_tLCDTextControl.fScale = ABS(fScale);
+    q16_t q16Scale = abs_q16(reinterpret_q16_f32(fScale));
+
+    if ((q16Scale != 0) && abs_q16(q16Scale - reinterpret_q16_s16(1)) > reinterpret_q16_f32(0.01f)) {
+        s_tLCDTextControl.q16Scale = q16Scale;
 
         __arm_lcd_text_update_char_buffer();
     } else {
-        s_tLCDTextControl.fScale = 0.0f;
+        s_tLCDTextControl.q16Scale = 0;
     }
 }
 
@@ -453,8 +456,8 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
         iAdvance = ptDescriptor->iAdvance;
     } while(0);
 
-    if (s_tLCDTextControl.fScale > 0.0f) {
-        iAdvance = (int16_t)((float)iAdvance * s_tLCDTextControl.fScale);
+    if (s_tLCDTextControl.q16Scale > 0) {
+        iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance));
         /* NOTE: No need to adjust bearings in the following way. */
         //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
         //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
@@ -523,9 +526,9 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
                                 &tCharDescriptor.tileChar,
                                 s_tLCDTextControl.tColour.tForeground,
                                 chOpacity,
-                                s_tLCDTextControl.fScale);
+                                s_tLCDTextControl.q16Scale);
 
-            if (s_tLCDTextControl.fScale > 0.0f) {
+            if (s_tLCDTextControl.q16Scale > 0) {
                 ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, NULL);
 
                 arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
@@ -543,8 +546,9 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
 {
     ARM_2D_UNUSED(ptFont);
+    ARM_2D_UNUSED(q16Scale);
 
-    if (fScale == 0.0f) {
+    if (q16Scale == 0) {
         return arm_2d_fill_colour_with_mask_and_opacity(
                                             ptTile,
                                             ptRegion,
@@ -568,7 +572,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
                                                 NULL,
                                                 c_tCentre,
                                                 0.0f,
-                                                fScale,
+                                                reinterpret_f32_q16(q16Scale),
                                                 tForeColour,
                                                 chOpacity,
                                                 &tTargetCenter);
@@ -577,8 +581,11 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)
 {
+    ARM_2D_UNUSED(ptFont);
+    ARM_2D_UNUSED(q16Scale);
+
 #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
-    if (fScale != 0.0f) {
+    if (q16Scale != 0) {
 
         arm_2d_tile_t tTempA8CharTile = {
             .tRegion = {
@@ -637,7 +644,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)
                                                             &tTempCharTile,
                                                             tForeColour,
                                                             chOpacity,
-                                                            fScale);
+                                                            q16Scale);
 
     } else 
 #endif
@@ -654,8 +661,11 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
 {
+    ARM_2D_UNUSED(ptFont);
+    ARM_2D_UNUSED(q16Scale);
+
 #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
-    if (fScale != 0.0f) {
+    if (q16Scale != 0) {
 
         arm_2d_tile_t tTempA8CharTile = {
             .tRegion = {
@@ -714,7 +724,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
                                                             &tTempCharTile,
                                                             tForeColour,
                                                             chOpacity,
-                                                            fScale);
+                                                            q16Scale);
 
     } else 
 #endif
@@ -732,7 +742,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a2_font_draw_char)
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char)
 {
 #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
-    if (fScale != 0.0f) {
+    if (q16Scale != 0) {
 
         arm_2d_tile_t tTempA8CharTile = {
             .tRegion = {
@@ -791,7 +801,7 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a4_font_draw_char)
                                                             &tTempCharTile,
                                                             tForeColour,
                                                             chOpacity,
-                                                            fScale);
+                                                            q16Scale);
 
     } else 
 #endif
@@ -827,9 +837,13 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
     }
     arm_2d_size_t tCharSize = ptFont->tCharSize;
 
-    if (s_tLCDTextControl.fScale > 0.0f) {
-        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
-        tCharSize.iWidth = (float)tCharSize.iWidth * s_tLCDTextControl.fScale + 2;
+    if (s_tLCDTextControl.q16Scale > 0) {
+        tCharSize.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iHeight)) 
+                          + 2;
+        tCharSize.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iWidth)) 
+                          + 2;
     }
 
     arm_2d_region_t tDrawBox = {
@@ -892,16 +906,28 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
 void arm_lcd_putchar(const char *str)
 {
 
-    if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &s_tLCDTextControl.tRegion, true)) {
-        return ;
-    }
-
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
 
-    if (s_tLCDTextControl.fScale > 0.0f) {
-        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
-        tCharSize.iWidth = (float)tCharSize.iWidth * s_tLCDTextControl.fScale + 2;
+    if (s_tLCDTextControl.q16Scale > 0) {
+        tCharSize.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iHeight)) 
+                          + 2;
+        tCharSize.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iWidth)) 
+                          + 2;
     }
+
+    do {
+        arm_2d_region_t tCharDrawRegion = s_tLCDTextControl.tRegion;
+        tCharDrawRegion.tSize.iWidth += tCharSize.iWidth;
+        tCharDrawRegion.tSize.iHeight += tCharSize.iHeight;
+        tCharDrawRegion.tLocation.iX -= tCharSize.iWidth >> 1;
+        tCharDrawRegion.tLocation.iY -= tCharSize.iHeight >> 1;
+
+        if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &tCharDrawRegion, false)) {
+            return ;
+        }
+    } while(0);
 
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 
@@ -941,17 +967,28 @@ void arm_lcd_putchar(const char *str)
 
 void arm_lcd_puts(const char *str)
 {
-    
-    if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &s_tLCDTextControl.tRegion, true)) {
-        return ;
-    }
-
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
 
-    if (s_tLCDTextControl.fScale > 0.0f) {
-        tCharSize.iHeight = (float)tCharSize.iHeight * s_tLCDTextControl.fScale + 2;
-        tCharSize.iWidth = (float)tCharSize.iWidth * s_tLCDTextControl.fScale + 2;
+    if (s_tLCDTextControl.q16Scale > 0) {
+        tCharSize.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iHeight)) 
+                          + 2;
+        tCharSize.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iWidth)) 
+                          + 2;
     }
+
+    do {
+        arm_2d_region_t tCharDrawRegion = s_tLCDTextControl.tRegion;
+        tCharDrawRegion.tSize.iWidth += tCharSize.iWidth;
+        tCharDrawRegion.tSize.iHeight += tCharSize.iHeight;
+        tCharDrawRegion.tLocation.iX -= tCharSize.iWidth >> 1;
+        tCharDrawRegion.tLocation.iY -= tCharSize.iHeight >> 1;
+
+        if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &tCharDrawRegion, false)) {
+            return ;
+        }
+    } while(0);
 
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 
@@ -1036,7 +1073,7 @@ typedef enum {
 #endif
 
 ARM_NONNULL(1)
-void arm_lcd_puts_label( const char *pchString,
+void arm_lcd_puts_label(const char *pchString,
                         arm_2d_align_t tAlignment)
 {
     assert(NULL != pchString);
