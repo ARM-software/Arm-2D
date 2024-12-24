@@ -924,7 +924,7 @@ void arm_lcd_putchar(const char *str)
         tCharDrawRegion.tLocation.iX -= tCharSize.iWidth >> 1;
         tCharDrawRegion.tLocation.iY -= tCharSize.iHeight >> 1;
 
-        if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &tCharDrawRegion, false)) {
+        if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &tCharDrawRegion, true)) {
             return ;
         }
     } while(0);
@@ -980,12 +980,13 @@ void arm_lcd_puts(const char *str)
 
     do {
         arm_2d_region_t tCharDrawRegion = s_tLCDTextControl.tRegion;
+
         tCharDrawRegion.tSize.iWidth += tCharSize.iWidth;
         tCharDrawRegion.tSize.iHeight += tCharSize.iHeight;
         tCharDrawRegion.tLocation.iX -= tCharSize.iWidth >> 1;
         tCharDrawRegion.tLocation.iY -= tCharSize.iHeight >> 1;
 
-        if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &tCharDrawRegion, false)) {
+        if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, &tCharDrawRegion, true)) {
             return ;
         }
     } while(0);
