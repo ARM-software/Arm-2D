@@ -493,9 +493,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga49e77f06aee5ad164db5e469be408548"><td class="memItemLeft" align="right" valign="top"><a id="ga49e77f06aee5ad164db5e469be408548" name="ga49e77f06aee5ad164db5e469be408548"></a>
 typedef <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_font_get_char_descriptor_handler_t</b>(const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, uint8_t *pchCharCode)</td></tr>
 <tr class="separator:ga49e77f06aee5ad164db5e469be408548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga971b1986bca7c7ac8f9f146be14c2a77"><td class="memItemLeft" align="right" valign="top"><a id="ga971b1986bca7c7ac8f9f146be14c2a77" name="ga971b1986bca7c7ac8f9f146be14c2a77"></a>
-typedef <a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_font_draw_char_handler_t</b>(const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptileChar, COLOUR_INT tForeColour, uint_fast8_t chOpacity, float fScale)</td></tr>
-<tr class="separator:ga971b1986bca7c7ac8f9f146be14c2a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc70c5aee9a4b6719a3cd03271d9eb88"><td class="memItemLeft" align="right" valign="top"><a id="gabc70c5aee9a4b6719a3cd03271d9eb88" name="gabc70c5aee9a4b6719a3cd03271d9eb88"></a>
+typedef <a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_font_draw_char_handler_t</b>(const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptileChar, COLOUR_INT tForeColour, uint_fast8_t chOpacity, q16_t q16Scale)</td></tr>
+<tr class="separator:gabc70c5aee9a4b6719a3cd03271d9eb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -6471,7 +6471,7 @@ chPTState</td>
 <div class="line">                                <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptileChar,                       \</div>
 <div class="line">                                COLOUR_INT tForeColour,                         \</div>
 <div class="line">                                uint_fast8_t chOpacity,                         \</div>
-<div class="line">                                <span class="keywordtype">float</span> fScale)</div>
+<div class="line">                                q16_t q16Scale)</div>
 </div><!-- fragment -->
 </div>
 </div>
