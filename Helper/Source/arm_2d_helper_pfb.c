@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        05. Dec 2024
- * $Revision:    V.1.12.3
+ * $Date:        26. Dec 2024
+ * $Revision:    V.1.12.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3165,11 +3165,12 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
 
     uint_fast8_t chDrawingIndex;
     uint_fast8_t chReadyToDrawIndex;
-
+    uint_fast8_t chReadyToFlushIndex;
 
     arm_irq_safe {
         chDrawingIndex = this.Runtime.u2Drawing;
         chReadyToDrawIndex = this.Runtime.u2ReadyToDraw;
+        chReadyToFlushIndex = this.Runtime.u2ReadyToFlush;
     }
 
     uintptr_t pnAddress = this.tCFG.pnAddress[chDrawingIndex];
@@ -3179,7 +3180,7 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
         arm_irq_safe {
 
             /* drawing: no */
-            if (ARM_2D_3FB_INVALID_IDX == this.Runtime.u2Drawing) {
+            if (ARM_2D_3FB_INVALID_IDX == chDrawingIndex) {
                 /* ensure ready-to-draw: available */
                 assert(ARM_2D_3FB_INVALID_IDX != chReadyToDrawIndex);
 
@@ -3197,10 +3198,10 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
             } /* drawing: yes */
 
             /* check whether Ready-To-Flush is empty */
-            if (this.Runtime.u2ReadyToFlush == ARM_2D_3FB_INVALID_IDX) {
+            if ((ARM_2D_3FB_INVALID_IDX == chReadyToFlushIndex)
+             && (ARM_2D_3FB_INVALID_IDX != chReadyToDrawIndex)
+             && (ARM_2D_3FB_INVALID_IDX != chDrawingIndex)) {
                 
-                /* ensure ready-to-draw: available */
-                assert(ARM_2D_3FB_INVALID_IDX != chReadyToDrawIndex);
                 this.Runtime.tState[chDrawingIndex] = ARM_3FB_STATE_COPYING_AS_SOURCE;
                 this.Runtime.tState[chReadyToDrawIndex] = ARM_3FB_STATE_COPYING_AS_TARGET;
                 this.Runtime.u2ReadyToDraw = ARM_2D_3FB_INVALID_IDX;
@@ -3213,12 +3214,13 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
         if (bPrepareForCopy) {
 
             this.Runtime.bFBCopyComplete = false;
-            __arm_2d_helper_3fb_dma_copy(ptThis, 
-                                        this.tCFG.evtOnDMACopy.pObj,
-                                        this.tCFG.pnAddress[chDrawingIndex],
-                                        this.tCFG.pnAddress[chReadyToDrawIndex],
-                                        this.tCFG.tScreenSize.iWidth * this.tCFG.tScreenSize.iHeight,
-                                        this.tCFG.chPixelBits >> 3);
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.evtOnDMACopy.fnHandler,
+                ARM_2D_PARAM(ptThis,
+                            this.tCFG.evtOnDMACopy.pObj,
+                            this.tCFG.pnAddress[chDrawingIndex],
+                            this.tCFG.pnAddress[chReadyToDrawIndex],
+                            this.tCFG.tScreenSize.iWidth * this.tCFG.tScreenSize.iHeight,
+                            this.tCFG.chPixelBits >> 3));
 
             while(true) {
                 if (this.Runtime.bFBCopyComplete) {
@@ -3278,15 +3280,14 @@ bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis,
     int16_t iWidth = MIN(iPFBWidth, iLCDWidth);
 
     return this.tCFG.evtOn2DCopy.fnHandler(ptThis,
-                                            this.tCFG.evtOnDMACopy.pObj,
+                                            this.tCFG.evtOn2DCopy.pObj,
                                             pnSource,
                                             wPFBStrideInByte,
                                             pnTarget,
                                             wLCDStrideInByte,
                                             iWidth,
                                             iHeight,
-                                            chBytePerPixel
-                                        );
+                                            chBytePerPixel);
 }
 
 
