@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        16. Dec 2024
+ * $Date:        28. Dec 2024
  * $Revision:    V.2.3.0
  *
  * Target Processor:  Cortex-M cores
@@ -1228,6 +1228,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
             int32_t nDelta = nVisualWindowStart - nSelectionOffset;
 
             this.nOffset += nDelta;
+            nVisualWindowStart -= nDelta;
 
             nOffset += nDelta;
             bWindowMoved = true;
@@ -1258,6 +1259,7 @@ arm_2d_err_t __calculator_offset_update(__arm_2d_list_core_t *ptThis,
                 this.nOffset -= nDelta;
 
                 nOffset -= nDelta;
+                nVisualWindowStart += nDelta;
                 bWindowMoved = true;
             }
         }
