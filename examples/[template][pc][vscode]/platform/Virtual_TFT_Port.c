@@ -23,15 +23,27 @@
 #if VT_COLOR_DEPTH == 1
 #define DEV_2_VT_RGB(color)                  monochrome_2_RGB888(color)
 #define VT_RGB_2_DEV(color)                  RGB888_2_monochrome(color)
+
+static uint8_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
+
 #elif VT_COLOR_DEPTH == 8
 #define DEV_2_VT_RGB(color)                  GRAY8_2_RGB888(color)
 #define VT_RGB_2_DEV(color)                  RGB888_2_GRAY8(color)
+
+static uint8_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
+
 #elif VT_COLOR_DEPTH == 16
 #define DEV_2_VT_RGB(color)                  RGB565_2_RGB888(color)
 #define VT_RGB_2_DEV(color)                  RGB888_2_RGB565(color)
+
+static uint16_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
+
 #elif VT_COLOR_DEPTH == 24 || VT_COLOR_DEPTH == 32
 #define DEV_2_VT_RGB(color)                 (color)
 #define VT_RGB_2_DEV(color)                 (color)
+
+static uint32_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
+
 #endif
 
 #if VT_WIDTH >= 240 || VT_HEIGHT >= 240
@@ -46,6 +58,11 @@ static SDL_Window * window;
 static SDL_Renderer * renderer;
 static SDL_Texture * texture;
 static uint32_t tft_fb[VT_WIDTH * VT_HEIGHT];
+
+uintptr_t __DISP_ADAPTER0_3FB_FB0_ADDRESS__;
+uintptr_t __DISP_ADAPTER0_3FB_FB1_ADDRESS__;
+uintptr_t __DISP_ADAPTER0_3FB_FB2_ADDRESS__;
+
 static volatile bool sdl_inited = false;
 static volatile bool sdl_refr_qry = false;
 static volatile bool sdl_refr_cpl = false;
@@ -156,6 +173,11 @@ static void monitor_sdl_clean_up(void)
 
 static void monitor_sdl_init(void)
 {
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+    __DISP_ADAPTER0_3FB_FB0_ADDRESS__ = (uintptr_t)s_tFramebuffer[0];
+    __DISP_ADAPTER0_3FB_FB1_ADDRESS__ = (uintptr_t)s_tFramebuffer[1];
+    __DISP_ADAPTER0_3FB_FB2_ADDRESS__ = (uintptr_t)s_tFramebuffer[2];
+#endif
 
     /*Initialize the SDL*/
     SDL_Init(SDL_INIT_VIDEO);
@@ -206,11 +228,18 @@ static void monitor_sdl_init(void)
 
 void VT_sdl_refresh_task(void)
 {
-    if(sdl_refr_qry != false)
+    //if(sdl_refr_qry != false)
     {
         if (arm_2d_helper_is_time_out(1000/60)) 
         {
             sdl_refr_qry = false;
+
+        #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+            void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
+        
+            VT_Fill_Multiple_Colors(0, 0, VT_WIDTH - 1, VT_HEIGHT - 1, (color_typedef *)pFrameBuffer);
+        #endif
+
             SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
             SDL_RenderClear(renderer);
 
@@ -288,9 +317,13 @@ int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const 
 void VT_sdl_flush(int32_t nMS)
 {
     nMS = MAX(1, nMS);
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+    SDL_Delay(nMS);
+#else
     while(!sdl_refr_cpl) {
         SDL_Delay(nMS);
     }
+#endif
     sdl_refr_cpl = false;
     sdl_refr_qry = true;
 }
