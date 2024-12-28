@@ -606,7 +606,7 @@ Table of Contents</h2>
 <div class="line">        disp_adapter0_task();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p >The method mentioned above won't pause the thread if the LCD has finished rendering the previous frame. instead, the <code>disp_adapterN_task()</code> will return <code>arm_fsm_rt_async</code> to indicate this status. You can ignore it, of course. Or you can use a semaphore to hang the thread in an RTOS environment. For example:</p>
+</div><!-- fragment --><p >The method mentioned above won't pause the thread if the LCD hasn't finished rendering the previous frame. instead, the <code>disp_adapterN_task()</code> will return <code>arm_fsm_rt_async</code> to indicate this status. You can ignore it, of course. Or you can use a semaphore to hang the thread in an RTOS environment. For example:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span> uintptr_t s_pLCDSem = NULL;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> set_lcd_cpl_sem(<span class="keywordtype">void</span>)</div>
