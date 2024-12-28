@@ -230,6 +230,7 @@ void VT_sdl_refresh_task(void)
 
     #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
         void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
+        static void *s_pLastFB = NULL;
     
         VT_Fill_Multiple_Colors(0, 0, VT_WIDTH - 1, VT_HEIGHT - 1, (color_typedef *)pFrameBuffer);
     #endif
@@ -240,7 +241,16 @@ void VT_sdl_refresh_task(void)
         /*Update the renderer with the texture containing the rendered image*/
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
+    
+    #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+        /* ensure the new content has been displayed*/
+        if (pFrameBuffer != s_pLastFB) {
+            sdl_refr_cpl = true;
+        }
+        s_pLastFB = pFrameBuffer;
+    #else
         sdl_refr_cpl = true;
+    #endif
     }
 
     SDL_Event event;
