@@ -534,7 +534,132 @@ Table of Contents</h2>
 </div><!-- fragment --><blockquote class="doxtable">
 <p >NOTE: Here, <b>N</b> and <b>n</b> represents the display adapter index number. </p>
 </blockquote>
-<h1><a class="anchor" id="autotoc_md76"></a>
+<p >When using 3FB mode, if the CPU can produce more frames than the display devices can handle, i.e. the CPU drawing framerate is higher than the LCD framerate, some frames will be overridden due to the overrun. We can introduce a simple LCD sync-up scheme to solve this issue.</p>
+<p >Suppose we have an LCD Vsync event handler <code>lcd_vsync_event_handler()</code> that will be triggered periodically by the LCD controller, and we have an API <code>lcd_update_framebuffer()</code> to update the Display Framebuffer used by the LCD controller. Then, it is easy to write the following code to use the 3FB mode:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> lcd_vsync_event_handler(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">void</span> * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();</div>
+<div class="line">    lcd_udpate_framebuffer(pFrameBuffer);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >To establish a sync-up mechanism, we need a flag like <code>s_bRenderedCPL</code>, and we can create a function to poll this flag as shown below:</p>
+<div class="fragment"><div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> s_bRenderedCPL = <span class="keyword">true</span>; <span class="comment">/* it is important to initialize this flag as true */</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">bool</span> lcd_is_previous_frame_rendered(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">bool</span> bResult = <span class="keyword">false</span>;</div>
+<div class="line">    arm_irq_safe {</div>
+<div class="line">        <span class="keywordflow">if</span> (s_bRenderedCPL) {</div>
+<div class="line">            s_bRenderedCPL = <span class="keyword">false</span>;</div>
+<div class="line">            bResult = <span class="keyword">true</span>;</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> bResult;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >After that, we have to update the flag <code>s_bRenderedCPL</code> in the VSync event handler:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> lcd_vsync_event_handler(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">void</span> * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> *s_pLastFB = NULL;</div>
+<div class="line">    lcd_udpate_framebuffer(pFrameBuffer);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (s_bLastFB != pFrameBuffer) {</div>
+<div class="line">        s_bRenderedCPL = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">    s_bLastFB = pFrameBuffer;</div>
+<div class="line">}</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >[!NOTE]</p>
+<p >Only when the Framebuffer pointer is different from the last one, we consider this as "last frame is rendered"; hence, update the flag <code>s_bRenderedCPL</code> to <code>true</code>. </p>
+</blockquote>
+<p>Now, the API <code>lcd_is_previous_frame_rendered</code> can tell us whether the previous frame is rendered or not. We should pass this information to display adapter service via a dedicated <b>Low-Level-Sync-Up</b> event handler. To register such an event handler, we need help from API <code><a class="el" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef" title="update PFB dependency (event handlers)">arm_2d_helper_pfb_update_dependency()</a></code> as shown below:</p>
+<div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keywordtype">bool</span> lcd_is_previous_frame_rendered(<span class="keywordtype">void</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> __lcd_sync_handler(<span class="keywordtype">void</span> *pTarget)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">return</span> lcd_is_previous_frame_rendered();</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    arm_irq_safe {</div>
+<div class="line">        <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    disp_adapter0_init();</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* register a low level sync-up handler to wait LCD finish rendering the previous frame */</span></div>
+<div class="line">    <span class="keywordflow">do</span> {</div>
+<div class="line">        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t" title="The PFB Helper Service Dependency.">arm_2d_helper_pfb_dependency_t</a> tDependency = {</div>
+<div class="line">            .<a class="code hl_variable" href="group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd">evtOnLowLevelSyncUp</a> = {</div>
+<div class="line">                .<a class="code hl_variable" href="group__gKernel.html#a276d348c59950c0663e28adfc4829c99" title="event handler">fnHandler</a> = &amp;__lcd_sync_handler,</div>
+<div class="line">            },</div>
+<div class="line">        };</div>
+<div class="line">        <a class="code hl_function" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef" title="update PFB dependency (event handlers)">arm_2d_helper_pfb_update_dependency</a>(&amp;DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, </div>
+<div class="line">                                            <a class="code hl_enumvalue" href="group__gHelper.html#ggaa2baea0e4a061cf7eda1c9589fd7c4fead7df2fe2d2065398cf935e34b6afedeb" title="On Low Level Sync-up Event.">ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP</a>,</div>
+<div class="line">                                            &amp;tDependency);</div>
+<div class="line">    } <span class="keywordflow">while</span>(0);</div>
+<div class="line">    </div>
+<div class="line">    ...</div>
+<div class="line">    <span class="keywordflow">while</span>(1) {</div>
+<div class="line">        disp_adapter0_task();</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >The method mentioned above won't pause the thread if the LCD has finished rendering the previous frame. instead, the <code>disp_adapterN_task()</code> will return <code>arm_fsm_rt_async</code> to indicate this status. You can ignore it, of course. Or you can use a semaphore to hang the thread in an RTOS environment. For example:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> uintptr_t s_pLCDSem = NULL;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> set_lcd_cpl_sem(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <a class="code hl_function" href="group__gHelper.html#gace219d9de63ad938b960ecc16ba95972" title="set a semaphore">arm_2d_port_set_semaphore</a>(s_pLCDSem);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    arm_irq_safe {</div>
+<div class="line">        <a class="code hl_function" href="group__gKernel.html#gae417897e7d7186b294c0ff3468102276" title="initialise arm-2d">arm_2d_init</a>();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    disp_adapter0_init();</div>
+<div class="line">  </div>
+<div class="line">    s_pLCDSem = <a class="code hl_function" href="group__gHelper.html#ga4d28a193f7ebb8b6381d22314106a113" title="get a new semaphore from host RTOS">arm_2d_port_new_semaphore</a>();</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">/* register a low level sync-up handler to wait LCD finish rendering the previous frame */</span></div>
+<div class="line">    <span class="keywordflow">do</span> {</div>
+<div class="line">        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__pfb__dependency__t" title="The PFB Helper Service Dependency.">arm_2d_helper_pfb_dependency_t</a> tDependency = {</div>
+<div class="line">            .<a class="code hl_variable" href="group__gHelper.html#a0ed423f1f6490f8cc89abd55f886f4cd">evtOnLowLevelSyncUp</a> = {</div>
+<div class="line">                .<a class="code hl_variable" href="group__gKernel.html#a276d348c59950c0663e28adfc4829c99" title="event handler">fnHandler</a> = &amp;__lcd_sync_handler,</div>
+<div class="line">            },</div>
+<div class="line">        };</div>
+<div class="line">        <a class="code hl_function" href="group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef" title="update PFB dependency (event handlers)">arm_2d_helper_pfb_update_dependency</a>(&amp;DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, </div>
+<div class="line">                                            <a class="code hl_enumvalue" href="group__gHelper.html#ggaa2baea0e4a061cf7eda1c9589fd7c4fead7df2fe2d2065398cf935e34b6afedeb" title="On Low Level Sync-up Event.">ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP</a>,</div>
+<div class="line">                                            &amp;tDependency);</div>
+<div class="line">    } <span class="keywordflow">while</span>(0);</div>
+<div class="line">    </div>
+<div class="line">    ...</div>
+<div class="line">    <span class="keywordflow">while</span>(1) {</div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fca6904301c000a8bd3f1f13b557d18679b" title="fsm work asynchronously, please check it later.">arm_fsm_rt_async</a> == disp_adapter0_task()) {</div>
+<div class="line">            <a class="code hl_function" href="group__gHelper.html#ga4ef26fee6266642ad57af1d1318aad9b" title="wait for a semaphore">arm_2d_port_wait_for_semaphore</a>(s_pLCDSem);   <span class="comment">/* hang the thread up */</span></div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >And in the <code>lcd_vsync_event_handler</code>, we should call the function <code>set_lcd_cpl_sem()</code> as shown below:</p>
+<div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> set_lcd_cpl_sem(<span class="keywordtype">void</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> lcd_vsync_event_handler(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">void</span> * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();</div>
+<div class="line">    <span class="keyword">static</span> <span class="keywordtype">void</span> *s_pLastFB = NULL;</div>
+<div class="line">    lcd_udpate_framebuffer(pFrameBuffer);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (s_bLastFB != pFrameBuffer) {</div>
+<div class="line">        s_bRenderedCPL = <span class="keyword">true</span>;</div>
+<div class="line">        set_lcd_cpl_sem();         <span class="comment">/* set the semaphore to wake the thread up */</span></div>
+<div class="line">    }</div>
+<div class="line">    s_bLastFB = pFrameBuffer;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md76"></a>
 4 Example Projects</h1>
 <p ><b>Table 3-1 Summary</b></p>
 <table class="markdownTable">
