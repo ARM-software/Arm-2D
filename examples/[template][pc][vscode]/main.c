@@ -434,6 +434,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        //scene_ruler_loader,
         //scene_filters_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader
@@ -443,7 +444,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_compass_loader,
         //scene_basics_loader,
         //scene_fitness_loader,
-        scene_user_defined_opcode_loader,
+        //scene_user_defined_opcode_loader,
         //scene_knob_loader,
         //scene_panel_loader,
     },
@@ -571,9 +572,7 @@ int app_2d_main_thread (void *argument)
 #endif
 
     while(1) {
-        if (arm_fsm_rt_cpl == disp_adapter0_task()) {
-            VT_sdl_flush(1);
-        }
+        disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
@@ -623,6 +622,10 @@ int app_2d_main_thread (void *argument)
     return 0;
 }
 
+static bool __lcd_sync_handler(void *pTarget)
+{
+    return VT_sdl_flush(1);
+}
 
 int main(int argc, char* argv[])
 {
@@ -635,6 +638,18 @@ int main(int argc, char* argv[])
     }
 
     disp_adapter0_init();
+
+    /* register a low level sync-up handler to wait LCD finish rendering the previous frame */
+    do {
+        arm_2d_helper_pfb_dependency_t tDependency = {
+            .evtOnLowLevelSyncUp = {
+                .fnHandler = &__lcd_sync_handler,
+            },
+        };
+        arm_2d_helper_pfb_update_dependency(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                                            ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP,
+                                            &tDependency);
+    } while(0);
 
     SDL_CreateThread(app_2d_main_thread, "arm-2d thread", NULL);
 
