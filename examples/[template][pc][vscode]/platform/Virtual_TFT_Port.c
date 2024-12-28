@@ -314,18 +314,19 @@ int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const 
     return 0;
 }
 
-void VT_sdl_flush(int32_t nMS)
+bool VT_sdl_flush(int32_t nMS)
 {
     nMS = MAX(1, nMS);
-#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
-    SDL_Delay(nMS);
-#else
-    while(!sdl_refr_cpl) {
+
+    if (sdl_refr_cpl) {
+        sdl_refr_cpl = false;
+        sdl_refr_qry = true;
+        return true;
+    } else {
         SDL_Delay(nMS);
     }
-#endif
-    sdl_refr_cpl = false;
-    sdl_refr_qry = true;
+
+    return false;
 }
 
 #if defined(_POSIX_VERSION) || defined(CLOCK_MONOTONIC) || defined(__APPLE__)

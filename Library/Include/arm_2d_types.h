@@ -907,7 +907,6 @@ typedef struct arm_2d_evt_t {
     void                    *pTarget;                                           //!< user attached target
 } arm_2d_evt_t;
 
-
 #define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)                      //!< opcode has source tile info
 #define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)                      //!< opcode has target tile info
 #define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)                      //!< opcode has source mask info

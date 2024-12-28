@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        26. Dec 2024
- * $Revision:    V.1.12.4
+ * $Date:        28. Dec 2024
+ * $Revision:    V.1.13.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -678,7 +678,13 @@ typedef struct arm_2d_helper_pfb_dependency_t {
     //! event handler for drawing GUI
     arm_2d_helper_draw_evt_t        evtOnDrawing;  
 
-    //! low level rendering handler wants to sync-up (return arm_fsm_rt_wait_for_obj)
+    /*! event handler for waiting LCD finish rendering previous frame
+     *  \note when then handler return false, the refresh task will yield and return
+     *        arm_fsm_rt_wait_async. 
+     *        when the handler return true, it means the display device finished 
+     *        rendering the previous frame and the refresh task will continue the 
+     *        following steps.
+     */
     arm_2d_evt_t                    evtOnLowLevelSyncUp;  
 
     //! event handler for each frame complete

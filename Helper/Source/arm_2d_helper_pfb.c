@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        26. Dec 2024
- * $Revision:    V.1.12.4
+ * $Date:        28. Dec 2024
+ * $Revision:    V.1.13.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -152,8 +152,7 @@ void __arm_2d_helper_pfb_free(arm_2d_helper_pfb_t *ptThis, arm_2d_pfb_t *ptPFB)
     }
     
     /* set event */
-    if  (   (NULL == this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)
-        &&  ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable)) {
+    if  ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable) {
         arm_2d_port_set_semaphore(this.Adapter.pFPBPoolAvailable);
     }
 
@@ -275,10 +274,8 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
         }
     } while(0);
 
-    if (NULL == this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler) {
-        /* use default semaphore */
-        this.Adapter.pFPBPoolAvailable = arm_2d_port_new_semaphore();
-    }
+    /* use semaphore */
+    this.Adapter.pFPBPoolAvailable = arm_2d_port_new_semaphore();
 
     /* initialize internal dirty region pool*/
     do {
@@ -2680,9 +2677,20 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList);
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptCandidateList);
     }
+    
+ARM_PT_ENTRY();
+    /* wait until LCD finish rendering the previous frame */
+    if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
+        // wait until lcd is ready
+        if (!(*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
+                this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget)) {
+            ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_async);
+        }
+    }
 
     __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp,
-                                       ARM_2D_PERFC_DRIVER); 
+                                       ARM_2D_PERFC_DRIVER);
+
     do {
         /* begin of the drawing iteration, 
          * try to request the tile of frame buffer
@@ -2731,12 +2739,8 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                     "PFB TASK", 
                     "No PFB is available, waiting..."
                 );
-                if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
-                     // wait until lcd is ready
-                    (*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
-                        this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget
-                    );
-                } else if ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable) {
+                
+                if ((uintptr_t)NULL != this.Adapter.pFPBPoolAvailable) {
                     arm_2d_port_wait_for_semaphore(
                                                 this.Adapter.pFPBPoolAvailable);
                 }
@@ -2801,7 +2805,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                                         this.Adapter.bIsNewFrame);
 
         // just in case some one forgot to do this...
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
 
         this.Statistics.nTotalCycle += 
             __arm_2d_helper_perf_counter_stop(  &this.Statistics.lTimestamp,
