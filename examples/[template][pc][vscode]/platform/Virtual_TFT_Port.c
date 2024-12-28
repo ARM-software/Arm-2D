@@ -64,7 +64,6 @@ uintptr_t __DISP_ADAPTER0_3FB_FB1_ADDRESS__;
 uintptr_t __DISP_ADAPTER0_3FB_FB2_ADDRESS__;
 
 static volatile bool sdl_inited = false;
-static volatile bool sdl_refr_qry = false;
 static volatile bool sdl_refr_cpl = false;
 static volatile bool sdl_quit_qry = false;
 
@@ -222,32 +221,26 @@ static void monitor_sdl_init(void)
     /*Initialize the frame buffer to gray (77 is an empirical value) */
     memset(tft_fb, 77, VT_WIDTH * VT_HEIGHT * sizeof(uint32_t));
     SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
-    sdl_refr_qry = true;
     sdl_inited = true;
 }
 
 void VT_sdl_refresh_task(void)
 {
-    //if(sdl_refr_qry != false)
-    {
-        if (arm_2d_helper_is_time_out(1000/60)) 
-        {
-            sdl_refr_qry = false;
+    if (arm_2d_helper_is_time_out(1000/60)) {
 
-        #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
-            void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
-        
-            VT_Fill_Multiple_Colors(0, 0, VT_WIDTH - 1, VT_HEIGHT - 1, (color_typedef *)pFrameBuffer);
-        #endif
+    #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+        void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
+    
+        VT_Fill_Multiple_Colors(0, 0, VT_WIDTH - 1, VT_HEIGHT - 1, (color_typedef *)pFrameBuffer);
+    #endif
 
-            SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
-            SDL_RenderClear(renderer);
+        SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
+        SDL_RenderClear(renderer);
 
-            /*Update the renderer with the texture containing the rendered image*/
-            SDL_RenderCopy(renderer, texture, NULL, NULL);
-            SDL_RenderPresent(renderer);
-            sdl_refr_cpl = true;
-        }
+        /*Update the renderer with the texture containing the rendered image*/
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
+        SDL_RenderPresent(renderer);
+        sdl_refr_cpl = true;
     }
 
     SDL_Event event;
@@ -320,7 +313,6 @@ bool VT_sdl_flush(int32_t nMS)
 
     if (sdl_refr_cpl) {
         sdl_refr_cpl = false;
-        sdl_refr_qry = true;
         return true;
     } else {
         SDL_Delay(nMS);
