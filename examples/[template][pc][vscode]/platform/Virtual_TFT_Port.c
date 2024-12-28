@@ -319,16 +319,21 @@ int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const 
 
 bool VT_sdl_flush(int32_t nMS)
 {
-    nMS = MAX(1, nMS);
+    bool bResult = false;
+    
+    arm_irq_safe {
+        if (sdl_refr_cpl) {
+            sdl_refr_cpl = false;
+            bResult = true;
+        }
+    }
 
-    if (sdl_refr_cpl) {
-        sdl_refr_cpl = false;
-        return true;
-    } else {
+    if (!bResult) {
+        nMS = MAX(1, nMS);
         SDL_Delay(nMS);
     }
 
-    return false;
+    return bResult;
 }
 
 #if defined(_POSIX_VERSION) || defined(CLOCK_MONOTONIC) || defined(__APPLE__)

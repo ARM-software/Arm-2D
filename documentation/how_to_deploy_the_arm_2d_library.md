@@ -524,6 +524,161 @@ void disp_adapterN_insert_dma_copy_complete_event_handler(void);
 
 
 
+When using 3FB mode, if the CPU can produce more frames than the display devices can handle, i.e. the CPU drawing framerate is higher than the LCD framerate, some frames will be overridden due to the overrun. We can introduce a simple LCD sync-up scheme to solve this issue.
+
+Suppose we have an LCD Vsync event handler `lcd_vsync_event_handler()` that will be triggered periodically by the LCD controller, and we have an API `lcd_update_framebuffer()` to update the Display Framebuffer used by the LCD controller. Then, it is easy to write the following code to use the 3FB mode:
+
+```c
+void lcd_vsync_event_handler(void)
+{
+    void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
+    lcd_udpate_framebuffer(pFrameBuffer);
+}
+```
+
+To establish a sync-up mechanism, we need a flag like `s_bRenderedCPL`, and we can create a function to poll this flag as shown below:
+
+```c
+volatile bool s_bRenderedCPL = true; /* it is important to initialize this flag as true */
+
+bool lcd_is_previous_frame_rendered(void)
+{
+    bool bResult = false;
+    arm_irq_safe {
+        if (s_bRenderedCPL) {
+            s_bRenderedCPL = false;
+            bResult = true;
+        }
+    }
+
+    return bResult;
+}
+```
+
+After that, we have to update the flag `s_bRenderedCPL` in the VSync event handler:
+
+```c
+void lcd_vsync_event_handler(void)
+{
+    void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
+    static void *s_pLastFB = NULL;
+    lcd_udpate_framebuffer(pFrameBuffer);
+
+    if (s_bLastFB != pFrameBuffer) {
+        s_bRenderedCPL = true;
+    }
+    s_bLastFB = pFrameBuffer;
+}
+```
+
+> [!NOTE]
+>
+> Only when the Framebuffer pointer is different from the last one, we consider this as "last frame is rendered"; hence, update the flag `s_bRenderedCPL` to `true`.
+
+Now, the API `lcd_is_previous_frame_rendered` can tell us whether the previous frame is rendered or not. We should pass this information to display adapter service via a dedicated **Low-Level-Sync-Up** event handler. To register such an event handler, we need help from API `arm_2d_helper_pfb_update_dependency()` as shown below:
+
+```c
+extern bool lcd_is_previous_frame_rendered(void);
+
+static bool __lcd_sync_handler(void *pTarget)
+{
+    return lcd_is_previous_frame_rendered();
+}
+
+int main(int argc, char* argv[])
+{
+    ...
+    arm_irq_safe {
+        arm_2d_init();
+    }
+
+    disp_adapter0_init();
+
+    /* register a low level sync-up handler to wait LCD finish rendering the previous frame */
+    do {
+        arm_2d_helper_pfb_dependency_t tDependency = {
+            .evtOnLowLevelSyncUp = {
+                .fnHandler = &__lcd_sync_handler,
+            },
+        };
+        arm_2d_helper_pfb_update_dependency(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                                            ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP,
+                                            &tDependency);
+    } while(0);
+    
+    ...
+    while(1) {
+        disp_adapter0_task();
+    }
+}
+```
+
+The method mentioned above won't pause the thread if the LCD has finished rendering the previous frame. instead, the `disp_adapterN_task()` will return `arm_fsm_rt_async` to indicate this status. You can ignore it, of course. Or you can use a semaphore to hang the thread in an RTOS environment.  For example:
+
+```c
+
+static uintptr_t s_pLCDSem = NULL;
+
+void set_lcd_cpl_sem(void)
+{
+    arm_2d_port_set_semaphore(s_pLCDSem);
+}
+
+int main(int argc, char* argv[])
+{
+    ...
+    arm_irq_safe {
+        arm_2d_init();
+    }
+
+    disp_adapter0_init();
+  
+    s_pLCDSem = arm_2d_port_new_semaphore();
+
+    /* register a low level sync-up handler to wait LCD finish rendering the previous frame */
+    do {
+        arm_2d_helper_pfb_dependency_t tDependency = {
+            .evtOnLowLevelSyncUp = {
+                .fnHandler = &__lcd_sync_handler,
+            },
+        };
+        arm_2d_helper_pfb_update_dependency(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                                            ARM_2D_PFB_DEPEND_ON_LOW_LEVEL_SYNC_UP,
+                                            &tDependency);
+    } while(0);
+    
+    ...
+    while(1) {
+        if (arm_fsm_rt_async == disp_adapter0_task()) {
+            arm_2d_port_wait_for_semaphore(s_pLCDSem);   /* hang the thread up */
+        }
+    }
+}
+```
+
+And in the `lcd_vsync_event_handler`, we should call the function `set_lcd_cpl_sem()` as shown below:
+
+```c
+extern void set_lcd_cpl_sem(void);
+
+void lcd_vsync_event_handler(void)
+{
+    void * pFrameBuffer = disp_adapter0_3fb_get_flush_pointer();
+    static void *s_pLastFB = NULL;
+    lcd_udpate_framebuffer(pFrameBuffer);
+
+    if (s_bLastFB != pFrameBuffer) {
+        s_bRenderedCPL = true;
+        set_lcd_cpl_sem();         /* set the semaphore to wake the thread up */
+    }
+    s_bLastFB = pFrameBuffer;
+}
+```
+
+
+
+
+
 ## 4 Example Projects
 
 **Table 3-1 Summary**

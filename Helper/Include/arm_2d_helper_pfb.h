@@ -680,7 +680,7 @@ typedef struct arm_2d_helper_pfb_dependency_t {
 
     /*! event handler for waiting LCD finish rendering previous frame
      *  \note when then handler return false, the refresh task will yield and return
-     *        arm_fsm_rt_wait_async. 
+     *        arm_fsm_rt_async. 
      *        when the handler return true, it means the display device finished 
      *        rendering the previous frame and the refresh task will continue the 
      *        following steps.
