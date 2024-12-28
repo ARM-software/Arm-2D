@@ -22,7 +22,7 @@
  * Description:  Public header file for list core related services
  *
  * $Date:        28. Dec 2024
- * $Revision:    V.2.3.0
+ * $Revision:    V.2.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
