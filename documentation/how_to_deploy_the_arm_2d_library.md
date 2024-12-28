@@ -613,7 +613,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-The method mentioned above won't pause the thread if the LCD has finished rendering the previous frame. instead, the `disp_adapterN_task()` will return `arm_fsm_rt_async` to indicate this status. You can ignore it, of course. Or you can use a semaphore to hang the thread in an RTOS environment.  For example:
+The method mentioned above won't pause the thread if the LCD hasn't finished rendering the previous frame. instead, the `disp_adapterN_task()` will return `arm_fsm_rt_async` to indicate this status. You can ignore it, of course. Or you can use a semaphore to hang the thread in an RTOS environment.  For example:
 
 ```c
 
