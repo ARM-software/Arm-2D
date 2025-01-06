@@ -189,6 +189,9 @@ uint16x8_t __arm_2d_blend_n_cccn888(uint16x8_t        vTrg, uint16x8_t vChColour
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_transform_helium.c"
 
+//#define __ARM_2D_COMPILATION_UNIT
+//#include "__arm_2d_tile_4xssaa_transform_src_mask_helium.c"
+
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_conversion_helium.c"
 
