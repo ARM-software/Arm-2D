@@ -250,7 +250,7 @@
             <file category="sourceC"     name="Library/Source/arm_2d_conversion.c" />
             <file category="sourceC"     name="Library/Source/arm_2d_helium.c"                  condition="Helium" />
             <file category="doc"         name="documentation/index.html"/>
-            <file category="preIncludeGlobal"    name="Library/Include/template/arm_2d_cfg.h"   attr="config" version="1.3.11" />
+            <file category="preIncludeGlobal"    name="Library/Include/template/arm_2d_cfg.h"   attr="config" version="1.3.12" />
             <file category="utility"     name="tools/img2c.py"                                  attr="config" version="1.2.5"/>
             <file category="utility"     name="tools/ttf2c.py"                                  attr="config" version="2.2.0"/>
             <file category="other"       name="tools/README.md" />
