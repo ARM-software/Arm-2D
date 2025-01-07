@@ -1328,7 +1328,8 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
     }
 
     if (this.bInvalid) {
-        __arm_2d_op_depose(ptThis, (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS);
+        __arm_2d_op_depose( (arm_2d_op_core_t *)ptThis, 
+                            (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS);
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS;
     }
 
