@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        01 Aug 2024
- * $Revision:    V.2.0.1
+ * $Date:        08 Jan 2025
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1328,6 +1328,7 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
     }
 
     if (this.bInvalid) {
+        __arm_2d_op_depose(ptThis, (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS);
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS;
     }
 

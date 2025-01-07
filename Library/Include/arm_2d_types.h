@@ -1010,7 +1010,7 @@ typedef union arm_2d_op_status_t {
     struct {
         uint16_t            u4SubTaskCount  : 4;        //!< sub task count
         uint16_t            bIsBusy         : 1;        //!< busy flag
-        uint16_t            bIOError        : 1;        //!< HW IO Error
+        uint16_t            bIOError        : 1;        //!< HW IO Error or other errors
         uint16_t            bOpCpl          : 1;        //!< the whole operation complete
         uint16_t                            : 9;        //!< reserved
     };
