@@ -22,8 +22,8 @@
  * Title:        __arm_2d_transform_helium.inc
  * Description:  c code template for transform
  *
- * $Date:        4. May 2023
- * $Revision:    V.1.0.5
+ * $Date:        7. Jan 2025
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -1414,6 +1414,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask
 #define transform_with_mask                     transform_with_src_mask
+#define get_pixel_colour_mask_inside_src        get_pixel_colour_src_mask_inside_src
 
 #include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 
@@ -1426,6 +1427,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 #   define __API_MTWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE  1
 #   define get_pixel_colour_mask                    get_pixel_colour_src_chn_mask
 #   define transform_with_mask                      transform_with_src_chn_mask
+#   define get_pixel_colour_mask_inside_src         get_pixel_colour_src_chn_mask_inside_src
 
 #   include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 #endif
@@ -1439,6 +1441,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask_opa
 #define transform_with_mask                     transform_with_src_mask_and_opacity
+#define get_pixel_colour_mask_inside_src        get_pixel_colour_src_mask_opa_inside_src
 
 #include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 
@@ -1454,6 +1457,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 
 #   define get_pixel_colour_mask                    get_pixel_colour_src_chn_mask_opa
 #   define transform_with_mask                      transform_with_src_chn_mask_and_opacity
+#   define get_pixel_colour_mask_inside_src         get_pixel_colour_src_chn_mask_opa_inside_src
 
 #   include "__arm_2d_ll_meta_trans_with_masks_helium.inc"
 #endif
