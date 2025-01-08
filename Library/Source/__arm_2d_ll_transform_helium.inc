@@ -23,7 +23,7 @@
  * Description:  c code template for transform
  *
  * $Date:        8. Jan 2025
- * $Revision:    V.2.0.0
+ * $Revision:    V.2.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -52,8 +52,8 @@
 
 
 __OVERRIDE_WEAK
-void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
-                                    __arm_2d_transform_info_t *ptInfo)
+void __ARM_2D_FUNC(transform)(  __arm_2d_param_copy_orig_t *ptParam,
+                                __arm_2d_transform_info_t *ptInfo)
 {
     int32_t         iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int32_t         iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
@@ -126,21 +126,36 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
         vX = SET_Q6INT(vX);
 
         while (nbVecElts > 0) {
-                arm_2d_point_s16x8_t tPointV;
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
 
-                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
-                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
 
-                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
-                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                    &ptParam->tOrigin.tValidRegion, 
+                                    &tPointTemp);
+
+            if (0xFFFF == p) {
+                __ARM_2D_FUNC(get_pixel_colour_inside_src)(
+                                                  &tPointV,
+                                                  &ptParam->tOrigin.tValidRegion,
+                                                  pOrigin,
+                                                  iOrigStride,
+                                                  pTargetBaseCur, MaskColour,
+                                                  nbVecElts);
+            } else if (0 != p) {
                 __ARM_2D_FUNC(get_pixel_colour)(&tPointV,
                                                   &ptParam->tOrigin.tValidRegion,
                                                   pOrigin,
                                                   iOrigStride,
                                                   pTargetBaseCur, MaskColour,
                                                   nbVecElts);
-
+            }
             pTargetBaseCur += 8;
             vX += ((1<<6) * 8);
             nbVecElts -= 8;
@@ -170,7 +185,7 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
             vX = SET_Q6INT(vX);
 
             while (nbVecElts > 0) {
-                arm_2d_point_s16x8_t tPointV;
+                arm_2d_point_s16x8_t tPointV, tPointTemp;
 
                 tPointV.X = vqdmulhq_n_s16(vX, slopeX);
                 tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
@@ -178,14 +193,33 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_offs_compensated)(&tPointV,
-                                                                       &ptParam->tOrigin.
-                                                                       tValidRegion,
-                                                                       pOrigin,
-                                                                       iOrigStride,
-                                                                       pTargetBaseCur,
-                                                                       MaskColour,
-                                                                       nbVecElts);
+                tPointTemp.X = tPointV.X >> 6;
+                tPointTemp.Y = tPointV.Y >> 6;
+                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                        &ptParam->tOrigin.tValidRegion, 
+                                        &tPointTemp);
+
+                if (0xFFFF == p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_offs_compensated_inside_src)(
+                        &tPointV,
+                        &ptParam->tOrigin.
+                        tValidRegion,
+                        pOrigin,
+                        iOrigStride,
+                        pTargetBaseCur,
+                        MaskColour,
+                        nbVecElts);
+                } else if (0 != p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_offs_compensated)(
+                        &tPointV,
+                        &ptParam->tOrigin.
+                        tValidRegion,
+                        pOrigin,
+                        iOrigStride,
+                        pTargetBaseCur,
+                        MaskColour,
+                        nbVecElts);
+                }
 
                 pTargetBaseCur += 8;
                 vX += SET_Q6INT(8);
@@ -272,20 +306,37 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
         vX = SET_Q6INT(vX);
 
         while (nbVecElts > 0) {
-                arm_2d_point_s16x8_t tPointV;
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
 
-                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
-                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
 
-                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
-                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __ARM_2D_FUNC(transform_only_get_pixel_colour)(&tPointV,
-                                                  &ptParam->tOrigin.tValidRegion,
-                                                  pOrigin,
-                                                  iOrigStride,
-                                                  pTargetBaseCur,
-                                                  nbVecElts);
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                    &ptParam->tOrigin.tValidRegion, 
+                                    &tPointTemp);
+
+            if (0xFFFF == p) {
+                __ARM_2D_FUNC(transform_only_get_pixel_colour_inside_src)(
+                                                &tPointV,
+                                                &ptParam->tOrigin.tValidRegion,
+                                                pOrigin,
+                                                iOrigStride,
+                                                pTargetBaseCur,
+                                                nbVecElts);
+            } else if (0 != p) {
+                __ARM_2D_FUNC(transform_only_get_pixel_colour)(
+                                                &tPointV,
+                                                &ptParam->tOrigin.tValidRegion,
+                                                pOrigin,
+                                                iOrigStride,
+                                                pTargetBaseCur,
+                                                nbVecElts);
+            }
 
             pTargetBaseCur += 8;
             vX += ((1<<6) * 8);
@@ -295,7 +346,7 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
         }
 #if __API_COLOUR == ARM_2D_M_COLOUR_RGB565
     /* RGB565 specific */
-    }    else {
+    } else {
         for (int32_t y = 0; y < iHeight; y++) {
 
             /* 1st column estimates */
@@ -316,7 +367,7 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
             vX = SET_Q6INT(vX);
 
             while (nbVecElts > 0) {
-                arm_2d_point_s16x8_t tPointV;
+                arm_2d_point_s16x8_t tPointV, tPointTemp;
 
                 tPointV.X = vqdmulhq_n_s16(vX, slopeX);
                 tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
@@ -324,14 +375,29 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_offs_compensated)(&tPointV,
-                                                                       &ptParam->tOrigin.
-                                                                       tValidRegion,
-                                                                       pOrigin,
-                                                                       iOrigStride,
-                                                                       pTargetBaseCur,
-                                                                       nbVecElts);
+                tPointTemp.X = tPointV.X >> 6;
+                tPointTemp.Y = tPointV.Y >> 6;
+                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                        &ptParam->tOrigin.tValidRegion, 
+                                        &tPointTemp);
 
+                if (0xFFFF == p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_offs_compensated_inside_src)(
+                                                &tPointV,
+                                                &ptParam->tOrigin.tValidRegion,
+                                                pOrigin,
+                                                iOrigStride,
+                                                pTargetBaseCur,
+                                                nbVecElts);
+                } else if (0 != p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_offs_compensated)(
+                                                &tPointV,
+                                                &ptParam->tOrigin.tValidRegion,
+                                                pOrigin,
+                                                iOrigStride,
+                                                pTargetBaseCur,
+                                                nbVecElts);
+                }
                 pTargetBaseCur += 8;
                 vX += SET_Q6INT(8);
                 nbVecElts -= 8;
@@ -420,7 +486,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
 
             while (nbVecElts > 0) {
                 /* interpolation */
-                arm_2d_point_s16x8_t tPointV;
+                arm_2d_point_s16x8_t tPointV, tPointTemp;
 
                 tPointV.X = vqdmulhq_n_s16(vX, slopeX);
                 tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
@@ -428,12 +494,29 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __ARM_2D_FUNC(get_pixel_colour_with_alpha)(&tPointV,
-                                                             &ptParam->tOrigin.tValidRegion,
-                                                             pOrigin, iOrigStride,
-                                                             pTargetBaseCur,
-                                                             MaskColour, hwRatio,
-                                                             nbVecElts);
+                tPointTemp.X = tPointV.X >> 6;
+                tPointTemp.Y = tPointV.Y >> 6;
+                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                        &ptParam->tOrigin.tValidRegion, 
+                                        &tPointTemp);
+
+                if (0xFFFF == p) {
+                    __ARM_2D_FUNC(get_pixel_colour_with_alpha_inside_src)(
+                                                 &tPointV,
+                                                 &ptParam->tOrigin.tValidRegion,
+                                                 pOrigin, iOrigStride,
+                                                 pTargetBaseCur,
+                                                 MaskColour, hwRatio,
+                                                 nbVecElts);
+                } else if (0 != p) {
+                    __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
+                                                 &tPointV,
+                                                 &ptParam->tOrigin.tValidRegion,
+                                                 pOrigin, iOrigStride,
+                                                 pTargetBaseCur,
+                                                 MaskColour, hwRatio,
+                                                 nbVecElts);
+                }
                 pTargetBaseCur += 8;
                 vX += SET_Q6INT(8);
                 nbVecElts -= 8;
@@ -471,7 +554,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
 
             while (nbVecElts > 0) {
                 /* interpolation */
-                arm_2d_point_s16x8_t tPointV;
+                arm_2d_point_s16x8_t tPointV, tPointTemp;
 
                 tPointV.X = vqdmulhq_n_s16(vX, slopeX);
                 tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
@@ -479,9 +562,33 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated)
-                    (&tPointV, &ptParam->tOrigin.tValidRegion, pOrigin, iOrigStride,
-                     pTargetBaseCur, MaskColour, hwRatio, nbVecElts);
+                tPointTemp.X = tPointV.X >> 6;
+                tPointTemp.Y = tPointV.Y >> 6;
+                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                        &ptParam->tOrigin.tValidRegion, 
+                                        &tPointTemp);
+
+                if (0xFFFF == p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated_inside_src)(
+                        &tPointV, 
+                        &ptParam->tOrigin.tValidRegion, 
+                        pOrigin, 
+                        iOrigStride,
+                        pTargetBaseCur, 
+                        MaskColour, 
+                        hwRatio, 
+                        nbVecElts);
+                } else if (0 != p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated)(
+                        &tPointV, 
+                        &ptParam->tOrigin.tValidRegion, 
+                        pOrigin, 
+                        iOrigStride,
+                        pTargetBaseCur, 
+                        MaskColour, 
+                        hwRatio, 
+                        nbVecElts);
+                }
 
                 pTargetBaseCur += 8;
                 vX += SET_Q6INT(8);
@@ -570,7 +677,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
 
             while (nbVecElts > 0) {
                 /* interpolation */
-                arm_2d_point_s16x8_t tPointV;
+                arm_2d_point_s16x8_t tPointV, tPointTemp;
 
                 tPointV.X = vqdmulhq_n_s16(vX, slopeX);
                 tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
@@ -578,12 +685,33 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(&tPointV,
-                                                             &ptParam->tOrigin.tValidRegion,
-                                                             pOrigin, iOrigStride,
-                                                             pTargetBaseCur,
-                                                             hwRatio,
-                                                             nbVecElts);
+                tPointTemp.X = tPointV.X >> 6;
+                tPointTemp.Y = tPointV.Y >> 6;
+                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                        &ptParam->tOrigin.tValidRegion, 
+                                        &tPointTemp);
+
+                if (0xFFFF == p) {
+
+                    __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha_inside_src)(
+                                                &tPointV,
+                                                &ptParam->tOrigin.tValidRegion,
+                                                pOrigin, iOrigStride,
+                                                pTargetBaseCur,
+                                                hwRatio,
+                                                nbVecElts);
+
+                } else if (0 != p) {
+
+                    __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
+                                                &tPointV,
+                                                &ptParam->tOrigin.tValidRegion,
+                                                pOrigin, iOrigStride,
+                                                pTargetBaseCur,
+                                                hwRatio,
+                                                nbVecElts);
+                }
+
                 pTargetBaseCur += 8;
                 vX += SET_Q6INT(8);
                 nbVecElts -= 8;
@@ -621,7 +749,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
 
             while (nbVecElts > 0) {
                 /* interpolation */
-                arm_2d_point_s16x8_t tPointV;
+                arm_2d_point_s16x8_t tPointV, tPointTemp;
 
                 tPointV.X = vqdmulhq_n_s16(vX, slopeX);
                 tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
@@ -629,9 +757,33 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
                 tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_with_alpha_offs_compensated)
-                    (&tPointV, &ptParam->tOrigin.tValidRegion, pOrigin, iOrigStride,
-                     pTargetBaseCur, hwRatio, nbVecElts);
+
+                tPointTemp.X = tPointV.X >> 6;
+                tPointTemp.Y = tPointV.Y >> 6;
+                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                        &ptParam->tOrigin.tValidRegion, 
+                                        &tPointTemp);
+
+                if (0xFFFF == p) {
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_with_alpha_offs_compensated_inside_src)(
+                            &tPointV, 
+                            &ptParam->tOrigin.tValidRegion, 
+                            pOrigin, 
+                            iOrigStride,
+                            pTargetBaseCur, 
+                            hwRatio, 
+                            nbVecElts);
+                } else if (0 != p) {
+
+                    __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_with_alpha_offs_compensated)(
+                            &tPointV, 
+                            &ptParam->tOrigin.tValidRegion, 
+                            pOrigin, 
+                            iOrigStride,
+                            pTargetBaseCur, 
+                            hwRatio, 
+                            nbVecElts);
+                }
 
                 pTargetBaseCur += 8;
                 vX += SET_Q6INT(8);
