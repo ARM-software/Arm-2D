@@ -3017,7 +3017,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_pixel_colour_with_alpha_inside_src)
     {
         __ARM_2D_RGB565_GET_RGBVEC_FROM_POINT_MASK_CLR_INSIDE_SRC(
                 vXi, vYi, pOrigin, ptOrigValidRegion, iOrigStride,
-                MaskColour, vTarget, vAvgR, vAvgG, vAvgB, predGlb );
+                MaskColour, vTarget, predTail, vAvgR, vAvgG, vAvgB );
     }
 #endif
     /* blending */
