@@ -147,11 +147,8 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     }
     
     //! draw a white box
-    arm_2d_fill_colour( ptTarget, 
-                        &tBarRegion, 
-                        //__RGB(0xa5, 0xc6, 0xef)/*0xA63D*/
-                        tBoarderColour);
-    
+    arm_2d_helper_draw_box(ptTarget, &tBarRegion, 1, tBoarderColour, 255);
+
     ARM_2D_OP_WAIT_ASYNC();
     
     //! pave inter texture
@@ -159,10 +156,6 @@ void __progress_bar_flowing_show(   const arm_2d_tile_t *ptTarget,
     tBarRegion.tSize.iWidth-=2;
     tBarRegion.tLocation.iX += 1;
     tBarRegion.tLocation.iY += 1;
-    
-    arm_2d_fill_colour(ptTarget, &tBarRegion, GLCD_COLOR_WHITE);
-
-    ARM_2D_OP_WAIT_ASYNC();
 
     if (iProgress >= 0) {
         //! calculate the width of the inner stripe 

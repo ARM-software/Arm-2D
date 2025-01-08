@@ -408,7 +408,7 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 
                 progress_bar_flowing_show(  ptTile, 
                                             &__bottom_centre_region, 
-                                            0, 
+                                            -1, 
                                             bIsNewFrame,
                                             GLCD_COLOR_BLACK,
                                             __RGB(0x92, 0xD0, 0x50),
