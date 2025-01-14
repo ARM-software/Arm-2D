@@ -52,11 +52,8 @@
 #   include __ARM_2D_HAS_USER_HEADER__
 #endif
 
-
-
 #undef __IS_SUPPORTED_ARM_ARCH__
-#if (   (defined(__ARM_ARCH) && __ARM_ARCH)                                     \
-    ||  defined(__TARGET_ARCH_ARM)) && !defined(__APPLE__)
+#if (__ARM_ARCH_PROFILE == 'M') || defined(__TARGET_PROFILE_M)
 #   define __IS_SUPPORTED_ARM_ARCH__        1
 #else
 #   define __IS_SUPPORTED_ARM_ARCH__        0

@@ -87,7 +87,7 @@ else
 	CCFLAG  +=  -w
 	LD_LIB  := SDL2
 	LDFLAG  +=  -Wl,--warn-common
-	LDFLAG  +=  -Wl,--gc-sections
+	LDFLAG  +=  -Wl,--gc-sections -lm
 app: $(OUT)
 
 endif
