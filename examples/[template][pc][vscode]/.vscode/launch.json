@@ -40,5 +40,19 @@
             ],
             "preLaunchTask": "Make"
         },
+        {
+            "name": "build and run Linux",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/arm_2d",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb-multiarch",
+            "preLaunchTask": "Make"
+        }
     ]
 }

@@ -52,7 +52,7 @@ In "**Run and Debug**" panel, you can run the project via "**build and run x86(3
 Second, please install the required modules with the following command:
 
 ```sh
-sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev
+sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev gdb-multiarch
 ```
 
 
