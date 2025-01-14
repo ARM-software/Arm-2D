@@ -61,7 +61,7 @@
   #define __USED                                 __attribute__((used))
 #endif
 #ifndef   __WEAK
-  #define __WEAK                                 //__attribute__((weak))
+  #define __WEAK                                 __attribute__((weak))
 #endif
 #ifndef   __PACKED
   #define __PACKED                               __attribute__((packed, aligned(1)))
@@ -72,6 +72,7 @@
 #ifndef   __PACKED_UNION
   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
 #endif
+
 #ifndef   __UNALIGNED_UINT32        /* deprecated */
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpacked"
