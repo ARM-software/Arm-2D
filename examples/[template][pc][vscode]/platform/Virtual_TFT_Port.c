@@ -41,12 +41,14 @@ static uint16_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
 #elif VT_COLOR_DEPTH == 24 || VT_COLOR_DEPTH == 32
 #define DEV_2_VT_RGB(color)                 (color)
 #define VT_RGB_2_DEV(color)                 (color)
-
 static uint32_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
 
 #endif
 
 #if VT_WIDTH >= 240 || VT_HEIGHT >= 240
+#   define VT_WINDOW_WIDTH     (VT_WIDTH / 4)
+#   define VT_WINDOW_HEIGHT    (VT_HEIGHT / 4)
+#elif VT_WIDTH >= 1024 || VT_HEIGHT >= 1024
 #   define VT_WINDOW_WIDTH     VT_WIDTH
 #   define VT_WINDOW_HEIGHT    VT_HEIGHT
 #else
@@ -66,6 +68,7 @@ uintptr_t __DISP_ADAPTER0_3FB_FB2_ADDRESS__;
 static volatile bool sdl_inited = false;
 static volatile bool sdl_refr_cpl = false;
 static volatile bool sdl_quit_qry = false;
+static volatile bool sdl_joined = false;
 
 static bool left_button_is_down = false;
 static int16_t last_x = 0;
@@ -80,7 +83,6 @@ extern void VT_Clear(color_typedef color);
 extern bool VT_Mouse_Get_Point(int16_t *x,int16_t *y);
 
 
-
 bool VT_mouse_get_location(arm_2d_location_t *ptLocation)
 {
     assert(NULL != ptLocation);
@@ -89,6 +91,7 @@ bool VT_mouse_get_location(arm_2d_location_t *ptLocation)
     return left_button_is_down;
 }
 
+#if 0
 int quit_filter(void * userdata, SDL_Event * event)
 {
     (void)userdata;
@@ -99,6 +102,7 @@ int quit_filter(void * userdata, SDL_Event * event)
 
     return 1;
 }
+#endif
 
 typedef struct RecursiveMutex {
     SDL_mutex *mutex;
@@ -106,7 +110,8 @@ typedef struct RecursiveMutex {
     int lock_count;
 } RecursiveMutex;
 
-RecursiveMutex* RecursiveMutex_Create(void) {
+RecursiveMutex* RecursiveMutex_Create(void) 
+{
     RecursiveMutex* rmutex = (RecursiveMutex*)malloc(sizeof(RecursiveMutex));
     rmutex->mutex = SDL_CreateMutex();
     rmutex->owner = 0;
@@ -183,7 +188,7 @@ static void monitor_sdl_init(void)
 
     s_ptGlobalMutex = RecursiveMutex_Create();
 
-    SDL_SetEventFilter(quit_filter, NULL);
+    //SDL_SetEventFilter(quit_filter, NULL);
 
     window = SDL_CreateWindow( "Arm-2D v" 
                                 ARM_TO_STRING(ARM_2D_VERSION_MAJOR)
@@ -216,7 +221,7 @@ static void monitor_sdl_init(void)
 
     SDL_RenderSetLogicalSize(renderer, __DISP0_CFG_SCEEN_WIDTH__, __DISP0_CFG_SCEEN_HEIGHT__);
 
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
     /*Initialize the frame buffer to gray (77 is an empirical value) */
     memset(tft_fb, 77, VT_WIDTH * VT_HEIGHT * sizeof(uint32_t));
@@ -224,7 +229,7 @@ static void monitor_sdl_init(void)
     sdl_inited = true;
 }
 
-void VT_sdl_refresh_task(void)
+bool VT_sdl_refresh_task(void)
 {
     if (arm_2d_helper_is_time_out(1000/60)) {
 
@@ -243,7 +248,6 @@ void VT_sdl_refresh_task(void)
         sdl_refr_cpl = true;
     #endif
 
-
         SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
         SDL_RenderClear(renderer);
 
@@ -253,11 +257,13 @@ void VT_sdl_refresh_task(void)
     }
 
     SDL_Event event;
-    while(SDL_PollEvent(&event))
-    {
+    while(SDL_PollEvent(&event)) {
 
-        switch((&event)->type)
-        {
+        switch((&event)->type) {
+            case SDL_QUIT:
+                sdl_quit_qry = true;
+                sdl_joined = false;
+                break;
             case SDL_MOUSEBUTTONUP:
                 if((&event)->button.button == SDL_BUTTON_LEFT)
                     left_button_is_down = false;
@@ -275,8 +281,7 @@ void VT_sdl_refresh_task(void)
                 break;
 
             case SDL_WINDOWEVENT:
-                switch((&event)->window.event)
-                {
+                switch((&event)->window.event) {
 #if SDL_VERSION_ATLEAST(2, 0, 5)
                     case SDL_WINDOWEVENT_TAKE_FOCUS:
 #endif
@@ -295,11 +300,18 @@ void VT_sdl_refresh_task(void)
                 break;
         }
     }
+
+    return !sdl_joined;
 }
 
 bool VT_is_request_quit(void)
 {
-    return sdl_quit_qry;
+    if (sdl_quit_qry) {
+        sdl_quit_qry = false;
+        sdl_joined = true;
+        return true;
+    }
+    return false;
 }
 
 void VT_deinit(void)

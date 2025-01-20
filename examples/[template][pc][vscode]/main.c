@@ -572,6 +572,10 @@ int app_2d_main_thread (void *argument)
 #endif
 
     while(1) {
+        if (VT_is_request_quit()) {
+            break;
+        }
+
         disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
@@ -654,8 +658,7 @@ int main(int argc, char* argv[])
     SDL_CreateThread(app_2d_main_thread, "arm-2d thread", NULL);
 
     while (1) {
-        VT_sdl_refresh_task();
-        if(VT_is_request_quit()){
+        if(!VT_sdl_refresh_task()){
             break;
         }
     }

@@ -45,7 +45,7 @@ extern void VT_init(void);
 extern bool VT_is_request_quit(void);
 extern void VT_deinit(void);
 extern bool VT_sdl_flush(int32_t nMS);
-extern void VT_sdl_refresh_task(void);
+extern bool VT_sdl_refresh_task(void);
 extern void VT_enter_global_mutex(void);
 extern void VT_leave_global_mutex(void);
 
