@@ -63,3 +63,4 @@ tools/inputstring.txt
 *.uf2
 *.otf
 tools/asset
+examples/\[template\]\[csolution\]/arm2d.cbuild-set.yml
