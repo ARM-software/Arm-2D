@@ -1747,12 +1747,12 @@ extern "C" {
  * \param ... parameter list 
  * 
  * \note prototype 1:
- *          __item_line_dock_vertical(__size) {
+ *          __item_line_dock_vertical(__height) {
  *              code body that can use __item_region
  *          }
  *
  * \note prototype 2:
- *          __item_line_dock_vertical(__size, __left, __right, __top, __bottom) {
+ *          __item_line_dock_vertical(__height, __left, __right, __top, __bottom) {
  *              code body that can use __item_region
  *          }
  *
