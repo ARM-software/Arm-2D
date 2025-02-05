@@ -22,7 +22,7 @@
  * Description:  the font helper service header file
  *
  * $Date:        05. Feb 2025
- * $Revision:    V.2.9.0
+ * $Revision:    V.2.9.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -250,7 +250,6 @@ int8_t arm_2d_helper_get_utf8_byte_valid_length(const uint8_t *pchChar);
 ARM_NONNULL(1)
 int8_t arm_2d_helper_get_utf8_byte_length(const uint8_t *pchChar);
 
-
 /*!
  * \brief convert an UTF8 char into unicode char
  * 
@@ -369,6 +368,12 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity);
 
 extern
 void arm_lcd_text_set_scale(float fScale);
+
+extern
+int8_t arm_lcd_text_set_char_spacing(int8_t chNewSpacing);
+
+extern
+int8_t arm_lcd_text_set_line_spacing(int8_t chNewSpacing);
 
 /*!
  * \brief Force all char use the same width

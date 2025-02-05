@@ -22,7 +22,7 @@
  * Description:  the font helper service source code
  *
  * $Date:        05. Feb 2025
- * $Revision:    V.2.9.0
+ * $Revision:    V.2.9.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -99,6 +99,11 @@ static struct {
     uint8_t  bForceAllCharUseSameWidth : 1;
     uint8_t                            : 7;
     uint8_t chOpacity;
+
+    struct {
+        int8_t chChar;
+        int8_t chLine;
+    } Spacing;
 
     struct {
         uint16_t hwPos;
@@ -300,6 +305,20 @@ void arm_lcd_text_set_opacity(uint8_t chOpacity)
     s_tLCDTextControl.chOpacity = chOpacity;
 }
 
+int8_t arm_lcd_text_set_char_spacing(int8_t chNewSpacing)
+{
+    int_fast8_t chOldSpacing = s_tLCDTextControl.Spacing.chChar;
+    s_tLCDTextControl.Spacing.chChar = chNewSpacing;
+    return chOldSpacing;
+}
+
+int8_t arm_lcd_text_set_line_spacing(int8_t chNewSpacing)
+{
+    int_fast8_t chOldSpacing = s_tLCDTextControl.Spacing.chLine;
+    s_tLCDTextControl.Spacing.chLine = chNewSpacing;
+    return chOldSpacing;
+}
+
 static void __arm_lcd_text_update_char_buffer(void)
 {
     const arm_2d_font_t *ptFont = s_tLCDTextControl.ptFont;
@@ -466,6 +485,7 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
     } while(0);
 
     if (s_tLCDTextControl.q16Scale > 0) {
+        iAdvance += s_tLCDTextControl.Spacing.chChar;   /* support char spacing */
         iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance));
         /* NOTE: No need to adjust bearings in the following way. */
         //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
@@ -845,14 +865,31 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
         ptFont = s_tLCDTextControl.ptFont;
     }
     arm_2d_size_t tCharSize = ptFont->tCharSize;
+    arm_2d_size_t tSpacing = {
+        .iWidth = tCharSize.iWidth + s_tLCDTextControl.Spacing.chChar,
+        .iHeight = tCharSize.iHeight + s_tLCDTextControl.Spacing.chLine,
+    };
 
     if (s_tLCDTextControl.q16Scale > 0) {
+        tSpacing.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tSpacing.iHeight)) 
+                          + 2;
+        tSpacing.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tSpacing.iWidth)) 
+                          + 2;
+
+    #if 0
         tCharSize.iHeight = reinterpret_s16_q16( 
-                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iHeight)) 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iHeight)) 
                           + 2;
         tCharSize.iWidth = reinterpret_s16_q16( 
-                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iWidth)) 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iWidth)) 
                           + 2;
+    #endif
     }
 
     arm_2d_region_t tDrawBox = {
@@ -864,19 +901,19 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             tDrawBox.tLocation.iX = 0;
         } else if (*str == '\n') {
             tDrawBox.tLocation.iX = 0;
-            tDrawBox.tLocation.iY += tCharSize.iHeight;
+            tDrawBox.tLocation.iY += tSpacing.iHeight;
 
             tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tDrawBox.tLocation.iY);
         } else if (*str == '\t') { 
-            tDrawBox.tLocation.iX += tCharSize.iWidth * 4;
+            tDrawBox.tLocation.iX += tSpacing.iWidth * 4;
             tDrawBox.tLocation.iX -= tDrawBox.tLocation.iX 
-                                   % tCharSize.iWidth;
+                                   % tSpacing.iWidth;
 
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
         }else if (*str == '\b') {
-            if (tDrawBox.tLocation.iX >= tCharSize.iWidth) {
-                tDrawBox.tLocation.iX -= tCharSize.iWidth;
+            if (tDrawBox.tLocation.iX >= tSpacing.iWidth) {
+                tDrawBox.tLocation.iX -= tSpacing.iWidth;
             } else {
                 tDrawBox.tLocation.iX = 0;
             }
@@ -893,10 +930,16 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
                                                              (uint8_t *)str);
 
             if (NULL != ptDescriptor) {
-                int16_t tCharNewHeight = (tCharSize.iHeight - tCharDescriptor.iBearingY) 
+                int16_t iCharNewHeight = (ptFont->tCharSize.iHeight - tCharDescriptor.iBearingY) 
                                        + tCharDescriptor.tileChar.tRegion.tSize.iHeight;
+                
+                if (s_tLCDTextControl.q16Scale > 0) {
+                    iCharNewHeight = reinterpret_s16_q16(
+                                        mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                                    iCharNewHeight));
+                }
 
-                tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tCharNewHeight);
+                tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, iCharNewHeight);
             }
 
             tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str);
@@ -915,13 +958,28 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
 void arm_lcd_putchar(const char *str)
 {
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
+    arm_2d_size_t tSpacing = {
+        .iWidth = tCharSize.iWidth + s_tLCDTextControl.Spacing.chChar,
+        .iHeight = tCharSize.iHeight + s_tLCDTextControl.Spacing.chLine,
+    };
 
     if (s_tLCDTextControl.q16Scale > 0) {
+        tSpacing.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tSpacing.iHeight)) 
+                          + 2;
+        tSpacing.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tSpacing.iWidth)) 
+                          + 2;
+
         tCharSize.iHeight = reinterpret_s16_q16( 
-                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iHeight)) 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iHeight)) 
                           + 2;
         tCharSize.iWidth = reinterpret_s16_q16( 
-                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iWidth)) 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iWidth)) 
                           + 2;
     }
 
@@ -944,20 +1002,20 @@ void arm_lcd_putchar(const char *str)
             s_tLCDTextControl.tDrawOffset.iX = 0;
         } else if (*str == '\n') {
             s_tLCDTextControl.tDrawOffset.iX = 0;
-            s_tLCDTextControl.tDrawOffset.iY += tCharSize.iHeight;
+            s_tLCDTextControl.tDrawOffset.iY += tSpacing.iHeight;
             if (s_tLCDTextControl.tDrawOffset.iY >= tDrawRegionSize.iHeight) {
                 s_tLCDTextControl.tDrawOffset.iY = 0;
             }
         } else if (*str == '\t') { 
-            s_tLCDTextControl.tDrawOffset.iX += tCharSize.iWidth * 4;
+            s_tLCDTextControl.tDrawOffset.iX += tSpacing.iWidth * 4;
             s_tLCDTextControl.tDrawOffset.iX -= s_tLCDTextControl.tDrawOffset.iX 
-                                              % (tCharSize.iWidth * 4);
+                                              % (tSpacing.iWidth * 4);
 
-            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+            __arm_lcd_draw_region_line_wrapping(&tSpacing, &tDrawRegionSize);
 
         }else if (*str == '\b') {
-            if (s_tLCDTextControl.tDrawOffset.iX >= tCharSize.iWidth) {
-                s_tLCDTextControl.tDrawOffset.iX -= tCharSize.iWidth;
+            if (s_tLCDTextControl.tDrawOffset.iX >= tSpacing.iWidth) {
+                s_tLCDTextControl.tDrawOffset.iX -= tSpacing.iWidth;
             } else {
                 s_tLCDTextControl.tDrawOffset.iX = 0;
             }
@@ -968,7 +1026,7 @@ void arm_lcd_putchar(const char *str)
             s_tLCDTextControl.tDrawOffset.iX 
                 += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);
 
-            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+            __arm_lcd_draw_region_line_wrapping(&tSpacing, &tDrawRegionSize);
         }
     }
 }
@@ -977,12 +1035,28 @@ void arm_lcd_puts(const char *str)
 {
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
 
+    arm_2d_size_t tSpacing = {
+        .iWidth = tCharSize.iWidth + s_tLCDTextControl.Spacing.chChar,
+        .iHeight = tCharSize.iHeight + s_tLCDTextControl.Spacing.chLine,
+    };
+
     if (s_tLCDTextControl.q16Scale > 0) {
+        tSpacing.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tSpacing.iHeight)) 
+                          + 2;
+        tSpacing.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tSpacing.iWidth)) 
+                          + 2;
+
         tCharSize.iHeight = reinterpret_s16_q16( 
-                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iHeight)) 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iHeight)) 
                           + 2;
         tCharSize.iWidth = reinterpret_s16_q16( 
-                                mul_n_q16(s_tLCDTextControl.q16Scale, tCharSize.iWidth)) 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iWidth)) 
                           + 2;
     }
 
@@ -1006,20 +1080,20 @@ void arm_lcd_puts(const char *str)
             s_tLCDTextControl.tDrawOffset.iX = 0;
         } else if (*str == '\n') {
             s_tLCDTextControl.tDrawOffset.iX = 0;
-            s_tLCDTextControl.tDrawOffset.iY += tCharSize.iHeight;
+            s_tLCDTextControl.tDrawOffset.iY += tSpacing.iHeight;
             if (s_tLCDTextControl.tDrawOffset.iY >= tDrawRegionSize.iHeight) {
                 s_tLCDTextControl.tDrawOffset.iY = 0;
             }
         } else if (*str == '\t') { 
-            s_tLCDTextControl.tDrawOffset.iX += tCharSize.iWidth * 4;
+            s_tLCDTextControl.tDrawOffset.iX += tSpacing.iWidth * 4;
             s_tLCDTextControl.tDrawOffset.iX -= s_tLCDTextControl.tDrawOffset.iX 
-                                              % tCharSize.iWidth;
+                                              % tSpacing.iWidth;
 
-            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+            __arm_lcd_draw_region_line_wrapping(&tSpacing, &tDrawRegionSize);
 
         }else if (*str == '\b') {
-            if (s_tLCDTextControl.tDrawOffset.iX >= tCharSize.iWidth) {
-                s_tLCDTextControl.tDrawOffset.iX -= tCharSize.iWidth;
+            if (s_tLCDTextControl.tDrawOffset.iX >= tSpacing.iWidth) {
+                s_tLCDTextControl.tDrawOffset.iX -= tSpacing.iWidth;
             } else {
                 s_tLCDTextControl.tDrawOffset.iX = 0;
             }
@@ -1030,7 +1104,7 @@ void arm_lcd_puts(const char *str)
             s_tLCDTextControl.tDrawOffset.iX 
                 += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);
 
-            __arm_lcd_draw_region_line_wrapping(&tCharSize, &tDrawRegionSize);
+            __arm_lcd_draw_region_line_wrapping(&tSpacing, &tDrawRegionSize);
 
             continue;
         }
