@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        24. Dec 2024
- * $Revision:    V.2.8.0
+ * $Date:        05. Feb 2025
+ * $Revision:    V.2.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -89,20 +89,29 @@ static struct {
         COLOUR_INT     tForeground;
         COLOUR_INT     tBackground;
     } tColour;
-    uint8_t chOpacity;
+    
 
     arm_2d_tile_t *ptTargetFB;
     uint32_t       wMode;
     //float          fScale;
     q16_t q16Scale;
 
-    uint32_t  bForceAllCharUseSameWidth : 1;
-    uint32_t                            : 31;
+    uint8_t  bForceAllCharUseSameWidth : 1;
+    uint8_t                            : 7;
+    uint8_t chOpacity;
+
+    struct {
+        uint16_t hwPos;
+        uint16_t hwLen;
+        char chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__+1];
+    } TXBuf;
 
     arm_2d_scratch_mem_t tCharBuffer;
+
     arm_2d_region_t tTextRegion;
 
     const arm_2d_font_t *ptFont;
+
 } s_tLCDTextControl = {
     .tScreen = {
         .tSize = {
@@ -905,7 +914,6 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
 
 void arm_lcd_putchar(const char *str)
 {
-
     arm_2d_size_t tCharSize = s_tLCDTextControl.ptFont->tCharSize;
 
     if (s_tLCDTextControl.q16Scale > 0) {
@@ -1038,15 +1046,75 @@ void arm_lcd_puts(const char *str)
 int arm_lcd_printf(const char *format, ...)
 {
     int real_size;
-    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
     __va_list ap;
     va_start(ap, format);
-        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+        real_size = vsnprintf(  s_tLCDTextControl.TXBuf.chBuffer, 
+                                sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, 
+                                format, 
+                                ap);
+        real_size = MAX(0, real_size);
     va_end(ap);
-    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
-    s_chBuffer[real_size] = '\0';
-    arm_lcd_puts(s_chBuffer);
+    real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
+    s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
+
+    arm_lcd_puts(s_tLCDTextControl.TXBuf.chBuffer);
     return real_size;
+}
+
+arm_2d_size_t arm_lcd_printf_to_buffer( const arm_2d_font_t *ptFont, 
+                                        const char *format,
+                                        ...)
+{
+    size_t real_size;
+    __va_list ap;
+    va_start(ap, format);
+        real_size = vsnprintf(  s_tLCDTextControl.TXBuf.chBuffer, 
+                                sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, 
+                                format, 
+                                ap);
+        real_size = MAX(0, real_size);
+    va_end(ap);
+    real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
+    s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
+
+    s_tLCDTextControl.TXBuf.hwPos = 0;
+    s_tLCDTextControl.TXBuf.hwLen = real_size;
+
+    arm_lcd_text_set_font(ptFont);
+
+    return __arm_lcd_get_string_line_box(s_tLCDTextControl.TXBuf.chBuffer, ptFont);
+}
+
+void arm_lcd_printf_buffer(int16_t iNumber)
+{
+    if (0 == s_tLCDTextControl.TXBuf.hwLen) {
+        return ;
+    }
+
+    if (0 == iNumber || iNumber >= s_tLCDTextControl.TXBuf.hwLen) {
+        iNumber = s_tLCDTextControl.TXBuf.hwLen;
+    } else if (iNumber < 0) {
+        iNumber = s_tLCDTextControl.TXBuf.hwLen + iNumber;
+    }
+
+    iNumber = MIN(s_tLCDTextControl.TXBuf.hwLen, iNumber);
+
+    do {
+        char cTemp = s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos + iNumber];
+        s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos + iNumber] = '\0';
+        
+        arm_lcd_puts(&s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos]);
+
+        s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos + iNumber] = cTemp;
+    } while(0);
+
+    s_tLCDTextControl.TXBuf.hwPos += iNumber;
+    s_tLCDTextControl.TXBuf.hwLen -= iNumber;
+}
+
+size_t arm_lcd_get_residual_text_length_in_buffer(void)
+{
+    return s_tLCDTextControl.TXBuf.hwLen;
 }
 
 #if 0
@@ -1120,15 +1188,17 @@ int arm_lcd_printf_label(   arm_2d_align_t tAlignment,
                             ...)
 {
     int real_size;
-    static char s_chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__ + 1];
     __va_list ap;
     va_start(ap, format);
-        real_size = vsnprintf(s_chBuffer, sizeof(s_chBuffer)-1, format, ap);
+        real_size = vsnprintf(  s_tLCDTextControl.TXBuf.chBuffer, 
+                                sizeof(s_tLCDTextControl.TXBuf.chBuffer) - 1, 
+                                format, 
+                                ap);
     va_end(ap);
-    real_size = MIN(sizeof(s_chBuffer)-1, real_size);
-    s_chBuffer[real_size] = '\0';
+    real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
+    s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
 
-    arm_lcd_puts_label(s_chBuffer, tAlignment);
+    arm_lcd_puts_label(s_tLCDTextControl.TXBuf.chBuffer, tAlignment);
 
     return real_size;
 }

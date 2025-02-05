@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        24. Dec 2024
- * $Revision:    V.2.8.0
+ * $Date:        05. Feb 2025
+ * $Revision:    V.2.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -283,6 +283,37 @@ void arm_lcd_text_init(arm_2d_region_t *ptScreen);
 
 extern
 int arm_lcd_printf(const char *format, ...);
+
+/*!
+ * \brief pre-printf a string to the internal text buffer and return the string box size
+ * 
+ * \param[in] ptFont the target front, passing NULL means using the previous font 
+ * \param[in] format the printf format string
+ * \param[in] ... the optional argument list 
+ * \return arm_2d_size_t the string box size
+ */
+extern
+arm_2d_size_t arm_lcd_printf_to_buffer(const arm_2d_font_t *ptFont, 
+                                 const char *format,
+                                 ...);
+
+/*!
+ * \brief print the text buffer
+ * \param[in] number of chars to print. Here:
+ *            0 means printing all chars in the text buffer
+ *            >0 means printing a specified number of chars
+ *            <0 means keeping a specified number of chars in the tail and printing the rest of the string
+ */
+extern
+void arm_lcd_printf_buffer(int16_t iNumber);
+
+/*!
+ * \brief get the residual text length in the text buffer
+ * 
+ * \return size_t number of chars left
+ */
+extern
+size_t arm_lcd_get_residual_text_length_in_buffer(void);
 
 extern
 ARM_NONNULL(1)
