@@ -205,8 +205,11 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
         if list(utf8_encoding) == [0xef, 0xbb, 0xbf]:
             continue
 
-        width_max = max(bitmap.width + 1, width_max)
-        height_max = max(bitmap.rows + 1, height_max)
+        width_max = max(bitmap.width, width_max)
+        height_max = max(bitmap.rows, height_max)
+    
+    width_max += 1
+    height_max += 1
 
     for char in sorted(set(text)):
         face.load_char(char)
@@ -253,6 +256,11 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
         if width < width_max:
            padding = ((0, 0), (0, width_max - width))
            bitmap_array = np.pad(bitmap_array, padding, 'constant')
+        
+        padding = ((0, 1), (0, 0))
+        bitmap_array = np.pad(bitmap_array, padding, 'constant')
+
+        height += 1
 
         char_index_advance = len(bitmap_array.flatten());
 
@@ -322,7 +330,7 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
 
         char_mask_array = bitmap_array.flatten()
 
-        glyphs_data.append((char, char_mask_array, width + 1, height + 1, current_index, advance_width, bearing_x, bearing_y, utf8_encoding))
+        glyphs_data.append((char, char_mask_array, width + 1, height, current_index, advance_width, bearing_x, bearing_y, utf8_encoding))
 
         current_index += char_index_advance
 
@@ -372,7 +380,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
         last_index += char_max_width * last_height
         f.write(f"    {{ {round(last_index / char_max_width)}, {{ {char_max_width}, {char_max_height}, }}, {round(char_max_width / 2)}, {0}, {char_max_height}, 1, {{0x20}} }},\n")
 
-        last_index += char_max_width * last_height
+        last_index += char_max_width * char_max_height
 
         f.write("};\n")
 
