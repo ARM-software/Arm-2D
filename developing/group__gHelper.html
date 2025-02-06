@@ -1010,6 +1010,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga972c196efc9330c427295679aff61ec0"><td class="memItemLeft" align="right" valign="top"><a id="ga972c196efc9330c427295679aff61ec0" name="ga972c196efc9330c427295679aff61ec0"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_printf</b> (const char *format,...)</td></tr>
 <tr class="separator:ga972c196efc9330c427295679aff61ec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac468ea8e1aff07f28ff54703a0ae66fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac468ea8e1aff07f28ff54703a0ae66fa">arm_lcd_printf_to_buffer</a> (const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, const char *format,...)</td></tr>
+<tr class="memdesc:gac468ea8e1aff07f28ff54703a0ae66fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">pre-printf a string to the internal text buffer and return the string box size  <a href="group__gHelper.html#gac468ea8e1aff07f28ff54703a0ae66fa">More...</a><br /></td></tr>
+<tr class="separator:gac468ea8e1aff07f28ff54703a0ae66fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga567a0a42f0daecba1734841de9289400"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga567a0a42f0daecba1734841de9289400">arm_lcd_printf_buffer</a> (int16_t iNumber)</td></tr>
+<tr class="memdesc:ga567a0a42f0daecba1734841de9289400"><td class="mdescLeft">&#160;</td><td class="mdescRight">print the text buffer  <a href="group__gHelper.html#ga567a0a42f0daecba1734841de9289400">More...</a><br /></td></tr>
+<tr class="separator:ga567a0a42f0daecba1734841de9289400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74aa206bd12c7e8297125d5117173662"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga74aa206bd12c7e8297125d5117173662">arm_lcd_get_residual_text_length_in_buffer</a> (void)</td></tr>
+<tr class="memdesc:ga74aa206bd12c7e8297125d5117173662"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the residual text length in the text buffer  <a href="group__gHelper.html#ga74aa206bd12c7e8297125d5117173662">More...</a><br /></td></tr>
+<tr class="separator:ga74aa206bd12c7e8297125d5117173662"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24b38db513a2d0103d127c0ef93dd737"><td class="memItemLeft" align="right" valign="top"><a id="ga24b38db513a2d0103d127c0ef93dd737" name="ga24b38db513a2d0103d127c0ef93dd737"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_puts_label</b> (const char *pchString, <a class="el" href="group__gKernel.html#ga5a759b205152a054a4abea10c8ff01b3">arm_2d_align_t</a> tAlignment)</td></tr>
 <tr class="separator:ga24b38db513a2d0103d127c0ef93dd737"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1043,6 +1052,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_opac
 <tr class="memitem:ga7429b916cd57bfe47ea9ad2d68abc93a"><td class="memItemLeft" align="right" valign="top"><a id="ga7429b916cd57bfe47ea9ad2d68abc93a" name="ga7429b916cd57bfe47ea9ad2d68abc93a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_scale</b> (float fScale)</td></tr>
 <tr class="separator:ga7429b916cd57bfe47ea9ad2d68abc93a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79867b31d6584825e116dce5d9fde8c8"><td class="memItemLeft" align="right" valign="top"><a id="ga79867b31d6584825e116dce5d9fde8c8" name="ga79867b31d6584825e116dce5d9fde8c8"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_char_spacing</b> (int8_t chNewSpacing)</td></tr>
+<tr class="separator:ga79867b31d6584825e116dce5d9fde8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ae5b9a7fcfd116d6408e14abaf1c152"><td class="memItemLeft" align="right" valign="top"><a id="ga7ae5b9a7fcfd116d6408e14abaf1c152" name="ga7ae5b9a7fcfd116d6408e14abaf1c152"></a>
+int8_t&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_line_spacing</b> (int8_t chNewSpacing)</td></tr>
+<tr class="separator:ga7ae5b9a7fcfd116d6408e14abaf1c152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0c1741450afbaca29bc8029b1e972c9a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a">arm_lcd_text_force_char_use_same_width</a> (bool bForced)</td></tr>
 <tr class="memdesc:ga0c1741450afbaca29bc8029b1e972c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force all char use the same width.  <a href="group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a">More...</a><br /></td></tr>
 <tr class="separator:ga0c1741450afbaca29bc8029b1e972c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -11704,6 +11719,98 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="gac468ea8e1aff07f28ff54703a0ae66fa" name="gac468ea8e1aff07f28ff54703a0ae66fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac468ea8e1aff07f28ff54703a0ae66fa">&#9670;&nbsp;</a></span>arm_lcd_printf_to_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> arm_lcd_printf_to_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *&#160;</td>
+          <td class="paramname"><em>ptFont</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>pre-printf a string to the internal text buffer and return the string box size </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptFont</td><td>the target front, passing NULL means using the previous font </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">format</td><td>the printf format string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>the optional argument list </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> the string box size </dd></dl>
+
+</div>
+</div>
+<a id="ga567a0a42f0daecba1734841de9289400" name="ga567a0a42f0daecba1734841de9289400"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga567a0a42f0daecba1734841de9289400">&#9670;&nbsp;</a></span>arm_lcd_printf_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_lcd_printf_buffer </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>iNumber</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>print the text buffer </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">number</td><td>of chars to print. Here: 0 means printing all chars in the text buffer &gt;0 means printing a specified number of chars &lt;0 means keeping a specified number of chars in the tail and printing the rest of the string </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga74aa206bd12c7e8297125d5117173662" name="ga74aa206bd12c7e8297125d5117173662"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga74aa206bd12c7e8297125d5117173662">&#9670;&nbsp;</a></span>arm_lcd_get_residual_text_length_in_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t arm_lcd_get_residual_text_length_in_buffer </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the residual text length in the text buffer </p>
+<dl class="section return"><dt>Returns</dt><dd>size_t number of chars left </dd></dl>
 
 </div>
 </div>

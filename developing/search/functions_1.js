@@ -386,8 +386,11 @@ var searchData=
   ['arm_5f2dp_5ftile_5fcopy_5fto_5fgray8_383',['arm_2dp_tile_copy_to_gray8',['../group__gConversion.html#gad5ccb2bf539aa24018a4eaa0868ed711',1,'arm_2d_conversion.h']]],
   ['arm_5f2dp_5ftile_5fcopy_5fto_5frgb565_384',['arm_2dp_tile_copy_to_rgb565',['../group__gConversion.html#gaa840bd826d66df37f7fc35eae8efe3bd',1,'arm_2d_conversion.h']]],
   ['arm_5f2dp_5ftile_5ftransform_385',['arm_2dp_tile_transform',['../group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2',1,'arm_2d_transform.h']]],
-  ['arm_5flcd_5ftext_5fforce_5fchar_5fuse_5fsame_5fwidth_386',['arm_lcd_text_force_char_use_same_width',['../group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a',1,'arm_2d_helper_font.h']]],
-  ['arm_5flcd_5ftext_5finit_387',['arm_lcd_text_init',['../group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9',1,'arm_2d_helper_font.h']]],
-  ['arm_5flcd_5ftext_5fset_5fdisplay_5fmode_388',['arm_lcd_text_set_display_mode',['../group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65',1,'arm_2d_helper_font.h']]],
-  ['arm_5fprotected_389',['ARM_PROTECTED',['../group__gHelper.html#a45ae8c2f126445c158944db2938719e6',1,'__arm_2d_list_core_t::ARM_PROTECTED()'],['../group__gHelper.html#afe89e6263d786fd9e987ef38545c0265',1,'arm_2d_list_item_t::ARM_PROTECTED()']]]
+  ['arm_5flcd_5fget_5fresidual_5ftext_5flength_5fin_5fbuffer_386',['arm_lcd_get_residual_text_length_in_buffer',['../group__gHelper.html#ga74aa206bd12c7e8297125d5117173662',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5fprintf_5fbuffer_387',['arm_lcd_printf_buffer',['../group__gHelper.html#ga567a0a42f0daecba1734841de9289400',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5fprintf_5fto_5fbuffer_388',['arm_lcd_printf_to_buffer',['../group__gHelper.html#gac468ea8e1aff07f28ff54703a0ae66fa',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5ftext_5fforce_5fchar_5fuse_5fsame_5fwidth_389',['arm_lcd_text_force_char_use_same_width',['../group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5ftext_5finit_390',['arm_lcd_text_init',['../group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5ftext_5fset_5fdisplay_5fmode_391',['arm_lcd_text_set_display_mode',['../group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65',1,'arm_2d_helper_font.h']]],
+  ['arm_5fprotected_392',['ARM_PROTECTED',['../group__gHelper.html#a45ae8c2f126445c158944db2938719e6',1,'__arm_2d_list_core_t::ARM_PROTECTED()'],['../group__gHelper.html#afe89e6263d786fd9e987ef38545c0265',1,'arm_2d_list_item_t::ARM_PROTECTED()']]]
 ];
