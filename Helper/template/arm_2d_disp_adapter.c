@@ -254,6 +254,8 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 
 #endif
 
+    arm_lcd_text_set_scale(0.0f);
+
 #if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__ == 2
     /* round mode */
     arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
