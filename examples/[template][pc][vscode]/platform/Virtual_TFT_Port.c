@@ -45,10 +45,10 @@ static uint32_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
 
 #endif
 
-#if VT_WIDTH >= 240 || VT_HEIGHT >= 240
+#if VT_WIDTH >= 1024 || VT_HEIGHT >= 1024
 #   define VT_WINDOW_WIDTH     (VT_WIDTH / 4)
 #   define VT_WINDOW_HEIGHT    (VT_HEIGHT / 4)
-#elif VT_WIDTH >= 1024 || VT_HEIGHT >= 1024
+#elif VT_WIDTH >= 240 || VT_HEIGHT >= 240
 #   define VT_WINDOW_WIDTH     VT_WIDTH
 #   define VT_WINDOW_HEIGHT    VT_HEIGHT
 #else
