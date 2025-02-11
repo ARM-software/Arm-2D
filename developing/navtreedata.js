@@ -212,8 +212,9 @@ var NAVTREE =
             [ "<strong>Docking in a Horizontal Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md148", null ],
             [ "<strong>Docking in a Vertical Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md149", null ]
           ] ],
-          [ "3.3.4 Advanced Docking with Margins", "md_how_to_use_layout_assistant.html#autotoc_md150", null ],
-          [ "3.3.5 Summary", "md_how_to_use_layout_assistant.html#autotoc_md151", null ]
+          [ "3.3.4 Advanced Docking with Margins", "md_how_to_use_layout_assistant.html#autotoc_md150", [
+            [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md151", null ]
+          ] ]
         ] ]
       ] ]
     ] ],
