@@ -193,28 +193,28 @@ var NAVTREE =
         [ "3.2 Stream Layout with Wrapping", "md_how_to_use_layout_assistant.html#autotoc_md132", [
           [ "3.2.1 Horizontal Stream", "md_how_to_use_layout_assistant.html#autotoc_md133", null ],
           [ "3.2.2 Vertical Stream", "md_how_to_use_layout_assistant.html#autotoc_md134", null ]
+        ] ],
+        [ "3.3 Docking", "md_how_to_use_layout_assistant.html#autotoc_md135", [
+          [ "3.3.1 Overview", "md_how_to_use_layout_assistant.html#autotoc_md136", [
+            [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md137", null ],
+            [ "<strong>Generated Region</strong>", "md_how_to_use_layout_assistant.html#autotoc_md138", null ]
+          ] ],
+          [ "3.3.2 Docking Macros", "md_how_to_use_layout_assistant.html#autotoc_md139", [
+            [ "<strong>Docking to the Top</strong>", "md_how_to_use_layout_assistant.html#autotoc_md140", null ],
+            [ "<strong>Docking to the Bottom</strong>", "md_how_to_use_layout_assistant.html#autotoc_md141", null ],
+            [ "<strong>Docking to the Left</strong>", "md_how_to_use_layout_assistant.html#autotoc_md142", null ],
+            [ "<strong>Docking to the Right</strong>", "md_how_to_use_layout_assistant.html#autotoc_md143", null ],
+            [ "<strong>Docking Vertically (Center-aligned)</strong>", "md_how_to_use_layout_assistant.html#autotoc_md144", null ],
+            [ "<strong>Docking Horizontally (Center-aligned)</strong>", "md_how_to_use_layout_assistant.html#autotoc_md145", null ]
+          ] ],
+          [ "3.3.3 Docking Inside <tt>arm_2d_layout()</tt>", "md_how_to_use_layout_assistant.html#autotoc_md146", [
+            [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md147", null ],
+            [ "<strong>Docking in a Horizontal Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md148", null ],
+            [ "<strong>Docking in a Vertical Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md149", null ]
+          ] ],
+          [ "3.3.4 Advanced Docking with Margins", "md_how_to_use_layout_assistant.html#autotoc_md150", null ],
+          [ "3.3.5 Summary", "md_how_to_use_layout_assistant.html#autotoc_md151", null ]
         ] ]
-      ] ],
-      [ "3.3 Docking", "md_how_to_use_layout_assistant.html#autotoc_md135", [
-        [ "3.3.1 Overview", "md_how_to_use_layout_assistant.html#autotoc_md136", [
-          [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md137", null ],
-          [ "<strong>Generated Region</strong>", "md_how_to_use_layout_assistant.html#autotoc_md138", null ]
-        ] ],
-        [ "3.3.2 Docking Macros", "md_how_to_use_layout_assistant.html#autotoc_md139", [
-          [ "<strong>Docking to the Top</strong>", "md_how_to_use_layout_assistant.html#autotoc_md140", null ],
-          [ "<strong>Docking to the Bottom</strong>", "md_how_to_use_layout_assistant.html#autotoc_md141", null ],
-          [ "<strong>Docking to the Left</strong>", "md_how_to_use_layout_assistant.html#autotoc_md142", null ],
-          [ "<strong>Docking to the Right</strong>", "md_how_to_use_layout_assistant.html#autotoc_md143", null ],
-          [ "<strong>Docking Vertically (Center-aligned)</strong>", "md_how_to_use_layout_assistant.html#autotoc_md144", null ],
-          [ "<strong>Docking Horizontally (Center-aligned)</strong>", "md_how_to_use_layout_assistant.html#autotoc_md145", null ]
-        ] ],
-        [ "3.3.3 Docking Inside <tt>arm_2d_layout()</tt>", "md_how_to_use_layout_assistant.html#autotoc_md146", [
-          [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md147", null ],
-          [ "<strong>Docking in a Horizontal Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md148", null ],
-          [ "<strong>Docking in a Vertical Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md149", null ]
-        ] ],
-        [ "3.3.4 Advanced Docking with Margins", "md_how_to_use_layout_assistant.html#autotoc_md150", null ],
-        [ "3.3.5 Summary", "md_how_to_use_layout_assistant.html#autotoc_md151", null ]
       ] ]
     ] ],
     [ "How to Use Tile Operations", "use_tile.html", [
