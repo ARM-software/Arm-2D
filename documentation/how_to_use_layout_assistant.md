@@ -22,21 +22,13 @@ This article will introduce the use of Arm-2D Layout Assistant in detail through
     - [3.2.1 Horizontal Stream](#321-horizontal-stream)
     - [3.2.2 Vertical Stream](#322-vertical-stream)
   - [3.3 Docking](#33-docking)
-    - [3.3.1 Overview](#331-overview)
+    - [3.3.1 Docking to a Canvas](#331-docking-to-a-canvas)
       - [**Syntax**](#syntax)
-      - [**Generated Region**](#generated-region)
-    - [3.3.2 Docking Macros](#332-docking-macros)
-      - [**Docking to the Top**](#docking-to-the-top)
-      - [**Docking to the Bottom**](#docking-to-the-bottom)
-      - [**Docking to the Left**](#docking-to-the-left)
-      - [**Docking to the Right**](#docking-to-the-right)
-      - [**Docking Vertically (Center-aligned)**](#docking-vertically-center-aligned)
-      - [**Docking Horizontally (Center-aligned)**](#docking-horizontally-center-aligned)
-    - [3.3.3 Docking Inside `arm_2d_layout()`](#333-docking-inside-arm_2d_layout)
+    - [3.3.2 Docking Inside `arm_2d_layout()`](#332-docking-inside-arm_2d_layout)
       - [**Syntax**](#syntax-1)
       - [**Docking in a Horizontal Stream**](#docking-in-a-horizontal-stream)
       - [**Docking in a Vertical Stream**](#docking-in-a-vertical-stream)
-    - [3.3.4 Insert Margins to a given Canvas(Region)](#334-insert-margins-to-a-given-canvasregion)
+    - [3.3.3 Insert Margins to a given Canvas(Region)](#333-insert-margins-to-a-given-canvasregion)
       - [**Syntax**](#syntax-2)
 
 
@@ -928,16 +920,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 
 ### 3.3 Docking
 
-Docking is a layout method that allows UI elements to be positioned along the edges of a given container or centrally aligned within it. Unlike alignment methods that focus on single elements, docking is designed to manage multiple elements within a defined space efficiently. This approach is particularly useful when designing user interfaces where elements should automatically adapt to the available screen space.
+Docking is a layout method that allows UI elements to be positioned along the edges of a given canvas (region) or centrally aligned within it. This approach is particularly useful when designing user interfaces where elements should automatically adapt to the available screen space.
 
-#### 3.3.1 Overview
+#### 3.3.1 Docking to a Canvas
 
-The docking macros in Arm-2D Layout Assistant simplify the process of placing UI elements in predefined areas within a container (e.g., a panel, screen, or any other tile). These macros automatically adjust the size and position of elements, reducing the need for manual region calculations.
+The docking macros in Arm-2D Layout Assistant simplify the process of placing UI elements in predefined areas within a canvas. These macros automatically adjust the size and position of elements, reducing the need for manual region calculations.
 
-Arm-2D provides several `dock` macros that allow elements to be positioned at the **top, bottom, left, right**, or **center (horizontally or vertically)** of a container. 
+Arm-2D provides several dock macros that allow elements to be positioned at the **top, bottom, left, right**, or **center (horizontally or vertically)** of a canvas. 
 
 ##### **Syntax**
-Each `dock` macro follows a similar syntax:
+Each dock macro follows a similar syntax:
 ```c
 arm_2d_dock_<position>(<target region>, <size>, [optional margins]) {
     /* Use the generated __<position>_region within this block */
@@ -948,12 +940,12 @@ arm_2d_dock_<position>(<target region>, <size>, [optional margins]) {
 - `<size>`: The height (for `top`, `bottom`, `vertical`) or width (for `left`, `right`, `horizontal`) of the docked region
 - `[optional margins]`: Defines margins from adjacent edges
 
-##### **Generated Region**
-Each `dock` macro creates a corresponding region (e.g., `__top_region`, `__bottom_region`) that can be used for UI operations inside the docked area.
+Each dock macro creates a corresponding region (e.g., `__top_region`, `__bottom_region`) that can be used for UI operations inside the docked area.
 
-#### 3.3.2 Docking Macros
+Here are some examples:
 
-##### **Docking to the Top**
+- ##### **Docking to the Top**
+
 ```c
 arm_2d_dock_top(parent_region, 50) {
     arm_2d_fill_colour(ptTile, &__top_region, GLCD_COLOR_BLUE);
@@ -966,7 +958,8 @@ Additional variations:
 arm_2d_dock_top(parent_region, 50, 10, 10); // Adds left and right margins
 ```
 
-##### **Docking to the Bottom**
+- ##### **Docking to the Bottom**
+
 ```c
 arm_2d_dock_bottom(parent_region, 30) {
     arm_2d_fill_colour(ptTile, &__bottom_region, GLCD_COLOR_RED);
@@ -974,7 +967,8 @@ arm_2d_dock_bottom(parent_region, 30) {
 ```
 **Effect**: Positions a 30-pixel-high region at the bottom of `parent_region`.
 
-##### **Docking to the Left**
+- ##### **Docking to the Left**
+
 ```c
 arm_2d_dock_left(parent_region, 40) {
     arm_2d_fill_colour(ptTile, &__left_region, GLCD_COLOR_GREEN);
@@ -982,7 +976,8 @@ arm_2d_dock_left(parent_region, 40) {
 ```
 **Effect**: Positions a 40-pixel-wide region at the left of `parent_region`.
 
-##### **Docking to the Right**
+- ##### **Docking to the Right**
+
 ```c
 arm_2d_dock_right(parent_region, 40) {
     arm_2d_fill_colour(ptTile, &__right_region, GLCD_COLOR_YELLOW);
@@ -990,7 +985,8 @@ arm_2d_dock_right(parent_region, 40) {
 ```
 **Effect**: Positions a 40-pixel-wide region at the right of `parent_region`.
 
-##### **Docking Vertically (Center-aligned)**
+- ##### **Docking Vertically (Center-aligned)**
+
 ```c
 arm_2d_dock_vertical(parent_region, 50) {
     arm_2d_fill_colour(ptTile, &__vertical_region, GLCD_COLOR_PURPLE);
@@ -998,7 +994,8 @@ arm_2d_dock_vertical(parent_region, 50) {
 ```
 **Effect**: Positions a 50-pixel-high region centered within `parent_region`.
 
-##### **Docking Horizontally (Center-aligned)**
+- ##### **Docking Horizontally (Center-aligned)**
+
 ```c
 arm_2d_dock_horizontal(parent_region, 100) {
     arm_2d_fill_colour(ptTile, &__horizontal_region, GLCD_COLOR_CYAN);
@@ -1006,7 +1003,7 @@ arm_2d_dock_horizontal(parent_region, 100) {
 ```
 **Effect**: Positions a 100-pixel-wide region centered within `parent_region`.
 
-#### 3.3.3 Docking Inside `arm_2d_layout()`
+#### 3.3.2 Docking Inside `arm_2d_layout()`
 
 In addition to standalone docking macros, **Arm-2D Layout Assistant** provides inline docking macros that work inside `arm_2d_layout()`. These macros allow elements to be positioned dynamically within a layout stream, ensuring flexible and adaptive UI design.
 
@@ -1023,17 +1020,15 @@ __item_line_dock_<direction>([<size>] [, <left>, <right>, <top>, <bottom>]) {
 ##### **Docking in a Horizontal Stream**
 ```c
 arm_2d_layout(parent_region) {
-    __item_line_dock_horizontal() {
-        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_BLUE);
-    }
-    __item_line_dock_horizontal(5, 5, 5, 5) {
-        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_YELLOW);
-    }
+
     __item_line_dock_horizontal(50) {
         arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_RED);
     }
     __item_line_dock_horizontal(80, 5, 5, 10, 10) {
         arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_GREEN);
+    }
+    __item_line_dock_horizontal() {
+        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_BLUE);
     }
 }
 ```
@@ -1042,23 +1037,20 @@ arm_2d_layout(parent_region) {
 ##### **Docking in a Vertical Stream**
 ```c
 arm_2d_layout(parent_region) {
-    __item_line_dock_vertical() {
-        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_RED);
-    }
-    __item_line_dock_vertical(4, 4, 4, 4) {
-        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_BLACK);
-    }
     __item_line_dock_vertical(32) {
         arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_GREEN);
     }
     __item_line_dock_vertical(70, 10, 10, 5, 5) {
         arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_YELLOW);
     }
+    __item_line_dock_vertical() {
+        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_RED);
+    }
 }
 ```
 **Effect**: Places items in a vertical layout with automatic docking, aligning them properly within the available space.
 
-#### 3.3.4 Insert Margins to a given Canvas(Region)
+#### 3.3.3 Insert Margins to a given Canvas(Region)
 To add space inside a target region (canvas), you can specify margin values.
 ##### **Syntax**
 ```c
