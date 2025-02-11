@@ -909,6 +909,175 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
 }
 ```
 
+# 3.3 Docking
+
+Docking is a layout method that allows UI elements to be positioned along the edges of a given container or centrally aligned within it. Unlike alignment methods that focus on single elements, docking is designed to manage multiple elements within a defined space efficiently. This approach is particularly useful when designing user interfaces where elements should automatically adapt to the available screen space.
+
+## 3.3.1 Overview
+
+The docking macros in Arm-2D Layout Assistant simplify the process of placing UI elements in predefined areas within a container (e.g., a panel, screen, or any other tile). These macros automatically adjust the size and position of elements, reducing the need for manual region calculations.
+
+Arm-2D provides several `dock` macros that allow elements to be positioned at the **top, bottom, left, right**, or **center (horizontally or vertically)** of a container.
+
+### **Syntax**
+
+Each `dock` macro follows a similar syntax:
+
+```c
+arm_2d_dock_<position>(<target region>, <size>, [optional margins]) {
+    /* Use the generated __<position>_region within this block */
+}
+```
+
+- `<position>`: Specifies the docking position (`top`, `bottom`, `left`, `right`, `horizontal`, `vertical`)
+- `<target region>`: The region where the docking occurs (e.g., a parent container)
+- `<size>`: The height (for `top`, `bottom`, `vertical`) or width (for `left`, `right`, `horizontal`) of the docked region
+- `[optional margins]`: Defines margins from adjacent edges
+
+### **Generated Region**
+
+Each `dock` macro creates a corresponding region (e.g., `__top_region`, `__bottom_region`) that can be used for UI operations inside the docked area.
+
+## 3.3.2 Docking Macros
+
+### **Docking to the Top**
+
+```c
+arm_2d_dock_top(parent_region, 50) {
+    arm_2d_fill_colour(ptTile, &__top_region, GLCD_COLOR_BLUE);
+}
+```
+
+**Effect**: Positions a 50-pixel-high region at the top of `parent_region`.
+
+Additional variations:
+
+```c
+arm_2d_dock_top(parent_region, 50, 10, 10); // Adds left and right margins
+```
+
+### **Docking to the Bottom**
+
+```c
+arm_2d_dock_bottom(parent_region, 30) {
+    arm_2d_fill_colour(ptTile, &__bottom_region, GLCD_COLOR_RED);
+}
+```
+
+**Effect**: Positions a 30-pixel-high region at the bottom of `parent_region`.
+
+### **Docking to the Left**
+
+```c
+arm_2d_dock_left(parent_region, 40) {
+    arm_2d_fill_colour(ptTile, &__left_region, GLCD_COLOR_GREEN);
+}
+```
+
+**Effect**: Positions a 40-pixel-wide region at the left of `parent_region`.
+
+### **Docking to the Right**
+
+```c
+arm_2d_dock_right(parent_region, 40) {
+    arm_2d_fill_colour(ptTile, &__right_region, GLCD_COLOR_YELLOW);
+}
+```
+
+**Effect**: Positions a 40-pixel-wide region at the right of `parent_region`.
+
+### **Docking Vertically (Center-aligned)**
+
+```c
+arm_2d_dock_vertical(parent_region, 50) {
+    arm_2d_fill_colour(ptTile, &__vertical_region, GLCD_COLOR_PURPLE);
+}
+```
+
+**Effect**: Positions a 50-pixel-high region centered within `parent_region`.
+
+### **Docking Horizontally (Center-aligned)**
+
+```c
+arm_2d_dock_horizontal(parent_region, 100) {
+    arm_2d_fill_colour(ptTile, &__horizontal_region, GLCD_COLOR_CYAN);
+}
+```
+
+**Effect**: Positions a 100-pixel-wide region centered within `parent_region`.
+
+## 3.3.3 Docking Inside `arm_2d_layout()`
+
+In addition to standalone docking macros, **Arm-2D Layout Assistant** provides inline docking macros that work inside `arm_2d_layout()`. These macros allow elements to be positioned dynamically within a layout stream, ensuring flexible and adaptive UI design.
+
+### **Syntax**
+
+```c
+__item_line_dock_<direction>(<size> [, <left>, <right>, <top>, <bottom>]) {
+    /* Use the generated __item_region within this block */
+}
+```
+
+- `<direction>`: Specifies the layout direction (`horizontal`, `vertical`)
+- `<size>`: The size of the docked item along the layout axis
+- `[optional margins]`: Defines padding around the item (left, right, top, bottom)
+
+### **Docking in a Horizontal Stream**
+
+```c
+arm_2d_layout(parent_region) {
+    __item_line_dock_horizontal(60) {
+        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_BLUE);
+    }
+    __item_line_dock_horizontal(80, 5, 5, 10, 10) {
+        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_GREEN);
+    }
+}
+```
+
+**Effect**: Places items in a horizontal layout with automatic docking, allowing for margins and spacing adjustments.
+
+### **Docking in a Vertical Stream**
+
+```c
+arm_2d_layout(parent_region) {
+    __item_line_dock_vertical(50) {
+        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_RED);
+    }
+    __item_line_dock_vertical(70, 10, 10, 5, 5) {
+        arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_YELLOW);
+    }
+}
+```
+
+**Effect**: Places items in a vertical layout with automatic docking, aligning them properly within the available space.
+
+## 3.3.4 Advanced Docking with Margins
+
+To add space around docked elements, you can specify margin values:
+
+```c
+arm_2d_dock_with_margin(parent_region, 10, 10, 20, 20) {
+    arm_2d_fill_colour(ptTile, &__dock_region, GLCD_COLOR_WHITE);
+}
+```
+
+**Effect**: Creates a docked region with 10-pixel margins on the left and right, and 20-pixel margins on the top and bottom.
+
+**Note**: `arm_2d_dock_with_margin()` also has a simplified alias, `arm_2d_dock()`.
+
+## 3.3.5 Summary
+
+- Docking provides an **efficient** way to position UI elements within containers.
+- Macros automatically generate usable regions (**e.g., ********`__top_region`********, \*\*\*\*****`__left_region`**).
+- Supports **margins**, **horizontal/vertical centering**, and **nested layouts**.
+- **Combine with alignment macros** for fine-tuned positioning.
+- **Use inside ********`arm_2d_layout()`******** for flexible, adaptive UI structures.**
+
+By leveraging `dock` macros, you can structure UI elements **dynamically** without manually calculating positions, improving both **code readability** and **layout consistency**.
+
+
+
 
 
 
