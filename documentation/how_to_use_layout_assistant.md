@@ -36,7 +36,7 @@ This article will introduce the use of Arm-2D Layout Assistant in detail through
       - [**Syntax**](#syntax-1)
       - [**Docking in a Horizontal Stream**](#docking-in-a-horizontal-stream)
       - [**Docking in a Vertical Stream**](#docking-in-a-vertical-stream)
-    - [3.3.4 Advanced Docking with Margins](#334-advanced-docking-with-margins)
+    - [3.3.4 Insert Margins to a given Canvas(Region)](#334-insert-margins-to-a-given-canvasregion)
       - [**Syntax**](#syntax-2)
 
 
@@ -1058,7 +1058,7 @@ arm_2d_layout(parent_region) {
 ```
 **Effect**: Places items in a vertical layout with automatic docking, aligning them properly within the available space.
 
-#### 3.3.4 Advanced Docking with Margins
+#### 3.3.4 Insert Margins to a given Canvas(Region)
 To add space inside a target region (canvas), you can specify margin values.
 ##### **Syntax**
 ```c
