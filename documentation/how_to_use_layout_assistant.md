@@ -37,7 +37,7 @@ This article will introduce the use of Arm-2D Layout Assistant in detail through
       - [**Docking in a Horizontal Stream**](#docking-in-a-horizontal-stream)
       - [**Docking in a Vertical Stream**](#docking-in-a-vertical-stream)
     - [3.3.4 Advanced Docking with Margins](#334-advanced-docking-with-margins)
-    - [3.3.5 Summary](#335-summary)
+      - [**Syntax**](#syntax-2)
 
 
 ## 1 Basic Concepts
@@ -1059,22 +1059,28 @@ arm_2d_layout(parent_region) {
 **Effect**: Places items in a vertical layout with automatic docking, aligning them properly within the available space.
 
 #### 3.3.4 Advanced Docking with Margins
-To add space around docked elements, you can specify margin values:
+To add space inside a target region (canvas), you can specify margin values.
+##### **Syntax**
+```c
+arm_2d_dock_with_margin(<target region>, [optional margins]) {
+    /* Use the generated __dock_region within this block */
+}
+```
+- `<target region>`: The region where the docking occurs (e.g., a parent canvas)
+- `[optional margins]`: Defines margins from adjacent edges
+
+For example:
 ```c
 arm_2d_dock_with_margin(parent_region, 10, 10, 20, 20) {
+    arm_2d_fill_colour(ptTile, &__dock_region, GLCD_COLOR_WHITE);
+}
+```
+or
+```c
+arm_2d_dock(parent_region, 10, 10, 20, 20) {
     arm_2d_fill_colour(ptTile, &__dock_region, GLCD_COLOR_WHITE);
 }
 ```
 **Effect**: Creates a docked region with 10-pixel margins on the left and right, and 20-pixel margins on the top and bottom.
 
 **Note**: `arm_2d_dock_with_margin()` also has a simplified alias, `arm_2d_dock()`.
-
-#### 3.3.5 Summary
-- Docking provides an **efficient** way to position UI elements within containers.
-- Macros automatically generate usable regions (**e.g., `__top_region`, `__left_region`**).
-- Supports **margins**, **horizontal/vertical centering**, and **nested layouts**.
-- **Combine with alignment macros** for fine-tuned positioning.
-- **Use inside `arm_2d_layout()` for flexible, adaptive UI structures.**
-
-By leveraging `dock` macros, you can structure UI elements **dynamically** without manually calculating positions, improving both **code readability** and **layout consistency**.
-
