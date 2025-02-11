@@ -194,76 +194,97 @@ var NAVTREE =
           [ "3.2.1 Horizontal Stream", "md_how_to_use_layout_assistant.html#autotoc_md133", null ],
           [ "3.2.2 Vertical Stream", "md_how_to_use_layout_assistant.html#autotoc_md134", null ]
         ] ]
+      ] ],
+      [ "3.3 Docking", "md_how_to_use_layout_assistant.html#autotoc_md135", [
+        [ "3.3.1 Overview", "md_how_to_use_layout_assistant.html#autotoc_md136", [
+          [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md137", null ],
+          [ "<strong>Generated Region</strong>", "md_how_to_use_layout_assistant.html#autotoc_md138", null ]
+        ] ],
+        [ "3.3.2 Docking Macros", "md_how_to_use_layout_assistant.html#autotoc_md139", [
+          [ "<strong>Docking to the Top</strong>", "md_how_to_use_layout_assistant.html#autotoc_md140", null ],
+          [ "<strong>Docking to the Bottom</strong>", "md_how_to_use_layout_assistant.html#autotoc_md141", null ],
+          [ "<strong>Docking to the Left</strong>", "md_how_to_use_layout_assistant.html#autotoc_md142", null ],
+          [ "<strong>Docking to the Right</strong>", "md_how_to_use_layout_assistant.html#autotoc_md143", null ],
+          [ "<strong>Docking Vertically (Center-aligned)</strong>", "md_how_to_use_layout_assistant.html#autotoc_md144", null ],
+          [ "<strong>Docking Horizontally (Center-aligned)</strong>", "md_how_to_use_layout_assistant.html#autotoc_md145", null ]
+        ] ],
+        [ "3.3.3 Docking Inside <tt>arm_2d_layout()</tt>", "md_how_to_use_layout_assistant.html#autotoc_md146", [
+          [ "<strong>Syntax</strong>", "md_how_to_use_layout_assistant.html#autotoc_md147", null ],
+          [ "<strong>Docking in a Horizontal Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md148", null ],
+          [ "<strong>Docking in a Vertical Stream</strong>", "md_how_to_use_layout_assistant.html#autotoc_md149", null ]
+        ] ],
+        [ "3.3.4 Advanced Docking with Margins", "md_how_to_use_layout_assistant.html#autotoc_md150", null ],
+        [ "3.3.5 Summary", "md_how_to_use_layout_assistant.html#autotoc_md151", null ]
       ] ]
     ] ],
     [ "How to Use Tile Operations", "use_tile.html", [
-      [ "1 Overview", "use_tile.html#autotoc_md135", null ],
-      [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md136", [
-        [ "2.1 Normal Usage", "use_tile.html#autotoc_md137", [
-          [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md138", null ],
-          [ "2.1.2 Texture Tiling", "use_tile.html#autotoc_md139", null ]
+      [ "1 Overview", "use_tile.html#autotoc_md152", null ],
+      [ "2 Key Scenarios, Patterns and Use Cases", "use_tile.html#autotoc_md153", [
+        [ "2.1 Normal Usage", "use_tile.html#autotoc_md154", [
+          [ "2.1.1 Window/Panel Clipping", "use_tile.html#autotoc_md155", null ],
+          [ "2.1.2 Texture Tiling", "use_tile.html#autotoc_md156", null ]
         ] ],
-        [ "2.2 Advanced Usage", "use_tile.html#autotoc_md140", [
-          [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md141", null ]
+        [ "2.2 Advanced Usage", "use_tile.html#autotoc_md157", [
+          [ "2.2.1 Partial Frame Buffer (PFB)", "use_tile.html#autotoc_md158", null ]
         ] ]
       ] ],
-      [ "3 Design Considerations", "use_tile.html#autotoc_md142", null ],
-      [ "4 API Table", "use_tile.html#autotoc_md143", [
-        [ "4.1 Basic", "use_tile.html#autotoc_md144", [
-          [ "4.1.1 <strong>arm_2d_tile_generate_child</strong>", "use_tile.html#autotoc_md145", null ],
-          [ "4.1.2 <strong>arm_2d_tile_get_root</strong>", "use_tile.html#autotoc_md146", null ],
-          [ "4.1.3 <strong>arm_2d_is_root_tile</strong>", "use_tile.html#autotoc_md147", null ],
-          [ "4.1.4 <strong>arm_2d_region_intersect</strong>", "use_tile.html#autotoc_md148", null ],
-          [ "4.1.5 <strong>arm_2d_get_address_and_region_from_tile</strong>", "use_tile.html#autotoc_md149", null ]
+      [ "3 Design Considerations", "use_tile.html#autotoc_md159", null ],
+      [ "4 API Table", "use_tile.html#autotoc_md160", [
+        [ "4.1 Basic", "use_tile.html#autotoc_md161", [
+          [ "4.1.1 <strong>arm_2d_tile_generate_child</strong>", "use_tile.html#autotoc_md162", null ],
+          [ "4.1.2 <strong>arm_2d_tile_get_root</strong>", "use_tile.html#autotoc_md163", null ],
+          [ "4.1.3 <strong>arm_2d_is_root_tile</strong>", "use_tile.html#autotoc_md164", null ],
+          [ "4.1.4 <strong>arm_2d_region_intersect</strong>", "use_tile.html#autotoc_md165", null ],
+          [ "4.1.5 <strong>arm_2d_get_address_and_region_from_tile</strong>", "use_tile.html#autotoc_md166", null ]
         ] ],
-        [ "4.2 Copy, Fill and X/Y Mirroring", "use_tile.html#autotoc_md150", [
-          [ "4.2.1 <strong>arm_2d_rgb16_tile_copy</strong>", "use_tile.html#autotoc_md151", null ],
-          [ "4.2.2 <strong>arm_2d_rgb32_tile_copy</strong>", "use_tile.html#autotoc_md152", null ]
+        [ "4.2 Copy, Fill and X/Y Mirroring", "use_tile.html#autotoc_md167", [
+          [ "4.2.1 <strong>arm_2d_rgb16_tile_copy</strong>", "use_tile.html#autotoc_md168", null ],
+          [ "4.2.2 <strong>arm_2d_rgb32_tile_copy</strong>", "use_tile.html#autotoc_md169", null ]
         ] ],
-        [ "4.3 Colour Keying", "use_tile.html#autotoc_md153", [
-          [ "4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying", "use_tile.html#autotoc_md154", null ],
-          [ "4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying", "use_tile.html#autotoc_md155", null ],
-          [ "4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying", "use_tile.html#autotoc_md156", null ]
+        [ "4.3 Colour Keying", "use_tile.html#autotoc_md170", [
+          [ "4.3.1 arm_2d_c8bit_tile_copy_with_colour_keying", "use_tile.html#autotoc_md171", null ],
+          [ "4.3.2 arm_2d_rbg16_tile_copy_with_colour_keying", "use_tile.html#autotoc_md172", null ],
+          [ "4.3.3 arm_2d_rbg32_tile_copy_with_colour_keying", "use_tile.html#autotoc_md173", null ]
         ] ]
       ] ],
-      [ "5 Reference", "use_tile.html#autotoc_md157", null ]
+      [ "5 Reference", "use_tile.html#autotoc_md174", null ]
     ] ],
     [ "How To Accelerate Arm-2D", "md_how_to_accelerate_arm_2d.html", [
-      [ "1 Software Tightly Coupled (Synchronouse) Acceleration", "md_how_to_accelerate_arm_2d.html#autotoc_md159", [
-        [ "1.1 Acceleration via Arm-2D Intrinsics", "md_how_to_accelerate_arm_2d.html#autotoc_md160", null ],
-        [ "1.2 Overriding the Default Low-Level Implementations", "md_how_to_accelerate_arm_2d.html#autotoc_md161", null ],
-        [ "1.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md162", null ]
+      [ "1 Software Tightly Coupled (Synchronouse) Acceleration", "md_how_to_accelerate_arm_2d.html#autotoc_md176", [
+        [ "1.1 Acceleration via Arm-2D Intrinsics", "md_how_to_accelerate_arm_2d.html#autotoc_md177", null ],
+        [ "1.2 Overriding the Default Low-Level Implementations", "md_how_to_accelerate_arm_2d.html#autotoc_md178", null ],
+        [ "1.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md179", null ]
       ] ],
-      [ "2 Asynchronouse Acceleration", "md_how_to_accelerate_arm_2d.html#autotoc_md163", [
-        [ "2.1 Pixel Pipeline Overview", "md_how_to_accelerate_arm_2d.html#autotoc_md164", [
-          [ "Feature Agnostic", "md_how_to_accelerate_arm_2d.html#autotoc_md165", null ]
+      [ "2 Asynchronouse Acceleration", "md_how_to_accelerate_arm_2d.html#autotoc_md180", [
+        [ "2.1 Pixel Pipeline Overview", "md_how_to_accelerate_arm_2d.html#autotoc_md181", [
+          [ "Feature Agnostic", "md_how_to_accelerate_arm_2d.html#autotoc_md182", null ]
         ] ],
-        [ "2.2 OPCODE based Acceleration Entry", "md_how_to_accelerate_arm_2d.html#autotoc_md166", null ],
-        [ "2.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md167", null ],
-        [ "2.4 Software Design Considerations for End Users", "md_how_to_accelerate_arm_2d.html#autotoc_md168", [
-          [ "2.4.1 When and How to Enable Asynchronouse Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md169", [
-            [ "Synchronous Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md170", null ],
-            [ "Asynchronous Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md171", null ]
+        [ "2.2 OPCODE based Acceleration Entry", "md_how_to_accelerate_arm_2d.html#autotoc_md183", null ],
+        [ "2.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md184", null ],
+        [ "2.4 Software Design Considerations for End Users", "md_how_to_accelerate_arm_2d.html#autotoc_md185", [
+          [ "2.4.1 When and How to Enable Asynchronouse Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md186", [
+            [ "Synchronous Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md187", null ],
+            [ "Asynchronous Mode", "md_how_to_accelerate_arm_2d.html#autotoc_md188", null ]
           ] ],
-          [ "2.4.2 How to Manage Dependencies Among 2D Operations", "md_how_to_accelerate_arm_2d.html#autotoc_md172", null ],
-          [ "2.4.3 Acceleration Methods Preference", "md_how_to_accelerate_arm_2d.html#autotoc_md173", null ]
+          [ "2.4.2 How to Manage Dependencies Among 2D Operations", "md_how_to_accelerate_arm_2d.html#autotoc_md189", null ],
+          [ "2.4.3 Acceleration Methods Preference", "md_how_to_accelerate_arm_2d.html#autotoc_md190", null ]
         ] ]
       ] ],
-      [ "3 Acceleration via Arm Custom Instruction (ACI)", "md_how_to_accelerate_arm_2d.html#autotoc_md174", [
-        [ "3.1 Helium-based ACI and Non-Helium-based ACI", "md_how_to_accelerate_arm_2d.html#autotoc_md175", null ],
-        [ "3.2 Disable the default Helium Implementation", "md_how_to_accelerate_arm_2d.html#autotoc_md176", null ],
-        [ "3.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md177", null ]
+      [ "3 Acceleration via Arm Custom Instruction (ACI)", "md_how_to_accelerate_arm_2d.html#autotoc_md191", [
+        [ "3.1 Helium-based ACI and Non-Helium-based ACI", "md_how_to_accelerate_arm_2d.html#autotoc_md192", null ],
+        [ "3.2 Disable the default Helium Implementation", "md_how_to_accelerate_arm_2d.html#autotoc_md193", null ],
+        [ "3.3 Insert An User Defined Header File", "md_how_to_accelerate_arm_2d.html#autotoc_md194", null ]
       ] ]
     ] ],
     [ "Header Files Summary", "headers.html", [
-      [ "1 Overview", "headers.html#autotoc_md178", null ],
-      [ "2 Public Header Files", "headers.html#autotoc_md179", null ],
-      [ "3 Private Header Files", "headers.html#autotoc_md180", null ],
-      [ "4 Templates", "headers.html#autotoc_md181", null ]
+      [ "1 Overview", "headers.html#autotoc_md195", null ],
+      [ "2 Public Header Files", "headers.html#autotoc_md196", null ],
+      [ "3 Private Header Files", "headers.html#autotoc_md197", null ],
+      [ "4 Templates", "headers.html#autotoc_md198", null ]
     ] ],
     [ "How to Contribute", "md_contribution.html", [
-      [ "1 Contributions and Pull Requests", "md_contribution.html#autotoc_md183", [
-        [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md184", null ]
+      [ "1 Contributions and Pull Requests", "md_contribution.html#autotoc_md200", [
+        [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md201", null ]
       ] ]
     ] ],
     [ "Reference", "modules.html", "modules" ]
@@ -278,7 +299,7 @@ var NAVTREEINDEX =
 "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ab3b48accb05d148567d193a912561338",
 "group__gKernel.html#ga3ca0dfcee2069013ee9d2bc124f1bdd6",
 "group__gKernel.html#structarm__2d__margin__t",
-"md_how_to_accelerate_arm_2d.html#autotoc_md174"
+"md_how_to_accelerate_arm_2d.html#autotoc_md191"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
