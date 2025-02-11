@@ -138,27 +138,17 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 </ul>
 </li>
 <li><a href="#33-docking">3.3 Docking</a><ul>
-<li><a href="#331-overview">3.3.1 Overview</a><ul>
+<li><a href="#331-docking-to-a-canvas">3.3.1 Docking to a Canvas</a><ul>
 <li><a href="#syntax"><b>Syntax</b></a></li>
-<li><a href="#generated-region"><b>Generated Region</b></a></li>
 </ul>
 </li>
-<li><a href="#332-docking-macros">3.3.2 Docking Macros</a><ul>
-<li><a href="#docking-to-the-top"><b>Docking to the Top</b></a></li>
-<li><a href="#docking-to-the-bottom"><b>Docking to the Bottom</b></a></li>
-<li><a href="#docking-to-the-left"><b>Docking to the Left</b></a></li>
-<li><a href="#docking-to-the-right"><b>Docking to the Right</b></a></li>
-<li><a href="#docking-vertically-center-aligned"><b>Docking Vertically (Center-aligned)</b></a></li>
-<li><a href="#docking-horizontally-center-aligned"><b>Docking Horizontally (Center-aligned)</b></a></li>
-</ul>
-</li>
-<li><a href="#333-docking-inside-arm_2d_layout">3.3.3 Docking Inside <code>arm_2d_layout()</code></a><ul>
+<li><a href="#332-docking-inside-arm_2d_layout">3.3.2 Docking Inside <code>arm_2d_layout()</code></a><ul>
 <li><a href="#syntax-1"><b>Syntax</b></a></li>
 <li><a href="#docking-in-a-horizontal-stream"><b>Docking in a Horizontal Stream</b></a></li>
 <li><a href="#docking-in-a-vertical-stream"><b>Docking in a Vertical Stream</b></a></li>
 </ul>
 </li>
-<li><a href="#334-insert-margins-to-a-given-canvasregion">3.3.4 Insert Margins to a given Canvas(Region)</a><ul>
+<li><a href="#333-insert-margins-to-a-given-canvasregion">3.3.3 Insert Margins to a given Canvas(Region)</a><ul>
 <li><a href="#syntax-2"><b>Syntax</b></a></li>
 </ul>
 </li>
@@ -906,14 +896,14 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md135"></a>
 3.3 Docking</h2>
-<p >Docking is a layout method that allows UI elements to be positioned along the edges of a given container or centrally aligned within it. Unlike alignment methods that focus on single elements, docking is designed to manage multiple elements within a defined space efficiently. This approach is particularly useful when designing user interfaces where elements should automatically adapt to the available screen space.</p>
+<p >Docking is a layout method that allows UI elements to be positioned along the edges of a given canvas (region) or centrally aligned within it. This approach is particularly useful when designing user interfaces where elements should automatically adapt to the available screen space.</p>
 <h3><a class="anchor" id="autotoc_md136"></a>
-3.3.1 Overview</h3>
-<p >The docking macros in Arm-2D Layout Assistant simplify the process of placing UI elements in predefined areas within a container (e.g., a panel, screen, or any other tile). These macros automatically adjust the size and position of elements, reducing the need for manual region calculations.</p>
-<p >Arm-2D provides several <code>dock</code> macros that allow elements to be positioned at the <b>top, bottom, left, right</b>, or <b>center (horizontally or vertically)</b> of a container.</p>
+3.3.1 Docking to a Canvas</h3>
+<p >The docking macros in Arm-2D Layout Assistant simplify the process of placing UI elements in predefined areas within a canvas. These macros automatically adjust the size and position of elements, reducing the need for manual region calculations.</p>
+<p >Arm-2D provides several dock macros that allow elements to be positioned at the <b>top, bottom, left, right</b>, or <b>center (horizontally or vertically)</b> of a canvas.</p>
 <h4><a class="anchor" id="autotoc_md137"></a>
 &lt;strong&gt;Syntax&lt;/strong&gt;</h4>
-<p >Each <code>dock</code> macro follows a similar syntax: </p><div class="fragment"><div class="line">arm_2d_dock_&lt;position&gt;(&lt;target region&gt;, &lt;size&gt;, [optional margins]) {</div>
+<p >Each dock macro follows a similar syntax: </p><div class="fragment"><div class="line">arm_2d_dock_&lt;position&gt;(&lt;target region&gt;, &lt;size&gt;, [optional margins]) {</div>
 <div class="line">    <span class="comment">/* Use the generated __&lt;position&gt;_region within this block */</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><ul>
@@ -922,52 +912,55 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <li><code>&lt;size&gt;</code>: The height (for <code>top</code>, <code>bottom</code>, <code>vertical</code>) or width (for <code>left</code>, <code>right</code>, <code>horizontal</code>) of the docked region</li>
 <li><code>[optional margins]</code>: Defines margins from adjacent edges</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md138"></a>
-&lt;strong&gt;Generated Region&lt;/strong&gt;</h4>
-<p >Each <code>dock</code> macro creates a corresponding region (e.g., <code>__top_region</code>, <code>__bottom_region</code>) that can be used for UI operations inside the docked area.</p>
-<h3><a class="anchor" id="autotoc_md139"></a>
-3.3.2 Docking Macros</h3>
-<h4><a class="anchor" id="autotoc_md140"></a>
-&lt;strong&gt;Docking to the Top&lt;/strong&gt;</h4>
+<p >Each dock macro creates a corresponding region (e.g., <code>__top_region</code>, <code>__bottom_region</code>) that can be used for UI operations inside the docked area.</p>
+<p >Here are some examples:</p>
+<ul>
+<li>##### <b>Docking to the Top</b></li>
+</ul>
 <div class="fragment"><div class="line">arm_2d_dock_top(parent_region, 50) {</div>
 <div class="line">    arm_2d_fill_colour(ptTile, &amp;__top_region, GLCD_COLOR_BLUE);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Positions a 50-pixel-high region at the top of <code>parent_region</code>.</p>
 <p >Additional variations: </p><div class="fragment"><div class="line">arm_2d_dock_top(parent_region, 50, 10, 10); <span class="comment">// Adds left and right margins</span></div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md141"></a>
-&lt;strong&gt;Docking to the Bottom&lt;/strong&gt;</h4>
+</div><!-- fragment --><ul>
+<li>##### <b>Docking to the Bottom</b></li>
+</ul>
 <div class="fragment"><div class="line">arm_2d_dock_bottom(parent_region, 30) {</div>
 <div class="line">    arm_2d_fill_colour(ptTile, &amp;__bottom_region, GLCD_COLOR_RED);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Positions a 30-pixel-high region at the bottom of <code>parent_region</code>.</p>
-<h4><a class="anchor" id="autotoc_md142"></a>
-&lt;strong&gt;Docking to the Left&lt;/strong&gt;</h4>
+<ul>
+<li>##### <b>Docking to the Left</b></li>
+</ul>
 <div class="fragment"><div class="line">arm_2d_dock_left(parent_region, 40) {</div>
 <div class="line">    arm_2d_fill_colour(ptTile, &amp;__left_region, GLCD_COLOR_GREEN);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Positions a 40-pixel-wide region at the left of <code>parent_region</code>.</p>
-<h4><a class="anchor" id="autotoc_md143"></a>
-&lt;strong&gt;Docking to the Right&lt;/strong&gt;</h4>
+<ul>
+<li>##### <b>Docking to the Right</b></li>
+</ul>
 <div class="fragment"><div class="line">arm_2d_dock_right(parent_region, 40) {</div>
 <div class="line">    arm_2d_fill_colour(ptTile, &amp;__right_region, GLCD_COLOR_YELLOW);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Positions a 40-pixel-wide region at the right of <code>parent_region</code>.</p>
-<h4><a class="anchor" id="autotoc_md144"></a>
-&lt;strong&gt;Docking Vertically (Center-aligned)&lt;/strong&gt;</h4>
+<ul>
+<li>##### <b>Docking Vertically (Center-aligned)</b></li>
+</ul>
 <div class="fragment"><div class="line">arm_2d_dock_vertical(parent_region, 50) {</div>
 <div class="line">    arm_2d_fill_colour(ptTile, &amp;__vertical_region, GLCD_COLOR_PURPLE);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Positions a 50-pixel-high region centered within <code>parent_region</code>.</p>
-<h4><a class="anchor" id="autotoc_md145"></a>
-&lt;strong&gt;Docking Horizontally (Center-aligned)&lt;/strong&gt;</h4>
+<ul>
+<li>##### <b>Docking Horizontally (Center-aligned)</b></li>
+</ul>
 <div class="fragment"><div class="line">arm_2d_dock_horizontal(parent_region, 100) {</div>
 <div class="line">    arm_2d_fill_colour(ptTile, &amp;__horizontal_region, GLCD_COLOR_CYAN);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Positions a 100-pixel-wide region centered within <code>parent_region</code>.</p>
-<h3><a class="anchor" id="autotoc_md146"></a>
-3.3.3 Docking Inside &lt;tt&gt;arm_2d_layout()&lt;/tt&gt;</h3>
+<h3><a class="anchor" id="autotoc_md138"></a>
+3.3.2 Docking Inside &lt;tt&gt;arm_2d_layout()&lt;/tt&gt;</h3>
 <p >In addition to standalone docking macros, <b>Arm-2D Layout Assistant</b> provides inline docking macros that work inside <code>arm_2d_layout()</code>. These macros allow elements to be positioned dynamically within a layout stream, ensuring flexible and adaptive UI design.</p>
-<h4><a class="anchor" id="autotoc_md147"></a>
+<h4><a class="anchor" id="autotoc_md139"></a>
 &lt;strong&gt;Syntax&lt;/strong&gt;</h4>
 <div class="fragment"><div class="line">__item_line_dock_&lt;direction&gt;([&lt;size&gt;] [, &lt;left&gt;, &lt;right&gt;, &lt;top&gt;, &lt;bottom&gt;]) {</div>
 <div class="line">    <span class="comment">/* Use the generated __item_region within this block */</span></div>
@@ -977,44 +970,39 @@ $(document).ready(function(){initNavTree('md_how_to_use_layout_assistant.html','
 <li><code>[&lt;size&gt;]</code>: The size of the docked item along the layout axis (optional for automatic adjustment)</li>
 <li><code>[optional margins]</code>: Defines padding around the item (left, right, top, bottom)</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md148"></a>
+<h4><a class="anchor" id="autotoc_md140"></a>
 &lt;strong&gt;Docking in a Horizontal Stream&lt;/strong&gt;</h4>
 <div class="fragment"><div class="line">arm_2d_layout(parent_region) {</div>
-<div class="line">    __item_line_dock_horizontal() {</div>
-<div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_BLUE);</div>
-<div class="line">    }</div>
-<div class="line">    __item_line_dock_horizontal(5, 5, 5, 5) {</div>
-<div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_YELLOW);</div>
-<div class="line">    }</div>
+<div class="line"> </div>
 <div class="line">    __item_line_dock_horizontal(50) {</div>
 <div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_RED);</div>
 <div class="line">    }</div>
 <div class="line">    __item_line_dock_horizontal(80, 5, 5, 10, 10) {</div>
 <div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_GREEN);</div>
 <div class="line">    }</div>
+<div class="line">    __item_line_dock_horizontal() {</div>
+<div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_BLUE);</div>
+<div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Places items in a horizontal layout with automatic docking, allowing for margins and spacing adjustments.</p>
-<h4><a class="anchor" id="autotoc_md149"></a>
+<h4><a class="anchor" id="autotoc_md141"></a>
 &lt;strong&gt;Docking in a Vertical Stream&lt;/strong&gt;</h4>
 <div class="fragment"><div class="line">arm_2d_layout(parent_region) {</div>
-<div class="line">    __item_line_dock_vertical() {</div>
-<div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_RED);</div>
-<div class="line">    }</div>
-<div class="line">    __item_line_dock_vertical(4, 4, 4, 4) {</div>
-<div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_BLACK);</div>
-<div class="line">    }</div>
 <div class="line">    __item_line_dock_vertical(32) {</div>
 <div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_GREEN);</div>
 <div class="line">    }</div>
 <div class="line">    __item_line_dock_vertical(70, 10, 10, 5, 5) {</div>
 <div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_YELLOW);</div>
 <div class="line">    }</div>
+<div class="line">    __item_line_dock_vertical() {</div>
+<div class="line">        arm_2d_fill_colour(ptTile, &amp;__item_region, GLCD_COLOR_RED);</div>
+<div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> <b>Effect</b>: Places items in a vertical layout with automatic docking, aligning them properly within the available space.</p>
-<h3><a class="anchor" id="autotoc_md150"></a>
-3.3.4 Insert Margins to a given Canvas(Region)</h3>
+<h3><a class="anchor" id="autotoc_md142"></a>
+3.3.3 Insert Margins to a given Canvas(Region)</h3>
 <p >To add space inside a target region (canvas), you can specify margin values. </p>
-<h4><a class="anchor" id="autotoc_md151"></a>
+<h4><a class="anchor" id="autotoc_md143"></a>
 &lt;strong&gt;Syntax&lt;/strong&gt;</h4>
 <div class="fragment"><div class="line">arm_2d_dock_with_margin(&lt;target region&gt;, [optional margins]) {</div>
 <div class="line">    <span class="comment">/* Use the generated __dock_region within this block */</span></div>
