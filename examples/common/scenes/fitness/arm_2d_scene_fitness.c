@@ -106,6 +106,14 @@ static void __on_scene_fitness_on_load(arm_2d_scene_t *ptScene)
     progress_wheel_on_load(&this.tWheel);
 }
 
+static void __after_scene_fitness_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+
 static void __on_scene_fitness_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_fitness_t *ptThis = (user_scene_fitness_t *)ptScene;
@@ -361,6 +369,8 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
             /* Please uncommon the callbacks if you need them
              */
             .fnOnLoad       = &__on_scene_fitness_on_load,
+            //.fnAfterSwitch  = &__after_scene_fitness_switching,
+
             .fnScene        = &__pfb_draw_scene_fitness_handler,
         #if __FITNESS_CFG_NEBULA_ENABLE__
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,

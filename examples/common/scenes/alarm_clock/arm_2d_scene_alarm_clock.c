@@ -150,6 +150,20 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_alarm_clock_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_alarm_clock_t *ptThis = (user_scene_alarm_clock_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+static void __after_scene_alarm_clock_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_alarm_clock_t *ptThis = (user_scene_alarm_clock_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
 
 static void __on_scene_alarm_clock_depose(arm_2d_scene_t *ptScene)
 {
@@ -516,6 +530,9 @@ user_scene_alarm_clock_t *__arm_2d_scene_alarm_clock_init(
 
             /* the canvas colour */
             .tCanvas = {GLCD_COLOR_BLACK}, 
+
+            .fnOnLoad       = &__on_scene_alarm_clock_load,
+            //.fnAfterSwitch  = &__after_scene_alarm_clock_switching,
         
             /* Please uncommon the callbacks if you need them
              */

@@ -140,6 +140,13 @@ static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
 
 }
 
+static void __after_scene_watch_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
 static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
@@ -396,6 +403,8 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
             /* Please uncommon the callbacks if you need them
              */
             .fnOnLoad       = &__on_scene_watch_load,
+            //.fnAfterSwitch  = &__after_scene_meter_switching,
+
             .fnScene        = &__pfb_draw_scene_watch_handler,
             
 

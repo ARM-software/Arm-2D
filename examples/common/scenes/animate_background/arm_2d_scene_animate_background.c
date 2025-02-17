@@ -115,6 +115,13 @@ static void __on_scene_animate_background_load(arm_2d_scene_t *ptScene)
 
 }
 
+static void __after_scene_animate_background_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_animate_background_t *ptThis = (user_scene_animate_background_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
 static void __on_scene_animate_background_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_animate_background_t *ptThis = (user_scene_animate_background_t *)ptScene;
@@ -272,6 +279,8 @@ user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnOnLoad       = &__on_scene_animate_background_load,
+            //.fnAfterSwitch  = &__after_scene_animate_background_switching,
+
             .fnScene        = &__pfb_draw_scene_animate_background_handler,
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             

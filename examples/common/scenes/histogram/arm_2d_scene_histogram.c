@@ -101,6 +101,19 @@ extern const arm_2d_tile_t c_tileHelium;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
 
 static void __on_scene_histogram_depose(arm_2d_scene_t *ptScene)
 {
@@ -289,6 +302,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_histogram_handler,
+
+            .fnOnLoad       = &__on_scene_histogram_load,
+            //.fnAfterSwitch  = &__after_scene_histogram_switching,
             
             //.fnOnBGStart    = &__on_scene_histogram_background_start,
             //.fnOnBGComplete = &__on_scene_histogram_background_complete,
