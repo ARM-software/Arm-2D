@@ -183,6 +183,11 @@ void scene_console_window_loader(void)
     arm_2d_scene_console_window_init(&DISP0_ADAPTER);
 }
 
+void scene_text_reader_loader(void)
+{
+    arm_2d_scene_text_reader_init(&DISP0_ADAPTER);
+}
+
 void scene_bubble_charging_loader(void) 
 {
     arm_2d_scene_bubble_charging_init(&DISP0_ADAPTER);
@@ -297,7 +302,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -340,6 +345,10 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         10000,
         scene_console_window_loader,
+    },
+    {
+        8000,
+        scene_text_reader_loader,
     },
     {
         15000,
@@ -434,6 +443,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        scene_text_reader_loader,
         //scene_ruler_loader,
         //scene_filters_loader,
         //scene_listview_loader,
