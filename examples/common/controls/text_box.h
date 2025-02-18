@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __<CONTROL_NAME>_H__
-#define __<CONTROL_NAME>_H__
+#ifndef __TEXT_BOX_H__
+#define __TEXT_BOX_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
@@ -37,11 +37,11 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __<CONTROL_NAME>_IMPLEMENT__
-#   undef   __<CONTROL_NAME>_IMPLEMENT__
+#ifdef __TEXT_BOX_IMPLEMENT__
+#   undef   __TEXT_BOX_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
-#elif defined(__<CONTROL_NAME>_INHERIT__)
-#   undef   __<CONTROL_NAME>_INHERIT__
+#elif defined(__TEXT_BOX_INHERIT__)
+#   undef   __TEXT_BOX_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -50,20 +50,20 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 
-typedef struct user_<control_name>_cfg_t {
+typedef struct text_box_cfg_t {
     arm_2d_scene_t *ptScene;
-} user_<control_name>_cfg_t;
+} text_box_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct user_<control_name>_t user_<control_name>_t;
+typedef struct text_box_t text_box_t;
 
-struct user_<control_name>_t {
+struct text_box_t {
 
 ARM_PRIVATE(
 
-    user_<control_name>_cfg_t tCFG;
+    text_box_cfg_t tCFG;
 
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
@@ -78,27 +78,27 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1)
-void <control_name>_init( user_<control_name>_t *ptThis,
-                          user_<control_name>_cfg_t *ptCFG);
+void text_box_init( text_box_t *ptThis,
+                          text_box_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
-void <control_name>_depose( user_<control_name>_t *ptThis);
+void text_box_depose( text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_load( user_<control_name>_t *ptThis);
+void text_box_on_load( text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_frame_start( user_<control_name>_t *ptThis);
+void text_box_on_frame_start( text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_frame_complete( user_<control_name>_t *ptThis);
+void text_box_on_frame_complete( text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_show( user_<control_name>_t *ptThis,
+void text_box_show( text_box_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame);

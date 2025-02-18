@@ -128,6 +128,7 @@ if (ARM2D_CONTROLS)
             examples/common/controls/spin_zoom_widget.c
             examples/common/controls/cloudy_glass.c
             examples/common/controls/meter_pointer.c
+            examples/common/controls/text_box.c
             
             examples/common/asset/WhiteDotMiddle.c
             examples/common/asset/WhiteDotBig.c

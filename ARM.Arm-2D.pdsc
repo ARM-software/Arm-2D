@@ -453,7 +453,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.3.1" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.4.0" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -476,6 +476,7 @@
             <file category="sourceC"     name="examples/common/controls/spin_zoom_widget.c" />
             <file category="sourceC"     name="examples/common/controls/cloudy_glass.c" />
             <file category="sourceC"     name="examples/common/controls/meter_pointer.c" />
+            <file category="sourceC"     name="examples/common/controls/text_box.c" />
 
             <!-- assets -->
             <file category="sourceC"     name="examples/common/asset/WhiteDotMiddle.c" />

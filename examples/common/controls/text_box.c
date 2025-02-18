@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2025 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2024 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,13 +17,13 @@
  */
 
 /*============================ INCLUDES ======================================*/
-#define __<CONTROL_NAME>_IMPLEMENT__
+#define __TEXT_BOX_IMPLEMENT__
 
 #include "./arm_2d_example_controls.h"
 #include "./__common.h"
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
-#include "user_<control_name>.h"
+#include "text_box.h"
 #include <assert.h>
 #include <string.h>
 
@@ -69,46 +69,46 @@
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1,2)
-void <control_name>_init( user_<control_name>_t *ptThis,
-                          user_<control_name>_cfg_t *ptCFG)
+void text_box_init( text_box_t *ptThis,
+                          text_box_cfg_t *ptCFG)
 {
     assert(NULL!= ptThis);
-    memset(ptThis, 0, sizeof(user_<control_name>_t));
+    memset(ptThis, 0, sizeof(text_box_t));
     this.tCFG = *ptCFG;
 
 
 }
 
 ARM_NONNULL(1)
-void <control_name>_depose( user_<control_name>_t *ptThis)
+void text_box_depose( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
 }
 
 ARM_NONNULL(1)
-void <control_name>_on_load( user_<control_name>_t *ptThis)
+void text_box_on_load( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
 }
 
 ARM_NONNULL(1)
-void <control_name>_on_frame_start( user_<control_name>_t *ptThis)
+void text_box_on_frame_start( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
 }
 
 ARM_NONNULL(1)
-void <control_name>_on_frame_complete( user_<control_name>_t *ptThis)
+void text_box_on_frame_complete( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
 }
 
 ARM_NONNULL(1)
-void <control_name>_show( user_<control_name>_t *ptThis,
+void text_box_show( text_box_t *ptThis,
                             const arm_2d_tile_t *ptTile, 
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)

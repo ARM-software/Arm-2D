@@ -42,6 +42,7 @@
 #include "./cloudy_glass.h"
 #include "./meter_pointer.h"
 #include "./text_tracking_list.h"
+#include "./text_box.h"
 
 #ifdef   __cplusplus
 extern "C" {
