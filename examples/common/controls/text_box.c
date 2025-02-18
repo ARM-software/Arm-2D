@@ -150,14 +150,14 @@ ARM_NONNULL(1,2)
 text_box_c_str_reader_t *text_box_c_str_reader_init(
                                                 text_box_c_str_reader_t *ptThis,
                                                 const char *pchString,
-                                                size_t tMaxLen)
+                                                int32_t nMaxLen)
 {
     assert(NULL != ptThis);
     assert(NULL != pchString);
 
     memset(ptThis, 0, sizeof(text_box_c_str_reader_t));
     this.pchString = pchString;
-    this.tSizeInByte = strnlen(pchString, tMaxLen);
+    this.nSizeInByte = strnlen(pchString, nMaxLen);
 
     return ptThis;
 }
@@ -175,17 +175,17 @@ int32_t __c_string_io_read_utf8_char_handler_t( text_box_t *ptTextBox,
         return -1;
     } else if (0 == hwSize) {
         return 0;
-    } else if (this.tPosition >= this.tSizeInByte) {
+    } else if (this.nPosition >= this.nSizeInByte) {
         return 0;
     }
 
-    uintptr_t wReadPosition = this.tPosition + (uintptr_t)this.pchString;
+    uintptr_t wReadPosition = this.nPosition + (uintptr_t)this.pchString;
 
-    size_t tLeftToRead = this.tSizeInByte - this.tPosition;
+    int32_t tLeftToRead = this.nSizeInByte - this.nPosition;
     hwSize = MIN(tLeftToRead, hwSize);
 
     memcpy(pchBuffer, (uint8_t *)wReadPosition, hwSize);
-    this.tPosition += hwSize;
+    this.nPosition += hwSize;
 
     return hwSize;
 }
@@ -197,16 +197,16 @@ int32_t __c_string_io_seek_handler_t(   text_box_t *ptTextBox,
 {
     text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
     assert(NULL != ptThis);
-    int64_t lPosition = this.tPosition;
+    int64_t lPosition = this.nPosition;
     switch (enWhence) {
         case TEXT_BOX_SEEK_SET:
             lPosition = nOffset;
             break;
         case TEXT_BOX_SEEK_CUR:
-            lPosition = this.tPosition + nOffset;
+            lPosition = this.nPosition + nOffset;
             break;
         case TEXT_BOX_SEEK_END:
-            lPosition = (this.tSizeInByte - 1) + nOffset;
+            lPosition = (this.nSizeInByte - 1) + nOffset;
             break;
         default:
             break;
@@ -214,12 +214,12 @@ int32_t __c_string_io_seek_handler_t(   text_box_t *ptTextBox,
 
     if (lPosition < 0) {
         lPosition = 0;
-    } else if (lPosition >= this.tSizeInByte) {
-        lPosition = this.tSizeInByte;
+    } else if (lPosition >= this.nSizeInByte) {
+        lPosition = this.nSizeInByte;
     }
-    this.tPosition = lPosition;
+    this.nPosition = lPosition;
 
-    return this.tPosition;
+    return this.nPosition;
 }
 
 #if defined(__clang__)

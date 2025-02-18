@@ -311,13 +311,15 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
 
     /* initialize textbox */
     do {
+        text_box_c_str_reader_init( &this.tStringReader,
+                                    c_chStory,
+                                    sizeof(c_chStory));
+
         text_box_cfg_t tCFG = {
             .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
             .tStreamIO = {
-                .ptIO = &TEXT_BOX_IO_C_STRING_READER,
-                .pTarget = (uintptr_t)text_box_c_str_reader_init(&this.tStringReader,
-                                                                 c_chStory,
-                                                                 sizeof(c_chStory)),
+                .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
+                .pTarget    = (uintptr_t)&this.tStringReader,
             },
 
             .ptScene = (arm_2d_scene_t *)ptThis,

@@ -93,6 +93,12 @@ struct text_box_t {
 
 ARM_PRIVATE(
     text_box_cfg_t tCFG;
+
+    struct {
+        uint32_t wLine;
+        int32_t  nPosition;
+    } Start;
+
 )
     /* place your public member here */
     
@@ -102,8 +108,8 @@ ARM_PRIVATE(
 typedef struct text_box_c_str_reader_t {
 ARM_PRIVATE(
     const char *pchString;
-    size_t tSizeInByte;
-    size_t tPosition;
+    int32_t nSizeInByte;
+    int32_t nPosition;
 )
 } text_box_c_str_reader_t;
 
@@ -146,7 +152,7 @@ ARM_NONNULL(1,2)
 text_box_c_str_reader_t *text_box_c_str_reader_init(
                                                 text_box_c_str_reader_t *ptThis,
                                                 const char *pchString,
-                                                size_t tMaxLen);
+                                                int32_t nMaxLen);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
