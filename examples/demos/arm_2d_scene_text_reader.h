@@ -28,6 +28,7 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -86,6 +87,8 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
     bool bUserAllocated;
 
+    text_box_c_str_reader_t tStringReader;
+    text_box_t tTextPanel;
 )
     /* place your public member here */
     

@@ -96,6 +96,8 @@ struct {
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
+
+
 /*
  * \brief This text sample is designed to test a GUI textbox's ability to handle 
  *        complex content. It features exceptionally long and compound words 
@@ -132,6 +134,7 @@ static void __on_scene_text_reader_load(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    text_box_on_load(&this.tTextPanel);
 }
 
 static void __after_scene_text_reader_switching(arm_2d_scene_t *ptScene)
@@ -146,6 +149,8 @@ static void __on_scene_text_reader_depose(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    text_box_depose(&this.tTextPanel);
+
     ptScene->ptPlayer = NULL;
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -181,6 +186,7 @@ static void __on_scene_text_reader_frame_start(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    text_box_on_frame_start(&this.tTextPanel);
 }
 
 static void __on_scene_text_reader_frame_complete(arm_2d_scene_t *ptScene)
@@ -188,6 +194,7 @@ static void __on_scene_text_reader_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    text_box_on_frame_complete(&this.tTextPanel);
 #if 0
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
@@ -231,14 +238,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_text_reader_handler)
         #endif
 
             arm_2d_dock_with_margin(__dock_region, 4) {
-                arm_2d_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_BLUE, 128);
 
-                /* draw text at the top-left corner */
-                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-                arm_lcd_text_set_draw_region(&__dock_region);
-                arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4);
-                arm_lcd_text_set_colour(GLCD_COLOR_BLACK, GLCD_COLOR_WHITE);
-                arm_lcd_printf("%s", c_chStory);
+                text_box_show(  &this.tTextPanel, 
+                                ptTile, 
+                                &__dock_region,
+                                (__arm_2d_color_t) {GLCD_COLOR_BLACK},
+                                255,
+                                bIsNewFrame);
 
             }
 
@@ -303,6 +309,22 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
 
     /* ------------   initialize members of user_scene_text_reader_t begin ---------------*/
 
+    /* initialize textbox */
+    do {
+        text_box_cfg_t tCFG = {
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
+            .tStreamIO = {
+                .ptIO = &TEXT_BOX_IO_C_STRING_READER,
+                .pTarget = (uintptr_t)text_box_c_str_reader_init(&this.tStringReader,
+                                                                 c_chStory,
+                                                                 sizeof(c_chStory)),
+            },
+
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+
+        text_box_init(&this.tTextPanel, &tCFG);
+    } while(0);
 
     /* ------------   initialize members of user_scene_text_reader_t end   ---------------*/
 

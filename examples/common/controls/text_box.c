@@ -63,9 +63,27 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+static 
+int32_t __c_string_io_read_utf8_char_handler_t(text_box_t *ptThis, 
+                                            uintptr_t pObj, 
+                                            uint8_t *pchBuffer,
+                                            uint_fast16_t hwSize);
+
+static 
+int32_t __c_string_io_seek_handler_t(   text_box_t *ptThis, 
+                                        uintptr_t pObj,
+                                        int32_t nOffset,
+                                        text_box_seek_whence_t enWhence);
+
+/*============================ GLOBAL VARIABLES ==============================*/
+const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
+    .fnGetChar = &__c_string_io_read_utf8_char_handler_t,
+    .fnSeek = &__c_string_io_seek_handler_t,
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1,2)
@@ -109,9 +127,11 @@ void text_box_on_frame_complete( text_box_t *ptThis)
 
 ARM_NONNULL(1)
 void text_box_show( text_box_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            bool bIsNewFrame)
+                    const arm_2d_tile_t *ptTile, 
+                    const arm_2d_region_t *ptRegion,
+                    __arm_2d_color_t tColour,
+                    uint8_t chOpacity,
+                    bool bIsNewFrame)
 {
     if (-1 == (intptr_t)ptTile) {
         ptTile = arm_2d_get_default_frame_buffer();
@@ -119,36 +139,87 @@ void text_box_show( text_box_t *ptThis,
 
     assert(NULL!= ptThis);
 
-    if (bIsNewFrame) {
-        int32_t iResult;
-
-        /* generate a cosine wave for opacity */
-        arm_2d_helper_time_cos_slider(0, 255, 2000, 0, &iResult, &this.lTimestamp[0]);
-        this.chOpacity = (uint8_t)iResult;
-    }
-
-    arm_2d_container(ptTile, __control, ptRegion) {
-        /* put your drawing code inside here
-         *    - &__control is the target tile (please do not use ptTile anymore)
-         *    - __control_canvas is the canvas
-         */
-
-        /* example code: flash a 50x50 red box in the centre */
-        arm_2d_align_centre(__control_canvas, 50, 50) {
-
-            arm_2d_fill_colour_with_opacity(
-                &__control,
-                &__centre_region,
-                (__arm_2d_color_t) {GLCD_COLOR_RED},
-                this.chOpacity
-            );
-
-            /* make sure the operation is complete */
-            ARM_2D_OP_WAIT_ASYNC();
-        }
+    arm_2d_container(ptTile, __text_box, ptRegion) {
+        arm_2d_draw_box(&__text_box, NULL, 1, GLCD_COLOR_BLUE, 128);
     }
 
     ARM_2D_OP_WAIT_ASYNC();
+}
+
+ARM_NONNULL(1,2)
+text_box_c_str_reader_t *text_box_c_str_reader_init(
+                                                text_box_c_str_reader_t *ptThis,
+                                                const char *pchString,
+                                                size_t tMaxLen)
+{
+    assert(NULL != ptThis);
+    assert(NULL != pchString);
+
+    memset(ptThis, 0, sizeof(text_box_c_str_reader_t));
+    this.pchString = pchString;
+    this.tSizeInByte = strnlen(pchString, tMaxLen);
+
+    return ptThis;
+}
+
+static 
+int32_t __c_string_io_read_utf8_char_handler_t( text_box_t *ptTextBox, 
+                                                uintptr_t pObj, 
+                                                uint8_t *pchBuffer,
+                                                uint_fast16_t hwSize)
+{
+    text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
+    assert(NULL != ptThis);
+    
+    if (NULL == pchBuffer) {
+        return -1;
+    } else if (0 == hwSize) {
+        return 0;
+    } else if (this.tPosition >= this.tSizeInByte) {
+        return 0;
+    }
+
+    uintptr_t wReadPosition = this.tPosition + (uintptr_t)this.pchString;
+
+    size_t tLeftToRead = this.tSizeInByte - this.tPosition;
+    hwSize = MIN(tLeftToRead, hwSize);
+
+    memcpy(pchBuffer, (uint8_t *)wReadPosition, hwSize);
+    this.tPosition += hwSize;
+
+    return hwSize;
+}
+static 
+int32_t __c_string_io_seek_handler_t(   text_box_t *ptTextBox, 
+                                        uintptr_t pObj,
+                                        int32_t nOffset,
+                                        text_box_seek_whence_t enWhence)
+{
+    text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
+    assert(NULL != ptThis);
+    int64_t lPosition = this.tPosition;
+    switch (enWhence) {
+        case TEXT_BOX_SEEK_SET:
+            lPosition = nOffset;
+            break;
+        case TEXT_BOX_SEEK_CUR:
+            lPosition = this.tPosition + nOffset;
+            break;
+        case TEXT_BOX_SEEK_END:
+            lPosition = (this.tSizeInByte - 1) + nOffset;
+            break;
+        default:
+            break;
+    }
+
+    if (lPosition < 0) {
+        lPosition = 0;
+    } else if (lPosition >= this.tSizeInByte) {
+        lPosition = this.tSizeInByte;
+    }
+    this.tPosition = lPosition;
+
+    return this.tPosition;
 }
 
 #if defined(__clang__)

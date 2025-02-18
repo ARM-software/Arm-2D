@@ -48,32 +48,68 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+typedef enum {
+    TEXT_BOX_SEEK_SET,
+    TEXT_BOX_SEEK_CUR,
+    TEXT_BOX_SEEK_END
+} text_box_seek_whence_t;
 
+typedef struct text_box_t text_box_t;
+
+typedef int32_t text_box_io_read_handler_t(text_box_t *ptThis, 
+                                        uintptr_t pObj, 
+                                        uint8_t *pchBuffer,
+                                        uint_fast16_t hwSize);
+typedef int32_t text_box_io_seek_handler_t( text_box_t *ptThis, 
+                                            uintptr_t pObj,
+                                            int32_t nOffset,
+                                            text_box_seek_whence_t enWhence); 
+
+typedef struct text_box_io_handler_t {
+    text_box_io_read_handler_t  *fnGetChar;
+    text_box_io_seek_handler_t  *fnSeek;
+} text_box_io_handler_t;
+
+typedef struct text_box_io_text_stream_reader_t {
+    const text_box_io_handler_t *ptIO;
+    uintptr_t pTarget;
+} text_box_io_text_stream_reader_t;
 
 typedef struct text_box_cfg_t {
+    const arm_2d_font_t *ptFont;
+    float fScale;
+
+    text_box_io_text_stream_reader_t tStreamIO;
+
     arm_2d_scene_t *ptScene;
 } text_box_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct text_box_t text_box_t;
+
 
 struct text_box_t {
 
 ARM_PRIVATE(
-
     text_box_cfg_t tCFG;
-
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    uint8_t chOpacity;
 )
     /* place your public member here */
     
 };
 
+
+typedef struct text_box_c_str_reader_t {
+ARM_PRIVATE(
+    const char *pchString;
+    size_t tSizeInByte;
+    size_t tPosition;
+)
+} text_box_c_str_reader_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
+extern
+const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER;
 /*============================ PROTOTYPES ====================================*/
 
 extern
@@ -99,10 +135,18 @@ void text_box_on_frame_complete( text_box_t *ptThis);
 extern
 ARM_NONNULL(1)
 void text_box_show( text_box_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            bool bIsNewFrame);
+                    const arm_2d_tile_t *ptTile, 
+                    const arm_2d_region_t *ptRegion,
+                    __arm_2d_color_t tColour,
+                    uint8_t chOpacity,
+                    bool bIsNewFrame);
 
+extern
+ARM_NONNULL(1,2)
+text_box_c_str_reader_t *text_box_c_str_reader_init(
+                                                text_box_c_str_reader_t *ptThis,
+                                                const char *pchString,
+                                                size_t tMaxLen);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
