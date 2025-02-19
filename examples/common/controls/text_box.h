@@ -56,7 +56,7 @@ ARM_PRIVATE(
     __text_box_line_info_t *ptNext;
 
     int32_t nLineNo;
-    int32_t nPosition;
+    int32_t nStartPosition;
 
     uint16_t hwActive;
     
@@ -71,12 +71,17 @@ ARM_PRIVATE(
 
 typedef __text_box_line_info_t __text_box_scratch_mem_t;
 
-
 typedef enum {
     TEXT_BOX_SEEK_SET,
     TEXT_BOX_SEEK_CUR,
     TEXT_BOX_SEEK_END
 } text_box_seek_whence_t;
+
+typedef enum {
+    TEXT_BOX_LINE_ALIGN_LEFT,
+    TEXT_BOX_LINE_ALIGN_RIGHT,
+    TEXT_BOX_LINE_ALIGN_JUSTIFIED,
+} text_box_line_alignment_t;
 
 typedef struct text_box_t text_box_t;
 
@@ -126,6 +131,8 @@ ARM_PRIVATE(
     } Start;
 
     int16_t iLineWidth;
+
+    __text_box_line_info_t tCurrentLine;
 
     __text_box_scratch_mem_t *ptFreeList;
     __text_box_scratch_mem_t *ptLineCache;

@@ -63,8 +63,18 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+typedef enum {
+    TEXT_BOX_CHAR_NORMAL,
+    TEXT_BOX_CHAR_SEPERATOR,
+    TEXT_BOX_CHAR_END_OF_LINE,
+    TEXT_BOX_CHAR_CUT_OFF,
+} __text_box_char_type_t;
 
 /*============================ PROTOTYPES ====================================*/
+static
+bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
+                                         __text_box_line_info_t *ptLineInfo);
+
 /*============================ LOCAL VARIABLES ===============================*/
 static 
 int32_t __c_string_io_read_utf8_char_handler_t(text_box_t *ptThis, 
@@ -85,6 +95,47 @@ const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
 };
 
 /*============================ IMPLEMENTATION ================================*/
+
+__STATIC_INLINE 
+int32_t __text_box_get_current_position(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return 
+    ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+        ARM_2D_PARAM(  ptThis, 
+                       this.tCFG.tStreamIO.pTarget,
+                       0,
+                       TEXT_BOX_SEEK_CUR));
+}
+
+__STATIC_INLINE 
+int32_t __text_box_set_current_position(text_box_t *ptThis, int32_t nPoistion)
+{
+    assert(NULL != ptThis);
+
+    return 
+    ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+        ARM_2D_PARAM(  ptThis, 
+                       this.tCFG.tStreamIO.pTarget,
+                       nPoistion,
+                       TEXT_BOX_SEEK_SET));
+}
+
+__STATIC_INLINE
+int32_t __text_box_read_bytes(  text_box_t *ptThis, 
+                                uint8_t *pchBuffer, 
+                                uint_fast16_t hwSize)
+{
+    assert(NULL != ptThis);
+    assert(NULL != pchBuffer);
+
+    return ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnGetChar,
+            ARM_2D_PARAM(   ptThis, 
+                            this.tCFG.tStreamIO.pTarget,
+                            pchBuffer,
+                            hwSize));
+}
 
 static
 ARM_NONNULL(1,2)
@@ -220,6 +271,27 @@ void __line_cache_free_old(text_box_t *ptThis)
     }
 }
 
+static
+ARM_NONNULL(1)
+void __line_cache_invalid_all(text_box_t *ptThis)
+{
+
+    assert(NULL != ptThis);
+   
+    __text_box_scratch_mem_t *ptItem = this.ptLineCache;
+
+    while (NULL != ptItem) {
+        __text_box_scratch_mem_t *ptNextItem = ptItem->ptNext;
+
+        __scratch_memory_free(ptThis, ptItem);
+
+        ptItem = ptNextItem;
+    }
+
+    this.ptLineCache = NULL;
+
+}
+
 ARM_NONNULL(1,2)
 void text_box_init( text_box_t *ptThis,
                     text_box_cfg_t *ptCFG)
@@ -275,6 +347,55 @@ void text_box_on_frame_complete( text_box_t *ptThis)
     
 }
 
+static
+ARM_NONNULL(1,2)
+void __text_box_draw_line(text_box_t *ptThis,
+                          __text_box_line_info_t *ptLineInfo,
+                          arm_2d_region_t *ptRegion,
+                          text_box_line_alignment_t tAlign)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptLineInfo);
+
+    int32_t nPosition = ptLineInfo->nStartPosition;
+    int32_t nBrickCount = ptLineInfo->hwBrickCount;
+    int32_t nBlankCount = nBrickCount - 1;
+
+    q16_t q16RisidualPixel = 0;
+
+    /* nothing to draw */
+    if (0 == nBrickCount || 0 == ptLineInfo->hwByteCount) {
+        return ;
+    }
+
+    /* handle draw region */
+    if (TEXT_BOX_LINE_ALIGN_RIGHT == tAlign) {
+        arm_2d_region_t tLineRegion = *ptRegion;
+
+        tLineRegion.tLocation.iX += this.iLineWidth - ptLineInfo->iLineWidth;
+        tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
+
+        arm_lcd_text_set_draw_region(&tLineRegion);
+    } else {
+        arm_lcd_text_set_draw_region(ptRegion);
+    }
+
+    __text_box_set_current_position(ptThis, nPosition);
+
+    if (TEXT_BOX_LINE_ALIGN_JUSTIFIED) {
+
+
+    } else {
+        uint16_t hwBytesLeft = ptLineInfo->hwByteCount;
+        do {
+
+
+
+        } while(hwBytesLeft);
+        
+    }
+}
+
 ARM_NONNULL(1)
 void text_box_show( text_box_t *ptThis,
                     const arm_2d_tile_t *ptTile, 
@@ -299,18 +420,64 @@ void text_box_show( text_box_t *ptThis,
             }
         }
 
-        arm_2d_draw_box(&__text_box, NULL, 1, GLCD_COLOR_BLUE, 128);
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__text_box);
+        arm_lcd_text_set_font((const arm_2d_font_t *)this.tCFG.ptFont);
+        arm_lcd_text_set_colour(tColour.tValue, GLCD_COLOR_BLACK);
+        arm_lcd_text_set_opacity(chOpacity);
+        arm_lcd_text_set_scale(this.tCFG.fScale);
+
+        /* move to the start */
+        ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+            ARM_2D_PARAM(   ptThis, 
+                            this.tCFG.tStreamIO.pTarget,
+                            this.Start.nPosition,
+                            TEXT_BOX_SEEK_SET));
+        
+        int32_t iLineNumber = this.Start.nLine;
+        int16_t iFontCharHeight = this.tCFG.ptFont->tCharSize.iHeight;
+
+        /* print all lines */
+        do {
+            //int32_t nStartPosition = __text_box_get_current_position(ptThis);
+            bool bEndOfStream = !__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine);
+
+            arm_2d_region_t tLineRegion = {
+                .tLocation = {
+                    .iY = iLineNumber * iFontCharHeight,
+                },
+                .tSize = {
+                    .iHeight = iFontCharHeight,
+                    .iWidth = this.tCurrentLine.iLineWidth,
+                },
+            };
+
+            /* update line info */
+            this.tCurrentLine.nLineNo = iLineNumber;
+
+            const arm_2d_tile_t *ptVirtualScreen = NULL;
+            if (arm_2d_helper_pfb_is_region_active(&__text_box, &tLineRegion, true, &ptVirtualScreen)) {
+            
+                //arm_2d_draw_box(&__text_box, &tLineRegion, 1, GLCD_COLOR_BLUE, 128);
+
+
+
+            }
+
+            if (bEndOfStream) {
+                break;
+            }
+
+            int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
+            __text_box_set_current_position(ptThis, nNewLinePosition);
+
+            iLineNumber++;
+        } while(1);
+
+        
     }
 
     ARM_2D_OP_WAIT_ASYNC();
 }
-
-typedef enum {
-    TEXT_BOX_CHAR_NORMAL,
-    TEXT_BOX_CHAR_SEPERATOR,
-    TEXT_BOX_CHAR_END_OF_LINE,
-    TEXT_BOX_CHAR_CUT_OFF,
-} __text_box_char_type_t;
 
 /*!
  * \brief detect bricks and update line info
@@ -321,6 +488,7 @@ ARM_NONNULL(1)
 bool __text_box_detect_brick(   uint8_t *pchPT, 
                                 __text_box_char_type_t tType,
                                 __text_box_line_info_t *ptLineInfo,
+                                int32_t nPoistion,
                                 int16_t iLineWidth)
 {
     assert(NULL != pchPT);
@@ -333,6 +501,12 @@ ARM_PT_BEGIN(*pchPT)
             ARM_PT_GOTO_PREV_ENTRY(false)
         }
 
+        if (NULL != ptLineInfo) {
+            if (0 == ptLineInfo->hwBrickCount) {
+                ptLineInfo->nStartPosition = nPoistion;
+            }
+        }
+
     /* accept for normal chars */
     ARM_PT_ENTRY()
         if (tType == TEXT_BOX_CHAR_NORMAL) {
@@ -341,6 +515,17 @@ ARM_PT_BEGIN(*pchPT)
 
         if (tType == TEXT_BOX_CHAR_CUT_OFF) {
             /* end a line and cut a brick off */
+
+            if (NULL != ptLineInfo) {
+                if (0 == ptLineInfo->hwBrickCount) {
+                    /* the box is too small to contain one brick */
+                    ptLineInfo->hwBrickCount++;
+                    ptLineInfo->iLineWidth = iLineWidth;
+                    ptLineInfo->hwByteCount = nPoistion - ptLineInfo->nStartPosition;
+                    ARM_PT_RETURN(true);
+                }
+            }
+
             ARM_PT_RETURN(false);
         }
 
@@ -348,6 +533,7 @@ ARM_PT_BEGIN(*pchPT)
         if (NULL != ptLineInfo) {
             ptLineInfo->hwBrickCount++;
             ptLineInfo->iLineWidth = iLineWidth;
+            ptLineInfo->hwByteCount = nPoistion - ptLineInfo->nStartPosition;
         }
 
 ARM_PT_END()
@@ -385,6 +571,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
         arm_2d_helper_get_char_descriptor(this.tCFG.ptFont, 
             &tDescriptor, 
             tUTF8Char.chByte);
+
     if (NULL == ptDescriptor) {
         iWhiteSpaceWidth = iFontCharWidth;
     } else {
@@ -395,12 +582,9 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
         bool bEndOfStream = false;
         tUTF8Char.wValue = 0;
 
-        int32_t nActualReadSize = 
-            ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnGetChar,
-                ARM_2D_PARAM(   ptThis, 
-                                this.tCFG.tStreamIO.pTarget,
-                                tUTF8Char.chByte,
-                                4));
+        int32_t nActualReadSize = __text_box_read_bytes(ptThis, 
+                                                        tUTF8Char.chByte,
+                                                        4);
 
         if (nActualReadSize <= 0) {
             /* we reach end of the stream */
@@ -421,6 +605,8 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                                 TEXT_BOX_SEEK_CUR));
         }
 
+        int32_t nPoistion = __text_box_get_current_position(ptThis);
+
         bool bNormalChar = true;
         switch (tUTF8Char.chByte[0]) {
             case '\n':
@@ -429,6 +615,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_END_OF_LINE,
                                         ptLineInfo,
+                                        nPoistion,
                                         iLineWidth);
 
                 break;
@@ -438,6 +625,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
+                                        nPoistion,
                                         iLineWidth);
                 break;
             case ' ':
@@ -445,6 +633,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
+                                        nPoistion,
                                         iLineWidth);
                 break;
             default:
@@ -454,11 +643,13 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                     __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
+                                        nPoistion,
                                         iLineWidth);
                 } else {
                     __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_NORMAL,
                                         ptLineInfo,
+                                        nPoistion,
                                         iLineWidth);
                 }
                 break;
@@ -484,6 +675,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             __text_box_detect_brick(&chBrickDetectorPT,
                                     TEXT_BOX_CHAR_CUT_OFF,
                                     ptLineInfo,
+                                    nPoistion,
                                     iLineWidth);
         }
 
@@ -523,6 +715,8 @@ void text_box_update(text_box_t *ptThis)
     assert(NULL != this.tCFG.tStreamIO.ptIO);
     assert(NULL != this.tCFG.tStreamIO.ptIO->fnSeek);
 
+    __line_cache_invalid_all(ptThis);
+
     /* move to the begin */
     ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
         ARM_2D_PARAM(   ptThis, 
@@ -536,11 +730,7 @@ void text_box_update(text_box_t *ptThis)
     do {
         /* get the current position */
         if (this.Start.nLine == nLineNumber) {
-            this.Start.nPosition = ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
-                ARM_2D_PARAM(   ptThis, 
-                                this.tCFG.tStreamIO.pTarget,
-                                0,
-                                TEXT_BOX_SEEK_CUR));
+            this.Start.nPosition = __text_box_get_current_position(ptThis);
             break;
         }
 
