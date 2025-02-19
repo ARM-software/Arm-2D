@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        28. Dec 2024
- * $Revision:    V.1.13.0
+ * $Date:        19. Feb 2025
+ * $Revision:    V.1.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -5016,9 +5016,10 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
     return bResult;
 }
 
-bool arm_2d_helper_pfb_is_region_active(const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_region_t *ptRegion,
-                                        bool bConsiderDryRun)
+ARM_NONNULL(1,2)
+bool __arm_2d_helper_pfb_is_region_active0( const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            bool bConsiderDryRun)
 {
     const arm_2d_tile_t *ptScreen = NULL;
 
@@ -5048,6 +5049,43 @@ bool arm_2d_helper_pfb_is_region_active(const arm_2d_tile_t *ptTarget,
 
     } while(0);
 
+    return bResult;
+}
+
+ARM_NONNULL(1,2,4)
+bool __arm_2d_helper_pfb_is_region_active1( const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            bool bConsiderDryRun,
+                                            const arm_2d_tile_t **pptScreen)
+{
+    bool bResult = arm_2d_helper_pfb_is_region_being_drawing(   ptTarget, 
+                                                                ptRegion, 
+                                                                pptScreen);
+
+    do {
+        if (bResult) {
+            break;
+        }
+        if (NULL == pptScreen) {
+            break;
+        }
+        const arm_2d_tile_t *ptScreen = *pptScreen;
+        if (NULL == ptScreen) {
+            break;
+        }
+
+        if ((ptScreen->tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_PFB)) {
+            break;
+        }
+        if (!ptScreen->tInfo.Extension.PFB.bIsNewFrame) {
+            if (!(bConsiderDryRun && ptScreen->tInfo.Extension.PFB.bIsDryRun)) {
+                break;
+            }
+        }
+
+        bResult = true;
+
+    } while(0);
 
     return bResult;
 }

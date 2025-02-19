@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        28. Dec 2024
- * $Revision:    V.1.13.0
+ * $Date:        19. Feb 2025
+ * $Revision:    V.1.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -441,6 +441,16 @@ extern "C" {
                             __ARM_VA_NUM_ARGS(__VA_ARGS__)                      \
                         )(__VA_ARGS__)
 
+
+#define arm_2d_helper_pfb_is_region_active( __target_tile_ptr,                  \
+                                            __target_region_ptr,                \
+                                            __consider_dry_run,                 \
+                                            ...)                                \
+            ARM_CONNECT2(   __arm_2d_helper_pfb_is_region_active,               \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(                    \
+                                (__target_tile_ptr),                            \
+                                (__target_region_ptr),                          \
+                                (__consider_dry_run),##__VA_ARGS__)
 
 #define impl_arm_2d_region_list(__NAME, ...)                                    \
             IMPL_ARM_2D_REGION_LIST(__NAME,##__VA_ARGS__)
@@ -1005,19 +1015,36 @@ bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
                                                const arm_2d_tile_t **ppVirtualScreen);
 
 extern
+ARM_NONNULL(1,2)
 /*!
  * \brief test whether the target region is active (used by PFB service)
  * 
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region to test
- * \param bConsiderDryRun whether taking dry run into consideration
+ * \param[in] bConsiderDryRun whether taking dry run into consideration
  * \return true the region is active
  * \return false the region is inactive
  */
-bool arm_2d_helper_pfb_is_region_active(const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_region_t *ptRegion,
-                                        bool bConsiderDryRun);
+bool __arm_2d_helper_pfb_is_region_active0( const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            bool bConsiderDryRun);
 
+extern
+ARM_NONNULL(1,2,4)
+/*!
+ * \brief test whether the target region is active (used by PFB service)
+ * 
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region to test
+ * \param[in] bConsiderDryRun whether taking dry run into consideration
+ * \param[in] pptScreen a 2rd level pointer to get the virtual screen
+ * \return true the region is active
+ * \return false the region is inactive
+ */
+bool __arm_2d_helper_pfb_is_region_active1( const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_region_t *ptRegion,
+                                            bool bConsiderDryRun,
+                                            const arm_2d_tile_t **pptScreen);
 /*!
  * \brief the task function for pfb helper
  * \param[in] ptThis an initialised PFB helper control block
