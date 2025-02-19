@@ -94,7 +94,11 @@ void text_box_init( text_box_t *ptThis,
     memset(ptThis, 0, sizeof(text_box_t));
     this.tCFG = *ptCFG;
 
+    if (NULL == this.tCFG.ptFont) {
+        this.tCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
+    }
 
+    this.Start.nLine = 1;
 }
 
 ARM_NONNULL(1)
@@ -140,10 +144,160 @@ void text_box_show( text_box_t *ptThis,
     assert(NULL!= ptThis);
 
     arm_2d_container(ptTile, __text_box, ptRegion) {
+
+        if (bIsNewFrame) {
+            if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
+                this.iLineWidth = __text_box_canvas.tSize.iWidth;
+
+                text_box_update(ptThis);
+            }
+        }
+
         arm_2d_draw_box(&__text_box, NULL, 1, GLCD_COLOR_BLUE, 128);
     }
 
     ARM_2D_OP_WAIT_ASYNC();
+}
+
+static
+bool __text_box_get_and_analyze_one_line(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+    assert(NULL != this.tCFG.tStreamIO.ptIO);
+    assert(NULL != this.tCFG.tStreamIO.ptIO->fnGetChar);
+
+    union {
+        uint32_t wValue;
+        uint8_t chByte[4];
+    } tUTF8Char = {.chByte = {[0] = ' '}};
+    
+    int16_t iLineWidth = 0;
+    int16_t iFontCharWidth = this.tCFG.ptFont->tCharSize.iWidth;
+    bool bGetAValidLine = false;
+    arm_2d_char_descriptor_t tDescriptor;
+
+    int16_t iWhiteSpaceWidth = 0;
+    arm_2d_char_descriptor_t *ptDescriptor =
+        arm_2d_helper_get_char_descriptor(this.tCFG.ptFont, 
+            &tDescriptor, 
+            tUTF8Char.chByte);
+    if (NULL == ptDescriptor) {
+        iWhiteSpaceWidth = iFontCharWidth;
+    } else {
+        iWhiteSpaceWidth = ptDescriptor->iAdvance;
+    }
+
+    do {
+        bool bEndOfStream = false;
+        tUTF8Char.wValue = 0;
+
+        int32_t nActualReadSize = 
+            ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnGetChar,
+                ARM_2D_PARAM(   ptThis, 
+                                this.tCFG.tStreamIO.pTarget,
+                                tUTF8Char.chByte,
+                                4));
+
+        if (nActualReadSize <= 0) {
+            /* we reach end of the stream */
+            break;
+        } else if (nActualReadSize < 4) {
+            bEndOfStream = true;
+        }
+
+        bGetAValidLine = true;
+
+        nActualReadSize -= arm_2d_helper_get_utf8_byte_length(tUTF8Char.chByte);
+        if (nActualReadSize > 0) {
+            /* move back */
+            ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+                ARM_2D_PARAM(   ptThis, 
+                                this.tCFG.tStreamIO.pTarget,
+                                -nActualReadSize,
+                                TEXT_BOX_SEEK_CUR));
+        }
+
+        bool bNormalChar = true;
+        switch (tUTF8Char.chByte[0]) {
+            case '\n':
+                bNormalChar = false;
+                bEndOfStream = true;
+                break;
+            case '\t':
+                bNormalChar = false;
+                iLineWidth += iWhiteSpaceWidth * 4;
+                break;
+            default:
+                if (tUTF8Char.chByte[0] < 0x20) {
+                    /* ignore invisible chars */
+                    bNormalChar = false;
+                }
+                break;
+        }
+
+        if (bNormalChar) {
+            ptDescriptor = arm_2d_helper_get_char_descriptor(
+                                                        this.tCFG.ptFont,
+                                                        &tDescriptor, 
+                                                        tUTF8Char.chByte);
+
+            if (NULL == ptDescriptor) {
+                iLineWidth += iFontCharWidth;
+            } else {
+                iLineWidth += ptDescriptor->iAdvance;
+            }
+        }
+
+        if (iLineWidth + iFontCharWidth > this.iLineWidth) {
+            /* insufficient space for next char */
+            bEndOfStream = true;
+        }
+
+        if (bEndOfStream) {
+            break;
+        }
+
+    } while(1);
+
+    return bGetAValidLine;
+}
+
+ARM_NONNULL(1)
+void text_box_update(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+    assert(NULL != this.tCFG.tStreamIO.ptIO);
+    assert(NULL != this.tCFG.tStreamIO.ptIO->fnSeek);
+
+    /* move to the begin */
+    ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+        ARM_2D_PARAM(   ptThis, 
+                        this.tCFG.tStreamIO.pTarget,
+                        0,
+                        TEXT_BOX_SEEK_SET));
+
+    int32_t nLineNumber = 0;
+
+    /* find the reading position of the start line */
+    do {
+        /* get the current position */
+        if (this.Start.nLine == nLineNumber) {
+            this.Start.nPosition = ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+                ARM_2D_PARAM(   ptThis, 
+                                this.tCFG.tStreamIO.pTarget,
+                                0,
+                                TEXT_BOX_SEEK_CUR));
+            break;
+        }
+
+        if (!__text_box_get_and_analyze_one_line(ptThis)) {
+            /* failed to read a line */
+            break;
+        }
+
+        nLineNumber++;
+    } while(1);
+
 }
 
 ARM_NONNULL(1,2)

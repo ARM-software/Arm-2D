@@ -95,9 +95,11 @@ ARM_PRIVATE(
     text_box_cfg_t tCFG;
 
     struct {
-        uint32_t wLine;
-        int32_t  nPosition;
+        int32_t nLine;
+        int32_t nPosition;
     } Start;
+
+    int16_t iLineWidth;
 
 )
     /* place your public member here */
@@ -146,6 +148,14 @@ void text_box_show( text_box_t *ptThis,
                     __arm_2d_color_t tColour,
                     uint8_t chOpacity,
                     bool bIsNewFrame);
+
+/*!
+ * \brief update the text box as the content is changed.
+ * \param[in] ptThis the target text box object
+ */
+extern
+ARM_NONNULL(1)
+void text_box_update(text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)
