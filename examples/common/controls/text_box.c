@@ -86,9 +86,143 @@ const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
 
 /*============================ IMPLEMENTATION ================================*/
 
+static
+ARM_NONNULL(1,2)
+void __scratch_memory_free( text_box_t *ptThis,
+                            __text_box_scratch_mem_t *ptItem)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptItem);
+    
+    memset(ptItem, 0, sizeof(__text_box_scratch_mem_t));
+
+    //arm_irq_safe {
+        ARM_LIST_STACK_PUSH(this.ptFreeList, ptItem);
+    //}
+}
+
+static 
+ARM_NONNULL(1)
+__text_box_scratch_mem_t * __scratch_memory_get(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    __text_box_scratch_mem_t *ptItem = NULL;
+
+    //arm_irq_safe {
+        ARM_LIST_STACK_POP(this.ptFreeList, ptItem);
+    //}
+
+    return ptItem;
+}
+
+static
+ARM_NONNULL(1,2)
+void __line_cache_enter(text_box_t *ptThis,
+                        __text_box_scratch_mem_t *ptItem)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptItem);
+    int32_t iTargetLineNumber = ptItem->nLineNo;
+    bool bInserted = false;
+
+    __text_box_scratch_mem_t **pptItem = &this.ptLineCache;
+
+    while (NULL != *pptItem) {
+        int32_t iItemLineNumber = (*pptItem)->nLineNo;
+
+        if (iTargetLineNumber < iItemLineNumber) {
+
+            /* insert to the current place */
+            ptItem->ptNext = *pptItem;
+            *pptItem = ptItem;
+
+            bInserted = true;
+            this.hwLineCacheCount++;
+            break;
+        } else if (iItemLineNumber == iTargetLineNumber) {
+
+            /* replace the old item */
+            __text_box_scratch_mem_t *ptOldItem = (*pptItem);
+
+            ptItem->ptNext = ptOldItem->ptNext;
+            (*pptItem) = ptItem;
+
+            __scratch_memory_free(ptThis, ptOldItem);
+
+            bInserted = true;
+            break;
+        }
+
+        /* move to next item */
+        pptItem = &((*pptItem)->ptNext);
+    }
+
+    if (!bInserted) {
+        /* add to the end of the list  */
+        *pptItem = ptItem;
+        ptItem->ptNext = NULL;
+        this.hwLineCacheCount++;
+    }
+}
+
+static
+ARM_NONNULL(1)
+__text_box_scratch_mem_t * __line_cache_find(text_box_t *ptThis,
+                                             int32_t iLineNumber)
+{
+    assert(NULL != ptThis);
+   
+    __text_box_scratch_mem_t *ptItem = this.ptLineCache;
+
+    while (NULL != ptItem) {
+
+        if (iLineNumber == ptItem->nLineNo) {
+            ptItem->hwActive = MAX(this.tCFG.hwScratchMemoryCount, 4);
+            return ptItem;
+        }
+
+        if (ptItem->hwActive) {
+            ptItem->hwActive--;
+        }
+
+        ptItem = ptItem->ptNext;
+    }
+
+    return NULL;
+}
+
+static
+ARM_NONNULL(1)
+void __line_cache_free_old(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    __text_box_scratch_mem_t **pptItem = &this.ptLineCache;
+
+    while (NULL != *pptItem) {
+    
+        if (0 == (*pptItem)->hwActive) {
+            __text_box_scratch_mem_t *ptOldItem = (*pptItem);
+
+            /* remove this item */
+            *pptItem = (*pptItem)->ptNext;
+
+            __scratch_memory_free(ptThis, ptOldItem);
+
+            return;
+        }
+
+        (*pptItem)->hwActive--;
+
+        /* move to next item */
+        pptItem = &((*pptItem)->ptNext);
+    }
+}
+
 ARM_NONNULL(1,2)
 void text_box_init( text_box_t *ptThis,
-                          text_box_cfg_t *ptCFG)
+                    text_box_cfg_t *ptCFG)
 {
     assert(NULL!= ptThis);
     memset(ptThis, 0, sizeof(text_box_t));
@@ -98,7 +232,19 @@ void text_box_init( text_box_t *ptThis,
         this.tCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
     }
 
-    this.Start.nLine = 1;
+    this.Start.nLine = 0;
+
+    if (    (NULL != ptCFG->ptScratchMemory)
+       &&   (ptCFG->hwScratchMemoryCount > 0)) {
+
+        uint_fast16_t hwCount = ptCFG->hwScratchMemoryCount;
+        __text_box_scratch_mem_t *ptItem = ptCFG->ptScratchMemory;
+
+        /* add scrach memory to pool */
+        do {
+            __scratch_memory_free(ptThis, ptItem++);
+        } while(--hwCount);
+    }
 }
 
 ARM_NONNULL(1)
@@ -159,8 +305,61 @@ void text_box_show( text_box_t *ptThis,
     ARM_2D_OP_WAIT_ASYNC();
 }
 
+typedef enum {
+    TEXT_BOX_CHAR_NORMAL,
+    TEXT_BOX_CHAR_SEPERATOR,
+    TEXT_BOX_CHAR_END_OF_LINE,
+    TEXT_BOX_CHAR_CUT_OFF,
+} __text_box_char_type_t;
+
+/*!
+ * \brief detect bricks and update line info
+ * \return bool whether detect a brick
+ */
 static
-bool __text_box_get_and_analyze_one_line(text_box_t *ptThis)
+ARM_NONNULL(1)
+bool __text_box_detect_brick(   uint8_t *pchPT, 
+                                __text_box_char_type_t tType,
+                                __text_box_line_info_t *ptLineInfo,
+                                int16_t iLineWidth)
+{
+    assert(NULL != pchPT);
+
+ARM_PT_BEGIN(*pchPT)
+
+    /* wait for a normal char as the begin of tha brick */
+    ARM_PT_ENTRY()
+        if (tType != TEXT_BOX_CHAR_NORMAL) {
+            ARM_PT_GOTO_PREV_ENTRY(false)
+        }
+
+    /* accept for normal chars */
+    ARM_PT_ENTRY()
+        if (tType == TEXT_BOX_CHAR_NORMAL) {
+            ARM_PT_GOTO_PREV_ENTRY(false)
+        }
+
+        if (tType == TEXT_BOX_CHAR_CUT_OFF) {
+            /* end a line and cut a brick off */
+            ARM_PT_RETURN(false);
+        }
+
+        /* normal end of a brick */
+        if (NULL != ptLineInfo) {
+            ptLineInfo->hwBrickCount++;
+            ptLineInfo->iLineWidth = iLineWidth;
+        }
+
+ARM_PT_END()
+
+    return true;
+}
+
+
+
+static
+bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
+                                         __text_box_line_info_t *ptLineInfo)
 {
     assert(NULL != ptThis);
     assert(NULL != this.tCFG.tStreamIO.ptIO);
@@ -170,12 +369,17 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis)
         uint32_t wValue;
         uint8_t chByte[4];
     } tUTF8Char = {.chByte = {[0] = ' '}};
-    
+
+    if (NULL != ptLineInfo) {
+        memset(ptLineInfo, 0, sizeof(__text_box_line_info_t));
+    }
+
+    uint8_t chBrickDetectorPT = 0;
+
     int16_t iLineWidth = 0;
     int16_t iFontCharWidth = this.tCFG.ptFont->tCharSize.iWidth;
     bool bGetAValidLine = false;
     arm_2d_char_descriptor_t tDescriptor;
-
     int16_t iWhiteSpaceWidth = 0;
     arm_2d_char_descriptor_t *ptDescriptor =
         arm_2d_helper_get_char_descriptor(this.tCFG.ptFont, 
@@ -222,15 +426,40 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis)
             case '\n':
                 bNormalChar = false;
                 bEndOfStream = true;
+                __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_END_OF_LINE,
+                                        ptLineInfo,
+                                        iLineWidth);
+
                 break;
             case '\t':
                 bNormalChar = false;
                 iLineWidth += iWhiteSpaceWidth * 4;
+                __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_SEPERATOR,
+                                        ptLineInfo,
+                                        iLineWidth);
+                break;
+            case ' ':
+                /* detect a blank space */
+                __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_SEPERATOR,
+                                        ptLineInfo,
+                                        iLineWidth);
                 break;
             default:
                 if (tUTF8Char.chByte[0] < 0x20) {
                     /* ignore invisible chars */
                     bNormalChar = false;
+                    __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_SEPERATOR,
+                                        ptLineInfo,
+                                        iLineWidth);
+                } else {
+                    __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_NORMAL,
+                                        ptLineInfo,
+                                        iLineWidth);
                 }
                 break;
         }
@@ -251,6 +480,11 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis)
         if (iLineWidth + iFontCharWidth > this.iLineWidth) {
             /* insufficient space for next char */
             bEndOfStream = true;
+
+            __text_box_detect_brick(&chBrickDetectorPT,
+                                    TEXT_BOX_CHAR_CUT_OFF,
+                                    ptLineInfo,
+                                    iLineWidth);
         }
 
         if (bEndOfStream) {
@@ -258,6 +492,26 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis)
         }
 
     } while(1);
+
+    if (NULL != ptLineInfo) {
+        do {
+            if (ptLineInfo->hwBrickCount <= 1) {
+                break;
+            }
+
+            int16_t iResidualWidth = this.iLineWidth - ptLineInfo->iLineWidth;
+            assert(iResidualWidth > 0);
+
+            if (iResidualWidth <= 0) {
+                break;
+            }
+
+            /* calculate additional char space */
+            ptLineInfo->q16PixelsPerBlank 
+                = div_n_q16(reinterpret_q16_s16(iResidualWidth), 
+                            (ptLineInfo->hwBrickCount - 1));        /* number of blanks */
+        } while(0);
+    }
 
     return bGetAValidLine;
 }
@@ -290,7 +544,7 @@ void text_box_update(text_box_t *ptThis)
             break;
         }
 
-        if (!__text_box_get_and_analyze_one_line(ptThis)) {
+        if (!__text_box_get_and_analyze_one_line(ptThis, NULL)) {
             /* failed to read a line */
             break;
         }

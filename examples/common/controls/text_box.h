@@ -48,6 +48,30 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+typedef struct __text_box_line_info_t __text_box_line_info_t;
+
+struct __text_box_line_info_t {
+ARM_PRIVATE(
+    __text_box_line_info_t *ptNext;
+
+    int32_t nLineNo;
+    int32_t nPosition;
+
+    uint16_t hwActive;
+    
+
+    uint16_t hwBrickCount;
+    int16_t iLineWidth;
+    uint16_t hwByteCount;
+    
+    q16_t q16PixelsPerBlank;
+)
+} ;
+
+typedef __text_box_line_info_t __text_box_scratch_mem_t;
+
+
 typedef enum {
     TEXT_BOX_SEEK_SET,
     TEXT_BOX_SEEK_CUR,
@@ -82,12 +106,14 @@ typedef struct text_box_cfg_t {
     text_box_io_text_stream_reader_t tStreamIO;
 
     arm_2d_scene_t *ptScene;
+
+    __text_box_scratch_mem_t *ptScratchMemory;
+    uint16_t                  hwScratchMemoryCount;
 } text_box_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-
 
 struct text_box_t {
 
@@ -101,6 +127,9 @@ ARM_PRIVATE(
 
     int16_t iLineWidth;
 
+    __text_box_scratch_mem_t *ptFreeList;
+    __text_box_scratch_mem_t *ptLineCache;
+    uint16_t hwLineCacheCount;
 )
     /* place your public member here */
     
