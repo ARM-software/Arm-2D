@@ -431,6 +431,7 @@ var group__gHelper =
     [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ],
     [ "arm_lcd_text_init", "group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9", null ],
     [ "arm_lcd_printf_to_buffer", "group__gHelper.html#gac468ea8e1aff07f28ff54703a0ae66fa", null ],
+    [ "arm_lcd_putchar_to_buffer", "group__gHelper.html#ga7881aad0b4d7aa193430b41fd1d4a271", null ],
     [ "arm_lcd_printf_buffer", "group__gHelper.html#ga567a0a42f0daecba1734841de9289400", null ],
     [ "arm_lcd_get_residual_text_length_in_buffer", "group__gHelper.html#ga74aa206bd12c7e8297125d5117173662", null ],
     [ "lcd_draw_char", "group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7", null ],

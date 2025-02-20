@@ -388,8 +388,9 @@ var searchData=
   ['arm_5flcd_5fget_5fresidual_5ftext_5flength_5fin_5fbuffer_385',['arm_lcd_get_residual_text_length_in_buffer',['../group__gHelper.html#ga74aa206bd12c7e8297125d5117173662',1,'arm_2d_helper_font.h']]],
   ['arm_5flcd_5fprintf_5fbuffer_386',['arm_lcd_printf_buffer',['../group__gHelper.html#ga567a0a42f0daecba1734841de9289400',1,'arm_2d_helper_font.h']]],
   ['arm_5flcd_5fprintf_5fto_5fbuffer_387',['arm_lcd_printf_to_buffer',['../group__gHelper.html#gac468ea8e1aff07f28ff54703a0ae66fa',1,'arm_2d_helper_font.h']]],
-  ['arm_5flcd_5ftext_5fforce_5fchar_5fuse_5fsame_5fwidth_388',['arm_lcd_text_force_char_use_same_width',['../group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a',1,'arm_2d_helper_font.h']]],
-  ['arm_5flcd_5ftext_5finit_389',['arm_lcd_text_init',['../group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9',1,'arm_2d_helper_font.h']]],
-  ['arm_5flcd_5ftext_5fset_5fdisplay_5fmode_390',['arm_lcd_text_set_display_mode',['../group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65',1,'arm_2d_helper_font.h']]],
-  ['arm_5fprotected_391',['ARM_PROTECTED',['../group__gHelper.html#a45ae8c2f126445c158944db2938719e6',1,'__arm_2d_list_core_t::ARM_PROTECTED()'],['../group__gHelper.html#afe89e6263d786fd9e987ef38545c0265',1,'arm_2d_list_item_t::ARM_PROTECTED()']]]
+  ['arm_5flcd_5fputchar_5fto_5fbuffer_388',['arm_lcd_putchar_to_buffer',['../group__gHelper.html#ga7881aad0b4d7aa193430b41fd1d4a271',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5ftext_5fforce_5fchar_5fuse_5fsame_5fwidth_389',['arm_lcd_text_force_char_use_same_width',['../group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5ftext_5finit_390',['arm_lcd_text_init',['../group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9',1,'arm_2d_helper_font.h']]],
+  ['arm_5flcd_5ftext_5fset_5fdisplay_5fmode_391',['arm_lcd_text_set_display_mode',['../group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65',1,'arm_2d_helper_font.h']]],
+  ['arm_5fprotected_392',['ARM_PROTECTED',['../group__gHelper.html#a45ae8c2f126445c158944db2938719e6',1,'__arm_2d_list_core_t::ARM_PROTECTED()'],['../group__gHelper.html#afe89e6263d786fd9e987ef38545c0265',1,'arm_2d_list_item_t::ARM_PROTECTED()']]]
 ];
