@@ -92,11 +92,14 @@ typedef int32_t text_box_io_read_handler_t(text_box_t *ptThis,
 typedef int32_t text_box_io_seek_handler_t( text_box_t *ptThis, 
                                             uintptr_t pObj,
                                             int32_t nOffset,
-                                            text_box_seek_whence_t enWhence); 
+                                            text_box_seek_whence_t enWhence);
+
+typedef bool text_box_io_eof_handler_t(text_box_t *ptThis, uintptr_t pObj);
 
 typedef struct text_box_io_handler_t {
     text_box_io_read_handler_t  *fnGetChar;
     text_box_io_seek_handler_t  *fnSeek;
+    text_box_io_eof_handler_t   *fnEOF;
 } text_box_io_handler_t;
 
 typedef struct text_box_io_text_stream_reader_t {
@@ -107,6 +110,7 @@ typedef struct text_box_io_text_stream_reader_t {
 typedef struct text_box_cfg_t {
     const arm_2d_font_t *ptFont;
     float fScale;
+    text_box_line_alignment_t tLineAlign;
 
     text_box_io_text_stream_reader_t tStreamIO;
 

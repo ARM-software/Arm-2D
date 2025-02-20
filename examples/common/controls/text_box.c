@@ -77,21 +77,26 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
 
 /*============================ LOCAL VARIABLES ===============================*/
 static 
-int32_t __c_string_io_read_utf8_char_handler_t(text_box_t *ptThis, 
-                                            uintptr_t pObj, 
-                                            uint8_t *pchBuffer,
-                                            uint_fast16_t hwSize);
+int32_t __c_string_io_read_char(text_box_t *ptThis, 
+                                uintptr_t pObj, 
+                                uint8_t *pchBuffer,
+                                uint_fast16_t hwSize);
 
 static 
-int32_t __c_string_io_seek_handler_t(   text_box_t *ptThis, 
-                                        uintptr_t pObj,
-                                        int32_t nOffset,
-                                        text_box_seek_whence_t enWhence);
+int32_t __c_string_io_seek( text_box_t *ptThis, 
+                            uintptr_t pObj,
+                            int32_t nOffset,
+                            text_box_seek_whence_t enWhence);
+
+static 
+bool __c_string_io_eof( text_box_t *ptTextBox, 
+                        uintptr_t pObj);
 
 /*============================ GLOBAL VARIABLES ==============================*/
 const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
-    .fnGetChar = &__c_string_io_read_utf8_char_handler_t,
-    .fnSeek = &__c_string_io_seek_handler_t,
+    .fnGetChar  = &__c_string_io_read_char,
+    .fnSeek     = &__c_string_io_seek,
+    .fnEOF      = &__c_string_io_eof,
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -122,6 +127,19 @@ int32_t __text_box_set_current_position(text_box_t *ptThis, int32_t nPoistion)
                        TEXT_BOX_SEEK_SET));
 }
 
+__STATIC_INLINE 
+int32_t __text_box_move_position(text_box_t *ptThis, int32_t nOffset)
+{
+    assert(NULL != ptThis);
+
+    return 
+    ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+        ARM_2D_PARAM(  ptThis, 
+                       this.tCFG.tStreamIO.pTarget,
+                       nOffset,
+                       TEXT_BOX_SEEK_CUR));
+}
+
 __STATIC_INLINE
 int32_t __text_box_read_bytes(  text_box_t *ptThis, 
                                 uint8_t *pchBuffer, 
@@ -135,6 +153,16 @@ int32_t __text_box_read_bytes(  text_box_t *ptThis,
                             this.tCFG.tStreamIO.pTarget,
                             pchBuffer,
                             hwSize));
+}
+
+__STATIC_INLINE
+bool __text_box_is_eof(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnEOF,
+            ARM_2D_PARAM(   ptThis, 
+                            this.tCFG.tStreamIO.pTarget));
 }
 
 static
@@ -368,31 +396,50 @@ void __text_box_draw_line(text_box_t *ptThis,
         return ;
     }
 
+    arm_2d_region_t tLineRegion = *ptRegion;
+    int16_t iLineHeight = tLineRegion.tSize.iHeight;
+
+    tLineRegion.tSize.iHeight = iLineHeight * 3;
+    tLineRegion.tLocation.iY -= iLineHeight;
+
     /* handle draw region */
     if (TEXT_BOX_LINE_ALIGN_RIGHT == tAlign) {
-        arm_2d_region_t tLineRegion = *ptRegion;
-
+        
         tLineRegion.tLocation.iX += this.iLineWidth - ptLineInfo->iLineWidth;
         tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
-
-        arm_lcd_text_set_draw_region(&tLineRegion);
-    } else {
-        arm_lcd_text_set_draw_region(ptRegion);
     }
+
+    arm_lcd_text_set_draw_region(&tLineRegion);
+
+    arm_lcd_text_location(1, 0);
+    
 
     __text_box_set_current_position(ptThis, nPosition);
 
-    if (TEXT_BOX_LINE_ALIGN_JUSTIFIED) {
+    if (TEXT_BOX_LINE_ALIGN_JUSTIFIED == tAlign) {
 
 
     } else {
         uint16_t hwBytesLeft = ptLineInfo->hwByteCount;
+
         do {
+            union {
+                uint32_t wValue;
+                uint8_t chByte[4];
+            } tUTF8Char = {0};
 
+            int32_t nActualReadSize = __text_box_read_bytes(ptThis, tUTF8Char.chByte, 4);
+            int_fast8_t chUTF8Length = arm_2d_helper_get_utf8_byte_length(tUTF8Char.chByte);
+            nActualReadSize -= chUTF8Length;
+            if (nActualReadSize > 0) {
+                /* move back */
+                __text_box_move_position(ptThis, -nActualReadSize);
+            }
+            hwBytesLeft -= chUTF8Length;
 
-
+            arm_lcd_putchar((const char *)tUTF8Char.chByte);
+            
         } while(hwBytesLeft);
-        
     }
 }
 
@@ -438,8 +485,11 @@ void text_box_show( text_box_t *ptThis,
 
         /* print all lines */
         do {
+            if (__text_box_is_eof(ptThis)) {
+                break;
+            }
             //int32_t nStartPosition = __text_box_get_current_position(ptThis);
-            bool bEndOfStream = !__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine);
+            __text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine);
 
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
@@ -458,13 +508,11 @@ void text_box_show( text_box_t *ptThis,
             if (arm_2d_helper_pfb_is_region_active(&__text_box, &tLineRegion, true, &ptVirtualScreen)) {
             
                 //arm_2d_draw_box(&__text_box, &tLineRegion, 1, GLCD_COLOR_BLUE, 128);
+                __text_box_draw_line(ptThis,
+                                     &this.tCurrentLine,
+                                     &tLineRegion,
+                                     this.tCFG.tLineAlign);
 
-
-
-            }
-
-            if (bEndOfStream) {
-                break;
             }
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
@@ -498,6 +546,11 @@ ARM_PT_BEGIN(*pchPT)
     /* wait for a normal char as the begin of tha brick */
     ARM_PT_ENTRY()
         if (tType != TEXT_BOX_CHAR_NORMAL) {
+            if (TEXT_BOX_CHAR_END_OF_LINE == tType) {
+                ptLineInfo->nStartPosition = nPoistion;
+                ptLineInfo->hwByteCount = 1;
+            }
+
             ARM_PT_GOTO_PREV_ENTRY(false)
         }
 
@@ -582,15 +635,19 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
         bool bEndOfStream = false;
         tUTF8Char.wValue = 0;
 
+        int32_t nPosition = __text_box_get_current_position(ptThis);
         int32_t nActualReadSize = __text_box_read_bytes(ptThis, 
                                                         tUTF8Char.chByte,
                                                         4);
 
         if (nActualReadSize <= 0) {
             /* we reach end of the stream */
+            __text_box_detect_brick(&chBrickDetectorPT,
+                                    TEXT_BOX_CHAR_END_OF_LINE,
+                                    ptLineInfo,
+                                    nPosition,
+                                    iLineWidth);
             break;
-        } else if (nActualReadSize < 4) {
-            bEndOfStream = true;
         }
 
         bGetAValidLine = true;
@@ -598,14 +655,10 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
         nActualReadSize -= arm_2d_helper_get_utf8_byte_length(tUTF8Char.chByte);
         if (nActualReadSize > 0) {
             /* move back */
-            ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
-                ARM_2D_PARAM(   ptThis, 
-                                this.tCFG.tStreamIO.pTarget,
-                                -nActualReadSize,
-                                TEXT_BOX_SEEK_CUR));
+            __text_box_move_position(ptThis, -nActualReadSize);
         }
 
-        int32_t nPoistion = __text_box_get_current_position(ptThis);
+        
 
         bool bNormalChar = true;
         switch (tUTF8Char.chByte[0]) {
@@ -615,7 +668,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_END_OF_LINE,
                                         ptLineInfo,
-                                        nPoistion,
+                                        nPosition,
                                         iLineWidth);
 
                 break;
@@ -625,7 +678,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
-                                        nPoistion,
+                                        nPosition,
                                         iLineWidth);
                 break;
             case ' ':
@@ -633,7 +686,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
-                                        nPoistion,
+                                        nPosition,
                                         iLineWidth);
                 break;
             default:
@@ -643,13 +696,13 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                     __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
-                                        nPoistion,
+                                        nPosition,
                                         iLineWidth);
                 } else {
                     __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_NORMAL,
                                         ptLineInfo,
-                                        nPoistion,
+                                        nPosition,
                                         iLineWidth);
                 }
                 break;
@@ -675,7 +728,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             __text_box_detect_brick(&chBrickDetectorPT,
                                     TEXT_BOX_CHAR_CUT_OFF,
                                     ptLineInfo,
-                                    nPoistion,
+                                    nPosition,
                                     iLineWidth);
         }
 
@@ -761,10 +814,10 @@ text_box_c_str_reader_t *text_box_c_str_reader_init(
 }
 
 static 
-int32_t __c_string_io_read_utf8_char_handler_t( text_box_t *ptTextBox, 
-                                                uintptr_t pObj, 
-                                                uint8_t *pchBuffer,
-                                                uint_fast16_t hwSize)
+int32_t __c_string_io_read_char(   text_box_t *ptTextBox, 
+                                        uintptr_t pObj, 
+                                        uint8_t *pchBuffer,
+                                        uint_fast16_t hwSize)
 {
     text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
     assert(NULL != ptThis);
@@ -787,11 +840,12 @@ int32_t __c_string_io_read_utf8_char_handler_t( text_box_t *ptTextBox,
 
     return hwSize;
 }
+
 static 
-int32_t __c_string_io_seek_handler_t(   text_box_t *ptTextBox, 
-                                        uintptr_t pObj,
-                                        int32_t nOffset,
-                                        text_box_seek_whence_t enWhence)
+int32_t __c_string_io_seek( text_box_t *ptTextBox, 
+                            uintptr_t pObj,
+                            int32_t nOffset,
+                            text_box_seek_whence_t enWhence)
 {
     text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
     assert(NULL != ptThis);
@@ -818,6 +872,17 @@ int32_t __c_string_io_seek_handler_t(   text_box_t *ptTextBox,
     this.nPosition = lPosition;
 
     return this.nPosition;
+}
+
+static 
+bool __c_string_io_eof( text_box_t *ptTextBox, 
+                        uintptr_t pObj)
+{
+    text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
+    assert(NULL != ptThis);
+
+    return this.nPosition >= this.nSizeInByte;
+
 }
 
 #if defined(__clang__)
