@@ -367,6 +367,7 @@ ARM_NONNULL(1)
  * \return false line buffer is full
  */
 bool arm_lcd_putchar_to_buffer(uint8_t *pchChar, uint_fast8_t chUTF8Size);
+
 /*!
  * \brief print the text buffer
  * \param[in] number of chars to print. Here:
@@ -376,6 +377,14 @@ bool arm_lcd_putchar_to_buffer(uint8_t *pchChar, uint_fast8_t chUTF8Size);
  */
 extern
 void arm_lcd_printf_buffer(int16_t iNumber);
+
+/*!
+ * \brief get the box size of the string in the text buffer
+ * 
+ * \return arm_2d_size_t the size of the text buffer
+ */
+extern
+arm_2d_size_t arm_lcd_get_buffer_box_size(void);
 
 /*!
  * \brief get the residual text length in the text buffer
