@@ -650,6 +650,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
         iWhiteSpaceWidth = ptDescriptor->iAdvance;
     }
 
+    bool bDetectFirstBrick = false;
     do {
         bool bEndOfStream = false;
         tUTF8Char.wValue = 0;
@@ -677,8 +678,6 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             __text_box_move_position(ptThis, -nActualReadSize);
         }
 
-        
-
         bool bNormalChar = true;
         switch (tUTF8Char.chByte[0]) {
             case '\n':
@@ -689,24 +688,30 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                                         ptLineInfo,
                                         nPosition,
                                         iLineWidth);
-
                 break;
             case '\t':
                 bNormalChar = false;
-                iLineWidth += iWhiteSpaceWidth * 4;
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
                                         nPosition,
                                         iLineWidth);
+                if (bDetectFirstBrick) {
+                    iLineWidth += iWhiteSpaceWidth * 4;
+                }
                 break;
             case ' ':
+                bNormalChar = false;
                 /* detect a blank space */
                 __text_box_detect_brick(&chBrickDetectorPT,
                                         TEXT_BOX_CHAR_SEPERATOR,
                                         ptLineInfo,
                                         nPosition,
                                         iLineWidth);
+
+                if (bDetectFirstBrick) {
+                    iLineWidth += iWhiteSpaceWidth;
+                }
                 break;
             default:
                 if (tUTF8Char.chByte[0] < 0x20) {
@@ -717,33 +722,42 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                                         ptLineInfo,
                                         nPosition,
                                         iLineWidth);
-                } else {
-                    __text_box_detect_brick(&chBrickDetectorPT,
-                                        TEXT_BOX_CHAR_NORMAL,
-                                        ptLineInfo,
-                                        nPosition,
-                                        iLineWidth);
                 }
                 break;
         }
 
         if (bNormalChar) {
+            bDetectFirstBrick = true;
             ptDescriptor = arm_2d_helper_get_char_descriptor(
                                                         this.tCFG.ptFont,
                                                         &tDescriptor, 
                                                         tUTF8Char.chByte);
-
+            int16_t iNewLineWidth = iLineWidth;
             if (NULL == ptDescriptor) {
-                iLineWidth += iFontCharWidth;
+                iNewLineWidth += iFontCharWidth;
             } else {
-                iLineWidth += ptDescriptor->iAdvance;
+                iNewLineWidth += ptDescriptor->iAdvance;
             }
-        }
 
-        if (iLineWidth + iFontCharWidth > this.iLineWidth) {
-            /* insufficient space for next char */
+            if (iNewLineWidth > this.iLineWidth) {
+                /* insufficient space for this char */
+                bEndOfStream = true;
+                __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_CUT_OFF,
+                                        ptLineInfo,
+                                        nPosition,
+                                        iLineWidth);
+            } else {
+                iLineWidth = iNewLineWidth;
+                __text_box_detect_brick(&chBrickDetectorPT,
+                                        TEXT_BOX_CHAR_NORMAL,
+                                        ptLineInfo,
+                                        nPosition,
+                                        iLineWidth);
+            }
+        } else if (iLineWidth >= this.iLineWidth) {
+            /* end of line, cut off */
             bEndOfStream = true;
-
             __text_box_detect_brick(&chBrickDetectorPT,
                                     TEXT_BOX_CHAR_CUT_OFF,
                                     ptLineInfo,
@@ -764,7 +778,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             }
 
             int16_t iResidualWidth = this.iLineWidth - ptLineInfo->iLineWidth;
-            assert(iResidualWidth > 0);
+            assert(iResidualWidth >= 0);
 
             if (iResidualWidth <= 0) {
                 break;
