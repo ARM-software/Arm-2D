@@ -429,6 +429,7 @@ var group__gHelper =
     [ "arm_2d_helper_get_utf8_byte_length", "group__gHelper.html#ga75b0dff775ed037ff9fd6d4c62786d52", null ],
     [ "arm_2d_helper_utf8_to_unicode", "group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7", null ],
     [ "arm_2d_helper_get_char_descriptor", "group__gHelper.html#gace860649e7b7172cf6aa155abc51434d", null ],
+    [ "arm_lcd_get_char_advance", "group__gHelper.html#ga84a494a536665175262652c84c53667f", null ],
     [ "arm_lcd_text_init", "group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9", null ],
     [ "arm_lcd_printf_to_buffer", "group__gHelper.html#gac468ea8e1aff07f28ff54703a0ae66fa", null ],
     [ "arm_lcd_putchar_to_buffer", "group__gHelper.html#ga7881aad0b4d7aa193430b41fd1d4a271", null ],

@@ -1013,6 +1013,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gace860649e7b7172cf6aa155abc51434d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">arm_2d_helper_get_char_descriptor</a> (const <a class="el" href="group__gHelper.html#structarm__2d__font__t">arm_2d_font_t</a> *ptFont, <a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> *ptDescriptor, uint8_t *pchCharCode)</td></tr>
 <tr class="memdesc:gace860649e7b7172cf6aa155abc51434d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get char descriptor  <a href="group__gHelper.html#gace860649e7b7172cf6aa155abc51434d">More...</a><br /></td></tr>
 <tr class="separator:gace860649e7b7172cf6aa155abc51434d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84a494a536665175262652c84c53667f"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga84a494a536665175262652c84c53667f">arm_lcd_get_char_advance</a> (uint8_t *pchChar)</td></tr>
+<tr class="memdesc:ga84a494a536665175262652c84c53667f"><td class="mdescLeft">&#160;</td><td class="mdescRight">get char advance with char spacing and scaling into consideration  <a href="group__gHelper.html#ga84a494a536665175262652c84c53667f">More...</a><br /></td></tr>
+<tr class="separator:ga84a494a536665175262652c84c53667f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8022d779d4096e9f0a97a6bcee3bdaa9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9">arm_lcd_text_init</a> (<a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptScreen)</td></tr>
 <tr class="memdesc:ga8022d779d4096e9f0a97a6bcee3bdaa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize lcd text display service  <a href="group__gHelper.html#ga8022d779d4096e9f0a97a6bcee3bdaa9">More...</a><br /></td></tr>
 <tr class="separator:ga8022d779d4096e9f0a97a6bcee3bdaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -11804,6 +11807,33 @@ sometimes, we want to force transform helper to update dirty regions even if bot
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gHelper.html#structarm__2d__char__descriptor__t">arm_2d_char_descriptor_t</a> * the descriptor </dd></dl>
+
+</div>
+</div>
+<a id="ga84a494a536665175262652c84c53667f" name="ga84a494a536665175262652c84c53667f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga84a494a536665175262652c84c53667f">&#9670;&#160;</a></span>arm_lcd_get_char_advance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t arm_lcd_get_char_advance </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pchChar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get char advance with char spacing and scaling into consideration </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>a UTF8 char buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int16_t the advance </dd></dl>
 
 </div>
 </div>
