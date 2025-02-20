@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        05. Feb 2025
- * $Revision:    V.2.9.1
+ * $Date:        20. Feb 2025
+ * $Revision:    V.2.9.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -106,7 +106,11 @@ static struct {
     } Spacing;
 
     struct {
-        uint16_t hwPos;
+        union {
+            uint16_t hwPos;
+            uint16_t hwHead;
+        };
+        uint16_t hwTail;
         uint16_t hwLen;
         char chBuffer[__LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__+1];
     } TXBuf;
@@ -994,7 +998,7 @@ void arm_lcd_putchar(const char *str)
             return ;
         }
     } while(0);
-
+ 
     arm_2d_size_t tDrawRegionSize = s_tLCDTextControl.tRegion.tSize;
 
     if (*str) {
@@ -1151,12 +1155,33 @@ arm_2d_size_t arm_lcd_printf_to_buffer( const arm_2d_font_t *ptFont,
     real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
     s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
 
-    s_tLCDTextControl.TXBuf.hwPos = 0;
+    s_tLCDTextControl.TXBuf.hwHead = 0;
     s_tLCDTextControl.TXBuf.hwLen = real_size;
+    s_tLCDTextControl.TXBuf.hwTail = real_size;
 
     arm_lcd_text_set_font(ptFont);
 
     return __arm_lcd_get_string_line_box(s_tLCDTextControl.TXBuf.chBuffer, ptFont);
+}
+
+ARM_NONNULL(1)
+bool arm_lcd_putchar_to_buffer(uint8_t *pchChar, uint_fast8_t chUTF8Size)
+{
+    assert(NULL != pchChar);
+
+    int16_t iSpaceLeftInByte = sizeof(s_tLCDTextControl.TXBuf.chBuffer) - 1 - s_tLCDTextControl.TXBuf.hwTail;
+    if (iSpaceLeftInByte < chUTF8Size) {
+        return false;
+    }
+
+    memcpy(s_tLCDTextControl.TXBuf.chBuffer + s_tLCDTextControl.TXBuf.hwTail,
+           pchChar,
+           chUTF8Size);
+    
+    s_tLCDTextControl.TXBuf.hwTail += chUTF8Size;
+    s_tLCDTextControl.TXBuf.hwLen += chUTF8Size;
+
+    return true;
 }
 
 void arm_lcd_printf_buffer(int16_t iNumber)
@@ -1174,16 +1199,22 @@ void arm_lcd_printf_buffer(int16_t iNumber)
     iNumber = MIN(s_tLCDTextControl.TXBuf.hwLen, iNumber);
 
     do {
-        char cTemp = s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos + iNumber];
-        s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos + iNumber] = '\0';
+        char cTemp = s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwHead + iNumber];
+        s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwHead + iNumber] = '\0';
         
-        arm_lcd_puts(&s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos]);
+        arm_lcd_puts(&s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwHead]);
 
-        s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwPos + iNumber] = cTemp;
+        s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwHead + iNumber] = cTemp;
     } while(0);
 
-    s_tLCDTextControl.TXBuf.hwPos += iNumber;
+    s_tLCDTextControl.TXBuf.hwHead += iNumber;
     s_tLCDTextControl.TXBuf.hwLen -= iNumber;
+
+    /* reset line buffer */
+    if (0 == s_tLCDTextControl.TXBuf.hwLen) {
+        s_tLCDTextControl.TXBuf.hwTail = 0;
+        s_tLCDTextControl.TXBuf.hwHead = 0;
+    }
 }
 
 size_t arm_lcd_get_residual_text_length_in_buffer(void)

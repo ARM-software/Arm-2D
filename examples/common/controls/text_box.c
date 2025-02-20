@@ -379,6 +379,7 @@ static
 ARM_NONNULL(1,2)
 void __text_box_draw_line(text_box_t *ptThis,
                           __text_box_line_info_t *ptLineInfo,
+                          const arm_2d_tile_t *ptTile,
                           arm_2d_region_t *ptRegion,
                           text_box_line_alignment_t tAlign)
 {
@@ -397,10 +398,6 @@ void __text_box_draw_line(text_box_t *ptThis,
     }
 
     arm_2d_region_t tLineRegion = *ptRegion;
-    int16_t iLineHeight = tLineRegion.tSize.iHeight;
-
-    tLineRegion.tSize.iHeight = iLineHeight * 3;
-    tLineRegion.tLocation.iY -= iLineHeight;
 
     /* handle draw region */
     if (TEXT_BOX_LINE_ALIGN_RIGHT == tAlign) {
@@ -411,8 +408,7 @@ void __text_box_draw_line(text_box_t *ptThis,
 
     arm_lcd_text_set_draw_region(&tLineRegion);
 
-    arm_lcd_text_location(1, 0);
-    
+    arm_2d_draw_box(ptTile, &tLineRegion, 1, GLCD_COLOR_BLUE, 128);
 
     __text_box_set_current_position(ptThis, nPosition);
 
@@ -437,9 +433,13 @@ void __text_box_draw_line(text_box_t *ptThis,
             }
             hwBytesLeft -= chUTF8Length;
 
-            arm_lcd_putchar((const char *)tUTF8Char.chByte);
+            if (!arm_lcd_putchar_to_buffer(tUTF8Char.chByte, chUTF8Length)) {
+                arm_lcd_printf_buffer(0);
+                arm_lcd_putchar_to_buffer(tUTF8Char.chByte, chUTF8Length);
+            }
             
         } while(hwBytesLeft);
+        arm_lcd_printf_buffer(0);
     }
 }
 
@@ -501,7 +501,15 @@ void text_box_show( text_box_t *ptThis,
                 },
             };
 
-
+            arm_2d_region_t tFullLineRegion = {
+                .tLocation = {
+                    .iY = iLineNumber * iFontCharHeight,
+                },
+                .tSize = {
+                    .iHeight = iFontCharHeight,
+                    .iWidth = this.iLineWidth,
+                },
+            };
 
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
@@ -514,15 +522,17 @@ void text_box_show( text_box_t *ptThis,
             }
 
             const arm_2d_tile_t *ptVirtualScreen = NULL;
-            if (arm_2d_helper_pfb_is_region_active(&__text_box, &tLineRegion, true, &ptVirtualScreen)) {
+            //if (arm_2d_helper_pfb_is_region_active(&__text_box, &tLineRegion, true, &ptVirtualScreen)) {
             
-                //arm_2d_draw_box(&__text_box, &tLineRegion, 1, GLCD_COLOR_BLUE, 128);
                 __text_box_draw_line(ptThis,
                                      &this.tCurrentLine,
+                                     &__text_box,
                                      &tLineRegion,
                                      this.tCFG.tLineAlign);
 
-            }
+            //}
+
+            arm_2d_draw_box(&__text_box, &tFullLineRegion, 1, GLCD_COLOR_RED, 64);
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
             __text_box_set_current_position(ptThis, nNewLinePosition);

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        05. Feb 2025
- * $Revision:    V.2.9.1
+ * $Date:        20. Feb 2025
+ * $Revision:    V.2.9.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -293,9 +293,20 @@ int arm_lcd_printf(const char *format, ...);
  */
 extern
 arm_2d_size_t arm_lcd_printf_to_buffer(const arm_2d_font_t *ptFont, 
-                                 const char *format,
-                                 ...);
+                                       const char *format,
+                                       ...);
 
+extern
+ARM_NONNULL(1)
+/*!
+ * \brief put a char to line buffer
+ * 
+ * \param[in] pchChar a buffer storing an UTF8 char
+ * \param[in] chUTF8Size the UTF8 size in byte
+ * \return true successful
+ * \return false line buffer is full
+ */
+bool arm_lcd_putchar_to_buffer(uint8_t *pchChar, uint_fast8_t chUTF8Size);
 /*!
  * \brief print the text buffer
  * \param[in] number of chars to print. Here:
