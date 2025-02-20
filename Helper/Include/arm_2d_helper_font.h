@@ -22,7 +22,7 @@
  * Description:  the font helper service header file
  *
  * $Date:        20. Feb 2025
- * $Revision:    V.2.9.2
+ * $Revision:    V.2.10.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -324,6 +324,15 @@ arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont,
                                     arm_2d_char_descriptor_t *ptDescriptor, 
                                     uint8_t *pchCharCode);
 
+/*!
+ * \brief get char advance with char spacing and scaling into consideration
+ * \param[in] pchChar a UTF8 char buffer
+ * \return int16_t the advance
+ */
+extern
+ARM_NONNULL(1)
+int16_t arm_lcd_get_char_advance(uint8_t *pchChar);
+                            
 /*!
  * \brief initialize lcd text display service
  * \param[in] ptScreen the default display area
