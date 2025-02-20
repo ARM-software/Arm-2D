@@ -35,6 +35,9 @@ import math
 import binascii
 
 c_head_string="""
+
+/* generated with ttf2c.py (v2.3.1) */
+
 #include "arm_2d_helper.h"
 
 #if defined(__clang__)
@@ -209,7 +212,7 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
         height_max = max(bitmap.rows, height_max)
     
     width_max += 1
-    height_max += 1
+    height_max += 2
 
     for char in sorted(set(text)):
         face.load_char(char)
@@ -257,10 +260,10 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
            padding = ((0, 0), (0, width_max - width))
            bitmap_array = np.pad(bitmap_array, padding, 'constant')
         
-        padding = ((0, 1), (0, 0))
+        padding = ((1, 1), (0, 0))
         bitmap_array = np.pad(bitmap_array, padding, 'constant')
 
-        height += 1
+        height += 2
 
         char_index_advance = len(bitmap_array.flatten());
 
@@ -393,7 +396,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.3.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.3.1)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("--index",          type=int,   help="The Font Index in a TTC file",    required=False,     default=0)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=True)
