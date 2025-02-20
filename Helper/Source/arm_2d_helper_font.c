@@ -22,7 +22,7 @@
  * Description:  the font helper service source code
  *
  * $Date:        20. Feb 2025
- * $Revision:    V.2.10.0
+ * $Revision:    V.2.10.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -291,6 +291,31 @@ int8_t arm_lcd_text_set_line_spacing(int8_t chNewSpacing)
     return chOldSpacing;
 }
 
+arm_2d_size_t arm_lcd_text_get_actual_spacing(void)
+{
+    return s_tLCDTextControl.Updated.tSpacing;
+}
+
+arm_2d_size_t arm_lcd_text_get_actual_char_size(void)
+{
+    return s_tLCDTextControl.Updated.tCharSize;
+}
+
+arm_2d_region_t arm_lcd_text_get_char_validation_box(void)
+{
+    return s_tLCDTextControl.Updated.tCharDrawBox;
+}
+
+arm_2d_size_t arm_lcd_text_get_actual_char_box(void)
+{
+    return (arm_2d_size_t) {
+        .iWidth = s_tLCDTextControl.Updated.tCharSize.iWidth 
+                + s_tLCDTextControl.Updated.tSpacing.iWidth,
+        .iHeight = s_tLCDTextControl.Updated.tCharSize.iHeight 
+                 + s_tLCDTextControl.Updated.tSpacing.iHeight,
+    };
+}
+
 static void __arm_lcd_text_update_char_buffer(void)
 {
     const arm_2d_font_t *ptFont = s_tLCDTextControl.ptFont;
@@ -376,7 +401,7 @@ void arm_lcd_text_location(uint8_t chY, uint8_t chX)
 void arm_lcd_text_insert_line_space(int16_t iWidth)
 {
     s_tLCDTextControl.tDrawOffset.iX += iWidth;
-    
+
     arm_2d_size_t tCharBoxSize = s_tLCDTextControl.Updated.tCharSize;
     tCharBoxSize.iWidth += s_tLCDTextControl.Updated.tSpacing.iWidth;
     tCharBoxSize.iHeight += s_tLCDTextControl.Updated.tSpacing.iHeight;
@@ -999,13 +1024,7 @@ static void __arm_lcd_update_spacing(void)
 
 void arm_lcd_putchar(const char *str)
 {
-    arm_2d_size_t tSpacing = s_tLCDTextControl.Updated.tSpacing;
-    arm_2d_size_t tCharSize = s_tLCDTextControl.Updated.tCharSize;
-    
-    arm_2d_size_t tCharBox = {
-        .iWidth = tSpacing.iWidth + tCharSize.iWidth,
-        .iHeight = tSpacing.iHeight + tCharSize.iHeight,
-    };
+    arm_2d_size_t tCharBox = arm_lcd_text_get_actual_char_box();
 
     if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, 
                                             &s_tLCDTextControl.Updated.tCharDrawBox, 
@@ -1064,14 +1083,8 @@ void __arm_lcd_update_char_draw_box(void)
 }
 
 void arm_lcd_puts(const char *str)
-{
-    arm_2d_size_t tSpacing = s_tLCDTextControl.Updated.tSpacing;
-    arm_2d_size_t tCharSize = s_tLCDTextControl.Updated.tCharSize;
-    
-    arm_2d_size_t tCharBox = {
-        .iWidth = tSpacing.iWidth + tCharSize.iWidth,
-        .iHeight = tSpacing.iHeight + tCharSize.iHeight,
-    };
+{    
+    arm_2d_size_t tCharBox = arm_lcd_text_get_actual_char_box();
 
     if (!arm_2d_helper_pfb_is_region_active(s_tLCDTextControl.ptTargetFB, 
                                             &s_tLCDTextControl.Updated.tCharDrawBox, 

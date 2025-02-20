@@ -22,7 +22,7 @@
  * Description:  the font helper service header file
  *
  * $Date:        20. Feb 2025
- * $Revision:    V.2.10.0
+ * $Revision:    V.2.10.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -457,6 +457,18 @@ int8_t arm_lcd_text_set_char_spacing(int8_t chNewSpacing);
 
 extern
 int8_t arm_lcd_text_set_line_spacing(int8_t chNewSpacing);
+
+extern
+arm_2d_size_t arm_lcd_text_get_actual_spacing(void);
+
+extern
+arm_2d_size_t arm_lcd_text_get_actual_char_size(void);
+
+extern
+arm_2d_region_t arm_lcd_text_get_char_validation_box(void);
+
+extern
+arm_2d_size_t arm_lcd_text_get_actual_char_box(void);
 
 /*!
  * \brief Force all char use the same width
