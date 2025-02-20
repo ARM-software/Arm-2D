@@ -555,7 +555,6 @@ void console_box_show(  console_box_t *ptThis,
 
     arm_2d_container(ptTile, __console_box, ptRegion) {
 
-        /* example code: flash a 50x50 red box in the centre */
         arm_2d_align_centre(__console_box_canvas, this.tBoxSize) {
 
             if (this.bCFGUseDirtyRegion) {
@@ -648,14 +647,17 @@ void console_box_show(  console_box_t *ptThis,
                         break;
                     }
 
+                #if 1
                     int_fast8_t chUTF8Len = arm_2d_helper_get_utf8_byte_length((const uint8_t *)&wUTF8);
 
                     if (!arm_lcd_putchar_to_buffer((uint8_t *)&wUTF8, chUTF8Len)) {
                         arm_lcd_printf_buffer(0);
                         arm_lcd_putchar_to_buffer((uint8_t *)&wUTF8, chUTF8Len);
                     }
+                #else
+                    arm_lcd_putchar((const char *)&wUTF8);
+                #endif
                     
-                    //arm_lcd_putchar((const char *)&wUTF8);
                 } while(true);
 
                 arm_lcd_printf_buffer(0);
