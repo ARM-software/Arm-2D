@@ -111,7 +111,7 @@ typedef struct text_box_io_text_stream_reader_t {
 
 typedef struct text_box_cfg_t {
     const arm_2d_font_t *ptFont;
-    float fScale;
+    //float fScale;
     text_box_line_alignment_t tLineAlign;
 
     text_box_io_text_stream_reader_t tStreamIO;

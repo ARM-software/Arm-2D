@@ -574,7 +574,7 @@ void text_box_show( text_box_t *ptThis,
         arm_lcd_text_set_font((const arm_2d_font_t *)this.tCFG.ptFont);
         arm_lcd_text_set_colour(tColour.tValue, GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
-        arm_lcd_text_set_scale(this.tCFG.fScale);
+        //arm_lcd_text_set_scale(this.tCFG.fScale);
 
         /* move to the start */
         ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
