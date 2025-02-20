@@ -648,8 +648,17 @@ void console_box_show(  console_box_t *ptThis,
                         break;
                     }
 
-                    arm_lcd_putchar((const char *)&wUTF8);
+                    int_fast8_t chUTF8Len = arm_2d_helper_get_utf8_byte_length((const uint8_t *)&wUTF8);
+
+                    if (!arm_lcd_putchar_to_buffer((uint8_t *)&wUTF8, chUTF8Len)) {
+                        arm_lcd_printf_buffer(0);
+                        arm_lcd_putchar_to_buffer((uint8_t *)&wUTF8, chUTF8Len);
+                    }
+                    
+                    //arm_lcd_putchar((const char *)&wUTF8);
                 } while(true);
+
+                arm_lcd_printf_buffer(0);
             }
             
 
