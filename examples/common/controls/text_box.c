@@ -501,8 +501,17 @@ void text_box_show( text_box_t *ptThis,
                 },
             };
 
+
+
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
+
+            if (0 != tLineRegion.tSize.iWidth ) {
+                if (!arm_2d_region_intersect(&__text_box_canvas, &tLineRegion, &tLineRegion)) {
+                    /* out of canvas */
+                    break;
+                }
+            }
 
             const arm_2d_tile_t *ptVirtualScreen = NULL;
             if (arm_2d_helper_pfb_is_region_active(&__text_box, &tLineRegion, true, &ptVirtualScreen)) {
