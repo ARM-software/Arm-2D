@@ -87,6 +87,10 @@ void __arm_lcd_update_spacing(void);
 static
 void __arm_lcd_update_char_draw_box(void);
 
+static 
+void __arm_lcd_draw_region_line_wrapping(arm_2d_size_t *ptCharSize, 
+                                         arm_2d_size_t *ptDrawRegionSize);
+
 /*============================ LOCAL VARIABLES ===============================*/
 
 static struct {
@@ -355,16 +359,29 @@ void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
 
 void arm_lcd_text_location(uint8_t chY, uint8_t chX)
 {
-    arm_2d_size_t tSize = s_tLCDTextControl.ptFont->tCharSize;
+    arm_2d_size_t tCharBoxSize = s_tLCDTextControl.Updated.tCharSize;
+    tCharBoxSize.iWidth += s_tLCDTextControl.Updated.tSpacing.iWidth;
+    tCharBoxSize.iHeight += s_tLCDTextControl.Updated.tSpacing.iHeight;
     
     s_tLCDTextControl.tDrawOffset.iX 
-        = tSize.iWidth * chX % s_tLCDTextControl.tRegion.tSize.iWidth;
+        = tCharBoxSize.iWidth * chX % s_tLCDTextControl.tRegion.tSize.iWidth;
     s_tLCDTextControl.tDrawOffset.iY 
-        = tSize.iHeight * 
-        (   chY + tSize.iWidth * chX 
+        = tCharBoxSize.iHeight * 
+        (   chY + tCharBoxSize.iWidth * chX 
         /   s_tLCDTextControl.tRegion.tSize.iWidth);
 
     s_tLCDTextControl.tDrawOffset.iY %= s_tLCDTextControl.tRegion.tSize.iHeight;
+}
+
+void arm_lcd_text_insert_line_space(int16_t iWidth)
+{
+    s_tLCDTextControl.tDrawOffset.iX += iWidth;
+    
+    arm_2d_size_t tCharBoxSize = s_tLCDTextControl.Updated.tCharSize;
+    tCharBoxSize.iWidth += s_tLCDTextControl.Updated.tSpacing.iWidth;
+    tCharBoxSize.iHeight += s_tLCDTextControl.Updated.tSpacing.iHeight;
+
+    __arm_lcd_draw_region_line_wrapping(&tCharBoxSize, &s_tLCDTextControl.tRegion.tSize);
 }
 
 
@@ -1025,7 +1042,7 @@ void arm_lcd_putchar(const char *str)
             int16_t iY = s_tLCDTextControl.tDrawOffset.iY + s_tLCDTextControl.tRegion.tLocation.iY; 
 
             s_tLCDTextControl.tDrawOffset.iX 
-                += lcd_draw_char(   iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);
+                += lcd_draw_char(iX, iY, (uint8_t **)&str, s_tLCDTextControl.chOpacity);
 
             __arm_lcd_draw_region_line_wrapping(&tCharBox, &tDrawRegionSize);
         }

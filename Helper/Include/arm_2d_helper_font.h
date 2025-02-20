@@ -411,6 +411,9 @@ extern
 void arm_lcd_text_location(uint8_t chY, uint8_t chX);
 
 extern
+void arm_lcd_text_insert_line_space(int16_t iWidth);
+
+extern
 void arm_lcd_text_reset_display_region_tracking(void);
 
 extern

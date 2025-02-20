@@ -321,7 +321,7 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
                 .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
                 .pTarget    = (uintptr_t)&this.tStringReader,
             },
-            .tLineAlign = TEXT_BOX_LINE_ALIGN_RIGHT,
+            .tLineAlign = TEXT_BOX_LINE_ALIGN_JUSTIFIED,
 
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
