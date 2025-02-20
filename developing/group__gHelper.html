@@ -1001,12 +1001,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga29e7743d6fb144033b12d5a1a408c6b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8">arm_2d_helper_control_get_absolute_region</a> (<a class="el" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *ptNode, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptOutRegion, bool bClip)</td></tr>
 <tr class="memdesc:ga29e7743d6fb144033b12d5a1a408c6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the absolute region of a given target control in an element tree  <a href="group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8">More...</a><br /></td></tr>
 <tr class="separator:ga29e7743d6fb144033b12d5a1a408c6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafef8afe9b381edc7b307ef22b66afae4"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">arm_2d_helper_get_utf8_byte_valid_length</a> (const uint8_t *pchChar)</td></tr>
-<tr class="memdesc:gafef8afe9b381edc7b307ef22b66afae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gafef8afe9b381edc7b307ef22b66afae4">More...</a><br /></td></tr>
-<tr class="separator:gafef8afe9b381edc7b307ef22b66afae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7553bfdcdafa1d4ddfa3e0bff5322fc7"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">arm_2d_helper_get_utf8_byte_length</a> (const uint8_t *pchChar)</td></tr>
-<tr class="memdesc:ga7553bfdcdafa1d4ddfa3e0bff5322fc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the code length based on the first byte of a given UTF8 char  <a href="group__gHelper.html#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">More...</a><br /></td></tr>
-<tr class="separator:ga7553bfdcdafa1d4ddfa3e0bff5322fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadecd1cd60238deb51e495eb8e19469ce"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gadecd1cd60238deb51e495eb8e19469ce">arm_2d_helper_get_utf8_byte_valid_length</a> (const uint8_t *pchChar)</td></tr>
+<tr class="memdesc:gadecd1cd60238deb51e495eb8e19469ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">return a valid code length of a given UTF8 char  <a href="group__gHelper.html#gadecd1cd60238deb51e495eb8e19469ce">More...</a><br /></td></tr>
+<tr class="separator:gadecd1cd60238deb51e495eb8e19469ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75b0dff775ed037ff9fd6d4c62786d52"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga75b0dff775ed037ff9fd6d4c62786d52">arm_2d_helper_get_utf8_byte_length</a> (const uint8_t *pchChar)</td></tr>
+<tr class="memdesc:ga75b0dff775ed037ff9fd6d4c62786d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the code length based on the first byte of a given UTF8 char  <a href="group__gHelper.html#ga75b0dff775ed037ff9fd6d4c62786d52">More...</a><br /></td></tr>
+<tr class="separator:ga75b0dff775ed037ff9fd6d4c62786d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0400f80284319e9ae66d5316a52ee0b7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7">arm_2d_helper_utf8_to_unicode</a> (const uint8_t *pchUTF8)</td></tr>
 <tr class="memdesc:ga0400f80284319e9ae66d5316a52ee0b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert an UTF8 char into unicode char  <a href="group__gHelper.html#ga0400f80284319e9ae66d5316a52ee0b7">More...</a><br /></td></tr>
 <tr class="separator:ga0400f80284319e9ae66d5316a52ee0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -11669,14 +11669,14 @@ sometimes, we want to force transform helper to update dirty regions even if bot
 
 </div>
 </div>
-<a id="gafef8afe9b381edc7b307ef22b66afae4" name="gafef8afe9b381edc7b307ef22b66afae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gafef8afe9b381edc7b307ef22b66afae4">&#9670;&#160;</a></span>arm_2d_helper_get_utf8_byte_valid_length()</h2>
+<a id="gadecd1cd60238deb51e495eb8e19469ce" name="gadecd1cd60238deb51e495eb8e19469ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadecd1cd60238deb51e495eb8e19469ce">&#9670;&#160;</a></span>arm_2d_helper_get_utf8_byte_valid_length()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t arm_2d_helper_get_utf8_byte_valid_length </td>
+          <td class="memname">__STATIC_INLINE int8_t arm_2d_helper_get_utf8_byte_valid_length </td>
           <td>(</td>
           <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>pchChar</em></td><td>)</td>
@@ -11702,14 +11702,14 @@ sometimes, we want to force transform helper to update dirty regions even if bot
 
 </div>
 </div>
-<a id="ga7553bfdcdafa1d4ddfa3e0bff5322fc7" name="ga7553bfdcdafa1d4ddfa3e0bff5322fc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7553bfdcdafa1d4ddfa3e0bff5322fc7">&#9670;&#160;</a></span>arm_2d_helper_get_utf8_byte_length()</h2>
+<a id="ga75b0dff775ed037ff9fd6d4c62786d52" name="ga75b0dff775ed037ff9fd6d4c62786d52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga75b0dff775ed037ff9fd6d4c62786d52">&#9670;&#160;</a></span>arm_2d_helper_get_utf8_byte_length()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t arm_2d_helper_get_utf8_byte_length </td>
+          <td class="memname">__STATIC_INLINE int8_t arm_2d_helper_get_utf8_byte_length </td>
           <td>(</td>
           <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>pchChar</em></td><td>)</td>
