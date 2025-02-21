@@ -622,9 +622,8 @@ void text_box_show( text_box_t *ptThis,
                             TEXT_BOX_SEEK_SET));
         
         int32_t iLineNumber = this.Start.nLine;
-        int16_t iFontCharHeight = arm_lcd_text_get_actual_char_box().iHeight;
-
-
+        int16_t iFontCharBoxHeight = arm_lcd_text_get_actual_char_box().iHeight;
+        int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;
         /* tPFBScanRegion is a mapping of the PFB region inside the __text_box_canvas,
          * with which we can ignore the lines that out of the PFB region.
          */
@@ -658,7 +657,7 @@ void text_box_show( text_box_t *ptThis,
             int32_t iLineOffset = iLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
-                    .iY = iLineOffset * iFontCharHeight + iLineVerticalOffset,
+                    .iY = iLineOffset * iFontCharBoxHeight + iLineVerticalOffset,
                 },
                 .tSize = {
                     .iHeight = iFontCharHeight,
@@ -670,18 +669,6 @@ void text_box_show( text_box_t *ptThis,
             } else {
                 tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
             }
-
-        #if 0
-            arm_2d_region_t tFullLineRegion = {
-                .tLocation = {
-                    .iY = iLineOffset * iFontCharHeight + iLineVerticalOffset,
-                },
-                .tSize = {
-                    .iHeight = iFontCharHeight,
-                    .iWidth = this.iLineWidth,
-                },
-            };
-        #endif
 
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
@@ -695,7 +682,7 @@ void text_box_show( text_box_t *ptThis,
 
                 arm_2d_region_t tExpandedLineRegion = tLineRegion;
                 tExpandedLineRegion.tLocation.iY -= iFontCharHeight / 2;
-                tExpandedLineRegion.tSize.iHeight *= 2;
+                tExpandedLineRegion.tSize.iHeight = iFontCharHeight * 2;
 
                 if (!arm_2d_region_intersect(&tPFBScanRegion, &tExpandedLineRegion, NULL)) {
                     /* out of canvas */
@@ -839,6 +826,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
     bool bGetAValidLine = false;
     arm_2d_char_descriptor_t tDescriptor;
     int16_t iWhiteSpaceWidth = 0;
+
     arm_2d_char_descriptor_t *ptDescriptor =
         arm_2d_helper_get_char_descriptor(this.tCFG.ptFont, 
             &tDescriptor, 
@@ -936,10 +924,8 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
         if (bNormalChar) {
             bDetectFirstBrick = true;
 
-            
             int16_t iAdvance = arm_lcd_get_char_advance(tUTF8Char.chByte);
             int16_t iNewLineWidth = iLineWidth + iAdvance;
-            
 
             if (iNewLineWidth > this.iLineWidth) {
                 /* insufficient space for this char */
