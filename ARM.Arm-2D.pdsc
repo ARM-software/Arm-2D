@@ -439,7 +439,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.10.0" condition="Arm-2D-Printf">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cversion="2.10.1" condition="Arm-2D-Printf">
           <description>A helper service for fonts and LCD printf.</description>
           <files>
             <file category="header"      name="Helper/Include/arm_2d_helper_font.h" />
@@ -804,11 +804,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cversion="0.5.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cversion="0.6.0" condition="Arm-2D-Demos">
           <description>A demo for text reader.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_text_reader.c" attr="config" version="0.5.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_text_reader.h" attr="config" version="0.5.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_text_reader.c" attr="config" version="0.6.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_text_reader.h" attr="config" version="0.6.0" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Text_Reader

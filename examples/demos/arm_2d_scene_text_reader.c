@@ -316,12 +316,13 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
                                     sizeof(c_chStory));
 
         text_box_cfg_t tCFG = {
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A8,
             .tStreamIO = {
                 .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
                 .pTarget    = (uintptr_t)&this.tStringReader,
             },
             .tLineAlign = TEXT_BOX_LINE_ALIGN_JUSTIFIED,
+            //.fScale = 1.1f,
 
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
