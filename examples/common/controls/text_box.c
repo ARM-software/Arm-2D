@@ -825,18 +825,8 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
     int16_t iFontCharWidth = this.tCFG.ptFont->tCharSize.iWidth;
     bool bGetAValidLine = false;
     arm_2d_char_descriptor_t tDescriptor;
-    int16_t iWhiteSpaceWidth = 0;
-
-    arm_2d_char_descriptor_t *ptDescriptor =
-        arm_2d_helper_get_char_descriptor(this.tCFG.ptFont, 
-            &tDescriptor, 
-            tUTF8Char.chByte);
-
-    if (NULL == ptDescriptor) {
-        iWhiteSpaceWidth = iFontCharWidth;
-    } else {
-        iWhiteSpaceWidth = ptDescriptor->iAdvance;
-    }
+    int16_t iWhiteSpaceWidth = arm_lcd_get_char_advance(tUTF8Char.chByte)
+                             + arm_lcd_text_get_actual_spacing().iWidth;
 
     int16_t iPureCharWidth = 0;
 
@@ -1001,7 +991,6 @@ void __text_box_update(text_box_t *ptThis, bool bFastUpdate)
     assert(NULL != this.tCFG.tStreamIO.ptIO);
     assert(NULL != this.tCFG.tStreamIO.ptIO->fnSeek);
 
-    
     int32_t nLineNumber = 0;
     if (bFastUpdate) {
         /* move to the previous start line */
