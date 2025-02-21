@@ -237,7 +237,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_text_reader_handler)
 
             arm_2d_dock_with_margin(__dock_region, 4) {
 
-                arm_lcd_text_set_char_spacing(5);
+                arm_lcd_text_set_char_spacing(1);
                 arm_lcd_text_set_line_spacing(4);
                 text_box_show(  &this.tTextPanel, 
                                 ptTile, 
