@@ -586,6 +586,21 @@ void text_box_show( text_box_t *ptThis,
         int32_t iLineNumber = this.Start.nLine;
         int16_t iFontCharHeight = arm_lcd_text_get_actual_char_box().iHeight;
 
+        arm_2d_region_t tValidRegion;
+        arm_2d_region_t tPFBScanRegion;
+
+        if (!__arm_2d_tile_get_virtual_screen_or_root(  &__text_box,
+                                                        &tValidRegion, 
+                                                        &tPFBScanRegion.tLocation,
+                                                        NULL,
+                                                        false)) {
+            return ;
+        }
+
+        tPFBScanRegion.tSize = tValidRegion.tSize;
+        
+        ARM_2D_OP_WAIT_ASYNC();
+
         /* print all lines */
         do {
             if (__text_box_is_eof(ptThis)) {
@@ -623,23 +638,36 @@ void text_box_show( text_box_t *ptThis,
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
 
+            bool bIgnoreDrawing = false;
             if (0 != tLineRegion.tSize.iWidth ) {
                 if (!arm_2d_region_intersect(&__text_box_canvas, &tLineRegion, &tLineRegion)) {
                     /* out of canvas */
                     break;
                 }
+
+                arm_2d_region_t tExpandedLineRegion = tLineRegion;
+                tExpandedLineRegion.tLocation.iY -= iFontCharHeight / 2;
+                tExpandedLineRegion.tSize.iHeight *= 2;
+
+                if (!arm_2d_region_intersect(&tPFBScanRegion, &tExpandedLineRegion, NULL)) {
+                    /* out of canvas */
+                    bIgnoreDrawing = true;
+
+                    if (tLineRegion.tLocation.iY >= tPFBScanRegion.tLocation.iY + tPFBScanRegion.tSize.iHeight) {
+                        /* the target line is below the PFB bottom line, no need to draw the following lines */
+                        break;
+                    }
+                }
             }
 
-            const arm_2d_tile_t *ptVirtualScreen = NULL;
-            //if (arm_2d_helper_pfb_is_region_active(&__text_box, &tLineRegion, true, &ptVirtualScreen)) {
-            
+            if (!bIgnoreDrawing) {
                 __text_box_draw_line(ptThis,
                                      &this.tCurrentLine,
                                      &__text_box,
                                      &tLineRegion,
                                      this.tCFG.tLineAlign);
 
-            //}
+            }
 
             //arm_2d_draw_box(&__text_box, &tFullLineRegion, 1, GLCD_COLOR_RED, 64);
 
