@@ -502,7 +502,7 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
 
     if (s_tLCDTextControl.q16Scale > 0) {
         iAdvance += s_tLCDTextControl.Spacing.chChar;   /* support char spacing */
-        iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance));
+        iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance) + 0xFFFF);
         /* NOTE: No need to adjust bearings in the following way. */
         //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
         //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
