@@ -112,14 +112,15 @@ typedef struct text_box_io_text_stream_reader_t {
 typedef struct text_box_cfg_t {
     const arm_2d_font_t *ptFont;
     float fScale;
-    text_box_line_alignment_t tLineAlign;
 
     text_box_io_text_stream_reader_t tStreamIO;
-
     arm_2d_scene_t *ptScene;
-
     __text_box_scratch_mem_t *ptScratchMemory;
     uint16_t                  hwScratchMemoryCount;
+
+    uint8_t tLineAlign;                             //!< please use enum in text_box_line_alignment_t
+    int8_t chSpaceBetweenParagraph;
+    
 } text_box_cfg_t;
 
 /*!

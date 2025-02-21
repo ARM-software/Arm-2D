@@ -642,19 +642,23 @@ void text_box_show( text_box_t *ptThis,
             tPFBScanRegion.tSize = tValidRegion.tSize;
         } while(0);
 
-        
         /* print all lines */
+        int16_t iLineVerticalOffset = 0;
         do {
+            #if 0
             if (__text_box_is_eof(ptThis)) {
                 break;
             }
+            #endif
 
-            __text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine);
+            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine)) {
+                break;
+            }
 
             int32_t iLineOffset = iLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
-                    .iY = iLineOffset * iFontCharHeight,
+                    .iY = iLineOffset * iFontCharHeight + iLineVerticalOffset,
                 },
                 .tSize = {
                     .iHeight = iFontCharHeight,
@@ -667,15 +671,17 @@ void text_box_show( text_box_t *ptThis,
                 tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
             }
 
+        #if 0
             arm_2d_region_t tFullLineRegion = {
                 .tLocation = {
-                    .iY = iLineOffset * iFontCharHeight,
+                    .iY = iLineOffset * iFontCharHeight + iLineVerticalOffset,
                 },
                 .tSize = {
                     .iHeight = iFontCharHeight,
                     .iWidth = this.iLineWidth,
                 },
             };
+        #endif
 
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
@@ -712,7 +718,14 @@ void text_box_show( text_box_t *ptThis,
             }
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
+            /* skip the `\n` */
+            nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
             __text_box_set_current_position(ptThis, nNewLinePosition);
+            
+            if (this.tCurrentLine.bEndNaturally) {
+                /* end of a paragraph, insert spacing */
+                iLineVerticalOffset += this.tCFG.chSpaceBetweenParagraph;
+            }
 
             iLineNumber++;
         } while(1);
