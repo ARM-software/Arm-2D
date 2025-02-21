@@ -136,6 +136,10 @@ ARM_PRIVATE(
         int32_t nPosition;
     } Start;
 
+    struct {
+        int32_t nTargetStartLine;
+    } Request;
+
     int16_t iLineWidth;
 
     __text_box_line_info_t tCurrentLine;
@@ -192,12 +196,20 @@ void text_box_show( text_box_t *ptThis,
                     bool bIsNewFrame);
 
 /*!
- * \brief update the text box as the content is changed.
+ * \brief force update the text box.
  * \param[in] ptThis the target text box object
  */
 extern
 ARM_NONNULL(1)
 void text_box_update(text_box_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine);
+
+extern
+ARM_NONNULL(1)
+int32_t text_box_get_start_line(text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

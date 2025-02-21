@@ -101,6 +101,9 @@ bool __text_box_detect_brick(   uint8_t *pchPT,
                                 int16_t iLineWidth,
                                 int16_t iPureCharWidth);
 
+static
+ARM_NONNULL(1)
+void __text_box_update(text_box_t *ptThis, bool bFastUpdate);
 /*============================ GLOBAL VARIABLES ==============================*/
 const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
     .fnGetChar  = &__c_string_io_read_char,
@@ -341,8 +344,6 @@ void text_box_init( text_box_t *ptThis,
         this.tCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
     }
 
-    this.Start.nLine = 0;
-
     if (    (NULL != ptCFG->ptScratchMemory)
        &&   (ptCFG->hwScratchMemoryCount > 0)) {
 
@@ -374,7 +375,7 @@ ARM_NONNULL(1)
 void text_box_on_frame_start( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
 }
 
 ARM_NONNULL(1)
@@ -382,6 +383,30 @@ void text_box_on_frame_complete( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
     
+}
+
+ARM_NONNULL(1)
+int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
+{
+    assert(NULL != ptThis);
+
+    int32_t iOldStartLine = 0;
+    
+    arm_irq_safe {
+        iOldStartLine = this.Request.nTargetStartLine;
+
+        if (iStartLine >= 0) {
+            this.Request.nTargetStartLine = iStartLine;
+        }
+    }
+
+    return iOldStartLine;
+}
+
+ARM_NONNULL(1)
+int32_t text_box_get_start_line(text_box_t *ptThis)
+{
+    return this.Request.nTargetStartLine;
 }
 
 static
@@ -562,19 +587,32 @@ void text_box_show( text_box_t *ptThis,
 
     arm_2d_container(ptTile, __text_box, ptRegion) {
 
-        if (bIsNewFrame) {
-            if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
-                this.iLineWidth = __text_box_canvas.tSize.iWidth;
-
-                text_box_update(ptThis);
-            }
-        }
-
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__text_box);
         arm_lcd_text_set_font((const arm_2d_font_t *)this.tCFG.ptFont);
         arm_lcd_text_set_colour(tColour.tValue, GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_text_set_scale(this.tCFG.fScale);
+
+        if (bIsNewFrame) {
+            bool bRequestUpdate = false;
+            bool bFastUpdate = false;
+            if (this.Request.nTargetStartLine != this.Start.nLine) {
+                bFastUpdate = (this.Request.nTargetStartLine > this.Start.nLine);
+
+                this.Start.nLine = this.Request.nTargetStartLine;
+                bRequestUpdate = true;
+            }
+
+            if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
+                this.iLineWidth = __text_box_canvas.tSize.iWidth;
+                bRequestUpdate = true;
+                bFastUpdate = false;
+            }
+
+            if (bRequestUpdate) {
+                __text_box_update(ptThis, bFastUpdate);
+            }
+        }
 
         /* move to the start */
         ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
@@ -586,36 +624,40 @@ void text_box_show( text_box_t *ptThis,
         int32_t iLineNumber = this.Start.nLine;
         int16_t iFontCharHeight = arm_lcd_text_get_actual_char_box().iHeight;
 
-        arm_2d_region_t tValidRegion;
+
+        /* tPFBScanRegion is a mapping of the PFB region inside the __text_box_canvas,
+         * with which we can ignore the lines that out of the PFB region.
+         */
         arm_2d_region_t tPFBScanRegion;
+        do {
+            arm_2d_region_t tValidRegion;
+            if (!__arm_2d_tile_get_virtual_screen_or_root(  &__text_box,
+                                                            &tValidRegion, 
+                                                            &tPFBScanRegion.tLocation,
+                                                            NULL,
+                                                            false)) {
+                return ;
+            }
 
-        if (!__arm_2d_tile_get_virtual_screen_or_root(  &__text_box,
-                                                        &tValidRegion, 
-                                                        &tPFBScanRegion.tLocation,
-                                                        NULL,
-                                                        false)) {
-            return ;
-        }
+            tPFBScanRegion.tSize = tValidRegion.tSize;
+        } while(0);
 
-        tPFBScanRegion.tSize = tValidRegion.tSize;
         
-        ARM_2D_OP_WAIT_ASYNC();
-
         /* print all lines */
         do {
             if (__text_box_is_eof(ptThis)) {
                 break;
             }
-            //int32_t nStartPosition = __text_box_get_current_position(ptThis);
+
             __text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine);
 
+            int32_t iLineOffset = iLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
-                    .iY = iLineNumber * iFontCharHeight,
+                    .iY = iLineOffset * iFontCharHeight,
                 },
                 .tSize = {
                     .iHeight = iFontCharHeight,
-                    //.iWidth = this.tCurrentLine.iLineWidth,
                 },
             };
 
@@ -627,7 +669,7 @@ void text_box_show( text_box_t *ptThis,
 
             arm_2d_region_t tFullLineRegion = {
                 .tLocation = {
-                    .iY = iLineNumber * iFontCharHeight,
+                    .iY = iLineOffset * iFontCharHeight,
                 },
                 .tSize = {
                     .iHeight = iFontCharHeight,
@@ -641,7 +683,7 @@ void text_box_show( text_box_t *ptThis,
             bool bIgnoreDrawing = false;
             if (0 != tLineRegion.tSize.iWidth ) {
                 if (!arm_2d_region_intersect(&__text_box_canvas, &tLineRegion, &tLineRegion)) {
-                    /* out of canvas */
+                    /* out of text box canvas */
                     break;
                 }
 
@@ -668,8 +710,6 @@ void text_box_show( text_box_t *ptThis,
                                      this.tCFG.tLineAlign);
 
             }
-
-            //arm_2d_draw_box(&__text_box, &tFullLineRegion, 1, GLCD_COLOR_RED, 64);
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
             __text_box_set_current_position(ptThis, nNewLinePosition);
@@ -954,24 +994,36 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
     return bGetAValidLine;
 }
 
+static
 ARM_NONNULL(1)
-void text_box_update(text_box_t *ptThis)
+void __text_box_update(text_box_t *ptThis, bool bFastUpdate)
 {
     assert(NULL != ptThis);
     assert(NULL != this.tCFG.tStreamIO.ptIO);
     assert(NULL != this.tCFG.tStreamIO.ptIO->fnSeek);
 
-    __line_cache_invalid_all(ptThis);
-
-    /* move to the begin */
-    ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
-        ARM_2D_PARAM(   ptThis, 
-                        this.tCFG.tStreamIO.pTarget,
-                        0,
-                        TEXT_BOX_SEEK_SET));
-
+    
     int32_t nLineNumber = 0;
+    if (bFastUpdate) {
+        /* move to the previous start line */
+        ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+            ARM_2D_PARAM(   ptThis, 
+                            this.tCFG.tStreamIO.pTarget,
+                            this.Start.nPosition,
+                            TEXT_BOX_SEEK_SET));
+        nLineNumber = this.Start.nLine;
+    } else {
+        /* move to the begin */
+        ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
+            ARM_2D_PARAM(   ptThis, 
+                            this.tCFG.tStreamIO.pTarget,
+                            0,
+                            TEXT_BOX_SEEK_SET));
+        __line_cache_invalid_all(ptThis);
+    } 
 
+    
+    __text_box_line_info_t tLineInfo;
     /* find the reading position of the start line */
     do {
         /* get the current position */
@@ -980,14 +1032,21 @@ void text_box_update(text_box_t *ptThis)
             break;
         }
 
-        if (!__text_box_get_and_analyze_one_line(ptThis, NULL)) {
+        if (!__text_box_get_and_analyze_one_line(ptThis, &tLineInfo)) {
             /* failed to read a line */
             break;
         }
-
+        int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
+        __text_box_set_current_position(ptThis, nNewLinePosition);
         nLineNumber++;
     } while(1);
 
+}
+
+ARM_NONNULL(1)
+void text_box_update(text_box_t *ptThis)
+{
+    __text_box_update(ptThis, false);
 }
 
 ARM_NONNULL(1,2)
