@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        20. Feb 2025
- * $Revision:    V.2.10.1
+ * $Date:        21. Feb 2025
+ * $Revision:    V.2.10.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -501,7 +501,6 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
     } while(0);
 
     if (s_tLCDTextControl.q16Scale > 0) {
-        iAdvance += s_tLCDTextControl.Spacing.chChar;   /* support char spacing */
         iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance) + 0xFFFF);
         /* NOTE: No need to adjust bearings in the following way. */
         //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
@@ -515,8 +514,9 @@ ARM_NONNULL(1)
 int16_t arm_lcd_get_char_advance(uint8_t *pchChar)
 {
     assert(NULL != pchChar);
-
-    return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, NULL, pchChar);
+    int16_t iUpdatedAdvance = __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, NULL, pchChar) 
+                            + s_tLCDTextControl.Updated.tSpacing.iWidth;
+    return iUpdatedAdvance;
 }
 
 int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8_t chOpacity)
@@ -533,8 +533,9 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
                                                     &tCharDescriptor,
                                                     *ppchCharCode)){
         (*ppchCharCode) += chCodeLength;
-
-        return __arm_lcd_get_char_advance(ptFont, NULL, NULL);
+    
+        return (    __arm_lcd_get_char_advance(ptFont, NULL, NULL)
+               +    s_tLCDTextControl.Updated.tSpacing.iWidth);                                  
     }
 
     //(*ppchCharCode) += tCharDescriptor.chCodeLength;
@@ -592,7 +593,8 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
 
     ARM_2D_OP_WAIT_ASYNC();
 
-    return __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, &tCharDescriptor, NULL);
+    return  (   __arm_lcd_get_char_advance(s_tLCDTextControl.ptFont, &tCharDescriptor, NULL) 
+            +   s_tLCDTextControl.Updated.tSpacing.iWidth);
 }
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
@@ -965,7 +967,7 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
                 tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, iCharNewHeight);
             }
 
-            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str);
+            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str) + s_tLCDTextControl.Updated.tSpacing.iWidth;
             tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
 
             str += chCodeLength;
