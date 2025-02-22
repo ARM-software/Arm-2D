@@ -612,11 +612,7 @@ void text_box_show( text_box_t *ptThis,
         }
 
         /* move to the start */
-        ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
-            ARM_2D_PARAM(   ptThis, 
-                            this.tCFG.tStreamIO.pTarget,
-                            this.Start.nPosition,
-                            TEXT_BOX_SEEK_SET));
+        __text_box_set_current_position(ptThis, this.Start.nPosition);
         
         int32_t iLineNumber = this.Start.nLine;
         int16_t iFontCharBoxHeight = arm_lcd_text_get_actual_char_box().iHeight;
@@ -702,8 +698,12 @@ void text_box_show( text_box_t *ptThis,
             }
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
-            /* skip the `\n` */
-            nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
+
+            if (this.tCurrentLine.hwBrickCount > 0) {
+                /* skip the `\n` in a paragraph */
+                nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
+            }
+
             __text_box_set_current_position(ptThis, nNewLinePosition);
             
             if (this.tCurrentLine.bEndNaturally) {
@@ -992,6 +992,7 @@ void __text_box_update(text_box_t *ptThis)
 
     bool bFastUpdate = false;
     if (this.Request.nTargetStartLine != this.Start.nLine) {
+
         if (    (this.Request.nTargetStartLine > this.Start.nLine)
            &&   (this.Start.nPosition > 0)) {
             bFastUpdate = true;
@@ -1023,7 +1024,12 @@ void __text_box_update(text_box_t *ptThis)
             break;
         }
         int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
+        if (tLineInfo.hwBrickCount > 0) {
+            /* skip the `\n` in a paragraph */
+            nNewLinePosition += !!tLineInfo.bEndNaturally;
+        }
         __text_box_set_current_position(ptThis, nNewLinePosition);
+
         nLineNumber++;
     } while(1);
 
