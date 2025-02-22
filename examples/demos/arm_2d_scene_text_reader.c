@@ -184,8 +184,12 @@ static void __on_scene_text_reader_frame_start(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        text_box_set_start_line(&this.tTextPanel, ++this.iLineNumber);
+    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
+
+        if (++this.iLineNumber >= 200) {
+            this.iLineNumber = 0;
+        }
+        text_box_set_start_line(&this.tTextPanel, this.iLineNumber);
     }
 
     text_box_on_frame_start(&this.tTextPanel);
@@ -223,7 +227,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_text_reader_handler)
 
         arm_2d_dock(__top_canvas, 16) {
 
-        #if 0
+        #if 1
             draw_round_corner_border(   ptTile, 
                 &__dock_region, 
                 GLCD_COLOR_BLACK, 
@@ -233,16 +237,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_text_reader_handler)
                     {0, 128, 128, 128});
         #endif
 
-            arm_2d_dock_with_margin(__dock_region, 4) {
+            arm_2d_dock_with_margin(__dock_region, 10) {
 
                 arm_lcd_text_set_char_spacing(1);
                 arm_lcd_text_set_line_spacing(4);
+
                 text_box_show(  &this.tTextPanel, 
                                 ptTile, 
                                 &__dock_region,
                                 (__arm_2d_color_t) {GLCD_COLOR_BLACK},
                                 255,
                                 bIsNewFrame);
+                
+                //arm_2d_helper_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_BLUE, 32);
 
             }
 
