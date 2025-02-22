@@ -103,7 +103,7 @@ bool __text_box_detect_brick(   uint8_t *pchPT,
 
 static
 ARM_NONNULL(1)
-void __text_box_update(text_box_t *ptThis, bool bFastUpdate);
+void __text_box_update(text_box_t *ptThis);
 /*============================ GLOBAL VARIABLES ==============================*/
 const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
     .fnGetChar  = &__c_string_io_read_char,
@@ -594,23 +594,20 @@ void text_box_show( text_box_t *ptThis,
         arm_lcd_text_set_scale(this.tCFG.fScale);
 
         if (bIsNewFrame) {
-            bool bRequestUpdate = false;
-            bool bFastUpdate = false;
-            if (this.Request.nTargetStartLine != this.Start.nLine) {
-                bFastUpdate = (this.Request.nTargetStartLine > this.Start.nLine);
+            bool bRequestUpdate = this.Request.bUpdate;
 
-                this.Start.nLine = this.Request.nTargetStartLine;
+            if (this.Request.nTargetStartLine != this.Start.nLine) {
                 bRequestUpdate = true;
             }
 
             if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
                 this.iLineWidth = __text_box_canvas.tSize.iWidth;
                 bRequestUpdate = true;
-                bFastUpdate = false;
             }
 
             if (bRequestUpdate) {
-                __text_box_update(ptThis, bFastUpdate);
+                this.Request.bUpdate = false;
+                __text_box_update(ptThis);
             }
         }
 
@@ -985,32 +982,33 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
 
 static
 ARM_NONNULL(1)
-void __text_box_update(text_box_t *ptThis, bool bFastUpdate)
+void __text_box_update(text_box_t *ptThis)
 {
     assert(NULL != ptThis);
     assert(NULL != this.tCFG.tStreamIO.ptIO);
     assert(NULL != this.tCFG.tStreamIO.ptIO->fnSeek);
 
     int32_t nLineNumber = 0;
-    if (bFastUpdate) {
-        /* move to the previous start line */
-        ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
-            ARM_2D_PARAM(   ptThis, 
-                            this.tCFG.tStreamIO.pTarget,
-                            this.Start.nPosition,
-                            TEXT_BOX_SEEK_SET));
-        nLineNumber = this.Start.nLine;
-    } else {
+
+    bool bFastUpdate = false;
+    if (this.Request.nTargetStartLine != this.Start.nLine) {
+        if (    (this.Request.nTargetStartLine > this.Start.nLine)
+           &&   (this.Start.nPosition > 0)) {
+            bFastUpdate = true;
+
+            nLineNumber = this.Start.nLine;
+            __text_box_set_current_position(ptThis, this.Start.nPosition);
+        }
+
+        this.Start.nLine = this.Request.nTargetStartLine;
+    }
+
+    if (!bFastUpdate) {
         /* move to the begin */
-        ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnSeek,
-            ARM_2D_PARAM(   ptThis, 
-                            this.tCFG.tStreamIO.pTarget,
-                            0,
-                            TEXT_BOX_SEEK_SET));
+        __text_box_set_current_position(ptThis, 0);
         __line_cache_invalid_all(ptThis);
     } 
 
-    
     __text_box_line_info_t tLineInfo;
     /* find the reading position of the start line */
     do {
@@ -1034,7 +1032,11 @@ void __text_box_update(text_box_t *ptThis, bool bFastUpdate)
 ARM_NONNULL(1)
 void text_box_update(text_box_t *ptThis)
 {
-    __text_box_update(ptThis, false);
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        this.Request.bUpdate = true;
+    }
 }
 
 ARM_NONNULL(1,2)

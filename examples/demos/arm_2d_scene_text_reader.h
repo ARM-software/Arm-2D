@@ -86,6 +86,7 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+    int16_t iLineNumber;
 
     text_box_c_str_reader_t tStringReader;
     text_box_t tTextPanel;

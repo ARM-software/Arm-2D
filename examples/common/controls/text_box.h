@@ -139,6 +139,7 @@ ARM_PRIVATE(
 
     struct {
         int32_t nTargetStartLine;
+        bool bUpdate;
     } Request;
 
     int16_t iLineWidth;

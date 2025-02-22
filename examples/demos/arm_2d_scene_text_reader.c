@@ -184,6 +184,10 @@ static void __on_scene_text_reader_frame_start(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
+        text_box_set_start_line(&this.tTextPanel, ++this.iLineNumber);
+    }
+
     text_box_on_frame_start(&this.tTextPanel);
 }
 
@@ -193,12 +197,6 @@ static void __on_scene_text_reader_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     text_box_on_frame_complete(&this.tTextPanel);
-#if 0
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
 static void __before_scene_text_reader_switching_out(arm_2d_scene_t *ptScene)
@@ -330,7 +328,7 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
 
         text_box_init(&this.tTextPanel, &tCFG);
 
-        //text_box_set_start_line(&this.tTextPanel, 150);
+        
     } while(0);
 
     /* ------------   initialize members of user_scene_text_reader_t end   ---------------*/
