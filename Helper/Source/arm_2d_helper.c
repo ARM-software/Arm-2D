@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        25. Nov 2024
- * $Revision:    V.2.2.1
+ * $Date:        24. Feb 2025
+ * $Revision:    V.2.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -87,6 +87,7 @@ static struct {
         uintptr_t semTaskAvailable;
     }Async;
 #endif
+    int64_t lTimestampInit;
 } s_tHelper = {
     .wMSUnit = 1,
 };
@@ -101,6 +102,23 @@ extern
 void arm_2d_helper_rtos_init(void);
 
 /*============================ IMPLEMENTATION ================================*/
+
+__STATIC_INLINE
+uint8_t __convert_2digits_bdc(const char *pchBCD)
+{
+    uint8_t chResult = 0;
+    uint8_t chChar = pchBCD[0];
+    if (chChar >= '0' && chChar <= '9') {
+        chResult = (chChar - '0') * 10;
+    }
+    
+    chChar = pchBCD[1];
+    if (chChar >= '0' && chChar <= '9') {
+        chResult += (chChar - '0');
+    }
+    
+    return chResult;
+}
 
 void arm_2d_helper_init(void)
 {
@@ -130,6 +148,20 @@ void arm_2d_helper_init(void)
 #endif
 
     arm_2d_helper_built_in_init();
+    
+    do {
+        const char c_chStartTime[] = {__TIME__};
+        uint8_t chHours = __convert_2digits_bdc(&c_chStartTime[0]);
+        uint8_t chMinus = __convert_2digits_bdc(&c_chStartTime[3]);
+        uint8_t chSeconds = __convert_2digits_bdc(&c_chStartTime[6]);
+
+        int64_t lTimestampInit = chSeconds * 1000ul;
+        lTimestampInit += chMinus * 60ul * 1000ul;
+        lTimestampInit += chHours * 3600 * 1000ul;
+    
+        s_tHelper.lTimestampInit = arm_2d_helper_convert_ms_to_ticks(lTimestampInit);
+    
+    } while(0);
 
 }
 
@@ -145,7 +177,7 @@ __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
     0;
 #endif
 
-    return iOriginTimestamp;
+    return iOriginTimestamp + s_tHelper.lTimestampInit;
 }
 
 __WEAK 
