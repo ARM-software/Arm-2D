@@ -123,7 +123,50 @@ static struct {
     uint8_t chNumber;
 } s_tDigitsTable[12];
 
+static 
+struct {
+    uint8_t chHours;
+    uint8_t chMinus;
+    uint8_t chSeconds;
+    
+    int64_t lStartTimeInMs;
+} s_tInitialTime = {0};
+
+const uint8_t c_chStartTime[] = {__TIME__};
+
 /*============================ IMPLEMENTATION ================================*/
+
+static 
+uint8_t __convert_2digits_bdc(const uint8_t *pchBCD)
+{
+    uint8_t chResult = 0;
+    uint8_t chChar = pchBCD[0];
+    if (chChar >= '0' && chChar <= '9') {
+        chResult = (chChar - '0') * 10;
+    }
+    
+    chChar = pchBCD[1];
+    if (chChar >= '0' && chChar <= '9') {
+        chResult += (chChar - '0');
+    }
+    
+    return chResult;
+}
+
+static
+void __parse_initial_time(void)
+{
+    s_tInitialTime.chHours = __convert_2digits_bdc(&c_chStartTime[0]);
+    s_tInitialTime.chMinus = __convert_2digits_bdc(&c_chStartTime[3]);
+    s_tInitialTime.chSeconds = __convert_2digits_bdc(&c_chStartTime[6]);
+
+    s_tInitialTime.lStartTimeInMs = s_tInitialTime.chSeconds * 1000ul;
+    s_tInitialTime.lStartTimeInMs += s_tInitialTime.chMinus * 60ul * 1000ul;
+    s_tInitialTime.lStartTimeInMs += s_tInitialTime.chHours * 3600 * 1000ul;
+    
+}
+
+
 
 static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
 {
@@ -199,12 +242,14 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
     int64_t lTimeStampInMs = arm_2d_helper_convert_ticks_to_ms(
                                 arm_2d_helper_get_system_timestamp());
 
+    lTimeStampInMs += s_tInitialTime.lStartTimeInMs;
+    
     /* calculate the hours */
     do {
-        uint32_t chHour = lTimeStampInMs / 1000ul;
-        chHour %= 12 * 3600ul;
-        this.chHour = chHour / 3600;
-        spin_zoom_widget_on_frame_start(&this.tPointers[0], chHour, 1.0f);
+        uint32_t wHour = lTimeStampInMs / 1000ul;
+        wHour %= 12 * 3600ul;
+        this.wHour = wHour / 3600;
+        spin_zoom_widget_on_frame_start(&this.tPointers[0], wHour, 1.0f);
 
         lTimeStampInMs %= (3600ul * 1000ul);
         
@@ -212,30 +257,30 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
     /* calculate the Minutes */
     do {
-        uint32_t chMin = lTimeStampInMs / 1000ul;
+        uint32_t wMin = lTimeStampInMs / 1000ul;
 
-        this.chMin = chMin / 60;
-        spin_zoom_widget_on_frame_start(&this.tPointers[1], chMin, 1.0f);
+        this.wMin = wMin / 60;
+        spin_zoom_widget_on_frame_start(&this.tPointers[1], wMin, 1.0f);
 
         lTimeStampInMs %= (60ul * 1000ul);
     } while(0);
 
     /* calculate the Seconds */
     do {
-        uint32_t chSec = lTimeStampInMs;
+        uint32_t wSec = lTimeStampInMs;
 
 #if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
 
-        chSec /= 1000;
-        if (!(this.chSec == -1 && chSec == 59)) {
-            this.chSec = chSec;
+        wSec /= 1000;
+        if (!(this.nSec == -1 && wSec == 59)) {
+            this.nSec = wSec;
         }
 
-        if (meter_pointer_on_frame_start(&this.tSecPointer, this.chSec, 1.0f)) {
+        if (meter_pointer_on_frame_start(&this.tSecPointer, this.nSec, 1.0f)) {
             /* when complete, map 59 to -1 */
-            if (59 == this.chSec) {
+            if (59 == this.nSec) {
                 meter_pointer_set_current_value(&this.tSecPointer, -1);
-                this.chSec = -1;
+                this.nSec = -1;
             }
         }
 #else
@@ -247,7 +292,7 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
     /* calculate the Ten-Miliseconds */
     do {
-        this.chMs = lTimeStampInMs;
+        this.wMs = lTimeStampInMs;
     } while(0);
 
 }
@@ -318,8 +363,8 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
                 arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
                 
                 arm_lcd_text_location(0,0);
-                
-                
+                arm_lcd_text_set_opacity(64);
+
                 arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%d", s_tDigitsTable[n].chNumber);
             
             }
@@ -364,6 +409,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
+        arm_lcd_text_set_opacity(255);
         arm_lcd_puts("Scene watch");
 
     /*-----------------------draw the foreground end  -----------------------*/
@@ -561,6 +607,11 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
         s_tDigitsTable[0].chNumber = 12;
     } while(0);
 
+#if !(defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__))
+    /* parse __TIME__ */
+    __parse_initial_time();
+#endif
+
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
                                         1);
@@ -573,4 +624,3 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
 #endif
 
 #endif
-

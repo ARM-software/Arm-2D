@@ -255,6 +255,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 #endif
 
     arm_lcd_text_set_scale(0.0f);
+    arm_lcd_text_set_opacity(255);
     arm_lcd_text_set_char_spacing(0);
     arm_lcd_text_set_line_spacing(0);
 

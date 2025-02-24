@@ -347,13 +347,13 @@ bool VT_sdl_flush(int32_t nMS)
     return bResult;
 }
 
-#if defined(_POSIX_VERSION) || defined(CLOCK_MONOTONIC) || defined(__APPLE__)
+#if defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
     struct timespec timestamp;
-    clock_gettime(CLOCK_MONOTONIC, &timestamp);
+    clock_gettime(CLOCK_REALTIME, &timestamp);
 
-    return 1000000ul * timestamp.tv_sec + timestamp.tv_nsec / 1000ul;
+    return (1000000ll * timestamp.tv_sec) + (timestamp.tv_nsec / 1000ll);
 }
 
 uint32_t arm_2d_helper_get_reference_clock_frequency(void)

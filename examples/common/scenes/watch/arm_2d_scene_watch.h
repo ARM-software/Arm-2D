@@ -98,10 +98,10 @@ ARM_PRIVATE(
     spin_zoom_widget_t tPointers[3];
 #endif
 
-    uint32_t chHour;
-    uint32_t chMin;
-    int32_t chSec;
-    uint32_t chMs;
+    uint32_t wHour;
+    uint32_t wMin;
+    int32_t nSec;
+    uint32_t wMs;
 )
     /* place your public member here */
     
