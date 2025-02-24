@@ -138,11 +138,14 @@ void arm_2d_helper_init(void)
 #if __IS_SUPPORTED_ARM_ARCH__
 __WEAK int64_t arm_2d_helper_get_system_timestamp(void)
 {
+    int64_t iOriginTimestamp = 
 #if defined(__PERF_COUNTER__)
-    return get_system_ticks();
+    get_system_ticks();
 #else
-    return 0;
+    0;
 #endif
+
+    return iOriginTimestamp;
 }
 
 __WEAK 
