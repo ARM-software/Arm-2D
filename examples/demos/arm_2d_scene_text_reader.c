@@ -85,6 +85,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
+extern
 const
 struct {
     implement(arm_2d_user_font_t);

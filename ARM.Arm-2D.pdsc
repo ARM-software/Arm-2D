@@ -807,8 +807,8 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cversion="0.9.1" condition="Arm-2D-Demos">
           <description>A demo for text reader.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_text_reader.c" attr="config" version="0.9.1" />
-            <file category="header"      name="examples/demos/arm_2d_scene_text_reader.h" attr="config" version="0.9.1" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_text_reader.c" attr="config" version="0.9.2" />
+            <file category="header"      name="examples/demos/arm_2d_scene_text_reader.h" attr="config" version="0.9.2" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Text_Reader
