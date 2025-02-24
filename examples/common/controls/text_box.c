@@ -177,6 +177,7 @@ bool __text_box_is_eof(text_box_t *ptThis)
                             this.tCFG.tStreamIO.pTarget));
 }
 
+#if 0
 static
 ARM_NONNULL(1,2)
 void __scratch_memory_free( text_box_t *ptThis,
@@ -331,6 +332,12 @@ void __line_cache_invalid_all(text_box_t *ptThis)
     this.ptLineCache = NULL;
 
 }
+#else
+static void __line_cache_invalid_all(text_box_t *ptThis)
+{
+    ARM_2D_UNUSED(ptThis);
+}
+#endif
 
 ARM_NONNULL(1,2)
 void text_box_init( text_box_t *ptThis,
@@ -344,6 +351,7 @@ void text_box_init( text_box_t *ptThis,
         this.tCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
     }
 
+#if 0
     if (    (NULL != ptCFG->ptScratchMemory)
        &&   (ptCFG->hwScratchMemoryCount > 0)) {
 
@@ -355,6 +363,7 @@ void text_box_init( text_box_t *ptThis,
             __scratch_memory_free(ptThis, ptItem++);
         } while(--hwCount);
     }
+#endif
 }
 
 ARM_NONNULL(1)
@@ -393,10 +402,10 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
     int32_t iOldStartLine = 0;
     
     arm_irq_safe {
-        iOldStartLine = this.Request.nTargetStartLine;
+        iOldStartLine = this.nTargetStartLineReq;
 
         if (iStartLine >= 0) {
-            this.Request.nTargetStartLine = iStartLine;
+            this.nTargetStartLineReq = iStartLine;
         }
     }
 
@@ -406,7 +415,7 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 ARM_NONNULL(1)
 int32_t text_box_get_start_line(text_box_t *ptThis)
 {
-    return this.Request.nTargetStartLine;
+    return this.nTargetStartLineReq;
 }
 
 static
@@ -594,9 +603,9 @@ void text_box_show( text_box_t *ptThis,
         arm_lcd_text_set_scale(this.tCFG.fScale);
 
         if (bIsNewFrame) {
-            bool bRequestUpdate = this.Request.bUpdate;
+            bool bRequestUpdate = this.bUpdateReq;
 
-            if (this.Request.nTargetStartLine != this.Start.nLine) {
+            if (this.nTargetStartLineReq != this.Start.nLine) {
                 bRequestUpdate = true;
             }
 
@@ -606,7 +615,7 @@ void text_box_show( text_box_t *ptThis,
             }
 
             if (bRequestUpdate) {
-                this.Request.bUpdate = false;
+                this.bUpdateReq = false;
                 __text_box_update(ptThis);
             }
         }
@@ -991,9 +1000,9 @@ void __text_box_update(text_box_t *ptThis)
     int32_t nLineNumber = 0;
 
     bool bFastUpdate = false;
-    if (this.Request.nTargetStartLine != this.Start.nLine) {
+    if (this.nTargetStartLineReq != this.Start.nLine) {
 
-        if (    (this.Request.nTargetStartLine > this.Start.nLine)
+        if (    (this.nTargetStartLineReq > this.Start.nLine)
            &&   (this.Start.nPosition > 0)) {
             bFastUpdate = true;
 
@@ -1001,7 +1010,7 @@ void __text_box_update(text_box_t *ptThis)
             __text_box_set_current_position(ptThis, this.Start.nPosition);
         }
 
-        this.Start.nLine = this.Request.nTargetStartLine;
+        this.Start.nLine = this.nTargetStartLineReq;
     }
 
     if (!bFastUpdate) {
@@ -1041,7 +1050,7 @@ void text_box_update(text_box_t *ptThis)
     assert(NULL != ptThis);
 
     arm_irq_safe {
-        this.Request.bUpdate = true;
+        this.bUpdateReq = true;
     }
 }
 

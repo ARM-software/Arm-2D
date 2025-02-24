@@ -137,18 +137,23 @@ ARM_PRIVATE(
         int32_t nPosition;
     } Start;
 
-    struct {
-        int32_t nTargetStartLine;
-        bool bUpdate;
-    } Request;
+    //struct {
+        int32_t nTargetStartLineReq;
+        uint16_t bUpdateReq         : 1;
+        uint16_t                    : 15;
+    //} Request;
 
     int16_t iLineWidth;
 
     __text_box_line_info_t tCurrentLine;
 
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+
+#if 0
     __text_box_scratch_mem_t *ptFreeList;
     __text_box_scratch_mem_t *ptLineCache;
     uint16_t hwLineCacheCount;
+#endif
 )
     /* place your public member here */
     
