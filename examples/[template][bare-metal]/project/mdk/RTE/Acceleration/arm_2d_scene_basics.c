@@ -190,7 +190,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
         }
     #endif
 
-        arm_2d_align_centre(__top_canvas, 240, 120 ) {
+        arm_2d_align_centre(__top_canvas, 240, 200 ) {
             arm_2d_layout(__centre_region, DEFAULT, true) {
 
                 __item_line_dock_vertical(c_tileCMSISLogoA4Mask.tRegion.tSize.iHeight, 0, 0, 0, 5) {
@@ -200,7 +200,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                             128,
                                             bIsNewFrame);
                     
-                    arm_2d_op_wait_async(NULL);
+                    ARM_2D_OP_WAIT_ASYNC();
 
                 #if 0
                     /* draw the cmsis logo in the centre of the screen */
@@ -253,7 +253,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     #endif
                     }
                 #endif
-                    arm_2d_op_wait_async(NULL);
+                    ARM_2D_OP_WAIT_ASYNC();
 
                     draw_round_corner_border(   ptTile, 
                                                 &__item_region, 
@@ -264,7 +264,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                     {0, 128, 128, 128});
                 }
 
-                __item_line_dock_vertical() {
+                __item_line_dock_vertical(32, 0, 0, 2, 2) {
                     
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
@@ -272,15 +272,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                             128,
                                             bIsNewFrame);
                     
-                    arm_2d_op_wait_async(NULL);
-
-                    draw_round_corner_border(   ptTile, 
-                                                &__item_region, 
-                                                GLCD_COLOR_BLACK, 
-                                                (arm_2d_border_opacity_t)
-                                                    {32, 32, 255-64, 255-64},
-                                                (arm_2d_corner_opacity_t)
-                                                    {0, 128, 128, 128});
+                    ARM_2D_OP_WAIT_ASYNC();
 
                     arm_2d_dock_vertical(__item_region, 
                                         ARM_2D_FONT_A8_DIGITS_ONLY
@@ -289,22 +281,100 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                                                     .tCharSize.iHeight) {
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                     
-                    #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
-                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-                    #else
-                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
-                    #endif
-
                         arm_lcd_text_set_draw_region(&__vertical_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
                         arm_lcd_text_location(0,0);
-                        
+
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A8_DIGITS_ONLY);
+
                         for (int n = 0; n < 10; n++) {
                             arm_lcd_text_set_scale(0.5f + 0.1f * (float)n);
                             arm_lcd_printf("%d", n);
                         }
+
+                        arm_lcd_text_set_font(NULL);
+                        arm_lcd_text_set_scale(1.0f);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "A8 FONT ");
                     }
+
+                    draw_glass_bar(ptTile, &__item_region, 255, true);
                 }
+
+            #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
+                __item_line_dock_vertical(32, 0, 0, 2, 2) {
+                    
+                    draw_round_corner_box(  ptTile, 
+                                            &__item_region, 
+                                            GLCD_COLOR_WHITE, 
+                                            128,
+                                            bIsNewFrame);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                    arm_2d_dock_vertical(__item_region, 
+                                        ARM_2D_FONT_A4_DIGITS_ONLY
+                                            .use_as__arm_2d_user_font_t
+                                                .use_as__arm_2d_font_t
+                                                    .tCharSize.iHeight) {
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    
+                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+                        arm_lcd_text_location(0,0);
+
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+
+                        for (int n = 0; n < 10; n++) {
+                            arm_lcd_text_set_scale(0.5f + 0.1f * (float)n);
+                            arm_lcd_printf("%d", n);
+                        }
+
+                        arm_lcd_text_set_font(NULL);
+                        arm_lcd_text_set_scale(1.0f);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "A4 FONT ");
+
+                    }
+
+                    draw_glass_bar(ptTile, &__item_region, 255, true);
+                }
+            
+                __item_line_dock_vertical(32, 0, 0, 2, 2) {
+                    
+                    draw_round_corner_box(  ptTile, 
+                                            &__item_region, 
+                                            GLCD_COLOR_WHITE, 
+                                            128,
+                                            bIsNewFrame);
+                    
+                    ARM_2D_OP_WAIT_ASYNC();
+
+                    arm_2d_dock_vertical(__item_region, 
+                                        ARM_2D_FONT_A2_DIGITS_ONLY
+                                            .use_as__arm_2d_user_font_t
+                                                .use_as__arm_2d_font_t
+                                                    .tCharSize.iHeight) {
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    
+                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+                        arm_lcd_text_location(0,0);
+
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A2_DIGITS_ONLY);
+
+                        for (int n = 0; n < 10; n++) {
+                            arm_lcd_text_set_scale(0.5f + 0.1f * (float)n);
+                            arm_lcd_printf("%d", n);
+                        }
+
+                        arm_lcd_text_set_font(NULL);
+                        arm_lcd_text_set_scale(1.0f);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "A2 FONT ");
+
+                    }
+
+                    draw_glass_bar(ptTile, &__item_region, 255, true);
+                }
+            #endif
             }                
         }
 
@@ -319,7 +389,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
-    arm_2d_op_wait_async(NULL);
+
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -361,6 +432,8 @@ user_scene_basics_t *__arm_2d_scene_basics_init(   arm_2d_scene_player_t *ptDisp
             //.fnBeforeSwitchOut = &__before_scene_basics_switching_out,
             .fnOnFrameCPL   = &__on_scene_basics_frame_complete,
             .fnDepose       = &__on_scene_basics_depose,
+
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
