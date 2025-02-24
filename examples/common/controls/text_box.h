@@ -115,10 +115,16 @@ typedef struct text_box_cfg_t {
 
     text_box_io_text_stream_reader_t tStreamIO;
     arm_2d_scene_t *ptScene;
+
+#if 0
     __text_box_scratch_mem_t *ptScratchMemory;
     uint16_t                  hwScratchMemoryCount;
+#endif
 
-    uint8_t tLineAlign;                             //!< please use enum in text_box_line_alignment_t
+    uint8_t u2LineAlign         : 2;                                            //!< please use enum in text_box_line_alignment_t
+    uint8_t                     : 4;
+    uint8_t bUseDirtyRegions    : 1;
+
     int8_t chSpaceBetweenParagraph;
     
 } text_box_cfg_t;
@@ -147,7 +153,7 @@ ARM_PRIVATE(
 
     __text_box_line_info_t tCurrentLine;
 
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem[1];
 
 #if 0
     __text_box_scratch_mem_t *ptFreeList;

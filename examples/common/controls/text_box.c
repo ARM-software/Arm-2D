@@ -364,20 +364,41 @@ void text_box_init( text_box_t *ptThis,
         } while(--hwCount);
     }
 #endif
-}
 
-ARM_NONNULL(1)
-void text_box_depose( text_box_t *ptThis)
-{
-    assert(NULL != ptThis);
-    
+    if (ptCFG->bUseDirtyRegions && NULL != this.tCFG.ptScene) {
+
+
+
+    }
+
 }
 
 ARM_NONNULL(1)
 void text_box_on_load( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_add_items(
+            &this.tCFG.ptScene->tDirtyRegionHelper,
+            this.tDirtyRegionItem,
+            dimof(this.tDirtyRegionItem));
+    }
+}
+
+ARM_NONNULL(1)
+void text_box_depose( text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    if (    (this.tCFG.bUseDirtyRegions) 
+        &&  (NULL != this.tCFG.ptScene)) {
+        
+        arm_2d_helper_dirty_region_remove_items(
+                        &this.tCFG.ptScene->tDirtyRegionHelper,
+                        this.tDirtyRegionItem,
+                        dimof(this.tDirtyRegionItem));
+    }
 }
 
 ARM_NONNULL(1)
@@ -617,6 +638,13 @@ void text_box_show( text_box_t *ptThis,
             if (bRequestUpdate) {
                 this.bUpdateReq = false;
                 __text_box_update(ptThis);
+
+                if (this.tCFG.bUseDirtyRegions) {
+                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[0],
+                        (arm_2d_tile_t *)&__text_box,
+                        NULL,
+                        &__text_box_canvas);
+                }
             }
         }
 
@@ -632,11 +660,12 @@ void text_box_show( text_box_t *ptThis,
         arm_2d_region_t tPFBScanRegion;
         do {
             arm_2d_region_t tValidRegion;
-            if (!__arm_2d_tile_get_virtual_screen_or_root(  &__text_box,
-                                                            &tValidRegion, 
-                                                            &tPFBScanRegion.tLocation,
-                                                            NULL,
-                                                            false)) {
+            if (!__arm_2d_tile_get_virtual_screen_or_root(  
+                                                    &__text_box,
+                                                    &tValidRegion, 
+                                                    &tPFBScanRegion.tLocation,
+                                                    NULL,
+                                                    false)) {
                 return ;
             }
 
@@ -666,7 +695,7 @@ void text_box_show( text_box_t *ptThis,
                 },
             };
 
-            if (this.tCFG.tLineAlign == TEXT_BOX_LINE_ALIGN_JUSTIFIED) {
+            if (this.tCFG.u2LineAlign == TEXT_BOX_LINE_ALIGN_JUSTIFIED) {
                 tLineRegion.tSize.iWidth = this.iLineWidth;
             } else {
                 tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
@@ -702,7 +731,7 @@ void text_box_show( text_box_t *ptThis,
                                      &this.tCurrentLine,
                                      &__text_box,
                                      &tLineRegion,
-                                     this.tCFG.tLineAlign);
+                                     this.tCFG.u2LineAlign);
 
             }
 
@@ -722,8 +751,6 @@ void text_box_show( text_box_t *ptThis,
 
             iLineNumber++;
         } while(1);
-
-        
     }
 
     ARM_2D_OP_WAIT_ASYNC();
@@ -968,7 +995,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
 
             int16_t iResidualWidth = 0;
             
-            if (TEXT_BOX_LINE_ALIGN_JUSTIFIED == this.tCFG.tLineAlign) {
+            if (TEXT_BOX_LINE_ALIGN_JUSTIFIED == this.tCFG.u2LineAlign) {
                 iResidualWidth = this.iLineWidth - ptLineInfo->iPureCharWidth;
             } else {
                 iResidualWidth = this.iLineWidth - ptLineInfo->iLineWidth;

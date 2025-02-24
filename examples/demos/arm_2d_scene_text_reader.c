@@ -307,7 +307,7 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
             .fnOnFrameCPL   = &__on_scene_text_reader_frame_complete,
             .fnDepose       = &__on_scene_text_reader_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -326,11 +326,12 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
                 .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
                 .pTarget    = (uintptr_t)&this.tStringReader,
             },
-            .tLineAlign = TEXT_BOX_LINE_ALIGN_JUSTIFIED,
+            .u2LineAlign = TEXT_BOX_LINE_ALIGN_JUSTIFIED,
             //.fScale = 1.0f,
             .chSpaceBetweenParagraph = 20,
 
             .ptScene = (arm_2d_scene_t *)ptThis,
+            .bUseDirtyRegions = true,
         };
 
         text_box_init(&this.tTextPanel, &tCFG);
