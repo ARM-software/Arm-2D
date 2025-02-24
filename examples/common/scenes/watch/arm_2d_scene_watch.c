@@ -123,49 +123,7 @@ static struct {
     uint8_t chNumber;
 } s_tDigitsTable[12];
 
-static 
-struct {
-    uint8_t chHours;
-    uint8_t chMinus;
-    uint8_t chSeconds;
-    
-    int64_t lStartTimeInMs;
-} s_tInitialTime = {0};
-
-const uint8_t c_chStartTime[] = {__TIME__};
-
 /*============================ IMPLEMENTATION ================================*/
-
-static 
-uint8_t __convert_2digits_bdc(const uint8_t *pchBCD)
-{
-    uint8_t chResult = 0;
-    uint8_t chChar = pchBCD[0];
-    if (chChar >= '0' && chChar <= '9') {
-        chResult = (chChar - '0') * 10;
-    }
-    
-    chChar = pchBCD[1];
-    if (chChar >= '0' && chChar <= '9') {
-        chResult += (chChar - '0');
-    }
-    
-    return chResult;
-}
-
-static
-void __parse_initial_time(void)
-{
-    s_tInitialTime.chHours = __convert_2digits_bdc(&c_chStartTime[0]);
-    s_tInitialTime.chMinus = __convert_2digits_bdc(&c_chStartTime[3]);
-    s_tInitialTime.chSeconds = __convert_2digits_bdc(&c_chStartTime[6]);
-
-    s_tInitialTime.lStartTimeInMs = s_tInitialTime.chSeconds * 1000ul;
-    s_tInitialTime.lStartTimeInMs += s_tInitialTime.chMinus * 60ul * 1000ul;
-    s_tInitialTime.lStartTimeInMs += s_tInitialTime.chHours * 3600 * 1000ul;
-    
-}
-
 
 
 static void __on_scene_watch_load(arm_2d_scene_t *ptScene)
@@ -241,8 +199,6 @@ static void __on_scene_watch_frame_start(arm_2d_scene_t *ptScene)
 
     int64_t lTimeStampInMs = arm_2d_helper_convert_ticks_to_ms(
                                 arm_2d_helper_get_system_timestamp());
-
-    lTimeStampInMs += s_tInitialTime.lStartTimeInMs;
     
     /* calculate the hours */
     do {
@@ -606,11 +562,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
 
         s_tDigitsTable[0].chNumber = 12;
     } while(0);
-
-#if !(defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__))
-    /* parse __TIME__ */
-    __parse_initial_time();
-#endif
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
