@@ -501,7 +501,7 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
     } while(0);
 
     if (s_tLCDTextControl.q16Scale > 0) {
-        iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance) + 0xFFFF);
+        iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance) + 0x8000);
         /* NOTE: No need to adjust bearings in the following way. */
         //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
         //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
@@ -898,12 +898,10 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
     if (s_tLCDTextControl.q16Scale > 0) {
         tCharBox.iHeight = reinterpret_s16_q16( 
                                 mul_n_q16(  s_tLCDTextControl.q16Scale, 
-                                            tCharBox.iHeight)) 
-                          + 2;
+                                            tCharBox.iHeight));
         tCharBox.iWidth = reinterpret_s16_q16( 
                                 mul_n_q16(  s_tLCDTextControl.q16Scale, 
-                                            tCharBox.iWidth)) 
-                          + 2;
+                                            tCharBox.iWidth));
 
     #if 0
         tCharSize.iHeight = reinterpret_s16_q16( 
@@ -989,12 +987,10 @@ void __arm_lcd_update_char_size(void)
 
         tCharSize.iHeight = reinterpret_s16_q16( 
                                 mul_n_q16(  s_tLCDTextControl.q16Scale, 
-                                            tCharSize.iHeight)) 
-                          + 2;
+                                            tCharSize.iHeight));
         tCharSize.iWidth = reinterpret_s16_q16( 
                                 mul_n_q16(  s_tLCDTextControl.q16Scale, 
-                                            tCharSize.iWidth)) 
-                          + 2;
+                                            tCharSize.iWidth));
     }
 
     s_tLCDTextControl.Updated.tCharSize = tCharSize;
@@ -1013,12 +1009,10 @@ static void __arm_lcd_update_spacing(void)
     if (s_tLCDTextControl.q16Scale > 0) {
         tSpacing.iHeight = reinterpret_s16_q16( 
                                 mul_n_q16(  s_tLCDTextControl.q16Scale, 
-                                            tSpacing.iHeight)) 
-                          + 2;
+                                            tSpacing.iHeight));
         tSpacing.iWidth = reinterpret_s16_q16( 
                                 mul_n_q16(  s_tLCDTextControl.q16Scale, 
-                                            tSpacing.iWidth)) 
-                          + 2;
+                                            tSpacing.iWidth));
     }
 
     s_tLCDTextControl.Updated.tSpacing = tSpacing;
