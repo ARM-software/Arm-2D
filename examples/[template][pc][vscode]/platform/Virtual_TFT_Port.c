@@ -9,13 +9,12 @@
 
 #undef main
 
-#define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
-//#define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen */
+//#define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
+#define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen */
 //#define monochrome_2_RGB888(color)                (color < 128 ? 0xb6c7e7 : 0x2043a4)             /* blue screen */
+
 #define GRAY8_2_RGB888(color)                     (((color&0xFF)<<16)+((color&0xFF)<<8)+((color&0xFF)))
 #define RGB565_2_RGB888(color)                    (((color&0xF800)<<8)+((color&0x7E0)<<5)+((color&0x1F)<<3))
-
-
 
 #define RGB888_2_GRAY8(color)                     (((((color&0xff0000)>>16)) + (((color&0xff00)>>8)) + (((color&0xff)))) / 3)
 #define RGB888_2_RGB565(color)                    ((((color&0xff0000)>>19) << 11) + (((color&0xff00)>>10) << 5) + (((color&0xff)>>3)))
@@ -210,8 +209,9 @@ static void monitor_sdl_init(void)
                                 ,
                                 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                 VT_WINDOW_WIDTH, VT_WINDOW_HEIGHT, 
-                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);       /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
-
+                                SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+                                //| SDL_WINDOW_BORDERLESS                         /*last param. SDL_WINDOW_BORDERLESS to hide borders*/
+                                );       
 #if VT_VIRTUAL_MACHINE
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
 #else
