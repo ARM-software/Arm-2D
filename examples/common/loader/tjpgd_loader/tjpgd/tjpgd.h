@@ -8,7 +8,8 @@
 extern "C" {
 #endif
 
-#include "tjpgdcnf.h"
+//#include "tjpgdcnf.h"
+#include "arm_tjpgd_cfg.h"
 #include <string.h>
 
 #if defined(_WIN32)	/* VC++ or some compiler without stdint.h */

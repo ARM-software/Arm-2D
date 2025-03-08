@@ -20,6 +20,8 @@ CC_SRC  += $(wildcard ../../examples/common/scenes/fan/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/bubble_charging/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/animate_background/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/knob/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/tjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
 
@@ -33,6 +35,8 @@ CC_INC  += ../../Helper/built_in
 CC_INC  += ../../examples/common/benchmark
 CC_INC  += ../../examples/common/controls
 CC_INC  += ../../examples/common/opcodes
+CC_INC  += ../../examples/common/loader
+CC_INC  += ../../examples/common/loader/tjpgd_loader
 CC_INC  += ../../examples/common/scenes/fitness
 CC_INC  += ../../examples/common/scenes/meter
 CC_INC  += ../../examples/common/scenes/watch
