@@ -961,7 +961,7 @@ void * __disp_adapter%Instance%_aligned_malloc(size_t nSize, size_t nAlign)
     /* ensure nAlign is 2^n */
     assert((((~nAlign) + 1) & nAlign) == nAlign);
 
-    void * pMem = malloc(nSize);
+    void * pMem = __arm_2d_allocate_scratch_memory(nSize, 4, ARM_2D_MEM_TYPE_FAST);
     assert( 0 == ((uintptr_t)pMem & (nAlign - 1)));
     return pMem;
 }
@@ -970,7 +970,7 @@ __WEAK
 void __disp_adapter%Instance%_free(void *pMem)
 {
     if (NULL != pMem) {
-        free(pMem);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, pMem);
     }
 }
 
