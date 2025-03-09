@@ -49,37 +49,87 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+typedef enum {
+    /*!
+     * very fast, when loading the scene, allocate a scratch memory that is big 
+     * enough to hold the decoded image and decode. Free the scratch memory when
+     * the scene is deposed.
+     */
+    ARM_TJPGD_MODE_FULLY_DECODED_ONCE,
+    
+    /*!
+     * fast, at the start of a frame, allocate a scratch memory that is big 
+     * enough to hold the decoded image and decode. Free the scratch memory
+     * at the end of a frame.
+     */
+    ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME,
+
+    /*! slow, and only consume a small scratch memory. If you have multiple 
+     *  arm_tjpgd_loader_t objects, each of them might occupy a scrach memory
+     *  (Recommended)
+     */         
+    ARM_TJPGD_MODE_PARTIAL_DECODED,                     
+
+    /*! very slow, for each partial loading, always decode from the begining and 
+     * release the scratch memory 
+     */
+    ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,                
+} arm_tjpgd_loader_work_mode_t;
+
+typedef struct arm_tjpgd_loader_t arm_tjpgd_loader_t;
+
+typedef struct arm_tjpgd_loader_io_t {
+
+    bool   (*fnOpen)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
+    void   (*fnClose)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
+    bool   (*fnSeek)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence);
+    size_t (*fnRead)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
+
+} arm_tjpgd_loader_io_t;
 
 typedef struct arm_tjpgd_loader_cfg_t {
+    
+    arm_2d_size_t       tSize;
+    arm_2d_color_info_t tColourInfo;
+
+    uint8_t bUseHeapForVRES     : 1;
+    uint8_t u2ScratchMemType    : 2;
+    uint8_t u2WorkMode          : 2;
+    uint8_t                     : 5;
+
+    struct {
+        const arm_tjpgd_loader_io_t *ptIO;
+        uintptr_t pTarget;
+    } ImageIO;
+
     arm_2d_scene_t *ptScene;
 } arm_tjpgd_loader_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct arm_tjpgd_loader_t arm_tjpgd_loader_t;
 
 struct arm_tjpgd_loader_t {
+    implement_ex(arm_2d_vres_t, vres);
 
 ARM_PRIVATE(
-
     arm_tjpgd_loader_cfg_t tCFG;
 
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    uint8_t chOpacity;
+    arm_2d_scratch_mem_t tImageBuffer;
+
+    uint32_t                        : 30;
+    uint32_t bErrorDetected         : 1;
+    uint32_t bInitialized           : 1;
 )
-    /* place your public member here */
-    
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
-
 extern
 ARM_NONNULL(1)
-void arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
-                          arm_tjpgd_loader_cfg_t *ptCFG);
+arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
+                                    arm_tjpgd_loader_cfg_t *ptCFG);
+
 extern
 ARM_NONNULL(1)
 void arm_tjpgd_loader_depose( arm_tjpgd_loader_t *ptThis);
@@ -95,6 +145,7 @@ void arm_tjpgd_loader_on_frame_start( arm_tjpgd_loader_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis);
+
 
 
 #if defined(__clang__)
