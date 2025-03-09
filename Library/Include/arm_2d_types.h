@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        24. Oct 2024
- * $Revision:    V.1.2.16
+ * $Date:        09. March 2025
+ * $Revision:    V.1.2.17
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -380,7 +380,7 @@ enum {
     ARM_2D_COLOUR_HAS_ALPHA_msk       = ARM_2D_COLOUR_HAS_ALPHA     << 0,
 
     ARM_2D_COLOUR_VARIANT_pos = 5,
-    ARM_2D_COLOUR_VARIANT_msk         = 0x07 << ARM_2D_COLOUR_VARIANT_pos,
+    ARM_2D_COLOUR_VARIANT_msk         = 0x03 << ARM_2D_COLOUR_VARIANT_pos,
 };
 
 /* macros for colour attributes */
@@ -414,16 +414,16 @@ enum {
 #define ARM_2D_M_COLOUR_HAS_ALPHA_msk       (ARM_2D_M_COLOUR_HAS_ALPHA << 0)    //!< bitmask for has-alpha-channel-in-pixel
 
 #define ARM_2D_M_COLOUR_VARIANT_pos         5                                   //!< offset for the VARIANT bitfield
-#define ARM_2D_M_COLOUR_VARIANT_msk         (0x07<<ARM_2D_M_COLOUR_VARIANT_pos) //!< bitmask for the VARIANT bitfield
+#define ARM_2D_M_COLOUR_VARIANT_msk         (0x03<<ARM_2D_M_COLOUR_VARIANT_pos) //!< bitmask for the VARIANT bitfield
 
 /*!
  * \brief enumerations for colour types
  *
  */
 enum {
-    ARM_2D_COLOUR_MONOCHROME  =   ARM_2D_COLOUR_SZ_1BIT_msk,
-    ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_SZ_1BIT_msk,
-    ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_SZ_1BIT_msk,
+    ARM_2D_COLOUR_MONOCHROME  =   ARM_2D_COLOUR_SZ_1BIT_msk | ARM_2D_COLOUR_VARIANT_msk,
+    ARM_2D_COLOUR_BIN         =   ARM_2D_COLOUR_MONOCHROME,
+    ARM_2D_COLOUR_1BIT        =   ARM_2D_COLOUR_MONOCHROME,
 
     ARM_2D_COLOUR_MASK_A1     =   ARM_2D_M_COLOUR_SZ_1BIT_msk,
     ARM_2D_COLOUR_MASK_A2     =   ARM_2D_M_COLOUR_SZ_2BIT_msk,
@@ -472,9 +472,10 @@ enum {
 };
 
 /* macros for colour formats */
-#define ARM_2D_M_COLOUR_MONOCHROME  ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the monochrome
-#define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bit colour format (alias)
-#define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bin colour format (alias)
+#define ARM_2D_M_COLOUR_MONOCHROME  ARM_2D_M_COLOUR_SZ_1BIT_msk     |\
+                                    ARM_2D_M_COLOUR_VARIANT_msk                 //!< macro for the monochrome
+#define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_MONOCHROME                  //!< macro for the 1bit colour format (alias)
+#define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_MONOCHROME                  //!< macro for the 1bin colour format (alias)
 
 #define ARM_2D_M_COLOUR_MASK_A1     ARM_2D_M_COLOUR_SZ_1BIT_msk                 //!< macro for the 1bit alpha mask
 #define ARM_2D_M_COLOUR_MASK_A2     ARM_2D_M_COLOUR_SZ_2BIT_msk                 //!< macro for the 2bit alpha mask
