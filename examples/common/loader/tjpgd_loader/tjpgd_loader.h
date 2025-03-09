@@ -21,8 +21,8 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
-#include "./__common.h"
 #include <stdio.h>
+#include "./tjpgd/tjpgd.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -116,11 +116,25 @@ struct arm_tjpgd_loader_t {
 ARM_PRIVATE(
     arm_tjpgd_loader_cfg_t tCFG;
 
-    arm_2d_scratch_mem_t tImageBuffer;
+    struct {
+        uint8_t *pchBuffer;
+        size_t tSize;
+    } ImageBuffer;
 
-    uint32_t                        : 30;
-    uint32_t bErrorDetected         : 1;
-    uint32_t bInitialized           : 1;
+    struct {
+        JDEC tDecoder;
+        void *pWorkMemory;
+        size_t nPosition;
+    } Decoder;
+
+    uint16_t u3PixelByteSize        : 3;
+    uint16_t u5BitsPerPixel         : 5;
+    uint16_t                        : 6;
+    uint16_t bErrorDetected         : 1;
+    uint16_t bInitialized           : 1;
+
+    int16_t iTargetStrideInByte;
+
 )
 };
 
