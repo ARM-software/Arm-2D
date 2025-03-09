@@ -26,7 +26,6 @@
 #include "tjpgd_loader.h"
 #include <assert.h>
 #include <string.h>
-#include <stdio.h>
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -54,7 +53,6 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
-/*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
 /*!
@@ -79,6 +77,26 @@ static
 void  __arm_tjpgd_vres_buffer_deposer(  uintptr_t pTarget,
                                         arm_2d_vres_t *ptVRES,
                                         intptr_t pBuffer );
+static
+bool   __arm_tjpgd_io_fopen(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
+
+static
+void   __arm_tjpgd_io_fclose(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
+
+static
+bool   __arm_tjpgd_io_fseek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence);
+
+static
+size_t __arm_tjpgd_io_fread(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
+
+/*============================ GLOBAL VARIABLES ==============================*/
+
+const arm_tjpgd_loader_io_t ARM_TGPGD_LOADER_IO_FILE = {
+    .fnOpen =   &__arm_tjpgd_io_fopen,
+    .fnClose =  &__arm_tjpgd_io_fclose,
+    .fnSeek =   &__arm_tjpgd_io_fseek,
+    .fnRead =   &__arm_tjpgd_io_fread,
+};
 
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -365,6 +383,83 @@ void  __arm_tjpgd_vres_buffer_deposer(  uintptr_t pTarget,
         __arm_2d_helper_pfb_free(&(this.tCFG.ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t), 
                                  ptPFB);
     }
+}
+
+static
+bool __file_exists(const char *path, const char *pchMode) 
+{
+    FILE *ph = fopen(path, pchMode);
+    if (ph) {
+        fclose(ph);
+        return true;
+    }
+    return false;
+}
+
+extern
+ARM_NONNULL(1, 2)
+arm_2d_err_t arm_tjpgd_io_file_init(arm_tjpgd_io_file_t *ptThis, 
+                                    const char *pchFilePath)
+{
+    if (NULL == ptThis || NULL == pchFilePath) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    if (!__file_exists(pchFilePath, "r")) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
+
+    memset(ptThis, 0, sizeof(arm_tjpgd_io_file_t));
+    this.pchFilePath = pchFilePath;
+
+    return ARM_2D_ERR_NONE;
+}
+
+static
+bool   __arm_tjpgd_io_fopen(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
+{
+    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+    assert(NULL != this.pchFilePath);
+
+    this.phFile = fopen(this.pchFilePath, "r");
+    if (NULL == this.phFile) {
+        return false;
+    }
+
+    return true;
+}
+
+static
+void   __arm_tjpgd_io_fclose(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
+{
+    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    fclose(this.phFile);
+    this.phFile = NULL;
+}
+
+static
+bool   __arm_tjpgd_io_fseek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence)
+{
+    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    return fseek(this.phFile, offset, whence) == 0;
+}
+
+static
+size_t __arm_tjpgd_io_fread(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize)
+{
+    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    return fread(pchBuffer, 1, tSize, this.phFile);
 }
 
 #if defined(__clang__)

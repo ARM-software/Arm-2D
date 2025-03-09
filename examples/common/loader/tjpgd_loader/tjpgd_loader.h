@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "./__common.h"
+#include <stdio.h>
 
 #ifdef   __cplusplus
 extern "C" {
@@ -123,7 +124,18 @@ ARM_PRIVATE(
 )
 };
 
+typedef struct arm_tjpgd_io_file_t {
+ARM_PRIVATE(
+    const char *pchFilePath;
+    FILE *phFile; 
+)
+} arm_tjpgd_io_file_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern 
+const arm_tjpgd_loader_io_t ARM_TGPGD_LOADER_IO_FILE;
+
 /*============================ PROTOTYPES ====================================*/
 extern
 ARM_NONNULL(1)
@@ -146,7 +158,10 @@ extern
 ARM_NONNULL(1)
 void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis);
 
-
+extern
+ARM_NONNULL(1, 2)
+arm_2d_err_t arm_tjpgd_io_file_init(arm_tjpgd_io_file_t *ptThis, 
+                            const char *pchFilePath);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
