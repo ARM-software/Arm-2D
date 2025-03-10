@@ -838,6 +838,7 @@ static JRESULT mcu_output (
 					*pix++ = /*R*/ BYTECLIP(yy + ((int)(1.402 * CVACC) * cr) / CVACC);
 					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
 					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb) / CVACC);
+					//*pix++ = 0xFF;			/* to support ARGB8888 */
 				}
 			}
 		} else {	/* Monochrome output (build a grayscale MCU from Y comopnent) */
@@ -905,6 +906,7 @@ static JRESULT mcu_output (
 					*pix++ = /*R*/ BYTECLIP(yy + ((int)(1.402 * CVACC) * cr / CVACC));
 					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
 					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb / CVACC));
+					//*pix++ = 0xFF;			/* to support ARGB8888 */
 				} else {
 					*pix++ = yy;
 				}
@@ -925,6 +927,7 @@ static JRESULT mcu_output (
 				if (JD_FORMAT != 2) {
 					*d++ = *s++;
 					*d++ = *s++;
+					//*d++ = *s++; /* to support ARGB8888 */
 				}
 			}
 			s += (mx - rx) * (JD_FORMAT != 2 ? 3 : 1);	/* Skip truncated pixels */
@@ -941,6 +944,7 @@ static JRESULT mcu_output (
 			w = (*s++ & 0xF8) << 8;		/* RRRRR----------- */
 			w |= (*s++ & 0xFC) << 3;	/* -----GGGGGG----- */
 			w |= *s++ >> 3;				/* -----------BBBBB */
+			//s++;						/* to support ARGB8888 */
 			*d++ = w;
 		} while (--n);
 	}

@@ -28,6 +28,7 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper.h"
+#include "arm_2d_example_loaders.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -85,6 +86,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+
+    arm_tjpgd_loader_t tJPGBackground;
+    arm_tjpgd_io_file_t tJDEFileIO;
 
 )
     /* place your public member here */

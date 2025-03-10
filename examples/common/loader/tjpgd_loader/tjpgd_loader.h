@@ -90,7 +90,7 @@ typedef struct arm_tjpgd_loader_io_t {
 
 typedef struct arm_tjpgd_loader_cfg_t {
     
-    arm_2d_size_t       tSize;
+    //arm_2d_size_t       tSize;
     arm_2d_color_info_t tColourInfo;
 
     uint8_t bUseHeapForVRES     : 1;
@@ -122,7 +122,7 @@ ARM_PRIVATE(
     } ImageBuffer;
 
     struct {
-        JDEC tDecoder;
+        JDEC tJDEC;
         void *pWorkMemory;
         size_t nPosition;
     } Decoder;

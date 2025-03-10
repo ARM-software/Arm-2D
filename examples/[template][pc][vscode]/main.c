@@ -282,6 +282,11 @@ void scene_mono_icon_menu_loader(void)
     arm_2d_scene_mono_icon_menu_init(&DISP0_ADAPTER);
 }
 
+void scene_tjpgd_loader(void) 
+{
+    arm_2d_scene_tjpgd_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -302,7 +307,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -443,7 +448,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_text_reader_loader,
+        scene_tjpgd_loader,
+        //scene_text_reader_loader,
         //scene_ruler_loader,
         //scene_filters_loader,
         //scene_listview_loader,
@@ -544,6 +550,21 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
     return arm_fsm_rt_cpl;
 }
 #endif
+
+void run_os_command(const char *pchCommandLine) {
+    static char s_chBuffer[4096];
+    FILE *ptPipe = popen(pchCommandLine, "r");
+    if (!ptPipe) {
+        printf("Failed to execute command: [%s]\r\n", pchCommandLine);
+        return;
+    }
+
+    while (fgets(s_chBuffer, sizeof(s_chBuffer), ptPipe) != NULL) {
+        printf("%s", s_chBuffer);
+    }
+
+    pclose(ptPipe);
+}
 
 /*----------------------------------------------------------------------------
   Main function
