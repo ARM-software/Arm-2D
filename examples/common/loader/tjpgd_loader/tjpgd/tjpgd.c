@@ -22,6 +22,8 @@
 / Jun 11, 2021 R0.02a Some performance improvement.
 / Jul 01, 2021 R0.03  Added JD_FASTDECODE option.
 /                     Some performance improvement.
+/ Mar 10, 2025 R0.03r Added JD_USE_INTERNAL_32BIT_PIXEL option to support ARGB8888. 
+/					  Added JD_SWAP_RED_AND_BLUE option.
 /----------------------------------------------------------------------------*/
 
 #include "tjpgd.h"
@@ -844,7 +846,9 @@ static JRESULT mcu_output (
 					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
 					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb) / CVACC);
 				#endif
+				#if JD_USE_INTERNAL_32BIT_PIXEL
 					*pix++ = 0xFF;			/* to support ARGB8888 */
+				#endif
 				}
 			}
 		} else {	/* Monochrome output (build a grayscale MCU from Y comopnent) */
@@ -873,13 +877,21 @@ static JRESULT mcu_output (
 			/* Get averaged RGB value of each square correcponds to a pixel */
 			s = jd->scale * 2;	/* Number of shifts for averaging */
 			w = 1 << jd->scale;	/* Width of square */
-			//a = (mx - w) * (JD_FORMAT != 2 ? 3 : 1);	/* Bytes to skip for next line in the square */
+		#if JD_USE_INTERNAL_32BIT_PIXEL
 			a = (mx - w) * (JD_FORMAT != 2 ? 4 : 1);	/* Bytes to skip for next line in the square */
+		#else
+			a = (mx - w) * (JD_FORMAT != 2 ? 3 : 1);	/* Bytes to skip for next line in the square */
+		#endif
+			
 			op = (uint8_t*)jd->workbuf;
 			for (iy = 0; iy < my; iy += w) {
 				for (ix = 0; ix < mx; ix += w) {
-					//pix = (uint8_t*)jd->workbuf + (iy * mx + ix) * (JD_FORMAT != 2 ? 3 : 1);
+
+				#if JD_USE_INTERNAL_32BIT_PIXEL
 					pix = (uint8_t*)jd->workbuf + (iy * mx + ix) * (JD_FORMAT != 2 ? 4 : 1);
+				#else
+					pix = (uint8_t*)jd->workbuf + (iy * mx + ix) * (JD_FORMAT != 2 ? 3 : 1);
+				#endif
 					r = g = b = 0;
 					for (y = 0; y < w; y++) {	/* Accumulate RGB value in the square */
 						for (x = 0; x < w; x++) {
@@ -888,14 +900,18 @@ static JRESULT mcu_output (
 							if (JD_FORMAT != 2) {	/* RGB output? */
 								g += *pix++;	/* Accumulate G */
 								r += *pix++;	/* Accumulate B */
+							#if JD_USE_INTERNAL_32BIT_PIXEL
 								pix++;			/* to support ARGB8888 */
+							#endif
 							}
 						#else
 							r += *pix++;	/* Accumulate R or Y (monochrome output) */
 							if (JD_FORMAT != 2) {	/* RGB output? */
 								g += *pix++;	/* Accumulate G */
 								b += *pix++;	/* Accumulate B */
+							#if JD_USE_INTERNAL_32BIT_PIXEL
 								pix++;			/* to support ARGB8888 */
+							#endif
 							}
 						#endif
 						}
@@ -911,7 +927,9 @@ static JRESULT mcu_output (
 						if (JD_FORMAT != 2) {				/* RGB output? */
 							*op++ = (uint8_t)(g >> s);		/* Put G */
 							*op++ = (uint8_t)(r >> s);		/* Put B */
+						#if JD_USE_INTERNAL_32BIT_PIXEL
 							op++;							/* to support ARGB8888 */
+						#endif
 						}
 					#else
 						do {
@@ -922,7 +940,9 @@ static JRESULT mcu_output (
 						if (JD_FORMAT != 2) {				/* RGB output? */
 							*op++ = (uint8_t)(g >> s);		/* Put G */
 							*op++ = (uint8_t)(b >> s);		/* Put B */
+						#if JD_USE_INTERNAL_32BIT_PIXEL
 							op++;							/* to support ARGB8888 */
+						#endif
 						}
 					#endif
 				}
@@ -952,7 +972,9 @@ static JRESULT mcu_output (
 					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
 					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb / CVACC));
 				#endif
+				#if JD_USE_INTERNAL_32BIT_PIXEL
 					*pix++ = 0xFF;			/* to support ARGB8888 */
+				#endif
 				} else {
 					*pix++ = yy;
 				}
@@ -973,11 +995,16 @@ static JRESULT mcu_output (
 				if (JD_FORMAT != 2) {
 					*d++ = *s++;
 					*d++ = *s++;
+				#if JD_USE_INTERNAL_32BIT_PIXEL
 					*d++ = *s++; /* to support ARGB8888 */
+				#endif
 				}
 			}
-			//s += (mx - rx) * (JD_FORMAT != 2 ? 3 : 1);	/* Skip truncated pixels */
+		#if JD_USE_INTERNAL_32BIT_PIXEL
 			s += (mx - rx) * (JD_FORMAT != 2 ? 4 : 1);	/* Skip truncated pixels */
+		#else
+			s += (mx - rx) * (JD_FORMAT != 2 ? 3 : 1);	/* Skip truncated pixels */
+		#endif
 		}
 	}
 
@@ -997,7 +1024,9 @@ static JRESULT mcu_output (
 			w |= (*s++ & 0xFC) << 3;	/* -----GGGGGG----- */
 			w |= *s++ >> 3;				/* -----------BBBBB */
 		#endif
+		#if JD_USE_INTERNAL_32BIT_PIXEL
 			s++;						/* to support ARGB8888 */
+		#endif
 			*d++ = w;
 		} while (--n);
 	}

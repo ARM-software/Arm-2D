@@ -58,12 +58,16 @@
 
 #if     __GLCD_CFG_COLOUR_DEPTH__ == 8
 #   define JD_FORMAT   2
+#   define JD_USE_INTERNAL_32BIT_PIXEL  0
 #elif   __GLCD_CFG_COLOUR_DEPTH__ == 16
 #   define JD_FORMAT   1
+#   define JD_USE_INTERNAL_32BIT_PIXEL  0
 #elif   __GLCD_CFG_COLOUR_DEPTH__ == 32
 #   define JD_FORMAT   0
+#   define JD_USE_INTERNAL_32BIT_PIXEL  1
 #endif
 
 #ifndef JD_SWAP_RED_AND_BLUE
 #   define JD_SWAP_RED_AND_BLUE     1
 #endif
+
