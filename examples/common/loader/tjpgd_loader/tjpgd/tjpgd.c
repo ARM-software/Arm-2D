@@ -338,7 +338,8 @@ static int huffext (	/* >=0: decoded data, <0: error code */
 #else
 	const uint8_t *hb, *hd;
 	const uint16_t *hc;
-	unsigned int nc, bl, wbit = jd->dbit % 32;
+	//unsigned int nc, bl, wbit = jd->dbit % 32;
+	unsigned int nc, bl, wbit = jd->dbit & 0x1F;
 	uint32_t w = jd->wreg & ((1UL << wbit) - 1);
 
 
@@ -466,7 +467,8 @@ static int bitext (	/* >=0: extracted data, <0: error code */
 	return (int)d;
 
 #else
-	unsigned int wbit = jd->dbit % 32;
+	//unsigned int wbit = jd->dbit % 32;
+	unsigned int wbit = jd->dbit & 0x1F;
 	uint32_t w = jd->wreg & ((1UL << wbit) - 1);
 
 
@@ -496,7 +498,8 @@ static int bitext (	/* >=0: extracted data, <0: error code */
 	jd->wreg = w; jd->dbit = wbit - nbit;
 	jd->dctr = dc; jd->dptr = dp;
 
-	return (int)(w >> ((wbit - nbit) % 32));
+	//return (int)(w >> ((wbit - nbit) % 32));
+	return (int)(w >> ((wbit - nbit) & 0x1F));
 #endif
 }
 
