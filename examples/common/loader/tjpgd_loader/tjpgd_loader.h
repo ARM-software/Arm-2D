@@ -91,7 +91,6 @@ typedef struct arm_tjpgd_loader_io_t {
 typedef struct arm_tjpgd_loader_cfg_t {
     
     //arm_2d_size_t       tSize;
-    arm_2d_color_info_t tColourInfo;
 
     uint8_t bUseHeapForVRES     : 1;
     uint8_t u2ScratchMemType    : 2;
@@ -116,6 +115,8 @@ struct arm_tjpgd_loader_t {
 ARM_PRIVATE(
     arm_tjpgd_loader_cfg_t tCFG;
 
+    arm_2d_color_info_t tColourInfo;
+    
     struct {
         uint8_t *pchBuffer;
         size_t tSize;

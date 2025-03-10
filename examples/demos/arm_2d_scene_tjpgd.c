@@ -311,7 +311,6 @@ user_scene_tjpgd_t *__arm_2d_scene_tjpgd_init(   arm_2d_scene_player_t *ptDispAd
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
-            .tColourInfo.chScheme = ARM_2D_COLOUR,       //!< we could remove it if required 
             .u2WorkMode = ARM_TJPGD_MODE_FULLY_DECODED_ONCE,
             .ImageIO = {
                 .ptIO = &ARM_TGPGD_LOADER_IO_FILE,

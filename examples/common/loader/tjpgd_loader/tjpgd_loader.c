@@ -128,7 +128,7 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
 
     this.vres.Load = &__arm_tjpgd_vres_asset_loader;
     this.vres.Depose = &__arm_tjpgd_vres_buffer_deposer;
-    this.vres.tTile.tColourInfo = this.tCFG.tColourInfo;
+    this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR;
 
     this.vres.tTile.tInfo.bIsRoot = true;
     this.vres.tTile.tInfo.bVirtualResource = true;
@@ -144,18 +144,18 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
         //uint32_t nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
         size_t nBitsPerPixel = sizeof(COLOUR_INT) << 3;
     
-        if (0 != this.tCFG.tColourInfo.chScheme) {
-            nBitsPerPixel = (1 << this.tCFG.tColourInfo.u3ColourSZ);
-            if (this.tCFG.tColourInfo.u3ColourSZ >= 3) {
-                if (this.tCFG.tColourInfo.u3ColourSZ == ARM_2D_COLOUR_SZ_24BIT) {
+        if (0 != this.vres.tTile.tColourInfo.chScheme) {
+            nBitsPerPixel = (1 << this.vres.tTile.tColourInfo.u3ColourSZ);
+            if (this.vres.tTile.tColourInfo.u3ColourSZ >= 3) {
+                if (this.vres.tTile.tColourInfo.u3ColourSZ == ARM_2D_COLOUR_SZ_24BIT) {
                     nPixelSize = 3;
                 } else {
-                    nPixelSize = (1 << (this.tCFG.tColourInfo.u3ColourSZ - 3));
+                    nPixelSize = (1 << (this.vres.tTile.tColourInfo.u3ColourSZ - 3));
                 }
                 //nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
             } else {
                 /* for A1, A2 and A4 */
-                size_t nPixelPerByte = 1 << (3 - this.tCFG.tColourInfo.u3ColourSZ);
+                size_t nPixelPerByte = 1 << (3 - this.vres.tTile.tColourInfo.u3ColourSZ);
                 //int16_t iOffset = ptRegion->tLocation.iX & (nPixelPerByte - 1);
                 
                 //uint32_t nBitsPerLine =  nBitsPerPixel * (iOffset + ptRegion->tSize.iWidth);
