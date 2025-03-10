@@ -51,6 +51,12 @@
 #undef this
 #define this    (*ptThis)
 
+#if JD_FASTDECODE == 2
+#   define __WORKING_MEMORY_SIZE__   (3300 - 512 + JD_SZBUF + (6<<HUFF_BIT))
+#else
+#   define __WORKING_MEMORY_SIZE__   (3300 - 512 + JD_SZBUF)
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ PROTOTYPES ====================================*/
@@ -237,7 +243,7 @@ void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
             chAlign = this.u3PixelByteSize;
         }
     
-        this.Decoder.pWorkMemory = (void*)__arm_2d_allocate_scratch_memory(3200, 4, ARM_2D_MEM_TYPE_FAST);
+        this.Decoder.pWorkMemory = (void*)__arm_2d_allocate_scratch_memory(__WORKING_MEMORY_SIZE__, 4, ARM_2D_MEM_TYPE_FAST);
         if (NULL == this.Decoder.pWorkMemory) {
             this.bErrorDetected = true;
             break;
@@ -253,7 +259,7 @@ void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
         if (JDR_OK != jd_prepare(&this.Decoder.tJDEC, 
                                     &__arm_tjpgd_loader_in_func, 
                                     this.Decoder.pWorkMemory, 
-                                    3200, 
+                                    __WORKING_MEMORY_SIZE__, 
                                     ptThis)) {
             this.bErrorDetected = true;
             break;

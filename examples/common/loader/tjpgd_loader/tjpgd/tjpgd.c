@@ -835,10 +835,16 @@ static JRESULT mcu_output (
 						pc++;						/* Step forward chroma pointer every pixel */
 					}
 					yy = *py++;			/* Get Y component */
+				#if JD_SWAP_RED_AND_BLUE
+					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb) / CVACC);
+					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
+					*pix++ = /*R*/ BYTECLIP(yy + ((int)(1.402 * CVACC) * cr) / CVACC);
+				#else
 					*pix++ = /*R*/ BYTECLIP(yy + ((int)(1.402 * CVACC) * cr) / CVACC);
 					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
 					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb) / CVACC);
-					//*pix++ = 0xFF;			/* to support ARGB8888 */
+				#endif
+					*pix++ = 0xFF;			/* to support ARGB8888 */
 				}
 			}
 		} else {	/* Monochrome output (build a grayscale MCU from Y comopnent) */
@@ -848,10 +854,13 @@ static JRESULT mcu_output (
 					if (iy >= 8) py += 64;
 				}
 				for (ix = 0; ix < mx; ix++) {
+					uint_fast16_t gray;
 					if (mx == 16) {					/* Double block width? */
 						if (ix == 8) py += 64 - 8;	/* Jump to next block if double block height */
 					}
-					*pix++ = (uint8_t)*py++;			/* Get and store a Y value as grayscale */
+					gray = (*py++);
+					gray = gray >= 256 ? 255 : gray;/* saturation protection */
+					*pix++ = (uint8_t)gray;			/* Get and store a Y value as grayscale */
 				}
 			}
 		}
@@ -864,27 +873,58 @@ static JRESULT mcu_output (
 			/* Get averaged RGB value of each square correcponds to a pixel */
 			s = jd->scale * 2;	/* Number of shifts for averaging */
 			w = 1 << jd->scale;	/* Width of square */
-			a = (mx - w) * (JD_FORMAT != 2 ? 3 : 1);	/* Bytes to skip for next line in the square */
+			//a = (mx - w) * (JD_FORMAT != 2 ? 3 : 1);	/* Bytes to skip for next line in the square */
+			a = (mx - w) * (JD_FORMAT != 2 ? 4 : 1);	/* Bytes to skip for next line in the square */
 			op = (uint8_t*)jd->workbuf;
 			for (iy = 0; iy < my; iy += w) {
 				for (ix = 0; ix < mx; ix += w) {
-					pix = (uint8_t*)jd->workbuf + (iy * mx + ix) * (JD_FORMAT != 2 ? 3 : 1);
+					//pix = (uint8_t*)jd->workbuf + (iy * mx + ix) * (JD_FORMAT != 2 ? 3 : 1);
+					pix = (uint8_t*)jd->workbuf + (iy * mx + ix) * (JD_FORMAT != 2 ? 4 : 1);
 					r = g = b = 0;
 					for (y = 0; y < w; y++) {	/* Accumulate RGB value in the square */
 						for (x = 0; x < w; x++) {
+						#if JD_SWAP_RED_AND_BLUE
+							b += *pix++;	/* Accumulate R or Y (monochrome output) */
+							if (JD_FORMAT != 2) {	/* RGB output? */
+								g += *pix++;	/* Accumulate G */
+								r += *pix++;	/* Accumulate B */
+								pix++;			/* to support ARGB8888 */
+							}
+						#else
 							r += *pix++;	/* Accumulate R or Y (monochrome output) */
 							if (JD_FORMAT != 2) {	/* RGB output? */
 								g += *pix++;	/* Accumulate G */
 								b += *pix++;	/* Accumulate B */
+								pix++;			/* to support ARGB8888 */
 							}
+						#endif
 						}
 						pix += a;
 					}							/* Put the averaged pixel value */
-					*op++ = (uint8_t)(r >> s);	/* Put R or Y (monochrome output) */
-					if (JD_FORMAT != 2) {	/* RGB output? */
-						*op++ = (uint8_t)(g >> s);	/* Put G */
-						*op++ = (uint8_t)(b >> s);	/* Put B */
-					}
+
+					#if JD_SWAP_RED_AND_BLUE
+						do {
+					    	uint_fast16_t gray = (b >> s);
+							gray = gray >= 256 ? 255 : gray;	/* saturation protection */
+							*op++ = (uint8_t)gray;				/* Put R or Y (monochrome output) */
+						} while(0);
+						if (JD_FORMAT != 2) {				/* RGB output? */
+							*op++ = (uint8_t)(g >> s);		/* Put G */
+							*op++ = (uint8_t)(r >> s);		/* Put B */
+							op++;							/* to support ARGB8888 */
+						}
+					#else
+						do {
+							uint_fast16_t gray = (r >> s);
+							gray = gray >= 256 ? 255 : gray;	/* saturation protection */
+							*op++ = (uint8_t)gray;				/* Put R or Y (monochrome output) */
+						} while(0);
+						if (JD_FORMAT != 2) {				/* RGB output? */
+							*op++ = (uint8_t)(g >> s);		/* Put G */
+							*op++ = (uint8_t)(b >> s)		/* Put B */
+							op++;							/* to support ARGB8888 */
+						}
+					#endif
 				}
 			}
 		}
@@ -903,10 +943,16 @@ static JRESULT mcu_output (
 				yy = *py;	/* Get Y component */
 				py += 64;
 				if (JD_FORMAT != 2) {
+				#if JD_SWAP_RED_AND_BLUE
+					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb / CVACC));
+					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
+					*pix++ = /*R*/ BYTECLIP(yy + ((int)(1.402 * CVACC) * cr / CVACC));
+				#else
 					*pix++ = /*R*/ BYTECLIP(yy + ((int)(1.402 * CVACC) * cr / CVACC));
 					*pix++ = /*G*/ BYTECLIP(yy - ((int)(0.344 * CVACC) * cb + (int)(0.714 * CVACC) * cr) / CVACC);
 					*pix++ = /*B*/ BYTECLIP(yy + ((int)(1.772 * CVACC) * cb / CVACC));
-					//*pix++ = 0xFF;			/* to support ARGB8888 */
+				#endif
+					*pix++ = 0xFF;			/* to support ARGB8888 */
 				} else {
 					*pix++ = yy;
 				}
@@ -927,10 +973,11 @@ static JRESULT mcu_output (
 				if (JD_FORMAT != 2) {
 					*d++ = *s++;
 					*d++ = *s++;
-					//*d++ = *s++; /* to support ARGB8888 */
+					*d++ = *s++; /* to support ARGB8888 */
 				}
 			}
-			s += (mx - rx) * (JD_FORMAT != 2 ? 3 : 1);	/* Skip truncated pixels */
+			//s += (mx - rx) * (JD_FORMAT != 2 ? 3 : 1);	/* Skip truncated pixels */
+			s += (mx - rx) * (JD_FORMAT != 2 ? 4 : 1);	/* Skip truncated pixels */
 		}
 	}
 
@@ -944,7 +991,7 @@ static JRESULT mcu_output (
 			w = (*s++ & 0xF8) << 8;		/* RRRRR----------- */
 			w |= (*s++ & 0xFC) << 3;	/* -----GGGGGG----- */
 			w |= *s++ >> 3;				/* -----------BBBBB */
-			//s++;						/* to support ARGB8888 */
+			s++;						/* to support ARGB8888 */
 			*d++ = w;
 		} while (--n);
 	}
@@ -1077,6 +1124,7 @@ JRESULT jd_prepare (
 			if (!n) return JDR_FMT1;					/* Err: SOF0 has not been loaded */
 			len = n * 64 * 2 + 64;						/* Allocate buffer for IDCT and RGB output */
 			if (len < 256) len = 256;					/* but at least 256 byte is required for IDCT */
+			if (len < n * 64 * 4) len = n * 64 * 4;		/* support ARGB8888 */
 			jd->workbuf = alloc_pool(jd, len);			/* and it may occupy a part of following MCU working buffer for RGB output */
 			if (!jd->workbuf) return JDR_MEM1;			/* Err: not enough memory */
 			jd->mcubuf = alloc_pool(jd, (n + 2) * 64 * sizeof (jd_yuv_t));	/* Allocate MCU working buffer */

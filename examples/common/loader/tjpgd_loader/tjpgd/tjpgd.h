@@ -4,13 +4,13 @@
 #ifndef DEF_TJPGDEC
 #define DEF_TJPGDEC
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 //#include "tjpgdcnf.h"
 #include "arm_tjpgd_cfg.h"
 #include <string.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #if defined(_WIN32)	/* VC++ or some compiler without stdint.h */
 typedef unsigned char	uint8_t;
