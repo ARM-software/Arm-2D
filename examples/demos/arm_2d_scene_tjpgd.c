@@ -183,7 +183,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_tjpgd_handler)
         
         /* following code is just a demo, you can remove them */
 
-        
         arm_2d_align_centre(__top_canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
 
             arm_2d_tile_copy_only(&this.tJPGBackground.vres.tTile,
@@ -191,7 +190,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_tjpgd_handler)
                                   &__centre_region);
 
         }
-
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
