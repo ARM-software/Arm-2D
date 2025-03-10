@@ -25,7 +25,7 @@
 // <q> Enable output descaling
 // <i> Switches output descaling feature.
 #ifndef JD_USE_SCALE
-#   define  JD_USE_SCALE    1
+#   define  JD_USE_SCALE    0
 #endif
 
 // <q> Enable Table Conversion for Saturation Arithmetic

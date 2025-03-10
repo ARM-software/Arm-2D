@@ -52,7 +52,7 @@
 #define this    (*ptThis)
 
 #if JD_FASTDECODE == 2
-#   define __WORKING_MEMORY_SIZE__   (3300 - 512 + JD_SZBUF + (6<<HUFF_BIT))
+#   define __WORKING_MEMORY_SIZE__   (3300 - 512 + JD_SZBUF + (6<<10))
 #else
 #   define __WORKING_MEMORY_SIZE__   (3300 - 512 + JD_SZBUF)
 #endif
