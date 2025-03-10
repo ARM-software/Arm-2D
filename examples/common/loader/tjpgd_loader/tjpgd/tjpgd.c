@@ -921,7 +921,7 @@ static JRESULT mcu_output (
 						} while(0);
 						if (JD_FORMAT != 2) {				/* RGB output? */
 							*op++ = (uint8_t)(g >> s);		/* Put G */
-							*op++ = (uint8_t)(b >> s)		/* Put B */
+							*op++ = (uint8_t)(b >> s);		/* Put B */
 							op++;							/* to support ARGB8888 */
 						}
 					#endif
@@ -988,9 +988,15 @@ static JRESULT mcu_output (
 		unsigned int n = rx * ry;
 
 		do {
+		#if JD_SWAP_RED_AND_BLUE
+			w = *s++ >> 3;				/* -----------BBBBB */
+			w |= (*s++ & 0xFC) << 3;	/* -----GGGGGG----- */
+			w |= (*s++ & 0xF8) << 8;	/* RRRRR----------- */
+		#else
 			w = (*s++ & 0xF8) << 8;		/* RRRRR----------- */
 			w |= (*s++ & 0xFC) << 3;	/* -----GGGGGG----- */
 			w |= *s++ >> 3;				/* -----------BBBBB */
+		#endif
 			s++;						/* to support ARGB8888 */
 			*d++ = w;
 		} while (--n);
