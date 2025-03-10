@@ -222,6 +222,108 @@ int __arm_tjpgd_loader_write_to_full_framebuffer (      /* Returns 1 to continue
     return 1;    /* Continue to decompress */
 }
 
+
+static
+void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    assert(NULL != ptThis);
+    
+    if (!this.bInitialized) {
+        return ;
+    }
+
+    this.bErrorDetected = false;
+    this.Decoder.nPosition = 0;
+
+    /* allocate memory */
+    do {
+        uint8_t chAlign = 0;
+        if (3 == this.u3PixelByteSize) {
+            chAlign = 1;
+        } else {
+            chAlign = this.u3PixelByteSize;
+        }
+
+        this.Decoder.pWorkMemory = (void*)__arm_2d_allocate_scratch_memory(__WORKING_MEMORY_SIZE__, 4, ARM_2D_MEM_TYPE_FAST);
+        if (NULL == this.Decoder.pWorkMemory) {
+            this.bErrorDetected = true;
+            break;
+        } 
+
+        /* open low level IO */
+        if (!ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnOpen,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis))) {
+            this.bErrorDetected = true;
+            break;    
+        }
+
+        if (JDR_OK != jd_prepare(&this.Decoder.tJDEC, 
+                                    &__arm_tjpgd_loader_in_func, 
+                                    this.Decoder.pWorkMemory, 
+                                    __WORKING_MEMORY_SIZE__, 
+                                    ptThis)) {
+            this.bErrorDetected = true;
+            break;
+        }
+
+        /* update image size */
+        this.vres.tTile.tRegion.tSize.iHeight = this.Decoder.tJDEC.height;
+        this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
+
+        /* decode now */
+
+        size_t tSize =this.vres.tTile.tRegion.tSize.iHeight * this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
+
+        this.ImageBuffer.pchBuffer = __arm_2d_allocate_scratch_memory(tSize, chAlign, this.tCFG.u2ScratchMemType);
+
+        if (NULL == this.ImageBuffer.pchBuffer) {
+            this.bErrorDetected = true;
+            break ;
+        } else {
+            this.ImageBuffer.tSize = tSize;
+        }
+
+        this.iTargetStrideInByte = this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
+
+
+        /* decoding */
+        if (JDR_OK != jd_decomp( &this.Decoder.tJDEC, 
+                        __arm_tjpgd_loader_write_to_full_framebuffer, 
+                        0)) {
+
+            this.bErrorDetected = true;
+            break;    
+        }
+
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+
+        /* free scratch memory */
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+        this.Decoder.pWorkMemory = NULL;
+        
+    } while(0);
+
+    if (this.bErrorDetected) {
+
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+
+        if (NULL != this.Decoder.pWorkMemory) {
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+            this.Decoder.pWorkMemory = NULL;
+        }
+        if (NULL != this.ImageBuffer.pchBuffer) {
+            __arm_2d_free_scratch_memory(this.tCFG.u2ScratchMemType, this.ImageBuffer.pchBuffer);
+            this.ImageBuffer.pchBuffer = NULL;
+        }
+    }
+}
+
 ARM_NONNULL(1)
 void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
 {
@@ -353,6 +455,10 @@ void arm_tjpgd_loader_on_frame_start( arm_tjpgd_loader_t *ptThis)
     if (!this.bInitialized) {
         return ;
     }
+
+    if (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode) {
+        __arm_tjpgd_decode_fully(ptThis);
+    }
 }
 
 ARM_NONNULL(1)
@@ -362,6 +468,17 @@ void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis)
     
     if (!this.bInitialized) {
         return ;
+    }
+
+    if (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode) {
+        if (NULL != this.Decoder.pWorkMemory) {
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+            this.Decoder.pWorkMemory = NULL;
+        }
+        if (NULL != this.ImageBuffer.pchBuffer) {
+            __arm_2d_free_scratch_memory(this.tCFG.u2ScratchMemType, this.ImageBuffer.pchBuffer);
+            this.ImageBuffer.pchBuffer = NULL;
+        }
     }
 }
 
