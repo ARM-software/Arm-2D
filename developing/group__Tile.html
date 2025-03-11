@@ -318,6 +318,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa53736cddf99f0499661fcdee1b3b237"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gaa53736cddf99f0499661fcdee1b3b237">arm_2d_tile_region_diff</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptReference, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptBuffer)</td></tr>
 <tr class="memdesc:gaa53736cddf99f0499661fcdee1b3b237"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the region differences between two tiles  <a href="group__Tile.html#gaa53736cddf99f0499661fcdee1b3b237">More...</a><br /></td></tr>
 <tr class="separator:gaa53736cddf99f0499661fcdee1b3b237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2462b8371a4843e771041481192e2e62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga2462b8371a4843e771041481192e2e62">arm_2d_sw_normal_root_tile_copy</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptSource, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, uint_fast8_t chBytesPerPixel)</td></tr>
+<tr class="memdesc:ga2462b8371a4843e771041481192e2e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">generic software tile copy for root tiles.  <a href="group__Tile.html#ga2462b8371a4843e771041481192e2e62">More...</a><br /></td></tr>
+<tr class="separator:ga2462b8371a4843e771041481192e2e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6f1f5bda917f0444de5845dccabb4026"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga6f1f5bda917f0444de5845dccabb4026">arm_2dp_c8bit_tile_copy</a> (<a class="el" href="group__gKernel.html#structarm__2d__op__src__t">arm_2d_op_cp_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptSource, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, uint32_t wMode)</td></tr>
 <tr class="memdesc:ga6f1f5bda917f0444de5845dccabb4026"><td class="mdescLeft">&#160;</td><td class="mdescRight">tile copy with specified mode  <a href="group__Tile.html#ga6f1f5bda917f0444de5845dccabb4026">More...</a><br /></td></tr>
 <tr class="separator:ga6f1f5bda917f0444de5845dccabb4026"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3982,6 +3985,58 @@ wColour</td>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> * the ptBuffer passed to this function </dd></dl>
+
+</div>
+</div>
+<a id="ga2462b8371a4843e771041481192e2e62" name="ga2462b8371a4843e771041481192e2e62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2462b8371a4843e771041481192e2e62">&#9670;&#160;</a></span>arm_2d_sw_normal_root_tile_copy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_sw_normal_root_tile_copy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptSource</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint_fast8_t&#160;</td>
+          <td class="paramname"><em>chBytesPerPixel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>generic software tile copy for root tiles. </p>
+<dl class="section note"><dt>Note</dt><dd>This API only supports normal tiles but not virtual resources.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptSource</td><td>the source tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region, NULL means using the region of the target tile. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">chBytesPerPixel</td><td>number of bytes in a pixel </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

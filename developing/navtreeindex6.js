@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"md_how_to_accelerate_arm_2d.html#autotoc_md184":[8,2,0],
 "md_how_to_accelerate_arm_2d.html#autotoc_md185":[8,2,1],
 "md_how_to_accelerate_arm_2d.html#autotoc_md186":[8,2,2],
 "md_how_to_deploy_the_arm_2d_library.html":[4],
