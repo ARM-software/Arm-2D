@@ -143,6 +143,11 @@
             <require Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf"/>
         </condition>
 
+        <condition id="Arm-2D-TJpgDec-Loader">
+            <description>The dependency of the TJpgDec Loader</description>
+            <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" />
+        </condition>
+
         <condition id="Arm-2D-Scene">
             <description>The dependency of the scene</description>
             <require condition="Arm-2D-Displayer-Adapter"/>
@@ -153,6 +158,11 @@
             <description>The dependency of the scene</description>
             <require condition="Arm-2D-Helper"/>
             <require Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" />
+        </condition>
+
+        <condition id="Arm-2D-Demo-TJpgDec-Loader">
+            <description>The dependency of the demo TJpgDec Loader</description>
+            <require Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="TJpgDec Loader" />
         </condition>
         
         <condition id="Arm-2D-Benchmark-Generic">
@@ -450,6 +460,20 @@
           <RTE_Components_h>
 
     #define RTE_Acceleration_Arm_2D_Extra_LCD_printf__
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="TJpgDec Loader" Cversion="0.9.0" condition="Arm-2D-TJpgDec-Loader">
+          <description>A helper service for loading baseline jpg files using TJpgDec.</description>
+          <files>
+            <file category="header"      name="examples/common/loader/tjpgd_loader/tjpgd_loader.h" />
+            <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
+            <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
+            <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"     attr="config" version="1.0.0"/>
+          </files>
+          <RTE_Components_h>
+
+    #define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__
           </RTE_Components_h>
         </component>
 
@@ -817,11 +841,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cversion="0.5.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cversion="0.9.0" condition="Arm-2D-Demo-TJpgDec-Loader">
           <description>A demo for decoding jpg images with TJpgDec.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_tjpgd.c" attr="config" version="0.5.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_tjpgd.h" attr="config" version="0.5.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_tjpgd.c" attr="config" version="0.9.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_tjpgd.h" attr="config" version="0.9.0" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_TJpgDec
