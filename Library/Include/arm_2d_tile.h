@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        13. June 2024
- * $Revision:    V.1.4.6
+ * $Date:        11. March 2025
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1087,6 +1087,24 @@ ARM_NONNULL(1,2,3)
 arm_2d_region_t *arm_2d_tile_region_diff(   const arm_2d_tile_t *ptTarget,
                                             const arm_2d_tile_t *ptReference,
                                             arm_2d_region_t *ptBuffer);
+
+extern
+ARM_NONNULL(1,2)
+/*!
+ * \brief generic software tile copy for root tiles. 
+ * \note This API only supports normal tiles but not virtual resources.
+ * 
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param chBytesPerPixel number of bytes in a pixel
+ */
+void arm_2d_sw_normal_root_tile_copy(   const arm_2d_tile_t *ptSource, 
+                                        arm_2d_tile_t *ptTarget, 
+                                        const arm_2d_region_t *ptRegion,
+                                        uint_fast8_t chBytesPerPixel);
+
 /*----------------------------------------------------------------------------*
  * Copy/Fill tile to destination with Mirroring                               *
  *----------------------------------------------------------------------------*/

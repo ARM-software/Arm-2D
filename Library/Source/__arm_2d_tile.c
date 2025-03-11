@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        05. Dec 2024
- * $Revision:    V.1.4.11
+ * $Date:        11. March 2025
+ * $Revision:    V.1.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -887,6 +887,92 @@ arm_2d_location_t arm_2d_get_absolute_location( const arm_2d_tile_t *ptTile,
     }
     
     return tLocation;
+}
+
+
+ARM_NONNULL(1,2)
+void arm_2d_sw_normal_root_tile_copy(   const arm_2d_tile_t *ptSource, 
+                                        arm_2d_tile_t *ptTarget, 
+                                        const arm_2d_region_t *ptTargetRegion,
+                                        uint_fast8_t chBytesPerPixel)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptTarget);
+    assert(ptSource->tInfo.bIsRoot);
+    assert(ptTarget->tInfo.bIsRoot);
+    assert(false == ptSource->tInfo.bVirtualResource);
+    assert(false == ptSource->tInfo.bVirtualResource);
+
+    assert(chBytesPerPixel > 0);
+
+    arm_2d_region_t tTargetRegion = {
+        .tSize = ptTarget->tRegion.tSize,
+    };
+
+    /* get a valid tTargetRegion */
+    if (NULL == ptTargetRegion) {
+        ptTargetRegion = &tTargetRegion;
+    } else {
+        if (!arm_2d_region_intersect(&tTargetRegion, ptTargetRegion, &tTargetRegion)) {
+            /* out of region */
+            return ;
+        }
+    }
+
+    int16_t iHeight = MIN(ptSource->tRegion.tSize.iHeight, tTargetRegion.tSize.iHeight);
+    int16_t iWidth = MIN(ptSource->tRegion.tSize.iWidth, tTargetRegion.tSize.iWidth);
+
+    uint32_t wCopyStrideInByte = iWidth * chBytesPerPixel;
+    uint32_t wSourceStrideInByte = ptSource->tRegion.tSize.iWidth * chBytesPerPixel;
+    uint32_t wTargetStrideInByte = ptTarget->tRegion.tSize.iWidth * chBytesPerPixel;
+
+    /* offset target address */
+    uintptr_t pTarget = ptTarget->nAddress 
+                      + tTargetRegion.tLocation.iY * wTargetStrideInByte
+                      + tTargetRegion.tLocation.iX * chBytesPerPixel;
+
+    /* offset source address */
+    uintptr_t pSource = ptSource->nAddress;
+    if (ptTargetRegion->tLocation.iY < 0) {
+        pSource += (-ptTargetRegion->tLocation.iY) * wSourceStrideInByte;
+    }
+    if (ptTargetRegion->tLocation.iX < 0) {
+        pSource += (-ptTargetRegion->tLocation.iX) * chBytesPerPixel;
+    }
+
+    switch (chBytesPerPixel) {
+        case 3:
+        case 1:
+            for (int_fast16_t y = 0; y < iHeight; y++) {
+
+                memcpy((void *)pTarget, (void *)pSource, wCopyStrideInByte);
+        
+                pSource += wSourceStrideInByte;
+                pTarget += wTargetStrideInByte;
+            }
+            break;
+        case 2:
+            for (int_fast16_t y = 0; y < iHeight; y++) {
+
+                memcpy((uint16_t *)pTarget, (uint16_t *)pSource, wCopyStrideInByte);
+        
+                pSource += wSourceStrideInByte;
+                pTarget += wTargetStrideInByte;
+            }
+            break;
+
+        case 4:
+            for (int_fast16_t y = 0; y < iHeight; y++) {
+
+                memcpy((uint32_t *)pTarget, (uint32_t *)pSource, wCopyStrideInByte);
+        
+                pSource += wSourceStrideInByte;
+                pTarget += wTargetStrideInByte;
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 /*----------------------------------------------------------------------------*
