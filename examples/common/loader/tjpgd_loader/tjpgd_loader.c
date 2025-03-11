@@ -249,91 +249,6 @@ int __arm_tjpgd_loader_write_to_full_framebuffer (      /* Returns 1 to continue
     return 1;    /* Continue to decompress */
 }
 
-ARM_NONNULL(1,2)
-void arm_2d_normal_root_tile_copy(  const arm_2d_tile_t *ptSource, 
-                                    arm_2d_tile_t *ptTarget, 
-                                    const arm_2d_region_t *ptTargetRegion,
-                                    uint_fast8_t chBytesPerPixel)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptTarget);
-    assert(ptSource->tInfo.bIsRoot);
-    assert(ptTarget->tInfo.bIsRoot);
-    assert(false == ptSource->tInfo.bVirtualResource);
-    assert(false == ptSource->tInfo.bVirtualResource);
-
-    assert(chBytesPerPixel > 0);
-
-    arm_2d_region_t tTargetRegion = {
-        .tSize = ptTarget->tRegion.tSize,
-    };
-
-    /* get a valid tTargetRegion */
-    if (NULL == ptTargetRegion) {
-        ptTargetRegion = &tTargetRegion;
-    } else {
-        if (!arm_2d_region_intersect(&tTargetRegion, ptTargetRegion, &tTargetRegion)) {
-            /* out of region */
-            return ;
-        }
-    }
-
-    int16_t iHeight = MIN(ptSource->tRegion.tSize.iHeight, tTargetRegion.tSize.iHeight);
-    int16_t iWidth = MIN(ptSource->tRegion.tSize.iWidth, tTargetRegion.tSize.iWidth);
-
-    uint32_t wCopyStrideInByte = iWidth * chBytesPerPixel;
-    uint32_t wSourceStrideInByte = ptSource->tRegion.tSize.iWidth * chBytesPerPixel;
-    uint32_t wTargetStrideInByte = ptTarget->tRegion.tSize.iWidth * chBytesPerPixel;
-
-    /* offset target address */
-    uintptr_t pTarget = ptTarget->nAddress 
-                      + tTargetRegion.tLocation.iY * wTargetStrideInByte
-                      + tTargetRegion.tLocation.iX * chBytesPerPixel;
-
-    /* offset source address */
-    uintptr_t pSource = ptSource->nAddress;
-    if (ptTargetRegion->tLocation.iY < 0) {
-        pSource += (-ptTargetRegion->tLocation.iY) * wSourceStrideInByte;
-    }
-    if (ptTargetRegion->tLocation.iX < 0) {
-        pSource += (-ptTargetRegion->tLocation.iX) * chBytesPerPixel;
-    }
-
-    switch (chBytesPerPixel) {
-        case 3:
-        case 1:
-            for (int_fast16_t y = 0; y < iHeight; y++) {
-
-                memcpy((void *)pTarget, (void *)pSource, wCopyStrideInByte);
-        
-                pSource += wSourceStrideInByte;
-                pTarget += wTargetStrideInByte;
-            }
-            break;
-        case 2:
-            for (int_fast16_t y = 0; y < iHeight; y++) {
-
-                memcpy((uint16_t *)pTarget, (uint16_t *)pSource, wCopyStrideInByte);
-        
-                pSource += wSourceStrideInByte;
-                pTarget += wTargetStrideInByte;
-            }
-            break;
-
-        case 4:
-            for (int_fast16_t y = 0; y < iHeight; y++) {
-
-                memcpy((uint32_t *)pTarget, (uint32_t *)pSource, wCopyStrideInByte);
-        
-                pSource += wSourceStrideInByte;
-                pTarget += wTargetStrideInByte;
-            }
-            break;
-        default:
-            break;
-    }
-}
-
 
 static
 int __arm_tjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue, 0 to abort */
@@ -383,23 +298,23 @@ int __arm_tjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue
      * tTargetRegion
      */
     if (tTargetRegion.tSize.iWidth < tTargetTile.tRegion.tSize.iWidth) {
-        arm_2d_region_t tTempRegion1 = {
-            .tSize = tTargetRegion.tSize,
-        };
 
-        if (!arm_2d_region_intersect(&tTempRegion1, &tBlockRegion, &tTempRegion1)) {
-            return 1;
+        if (tBlockRegion.tLocation.iX < 0) {
+            int16_t iActualWidth = tBlockRegion.tSize.iWidth + tBlockRegion.tLocation.iX;
+            iActualWidth = MIN(iActualWidth, tTargetRegion.tSize.iWidth);
+            tBlockRegion.tSize.iWidth = -tBlockRegion.tLocation.iX + iActualWidth;
+        } else if (0 == tBlockRegion.tLocation.iX){
+            tBlockRegion.tSize.iWidth = MIN(tBlockRegion.tSize.iWidth, tTargetRegion.tSize.iWidth);
+        } else {
+            int16_t iRight = tBlockRegion.tLocation.iX + tBlockRegion.tSize.iWidth - 1;
+            int16_t iTargetRight = 0 + tTargetRegion.tSize.iWidth - 1;
+            iRight = MIN(iRight, iTargetRight);
+            
+            tBlockRegion.tSize.iWidth = iRight - tBlockRegion.tLocation.iX + 1;
         }
-
-        arm_2d_region_t tTempRegion2 = {
-            .tSize = tTargetTile.tRegion.tSize,
-        };
-        arm_2d_region_intersect(&tTempRegion2, &tBlockRegion, &tTempRegion2);
-
-        tBlockRegion.tSize.iWidth -= tTempRegion2.tSize.iWidth - tTempRegion1.tSize.iWidth;
     }
 
-    arm_2d_normal_root_tile_copy(&tSourceTile, &tTargetTile, &tBlockRegion, this.u3PixelByteSize);
+    arm_2d_sw_normal_root_tile_copy(&tSourceTile, &tTargetTile, &tBlockRegion, this.u3PixelByteSize);
 
     return 1;    /* Continue to decompress */
 }
