@@ -61,6 +61,25 @@
 /*============================ TYPES =========================================*/
 /*============================ PROTOTYPES ====================================*/
 
+extern
+JRESULT restart (
+	JDEC* jd,		/* Pointer to the decompressor object */
+	uint16_t rstn	/* Expected restert sequense number */
+);
+
+extern
+JRESULT mcu_output (
+	JDEC* jd,			/* Pointer to the decompressor object */
+	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
+	unsigned int x,		/* MCU location in the image */
+	unsigned int y		/* MCU location in the image */
+);
+
+extern
+JRESULT mcu_load (
+	JDEC* jd		/* Pointer to the decompressor object */
+);
+
 /*!
  *  \brief a method to load a specific part of an image
  *  \param[in] pTarget a reference of an user object
@@ -95,9 +114,16 @@ bool   __arm_tjpgd_io_fseek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int
 static
 size_t __arm_tjpgd_io_fread(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
 
+static
+JRESULT jd_decomp_rect (
+	JDEC* jd,								/* Initialized decompression object */
+	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
+	uint8_t scale,							/* Output de-scaling factor (0 to 3) */
+    arm_2d_region_t *ptRegion               /* Target Region inside the image */
+);
 /*============================ GLOBAL VARIABLES ==============================*/
 
-const arm_tjpgd_loader_io_t ARM_TGPGD_LOADER_IO_FILE = {
+const arm_tjpgd_loader_io_t ARM_TJPGD_LOADER_IO_FILE = {
     .fnOpen =   &__arm_tjpgd_io_fopen,
     .fnClose =  &__arm_tjpgd_io_fclose,
     .fnSeek =   &__arm_tjpgd_io_fseek,
@@ -194,6 +220,7 @@ size_t __arm_tjpgd_loader_in_func ( JDEC *ptDecoder,
     return nResult;
 }
 
+static
 int __arm_tjpgd_loader_write_to_full_framebuffer (      /* Returns 1 to continue, 0 to abort */
     JDEC* ptDecoder,        /* Decompression object */
     void* pSource,          /* Bitmap data to be output */
@@ -222,9 +249,167 @@ int __arm_tjpgd_loader_write_to_full_framebuffer (      /* Returns 1 to continue
     return 1;    /* Continue to decompress */
 }
 
+ARM_NONNULL(1,2)
+void arm_2d_normal_root_tile_copy(  const arm_2d_tile_t *ptSource, 
+                                    arm_2d_tile_t *ptTarget, 
+                                    const arm_2d_region_t *ptTargetRegion,
+                                    uint_fast8_t chBytesPerPixel)
+{
+    assert(NULL != ptSource);
+    assert(NULL != ptTarget);
+    assert(ptSource->tInfo.bIsRoot);
+    assert(ptTarget->tInfo.bIsRoot);
+    assert(false == ptSource->tInfo.bVirtualResource);
+    assert(false == ptSource->tInfo.bVirtualResource);
+
+    assert(chBytesPerPixel > 0);
+
+    arm_2d_region_t tTargetRegion = {
+        .tSize = ptTarget->tRegion.tSize,
+    };
+
+    /* get a valid tTargetRegion */
+    if (NULL == ptTargetRegion) {
+        ptTargetRegion = &tTargetRegion;
+    } else {
+        if (!arm_2d_region_intersect(&tTargetRegion, ptTargetRegion, &tTargetRegion)) {
+            /* out of region */
+            return ;
+        }
+    }
+
+    int16_t iHeight = MIN(ptSource->tRegion.tSize.iHeight, tTargetRegion.tSize.iHeight);
+    int16_t iWidth = MIN(ptSource->tRegion.tSize.iWidth, tTargetRegion.tSize.iWidth);
+
+    uint32_t wCopyStrideInByte = iWidth * chBytesPerPixel;
+    uint32_t wSourceStrideInByte = ptSource->tRegion.tSize.iWidth * chBytesPerPixel;
+    uint32_t wTargetStrideInByte = ptTarget->tRegion.tSize.iWidth * chBytesPerPixel;
+
+    /* offset target address */
+    uintptr_t pTarget = ptTarget->nAddress 
+                      + tTargetRegion.tLocation.iY * wTargetStrideInByte
+                      + tTargetRegion.tLocation.iX * chBytesPerPixel;
+
+    /* offset source address */
+    uintptr_t pSource = ptSource->nAddress;
+    if (ptTargetRegion->tLocation.iY < 0) {
+        pSource += (-ptTargetRegion->tLocation.iY) * wSourceStrideInByte;
+    }
+    if (ptTargetRegion->tLocation.iX < 0) {
+        pSource += (-ptTargetRegion->tLocation.iX) * chBytesPerPixel;
+    }
+
+    switch (chBytesPerPixel) {
+        case 3:
+        case 1:
+            for (int_fast16_t y = 0; y < iHeight; y++) {
+
+                memcpy((void *)pTarget, (void *)pSource, wCopyStrideInByte);
+        
+                pSource += wSourceStrideInByte;
+                pTarget += wTargetStrideInByte;
+            }
+            break;
+        case 2:
+            for (int_fast16_t y = 0; y < iHeight; y++) {
+
+                memcpy((uint16_t *)pTarget, (uint16_t *)pSource, wCopyStrideInByte);
+        
+                pSource += wSourceStrideInByte;
+                pTarget += wTargetStrideInByte;
+            }
+            break;
+
+        case 4:
+            for (int_fast16_t y = 0; y < iHeight; y++) {
+
+                memcpy((uint32_t *)pTarget, (uint32_t *)pSource, wCopyStrideInByte);
+        
+                pSource += wSourceStrideInByte;
+                pTarget += wTargetStrideInByte;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 
 static
-void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis)
+int __arm_tjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue, 0 to abort */
+    JDEC* ptDecoder,        /* Decompression object */
+    void* pSource,          /* Bitmap data to be output */
+    JRECT* rect             /* Rectangle region of output image */
+)
+{
+    arm_tjpgd_loader_t *ptThis = (arm_tjpgd_loader_t *)ptDecoder->device;
+
+    ARM_2D_UNUSED(rect);
+    arm_2d_region_t tBlockRegion = this.Decoder.tBlockRegion;
+
+    assert(tBlockRegion.tLocation.iX == rect->left);
+    assert(tBlockRegion.tLocation.iY == rect->top);
+    assert(tBlockRegion.tSize.iWidth == rect->right - rect->left + 1);
+    assert(tBlockRegion.tSize.iHeight == rect->bottom - rect->top + 1);
+
+    /* create source tile */
+    arm_2d_tile_t tSourceTile = {
+        .tInfo.bIsRoot = true,
+        .tRegion = {
+            .tSize = tBlockRegion.tSize,
+        },
+        .nAddress = (uintptr_t)pSource,
+    };
+
+    arm_2d_region_t tTargetRegion = this.ImageBuffer.tRegion;
+
+    arm_2d_tile_t tTargetTile = {
+        .tInfo.bIsRoot = true,
+        .tRegion = {
+            .tSize = {
+                .iHeight = tTargetRegion.tSize.iHeight,
+                .iWidth = this.iTargetStrideInByte / this.u3PixelByteSize,
+            }
+        },
+        .nAddress = (uintptr_t)this.ImageBuffer.pchBuffer,
+    };
+
+    tBlockRegion.tLocation.iX -= tTargetRegion.tLocation.iX;
+    tBlockRegion.tLocation.iY -= tTargetRegion.tLocation.iY;
+
+    /* ugly fix for background image loading mode
+     * when tTargetRegion.tSize.iWidth < tTargetTile.tRegion.tSize.iWidth
+     * the arm_2d_normal_root_tile_copy might write pixels outside the 
+     * tTargetRegion
+     */
+    if (tTargetRegion.tSize.iWidth < tTargetTile.tRegion.tSize.iWidth) {
+        arm_2d_region_t tTempRegion1 = {
+            .tSize = tTargetRegion.tSize,
+        };
+
+        if (!arm_2d_region_intersect(&tTempRegion1, &tBlockRegion, &tTempRegion1)) {
+            return 1;
+        }
+
+        arm_2d_region_t tTempRegion2 = {
+            .tSize = tTargetTile.tRegion.tSize,
+        };
+        arm_2d_region_intersect(&tTempRegion2, &tBlockRegion, &tTempRegion2);
+
+        tBlockRegion.tSize.iWidth -= tTempRegion2.tSize.iWidth - tTempRegion1.tSize.iWidth;
+    }
+
+    arm_2d_normal_root_tile_copy(&tSourceTile, &tTargetTile, &tBlockRegion, this.u3PixelByteSize);
+
+    return 1;    /* Continue to decompress */
+}
+
+
+static
+void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis, 
+                              arm_2d_region_t *ptRegion,
+                              uint8_t *pchBuffer,
+                              int16_t iStrideInByte)
 {
     assert(NULL != ptThis);
 
@@ -271,30 +456,47 @@ void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis)
         /* update image size */
         this.vres.tTile.tRegion.tSize.iHeight = this.Decoder.tJDEC.height;
         this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
+        
+        /* allocate scratch memory */
+        if (NULL == ptRegion) {
+            this.iTargetStrideInByte = this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
+            size_t tSize =this.vres.tTile.tRegion.tSize.iHeight * this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
+            this.ImageBuffer.pchBuffer = __arm_2d_allocate_scratch_memory(tSize, chAlign, this.tCFG.u2ScratchMemType);
 
-        /* decode now */
+            if (NULL == this.ImageBuffer.pchBuffer) {
+                this.bErrorDetected = true;
+                break ;
+            } else {
+                this.ImageBuffer.tSize = tSize;
+            }
 
-        size_t tSize =this.vres.tTile.tRegion.tSize.iHeight * this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
-
-        this.ImageBuffer.pchBuffer = __arm_2d_allocate_scratch_memory(tSize, chAlign, this.tCFG.u2ScratchMemType);
-
-        if (NULL == this.ImageBuffer.pchBuffer) {
-            this.bErrorDetected = true;
-            break ;
+            /* decoding */
+            if (JDR_OK != jd_decomp_rect( &this.Decoder.tJDEC, 
+                                          __arm_tjpgd_loader_write_to_full_framebuffer, 
+                                          0,
+                                          NULL)) {
+                this.bErrorDetected = true;
+                break;    
+            }
         } else {
-            this.ImageBuffer.tSize = tSize;
-        }
+            this.ImageBuffer.pchBuffer = pchBuffer;
+            this.iTargetStrideInByte = iStrideInByte;
+            this.ImageBuffer.tRegion = *ptRegion;
 
-        this.iTargetStrideInByte = this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
+            /* decoding */
+            if (JDR_OK != jd_decomp_rect(   &this.Decoder.tJDEC, 
+                                            __arm_tjpgd_loader_write_to_vres_framebuffer, 
+                                            0,
+                                            ptRegion)) {
 
+                this.ImageBuffer.pchBuffer = NULL;
+                this.iTargetStrideInByte = 0;
+                this.bErrorDetected = true;
+                break;    
+            }
 
-        /* decoding */
-        if (JDR_OK != jd_decomp( &this.Decoder.tJDEC, 
-                        __arm_tjpgd_loader_write_to_full_framebuffer, 
-                        0)) {
-
-            this.bErrorDetected = true;
-            break;    
+            this.ImageBuffer.pchBuffer = NULL;
+            this.iTargetStrideInByte = 0;
         }
 
         /* close low level IO */
@@ -386,7 +588,6 @@ void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
 
             this.iTargetStrideInByte = this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
 
-
             /* decoding */
             if (JDR_OK != jd_decomp( &this.Decoder.tJDEC, 
                             __arm_tjpgd_loader_write_to_full_framebuffer, 
@@ -457,7 +658,7 @@ void arm_tjpgd_loader_on_frame_start( arm_tjpgd_loader_t *ptThis)
     }
 
     if (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode) {
-        __arm_tjpgd_decode_fully(ptThis);
+        __arm_tjpgd_decode_fully(ptThis, NULL, NULL, 0);
     }
 }
 
@@ -582,27 +783,32 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
         }
 
         assert ((uintptr_t)NULL != ptVRES->tTile.nAddress);
-
-        //uintptr_t pSrc = __disp_adapter0_vres_get_asset_address(pTarget, ptVRES);
-        uintptr_t pSrc = (uintptr_t)NULL;
+        int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
 
         if (    (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode)
           ||    (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode)) {
-            pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
-        }
+            uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
+        
+            uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
+            
+            int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+        
+            __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
+                                            ptVRES, 
+                                            ptRegion, 
+                                            pSrc, 
+                                            pDes, 
+                                            iTargetStride, 
+                                            iSourceStride, 
+                                            nPixelSize);
+        } else if (ARM_TJPGD_MODE_PARTIAL_DECODED_TINY == this.tCFG.u2WorkMode) {
 
-        uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
-        int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
-        int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
-    
-        __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
-                                        ptVRES, 
+            __arm_tjpgd_decode_fully(   ptThis, 
                                         ptRegion, 
-                                        pSrc, 
-                                        pDes, 
-                                        iTargetStride, 
-                                        iSourceStride, 
-                                        nPixelSize);
+                                        ptVRES->tTile.pchBuffer, 
+                                        iTargetStride * this.u3PixelByteSize );
+
+        }
 
         return ptVRES->tTile.nAddress;
     } while(0);
@@ -657,26 +863,31 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
         assert(false);
     #endif
     } else {
-        //uintptr_t pSrc = __disp_adapter0_vres_get_asset_address(pTarget, ptVRES);
-        uintptr_t pSrc = (uintptr_t)NULL;
 
+        int16_t iTargetStride = ptRegion->tSize.iWidth;
         if (    (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode)
           ||    (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode)) {
-            pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
+            uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
+        
+
+            uintptr_t pDes = (uintptr_t)pBuffer;
+            
+            int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+
+            __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
+                                            ptVRES, 
+                                            ptRegion, 
+                                            pSrc, 
+                                            pDes, 
+                                            iTargetStride, 
+                                            iSourceStride, 
+                                            nPixelSize);
+        } else if (ARM_TJPGD_MODE_PARTIAL_DECODED_TINY == this.tCFG.u2WorkMode) {
+
+            __arm_tjpgd_decode_fully(ptThis, ptRegion, (uint8_t *)pBuffer, iTargetStride * this.u3PixelByteSize );
+
         }
 
-        uintptr_t pDes = (uintptr_t)pBuffer;
-        int16_t iTargetStride = ptRegion->tSize.iWidth;
-        int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
-
-        __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
-                                        ptVRES, 
-                                        ptRegion, 
-                                        pSrc, 
-                                        pDes, 
-                                        iTargetStride, 
-                                        iSourceStride, 
-                                        nPixelSize);
     } while(0);
     
     return (intptr_t)pBuffer;
@@ -716,6 +927,92 @@ void  __arm_tjpgd_vres_buffer_deposer(  uintptr_t pTarget,
                                  ptPFB);
     }
 }
+
+/*----------------------------------------------------------------------------*
+ * TJpgDec Extension                                                          *
+ *----------------------------------------------------------------------------*/
+
+static
+JRESULT jd_decomp_rect (
+	JDEC* jd,								/* Initialized decompression object */
+	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
+	uint8_t scale,							/* Output de-scaling factor (0 to 3) */
+    arm_2d_region_t *ptRegion               /* Target Region inside the image */
+)
+{
+    arm_tjpgd_loader_t *ptThis = (arm_tjpgd_loader_t *)jd->device;
+
+	int16_t x, y, mx, my;
+	uint16_t rst, rsc;
+	JRESULT rc;
+
+    arm_2d_region_t tDrawRegion = {
+        .tSize = {
+            .iWidth = jd->width,
+            .iHeight = jd->height,
+        },
+    };
+
+    if (NULL != ptRegion) {
+        if (!arm_2d_region_intersect(&tDrawRegion, ptRegion, &tDrawRegion)) {
+            /* nothing to load */
+            return JDR_OK;
+        }
+    }
+
+	if (scale > (JD_USE_SCALE ? 3 : 0)) {
+        return JDR_PAR;
+    }
+	jd->scale = scale;
+
+	mx = jd->msx * 8; my = jd->msy * 8;			/* Size of the MCU (pixel) */
+
+    this.Decoder.tBlockRegion = (arm_2d_region_t){
+        .tSize = {
+            .iHeight = my,
+            .iWidth = mx,
+        }
+    };
+
+	jd->dcv[2] = jd->dcv[1] = jd->dcv[0] = 0;	/* Initialize DC values */
+	rst = rsc = 0;
+
+	rc = JDR_OK;
+	for (y = 0; y < jd->height; y += my) {		/* Vertical loop of MCUs */
+        this.Decoder.tBlockRegion.tLocation.iY = y;
+
+		for (x = 0; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
+            this.Decoder.tBlockRegion.tLocation.iX = x;
+
+			if (jd->nrst && rst++ == jd->nrst) {	/* Process restart interval if enabled */
+				rc = restart(jd, rsc++);
+				if (rc != JDR_OK) return rc;
+				rst = 1;
+			}
+			rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
+			if (rc != JDR_OK) return rc;
+
+            if (!arm_2d_region_intersect(&this.Decoder.tBlockRegion, &tDrawRegion, NULL)) {
+
+                if (    this.Decoder.tBlockRegion.tLocation.iY 
+                   >=   (tDrawRegion.tLocation.iY + tDrawRegion.tSize.iHeight)) {
+                    /* lower than the bottom of the draw region, terminate the job earlier */
+                    return rc;
+                }
+                continue;
+            }
+
+			rc = mcu_output(jd, outfunc, x, y);	/* Output the MCU (YCbCr to RGB, scaling and output) */
+			if (rc != JDR_OK) return rc;
+		}
+	}
+
+	return rc;
+}
+
+/*----------------------------------------------------------------------------*
+ * IO                                                                         *
+ *----------------------------------------------------------------------------*/
 
 static
 bool __file_exists(const char *path, const char *pchMode) 

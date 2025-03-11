@@ -123,7 +123,7 @@ static void __on_scene_tjpgd_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene tjpgd                                                                    *
+ * Scene tjpgd                                                                *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_tjpgd_background_start(arm_2d_scene_t *ptScene)
@@ -266,9 +266,9 @@ user_scene_tjpgd_t *__arm_2d_scene_tjpgd_init(   arm_2d_scene_player_t *ptDispAd
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
-            .u2WorkMode = ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME,
+            .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,
             .ImageIO = {
-                .ptIO = &ARM_TGPGD_LOADER_IO_FILE,
+                .ptIO = &ARM_TJPGD_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.tJDEFileIO,
             },
         };

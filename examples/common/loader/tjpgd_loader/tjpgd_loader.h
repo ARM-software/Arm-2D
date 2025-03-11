@@ -120,12 +120,14 @@ ARM_PRIVATE(
     struct {
         uint8_t *pchBuffer;
         size_t tSize;
+        arm_2d_region_t tRegion;
     } ImageBuffer;
 
     struct {
         JDEC tJDEC;
         void *pWorkMemory;
         size_t nPosition;
+        arm_2d_region_t tBlockRegion;
     } Decoder;
 
     uint16_t u3PixelByteSize        : 3;
@@ -149,7 +151,7 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern 
-const arm_tjpgd_loader_io_t ARM_TGPGD_LOADER_IO_FILE;
+const arm_tjpgd_loader_io_t ARM_TJPGD_LOADER_IO_FILE;
 
 /*============================ PROTOTYPES ====================================*/
 extern
