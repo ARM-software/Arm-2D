@@ -107,6 +107,20 @@ if (ARM2D_LCD_PRINTF)
             )
 endif()
 
+if (ARM2D_TJPGD_LOADER)
+	target_include_directories(ARM2D PUBLIC examples/common/loader/tjpgd_loader)
+
+	target_sources(ARM2D PRIVATE 
+            examples/common/opcodes/arm_2d_user_opcode_draw_circle.c
+            examples/common/opcodes/arm_2d_user_opcode_draw_line.c
+            examples/common/loader/tjpgd_loader/tjpgd_loader.c
+            examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c
+            )
+    target_compile_options(ARM2D PUBLIC
+            -RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__
+            )
+endif()
+
 if (ARM2D_CONTROLS)
 	target_include_directories(ARM2D PUBLIC examples/common/controls/)
 	target_sources(ARM2D PRIVATE 
@@ -129,6 +143,7 @@ if (ARM2D_CONTROLS)
             examples/common/controls/cloudy_glass.c
             examples/common/controls/meter_pointer.c
             examples/common/controls/text_box.c
+
             
             examples/common/asset/WhiteDotMiddle.c
             examples/common/asset/WhiteDotBig.c
