@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        21. Feb 2025
- * $Revision:    V.2.10.2
+ * $Date:        12. March 2025
+ * $Revision:    V.2.10.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -412,12 +412,12 @@ void arm_lcd_text_insert_line_space(int16_t iWidth)
 
 arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont)
 {
-    if (NULL == ptFont) {
-        ptFont = &ARM_2D_FONT_6x8.use_as__arm_2d_font_t;   /* use default font */
-    }
-
     if (s_tLCDTextControl.ptFont == ptFont) {
         return ARM_2D_ERR_NONE;
+    }
+
+    if (NULL == ptFont) {
+        ptFont = &ARM_2D_FONT_6x8.use_as__arm_2d_font_t;   /* use default font */
     }
 
     do {
