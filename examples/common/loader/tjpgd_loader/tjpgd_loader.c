@@ -115,6 +115,18 @@ static
 size_t __arm_tjpgd_io_fread(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
 
 static
+bool   __arm_tjpgd_io_binary_open(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
+
+static
+void   __arm_tjpgd_io_binary_close(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
+
+static
+bool   __arm_tjpgd_io_binary_seek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence);
+
+static
+size_t __arm_tjpgd_io_binary_read(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
+
+static
 JRESULT jd_decomp_rect (
 	JDEC* jd,								/* Initialized decompression object */
 	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
@@ -123,11 +135,18 @@ JRESULT jd_decomp_rect (
 );
 /*============================ GLOBAL VARIABLES ==============================*/
 
-const arm_tjpgd_loader_io_t ARM_TJPGD_LOADER_IO_FILE = {
+const arm_tjpgd_loader_io_t ARM_TJPGD_IO_FILE_LOADER = {
     .fnOpen =   &__arm_tjpgd_io_fopen,
     .fnClose =  &__arm_tjpgd_io_fclose,
     .fnSeek =   &__arm_tjpgd_io_fseek,
     .fnRead =   &__arm_tjpgd_io_fread,
+};
+
+const arm_tjpgd_loader_io_t ARM_TJPGD_IO_BINARY_LOADER = {
+    .fnOpen =   &__arm_tjpgd_io_binary_open,
+    .fnClose =  &__arm_tjpgd_io_binary_close,
+    .fnSeek =   &__arm_tjpgd_io_binary_seek,
+    .fnRead =   &__arm_tjpgd_io_binary_read,
 };
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -942,8 +961,8 @@ bool __file_exists(const char *path, const char *pchMode)
 
 extern
 ARM_NONNULL(1, 2)
-arm_2d_err_t arm_tjpgd_io_file_init(arm_tjpgd_io_file_t *ptThis, 
-                                    const char *pchFilePath)
+arm_2d_err_t arm_tjpgd_io_file_loader_init(arm_tjpgd_io_file_loader_t *ptThis, 
+                                           const char *pchFilePath)
 {
     if (NULL == ptThis || NULL == pchFilePath) {
         return ARM_2D_ERR_INVALID_PARAM;
@@ -953,16 +972,16 @@ arm_2d_err_t arm_tjpgd_io_file_init(arm_tjpgd_io_file_t *ptThis,
         return ARM_2D_ERR_IO_ERROR;
     }
 
-    memset(ptThis, 0, sizeof(arm_tjpgd_io_file_t));
+    memset(ptThis, 0, sizeof(arm_tjpgd_io_file_loader_t));
     this.pchFilePath = pchFilePath;
 
     return ARM_2D_ERR_NONE;
 }
 
 static
-bool   __arm_tjpgd_io_fopen(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
+bool __arm_tjpgd_io_fopen(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
 {
-    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    arm_tjpgd_io_file_loader_t *ptThis = (arm_tjpgd_io_file_loader_t *)pTarget;
     ARM_2D_UNUSED(ptLoader);
     assert(NULL != ptThis);
     assert(NULL != this.pchFilePath);
@@ -976,9 +995,9 @@ bool   __arm_tjpgd_io_fopen(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
 }
 
 static
-void   __arm_tjpgd_io_fclose(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
+void __arm_tjpgd_io_fclose(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
 {
-    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    arm_tjpgd_io_file_loader_t *ptThis = (arm_tjpgd_io_file_loader_t *)pTarget;
     ARM_2D_UNUSED(ptLoader);
     assert(NULL != ptThis);
 
@@ -987,9 +1006,9 @@ void   __arm_tjpgd_io_fclose(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
 }
 
 static
-bool   __arm_tjpgd_io_fseek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence)
+bool __arm_tjpgd_io_fseek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence)
 {
-    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    arm_tjpgd_io_file_loader_t *ptThis = (arm_tjpgd_io_file_loader_t *)pTarget;
     ARM_2D_UNUSED(ptLoader);
     assert(NULL != ptThis);
 
@@ -999,11 +1018,125 @@ bool   __arm_tjpgd_io_fseek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int
 static
 size_t __arm_tjpgd_io_fread(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize)
 {
-    arm_tjpgd_io_file_t *ptThis = (arm_tjpgd_io_file_t *)pTarget;
+    arm_tjpgd_io_file_loader_t *ptThis = (arm_tjpgd_io_file_loader_t *)pTarget;
     ARM_2D_UNUSED(ptLoader);
     assert(NULL != ptThis);
 
     return fread(pchBuffer, 1, tSize, this.phFile);
+}
+
+
+
+extern
+ARM_NONNULL(1, 2)
+arm_2d_err_t arm_tjpgd_io_binary_loader_init(arm_tjpgd_io_binary_loader_t *ptThis, 
+                                             const uint8_t *pchBinary,
+                                             size_t tSize)
+{
+    if (NULL == ptThis || NULL == pchBinary || 0 == tSize) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    memset(ptThis, 0, sizeof(arm_tjpgd_io_binary_loader_t));
+    this.pchBinary = (uint8_t *)pchBinary;
+    this.tSize = tSize;
+
+    return ARM_2D_ERR_NONE;
+}
+
+static
+bool __arm_tjpgd_io_binary_open(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
+{
+    arm_tjpgd_io_binary_loader_t *ptThis = (arm_tjpgd_io_binary_loader_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+    assert(NULL != this.pchBinary);
+    assert(this.tSize > 0);
+
+    this.tPostion = 0;
+
+    return true;
+}
+
+static
+void __arm_tjpgd_io_binary_close(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader)
+{
+    arm_tjpgd_io_binary_loader_t *ptThis = (arm_tjpgd_io_binary_loader_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+static
+bool __arm_tjpgd_io_binary_seek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence)
+{
+    arm_tjpgd_io_binary_loader_t *ptThis = (arm_tjpgd_io_binary_loader_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+    assert(NULL != this.pchBinary);
+    assert(this.tSize > 0);
+
+    switch (whence) {
+        case SEEK_SET:
+            if (offset < 0 || offset >= this.tSize) {
+                return false;
+            }
+            this.tPostion = offset;
+            break;
+        
+        case SEEK_END:
+            if (offset > 0 || (-offset >= this.tSize)) {
+                return false;
+            }
+            this.tPostion = this.tSize + offset - 1;
+            break;
+        
+        case SEEK_CUR:
+            if (offset > 0) {
+                if ((this.tPostion + offset) >= this.tSize) {
+                    return false;
+                }
+                this.tPostion += offset;
+            } else if (offset < 0) {
+                size_t tABSOffset = -offset;
+                if ((this.tPostion < tABSOffset)) {
+                    return false;
+                }
+                this.tPostion -= tABSOffset;
+            }
+            break;
+        default:
+            return false;
+    }
+
+    return true;
+
+}
+
+static
+size_t __arm_tjpgd_io_binary_read(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize)
+{
+    arm_tjpgd_io_binary_loader_t *ptThis = (arm_tjpgd_io_binary_loader_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+    assert(NULL != this.pchBinary);
+    assert(this.tSize > 0);
+
+    if (NULL == pchBuffer || 0 == tSize) {
+        return 0;
+    }
+
+    if (this.tPostion >= this.tSize) {
+        return 0;
+    }
+    size_t iSizeToRead = this.tSize - this.tPostion;
+    iSizeToRead = MIN(iSizeToRead, tSize);
+
+    memcpy(pchBuffer, this.pchBinary + this.tPostion, iSizeToRead);
+
+    this.tPostion += iSizeToRead;
+
+    return iSizeToRead;
 }
 
 #if defined(__clang__)

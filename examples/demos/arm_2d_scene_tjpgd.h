@@ -59,6 +59,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef ARM_2D_DEMO_TJPGD_USE_FILE
+#   define ARM_2D_DEMO_TJPGD_USE_FILE  0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -88,7 +92,10 @@ ARM_PRIVATE(
     bool bUserAllocated;
 
     arm_tjpgd_loader_t tJPGBackground;
-    arm_tjpgd_io_file_t tJDEFileIO;
+    union {
+        arm_tjpgd_io_file_loader_t tFile;
+        arm_tjpgd_io_binary_loader_t tBinary;
+    } LoaderIO;
 
 )
     /* place your public member here */

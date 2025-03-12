@@ -141,17 +141,28 @@ ARM_PRIVATE(
 )
 };
 
-typedef struct arm_tjpgd_io_file_t {
+typedef struct arm_tjpgd_io_file_loader_t {
 ARM_PRIVATE(
     const char *pchFilePath;
     FILE *phFile; 
 )
-} arm_tjpgd_io_file_t;
+} arm_tjpgd_io_file_loader_t;
+
+typedef struct arm_tjpgd_io_binary_loader_t {
+ARM_PRIVATE(
+    size_t tPostion;
+    uint8_t *pchBinary;
+    size_t tSize;
+)
+} arm_tjpgd_io_binary_loader_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern 
-const arm_tjpgd_loader_io_t ARM_TJPGD_LOADER_IO_FILE;
+const arm_tjpgd_loader_io_t ARM_TJPGD_IO_FILE_LOADER;
+
+extern 
+const arm_tjpgd_loader_io_t ARM_TJPGD_IO_BINARY_LOADER;
 
 /*============================ PROTOTYPES ====================================*/
 extern
@@ -177,8 +188,14 @@ void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis);
 
 extern
 ARM_NONNULL(1, 2)
-arm_2d_err_t arm_tjpgd_io_file_init(arm_tjpgd_io_file_t *ptThis, 
-                            const char *pchFilePath);
+arm_2d_err_t arm_tjpgd_io_file_loader_init(arm_tjpgd_io_file_loader_t *ptThis, 
+                                           const char *pchFilePath);
+
+extern
+ARM_NONNULL(1, 2)
+arm_2d_err_t arm_tjpgd_io_binary_loader_init(arm_tjpgd_io_binary_loader_t *ptThis, 
+                                             const uint8_t *pchBinary,
+                                             size_t tSize);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
