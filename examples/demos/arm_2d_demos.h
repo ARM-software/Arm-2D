@@ -43,12 +43,21 @@
 #include "arm_2d_scene_tjpgd.h"
 
 /* monochrome demos */
-#include "arm_2d_scene_mono_loading.h"
-#include "arm_2d_scene_mono_histogram.h"
-#include "arm_2d_scene_mono_clock.h"
-#include "arm_2d_scene_mono_list.h"
-#include "arm_2d_scene_mono_tracking_list.h"
-#include "arm_2d_scene_mono_icon_menu.h"
+#if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)
+#   include "arm_2d_scene_mono_loading.h"
+#   include "arm_2d_scene_mono_histogram.h"
+#   include "arm_2d_scene_mono_clock.h"
+#   include "arm_2d_scene_mono_list.h"
+#   include "arm_2d_scene_mono_tracking_list.h"
+#   include "arm_2d_scene_mono_icon_menu.h"
+#else
+#   include "./monochrome/arm_2d_scene_mono_loading.h"
+#   include "./monochrome/arm_2d_scene_mono_histogram.h"
+#   include "./monochrome/arm_2d_scene_mono_clock.h"
+#   include "./monochrome/arm_2d_scene_mono_list.h"
+#   include "./monochrome/arm_2d_scene_mono_tracking_list.h"
+#   include "./monochrome/arm_2d_scene_mono_icon_menu.h"
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
