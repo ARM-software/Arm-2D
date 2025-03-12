@@ -523,9 +523,10 @@ void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
             this.iTargetStrideInByte = this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
 
             /* decoding */
-            if (JDR_OK != jd_decomp( &this.Decoder.tJDEC, 
+            if (JDR_OK != jd_decomp_rect( &this.Decoder.tJDEC, 
                             __arm_tjpgd_loader_write_to_full_framebuffer, 
-                            0)) {
+                            0,
+                            NULL)) {
 
                 this.bErrorDetected = true;
                 break;    
