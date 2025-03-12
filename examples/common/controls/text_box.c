@@ -631,7 +631,8 @@ void text_box_show( text_box_t *ptThis,
             }
 
             if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
-                this.iLineWidth = __text_box_canvas.tSize.iWidth;
+                this.iLineWidth = __text_box_canvas.tSize.iWidth 
+                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
                 bRequestUpdate = true;
             }
 
