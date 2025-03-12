@@ -466,6 +466,7 @@
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="TJpgDec Loader" Cversion="0.9.5" condition="Arm-2D-TJpgDec-Loader">
           <description>A helper service for loading baseline jpg files using TJpgDec.</description>
           <files>
+            <file category="include"     name="examples/common/loader/" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/tjpgd_loader.h" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
