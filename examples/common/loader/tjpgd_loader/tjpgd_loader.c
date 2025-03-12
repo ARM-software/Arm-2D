@@ -213,6 +213,11 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
 
     } while(0);
 
+    /* unsupported yet */
+    if (ARM_TJPGD_MODE_PARTIAL_DECODED == this.tCFG.u2WorkMode) {
+        this.tCFG.u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED_TINY;
+    }
+
     this.bInitialized = true;
 
     return ARM_2D_ERR_NONE;
