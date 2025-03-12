@@ -32,6 +32,10 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__)
+#   include "arm_2d_example_loaders.h"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -59,6 +63,15 @@ extern "C" {
 #   define __ARM_2D_IMPL__
 #endif
 #include "arm_2d_utils.h"
+
+#ifndef ARM_2D_SCENE_METER_USE_JPG
+#   define ARM_2D_SCENE_METER_USE_JPG       0
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__)
+#   undef  ARM_2D_SCENE_METER_USE_JPG
+#   define ARM_2D_SCENE_METER_USE_JPG       0
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -93,6 +106,14 @@ ARM_PRIVATE(
     bool bUserAllocated;
 
     meter_pointer_t tMeterPointer;
+
+#if ARM_2D_SCENE_METER_USE_JPG
+    arm_tjpgd_loader_t tJPGBackground;
+    union {
+        arm_tjpgd_io_file_loader_t tFile;
+        arm_tjpgd_io_binary_loader_t tBinary;
+    } LoaderIO;
+#endif
 
 )
     /* place your public member here */

@@ -181,6 +181,7 @@ static void __on_scene_histogram_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
 #endif

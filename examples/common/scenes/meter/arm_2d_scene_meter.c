@@ -134,6 +134,9 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
 
     meter_pointer_on_load(&this.tMeterPointer);
 
+#if ARM_2D_SCENE_METER_USE_JPG
+    arm_tjpgd_loader_on_load(&this.tJPGBackground);
+#endif
 }
 
 static void __after_scene_meter_switching(arm_2d_scene_t *ptScene)
@@ -147,7 +150,11 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+#if ARM_2D_SCENE_METER_USE_JPG
+    arm_tjpgd_loader_depose(&this.tJPGBackground);
+#endif
+
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
@@ -185,7 +192,11 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+#if ARM_2D_SCENE_METER_USE_JPG
+    arm_tjpgd_loader_on_frame_start(&this.tJPGBackground);
+#endif
+
     /*-----------------------    IMPORTANT MESSAGE    -----------------------*
      * It is better to update the 3 digits and pointer angle here            *
      *-----------------------------------------------------------------------*/
@@ -222,6 +233,10 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
 
     meter_pointer_on_frame_complete(&this.tMeterPointer);
 
+#if ARM_2D_SCENE_METER_USE_JPG
+    arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
+#endif
+
 #if 0
     /* switch to next scene after 15s */
     if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
@@ -250,21 +265,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         
         /* following code is just a demo, you can remove them */
 
-        /* draw the cmsis logo using mask in the centre of the screen */
+    #if !ARM_2D_SCENE_METER_USE_JPG 
         arm_2d_align_centre(__canvas, c_tileMeterPanel.tRegion.tSize) {
 
             arm_2d_tile_copy_only(  &c_tileMeterPanel,
                                     ptTile,
                                     &__centre_region);
-
-            arm_2d_op_wait_async(NULL);
         
-            meter_pointer_show(&this.tMeterPointer,
-                                  ptTile,
-                                  &__centre_region,
-                                  NULL,
-                                  255);
+            
         }
+    #else
+        arm_2d_align_centre(__canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+
+            arm_2d_tile_copy_only(  &this.tJPGBackground.vres.tTile,
+                                    ptTile,
+                                    &__centre_region);
+
+        }
+    #endif
+
+        meter_pointer_show(&this.tMeterPointer,
+                            ptTile,
+                            &__canvas,
+                            NULL,
+                            255);
         
         /* draw 3 digits numbers */
         do {
@@ -434,6 +458,38 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
         this.iTargetNumber = 150;
     } while(0);
+
+    /* initialize TJpgDec loader */
+#if ARM_2D_SCENE_METER_USE_JPG
+    do {
+    #if ARM_2D_DEMO_TJPGD_USE_FILE
+        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+    #else
+        extern
+        const uint8_t c_chMeterPanel80jpg[10089];
+
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
+    #endif
+        arm_tjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,
+        #if ARM_2D_DEMO_TJPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_TJPGD_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_TJPGD_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
+    } while(0);
+#endif
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
