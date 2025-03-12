@@ -548,7 +548,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
     #endif
     } while(0);
 #endif
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     //! handle the right half of the screen
     do {
@@ -579,7 +579,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                             NULL,
                             GLCD_COLOR_DARK_GREY);
 #endif
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
         /*! \note arm_2d_align_centre generate a region '__centre_region' based
@@ -635,7 +635,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                     break;
             }
 #endif
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
         }
 #else
         arm_2d_align_centre(__canvas, 
@@ -648,7 +648,8 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                     &c_tileCMSISLogoA4Mask,
                     (__arm_2d_color_t){GLCD_COLOR_LIGHT_GREY}
                 );
-            arm_2d_op_wait_async(NULL);
+            
+            ARM_2D_OP_WAIT_ASYNC();
             
             do {
                 arm_2d_tile_t tProgressBar;
@@ -661,8 +662,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                                         &__centre_region, 
                                                         &tProgressBar, 
                                                         false)) {
-                    //progress_bar_drill_show(&tProgressBar, 0, bIsNewFrame);
-                    progress_bar_flowing_show(&tProgressBar, 0, bIsNewFrame);
+                    progress_bar_flowing_show(&tProgressBar, -1);
                 }
             } while(0);
         }
@@ -710,7 +710,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
 
 #endif
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     arm_foreach(arm_2d_layer_t, ptLayers, hwCount, ptLayer) {
         arm_2d_region_t tRegion = ptLayer->tRegion;
@@ -785,7 +785,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                         &tRegion);
             }
         }
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     }
     
     arm_2d_fill_colour_with_opacity(   
@@ -831,7 +831,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                         GLCD_COLOR_BLACK,
                                         64,
                                         bIsNewFrame);    
-                arm_2d_op_wait_async(NULL);
+                ARM_2D_OP_WAIT_ASYNC();
             }
         }
 #endif
@@ -839,7 +839,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
             //! show busy wheel
             busy_wheel2_show(&tTempPanel, bIsNewFrame);
         
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     }
 
 #if !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
@@ -875,7 +875,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                     GLCD_COLOR_WHITE,
                                     bIsNewFrame);
     //  }
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     }
 #endif
 #endif
@@ -900,7 +900,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
         //show_icon_with_background(&tTempPanel, bIsNewFrame);
         spinning_wheel_show(&tTempPanel, bIsNewFrame);
         
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     }
 
 
@@ -921,7 +921,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                 false)) {
         show_icon_without_background(&tTempPanel, bIsNewFrame);
         
-        arm_2d_op_wait_async(NULL);
+        ARM_2D_OP_WAIT_ASYNC();
     }
 #endif
 }
