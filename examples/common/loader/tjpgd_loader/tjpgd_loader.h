@@ -130,6 +130,12 @@ ARM_PRIVATE(
         arm_2d_region_t tBlockRegion;
     } Decoder;
 
+    struct {
+        size_t nPostion;
+        int16_t x;
+        int16_t y;
+    } Context[2];
+
     uint16_t u3PixelByteSize        : 3;
     uint16_t u5BitsPerPixel         : 5;
     uint16_t                        : 6;

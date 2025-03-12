@@ -131,7 +131,8 @@ JRESULT jd_decomp_rect (
 	JDEC* jd,								/* Initialized decompression object */
 	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
 	uint8_t scale,							/* Output de-scaling factor (0 to 3) */
-    arm_2d_region_t *ptRegion               /* Target Region inside the image */
+    arm_2d_region_t *ptRegion,              /* Target Region inside the image */
+    bool bUseContex
 );
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -383,6 +384,12 @@ bool __arm_tjpgd_decode_prepare(arm_tjpgd_loader_t *ptThis)
         /* update image size */
         this.vres.tTile.tRegion.tSize.iHeight = this.Decoder.tJDEC.height;
         this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
+
+        /* reset context */
+        memset(this.Context, 0, sizeof(this.Context));
+        /* record starting position */
+        this.Context[0].nPostion = this.Decoder.nPosition;
+
     } while(0);
 
     if (this.bErrorDetected) {
@@ -449,7 +456,8 @@ void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis,
             if (JDR_OK != jd_decomp_rect( &this.Decoder.tJDEC, 
                                           __arm_tjpgd_loader_write_to_full_framebuffer, 
                                           0,
-                                          NULL)) {
+                                          NULL,
+                                          false)) {
                 this.bErrorDetected = true;
                 break;    
             }
@@ -462,7 +470,8 @@ void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis,
             if (JDR_OK != jd_decomp_rect(   &this.Decoder.tJDEC, 
                                             __arm_tjpgd_loader_write_to_vres_framebuffer, 
                                             0,
-                                            ptRegion)) {
+                                            ptRegion,
+                                            false)) {
 
                 this.ImageBuffer.pchBuffer = NULL;
                 this.iTargetStrideInByte = 0;
@@ -482,6 +491,67 @@ void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis,
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
         this.Decoder.pWorkMemory = NULL;
         
+    } while(0);
+
+    if (this.bErrorDetected) {
+
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+
+        if (NULL != this.Decoder.pWorkMemory) {
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+            this.Decoder.pWorkMemory = NULL;
+        }
+        if (NULL != this.ImageBuffer.pchBuffer) {
+            __arm_2d_free_scratch_memory(this.tCFG.u2ScratchMemType, this.ImageBuffer.pchBuffer);
+            this.ImageBuffer.pchBuffer = NULL;
+        }
+    }
+}
+
+ARM_NONNULL(1,2,3)
+static
+void __arm_tjpgd_decode_partial(arm_tjpgd_loader_t *ptThis, 
+                                arm_2d_region_t *ptRegion,
+                                uint8_t *pchBuffer,
+                                int16_t iStrideInByte)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptRegion);
+    assert(NULL != pchBuffer);
+    
+    if (!this.bInitialized || this.bErrorDetected) {
+        return ;
+    }
+
+    /* allocate memory */
+    do {
+    
+        uint8_t chAlign = 0;
+        if (3 == this.u3PixelByteSize) {
+            chAlign = 1;
+        } else {
+            chAlign = this.u3PixelByteSize;
+        }
+
+        this.ImageBuffer.pchBuffer = pchBuffer;
+        this.iTargetStrideInByte = iStrideInByte;
+        this.ImageBuffer.tRegion = *ptRegion;
+
+        /* decoding */
+        if (JDR_OK != jd_decomp_rect(   &this.Decoder.tJDEC, 
+                                        __arm_tjpgd_loader_write_to_vres_framebuffer, 
+                                        0,
+                                        ptRegion,
+                                        true)) {
+
+            this.ImageBuffer.pchBuffer = NULL;
+            this.iTargetStrideInByte = 0;
+            this.bErrorDetected = true;
+            break;    
+        }
+
     } while(0);
 
     if (this.bErrorDetected) {
@@ -522,31 +592,9 @@ void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
             chAlign = this.u3PixelByteSize;
         }
     
-        this.Decoder.pWorkMemory = (void*)__arm_2d_allocate_scratch_memory(__WORKING_MEMORY_SIZE__, 4, ARM_2D_MEM_TYPE_FAST);
-        if (NULL == this.Decoder.pWorkMemory) {
-            this.bErrorDetected = true;
-            break;
-        } 
-
-        /* open low level IO */
-        if (!ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnOpen,
-                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis))) {
-            this.bErrorDetected = true;
-            break;    
-        }
-
-        if (JDR_OK != jd_prepare(&this.Decoder.tJDEC, 
-                                    &__arm_tjpgd_loader_in_func, 
-                                    this.Decoder.pWorkMemory, 
-                                    __WORKING_MEMORY_SIZE__, 
-                                    ptThis)) {
-            this.bErrorDetected = true;
+        if (!__arm_tjpgd_decode_prepare(ptThis)) {
             break;
         }
-
-        /* update image size */
-        this.vres.tTile.tRegion.tSize.iHeight = this.Decoder.tJDEC.height;
-        this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
 
         /* decode now */
         if (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode) {
@@ -567,22 +615,23 @@ void arm_tjpgd_loader_on_load( arm_tjpgd_loader_t *ptThis)
             if (JDR_OK != jd_decomp_rect( &this.Decoder.tJDEC, 
                             __arm_tjpgd_loader_write_to_full_framebuffer, 
                             0,
-                            NULL)) {
+                            NULL,
+                            false)) {
 
                 this.bErrorDetected = true;
                 break;    
             }
-
-            
         }
 
-        /* close low level IO */
-        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        if (ARM_TJPGD_MODE_PARTIAL_DECODED != this.tCFG.u2WorkMode) {
+            /* close low level IO */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
 
-        /* free scratch memory */
-        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
-        this.Decoder.pWorkMemory = NULL;
+            /* free scratch memory */
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+            this.Decoder.pWorkMemory = NULL;
+        }
         
     } while(0);
 
@@ -611,6 +660,16 @@ void arm_tjpgd_loader_depose( arm_tjpgd_loader_t *ptThis)
 
     if (!this.bInitialized) {
         return ;
+    }
+
+    if (ARM_TJPGD_MODE_PARTIAL_DECODED == this.tCFG.u2WorkMode) {
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+
+        this.ImageBuffer.pchBuffer = NULL;
+    } else if (ARM_TJPGD_MODE_PARTIAL_DECODED_TINY == this.tCFG.u2WorkMode) {
+        assert(NULL == this.ImageBuffer.pchBuffer);
     }
 
     if (NULL != this.Decoder.pWorkMemory) {
@@ -761,29 +820,38 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
         assert ((uintptr_t)NULL != ptVRES->tTile.nAddress);
         int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
 
-        if (    (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode)
-          ||    (ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME == this.tCFG.u2WorkMode)) {
-            uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
+        switch(this.tCFG.u2WorkMode) {
+            case ARM_TJPGD_MODE_FULLY_DECODED_ONCE:
+            case ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME:
+                do {
+                    uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
         
-            uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
-            
-            int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
-        
-            __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
-                                            ptVRES, 
+                    uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
+                    
+                    int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
+                
+                    __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
+                                                    ptVRES, 
+                                                    ptRegion, 
+                                                    pSrc, 
+                                                    pDes, 
+                                                    iTargetStride, 
+                                                    iSourceStride, 
+                                                    nPixelSize);
+                } while(0);
+                break;
+            case ARM_TJPGD_MODE_PARTIAL_DECODED:
+                __arm_tjpgd_decode_partial( ptThis, 
                                             ptRegion, 
-                                            pSrc, 
-                                            pDes, 
-                                            iTargetStride, 
-                                            iSourceStride, 
-                                            nPixelSize);
-        } else if (ARM_TJPGD_MODE_PARTIAL_DECODED_TINY == this.tCFG.u2WorkMode) {
-
-            __arm_tjpgd_decode_fully(   ptThis, 
-                                        ptRegion, 
-                                        ptVRES->tTile.pchBuffer, 
-                                        iTargetStride * this.u3PixelByteSize );
-
+                                            ptVRES->tTile.pchBuffer, 
+                                            iTargetStride * this.u3PixelByteSize );
+                break;
+            case ARM_TJPGD_MODE_PARTIAL_DECODED_TINY:
+                __arm_tjpgd_decode_fully(   ptThis, 
+                                            ptRegion, 
+                                            ptVRES->tTile.pchBuffer, 
+                                            iTargetStride * this.u3PixelByteSize );
+                break;
         }
 
         return ptVRES->tTile.nAddress;
@@ -841,27 +909,38 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
     } else {
 
         int16_t iTargetStride = ptRegion->tSize.iWidth;
-        if (    (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode)
-          ||    (ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME == this.tCFG.u2WorkMode)) {
-            uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
+
+        switch(this.tCFG.u2WorkMode) {
+            case ARM_TJPGD_MODE_FULLY_DECODED_ONCE:
+            case ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME:
+                do {
+                    uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
+                    uintptr_t pDes = (uintptr_t)pBuffer;
+                    
+                    int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
         
-
-            uintptr_t pDes = (uintptr_t)pBuffer;
-            
-            int16_t iSourceStride = ptVRES->tTile.tRegion.tSize.iWidth;
-
-            __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
-                                            ptVRES, 
+                    __arm_tjpgd_vres_asset_2dcopy(  pTarget, 
+                                                    ptVRES, 
+                                                    ptRegion, 
+                                                    pSrc, 
+                                                    pDes, 
+                                                    iTargetStride, 
+                                                    iSourceStride, 
+                                                    nPixelSize);
+                } while(0);
+                break;
+            case ARM_TJPGD_MODE_PARTIAL_DECODED:
+                __arm_tjpgd_decode_partial( ptThis, 
                                             ptRegion, 
-                                            pSrc, 
-                                            pDes, 
-                                            iTargetStride, 
-                                            iSourceStride, 
-                                            nPixelSize);
-        } else if (ARM_TJPGD_MODE_PARTIAL_DECODED_TINY == this.tCFG.u2WorkMode) {
-
-            __arm_tjpgd_decode_fully(ptThis, ptRegion, (uint8_t *)pBuffer, iTargetStride * this.u3PixelByteSize );
-
+                                            (uint8_t *)pBuffer, 
+                                            iTargetStride * this.u3PixelByteSize );
+                break;
+            case ARM_TJPGD_MODE_PARTIAL_DECODED_TINY:
+                __arm_tjpgd_decode_fully(   ptThis, 
+                                            ptRegion, 
+                                            (uint8_t *)pBuffer, 
+                                            iTargetStride * this.u3PixelByteSize );
+                break;
         }
 
     } while(0);
@@ -913,7 +992,8 @@ JRESULT jd_decomp_rect (
 	JDEC* jd,								/* Initialized decompression object */
 	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
 	uint8_t scale,							/* Output de-scaling factor (0 to 3) */
-    arm_2d_region_t *ptRegion               /* Target Region inside the image */
+    arm_2d_region_t *ptRegion,              /* Target Region inside the image */
+    bool bUseContex                         /* whether use context */
 )
 {
     arm_tjpgd_loader_t *ptThis = (arm_tjpgd_loader_t *)jd->device;
