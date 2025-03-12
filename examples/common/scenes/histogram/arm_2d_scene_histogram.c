@@ -105,8 +105,9 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
 {
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
+#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
+#endif
 }
 
 static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
@@ -121,7 +122,9 @@ static void __on_scene_histogram_depose(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_depose(&this.tJPGBackground);
+#endif
 
     ptScene->ptPlayer = NULL;
     
@@ -160,7 +163,9 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_frame_start(&this.tJPGBackground);
+#endif
 
     do {
         int32_t nResult;
@@ -176,8 +181,9 @@ static void __on_scene_histogram_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
+#endif
 
 #if 0
     /* switch to next scene after 10s */
@@ -210,7 +216,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
 #if 1
-    #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+    #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
         arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
             arm_2d_tile_copy_only(
                 &c_tileHelium,
@@ -369,6 +375,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
 
     /* initialize TJpgDec loader */
+#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     do {
     #if ARM_2D_DEMO_TJPGD_USE_FILE
         arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
@@ -398,6 +405,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
         arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
     } while(0);
+#endif
 
     /* ------------   initialize members of user_scene_histogram_t end   ---------------*/
 
