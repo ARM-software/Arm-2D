@@ -70,7 +70,10 @@
 			"arm_2d_scene_watch_face_01.h": "c",
 			"arm_2d_scene_user_defined_opcode.h": "c",
 			"math.h": "c",
-			"arm_2d_user_opcode_draw_circle.h": "c"
+			"arm_2d_user_opcode_draw_circle.h": "c",
+			"arm_2d_scene_text_reader.h": "c",
+			"arm_2d_scene_compass.h": "c",
+			"arm_2d_scene_filters.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"
