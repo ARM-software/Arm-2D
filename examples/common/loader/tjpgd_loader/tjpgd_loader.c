@@ -59,6 +59,13 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+enum {
+    JDEC_CONTEXT_START,
+    JDEC_CONTEXT_PREVIOUS_START,
+    JDEC_CONTEXT_CURRENT,
+};
+
 /*============================ PROTOTYPES ====================================*/
 
 extern
@@ -386,9 +393,11 @@ bool __arm_tjpgd_decode_prepare(arm_tjpgd_loader_t *ptThis)
         this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
 
         /* reset context */
-        memset(this.Context, 0, sizeof(this.Context));
+        memset(&this.Context[0], 0, sizeof(this.Context[0]));
         /* record starting position */
-        this.Context[0].nPostion = this.Decoder.nPosition;
+        this.Context[JDEC_CONTEXT_START].nPostion = this.Decoder.nPosition;
+        this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_START];
+        this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_START];
 
     } while(0);
 
@@ -1030,14 +1039,68 @@ JRESULT jd_decomp_rect (
         }
     };
 
-	jd->dcv[2] = jd->dcv[1] = jd->dcv[0] = 0;	/* Initialize DC values */
-	rst = rsc = 0;
+    if (bUseContex) {
 
-	rc = JDR_OK;
-	for (y = 0; y < jd->height; y += my) {		/* Vertical loop of MCUs */
+        do {
+            if (    (this.Context[JDEC_CONTEXT_CURRENT].y <= tDrawRegion.tLocation.iY)
+               &&   (this.Context[JDEC_CONTEXT_CURRENT].x <= tDrawRegion.tLocation.iX)) {
+                /* next position */
+                break;
+            }
+
+            if (    (this.Context[JDEC_CONTEXT_PREVIOUS_START].y <= tDrawRegion.tLocation.iY)
+               &&   (this.Context[JDEC_CONTEXT_PREVIOUS_START].x <= tDrawRegion.tLocation.iX)) {
+                /* use previous start point */
+                this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_PREVIOUS_START];
+                break;
+            }
+
+            if ((this.Context[JDEC_CONTEXT_PREVIOUS_START].y + my) <= tDrawRegion.tLocation.iY) {
+                /* use previous start point */
+                this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_PREVIOUS_START];
+                break;
+            }
+
+            /* use the very start point*/
+            this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_START];
+            this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_START];
+
+        } while(0);
+
+
+        /* resume context */
+        memcpy(jd->dcv, this.Context[JDEC_CONTEXT_CURRENT].dcv, sizeof(jd->dcv));
+        jd->nrst = this.Context[JDEC_CONTEXT_CURRENT].nrst;
+        rst = this.Context[JDEC_CONTEXT_CURRENT].rsc;
+        rsc = this.Context[JDEC_CONTEXT_CURRENT].rsc;
+
+        y = this.Context[JDEC_CONTEXT_CURRENT].y;
+        x = this.Context[JDEC_CONTEXT_CURRENT].x;
+
+        this.Decoder.tBlockRegion.tLocation.iX = x;
+        this.Decoder.tBlockRegion.tLocation.iX = y;
+        
+        this.Decoder.nPosition = this.Context[JDEC_CONTEXT_CURRENT].nPostion;
+        ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis, this.Decoder.nPosition, SEEK_SET));
+
+        goto label_context_entry;
+
+    } else {
+        jd->dcv[2] = jd->dcv[1] = jd->dcv[0] = 0;	/* Initialize DC values */
+        rst = rsc = 0;
+
+        rc = JDR_OK;
+        y = 0;
+    }
+
+	for (;y < jd->height; y += my) {		/* Vertical loop of MCUs */
         this.Decoder.tBlockRegion.tLocation.iY = y;
+        x = 0;
+		for (; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
 
-		for (x = 0; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
+label_context_entry:
+
             this.Decoder.tBlockRegion.tLocation.iX = x;
 
 			if (jd->nrst && rst++ == jd->nrst) {	/* Process restart interval if enabled */
@@ -1053,8 +1116,17 @@ JRESULT jd_decomp_rect (
                 if (    this.Decoder.tBlockRegion.tLocation.iY 
                    >=   (tDrawRegion.tLocation.iY + tDrawRegion.tSize.iHeight)) {
                     /* lower than the bottom of the draw region, terminate the job earlier */
-                    return rc;
+                    goto label_normal_exit;
                 }
+
+                if (y <= tDrawRegion.tLocation.iY) {
+                    if (x <= tDrawRegion.tLocation.iX) {
+                        this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_CURRENT];
+                    } else if ((y + my) <= tDrawRegion.tLocation.iY) {
+                        this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_CURRENT];
+                    }
+                } 
+
                 continue;
             }
 
@@ -1063,6 +1135,19 @@ JRESULT jd_decomp_rect (
 		}
 	}
 
+label_normal_exit:
+    if (bUseContex) {
+        /* save context */
+        memcpy(this.Context[JDEC_CONTEXT_CURRENT].dcv, jd->dcv, sizeof(jd->dcv));
+        this.Context[JDEC_CONTEXT_CURRENT].nrst = jd->nrst;
+        this.Context[JDEC_CONTEXT_CURRENT].rsc = rst;
+        this.Context[JDEC_CONTEXT_CURRENT].rsc = rsc;
+
+        this.Context[JDEC_CONTEXT_CURRENT].y = y;
+        this.Context[JDEC_CONTEXT_CURRENT].x = x;
+
+        this.Context[JDEC_CONTEXT_CURRENT].nPostion = this.Decoder.nPosition;
+    }
 	return rc;
 }
 

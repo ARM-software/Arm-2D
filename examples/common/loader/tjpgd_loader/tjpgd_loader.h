@@ -134,7 +134,11 @@ ARM_PRIVATE(
         size_t nPostion;
         int16_t x;
         int16_t y;
-    } Context[2];
+        uint16_t rst;
+        uint16_t rsc;
+        uint16_t nrst;
+        uint16_t dcv[3];
+    } Context[3];
 
     uint16_t u3PixelByteSize        : 3;
     uint16_t u5BitsPerPixel         : 5;
