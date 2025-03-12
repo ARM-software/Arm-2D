@@ -63,7 +63,7 @@ typedef enum {
      * enough to hold the decoded image and decode. Free the scratch memory
      * at the end of a frame.
      */
-    ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME,
+    ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME,
 
     /*! slow, and only consume a small scratch memory. If you have multiple 
      *  arm_tjpgd_loader_t objects, each of them might occupy a scrach memory

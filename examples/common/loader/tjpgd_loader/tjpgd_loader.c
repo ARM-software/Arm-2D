@@ -345,17 +345,12 @@ int __arm_tjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue
 
 
 static
-void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis, 
-                              arm_2d_region_t *ptRegion,
-                              uint8_t *pchBuffer,
-                              int16_t iStrideInByte)
+bool __arm_tjpgd_decode_prepare(arm_tjpgd_loader_t *ptThis)
 {
-    assert(NULL != ptThis);
-
     assert(NULL != ptThis);
     
     if (!this.bInitialized) {
-        return ;
+        return false;
     }
 
     this.bErrorDetected = false;
@@ -395,7 +390,82 @@ void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis,
         /* update image size */
         this.vres.tTile.tRegion.tSize.iHeight = this.Decoder.tJDEC.height;
         this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
-        
+    } while(0);
+
+    if (this.bErrorDetected) {
+
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+
+        if (NULL != this.Decoder.pWorkMemory) {
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+            this.Decoder.pWorkMemory = NULL;
+        }
+
+        return false;
+    }
+
+    return true;
+}
+
+
+static
+void __arm_tjpgd_decode_fully(arm_tjpgd_loader_t *ptThis, 
+                              arm_2d_region_t *ptRegion,
+                              uint8_t *pchBuffer,
+                              int16_t iStrideInByte)
+{
+    assert(NULL != ptThis);
+    
+    if (!this.bInitialized) {
+        return ;
+    }
+
+    this.bErrorDetected = false;
+    this.Decoder.nPosition = 0;
+
+    /* allocate memory */
+    do {
+    
+        uint8_t chAlign = 0;
+        if (3 == this.u3PixelByteSize) {
+            chAlign = 1;
+        } else {
+            chAlign = this.u3PixelByteSize;
+        }
+
+    #if 0
+        this.Decoder.pWorkMemory = (void*)__arm_2d_allocate_scratch_memory(__WORKING_MEMORY_SIZE__, 4, ARM_2D_MEM_TYPE_FAST);
+        if (NULL == this.Decoder.pWorkMemory) {
+            this.bErrorDetected = true;
+            break;
+        }
+
+        /* open low level IO */
+        if (!ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnOpen,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis))) {
+            this.bErrorDetected = true;
+            break;    
+        }
+
+        if (JDR_OK != jd_prepare(&this.Decoder.tJDEC, 
+                                    &__arm_tjpgd_loader_in_func, 
+                                    this.Decoder.pWorkMemory, 
+                                    __WORKING_MEMORY_SIZE__, 
+                                    ptThis)) {
+            this.bErrorDetected = true;
+            break;
+        }
+
+        /* update image size */
+        this.vres.tTile.tRegion.tSize.iHeight = this.Decoder.tJDEC.height;
+        this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
+    #else
+        if (!__arm_tjpgd_decode_prepare(ptThis)) {
+            break;
+        }
+    #endif
         /* allocate scratch memory */
         if (NULL == ptRegion) {
             this.iTargetStrideInByte = this.vres.tTile.tRegion.tSize.iWidth * this.u3PixelByteSize;
@@ -597,7 +667,7 @@ void arm_tjpgd_loader_on_frame_start( arm_tjpgd_loader_t *ptThis)
         return ;
     }
 
-    if (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode) {
+    if (ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME == this.tCFG.u2WorkMode) {
         __arm_tjpgd_decode_fully(ptThis, NULL, NULL, 0);
     }
 }
@@ -611,7 +681,7 @@ void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis)
         return ;
     }
 
-    if (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode) {
+    if (ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME == this.tCFG.u2WorkMode) {
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
             this.Decoder.pWorkMemory = NULL;
@@ -726,7 +796,7 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
         int16_t iTargetStride = ptVRES->tTile.tInfo.Extension.VRES.iTargetStride;
 
         if (    (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode)
-          ||    (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode)) {
+          ||    (ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME == this.tCFG.u2WorkMode)) {
             uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
         
             uintptr_t pDes = (uintptr_t)ptVRES->tTile.nAddress;
@@ -806,7 +876,7 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
 
         int16_t iTargetStride = ptRegion->tSize.iWidth;
         if (    (ARM_TJPGD_MODE_FULLY_DECODED_ONCE == this.tCFG.u2WorkMode)
-          ||    (ARM_TJPGD_MODE_FULLY_DECODED_EACH_FRAME == this.tCFG.u2WorkMode)) {
+          ||    (ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME == this.tCFG.u2WorkMode)) {
             uintptr_t pSrc = (uintptr_t)this.ImageBuffer.pchBuffer;
         
 
