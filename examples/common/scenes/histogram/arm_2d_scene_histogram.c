@@ -106,6 +106,7 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_tjpgd_loader_on_load(&this.tJPGBackground);
 }
 
 static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
@@ -119,7 +120,9 @@ static void __on_scene_histogram_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
+
+    arm_tjpgd_loader_depose(&this.tJPGBackground);
+
     ptScene->ptPlayer = NULL;
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -157,6 +160,8 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_tjpgd_loader_on_frame_start(&this.tJPGBackground);
+
     do {
         int32_t nResult;
         arm_2d_helper_time_cos_slider(0, 1000, 1000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[1]);
@@ -172,6 +177,8 @@ static void __on_scene_histogram_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
+
 #if 0
     /* switch to next scene after 10s */
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
@@ -202,7 +209,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
         
-    #if 0
+#if 1
+    #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
         arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
             arm_2d_tile_copy_only(
                 &c_tileHelium,
@@ -212,10 +220,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
 
             ARM_2D_OP_WAIT_ASYNC();
         }
+    #else
+        arm_2d_align_centre(__top_canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+
+            arm_2d_tile_copy_only(&this.tJPGBackground.vres.tTile,
+                                ptTile,
+                                &__centre_region);
+
+        }
     #endif
+#endif
         
         arm_2d_align_centre(__top_canvas, 240, 200) {
-    #if 0
+    #if 1
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
                                     GLCD_COLOR_BLACK, 
@@ -348,6 +365,38 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         };
 
         histogram_init(&this.tHistogram, &tCFG);
+    } while(0);
+
+
+    /* initialize TJpgDec loader */
+    do {
+    #if ARM_2D_DEMO_TJPGD_USE_FILE
+        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+    #else
+        extern const uint8_t c_chHeliumJPG[23656];
+        extern const uint8_t c_chHelium75JPG[10685];
+        extern const uint8_t c_chHelium30JPG[5411];
+
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chHelium75JPG, sizeof(c_chHelium75JPG));
+    #endif
+        arm_tjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,
+        #if ARM_2D_DEMO_TJPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_TJPGD_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_TJPGD_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_histogram_t end   ---------------*/

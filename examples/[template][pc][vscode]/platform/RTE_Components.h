@@ -23,6 +23,8 @@
 
 #define RTE_Acceleration_Arm_2D_Extra_LCD_printf__
 
+#define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__
+
 #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 
 #define RTE_Acceleration_Arm_2D_Helper_PFB
@@ -36,5 +38,6 @@
 #define RTE_Acceleration_Arm_2D_Filter
 
 #define RTE_Acceleration_Arm_2D_Demos_User_Defined_OPCODE
+
 
 #endif /* RTE_COMPONENTS_H */
