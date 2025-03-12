@@ -25,7 +25,8 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
+ && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__)
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_loaders.h"
