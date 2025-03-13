@@ -466,9 +466,11 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
     #else
         extern
-        const uint8_t c_chMeterPanel80jpg[10089];
+        const uint8_t c_chMeterPanel80jpg[10474];
+        extern
+        const uint8_t c_chMeterPaneljpg[21894];
 
-        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPaneljpg, sizeof(c_chMeterPaneljpg));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
