@@ -298,12 +298,17 @@ int __arm_tjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue
     arm_tjpgd_loader_t *ptThis = (arm_tjpgd_loader_t *)ptDecoder->device;
 
     ARM_2D_UNUSED(rect);
-    arm_2d_region_t tBlockRegion = this.Decoder.tBlockRegion;
+    arm_2d_region_t tBlockRegion = {
+        .tLocation = {
+            .iX = rect->left,
+            .iY = rect->top,
+        },
 
-    assert(tBlockRegion.tLocation.iX == rect->left);
-    assert(tBlockRegion.tLocation.iY == rect->top);
-    assert(tBlockRegion.tSize.iWidth == rect->right - rect->left + 1);
-    assert(tBlockRegion.tSize.iHeight == rect->bottom - rect->top + 1);
+        .tSize = {
+            .iWidth = rect->right - rect->left + 1,
+            .iHeight = rect->bottom - rect->top + 1,
+        },
+    };
 
     /* create source tile */
     arm_2d_tile_t tSourceTile = {
@@ -1136,10 +1141,6 @@ label_context_entry:
 				if (rc != JDR_OK) return rc;
 				rst = 1;
 			}
-
-            if (304 == x && y == 240) {
-                printf("");
-            }
 
             if (!arm_2d_region_intersect(&this.Decoder.tBlockRegion, &tDrawRegion, NULL)) {
 
