@@ -248,10 +248,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     #endif
             arm_2d_align_bottom_centre(__centre_region, 224, 140 ) {
 
+
                 histogram_show( &this.tHistogram,
                                 ptTile,
                                 &__bottom_centre_region,
                                 255);
+            
+            #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+                /* update dirty region */
+                arm_2d_helper_dirty_region_update_item( 
+                    &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                    (arm_2d_tile_t *)ptTile,
+                    &__centre_region,
+                    &__bottom_centre_region);
+            #endif
             }
 
         }
@@ -336,8 +346,11 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             .fnBeforeSwitchOut = &__before_scene_histogram_switching_out,
             .fnOnFrameCPL   = &__on_scene_histogram_frame_complete,
             .fnDepose       = &__on_scene_histogram_depose,
-
+        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
             .bUseDirtyRegionHelper = false,
+        #else
+            .bUseDirtyRegionHelper = true,
+        #endif
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -363,8 +376,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
                 .wTo =    __RGB32(0xFF, 0, 0), 
             },
 
+        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
             .ptParent = &this.use_as__arm_2d_scene_t,
-
+        #endif
             .evtOnGetBinValue = {
                 .fnHandler = &histogram_get_bin_value,
                 .pTarget = ptThis,
