@@ -10,16 +10,17 @@
 // =======================
 //
 
-
 // <o>Input Buffer Size
-//      <512=>          0.5K
-//      <1024=>         1.0K
-//      <2048=>         2.0K
-//      <4096=>         4.0K
-//      <8192=>         8.0K
+//      <128=>          128B
+//      <256=>          256B
+//      <512=>          0.5KB
+//      <1024=>         1.0KB
+//      <2048=>         2.0KB
+//      <4096=>         4.0KB
+//      <8192=>         8.0KB
 // <i> Specifies size of stream input buffer.
 #ifndef JD_SZBUF
-#   define JD_SZBUF         128
+#   define JD_SZBUF         256
 #endif
 
 // <q> Enable output descaling

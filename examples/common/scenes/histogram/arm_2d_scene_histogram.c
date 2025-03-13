@@ -390,7 +390,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
-            .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,
+            .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED,
         #if ARM_2D_DEMO_TJPGD_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_TJPGD_IO_FILE_LOADER,

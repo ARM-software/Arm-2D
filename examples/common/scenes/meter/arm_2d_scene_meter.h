@@ -65,7 +65,7 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 #ifndef ARM_2D_SCENE_METER_USE_JPG
-#   define ARM_2D_SCENE_METER_USE_JPG       0
+#   define ARM_2D_SCENE_METER_USE_JPG       1
 #endif
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__)
