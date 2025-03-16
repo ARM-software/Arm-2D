@@ -231,22 +231,25 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
 
     this.bInitialized = true;
 
-    this.bErrorDetected = false;
-    this.Decoder.nPosition = 0;
-    
-    __arm_tjpgd_decode_prepare(ptThis);
+    /* try to decode */
+    do {
+        this.bErrorDetected = false;
+        this.Decoder.nPosition = 0;
+        
+        __arm_tjpgd_decode_prepare(ptThis);
 
-    /* close low level IO */
-    ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-        ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
 
-    /* free scratch memory */
-    __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
-    this.Decoder.pWorkMemory = NULL;
-    
-    if (this.bErrorDetected) {
-        return ARM_2D_ERR_IO_ERROR;
-    }
+        /* free scratch memory */
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+        this.Decoder.pWorkMemory = NULL;
+        
+        if (this.bErrorDetected) {
+            return ARM_2D_ERR_IO_ERROR;
+        }
+    } while(0);
 
     return ARM_2D_ERR_NONE;
 }
