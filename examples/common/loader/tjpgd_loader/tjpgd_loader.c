@@ -243,6 +243,10 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
     /* free scratch memory */
     __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
     this.Decoder.pWorkMemory = NULL;
+    
+    if (this.bErrorDetected) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
 
     return ARM_2D_ERR_NONE;
 }
