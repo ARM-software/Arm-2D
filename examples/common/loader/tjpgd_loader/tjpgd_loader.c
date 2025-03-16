@@ -141,6 +141,9 @@ JRESULT jd_decomp_rect (
     arm_2d_region_t *ptRegion,              /* Target Region inside the image */
     bool bUseContex
 );
+
+static
+bool __arm_tjpgd_decode_prepare(arm_tjpgd_loader_t *ptThis);
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const arm_tjpgd_loader_io_t ARM_TJPGD_IO_FILE_LOADER = {
@@ -227,6 +230,19 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
     }*/
 
     this.bInitialized = true;
+
+    this.bErrorDetected = false;
+    this.Decoder.nPosition = 0;
+    
+    __arm_tjpgd_decode_prepare(ptThis);
+
+    /* close low level IO */
+    ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+        ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+
+    /* free scratch memory */
+    __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
+    this.Decoder.pWorkMemory = NULL;
 
     return ARM_2D_ERR_NONE;
 }
@@ -1061,6 +1077,8 @@ void __arm_tjpgd_context_add_to_list(   arm_tjpgd_context_t **ppList,
         .iY = ptItem->tLocation.iY & ~(tBlockSize.iHeight - 1),
     };
 
+    ptItem->tLocation = tItemLocation;
+
     while(NULL != *ppList) {
 
         arm_2d_location_t tTempLocation = {
@@ -1093,6 +1111,11 @@ void __arm_tjpgd_context_add_to_list(   arm_tjpgd_context_t **ppList,
 
 label_next_item:
         ppList = &((*ppList)->ptNext);
+    }
+
+    /* insert to the tail */
+    arm_irq_safe {
+        ARM_LIST_INSERT_AFTER((*ppList), ptItem);
     }
 }
 
