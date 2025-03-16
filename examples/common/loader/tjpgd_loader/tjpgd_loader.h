@@ -50,21 +50,32 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-typedef enum {
-    /*!
-     * very fast, when loading the scene, allocate a scratch memory that is big 
-     * enough to hold the decoded image and decode. Free the scratch memory when
-     * the scene is deposed.
-     */
-    ARM_TJPGD_MODE_FULLY_DECODED_ONCE,
-    
-    /*!
-     * fast, at the start of a frame, allocate a scratch memory that is big 
-     * enough to hold the decoded image and decode. Free the scratch memory
-     * at the end of a frame.
-     */
-    ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME,
+typedef struct arm_tjpgd_context_t arm_tjpgd_context_t;
 
+struct arm_tjpgd_context_t {
+ARM_PRIVATE (
+    arm_tjpgd_context_t *ptNext;
+    size_t nPostion;
+    uintptr_t pBuffer;
+    size_t tSize;
+    size_t dctr;
+    uint8_t *dptr;
+    uint32_t wreg;
+
+    uint8_t dbit;
+    uint8_t marker;
+
+    uint16_t rst;
+    uint16_t rsc;
+
+    uint16_t nrst;
+    uint16_t dcv[3];
+
+    arm_2d_location_t tLocation;
+)
+};
+
+typedef enum {
     /*! slow, and only consume a small scratch memory. If you have multiple 
      *  arm_tjpgd_loader_t objects, each of them might occupy a scrach memory
      *  (Recommended)
@@ -74,7 +85,22 @@ typedef enum {
     /*! very slow, for each partial loading, always decode from the begining and 
      * release the scratch memory 
      */
-    ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,                
+    ARM_TJPGD_MODE_PARTIAL_DECODED_TINY,
+    
+    /*!
+     * fast, at the start of a frame, allocate a scratch memory that is big 
+     * enough to hold the decoded image and decode. Free the scratch memory
+     * at the end of a frame.
+     */
+    ARM_TJPGD_MODE_FULLY_DECODED_PER_FRAME,
+
+    /*!
+     * very fast, when loading the scene, allocate a scratch memory that is big 
+     * enough to hold the decoded image and decode. Free the scratch memory when
+     * the scene is deposed.
+     */
+    ARM_TJPGD_MODE_FULLY_DECODED_ONCE,
+
 } arm_tjpgd_loader_work_mode_t;
 
 typedef struct arm_tjpgd_loader_t arm_tjpgd_loader_t;
@@ -136,22 +162,12 @@ ARM_PRIVATE(
         } PreviousRead;
     } Decoder;
 
-    struct {
-        size_t nPostion;
-        uintptr_t pBuffer;
-        size_t tSize;
-        size_t dctr;
-        uint8_t *dptr;
-        uint32_t wreg;
-        uint8_t dbit;
-        uint8_t marker;
+    arm_tjpgd_context_t tContext[3];
 
-        arm_2d_location_t tLocation;
-        uint16_t rst;
-        uint16_t rsc;
-        uint16_t nrst;
-        uint16_t dcv[3];
-    } Context[3];
+    struct {
+        arm_tjpgd_context_t *ptCandidates;
+        arm_tjpgd_context_t *ptList;
+    } Reference;
 
     uint16_t u3PixelByteSize        : 3;
     uint16_t u5BitsPerPixel         : 5;
@@ -208,6 +224,11 @@ void arm_tjpgd_loader_on_frame_start( arm_tjpgd_loader_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point(arm_tjpgd_loader_t *ptThis, 
+                                                  arm_2d_location_t tLocation);
 
 extern
 ARM_NONNULL(1, 2)

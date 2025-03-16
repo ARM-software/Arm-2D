@@ -404,21 +404,21 @@ bool __arm_tjpgd_decode_prepare(arm_tjpgd_loader_t *ptThis)
         this.vres.tTile.tRegion.tSize.iWidth = this.Decoder.tJDEC.width;
 
         /* reset context */
-        memset(&this.Context[0], 0, sizeof(this.Context[0]));
+        memset(&this.tContext[0], 0, sizeof(this.tContext[0]));
 
-        this.Context[JDEC_CONTEXT_START].nPostion = this.Decoder.PreviousRead.nPostion;
-        this.Context[JDEC_CONTEXT_START].pBuffer = this.Decoder.PreviousRead.pBuffer;
-        this.Context[JDEC_CONTEXT_START].tSize = this.Decoder.PreviousRead.tSize;
+        this.tContext[JDEC_CONTEXT_START].nPostion = this.Decoder.PreviousRead.nPostion;
+        this.tContext[JDEC_CONTEXT_START].pBuffer = this.Decoder.PreviousRead.pBuffer;
+        this.tContext[JDEC_CONTEXT_START].tSize = this.Decoder.PreviousRead.tSize;
 
-        this.Context[JDEC_CONTEXT_START].dbit = this.Decoder.tJDEC.dbit;
-        this.Context[JDEC_CONTEXT_START].dctr = this.Decoder.tJDEC.dctr;
-        this.Context[JDEC_CONTEXT_START].dptr = this.Decoder.tJDEC.dptr;
-        this.Context[JDEC_CONTEXT_START].wreg = this.Decoder.tJDEC.wreg;
-        this.Context[JDEC_CONTEXT_START].marker = this.Decoder.tJDEC.marker;
+        this.tContext[JDEC_CONTEXT_START].dbit = this.Decoder.tJDEC.dbit;
+        this.tContext[JDEC_CONTEXT_START].dctr = this.Decoder.tJDEC.dctr;
+        this.tContext[JDEC_CONTEXT_START].dptr = this.Decoder.tJDEC.dptr;
+        this.tContext[JDEC_CONTEXT_START].wreg = this.Decoder.tJDEC.wreg;
+        this.tContext[JDEC_CONTEXT_START].marker = this.Decoder.tJDEC.marker;
 
 
-        this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_START];
-        this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_START];
+        this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_START];
+        this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_START];
 
     } while(0);
 
@@ -710,6 +710,36 @@ void arm_tjpgd_loader_depose( arm_tjpgd_loader_t *ptThis)
         __arm_2d_free_scratch_memory(this.tCFG.u2ScratchMemType, this.ImageBuffer.pchBuffer);
         this.ImageBuffer.pchBuffer = NULL;
     }
+
+    /* free the candidates list */
+    do {
+        arm_tjpgd_context_t *ptItem = NULL;
+
+        arm_irq_safe {
+            ARM_LIST_STACK_POP(this.Reference.ptCandidates, ptItem);
+        }
+
+        if (NULL == ptItem) {
+            break;
+        }
+
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, ptItem);
+    } while(1);
+
+    /* free the reference working list */
+    do {
+        arm_tjpgd_context_t *ptItem = NULL;
+
+        arm_irq_safe {
+            ARM_LIST_STACK_POP(this.Reference.ptList, ptItem);
+        }
+
+        if (NULL == ptItem) {
+            break;
+        }
+
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, ptItem);
+    } while(1);
 
 }
 
@@ -1014,6 +1044,124 @@ void  __arm_tjpgd_vres_buffer_deposer(  uintptr_t pTarget,
 }
 
 /*----------------------------------------------------------------------------*
+ * Context                                                                    *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1,2)
+static
+void __arm_tjpgd_context_add_to_list(   arm_tjpgd_context_t **ppList, 
+                                        arm_tjpgd_context_t *ptItem,
+                                        arm_2d_size_t tBlockSize)
+{
+    assert(NULL != ppList);
+    assert(NULL != ptItem);
+
+    arm_2d_location_t tItemLocation = {
+        .iX = ptItem->tLocation.iX & ~(tBlockSize.iWidth - 1),
+        .iY = ptItem->tLocation.iY & ~(tBlockSize.iHeight - 1),
+    };
+
+    while(NULL != *ppList) {
+
+        arm_2d_location_t tTempLocation = {
+            .iX = (*ppList)->tLocation.iX & ~(tBlockSize.iWidth - 1),
+            .iY = (*ppList)->tLocation.iY & ~(tBlockSize.iHeight - 1),
+        };
+
+        if ((tTempLocation.iX == tItemLocation.iX)
+        &&  (tTempLocation.iY == tItemLocation.iY)) {
+            /* free the item */
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, ptItem);
+            return ;
+        }
+
+        if (tItemLocation.iY > tTempLocation.iY) {
+            goto label_next_item;
+        } else if ( (tItemLocation.iY == tTempLocation.iY)
+                &&  (tItemLocation.iX > tTempLocation.iX)) {
+            goto label_next_item;
+        } /*if ( (tItemLocation.iY < tTempLocation.iY) 
+                 || (   (tItemLocation.iY == tTempLocation.iY)
+                    &&  (tItemLocation.iX < tTempLocation.iX))) */
+        {
+            /* insert here */
+            arm_irq_safe {
+                ARM_LIST_INSERT_AFTER((*ppList), ptItem);
+            }
+            return ;
+        }
+
+label_next_item:
+        ppList = &((*ppList)->ptNext);
+    }
+}
+
+ARM_NONNULL(1)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point(  arm_tjpgd_loader_t *ptThis, 
+                                                    arm_2d_location_t tLocation)
+{
+    assert(NULL != ptThis);
+    if (!this.bInitialized 
+    ||  this.bErrorDetected 
+    ||  this.tCFG.u2WorkMode != ARM_TJPGD_MODE_PARTIAL_DECODED) {
+        return ARM_2D_ERR_INVALID_STATUS;
+    }
+
+    arm_2d_region_t tImageRegion = {
+        .tSize = {
+            .iWidth = this.Decoder.tJDEC.width,
+            .iHeight = this.Decoder.tJDEC.height,
+        },
+    };
+
+    if (!arm_2d_is_point_inside_region(&tImageRegion, &tLocation)) {
+        return ARM_2D_ERR_OUT_OF_REGION;
+    }
+
+    arm_tjpgd_context_t *ptItem = 
+        __arm_2d_allocate_scratch_memory(   sizeof(arm_tjpgd_context_t), 
+                                            __alignof__(arm_tjpgd_context_t),
+                                            ARM_2D_MEM_TYPE_FAST);
+
+    if (NULL == ptItem) {
+        return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+    }
+
+    memset(ptItem, 0, sizeof(arm_tjpgd_context_t));
+
+    ptItem->tLocation = tLocation;
+
+    arm_2d_size_t tBlockSize = {
+        .iWidth = this.Decoder.tJDEC.msx * 8,
+        .iHeight = this.Decoder.tJDEC.msy * 8,	
+    };
+
+    __arm_tjpgd_context_add_to_list(&this.Reference.ptCandidates, 
+                                    ptItem, 
+                                    tBlockSize);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
+bool __arm_2d_tjpgd_is_context_before_the_target_region(arm_tjpgd_context_t *ptContext, 
+                                                        arm_2d_location_t tLocation,
+                                                        arm_2d_size_t tBlockSize)
+{
+    assert(NULL != ptContext);
+
+    if ((ptContext->tLocation.iY <= tLocation.iY)
+    &&  (ptContext->tLocation.iX <= tLocation.iX)) {
+        return true;
+    } else if ((ptContext->tLocation.iY + tBlockSize.iHeight) <= tLocation.iY) {
+        return true;
+    }
+    
+    return false;
+}
+
+/*----------------------------------------------------------------------------*
  * TJpgDec Extension                                                          *
  *----------------------------------------------------------------------------*/
 
@@ -1063,59 +1211,55 @@ JRESULT jd_decomp_rect (
     if (bUseContex) {
 
         do {
-            if (    (this.Context[JDEC_CONTEXT_CURRENT].tLocation.iY <= tDrawRegion.tLocation.iY)
-               &&   (this.Context[JDEC_CONTEXT_CURRENT].tLocation.iX <= tDrawRegion.tLocation.iX)) {
+            if (    (this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY <= tDrawRegion.tLocation.iY)
+               &&   (this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX <= tDrawRegion.tLocation.iX)) {
                 /* next position */
                 break;
             }
 
-            if (    (this.Context[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY <= tDrawRegion.tLocation.iY)
-               &&   (this.Context[JDEC_CONTEXT_PREVIOUS_START].tLocation.iX <= tDrawRegion.tLocation.iX)) {
+        
+            if (__arm_2d_tjpgd_is_context_before_the_target_region(
+                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_START],
+                                            tDrawRegion.tLocation,
+                                            this.Decoder.tBlockRegion.tSize)) {
                 /* use previous start point */
-                this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_PREVIOUS_START];
-                break;
-            }
-
-            if ((this.Context[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY + my) <= tDrawRegion.tLocation.iY) {
-                /* use previous start point */
-                this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_PREVIOUS_START];
+                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_START];
                 break;
             }
 
             /* use the very start point*/
-            this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_START];
-            this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_START];
+            this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_START];
+            this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_START];
 
         } while(0);
 
 
         /* resume context */
-        memcpy(jd->dcv, this.Context[JDEC_CONTEXT_CURRENT].dcv, sizeof(jd->dcv));
-        jd->nrst = this.Context[JDEC_CONTEXT_CURRENT].nrst;
-        rst = this.Context[JDEC_CONTEXT_CURRENT].rst;
-        rsc = this.Context[JDEC_CONTEXT_CURRENT].rsc;
+        memcpy(jd->dcv, this.tContext[JDEC_CONTEXT_CURRENT].dcv, sizeof(jd->dcv));
+        jd->nrst = this.tContext[JDEC_CONTEXT_CURRENT].nrst;
+        rst = this.tContext[JDEC_CONTEXT_CURRENT].rst;
+        rsc = this.tContext[JDEC_CONTEXT_CURRENT].rsc;
 
-        y = this.Context[JDEC_CONTEXT_CURRENT].tLocation.iY;
-        x = this.Context[JDEC_CONTEXT_CURRENT].tLocation.iX;
+        y = this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY;
+        x = this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX;
 
-        this.Decoder.tBlockRegion.tLocation.iX = x;
-        this.Decoder.tBlockRegion.tLocation.iY = y;
+        this.Decoder.tBlockRegion.tLocation = this.tContext[JDEC_CONTEXT_CURRENT].tLocation;
         
-        this.Decoder.nPosition = this.Context[JDEC_CONTEXT_CURRENT].nPostion;
+        this.Decoder.nPosition = this.tContext[JDEC_CONTEXT_CURRENT].nPostion;
         ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
             ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis, this.Decoder.nPosition, SEEK_SET));
         
         /* refill the inbuf */
         __arm_tjpgd_loader_in_func(&this.Decoder.tJDEC, 
-                                    (uint8_t *)this.Context[JDEC_CONTEXT_CURRENT].pBuffer, 
-                                    this.Context[JDEC_CONTEXT_CURRENT].tSize);
+                                    (uint8_t *)this.tContext[JDEC_CONTEXT_CURRENT].pBuffer, 
+                                    this.tContext[JDEC_CONTEXT_CURRENT].tSize);
 
 
-        this.Decoder.tJDEC.dbit = this.Context[JDEC_CONTEXT_CURRENT].dbit;
-        this.Decoder.tJDEC.dctr = this.Context[JDEC_CONTEXT_CURRENT].dctr;
-        this.Decoder.tJDEC.dptr = this.Context[JDEC_CONTEXT_CURRENT].dptr;
-        this.Decoder.tJDEC.wreg = this.Context[JDEC_CONTEXT_CURRENT].wreg;
-        this.Decoder.tJDEC.marker = this.Context[JDEC_CONTEXT_CURRENT].marker;
+        this.Decoder.tJDEC.dbit = this.tContext[JDEC_CONTEXT_CURRENT].dbit;
+        this.Decoder.tJDEC.dctr = this.tContext[JDEC_CONTEXT_CURRENT].dctr;
+        this.Decoder.tJDEC.dptr = this.tContext[JDEC_CONTEXT_CURRENT].dptr;
+        this.Decoder.tJDEC.wreg = this.tContext[JDEC_CONTEXT_CURRENT].wreg;
+        this.Decoder.tJDEC.marker = this.tContext[JDEC_CONTEXT_CURRENT].marker;
 
         goto label_context_entry;
 
@@ -1146,23 +1290,23 @@ label_context_entry:
 
                 if (bUseContex) {
                     /* save context */
-                    memcpy(this.Context[JDEC_CONTEXT_CURRENT].dcv, jd->dcv, sizeof(jd->dcv));
-                    this.Context[JDEC_CONTEXT_CURRENT].nrst = jd->nrst;
-                    this.Context[JDEC_CONTEXT_CURRENT].rst = rst;
-                    this.Context[JDEC_CONTEXT_CURRENT].rsc = rsc;
+                    memcpy(this.tContext[JDEC_CONTEXT_CURRENT].dcv, jd->dcv, sizeof(jd->dcv));
+                    this.tContext[JDEC_CONTEXT_CURRENT].nrst = jd->nrst;
+                    this.tContext[JDEC_CONTEXT_CURRENT].rst = rst;
+                    this.tContext[JDEC_CONTEXT_CURRENT].rsc = rsc;
     
-                    this.Context[JDEC_CONTEXT_CURRENT].tLocation.iY = y;
-                    this.Context[JDEC_CONTEXT_CURRENT].tLocation.iX = x;
+                    this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY = y;
+                    this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX = x;
     
-                    this.Context[JDEC_CONTEXT_CURRENT].nPostion = this.Decoder.PreviousRead.nPostion;
-                    this.Context[JDEC_CONTEXT_CURRENT].pBuffer = this.Decoder.PreviousRead.pBuffer;
-                    this.Context[JDEC_CONTEXT_CURRENT].tSize = this.Decoder.PreviousRead.tSize;
+                    this.tContext[JDEC_CONTEXT_CURRENT].nPostion = this.Decoder.PreviousRead.nPostion;
+                    this.tContext[JDEC_CONTEXT_CURRENT].pBuffer = this.Decoder.PreviousRead.pBuffer;
+                    this.tContext[JDEC_CONTEXT_CURRENT].tSize = this.Decoder.PreviousRead.tSize;
     
-                    this.Context[JDEC_CONTEXT_CURRENT].dbit = this.Decoder.tJDEC.dbit;
-                    this.Context[JDEC_CONTEXT_CURRENT].dctr = this.Decoder.tJDEC.dctr;
-                    this.Context[JDEC_CONTEXT_CURRENT].dptr = this.Decoder.tJDEC.dptr;
-                    this.Context[JDEC_CONTEXT_CURRENT].wreg = this.Decoder.tJDEC.wreg;
-                    this.Context[JDEC_CONTEXT_CURRENT].marker = this.Decoder.tJDEC.marker;
+                    this.tContext[JDEC_CONTEXT_CURRENT].dbit = this.Decoder.tJDEC.dbit;
+                    this.tContext[JDEC_CONTEXT_CURRENT].dctr = this.Decoder.tJDEC.dctr;
+                    this.tContext[JDEC_CONTEXT_CURRENT].dptr = this.Decoder.tJDEC.dptr;
+                    this.tContext[JDEC_CONTEXT_CURRENT].wreg = this.Decoder.tJDEC.wreg;
+                    this.tContext[JDEC_CONTEXT_CURRENT].marker = this.Decoder.tJDEC.marker;
                 }
 
                 rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
@@ -1180,9 +1324,9 @@ label_context_entry:
                     /* copy context */
                     if (y <= tDrawRegion.tLocation.iY) {
                         if (x <= tDrawRegion.tLocation.iX) {
-                            this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_CURRENT];
+                            this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_CURRENT];
                         } else if ((y + my) <= tDrawRegion.tLocation.iY) {
-                            this.Context[JDEC_CONTEXT_PREVIOUS_START] = this.Context[JDEC_CONTEXT_CURRENT];
+                            this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_CURRENT];
                         }
                     } 
                 }
