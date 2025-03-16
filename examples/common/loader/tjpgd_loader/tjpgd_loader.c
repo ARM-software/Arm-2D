@@ -1063,20 +1063,20 @@ JRESULT jd_decomp_rect (
     if (bUseContex) {
 
         do {
-            if (    (this.Context[JDEC_CONTEXT_CURRENT].y <= tDrawRegion.tLocation.iY)
-               &&   (this.Context[JDEC_CONTEXT_CURRENT].x <= tDrawRegion.tLocation.iX)) {
+            if (    (this.Context[JDEC_CONTEXT_CURRENT].tLocation.iY <= tDrawRegion.tLocation.iY)
+               &&   (this.Context[JDEC_CONTEXT_CURRENT].tLocation.iX <= tDrawRegion.tLocation.iX)) {
                 /* next position */
                 break;
             }
 
-            if (    (this.Context[JDEC_CONTEXT_PREVIOUS_START].y <= tDrawRegion.tLocation.iY)
-               &&   (this.Context[JDEC_CONTEXT_PREVIOUS_START].x <= tDrawRegion.tLocation.iX)) {
+            if (    (this.Context[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY <= tDrawRegion.tLocation.iY)
+               &&   (this.Context[JDEC_CONTEXT_PREVIOUS_START].tLocation.iX <= tDrawRegion.tLocation.iX)) {
                 /* use previous start point */
                 this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_PREVIOUS_START];
                 break;
             }
 
-            if ((this.Context[JDEC_CONTEXT_PREVIOUS_START].y + my) <= tDrawRegion.tLocation.iY) {
+            if ((this.Context[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY + my) <= tDrawRegion.tLocation.iY) {
                 /* use previous start point */
                 this.Context[JDEC_CONTEXT_CURRENT] = this.Context[JDEC_CONTEXT_PREVIOUS_START];
                 break;
@@ -1095,8 +1095,8 @@ JRESULT jd_decomp_rect (
         rst = this.Context[JDEC_CONTEXT_CURRENT].rst;
         rsc = this.Context[JDEC_CONTEXT_CURRENT].rsc;
 
-        y = this.Context[JDEC_CONTEXT_CURRENT].y;
-        x = this.Context[JDEC_CONTEXT_CURRENT].x;
+        y = this.Context[JDEC_CONTEXT_CURRENT].tLocation.iY;
+        x = this.Context[JDEC_CONTEXT_CURRENT].tLocation.iX;
 
         this.Decoder.tBlockRegion.tLocation.iX = x;
         this.Decoder.tBlockRegion.tLocation.iY = y;
@@ -1151,8 +1151,8 @@ label_context_entry:
                     this.Context[JDEC_CONTEXT_CURRENT].rst = rst;
                     this.Context[JDEC_CONTEXT_CURRENT].rsc = rsc;
     
-                    this.Context[JDEC_CONTEXT_CURRENT].y = y;
-                    this.Context[JDEC_CONTEXT_CURRENT].x = x;
+                    this.Context[JDEC_CONTEXT_CURRENT].tLocation.iY = y;
+                    this.Context[JDEC_CONTEXT_CURRENT].tLocation.iX = x;
     
                     this.Context[JDEC_CONTEXT_CURRENT].nPostion = this.Decoder.PreviousRead.nPostion;
                     this.Context[JDEC_CONTEXT_CURRENT].pBuffer = this.Decoder.PreviousRead.pBuffer;
