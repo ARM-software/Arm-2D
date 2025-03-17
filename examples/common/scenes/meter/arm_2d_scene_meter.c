@@ -107,6 +107,9 @@ enum {
 extern 
 const arm_2d_tile_t c_tileMeterPanel;
 
+extern 
+const arm_2d_tile_t c_tileMeterPanelMask;
+
 extern
 const arm_2d_tile_t c_tilePointerMask;
 
@@ -206,7 +209,7 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
         if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[1])) {
             this.lTimestamp[1] = 0;
             srand(arm_2d_helper_get_system_timestamp());
-            this.iTargetNumber = rand() % 200;
+            this.iTargetNumber = rand() % 240;
         }
 
         meter_pointer_on_frame_start(&this.tMeterPointer, this.iTargetNumber, 1.0f);
@@ -268,10 +271,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
     #if !ARM_2D_SCENE_METER_USE_JPG 
         arm_2d_align_centre(__canvas, c_tileMeterPanel.tRegion.tSize) {
 
-            arm_2d_tile_copy_only(  &c_tileMeterPanel,
-                                    ptTile,
-                                    &__centre_region);
-        
+            arm_2d_tile_copy_with_src_mask_only(    &c_tileMeterPanel,
+                                                    &c_tileMeterPanelMask,
+                                                    ptTile,
+                                                    &__centre_region);
             
         }
     #else
@@ -305,7 +308,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                     __item_line_vertical(tTextSize.iWidth, tTextSize.iHeight - 16) {
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
                         arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_set_colour( GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                        arm_lcd_text_set_colour( GLCD_COLOR_CYAN, GLCD_COLOR_BLACK);
                         arm_lcd_text_set_opacity(255 - 64);
                         arm_lcd_printf("%03d", (int)this.iNumber);
                         arm_lcd_text_set_opacity(255);
@@ -399,7 +402,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_BLACK}, 
+            .tCanvas = {GLCD_COLOR_WHITE}, 
         
             /* Please uncommon the callbacks if you need them
              */
@@ -430,8 +433,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                         .nValue = 0,
                     },
                     .UpperLimit = {
-                        .fAngleInDegree = 100.0f,
-                        .nValue = 200,
+                        .fAngleInDegree = 120.0f,
+                        .nValue = 240,
                     },
                 },
                 .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
@@ -466,13 +469,11 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
     #else
         extern
-        const uint8_t c_chMeterPanel80jpg[10474];
-        extern
-        const uint8_t c_chMeterPaneljpg[21894];
+        const uint8_t c_chMeterPanel80jpg[12517];
         extern
         const uint8_t c_chBackground2jpg[64228];
 
-        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chBackground2jpg, sizeof(c_chBackground2jpg));
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
