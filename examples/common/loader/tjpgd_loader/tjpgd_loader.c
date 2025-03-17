@@ -1191,6 +1191,37 @@ bool __arm_2d_tjpgd_is_context_before_the_target_region(arm_tjpgd_context_t *ptC
     return false;
 }
 
+static
+void __arm_tjpgd_save_context_to(   arm_tjpgd_loader_t *ptThis, 
+                                    arm_tjpgd_context_t *ptContext, 
+                                    int16_t x, 
+                                    int16_t y, 
+                                    uint16_t rst, 
+                                    uint16_t rsc)
+{
+    assert(NULL != ptThis);
+
+
+    /* save context */
+    memcpy(ptContext->dcv, this.Decoder.tJDEC.dcv, sizeof(this.Decoder.tJDEC.dcv));
+    ptContext->nrst = this.Decoder.tJDEC.nrst;
+    ptContext->rst = rst;
+    ptContext->rsc = rsc;
+
+    ptContext->tLocation.iY = y;
+    ptContext->tLocation.iX = x;
+
+    ptContext->nPostion = this.Decoder.PreviousRead.nPostion;
+    ptContext->pBuffer = this.Decoder.PreviousRead.pBuffer;
+    ptContext->tSize = this.Decoder.PreviousRead.tSize;
+
+    ptContext->dbit = this.Decoder.tJDEC.dbit;
+    ptContext->dctr = this.Decoder.tJDEC.dctr;
+    ptContext->dptr = this.Decoder.tJDEC.dptr;
+    ptContext->wreg = this.Decoder.tJDEC.wreg;
+    ptContext->marker = this.Decoder.tJDEC.marker;
+}
+
 /*----------------------------------------------------------------------------*
  * TJpgDec Extension                                                          *
  *----------------------------------------------------------------------------*/
@@ -1257,6 +1288,29 @@ JRESULT jd_decomp_rect (
                 break;
             }
 
+            /* scan reference points */
+            arm_tjpgd_context_t *ptReference = this.Reference.ptList;
+            bool bFindReferencePoint = false;
+
+            while(NULL != ptReference) {
+
+                if (__arm_2d_tjpgd_is_context_before_the_target_region(
+                                        ptReference,
+                                        tDrawRegion.tLocation,
+                                        this.Decoder.tBlockRegion.tSize)) {
+                    /* use previous start point */
+                    this.tContext[JDEC_CONTEXT_CURRENT] = *ptReference;
+                    bFindReferencePoint = true;
+                    break;
+                }
+
+                ptReference = ptReference->ptNext;
+            }
+            if (bFindReferencePoint) {
+                break;
+            }
+
+
             /* use the very start point*/
             this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_START];
             this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_START];
@@ -1316,27 +1370,33 @@ label_context_entry:
 				rst = 1;
 			}
 
+            /* scan reference candidates */
+            arm_tjpgd_context_t *ptCandiate = NULL;
+            arm_irq_safe {
+                ptCandiate = this.Reference.ptCandidates;
+                if (NULL != ptCandiate) {
+                    if (ptCandiate->tLocation.iX == x && ptCandiate->tLocation.iY == y) {
+                        /* save reference point */
+                        __arm_tjpgd_save_context_to(ptThis, ptCandiate, x, y, rst, rsc);
+
+                        /* remove it from candidate list */
+                        ARM_LIST_STACK_POP(this.Reference.ptCandidates, ptCandiate);
+                        assert(NULL != ptCandiate);
+                    } else {
+                        ptCandiate = NULL;
+                    }
+                }
+            }
+            if (NULL != ptCandiate) {
+                __arm_tjpgd_context_add_to_list(&this.Reference.ptList, 
+                                                ptCandiate, 
+                                                this.Decoder.tBlockRegion.tSize);
+            }
+
             if (!arm_2d_region_intersect(&this.Decoder.tBlockRegion, &tDrawRegion, NULL)) {
 
                 if (bUseContex) {
-                    /* save context */
-                    memcpy(this.tContext[JDEC_CONTEXT_CURRENT].dcv, jd->dcv, sizeof(jd->dcv));
-                    this.tContext[JDEC_CONTEXT_CURRENT].nrst = jd->nrst;
-                    this.tContext[JDEC_CONTEXT_CURRENT].rst = rst;
-                    this.tContext[JDEC_CONTEXT_CURRENT].rsc = rsc;
-    
-                    this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY = y;
-                    this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX = x;
-    
-                    this.tContext[JDEC_CONTEXT_CURRENT].nPostion = this.Decoder.PreviousRead.nPostion;
-                    this.tContext[JDEC_CONTEXT_CURRENT].pBuffer = this.Decoder.PreviousRead.pBuffer;
-                    this.tContext[JDEC_CONTEXT_CURRENT].tSize = this.Decoder.PreviousRead.tSize;
-    
-                    this.tContext[JDEC_CONTEXT_CURRENT].dbit = this.Decoder.tJDEC.dbit;
-                    this.tContext[JDEC_CONTEXT_CURRENT].dctr = this.Decoder.tJDEC.dctr;
-                    this.tContext[JDEC_CONTEXT_CURRENT].dptr = this.Decoder.tJDEC.dptr;
-                    this.tContext[JDEC_CONTEXT_CURRENT].wreg = this.Decoder.tJDEC.wreg;
-                    this.tContext[JDEC_CONTEXT_CURRENT].marker = this.Decoder.tJDEC.marker;
+                    __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_CURRENT], x, y, rst, rsc);
                 }
 
                 rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */

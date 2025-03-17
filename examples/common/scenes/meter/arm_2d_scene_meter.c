@@ -469,8 +469,10 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         const uint8_t c_chMeterPanel80jpg[10474];
         extern
         const uint8_t c_chMeterPaneljpg[21894];
+        extern
+        const uint8_t c_chBackground2jpg[64228];
 
-        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPaneljpg, sizeof(c_chMeterPaneljpg));
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chBackground2jpg, sizeof(c_chBackground2jpg));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -490,6 +492,30 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         };
 
         arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
+
+        /* add reference point */
+    #define REFERENCE_POINT_NUMBER      4
+    arm_2d_location_t tRefercenPoint;
+        arm_2d_align_centre(tScreen, 240, 240) {
+
+            tRefercenPoint = __centre_region.tLocation;
+            int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
+            for (int n = 0; n < REFERENCE_POINT_NUMBER; n++) {
+
+                arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
+                                                        tRefercenPoint);
+                    
+                tRefercenPoint.iY += nDelta;
+            }
+        }
+
+        tRefercenPoint.iX = 0;
+        tRefercenPoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+        
+        arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
+                                                tRefercenPoint);
+
+
     } while(0);
 #endif
 

@@ -356,9 +356,9 @@
             <file category="sourceC"     name="Helper/Source/console_box.c" />
 
             <!-- scene template -->
-            <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="3.0.0" />
-            <file category="sourceC"     name="examples/common/asset/MeterPanel.c"                  attr="template"  select="Scene Template: Meter"   version="3.0.0" />
-            <file category="header"      name="examples/common/scenes/meter/arm_2d_scene_meter.h"   attr="template"  select="Scene Template: Meter"   version="3.0.0" />
+            <file category="sourceC"     name="examples/common/scenes/meter/arm_2d_scene_meter.c"   attr="template"  select="Scene Template: Meter"   version="3.1.0" />
+            <file category="sourceC"     name="examples/common/asset/MeterPanel.c"                  attr="template"  select="Scene Template: Meter"   version="3.1.0" />
+            <file category="header"      name="examples/common/scenes/meter/arm_2d_scene_meter.h"   attr="template"  select="Scene Template: Meter"   version="3.1.0" />
             
             <file category="sourceC"     name="examples/common/scenes/watch/arm_2d_scene_watch.c"   attr="template"  select="Scene Template: Watch"   version="2.2.0" />
             <file category="header"      name="examples/common/scenes/watch/arm_2d_scene_watch.h"   attr="template"  select="Scene Template: Watch"   version="2.2.0" />
@@ -463,14 +463,14 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="1.0.0" condition="Arm-2D-Loaders">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="1.1.0" condition="Arm-2D-Loaders">
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/tjpgd_loader.h" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
-            <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"     attr="config" version="1.0.0"/>
+            <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"     attr="config" version="1.1.0"/>
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Extra_Loaders__
