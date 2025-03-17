@@ -725,14 +725,19 @@ static void __user_scene_player_init(void)
 __WEAK 
 void disp_adapter0_navigator_init(void)
 {
-#if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
-    
+
     static const arm_2d_region_t tScreen = {
         .tSize = {
             .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
             .iHeight = __DISP0_CFG_SCEEN_HEIGHT__,
         },
     };
+
+    ARM_2D_UNUSED(tScreen);
+
+#if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+    
+
     
     arm_2d_align_bottom_centre(tScreen, s_tNavDirtyRegionList[0].tRegion.tSize) {
         s_tNavDirtyRegionList[0].tRegion = __bottom_centre_region;
@@ -794,13 +799,6 @@ void disp_adapter0_navigator_init(void)
     } while(0);
 
     arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
-    
-    arm_2d_region_t tScreen = {
-        .tSize = {
-            __DISP0_CFG_SCEEN_WIDTH__, 
-            __DISP0_CFG_SCEEN_HEIGHT__
-        },
-    };
 
     arm_2d_align_top_left(tScreen, 220, 200) {
         DISP0_CONSOLE.tBackground.tRegion = __top_left_region;
