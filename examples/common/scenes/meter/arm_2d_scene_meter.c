@@ -517,13 +517,19 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                         tReferencePoint.iY += nDelta;
                 }
             }
+
+            tReferencePoint.iX = 0;
+            tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+
+            /* calculate the coordinates in the JPG */
+            tReferencePoint.iX -= tBackgroundLocation.iX;
+            tReferencePoint.iY -= tBackgroundLocation.iY;
+            
+            arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
+                tReferencePoint);
         }
 
-        tReferencePoint.iX = 0;
-        tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
         
-        arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
-            tReferencePoint);
 
 
     } while(0);
