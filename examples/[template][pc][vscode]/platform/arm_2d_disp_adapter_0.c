@@ -737,8 +737,6 @@ void disp_adapter0_navigator_init(void)
 
 #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
     
-
-    
     arm_2d_align_bottom_centre(tScreen, s_tNavDirtyRegionList[0].tRegion.tSize) {
         s_tNavDirtyRegionList[0].tRegion = __bottom_centre_region;
         s_tNavDirtyRegionList[0].tRegion.tLocation.iY -= 16;
