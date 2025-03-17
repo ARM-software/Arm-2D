@@ -495,25 +495,35 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
         /* add reference point */
     #define REFERENCE_POINT_NUMBER      4
-    arm_2d_location_t tRefercenPoint;
-        arm_2d_align_centre(tScreen, 240, 240) {
+    arm_2d_location_t tReferencePoint;
 
-            tRefercenPoint = __centre_region.tLocation;
-            int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
-            for (int n = 0; n < REFERENCE_POINT_NUMBER; n++) {
+        arm_2d_align_centre(tScreen, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tBackgroundLocation = __centre_region.tLocation;
 
-                arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
-                                                        tRefercenPoint);
-                    
-                tRefercenPoint.iY += nDelta;
+            arm_2d_align_centre(tScreen, 240, 240) {
+
+                tReferencePoint = __centre_region.tLocation;
+
+                /* calculate the coordinates in the JPG */
+                tReferencePoint.iX -= tBackgroundLocation.iX;
+                tReferencePoint.iY -= tBackgroundLocation.iY;
+
+                int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
+                for (int n = 0; n < REFERENCE_POINT_NUMBER; n++) {
+
+                    arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
+                        tReferencePoint);
+                        
+                        tReferencePoint.iY += nDelta;
+                }
             }
         }
 
-        tRefercenPoint.iX = 0;
-        tRefercenPoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+        tReferencePoint.iX = 0;
+        tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
         
         arm_tjpgd_loader_add_reference_point(   &this.tJPGBackground, 
-                                                tRefercenPoint);
+            tReferencePoint);
 
 
     } while(0);
