@@ -227,8 +227,8 @@ void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-arm_2d_err_t arm_tjpgd_loader_add_reference_point(arm_tjpgd_loader_t *ptThis, 
-                                                  arm_2d_location_t tLocation);
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_in_image( arm_tjpgd_loader_t *ptThis, 
+                                                            arm_2d_location_t tLocation);
 
 extern
 ARM_NONNULL(1, 2)

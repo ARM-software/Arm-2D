@@ -1127,8 +1127,8 @@ label_next_item:
 }
 
 ARM_NONNULL(1)
-arm_2d_err_t arm_tjpgd_loader_add_reference_point(  arm_tjpgd_loader_t *ptThis, 
-                                                    arm_2d_location_t tLocation)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_in_image( arm_tjpgd_loader_t *ptThis, 
+                                                            arm_2d_location_t tLocation)
 {
     assert(NULL != ptThis);
     if (!this.bInitialized 
