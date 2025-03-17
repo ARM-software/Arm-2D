@@ -1074,7 +1074,8 @@ ARM_NONNULL(1,2)
 static
 void __arm_tjpgd_context_add_to_list(   arm_tjpgd_context_t **ppList, 
                                         arm_tjpgd_context_t *ptItem,
-                                        arm_2d_size_t tBlockSize)
+                                        arm_2d_size_t tBlockSize,
+                                        bool bBackward)
 {
     assert(NULL != ppList);
     assert(NULL != ptItem);
@@ -1100,20 +1101,39 @@ void __arm_tjpgd_context_add_to_list(   arm_tjpgd_context_t **ppList,
             return ;
         }
 
-        if (tItemLocation.iY > tTempLocation.iY) {
-            goto label_next_item;
-        } else if ( (tItemLocation.iY == tTempLocation.iY)
-                &&  (tItemLocation.iX > tTempLocation.iX)) {
-            goto label_next_item;
-        } /*if ( (tItemLocation.iY < tTempLocation.iY) 
-                 || (   (tItemLocation.iY == tTempLocation.iY)
-                    &&  (tItemLocation.iX < tTempLocation.iX))) */
-        {
-            /* insert here */
-            arm_irq_safe {
-                ARM_LIST_INSERT_AFTER((*ppList), ptItem);
+        if (bBackward) {
+            if (tTempLocation.iY > tItemLocation.iY) {
+                goto label_next_item;
+            }else if (  (tItemLocation.iY == tTempLocation.iY)
+                    &&  (tTempLocation.iX > tItemLocation.iX)) {
+                goto label_next_item;
+            } /*if ( (tTempLocation.iY < tItemLocation.iY) 
+                  || (   (tItemLocation.iY == tTempLocation.iY)
+                     &&  (tTempLocation.iX < tItemLocation.iX))) */
+            {
+
+                /* insert here */
+                arm_irq_safe {
+                    ARM_LIST_INSERT_AFTER((*ppList), ptItem);
+                }
+                return ;
             }
-            return ;
+        } else {
+            if (tItemLocation.iY > tTempLocation.iY) {
+                goto label_next_item;
+            } else if ( (tItemLocation.iY == tTempLocation.iY)
+                    &&  (tItemLocation.iX > tTempLocation.iX)) {
+                goto label_next_item;
+            } /*if ( (tItemLocation.iY < tTempLocation.iY) 
+                  || (   (tItemLocation.iY == tTempLocation.iY)
+                     &&  (tItemLocation.iX < tTempLocation.iX))) */
+            {
+                /* insert here */
+                arm_irq_safe {
+                    ARM_LIST_INSERT_AFTER((*ppList), ptItem);
+                }
+                return ;
+            }
         }
 
 label_next_item:
@@ -1168,7 +1188,8 @@ arm_2d_err_t arm_tjpgd_loader_add_reference_point_in_image( arm_tjpgd_loader_t *
 
     __arm_tjpgd_context_add_to_list(&this.Reference.ptCandidates, 
                                     ptItem, 
-                                    tBlockSize);
+                                    tBlockSize,
+                                    false);
 
     return ARM_2D_ERR_NONE;
 }
@@ -1421,7 +1442,8 @@ label_context_entry:
             if (NULL != ptCandiate) {
                 __arm_tjpgd_context_add_to_list(&this.Reference.ptList, 
                                                 ptCandiate, 
-                                                this.Decoder.tBlockRegion.tSize);
+                                                this.Decoder.tBlockRegion.tSize,
+                                                true);
             }
 
             if (!arm_2d_region_intersect(&this.Decoder.tBlockRegion, &tDrawRegion, NULL)) {
