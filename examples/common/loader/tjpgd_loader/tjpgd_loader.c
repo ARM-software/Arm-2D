@@ -1174,6 +1174,37 @@ arm_2d_err_t arm_tjpgd_loader_add_reference_point_in_image( arm_tjpgd_loader_t *
 }
 
 ARM_NONNULL(1)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_on_canvas(
+                                            arm_tjpgd_loader_t *ptThis,
+                                            arm_2d_location_t tImageLocation,
+                                            arm_2d_location_t tReferencePoint)
+{
+    tReferencePoint.iX -= tImageLocation.iX;
+    tReferencePoint.iY -= tImageLocation.iY;
+
+    return arm_tjpgd_loader_add_reference_point_in_image(ptThis, 
+                                                         tReferencePoint);
+}
+
+ARM_NONNULL(1,2)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_on_virtual_screen(
+                            arm_tjpgd_loader_t *ptThis,
+                            arm_2d_tile_t *ptTile,
+                            arm_2d_location_t tImageLocationOnTile,
+                            arm_2d_location_t tReferencePointOnVirtualScreen)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    return arm_tjpgd_loader_add_reference_point_on_canvas(  
+            ptThis, 
+            arm_2d_get_absolute_location(ptTile, tImageLocationOnTile, true),
+            tReferencePointOnVirtualScreen);
+}
+
+
+
+ARM_NONNULL(1)
 static
 bool __arm_2d_tjpgd_is_context_before_the_target_region(arm_tjpgd_context_t *ptContext, 
                                                         arm_2d_location_t tLocation,

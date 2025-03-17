@@ -48,6 +48,53 @@ extern "C" {
 #include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+#define __arm_tjpgd_loader_add_reference_point1(__TJPGD_LD_PTR,                 \
+                                                __REF_PT)                       \
+            arm_tjpgd_loader_add_reference_point_in_image((__TJPGD_LD_PTR),     \
+                                                          (__REF_PT))
+
+#define __arm_tjpgd_loader_add_reference_point2(__TJPGD_LD_PTR,                 \
+                                                __IMG_LOCATION,                 \
+                                                __REF_PT)                       \
+            arm_tjpgd_loader_add_reference_point_on_canvas((__TJPGD_LD_PTR),    \
+                                                           (__IMG_LOCATION),    \
+                                                           (__REF_PT))
+
+#define __arm_tjpgd_loader_add_reference_point3(__TJPGD_LD_PTR,                 \
+                                                __TILE_PTR,                     \
+                                                __IMG_LOCATION,                 \
+                                                __REF_PT)                       \
+    arm_tjpgd_loader_add_reference_point_on_virtual_screen( (__TJPGD_LD_PTR),   \
+                                                            (__TILE_PTR),       \
+                                                            (__IMG_LOCATION),   \
+                                                            (__REF_PT))
+
+/*!
+ * \brief add reference point for a given TJpgDec Loader. 
+ * 
+ * \note prototype 1:
+ *      arm_tjpgd_loader_add_reference_point(
+ *                                      <TJpgDec Loader pointer>,
+ *                                      <Reference Point in the target image>);
+ * 
+ * \note prototype 2:
+ *      arm_tjpgd_loader_add_reference_point(
+ *                                      <TJpgDec Loader pointer>,
+ *                                      <Image Location on a canvas>
+ *                                      <Reference Point on the same canvas>);
+ *
+ * \note prototype 3:
+ *      arm_tjpgd_loader_add_reference_point(
+ *                                      <TJpgDec Loader pointer>,
+ *                                      <The target tile pointer>
+ *                                      <Image Location on the target tile>
+ *                                      <Reference Point on the virtual screen>);
+ */
+#define arm_tjpgd_loader_add_reference_point(__TJPGD_LD_PTR, ...)               \
+            ARM_CONNECT2(   __arm_tjpgd_loader_add_reference_point,             \
+                __ARM_VA_NUM_ARGS(__VA_ARGS__))((__TJPGD_LD_PTR),               \
+                                                 __VA_ARGS__)
+
 /*============================ TYPES =========================================*/
 
 typedef struct arm_tjpgd_context_t arm_tjpgd_context_t;
@@ -227,8 +274,23 @@ void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-arm_2d_err_t arm_tjpgd_loader_add_reference_point_in_image( arm_tjpgd_loader_t *ptThis, 
-                                                            arm_2d_location_t tLocation);
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_in_image( 
+                                            arm_tjpgd_loader_t *ptThis, 
+                                            arm_2d_location_t tLocation);
+extern
+ARM_NONNULL(1)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_on_canvas(
+                                            arm_tjpgd_loader_t *ptThis,
+                                            arm_2d_location_t tImageLocation,
+                                            arm_2d_location_t tReferencePoint);
+
+extern
+ARM_NONNULL(1,2)
+arm_2d_err_t arm_tjpgd_loader_add_reference_point_on_virtual_screen(
+                            arm_tjpgd_loader_t *ptThis,
+                            arm_2d_tile_t *ptTile,
+                            arm_2d_location_t tImageLocationOnTile,
+                            arm_2d_location_t tReferencePointOnVirtualScreen);
 
 extern
 ARM_NONNULL(1, 2)
