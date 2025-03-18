@@ -150,8 +150,8 @@ const arm_2d_tile_t c_tChildImage =
 static arm_2d_vres_t s_vresA4Font = 
     disp_adapter0_impl_vres(   
         ARM_2D_COLOUR_MASK_A4, 
-        14, 
-        1222, 
+        16,        /* width */
+        1064,        /* height */ 
         .pTarget = (uintptr_t)c_bmpUTF8Arial14A4Font,
     );
 
@@ -242,12 +242,12 @@ struct {
                 s_vresA4Font,               /* use virtual resource here */
                 0,          /* x offset */
                 0,          /* y offset */
-                14,        /* width */
-                1222         /* height */
+                16,        /* width */
+                1064         /* height */
             ),
             .tCharSize = {
-                .iWidth = 14,
-                .iHeight = 13,
+                .iWidth = 16,
+                .iHeight = 15,
             },
             .nCount =  94,                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a4_font_get_char_descriptor,
