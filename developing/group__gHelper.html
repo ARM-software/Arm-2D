@@ -877,9 +877,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3143cf1a38a0868035618dc5d91e94fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa">arm_2d_helper_pfb_enable_dirty_region_optimization</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, <a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptRegions, uint_fast8_t chCount)</td></tr>
 <tr class="memdesc:ga3143cf1a38a0868035618dc5d91e94fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable dirty region optimization service  <a href="group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa">More...</a><br /></td></tr>
 <tr class="separator:ga3143cf1a38a0868035618dc5d91e94fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2397e6e7f240d0902d3b5d3eee794cf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3">arm_2d_helper_pfb_disable_dirty_region_optimization</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
-<tr class="memdesc:ga2397e6e7f240d0902d3b5d3eee794cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">disable dirty region optimization service  <a href="group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3">More...</a><br /></td></tr>
-<tr class="separator:ga2397e6e7f240d0902d3b5d3eee794cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f2d1ba5da5c77752e680c3c6d8c9b35"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9f2d1ba5da5c77752e680c3c6d8c9b35">arm_2d_helper_pfb_disable_dirty_region_optimization</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga9f2d1ba5da5c77752e680c3c6d8c9b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">disable dirty region optimization service  <a href="group__gHelper.html#ga9f2d1ba5da5c77752e680c3c6d8c9b35">More...</a><br /></td></tr>
+<tr class="separator:ga9f2d1ba5da5c77752e680c3c6d8c9b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga97fe5674a2a624ddac7ce4165579d312"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga97fe5674a2a624ddac7ce4165579d312">arm_2d_dynamic_dirty_region_on_frame_start</a> (<a class="el" href="group__gHelper.html#structarm__2d__region__list__item__t">arm_2d_region_list_item_t</a> *ptThis, uint8_t chUserRegionIndex)</td></tr>
 <tr class="memdesc:ga97fe5674a2a624ddac7ce4165579d312"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-start event handler for a given user dynamic dirty region  <a href="group__gHelper.html#ga97fe5674a2a624ddac7ce4165579d312">More...</a><br /></td></tr>
 <tr class="separator:ga97fe5674a2a624ddac7ce4165579d312"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -10124,14 +10124,14 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="ga2397e6e7f240d0902d3b5d3eee794cf3" name="ga2397e6e7f240d0902d3b5d3eee794cf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2397e6e7f240d0902d3b5d3eee794cf3">&#9670;&#160;</a></span>arm_2d_helper_pfb_disable_dirty_region_optimization()</h2>
+<a id="ga9f2d1ba5da5c77752e680c3c6d8c9b35" name="ga9f2d1ba5da5c77752e680c3c6d8c9b35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9f2d1ba5da5c77752e680c3c6d8c9b35">&#9670;&#160;</a></span>arm_2d_helper_pfb_disable_dirty_region_optimization()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arm_2d_helper_pfb_disable_dirty_region_optimization </td>
+          <td class="memname">bool arm_2d_helper_pfb_disable_dirty_region_optimization </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em></td><td>)</td>
@@ -10147,6 +10147,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>previous status </dd></dl>
 
 </div>
 </div>

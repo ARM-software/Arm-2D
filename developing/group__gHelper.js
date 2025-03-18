@@ -384,7 +384,7 @@ var group__gHelper =
     [ "arm_2d_dirty_region_item_ignore_set", "group__gHelper.html#ga45723c42384538326287fdf4071c4dc8", null ],
     [ "arm_2d_dirty_region_item_ignore_get", "group__gHelper.html#gaab5b94c8714675f90d360b68966a45be", null ],
     [ "arm_2d_helper_pfb_enable_dirty_region_optimization", "group__gHelper.html#ga3143cf1a38a0868035618dc5d91e94fa", null ],
-    [ "arm_2d_helper_pfb_disable_dirty_region_optimization", "group__gHelper.html#ga2397e6e7f240d0902d3b5d3eee794cf3", null ],
+    [ "arm_2d_helper_pfb_disable_dirty_region_optimization", "group__gHelper.html#ga9f2d1ba5da5c77752e680c3c6d8c9b35", null ],
     [ "arm_2d_dynamic_dirty_region_on_frame_start", "group__gHelper.html#ga97fe5674a2a624ddac7ce4165579d312", null ],
     [ "arm_2d_dynamic_dirty_region_init", "group__gHelper.html#ga56467aae0aab3ac59896ca9a1fa76a9c", null ],
     [ "arm_2d_dynamic_dirty_region_depose", "group__gHelper.html#ga99cbf60f72dd08377b973eab8dce127e", null ],
