@@ -107,7 +107,13 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
+
+    this.bIsDirtyRegionOptimizationEnabled = !!
+        arm_2d_helper_pfb_disable_dirty_region_optimization(
+            &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
+
 #endif
+    this.bOnLoad = true;
 }
 
 static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
@@ -199,6 +205,15 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+
+    if (this.bIsDirtyRegionOptimizationEnabled) {
+        arm_2d_helper_pfb_enable_dirty_region_optimization(
+                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
+                NULL,
+                0);
+    }
+#endif
 }
 
 static
@@ -215,7 +230,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
-        
+    
 #if 1
     #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
         arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
@@ -234,6 +249,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
                                 ptTile,
                                 &__centre_region);
 
+            if (this.bOnLoad) {
+                this.bOnLoad = false;
+                
+                arm_2d_location_t tReferencePoint;
+
+                #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+            
+                    arm_2d_align_bottom_centre(__top_canvas, 100, 24) {
+                        tReferencePoint = __bottom_centre_region.tLocation;
+                        tReferencePoint.iY -= 16;
+                    }
+
+                #else
+                    tReferencePoint.iX = 0;
+                    tReferencePoint.iY = ((__top_canvas.tSize.iHeight + 7) / 8 - 2) * 8;
+                #endif
+
+                #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+                    arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
+                                                          __centre_region.tLocation,
+                                                          tReferencePoint);
+                #endif
+                
+            }
         }
     #endif
 #endif
@@ -254,7 +293,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
                                 &__bottom_centre_region,
                                 255);
             
-            #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+            #if  ARM_2D_SCENE_HISTOGRAM_USE_JPG
                 /* update dirty region */
                 arm_2d_helper_dirty_region_update_item( 
                     &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
@@ -419,6 +458,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         };
 
         arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
+
     } while(0);
 #endif
 

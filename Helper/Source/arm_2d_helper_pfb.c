@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        19. Feb 2025
- * $Revision:    V.1.13.1
+ * $Date:        18. March 2025
+ * $Revision:    V.1.13.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -788,15 +788,17 @@ void arm_2d_helper_pfb_enable_dirty_region_optimization(
 }
 
 ARM_NONNULL(1)
-void arm_2d_helper_pfb_disable_dirty_region_optimization(
+bool arm_2d_helper_pfb_disable_dirty_region_optimization(
                                                 arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
-
+    bool bPreviousStatus = false;
     arm_irq_safe {
+        bPreviousStatus = this.Adapter.bIsDirtyRegionOptimizationEnabled;
         this.Adapter.bEnableDirtyRegionOptimizationRequest = false;
         this.Adapter.bDisableDirtyRegionOptimizationRequest = true;
     }
+    return bPreviousStatus;
 }
 
 

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        19. Feb 2025
- * $Revision:    V.1.13.1
+ * $Date:        18. March 2025
+ * $Revision:    V.1.13.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1399,10 +1399,11 @@ void arm_2d_helper_pfb_enable_dirty_region_optimization(
 /*!
  * \brief disable dirty region optimization service
  * \param[in] ptThis the PFB helper control block
+ * \return previous status
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_pfb_disable_dirty_region_optimization(
+bool arm_2d_helper_pfb_disable_dirty_region_optimization(
                                                 arm_2d_helper_pfb_t *ptThis);
 
 /*----------------------------------------------------------------------------*
