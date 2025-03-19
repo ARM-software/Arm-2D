@@ -316,27 +316,30 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fan_handler)
                 __item_line_dock_vertical(160) {
                 
                     arm_foreach(spin_zoom_widget_t, this.tFanBlades, ptFanBlade) {
-                        spin_zoom_widget_show(ptFanBlade, ptTile, &__item_region, NULL, 255);
+                        spin_zoom_widget_show(  ptFanBlade, 
+                                                ptTile, 
+                                                &__item_region, 
+                                                NULL, 
+                                                255);
                     }
 
                     /* draw fan pivot */
                     arm_2d_align_centre(__item_region, 
                                         c_tileWhiteDotMiddleA4Mask.tRegion.tSize) {
                         arm_2d_fill_colour_with_a4_mask(
-                                    ptTile,
-                                    &__centre_region,
-                                    &c_tileWhiteDotMiddleA4Mask, 
-                                    (__arm_2d_color_t){c_tFanLevel[this.chLevel].tColour});
+                            ptTile,
+                            &__centre_region,
+                            &c_tileWhiteDotMiddleA4Mask, 
+                            (__arm_2d_color_t){c_tFanLevel[this.chLevel].tColour});
                     }
                 }
 
                 __item_line_dock_vertical() {
 
-                    while(arm_fsm_rt_cpl != text_list_show(   
-                                                    &this.tLevelList, 
-                                                    ptTile, 
-                                                    &__item_region, 
-                                                    bIsNewFrame));
+                    while(arm_fsm_rt_cpl != text_list_show( &this.tLevelList, 
+                                                            ptTile, 
+                                                            &__item_region, 
+                                                            bIsNewFrame));
 
                 }
 
@@ -554,8 +557,8 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
-                .chNextPadding = 3,
-                .chPreviousPadding = 3,
+                .chNextPadding = 2,
+                .chPreviousPadding = 2,
                 .tListSize = {
                     .iHeight = 80,
                     .iWidth = 0,            /* automatically set the width */

@@ -190,10 +190,10 @@ arm_fsm_rt_t text_list_show(  text_list_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptTile);
 
-    return __simple_list_show(&this.use_as____simple_list_t,
-                            ptTile,
-                            ptRegion,
-                            bIsNewFrame);
+    return __simple_list_show(  &this.use_as____simple_list_t,
+                                ptTile,
+                                ptRegion,
+                                bIsNewFrame);
 }
 
 
@@ -202,9 +202,9 @@ void text_list_move_selection( text_list_t *ptThis,
                                 int16_t iSteps,
                                 int32_t nFinishInMs)
 {
-    __simple_list_move_selection( &this.use_as____simple_list_t, 
-                                iSteps, 
-                                nFinishInMs);
+    __simple_list_move_selection(   &this.use_as____simple_list_t, 
+                                    iSteps, 
+                                    nFinishInMs);
 }
 
 ARM_NONNULL(1)

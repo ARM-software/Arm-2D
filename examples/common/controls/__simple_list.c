@@ -586,19 +586,23 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
     assert(NULL != ptCFG);
     assert(ptCFG->hwCount > 0);
 
-    int16_t iItemHeight = ptCFG->chPreviousPadding + ptCFG->chNextPadding;
-
-    if (0 == ptCFG->tItemSize.iHeight) {
-        if (NULL != ptCFG->ptFont) {
-            iItemHeight += ptCFG->ptFont->tCharSize.iHeight;
-        } else {
-            iItemHeight += 8;
-        }
-    } else {
-        iItemHeight += ptCFG->tItemSize.iHeight;
-    }
-
     this.tSimpleListCFG = *ptCFG;
+
+    int16_t iItemHeight = ptCFG->chPreviousPadding + ptCFG->chNextPadding;
+    arm_2d_size_t tItemSize = ptCFG->tItemSize;
+    if (0 == tItemSize.iHeight) {
+        int16_t iFontHeight = ptCFG->ptFont->tCharSize.iHeight;
+        if (NULL != ptCFG->ptFont) {
+            iItemHeight += iFontHeight + (iFontHeight >> 1);
+            tItemSize.iHeight = iFontHeight + (iFontHeight >> 2);
+        } else {
+            iItemHeight += 10;
+            tItemSize.iHeight = 10;
+        }
+        this.tSimpleListCFG.tItemSize = tItemSize;
+    } else {
+        iItemHeight += tItemSize.iHeight;
+    }
 
     /* validation */
     if (!this.tSimpleListCFG.hwCount) {
@@ -665,7 +669,7 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
     
     this.tTempItem.Padding.chPrevious = ptCFG->chPreviousPadding;
     this.tTempItem.Padding.chNext = ptCFG->chNextPadding;
-    this.tTempItem.tSize = ptCFG->tItemSize;
+    this.tTempItem.tSize = tItemSize;
 
     if (NULL != ptCFG->fnOnDrawListItem ) {
         this.tTempItem.fnOnDrawItem = ptCFG->fnOnDrawListItem;
