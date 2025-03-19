@@ -211,6 +211,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_tracking_list_handler)
                 
                 arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_LEFT, " Month");
                 arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "_x");
+
+                arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
             }
 
             __item_line_dock_vertical(4,    /* left margin */

@@ -287,7 +287,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
                             ARM_2D_ALIGN_CENTRE, "%s", 
                             c_pIconNameTable[
                                 icon_list_get_selected_item_id(&this.tList)]);
-                    
+                        
+                        arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
 
                         if (this.bRedrawLabel) {
                             this.bRedrawLabel = false;

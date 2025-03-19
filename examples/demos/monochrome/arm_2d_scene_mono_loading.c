@@ -267,6 +267,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_loading_handler)
                                                                 arm_lcd_text_get_last_display_region());
                     }
                 }
+
+                arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
             } while(0);
 
         }

@@ -274,7 +274,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_clock_handler)
 
         arm_2d_dock_vertical(__top_canvas, 16, 16) {
 
-            arm_lcd_text_set_scale(1.0f);
+            arm_lcd_text_set_scale(0.0f);
             arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00:00:00", &CLOCK_FONT);
             
             arm_2d_size_t tTwoDigitsSizeBig = arm_lcd_get_string_line_box("00", &CLOCK_FONT);
@@ -290,7 +290,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_clock_handler)
             arm_lcd_text_set_font((arm_2d_font_t *)&CLOCK_FONT);
             arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
             arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
-            arm_lcd_text_set_scale(1.0f);
+            arm_lcd_text_set_scale(0.0f);
             arm_2d_dock_horizontal(__vertical_region, tStringSize.iWidth) {
 
                 arm_2d_layout(__horizontal_region) {
@@ -341,8 +341,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_clock_handler)
                     }
                 }
             }
+            arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
 
-            arm_lcd_text_set_scale(1.0f);
+            arm_lcd_text_set_scale(0.0f);
         }
 
     }

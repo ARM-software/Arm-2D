@@ -227,6 +227,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_histogram_handler)
                     arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_LEFT, " histogram");
                     arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "_x");
 
+                    arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
+
                 }
 
                 __item_line_vertical(histogram_get_size(&this.tHistogram))
