@@ -127,11 +127,10 @@ void busy_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                                         &tTargetRegion,
                                                         s_tAlphaTable[n],
                                                         (__arm_2d_color_t){0});
-                                                
-        arm_2d_op_wait_async(NULL);
+                            
+        ARM_2D_OP_WAIT_ASYNC();
     }
 }
-
 
 void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 {
@@ -165,8 +164,8 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
                                     &c_tileWhiteDotMask,
                                     (__arm_2d_color_t){GLCD_COLOR_WHITE},
                                     s_tAlphaTable[n]);
-                                                
-        arm_2d_op_wait_async(NULL);
+                                    
+        ARM_2D_OP_WAIT_ASYNC();
     }
 }
 
