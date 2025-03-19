@@ -2580,9 +2580,9 @@ ARM_PT_BEGIN(this.chState)
                     nTempOffset += iItemActualHeight;
                     nCount++;
                 } while(true);
-            } else {
+            } /*else {
                 assert(this.tCFG.bDisableRingMode);
-            }
+            } */
             
             uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
             
@@ -3075,9 +3075,9 @@ ARM_PT_BEGIN(this.chState)
                     nTempOffset += iItemActualWidth;
                     nCount++;
                 } while(true);
-            } else {
+            } /* else {
                 assert(this.tCFG.bDisableRingMode);
-            }
+            } */
             
             uint16_t hwTempID = (ptItem->hwID + nCount) % this.tCFG.hwItemCount;
             
