@@ -117,7 +117,8 @@ if (ARM2D_TJPGD_LOADER)
             examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c
             )
     target_compile_options(ARM2D PUBLIC
-            -RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__
+            -DRTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
+            -DRTE_Acceleration_Arm_2D_Extra_Loader
             )
 endif()
 
