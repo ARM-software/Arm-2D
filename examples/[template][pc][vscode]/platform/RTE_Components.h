@@ -21,9 +21,11 @@
 
 #define RTE_Acceleration_Arm_2D_Extra_Controls
 
-#define RTE_Acceleration_Arm_2D_Extra_LCD_printf__
+#define RTE_Acceleration_Arm_2D_Extra_LCD_printf
 
-#define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader__
+#define RTE_Acceleration_Arm_2D_Extra_Loader
+
+#define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
 
 #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 
