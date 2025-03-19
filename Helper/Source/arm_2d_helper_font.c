@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        12. March 2025
- * $Revision:    V.2.10.3
+ * $Date:        19. March 2025
+ * $Revision:    V.2.11.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1208,22 +1208,68 @@ void arm_lcd_printf_buffer(int16_t iNumber)
         return ;
     }
 
+    // here we need to translate the unit of iNumber from number of UTF8 chars
+    // into number of bytes
     do {
-        // todo support UTF8
-        // the iNumber is number of UTF8 chars, but now we only ASCII
-        // here we need to translate the unit of iNumber from number of chars
-        // into number of bytes
+        if (iNumber < 0) {
+
+            int32_t nNumberOfBytes = 0;
+            int32_t nNumberOfUTF8Chars = 0;
+
+            uint8_t *pchString = (uint8_t *)s_tLCDTextControl.TXBuf.chBuffer;
+            do {
+                int_fast8_t chUTF8Leng = arm_2d_helper_get_utf8_byte_length(pchString);
+                if (chUTF8Leng < 0) {
+                    break;
+                }
+
+                pchString += chUTF8Leng;
+                nNumberOfBytes += chUTF8Leng;
+                nNumberOfUTF8Chars++;
+
+                if ((nNumberOfBytes >= s_tLCDTextControl.TXBuf.hwLen)
+                ||  (nNumberOfBytes >= sizeof(s_tLCDTextControl.TXBuf.chBuffer))) {
+                    break;
+                }
+
+            } while(1);
+
+            iNumber = nNumberOfUTF8Chars + iNumber;
+            if (iNumber < 0) {
+                iNumber = 0;
+            }
+        }
+
+        if (iNumber > 0) {
+            int32_t nNumberOfBytes = 0;
+
+            uint8_t *pchString = (uint8_t *)s_tLCDTextControl.TXBuf.chBuffer;
+            do {
+                int_fast8_t chUTF8Leng = arm_2d_helper_get_utf8_byte_length(pchString);
+                if (chUTF8Leng < 0) {
+                    break;
+                }
+
+                pchString += chUTF8Leng;
+                nNumberOfBytes += chUTF8Leng;
+
+                if ((nNumberOfBytes >= s_tLCDTextControl.TXBuf.hwLen)
+                ||  (nNumberOfBytes >= sizeof(s_tLCDTextControl.TXBuf.chBuffer))) {
+                    nNumberOfBytes = 0; /* print all chars */
+                    break;
+                }
+
+            } while(--iNumber);
+
+            iNumber = nNumberOfBytes;
+        }
     } while(0);
 
     if (0 == iNumber || iNumber >= s_tLCDTextControl.TXBuf.hwLen) {
         iNumber = s_tLCDTextControl.TXBuf.hwLen;
-    } else if (iNumber < 0) {
-        iNumber = s_tLCDTextControl.TXBuf.hwLen + iNumber;
     }
 
     iNumber = MIN(s_tLCDTextControl.TXBuf.hwLen, iNumber);
-
-
 
     do {
         char cTemp = s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwHead + iNumber];
@@ -1248,30 +1294,6 @@ size_t arm_lcd_get_residual_text_length_in_buffer(void)
 {
     return s_tLCDTextControl.TXBuf.hwLen;
 }
-
-#if 0
-typedef enum {
-    ARM_2D_ALIGN_LEFT               = _BV(0),                                   /*!< align to left */
-    ARM_2D_ALIGN_RIGHT              = _BV(1),                                   /*!< align to right */
-    ARM_2D_ALIGN_TOP                = _BV(2),                                   /*!< align to top */
-    ARM_2D_ALIGN_BOTTOM             = _BV(3),                                   /*!< align to bottom */
-    
-    ARM_2D_ALIGN_CENTRE             = 0,                                        /*!< align to centre */
-    ARM_2D_ALIGN_CENTRE_ALIAS       = ARM_2D_ALIGN_LEFT                         /*!< align to centre */
-                                    | ARM_2D_ALIGN_RIGHT
-                                    | ARM_2D_ALIGN_TOP
-                                    | ARM_2D_ALIGN_BOTTOM,
-
-    ARM_2D_ALIGN_TOP_LEFT           = ARM_2D_ALIGN_TOP                          /*!< align to top left corner */
-                                    | ARM_2D_ALIGN_LEFT,
-    ARM_2D_ALIGN_TOP_RIGHT          = ARM_2D_ALIGN_TOP                          /*!< align to top right corner */
-                                    | ARM_2D_ALIGN_RIGHT,
-    ARM_2D_ALIGN_BOTTOM_LEFT        = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom left corner */
-                                    | ARM_2D_ALIGN_LEFT,
-    ARM_2D_ALIGN_BOTTOM_RIGHT       = ARM_2D_ALIGN_BOTTOM                       /*!< align to bottom right corner */
-                                    | ARM_2D_ALIGN_RIGHT,
-} arm_2d_align_t ;
-#endif
 
 ARM_NONNULL(1)
 void arm_lcd_puts_label(const char *pchString,
