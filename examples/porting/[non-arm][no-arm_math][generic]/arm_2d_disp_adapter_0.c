@@ -257,6 +257,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
     arm_lcd_text_set_opacity(255);
     arm_lcd_text_set_char_spacing(0);
     arm_lcd_text_set_line_spacing(0);
+    arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
 
 #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
     /* round mode */
