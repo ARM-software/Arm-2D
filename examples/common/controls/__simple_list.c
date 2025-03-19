@@ -592,13 +592,15 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
     arm_2d_size_t tItemSize = ptCFG->tItemSize;
     if (0 == tItemSize.iHeight) {
         int16_t iFontHeight = ptCFG->ptFont->tCharSize.iHeight;
+
         if (NULL != ptCFG->ptFont) {
-            iItemHeight += iFontHeight + (iFontHeight >> 1);
+            iItemHeight += iFontHeight + (iFontHeight >> 2);
             tItemSize.iHeight = iFontHeight + (iFontHeight >> 2);
         } else {
             iItemHeight += 10;
             tItemSize.iHeight = 10;
         }
+
         this.tSimpleListCFG.tItemSize = tItemSize;
     } else {
         iItemHeight += tItemSize.iHeight;
