@@ -96,6 +96,12 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static void __on_scene_console_window_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+}
 
 static void __on_scene_console_window_depose(arm_2d_scene_t *ptScene)
 {
@@ -136,6 +142,7 @@ static void __on_scene_console_window_background_complete(arm_2d_scene_t *ptScen
 static void __on_scene_console_window_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+
     if (arm_2d_helper_is_time_out(100, &this.lTimestamp[1])) {
         static uint16_t s_hwCount = 0;
 
@@ -258,6 +265,7 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
             /* Please uncommon the callbacks if you need them
              */
             .fnScene        = &__pfb_draw_scene_console_window_handler,
+            .fnOnLoad       = &__on_scene_console_window_load,
             
             //.fnOnBGStart    = &__on_scene_console_window_background_start,
             //.fnOnBGComplete = &__on_scene_console_window_background_complete,
@@ -265,6 +273,8 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
             //.fnBeforeSwitchOut = &__before_scene_console_window_switching_out,
             .fnOnFrameCPL   = &__on_scene_console_window_frame_complete,
             .fnDepose       = &__on_scene_console_window_depose,
+
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };

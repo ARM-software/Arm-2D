@@ -632,7 +632,10 @@ void console_box_show(  console_box_t *ptThis,
             arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__console_box);
             arm_lcd_text_set_font(this.ptFont);
             arm_lcd_text_set_draw_region(&__centre_region);
+            arm_lcd_text_set_scale(0.0f);
+
             arm_lcd_text_set_colour(this.tColor, GLCD_COLOR_BLACK);
+
 
             arm_lcd_text_set_opacity(chOpacity);
             /* force all char use the same with in display */
@@ -647,16 +650,12 @@ void console_box_show(  console_box_t *ptThis,
                         break;
                     }
 
-                #if 1
                     int_fast8_t chUTF8Len = arm_2d_helper_get_utf8_byte_length((const uint8_t *)&wUTF8);
 
                     if (!arm_lcd_putchar_to_buffer((uint8_t *)&wUTF8, chUTF8Len)) {
                         arm_lcd_printf_buffer(0);
                         arm_lcd_putchar_to_buffer((uint8_t *)&wUTF8, chUTF8Len);
                     }
-                #else
-                    arm_lcd_putchar((const char *)&wUTF8);
-                #endif
                     
                 } while(true);
 
