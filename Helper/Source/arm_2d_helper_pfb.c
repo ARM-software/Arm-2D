@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        18. March 2025
+ * $Date:        20. March 2025
  * $Revision:    V.1.13.2
  *
  * Target Processor:  Cortex-M cores
@@ -2107,6 +2107,10 @@ label_iteration_begin_start:
                         this.Adapter.ptDirtyRegion
                     );
 
+                    if (this.Adapter.bEncounterDynamicDirtyRegion) {
+                        goto label_start_iteration;
+                    }
+
                     /*----------------------------------------------------------------*
                      * the code segment for try next dirty region or end early: BEGIN *
                      *----------------------------------------------------------------*/
@@ -2163,6 +2167,8 @@ label_iteration_begin_start:
             } else {
                 this.Adapter.tTargetRegion = this.tCFG.tDisplayArea;
             }
+
+label_start_iteration:
 
             /* update this.Adapter.tTargetRegion to fulfill the pixel width
              * alignment request 
