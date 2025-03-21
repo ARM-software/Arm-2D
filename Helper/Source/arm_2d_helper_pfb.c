@@ -2108,6 +2108,13 @@ label_iteration_begin_start:
                     );
 
                     if (this.Adapter.bEncounterDynamicDirtyRegion) {
+                        /* note:
+                         *      Some dynamic dirty region might provide regions that 
+                         *      are out of the display area, even so, we need to 
+                         *      stick with this dynamic dirty region until it reaches
+                         *      the end. That means we need to start an iteration.
+                         *      [reference point 1]
+                         */
                         goto label_start_iteration;
                     }
 
@@ -2376,10 +2383,19 @@ label_start_iteration:
                             this.Adapter.bEncounterDynamicDirtyRegion ? "true" : "false"
                         );
 
-                        __arm_2d_helper_update_dirty_region_working_list(
-                                                ptThis, 
-                                                this.Adapter.ptDirtyRegion,
-                                                this.Adapter.bEncounterDynamicDirtyRegion);
+                        if (arm_2d_region_intersect(&this.tCFG.tDisplayArea, 
+                                                    &(this.Adapter.ptDirtyRegion->tRegion), 
+                                                    NULL)) {
+
+                            /*
+                             * note: as the scenarios mentioned in [reference 1], we only add valid
+                             *       dirty region to the working list.
+                             */
+                            __arm_2d_helper_update_dirty_region_working_list(
+                                                    ptThis, 
+                                                    this.Adapter.ptDirtyRegion,
+                                                    this.Adapter.bEncounterDynamicDirtyRegion);
+                        }
                     } else {
                         ARM_2D_LOG_INFO(
                             DIRTY_REGION_OPTIMISATION, 
