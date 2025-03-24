@@ -289,9 +289,6 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
 }
 
 
-
-#if __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
-
 static
 void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                 arm_2d_location_t * pSrcPoint,
@@ -349,8 +346,6 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     tPoint.q16X = tmp.X - centerQ16.X;
     tPoint.q16Y = tmp.Y - centerQ16.Y;
 
-
-
 #define __PT_TRANSFORM(__PT) \
     do {                                                                                                                        \
         /* rotation first, then scaling */                                                                                      \
@@ -406,7 +401,8 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     regrCoefs[1].interceptX = tPointCornerFx[1][0].X;
 }
 
-#else
+
+#if 0 /* we keep this original algorithm for reference, please do NOT remove it */
 
 static
 void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
@@ -428,8 +424,8 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
         invHeight = 1.0f / (float) (iHeight - 1);
     }
 
-    float           cosAngle = arm_cos_f32(fAngle) * fScaleX;
-    float           sinAngle = arm_sin_f32(fAngle) * fScaleX;
+    float           cosAngle = arm_cos_f32(fAngle);
+    float           sinAngle = arm_sin_f32(fAngle);
     arm_2d_location_t tSrcPoint;
     arm_2d_point_float_t tPointCorner[2][2];
     int16_t         iX, iY;
@@ -440,26 +436,26 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     iX = tSrcPoint.iX - ptCenter->iX;
     iY = tSrcPoint.iY - ptCenter->iY;
 
-    tPointCorner[0][0].fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
-    tPointCorner[0][0].fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
+    tPointCorner[0][0].fY = (iY * cosAngle + iX * sinAngle) * fScaleY + ptCenter->iY;
+    tPointCorner[0][0].fX = (iX * cosAngle - iY * sinAngle) * fScaleX + ptCenter->iX;
 
     tSrcPoint.iX = pSrcPoint->iX + (iWidth - 1) + tOffset->iX;
     iX = tSrcPoint.iX - ptCenter->iX;
 
-    tPointCorner[1][0].fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
-    tPointCorner[1][0].fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
+    tPointCorner[1][0].fY = (iY * cosAngle + iX * sinAngle) * fScaleY + ptCenter->iY;
+    tPointCorner[1][0].fX = (iX * cosAngle - iY * sinAngle) * fScaleX + ptCenter->iX;
 
     tSrcPoint.iY = pSrcPoint->iY + (iHeight - 1) + tOffset->iY;
     iY = tSrcPoint.iY - ptCenter->iY;
 
-    tPointCorner[1][1].fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
-    tPointCorner[1][1].fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
+    tPointCorner[1][1].fY = (iY * cosAngle + iX * sinAngle) * fScaleY + ptCenter->iY;
+    tPointCorner[1][1].fX = (iX * cosAngle - iY * sinAngle) * fScaleX + ptCenter->iX;
 
     tSrcPoint.iX = pSrcPoint->iX + 0 + tOffset->iX;
     iX = tSrcPoint.iX - ptCenter->iX;
 
-    tPointCorner[0][1].fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
-    tPointCorner[0][1].fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
+    tPointCorner[0][1].fY = (iY * cosAngle + iX * sinAngle) * fScaleY + ptCenter->iY;
+    tPointCorner[0][1].fX = (iX * cosAngle - iY * sinAngle) * fScaleX + ptCenter->iX;
 
     float           slopeX, slopeY;
 
