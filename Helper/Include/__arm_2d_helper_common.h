@@ -1074,6 +1074,9 @@ extern "C" {
                     arm_2d_helper_pfb_is_region_active( ptCurrentTile,          \
                                                     &(__region_name),           \
                                                     true);                      \
+                  if ((NULL == ptCurrentTile)) {                                \
+                      ARM_2D_SAFE_NAME(bIsActive) = true;                       \
+                  }                                                             \
                   if (ARM_2D_SAFE_NAME(bIsActive)) {                            \
                         ARM_2D_LOG_INFO(                                        \
                             APP,                                                \
@@ -1108,9 +1111,6 @@ extern "C" {
                             (const arm_2d_tile_t *)(__tile_ptr),                \
                         ({ARM_2D_UNUSED(ptCurrentTile);})                       \
                     ) __arm_2d_hint_optimize_for_pfb__(__region_name)
-
-
-                
 
 #if 0
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
