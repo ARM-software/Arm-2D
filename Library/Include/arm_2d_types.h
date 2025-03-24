@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        09. March 2025
- * $Revision:    V.1.2.17
+ * $Date:        24. March 2025
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -567,9 +567,17 @@ typedef struct arm_2d_point_float_t {
  *
  */
 typedef struct arm_2d_point_fx_t {
-    int32_t X;                          //!< x in Cartesian coordinate system
-    int32_t Y;                          //!< y in Cartesian coordinate system
+    union {
+        int32_t X;                          //!< x in Cartesian coordinate system
+        q16_t q16X;
+    };
+    union {
+        int32_t Y;                          //!< y in Cartesian coordinate system
+        q16_t q16Y;
+    };
 } arm_2d_point_fx_t;
+
+typedef arm_2d_point_fx_t arm_2d_point_q16_t; 
 
 /*!
  * \brief a type for the size of an rectangular area

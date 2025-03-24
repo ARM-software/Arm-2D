@@ -194,7 +194,8 @@ void __arm_2d_impl_gray8_2xssaa_transform_with_opacity(__arm_2d_param_copy_orig_
         &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
         &SrcPt,
         fAngle,
-        ptInfo->fScale,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
         &tOffset,
         &(ptInfo->tCenter),
         regrCoefs);
@@ -365,7 +366,8 @@ void __arm_2d_impl_rgb565_2xssaa_transform_with_opacity(__arm_2d_param_copy_orig
         &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
         &SrcPt,
         fAngle,
-        ptInfo->fScale,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
         &tOffset,
         &(ptInfo->tCenter),
         regrCoefs);
@@ -536,7 +538,8 @@ void __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(__arm_2d_param_copy_ori
         &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
         &SrcPt,
         fAngle,
-        ptInfo->fScale,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
         &tOffset,
         &(ptInfo->tCenter),
         regrCoefs);

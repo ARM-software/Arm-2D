@@ -107,10 +107,11 @@ extern "C" {
 /* 32 bit multiplication with high part extraction */
 #define MULTFX(x,y)         (q31_t)((q63_t)((q63_t) (x) * (q63_t)(y)) >> 32)
 
+#if 0
 /* Q16 multiplication */
 #undef MUL_Q16
 #define MUL_Q16(x,y)         (q31_t)((q63_t)((q63_t) (x) * (q63_t)(y)) >> 16)
-
+#endif
 
 #define ARM_PIX_SCLTYP(sz)     ARM_CONNECT2(ARM_CONNECT2(uint, sz), _t)
 
@@ -184,44 +185,71 @@ typedef int32_t q16_t;
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+__STATIC_INLINE
+q16_t
+reinterpret_q16_q31(q31_t q31In0)
+{
+    return ((q16_t)(q31In0) >> 16);
+}
 
-__STATIC_INLINE q16_t
+/*!
+ * \brief convert q16 number to q31. NOTE: It is your own responsibility to ensure
+ *        it is safe to do so.
+ * 
+ * \param q16In0 the input q16 number
+ * \return q31_t the q31 number 
+ */
+__STATIC_INLINE 
+q31_t
+reinterpret_q31_q16(q16_t q16In0)
+{
+    return ((q31_t)(q16In0) << 16);
+}
+
+__STATIC_INLINE 
+q16_t
 reinterpret_q16_s16(int16_t iIn0)
 {
     return ((q16_t)(iIn0) << 16);
 }
 
-__STATIC_INLINE int16_t
+__STATIC_INLINE 
+int16_t
 reinterpret_s16_q16(q16_t q16In0)
 {
     return (int16_t)((q16_t)(q16In0) >> 16);
 }
 
-__STATIC_INLINE q16_t
+__STATIC_INLINE 
+q16_t
 reinterpret_q16_f32(float fIn0)
 {
     return ((q16_t)((fIn0) * 65536.0f + ((fIn0) >= 0 ? 0.5f : -0.5f)));
 }
 
-__STATIC_INLINE float
+__STATIC_INLINE 
+float
 reinterpret_f32_q16(q16_t q16In0)
 {
     return ((float)(q16In0) / 65536.0f);
 }
 
-__STATIC_INLINE q16_t
+__STATIC_INLINE 
+q16_t
 mul_q16(q16_t q16In0, q16_t q16In1)
 {
     return (q16_t)((((int64_t)(q16In0)) * ((int64_t)(q16In1))) >> 16);
 }
 
-__STATIC_INLINE q16_t
+__STATIC_INLINE 
+q16_t
 mul_n_q16(q16_t q16In0, int32_t nIn1)
 {
     return q16In0 * nIn1;
 }
 
-__STATIC_INLINE q16_t
+__STATIC_INLINE 
+q16_t
 div_q16(q16_t q16In0, q16_t q16In1)
 {
     if (0 == q16In1) {
@@ -232,7 +260,8 @@ div_q16(q16_t q16In0, q16_t q16In1)
     return (q16_t)(lTemp / q16In1);
 }
 
-__STATIC_INLINE q16_t
+__STATIC_INLINE 
+q16_t
 div_n_q16(q16_t q16In0, int32_t nIn1)
 {
     if (0 == nIn1) {
@@ -241,7 +270,8 @@ div_n_q16(q16_t q16In0, int32_t nIn1)
     return (q16_t)(q16In0 / nIn1);
 }
 
-__STATIC_INLINE q16_t
+__STATIC_INLINE 
+q16_t
 abs_q16(q16_t q16In0)
 {
     return ABS(q16In0);

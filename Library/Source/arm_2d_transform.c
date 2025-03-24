@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        08 Jan 2025
- * $Revision:    V.2.0.2
+ * $Date:        23 March 2025
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -87,7 +87,7 @@ extern "C" {
 #define EPS_ATAN2           1e-5f
 
 
-#define TO_Q16(x)           ((int32_t)(x) << 16)
+#define reinterpret_q16_s16(x)           ((int32_t)(x) << 16)
 
 /*----------------------------------------------------------------------------*
  * Code Template                                                              *
@@ -237,9 +237,9 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
                 },
             #if 0
                 .chAlpha = (uint8_t)__USAT(
-             MUL_Q16(MUL_Q16(   (TO_Q16(1-iXSign)   - x)        //!< x
-                            ,   (TO_Q16(1-iYSign)   - y))       //!< y
-                            ,   TO_Q16(256)
+             mul_q16(mul_q16(   (reinterpret_q16_s16(1-iXSign)   - x)        //!< x
+                            ,   (reinterpret_q16_s16(1-iYSign)   - y))       //!< y
+                            ,   reinterpret_q16_s16(256)
                             ) >> 16, 8),
             #endif
             },
@@ -249,9 +249,9 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
                     .iY = -iYSign,
                 },
                 .chAlpha = (uint8_t)__USAT(
-             MUL_Q16(MUL_Q16(   (TO_Q16(iXSign)     + x)        //!< x
-                            ,   (TO_Q16(1-iYSign)   - y))       //!< y
-                            ,   TO_Q16(256)
+             mul_q16(mul_q16(   (reinterpret_q16_s16(iXSign)     + x)        //!< x
+                            ,   (reinterpret_q16_s16(1-iYSign)   - y))       //!< y
+                            ,   reinterpret_q16_s16(256)
                             ) >> 16, 8),
             },
             [2] = {
@@ -260,9 +260,9 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
                     .iY = -iYSign + 1,
                 },
                 .chAlpha = (uint8_t)__USAT(
-             MUL_Q16(MUL_Q16(   (TO_Q16(1-iXSign)   - x)        //!< x
-                            ,   (TO_Q16(iYSign)     + y))       //!< y
-                            ,   TO_Q16(256)
+             mul_q16(mul_q16(   (reinterpret_q16_s16(1-iXSign)   - x)        //!< x
+                            ,   (reinterpret_q16_s16(iYSign)     + y))       //!< y
+                            ,   reinterpret_q16_s16(256)
                             ) >> 16, 8),
             },
             [3] = {
@@ -271,9 +271,9 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
                     .iY = -iYSign +1,
                 },
                 .chAlpha = (uint8_t)__USAT(
-             MUL_Q16(MUL_Q16(   (TO_Q16(iXSign)     + x)        //!< x
-                            ,   (TO_Q16(iYSign)     + y))       //!< y
-                            ,   TO_Q16(256)
+             mul_q16(mul_q16(   (reinterpret_q16_s16(iXSign)     + x)        //!< x
+                            ,   (reinterpret_q16_s16(iYSign)     + y))       //!< y
+                            ,   reinterpret_q16_s16(256)
                             ) >> 16, 8),
             },
         },
@@ -292,17 +292,40 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
 
 #if __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 
+
+
+__STATIC_INLINE
+arm_2d_point_q16_t
+__point_trasform(arm_2d_point_fx_t tPointIn, arm_2d_point_fx_t tCenter, q16_t q16CosAngle, q16_t q16SinAngle, q16_t q16ScaleX, q16_t q16ScaleY)
+{
+/*
+    tPointCorner[0][0].fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
+    tPointCorner[0][0].fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
+ */
+    arm_2d_point_q16_t tOutput;
+
+    tOutput.q16Y = mul_q16(tPointIn.q16Y, q16CosAngle) + mul_q16(tPointIn.q16X, q16SinAngle);
+    tOutput.q16Y = mul_q16(tOutput.q16Y, q16ScaleY) + tCenter.q16Y;
+
+    tOutput.q16X = mul_q16(tPointIn.q16X, q16CosAngle) - mul_q16(tPointIn.q16Y, q16SinAngle);
+    tOutput.q16X = mul_q16(tOutput.q16X, q16ScaleX) + tCenter.q16X;
+
+    return tOutput;
+
+}
+
 static
 void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                 arm_2d_location_t * pSrcPoint,
                                 float fAngle,
-                                float fScale,
+                                float fScaleX,
+                                float fScaleY,
                                 arm_2d_location_t * tOffset,
                                 arm_2d_location_t * center,
                                 arm_2d_rot_linear_regr_t regrCoefs[])
 {
 #define ONE_BY_2PI_Q31      341782637.0f
-//#define TO_Q16(x)           ((x) << 16)
+//#define reinterpret_q16_s16(x)           ((x) << 16)
 
     int_fast16_t        iHeight = ptCopySize->iHeight;
     int_fast16_t        iWidth = ptCopySize->iWidth;
@@ -315,78 +338,125 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     }
 
     int32_t             AngleFx = ARM_2D_LROUNDF(fAngle * ONE_BY_2PI_Q31);
-    int32_t             ScaleFx = (int32_t)((float)fScale * (float)TO_Q16(1));
-    q31_t               cosAngleFx = MULTFX(arm_cos_q31(AngleFx), ScaleFx);
-    q31_t               sinAngleFx = MULTFX(arm_sin_q31(AngleFx), ScaleFx);
+    int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);// (int32_t)((float)fScaleX * (float)reinterpret_q16_s16(1));
+    int32_t             ScaleYFx = reinterpret_q16_f32(fScaleY);
+#if 0
+    q31_t               cosAngleFx = MULTFX(arm_cos_q31(AngleFx), ScaleXFx);
+    q31_t               sinAngleFx = MULTFX(arm_sin_q31(AngleFx), ScaleXFx);
+#else
+    q16_t               cosAngleFx = reinterpret_q16_q31(arm_cos_q31(AngleFx));
+    q16_t               sinAngleFx = reinterpret_q16_q31(arm_sin_q31(AngleFx));
+#endif
+
     arm_2d_point_fx_t   tPointCornerFx[2][2];
     arm_2d_point_fx_t   centerQ16;
     arm_2d_point_fx_t   srcPointQ16;
     arm_2d_point_fx_t   tOffsetQ16;
     arm_2d_point_fx_t   tmp;
-    int32_t             iXQ16, iYQ16;
+    //int32_t             iXQ16, iYQ16;
+    arm_2d_point_q16_t  tPoint;  
 
 
     /* Q16 conversion */
-    centerQ16.X = TO_Q16(center->iX);
-    centerQ16.Y = TO_Q16(center->iY);
+    centerQ16.X = reinterpret_q16_s16(center->iX);// reinterpret_q16_s16(center->iX);
+    centerQ16.Y = reinterpret_q16_s16(center->iY);
 
-    srcPointQ16.X = TO_Q16(pSrcPoint->iX);
-    srcPointQ16.Y = TO_Q16(pSrcPoint->iY);
+    srcPointQ16.X = reinterpret_q16_s16(pSrcPoint->iX);
+    srcPointQ16.Y = reinterpret_q16_s16(pSrcPoint->iY);
 
-    tOffsetQ16.X = TO_Q16(tOffset->iX);
-    tOffsetQ16.Y = TO_Q16(tOffset->iY);
+    tOffsetQ16.X = reinterpret_q16_s16(tOffset->iX);
+    tOffsetQ16.Y = reinterpret_q16_s16(tOffset->iY);
 
 
     /* (0,0) corner */
     tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
     tmp.Y = srcPointQ16.Y + 0 + tOffsetQ16.Y;
 
-    iXQ16 = tmp.X - centerQ16.X;
-    iYQ16 = tmp.Y - centerQ16.Y;
+    tPoint.q16X = tmp.X - centerQ16.X;
+    tPoint.q16Y = tmp.Y - centerQ16.Y;
 
+
+
+#define __PT_TRANSFORM(__PT) \
+    do {\
+        __PT.Y =__QDADD(centerQ16.Y, mul_q16((mul_q16(tPoint.q16Y, cosAngleFx) + mul_q16(tPoint.q16X, sinAngleFx)), ScaleYFx));\
+        __PT.X =__QDADD(centerQ16.X, mul_q16((mul_q16(tPoint.q16X, cosAngleFx) - mul_q16(tPoint.q16Y, sinAngleFx)), ScaleXFx));\
+    } while(0)
+
+#if 1
+#if 0
     tPointCornerFx[0][0].Y =
-        __QDADD(__QDADD(centerQ16.Y, MUL_Q16(iYQ16, cosAngleFx)),
-                MUL_Q16(iXQ16, sinAngleFx));
+        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
+                mul_q16(tPoint.q16X, sinAngleFx));
     tPointCornerFx[0][0].X =
-        __QDSUB(__QDADD(centerQ16.X, MUL_Q16(iXQ16, cosAngleFx)),
-                MUL_Q16(iYQ16, sinAngleFx));
+        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
+                mul_q16(tPoint.q16Y, sinAngleFx));
+#else
+    __PT_TRANSFORM(tPointCornerFx[0][0]);
+#endif
+#else
+    tPointCornerFx[0][0] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
 
+#endif
 
     /* ((iWidth - 1),0) corner */
-    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X + TO_Q16(iWidth - 1);
-    iXQ16 = tmp.X - centerQ16.X;
+    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X + reinterpret_q16_s16(iWidth - 1);
+    tPoint.q16X = tmp.X - centerQ16.X;
 
+#if 1
+#if 0
     tPointCornerFx[1][0].Y =
-        __QDADD(__QDADD(centerQ16.Y, MUL_Q16(iYQ16, cosAngleFx)),
-                MUL_Q16(iXQ16, sinAngleFx));
+        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
+                mul_q16(tPoint.q16X, sinAngleFx));
     tPointCornerFx[1][0].X =
-        __QDSUB(__QDADD(centerQ16.X, MUL_Q16(iXQ16, cosAngleFx)),
-                MUL_Q16(iYQ16, sinAngleFx));
+        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
+                mul_q16(tPoint.q16Y, sinAngleFx));
+#else
 
+    __PT_TRANSFORM(tPointCornerFx[1][0]);
+#endif
+#else
+    tPointCornerFx[1][0] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
+#endif
 
     /* ((iWidth - 1),(iHeight - 1)) corner */
-    tmp.Y = srcPointQ16.Y + tOffsetQ16.Y + TO_Q16(iHeight - 1);
-    iYQ16 = tmp.Y - centerQ16.Y;
+    tmp.Y = srcPointQ16.Y + tOffsetQ16.Y + reinterpret_q16_s16(iHeight - 1);
+    tPoint.q16Y = tmp.Y - centerQ16.Y;
 
+#if 1
+#if 0
     tPointCornerFx[1][1].Y =
-        __QDADD(__QDADD(centerQ16.Y, MUL_Q16(iYQ16, cosAngleFx)),
-                MUL_Q16(iXQ16, sinAngleFx));
+        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
+                mul_q16(tPoint.q16X, sinAngleFx));
     tPointCornerFx[1][1].X =
-        __QDSUB(__QDADD(centerQ16.X, MUL_Q16(iXQ16, cosAngleFx)),
-                MUL_Q16(iYQ16, sinAngleFx));
-
+        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
+                mul_q16(tPoint.q16Y, sinAngleFx));
+#else
+    __PT_TRANSFORM(tPointCornerFx[1][1]);
+#endif
+#else
+    tPointCornerFx[1][1] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
+#endif
 
     /* (0,(iHeight - 1)) corner */
     tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
-    iXQ16 = tmp.X - centerQ16.X;
+    tPoint.q16X = tmp.X - centerQ16.X;
 
+#if 1
+#if 0
     tPointCornerFx[0][1].Y =
-        __QDADD(__QDADD(centerQ16.Y, MUL_Q16(iYQ16, cosAngleFx)),
-                MUL_Q16(iXQ16, sinAngleFx));
+        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
+                mul_q16(tPoint.q16X, sinAngleFx));
     tPointCornerFx[0][1].X =
-        __QDSUB(__QDADD(centerQ16.X, MUL_Q16(iXQ16, cosAngleFx)),
-                MUL_Q16(iYQ16, sinAngleFx));
+        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
+                mul_q16(tPoint.q16Y, sinAngleFx));
+#else
 
+    __PT_TRANSFORM(tPointCornerFx[0][1]);
+#endif
+#else
+    tPointCornerFx[0][1] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
+#endif
 
     /* regression */
     int32_t           slopeXFx, slopeYFx;
@@ -421,7 +491,8 @@ static
 void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                 arm_2d_location_t * pSrcPoint,
                                 float fAngle,
-                                float fScale,
+                                float fScaleX,
+                                float fScaleY,
                                 arm_2d_location_t * tOffset,
                                 arm_2d_location_t * ptCenter,
                                 arm_2d_rot_linear_regr_t regrCoefs[])
@@ -436,8 +507,8 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
         invHeight = 1.0f / (float) (iHeight - 1);
     }
 
-    float           cosAngle = arm_cos_f32(fAngle) * fScale;
-    float           sinAngle = arm_sin_f32(fAngle) * fScale;
+    float           cosAngle = arm_cos_f32(fAngle) * fScaleX;
+    float           sinAngle = arm_sin_f32(fAngle) * fScaleX;
     arm_2d_location_t tSrcPoint;
     arm_2d_point_float_t tPointCorner[2][2];
     int16_t         iX, iY;
@@ -494,26 +565,27 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 #endif
 
 
-ARM_NONNULL(1,2,5)
+ARM_NONNULL(1,2,6)
 static
 arm_2d_point_float_t *__arm_2d_transform_point(
                                             const arm_2d_location_t *ptLocation,
                                             const arm_2d_location_t *ptCenter,
                                             float fAngle,
-                                            float fScale,
+                                            float fScaleX,
+                                            float fScaleY,
                                             arm_2d_point_float_t *ptOutBuffer)
 {
-    int16_t iX = ptLocation->iX - ptCenter->iX;
-    int16_t iY = ptLocation->iY - ptCenter->iY;
+    int16_t iX = (ptLocation->iX - ptCenter->iX) * fScaleX;
+    int16_t iY = (ptLocation->iY - ptCenter->iY) * fScaleY;
 
-    float fX,fY;
+    float           cosAngle = arm_cos_f32(fAngle);
+    float           sinAngle = arm_sin_f32(fAngle);
 
-    float           cosAngle = arm_cos_f32(fAngle) * fScale;
-    float           sinAngle = arm_sin_f32(fAngle) * fScale;
+    float fY = (iY * cosAngle + iX * sinAngle);
+    float fX = (iX * cosAngle - iY * sinAngle);
 
-    fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
-    fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
-
+    fY += ptCenter->iY;
+    fX += ptCenter->iX;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
     if (fX > 0) {
@@ -554,8 +626,11 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
 
     //! angle validation
     ptTransform->fAngle = ARM_2D_FMODF(ptTransform->fAngle, ARM_2D_ANGLE(360));
-    if (0.0f == ptTransform->fScale) {
-        ptTransform->fScale = 1.0f;
+    if (0.0f == ptTransform->fScaleX) {
+        ptTransform->fScaleX = 1.0f;
+    }
+    if (0.0f == ptTransform->fScaleY) {
+        ptTransform->fScaleY = ptTransform->fScaleX;
     }
 
     /* update source center (using root tile's coordinates) */
@@ -578,7 +653,8 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
         __arm_2d_transform_point(  &tCornerPoint,
                                 &ptTransform->tCenter,
                                 ptTransform->fAngle,
-                                ptTransform->fScale,
+                                ptTransform->fScaleX,
+                                ptTransform->fScaleY,
                                 &tPoint);
 
         do {
@@ -594,7 +670,8 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
         __arm_2d_transform_point(  &tCornerPoint,
                                 &ptTransform->tCenter,
                                 ptTransform->fAngle,
-                                ptTransform->fScale,
+                                ptTransform->fScaleX,
+                                ptTransform->fScaleY,
                                 &tPoint);
 
         do {
@@ -612,7 +689,8 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
         __arm_2d_transform_point(  &tCornerPoint,
                                 &ptTransform->tCenter,
                                 ptTransform->fAngle,
-                                ptTransform->fScale,
+                                ptTransform->fScaleX,
+                                ptTransform->fScaleY,
                                 &tPoint);
 
         do {
@@ -628,7 +706,8 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
         __arm_2d_transform_point(  &tCornerPoint,
                                 &ptTransform->tCenter,
                                 ptTransform->fAngle,
-                                ptTransform->fScale,
+                                ptTransform->fScaleX,
+                                ptTransform->fScaleY,
                                 &tPoint);
 
         do {
@@ -648,14 +727,15 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
 
         //! calculate the region
         ptTransform->tDummySourceOffset = (arm_2d_location_t){
-                                            (int16_t)(tTopLeft.fX + 0.5f), 
-                                            (int16_t)(tTopLeft.fY + 0.5f),
+                                            (int16_t)(tTopLeft.fX + (tTopLeft.fX < 0 ? -0.5f : 0.5f)), 
+                                            (int16_t)(tTopLeft.fY + (tTopLeft.fY < 0 ? -0.5f : 0.5f)),
                                         };
 
         ptSource->tRegion.tSize.iHeight = (int16_t)(tBottomRight.fY - tTopLeft.fY + 1.9f);
         ptSource->tRegion.tSize.iWidth = (int16_t)(tBottomRight.fX - tTopLeft.fX + 1.9f);
 
-        ptTransform->fScale = 1.0f / ptTransform->fScale;
+        ptTransform->fScaleX = 1.0f / ptTransform->fScaleX;
+        ptTransform->fScaleY = 1.0f / ptTransform->fScaleY;
 
         //ptTransform->tTargetRegion.tSize = ptSource->tRegion.tSize;
     } while(0);
@@ -745,7 +825,8 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = chFillColour;
 
@@ -775,7 +856,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = hwFillColour;
 
@@ -805,7 +887,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.wColour = wFillColour;
 
@@ -878,7 +961,8 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_only_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
@@ -906,7 +990,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_only_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
@@ -934,7 +1019,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_only_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
@@ -1006,7 +1092,8 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.chColour = chFillColour;
     this.chOpacity = chOpacity;
@@ -1040,7 +1127,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepar
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = hwFillColour;
     this.chOpacity = chOpacity;
@@ -1073,7 +1161,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_and_opacity_prepa
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.wColour = wFillColour;
     this.chOpacity = chOpacity;
@@ -1182,7 +1271,8 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_only_with_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.chOpacity = chOpacity;
 
@@ -1213,7 +1303,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_only_with_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.chOpacity = chOpacity;
 
@@ -1244,7 +1335,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_only_with_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.chOpacity = chOpacity;
 
@@ -1408,7 +1500,8 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = chFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
@@ -1451,7 +1544,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = hwFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
@@ -1494,7 +1588,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = wFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
@@ -1639,7 +1734,8 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = chFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
@@ -1684,7 +1780,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = hwFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
@@ -1729,7 +1826,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = wFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
@@ -1931,7 +2029,8 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
     this.Origin.ptTile = ptMask;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.chColour = chFillColour;
     this.chOpacity = chOpacity;
@@ -1975,7 +2074,8 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
     this.Origin.ptTile = ptMask;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = hwFillColour;
     this.chOpacity = chOpacity;
@@ -2018,7 +2118,8 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
     this.Origin.ptTile = ptMask;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScale = fScale;
+    this.tTransform.fScaleX = fScale;
+    this.tTransform.fScaleY = fScale;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.wColour = wFillColour;
     this.chOpacity = chOpacity;
