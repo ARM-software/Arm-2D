@@ -1069,6 +1069,32 @@ extern "C" {
                 })
 #endif
 
+#define __arm_2d_hint_optimize_for_pfb__(__region_name)                         \
+            if (({bool ARM_2D_SAFE_NAME(bIsActive) =                            \
+                    arm_2d_helper_pfb_is_region_active( ptCurrentTile,          \
+                                                    &(__region_name),           \
+                                                    true);                      \
+                  if (ARM_2D_SAFE_NAME(bIsActive)) {                            \
+                        ARM_2D_LOG_INFO(                                        \
+                            APP,                                                \
+                            0,                                                  \
+                            "region " #__region_name,                           \
+                            "Draw region for the target tile [%p] ",            \
+                            (ptCurrentTile)                                     \
+                        );                                                      \
+                  } else {                                                      \
+                        ARM_2D_LOG_INFO(                                        \
+                            APP,                                                \
+                            0,                                                  \
+                            "region " #__region_name,                           \
+                            "Skip region for the target tile [%p]"              \
+                            "as the PFB is out of range.",                      \
+                            (ptCurrentTile)                                     \
+                        );                                                      \
+                  }                                                             \
+                  ARM_2D_SAFE_NAME(bIsActive);                                  \
+            }))
+
 #define __arm_2d_canvas(__tile_ptr, __region_name, ...)                         \
             arm_using(arm_2d_region_t __region_name = {0},                      \
                     {                                                           \
@@ -1077,9 +1103,16 @@ extern "C" {
                     },                                                          \
                     {                                                           \
                         ARM_2D_OP_WAIT_ASYNC();                                 \
-                    })
+                    }) arm_using(                                               \
+                        const arm_2d_tile_t *ptCurrentTile =                    \
+                            (const arm_2d_tile_t *)(__tile_ptr),                \
+                        ({ARM_2D_UNUSED(ptCurrentTile);})                       \
+                    ) __arm_2d_hint_optimize_for_pfb__(__region_name)
 
-#if 1
+
+                
+
+#if 0
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
             __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                  \
                 for (arm_2d_region_t __region_name = {0},                       \
@@ -1111,16 +1144,16 @@ extern "C" {
                             ARM_2D_LOG_INFO(                                    \
                                 APP,                                            \
                                 0,                                              \
-                                "Canvas " #__region_name,                       \
-                                "Draw Canvas for the target tile [%p] ",        \
+                                "region " #__region_name,                       \
+                                "Draw region for the target tile [%p] ",        \
                                 (__tile_ptr)                                    \
                             );                                                  \
                         } else {                                                \
                             ARM_2D_LOG_INFO(                                    \
                                 APP,                                            \
                                 0,                                              \
-                                "Canvas " #__region_name,                       \
-                                "Skip Canvas for the target tile [%p]"          \
+                                "region " #__region_name,                       \
+                                "Skip region for the target tile [%p]"          \
                                 "as the PFB is out of range.",                  \
                                 (__tile_ptr)                                    \
                             );                                                  \
@@ -1131,7 +1164,7 @@ extern "C" {
                 )
 #else
 #   define arm_2d_canvas(__tile_ptr, __region_name, ...)                        \
-            __arm_2d_canvas((__tile_ptr, __region_name, ##__VA_ARGS__))
+            __arm_2d_canvas((__tile_ptr), __region_name, ##__VA_ARGS__)
 #endif
 
 #if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
