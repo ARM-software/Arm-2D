@@ -347,10 +347,16 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     tPoint.q16Y = tmp.Y - centerQ16.Y;
 
 #define __PT_TRANSFORM(__PT) \
-    do {                                                                                                                        \
-        /* rotation first, then scaling */                                                                                      \
-        __PT.Y =qadd_q16(centerQ16.Y, mul_q16((mul_q16(tPoint.q16Y, cosAngleFx) + mul_q16(tPoint.q16X, sinAngleFx)), ScaleYFx)); \
-        __PT.X =qsub_q16(centerQ16.X, mul_q16((mul_q16(tPoint.q16X, cosAngleFx) - mul_q16(tPoint.q16Y, sinAngleFx)), ScaleXFx)); \
+    do {                                                                            \
+        /* rotation first, then scaling */                                          \
+        __PT.Y =qadd_q16(   centerQ16.Y,                                            \
+                            mul_q16(qadd_q16(   mul_q16(tPoint.q16Y, cosAngleFx),   \
+                                                mul_q16(tPoint.q16X, sinAngleFx)),  \
+                                    ScaleYFx));                                     \
+        __PT.X =qadd_q16(   centerQ16.X,                                            \
+                            mul_q16(qsub_q16(   mul_q16(tPoint.q16X, cosAngleFx),   \
+                                                mul_q16(tPoint.q16Y, sinAngleFx)),  \
+                                    ScaleXFx));                                     \
     } while(0)
 
     __PT_TRANSFORM(tPointCornerFx[0][0]);
