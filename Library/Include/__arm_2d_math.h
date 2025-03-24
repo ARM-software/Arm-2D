@@ -189,7 +189,7 @@ __STATIC_INLINE
 q16_t
 reinterpret_q16_q31(q31_t q31In0)
 {
-    return ((q16_t)(q31In0) >> 16);
+    return ((q16_t)(q31In0) >> 15);
 }
 
 /*!
@@ -277,6 +277,19 @@ abs_q16(q16_t q16In0)
     return ABS(q16In0);
 }
 
+__STATIC_INLINE
+q16_t
+qadd_q16(q16_t q16In0, q16_t q16In1) 
+{
+    return ((q16_t)(clip_q63_to_q31((q63_t)q16In0 + (q63_t)q16In1)));
+}
+
+__STATIC_INLINE
+q16_t
+qsub_q16(q16_t q16In0, q16_t q16In1) 
+{
+    return ((q16_t)(clip_q63_to_q31((q63_t)q16In0 - (q63_t)q16In1)));
+}
 
 
 #if defined(__clang__)

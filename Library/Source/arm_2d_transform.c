@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        23 March 2025
- * $Revision:    V.2.1.0
+ * $Date:        24 March 2025
+ * $Revision:    V.2.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -349,8 +349,8 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 #define __PT_TRANSFORM(__PT) \
     do {                                                                                                                        \
         /* rotation first, then scaling */                                                                                      \
-        __PT.Y =__QDADD(centerQ16.Y, mul_q16((mul_q16(tPoint.q16Y, cosAngleFx) + mul_q16(tPoint.q16X, sinAngleFx)), ScaleYFx)); \
-        __PT.X =__QDADD(centerQ16.X, mul_q16((mul_q16(tPoint.q16X, cosAngleFx) - mul_q16(tPoint.q16Y, sinAngleFx)), ScaleXFx)); \
+        __PT.Y =qadd_q16(centerQ16.Y, mul_q16((mul_q16(tPoint.q16Y, cosAngleFx) + mul_q16(tPoint.q16X, sinAngleFx)), ScaleYFx)); \
+        __PT.X =qsub_q16(centerQ16.X, mul_q16((mul_q16(tPoint.q16X, cosAngleFx) - mul_q16(tPoint.q16Y, sinAngleFx)), ScaleXFx)); \
     } while(0)
 
     __PT_TRANSFORM(tPointCornerFx[0][0]);
