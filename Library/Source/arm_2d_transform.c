@@ -292,28 +292,6 @@ __arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
 
 #if __ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__
 
-
-
-__STATIC_INLINE
-arm_2d_point_q16_t
-__point_trasform(arm_2d_point_fx_t tPointIn, arm_2d_point_fx_t tCenter, q16_t q16CosAngle, q16_t q16SinAngle, q16_t q16ScaleX, q16_t q16ScaleY)
-{
-/*
-    tPointCorner[0][0].fY = (iY * cosAngle + iX * sinAngle + ptCenter->iY);
-    tPointCorner[0][0].fX = (-iY * sinAngle + iX * cosAngle + ptCenter->iX);
- */
-    arm_2d_point_q16_t tOutput;
-
-    tOutput.q16Y = mul_q16(tPointIn.q16Y, q16CosAngle) + mul_q16(tPointIn.q16X, q16SinAngle);
-    tOutput.q16Y = mul_q16(tOutput.q16Y, q16ScaleY) + tCenter.q16Y;
-
-    tOutput.q16X = mul_q16(tPointIn.q16X, q16CosAngle) - mul_q16(tPointIn.q16Y, q16SinAngle);
-    tOutput.q16X = mul_q16(tOutput.q16X, q16ScaleX) + tCenter.q16X;
-
-    return tOutput;
-
-}
-
 static
 void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                 arm_2d_location_t * pSrcPoint,
@@ -340,13 +318,9 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     int32_t             AngleFx = ARM_2D_LROUNDF(fAngle * ONE_BY_2PI_Q31);
     int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);// (int32_t)((float)fScaleX * (float)reinterpret_q16_s16(1));
     int32_t             ScaleYFx = reinterpret_q16_f32(fScaleY);
-#if 0
-    q31_t               cosAngleFx = MULTFX(arm_cos_q31(AngleFx), ScaleXFx);
-    q31_t               sinAngleFx = MULTFX(arm_sin_q31(AngleFx), ScaleXFx);
-#else
+
     q16_t               cosAngleFx = reinterpret_q16_q31(arm_cos_q31(AngleFx));
     q16_t               sinAngleFx = reinterpret_q16_q31(arm_sin_q31(AngleFx));
-#endif
 
     arm_2d_point_fx_t   tPointCornerFx[2][2];
     arm_2d_point_fx_t   centerQ16;
@@ -378,85 +352,32 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 
 
 #define __PT_TRANSFORM(__PT) \
-    do {\
-        __PT.Y =__QDADD(centerQ16.Y, mul_q16((mul_q16(tPoint.q16Y, cosAngleFx) + mul_q16(tPoint.q16X, sinAngleFx)), ScaleYFx));\
-        __PT.X =__QDADD(centerQ16.X, mul_q16((mul_q16(tPoint.q16X, cosAngleFx) - mul_q16(tPoint.q16Y, sinAngleFx)), ScaleXFx));\
+    do {                                                                                                                        \
+        /* rotation first, then scaling */                                                                                      \
+        __PT.Y =__QDADD(centerQ16.Y, mul_q16((mul_q16(tPoint.q16Y, cosAngleFx) + mul_q16(tPoint.q16X, sinAngleFx)), ScaleYFx)); \
+        __PT.X =__QDADD(centerQ16.X, mul_q16((mul_q16(tPoint.q16X, cosAngleFx) - mul_q16(tPoint.q16Y, sinAngleFx)), ScaleXFx)); \
     } while(0)
 
-#if 1
-#if 0
-    tPointCornerFx[0][0].Y =
-        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
-                mul_q16(tPoint.q16X, sinAngleFx));
-    tPointCornerFx[0][0].X =
-        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
-                mul_q16(tPoint.q16Y, sinAngleFx));
-#else
     __PT_TRANSFORM(tPointCornerFx[0][0]);
-#endif
-#else
-    tPointCornerFx[0][0] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
-
-#endif
 
     /* ((iWidth - 1),0) corner */
     tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X + reinterpret_q16_s16(iWidth - 1);
     tPoint.q16X = tmp.X - centerQ16.X;
 
-#if 1
-#if 0
-    tPointCornerFx[1][0].Y =
-        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
-                mul_q16(tPoint.q16X, sinAngleFx));
-    tPointCornerFx[1][0].X =
-        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
-                mul_q16(tPoint.q16Y, sinAngleFx));
-#else
 
     __PT_TRANSFORM(tPointCornerFx[1][0]);
-#endif
-#else
-    tPointCornerFx[1][0] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
-#endif
 
     /* ((iWidth - 1),(iHeight - 1)) corner */
     tmp.Y = srcPointQ16.Y + tOffsetQ16.Y + reinterpret_q16_s16(iHeight - 1);
     tPoint.q16Y = tmp.Y - centerQ16.Y;
 
-#if 1
-#if 0
-    tPointCornerFx[1][1].Y =
-        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
-                mul_q16(tPoint.q16X, sinAngleFx));
-    tPointCornerFx[1][1].X =
-        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
-                mul_q16(tPoint.q16Y, sinAngleFx));
-#else
     __PT_TRANSFORM(tPointCornerFx[1][1]);
-#endif
-#else
-    tPointCornerFx[1][1] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
-#endif
 
     /* (0,(iHeight - 1)) corner */
     tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
     tPoint.q16X = tmp.X - centerQ16.X;
 
-#if 1
-#if 0
-    tPointCornerFx[0][1].Y =
-        __QDADD(__QDADD(centerQ16.Y, mul_q16(tPoint.q16Y, cosAngleFx)),
-                mul_q16(tPoint.q16X, sinAngleFx));
-    tPointCornerFx[0][1].X =
-        __QDSUB(__QDADD(centerQ16.X, mul_q16(tPoint.q16X, cosAngleFx)),
-                mul_q16(tPoint.q16Y, sinAngleFx));
-#else
-
     __PT_TRANSFORM(tPointCornerFx[0][1]);
-#endif
-#else
-    tPointCornerFx[0][1] = __point_trasform(tPoint, centerQ16, cosAngleFx, sinAngleFx, ScaleXFx, ScaleYFx);
-#endif
 
     /* regression */
     int32_t           slopeXFx, slopeYFx;
@@ -575,6 +496,7 @@ arm_2d_point_float_t *__arm_2d_transform_point(
                                             float fScaleY,
                                             arm_2d_point_float_t *ptOutBuffer)
 {
+    /* scaling first, then rotate */ 
     int16_t iX = (ptLocation->iX - ptCenter->iX) * fScaleX;
     int16_t iY = (ptLocation->iY - ptCenter->iY) * fScaleY;
 
