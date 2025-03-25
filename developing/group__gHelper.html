@@ -345,8 +345,7 @@ Macros</h2></td></tr>
 <tr class="memitem:gab6ff127404905e75ff0bd689867c0dea"><td class="memItemLeft" align="right" valign="top"><a id="gab6ff127404905e75ff0bd689867c0dea" name="gab6ff127404905e75ff0bd689867c0dea"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>IMPL_ARM_2D_REGION_LIST</b>(__NAME, ...)&#160;&#160;&#160;            __IMPL_ARM_2D_REGION_LIST(__NAME,##__VA_ARGS__)</td></tr>
 <tr class="separator:gab6ff127404905e75ff0bd689867c0dea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga271c7a8c0b58952156ae432a62d9891e"><td class="memItemLeft" align="right" valign="top"><a id="ga271c7a8c0b58952156ae432a62d9891e" name="ga271c7a8c0b58952156ae432a62d9891e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>END_IMPL_ARM_2D_REGION_LIST</b>(...)&#160;&#160;&#160;            };</td></tr>
+<tr class="memitem:ga271c7a8c0b58952156ae432a62d9891e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga271c7a8c0b58952156ae432a62d9891e">END_IMPL_ARM_2D_REGION_LIST</a>(...)</td></tr>
 <tr class="separator:ga271c7a8c0b58952156ae432a62d9891e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga76d2c9d765e0f4d7725611b3ef535552"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga76d2c9d765e0f4d7725611b3ef535552">__ADD_REGION_TO_LIST</a>(__NAME, ...)</td></tr>
 <tr class="separator:ga76d2c9d765e0f4d7725611b3ef535552"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -5698,6 +5697,30 @@ chPTState</td>
 <div class="line">            };                                                                  \</div>
 <div class="line">            __VA_ARGS__                                                         \</div>
 <div class="line">            arm_2d_region_list_item_t __NAME[] = {</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ga271c7a8c0b58952156ae432a62d9891e" name="ga271c7a8c0b58952156ae432a62d9891e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga271c7a8c0b58952156ae432a62d9891e">&#9670;&#160;</a></span>END_IMPL_ARM_2D_REGION_LIST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define END_IMPL_ARM_2D_REGION_LIST</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            };                                                                  \</div>
+<div class="line">            <span class="comment">/* In ANSI-C Standard, the local variable always hides a global */</span>  \</div>
+<div class="line">            <span class="comment">/* of the same name as soon as it&#39;s declared. We use this feature */</span>\</div>
+<div class="line">            <span class="comment">/* to provide a temporary fix for backward compatibility.*/</span>         \</div>
+<div class="line">            <span class="comment">/* the following line should be removed in the future */</span>            \</div>
+<div class="line">            <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> * <span class="keyword">const</span> ptCurrentTile = NULL;</div>
 </div><!-- fragment -->
 </div>
 </div>
