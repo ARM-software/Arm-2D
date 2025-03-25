@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        04. Dec 2024
- * $Revision:    V.1.7.4
+ * $Date:        25. March 2025
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1454,8 +1454,13 @@ extern "C" {
  */
 #define __item_line_horizontal(...)                                             \
             ARM_CONNECT2(   ____item_line_horizontal,                           \
-                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+                __arm_2d_hint_optimize_for_pfb__(__item_region)
 
+#define __item_line_horizontal_open(...)                                        \
+            ARM_CONNECT2(   ____item_line_horizontal,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+                __arm_2d_hint_optimize_for_pfb__(__item_region)
 
 /*!
  * \brief Please do NOT use this macro directly
@@ -1567,12 +1572,14 @@ extern "C" {
  *          }
  *
  */
-#define __item_line_dock_horizontal(...)                                        \
+#define __item_line_dock_horizontal_open(...)                                   \
             ARM_CONNECT2(   ____item_line_dock_horizontal,                      \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
-
+#define __item_line_dock_horizontal(...)                                        \
+            ARM_CONNECT2(   ____item_line_dock_horizontal,                      \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+                __arm_2d_hint_optimize_for_pfb__(__item_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -1676,10 +1683,14 @@ extern "C" {
  *              code body that can use __item_region
  *          }
  */
-#define __item_line_vertical(...)                                               \
+#define __item_line_vertical_open(...)                                          \
             ARM_CONNECT2(   ____item_line_vertical,                             \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+#define __item_line_vertical(...)                                               \
+            ARM_CONNECT2(   ____item_line_vertical,                             \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__item_region)
 
 /*!
  * \brief Please do NOT use this macro directly
@@ -1790,10 +1801,14 @@ extern "C" {
  *          }
  *
  */
-#define __item_line_dock_vertical(...)                                          \
+#define __item_line_dock_vertical_open(...)                                     \
             ARM_CONNECT2(   ____item_line_dock_vertical,                        \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+#define __item_line_dock_vertical(...)                                          \
+            ARM_CONNECT2(   ____item_line_dock_vertical,                        \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__item_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -1911,11 +1926,14 @@ extern "C" {
  *              code body that can use __item_region
  *          }
  */
-#define __item_horizontal(...)                                                  \
+#define __item_horizontal_open(...)                                             \
             ARM_CONNECT2(   ____item_horizontal,                                \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define __item_horizontal(...)                                                  \
+            ARM_CONNECT2(   ____item_horizontal,                                \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__item_region)
 
 /*!
  * \brief Please do NOT use this macro directly
@@ -2033,10 +2051,14 @@ extern "C" {
  *              code body that can use __item_region
  *          }
  */
-#define __item_vertical(...)                                                    \
+#define __item_vertical_open(...)                                               \
             ARM_CONNECT2(   ____item_vertical,                                  \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+#define __item_vertical(...)                                                    \
+            ARM_CONNECT2(   ____item_vertical,                                  \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__item_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2087,11 +2109,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_top_left(...)                                              \
+#define arm_2d_align_top_left_open(...)                                         \
             ARM_CONNECT2(   __arm_2d_align_top_left,                            \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define arm_2d_align_top_left(...)                                              \
+            ARM_CONNECT2(   __arm_2d_align_top_left,                            \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__top_left_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2148,10 +2173,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_top_centre(...)                                            \
+#define arm_2d_align_top_centre_open(...)                                       \
             ARM_CONNECT2(   __arm_2d_align_top_centre,                          \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+#define arm_2d_align_top_centre(...)                                            \
+            ARM_CONNECT2(   __arm_2d_align_top_centre,                          \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__top_centre_region)
 
 /*!
  * \brief Please do NOT use this macro directly
@@ -2209,11 +2238,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_top_right(...)                                             \
+#define arm_2d_align_top_right_open(...)                                        \
             ARM_CONNECT2(   __arm_2d_align_top_right,                           \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define arm_2d_align_top_right(...)                                             \
+            ARM_CONNECT2(   __arm_2d_align_top_right,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__top_right_region)
 
 
 /*!
@@ -2272,10 +2304,15 @@ extern "C" {
  *          }
  *
  */
-#define arm_2d_align_mid_left(...)                                              \
+#define arm_2d_align_mid_left_open(...)                                         \
             ARM_CONNECT2(   __arm_2d_align_mid_left,                            \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+
+#define arm_2d_align_mid_left(...)                                              \
+            ARM_CONNECT2(   __arm_2d_align_mid_left,                            \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__mid_left_region)
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
  *        left alignment. 
@@ -2364,11 +2401,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_centre(...)                                                \
+#define arm_2d_align_centre_open(...)                                           \
             ARM_CONNECT2(   __arm_2d_align_centre,                              \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define arm_2d_align_centre(...)                                                \
+            ARM_CONNECT2(   __arm_2d_align_centre,                              \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__centre_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2431,11 +2471,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_mid_right(...)                                             \
+#define arm_2d_align_mid_right_open(...)                                        \
             ARM_CONNECT2(   __arm_2d_align_mid_right,                           \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define arm_2d_align_mid_right(...)                                             \
+            ARM_CONNECT2(   __arm_2d_align_mid_right,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__mid_right_region)
 /*!
  * \brief generate a temporary arm_2d_region_t object with user specified info for
  *        right alignment. 
@@ -2515,10 +2558,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_bottom_left(...)                                           \
+#define arm_2d_align_bottom_left_open(...)                                      \
             ARM_CONNECT2(   __arm_2d_align_bottom_left,                         \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
+#define arm_2d_align_bottom_left(...)                                           \
+            ARM_CONNECT2(   __arm_2d_align_bottom_left,                         \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__bottom_left_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2581,11 +2628,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_bottom_centre(...)                                         \
+#define arm_2d_align_bottom_centre_open(...)                                    \
             ARM_CONNECT2(   __arm_2d_align_bottom_centre,                       \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define arm_2d_align_bottom_centre(...)                                         \
+            ARM_CONNECT2(   __arm_2d_align_bottom_centre,                       \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__bottom_centre_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2648,11 +2698,14 @@ extern "C" {
  *          }
  *          
  */
-#define arm_2d_align_bottom_right(...)                                          \
+#define arm_2d_align_bottom_right_open(...)                                     \
             ARM_CONNECT2(   __arm_2d_align_bottom_right,                        \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
 
-
+#define arm_2d_align_bottom_right(...)                                          \
+            ARM_CONNECT2(   __arm_2d_align_bottom_right,                        \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)        \
+            __arm_2d_hint_optimize_for_pfb__(__bottom_right_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2710,12 +2763,16 @@ extern "C" {
  *              code body that can use __top_region
  *          }
  */
-#define arm_2d_dock_top(__region, __height, ...)                                \
+#define arm_2d_dock_top_open(__region, __height, ...)                           \
             ARM_CONNECT2(   __arm_2d_dock_top,                                  \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__height), ##__VA_ARGS__)
 
-
+#define arm_2d_dock_top(__region, __height, ...)                                \
+            ARM_CONNECT2(   __arm_2d_dock_top,                                  \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__height), ##__VA_ARGS__)         \
+            __arm_2d_hint_optimize_for_pfb__(__top_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2779,12 +2836,16 @@ extern "C" {
  *              code body that can use __bottom_region
  *          }          
  */
-#define arm_2d_dock_bottom(__region, __height, ...)                             \
+#define arm_2d_dock_bottom_open(__region, __height, ...)                        \
             ARM_CONNECT2(   __arm_2d_dock_bottom,                               \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__height), ##__VA_ARGS__)
 
-
+#define arm_2d_dock_bottom(__region, __height, ...)                             \
+            ARM_CONNECT2(   __arm_2d_dock_bottom,                               \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__height), ##__VA_ARGS__)         \
+            __arm_2d_hint_optimize_for_pfb__(__bottom_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2842,12 +2903,16 @@ extern "C" {
  *              code body that can use __left_region
  *          }            
  */
-#define arm_2d_dock_left(__region, __width, ...)                                \
+#define arm_2d_dock_left_open(__region, __width, ...)                           \
             ARM_CONNECT2(   __arm_2d_dock_left,                                 \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__width), ##__VA_ARGS__)
 
-
+#define arm_2d_dock_left(__region, __width, ...)                                \
+            ARM_CONNECT2(   __arm_2d_dock_left,                                 \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__width), ##__VA_ARGS__)          \
+            __arm_2d_hint_optimize_for_pfb__(__left_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2911,11 +2976,16 @@ extern "C" {
  *              code body that can use __right_region
  *          }           
  */
-#define arm_2d_dock_right(__region, __width, ...)                               \
+#define arm_2d_dock_right_open(__region, __width, ...)                          \
             ARM_CONNECT2(   __arm_2d_dock_right,                                \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__width), ##__VA_ARGS__)
 
+#define arm_2d_dock_right(__region, __width, ...)                               \
+            ARM_CONNECT2(   __arm_2d_dock_right,                                \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__width), ##__VA_ARGS__)          \
+            __arm_2d_hint_optimize_for_pfb__(__right_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -2987,12 +3057,16 @@ extern "C" {
  *              code body that can use __vertical_region
  *          }          
  */
-#define arm_2d_dock_vertical(__region, __height, ...)                           \
+#define arm_2d_dock_vertical_open(__region, __height, ...)                      \
             ARM_CONNECT2(   __arm_2d_dock_vertical,                             \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__height), ##__VA_ARGS__)
 
-
+#define arm_2d_dock_vertical(__region, __height, ...)                           \
+            ARM_CONNECT2(   __arm_2d_dock_vertical,                             \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__height), ##__VA_ARGS__)         \
+            __arm_2d_hint_optimize_for_pfb__(__vertical_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -3064,12 +3138,16 @@ extern "C" {
  *              code body that can use __horizontal_region
  *          }   
  */
-#define arm_2d_dock_horizontal(__region, __width, ...)                          \
+#define arm_2d_dock_horizontal_open(__region, __width, ...)                     \
             ARM_CONNECT2(   __arm_2d_dock_horizontal,                           \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), (__width), ##__VA_ARGS__)
 
-
+#define arm_2d_dock_horizontal(__region, __width, ...)                          \
+            ARM_CONNECT2(   __arm_2d_dock_horizontal,                           \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), (__width), ##__VA_ARGS__)          \
+            __arm_2d_hint_optimize_for_pfb__(__horizontal_region)
 /*!
  * \brief Please do NOT use this macro directly
  * 
@@ -3125,11 +3203,16 @@ extern "C" {
  *              code body that can use __dock_region
  *          }   
  */
-#define arm_2d_dock_with_margin(__region, ...)                                  \
+#define arm_2d_dock_with_margin_open(__region, ...)                             \
             ARM_CONNECT2(   __arm_2d_dock_with_margin,                          \
                             __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
                                 ((__region), ##__VA_ARGS__)
 
+#define arm_2d_dock_with_margin(__region, ...)                                  \
+            ARM_CONNECT2(   __arm_2d_dock_with_margin,                          \
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))                     \
+                                ((__region), ##__VA_ARGS__)                     \
+            __arm_2d_hint_optimize_for_pfb__(__dock_region)
 /*!
  * \brief generate a temporary arm_2d_region_t object that docks to the target
  *        region with given margins
@@ -3152,6 +3235,8 @@ extern "C" {
 #define arm_2d_dock(__region, ...)                                              \
             arm_2d_dock_with_margin(__region, ##__VA_ARGS__)
 
+#define arm_2d_dock_open(__region, ...)                                         \
+            arm_2d_dock_with_margin_open(__region, ##__VA_ARGS__)
 /*!
  * \brief a template for implement a on draw event handler
  */

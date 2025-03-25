@@ -259,7 +259,7 @@ void benchmark_watch_panel_init(arm_2d_region_t tScreen)
         _->tRegion = tRegion;
     }
 #endif
-
+    const arm_2d_tile_t *ptCurrentTile = NULL;
     arm_foreach(demo_gears_t, s_tGears, ptGear) {
         arm_2d_align_centre(tScreen, ptGear->ptRegion->tSize) {
             ptGear->ptRegion->tLocation = __centre_region.tLocation;
