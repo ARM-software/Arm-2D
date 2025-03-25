@@ -5040,7 +5040,7 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
     return bResult;
 }
 
-ARM_NONNULL(1,2)
+ARM_NONNULL(2)
 bool __arm_2d_helper_pfb_is_region_active0( const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             bool bConsiderDryRun)
@@ -5076,7 +5076,7 @@ bool __arm_2d_helper_pfb_is_region_active0( const arm_2d_tile_t *ptTarget,
     return bResult;
 }
 
-ARM_NONNULL(1,2,4)
+ARM_NONNULL(2,4)
 bool __arm_2d_helper_pfb_is_region_active1( const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             bool bConsiderDryRun,

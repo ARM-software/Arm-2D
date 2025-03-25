@@ -193,7 +193,12 @@ extern "C" {
             
 
 #define END_IMPL_ARM_2D_REGION_LIST(...)                                        \
-            };
+            };                                                                  \
+            /* In ANSI-C Standard, the local variable always hides a global */  \
+            /* of the same name as soon as it's declared. We use this feature */\
+            /* to provide a temporary fix for backward compatibility.*/         \
+            /* the following line should be removed in the future */            \
+            static const arm_2d_tile_t * const ptCurrentTile = NULL;
             
 #define __ADD_REGION_TO_LIST(__NAME, ...)                                       \
             {                                                                   \
@@ -1015,7 +1020,7 @@ bool arm_2d_helper_pfb_is_region_being_drawing(const arm_2d_tile_t *ptTarget,
                                                const arm_2d_tile_t **ppVirtualScreen);
 
 extern
-ARM_NONNULL(1,2)
+ARM_NONNULL(2)
 /*!
  * \brief test whether the target region is active (used by PFB service)
  * 
@@ -1030,7 +1035,7 @@ bool __arm_2d_helper_pfb_is_region_active0( const arm_2d_tile_t *ptTarget,
                                             bool bConsiderDryRun);
 
 extern
-ARM_NONNULL(1,2,4)
+ARM_NONNULL(2,4)
 /*!
  * \brief test whether the target region is active (used by PFB service)
  * 
