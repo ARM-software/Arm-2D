@@ -243,7 +243,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
                             this.iProgress,         /* progress 0~1000 */
                             255,                    /* opacity */
                             bIsNewFrame);
-        arm_2d_op_wait_async(NULL);
 
         arm_2d_align_centre(__top_canvas, 84, 80 ) {
             arm_2d_layout(__centre_region, DEFAULT, true) {
@@ -285,7 +284,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_fitness_handler)
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
-    arm_2d_op_wait_async(NULL);
+
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }

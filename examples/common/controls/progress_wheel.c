@@ -276,7 +276,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             tWheelSize.iWidth *= 2;
             tWheelSize.iHeight *= 2;
 
-            arm_2d_align_centre(*ptRegion, tWheelSize) {
+            arm_2d_align_centre_open(*ptRegion, tWheelSize) {
                 tDrawRegion = __centre_region;
                 ptRegion = &tDrawRegion;
             }

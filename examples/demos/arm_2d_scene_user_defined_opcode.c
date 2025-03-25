@@ -409,11 +409,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
         }
     #endif
 
-        arm_2d_dock_top(__top_canvas, (__top_canvas.tSize.iHeight >> 1)) {
+        arm_2d_dock_top_open(__top_canvas, (__top_canvas.tSize.iHeight >> 1)) {
 
-            arm_2d_dock_bottom(__top_region, 60, 50, 0) {
+            arm_2d_dock_bottom_open(__top_region, 60, 50, 0) {
 
-                arm_2d_align_centre(__bottom_region, c_tileBattleshipA4Mask.tRegion.tSize) {
+                arm_2d_align_centre_open(__bottom_region, c_tileBattleshipA4Mask.tRegion.tSize) {
 
                     if (BATTLESHIP_VANISH !=  this.chBattleshipState && this.chBattleshipState != BATTLESHIP_IDLE) {
 

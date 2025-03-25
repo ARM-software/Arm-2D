@@ -405,7 +405,7 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
         arm_lcd_text_set_scale(fRatio + 0.3f);
         arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
 
-        arm_2d_align_centre(__top_container, tTextSize) {
+        arm_2d_align_centre_open(__top_container, tTextSize) {
 
             /* adjust item position around a curve*/
             do {

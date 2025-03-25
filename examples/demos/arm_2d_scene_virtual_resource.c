@@ -383,7 +383,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_virtual_resource_handler)
         #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ > 1
             /* draw A4 fonts that stored as a virtual resource */
 
-            arm_2d_dock_vertical(__centre_region, tCharSize.iHeight * 2, 32) {
+            arm_2d_dock_vertical_open(__centre_region, tCharSize.iHeight * 2, 32) {
                 arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                 arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_ARIAL14_A4);
                 arm_lcd_text_set_draw_region(&__vertical_region);
