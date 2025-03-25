@@ -1069,7 +1069,10 @@ extern "C" {
                 })
 #endif
 
-#define __arm_2d_hint_optimize_for_pfb__(__region_name)                         \
+#if defined(__ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__)                \
+ && __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__
+
+#   define __arm_2d_hint_optimize_for_pfb__(__region_name)                      \
             if (({bool ARM_2D_SAFE_NAME(bIsActive) =                            \
                     arm_2d_helper_pfb_is_region_active( ptCurrentTile,          \
                                                     &(__region_name),           \
@@ -1097,6 +1100,9 @@ extern "C" {
                   }                                                             \
                   ARM_2D_SAFE_NAME(bIsActive);                                  \
             }))
+#else
+#   define __arm_2d_hint_optimize_for_pfb__(__region_name)
+#endif
 
 #define __arm_2d_canvas(__tile_ptr, __region_name, ...)                         \
             arm_using(arm_2d_region_t __region_name = {0},                      \

@@ -250,7 +250,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
 
             arm_2d_layout(__centre_region, DEFAULT, true) {
             
-                __item_line_dock_vertical(c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight * 2) {
+                __item_line_dock_vertical_open(c_tileWhiteDotMiddleA4Mask.tRegion.tSize.iHeight * 2) {
                     
                     /* apply vibration */
                     __item_region.tLocation.iX += this.Core.tVibration.iX;
@@ -324,7 +324,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                     } while(0);
                 }
 
-                __item_line_dock_vertical() {
+                __item_line_dock_vertical_open() {
 
                     /* apply vibration */
                     __item_region.tLocation.iX += this.Core.tVibration.iX;
@@ -339,7 +339,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
 
         /* draw electronics */
         do {
-            arm_2d_align_centre(__top_canvas, 
+            arm_2d_align_centre_open(__top_canvas, 
                                 220, 
                                 220) {
 
@@ -351,7 +351,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                 };
 
                 /* electronic 0 */
-                arm_2d_align_centre(__centre_region, tElectronicSize) {
+                arm_2d_align_centre_open(__centre_region, tElectronicSize) {
 
                     __centre_region.tLocation.iX += this.Electronic[0].tOffset.iX;
                     __centre_region.tLocation.iY += this.Electronic[0].tOffset.iY;
@@ -382,7 +382,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_atom_handler)
                 }
                 
                 /* electronic 1 */
-                arm_2d_align_centre(__centre_region, tElectronicSize) {
+                arm_2d_align_centre_open(__centre_region, tElectronicSize) {
 
                     __centre_region.tLocation.iX += this.Electronic[1].tOffset.iX;
                     __centre_region.tLocation.iY += this.Electronic[1].tOffset.iY;
