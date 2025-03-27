@@ -1118,60 +1118,10 @@ extern "C" {
                         ({ARM_2D_UNUSED(ptCurrentTile);})                       \
                     ) __arm_2d_hint_optimize_for_pfb__(__region_name)
 
-#if 0
+
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
-            __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                  \
-                for (arm_2d_region_t __region_name = {0},                       \
-                    *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;          \
-                 ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
-                    ({ /* on enter operations */                                \
-                        ARM_2D_UNUSED(__region_name);                           \
-                        __region_name.tSize                                     \
-                            = (__tile_ptr)->tRegion.tSize;                      \
-                        const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptScreen) = NULL; \
-                        const arm_2d_tile_t *ARM_2D_SAFE_NAME(ptRootTile)       \
-                            = __arm_2d_tile_get_virtual_screen_or_root(         \
-                                        (const arm_2d_tile_t *)(__tile_ptr),    \
-                                        NULL,                                   \
-                                        NULL,                                   \
-                                        &ARM_2D_SAFE_NAME(ptScreen),            \
-                                        false);                                 \
-                        bool bDrawCanvas =                                      \
-                        (   NULL != ARM_2D_SAFE_NAME(ptRootTile)                \
-                        ||  (   (NULL != ARM_2D_SAFE_NAME(ptScreen))            \
-                            &&  (ARM_2D_SAFE_NAME(ptScreen)->tInfo.u3ExtensionID\
-                                    == ARM_2D_TILE_EXTENSION_PFB)               \
-                            &&  (   ARM_2D_SAFE_NAME(ptScreen)                  \
-                                        ->tInfo.Extension.PFB.bIsDryRun         \
-                                ||  ARM_2D_SAFE_NAME(ptScreen)                  \
-                                        ->tInfo.Extension.PFB.bIsNewFrame))     \
-                        );                                                      \
-                        if (bDrawCanvas) {                                      \
-                            ARM_2D_LOG_INFO(                                    \
-                                APP,                                            \
-                                0,                                              \
-                                "region " #__region_name,                       \
-                                "Draw region for the target tile [%p] ",        \
-                                (__tile_ptr)                                    \
-                            );                                                  \
-                        } else {                                                \
-                            ARM_2D_LOG_INFO(                                    \
-                                APP,                                            \
-                                0,                                              \
-                                "region " #__region_name,                       \
-                                "Skip region for the target tile [%p]"          \
-                                "as the PFB is out of range.",                  \
-                                (__tile_ptr)                                    \
-                            );                                                  \
-                        }                                                       \
-                        (bDrawCanvas, ##__VA_ARGS__);                           \
-                    }) : 0;                                                     \
-                 ({ARM_2D_OP_WAIT_ASYNC();})                                    \
-                )
-#else
-#   define arm_2d_canvas(__tile_ptr, __region_name, ...)                        \
             __arm_2d_canvas((__tile_ptr), __region_name, ##__VA_ARGS__)
-#endif
+
 
 #if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
 #   define __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug)
