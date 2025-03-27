@@ -180,8 +180,18 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
         vPixVal =                                                                                   \
             vldrbq_gather_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
 
-#define __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_FAR    __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT
 
+#define __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_FAR(/* inputs */                                       \
+                                                      vecX, vecY, pOrigin, ptOrigValidRegion,       \
+                                                      iOrigStride, predTail,                        \
+                                                      /* outputs */                                 \
+                                                      vPixVal, predGlb)                             \
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(vecX, vecY, pOrigin, ptOrigValidRegion,                \
+                                    iOrigStride, predTail, vPixVal, predGlb);                       \
+                                                                                                    \
+        /* combine 2 predicates set to true if point is in the region & values */                   \
+        /*  different from color mask */                                                            \
+        vPixVal = vpselq_u16(vPixVal, vTarget, p);
 /**
   unpack vectors of 8-bit widened pixels read from a input 2D coordinates if fits inside the region of
   interest or alternative target pixel if content matches color mask
@@ -259,7 +269,8 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
          /* retrieve all point values */                                                                   \
         ptVal =                                                                                            \
             vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);                             \
-        predGlb |= p;
+        predGlb |= p;                                                                                      \
+        ptVal = vpselq_u16(ptVal, vTarget, p);
 
 #define __ARM_2D_RGB565_GET_RGBVEC_FROM_POINT_NOUNPK_INSIDE_SRC(/* inputs */                               \
                                                     vecX, vecY, pOrigin, ptOrigValidRegion, iOrigStride,   \
@@ -280,8 +291,16 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
                                                     MaskColour, vTarget, predTail,                         \
                                                     /* outputs */                                          \
                                                     ptVal, predGlb)                                        \
-        __ARM_2D_RGB565_GET_RGBVEC_FROM_POINT_NOUNPK(vecX, vecY, pOrigin, ptOrigValidRegion,               \
-                           iOrigStride, predTail, ptVal, predGlb);                                         \
+        arm_2d_point_s16x8_t vPoint = {.X = vecX,.Y = vecY };                                              \
+        /* set vector predicate if point is inside the region */                                           \
+        mve_pred16_t    p =                                                                                \
+            arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);                             \
+                                                                                                           \
+        /* prepare vector of point offsets */                                                              \
+        uint16x8_t      ptOffs = vPoint.X + vPoint.Y * iOrigStride;                                        \
+         /* retrieve all point values */                                                                   \
+        ptVal =                                                                                            \
+            vldrhq_gather_shifted_offset_z_u16(pOrigin, ptOffs, predTail & p);                             \
                                                                                                            \
         /* combine 2 predicates set to true if point is in the region & values different from color mask */\
         p = vcmpneq_m_n_u16(ptVal, MaskColour, p);                                                         \
@@ -378,7 +397,8 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
         /* retrieve all point values */                                                                    \
         ptVal =                                                                                            \
             vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);                    \
-        predGlb |= p;
+        predGlb |= p;                                                                                      \
+        ptVal = vpselq_u16(ptVal, vTarget, p);
 
 #define __ARM_2D_RGB565_GET_RGBVEC_FROM_POINT_NOUNPK_FAR_INSIDE_SRC(                                       \
                                                 /* inputs */                                               \
@@ -533,7 +553,7 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
         /* retrieve all point values */                                                                    \
         pointLo = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLo & p);                     \
         predGlbLo |= p;                                                                                    \
-                                                                                                           \
+        pointLo = vpselq_u32(pointLo, vTargetLo, p);                                                       \
                                                                                                            \
         /* 2nd half */                                                                                     \
                                                                                                            \
@@ -544,7 +564,8 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
                                                                                                            \
         /* retrieve all point values */                                                                    \
         pointHi = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHi & p);                     \
-        predGlbHi |= p;
+        predGlbHi |= p;                                                                                    \
+        pointHi = vpselq_u32(pointHi, vTargetHi, p);
 
 #define __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_NOUNPK_INSIDE_SRC(/* inputs */                               \
                                                     vecX, vecY, pOrigin, ptOrigValidRegion, iOrigStride,   \
