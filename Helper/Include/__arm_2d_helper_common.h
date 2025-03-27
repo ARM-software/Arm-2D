@@ -1116,12 +1116,15 @@ extern "C" {
                         const arm_2d_tile_t *ptCurrentTile =                    \
                             (const arm_2d_tile_t *)(__tile_ptr),                \
                         ({ARM_2D_UNUSED(ptCurrentTile);})                       \
-                    ) __arm_2d_hint_optimize_for_pfb__(__region_name)
+                    ) 
 
 
 #define arm_2d_canvas(__tile_ptr, __region_name, ...)                           \
-            __arm_2d_canvas((__tile_ptr), __region_name, ##__VA_ARGS__)
+            __arm_2d_canvas((__tile_ptr), __region_name, ##__VA_ARGS__)         \
+                __arm_2d_hint_optimize_for_pfb__(__region_name)
 
+#define arm_2d_canvas_open(__tile_ptr, __region_name, ...)                      \
+            __arm_2d_canvas((__tile_ptr), __region_name, ##__VA_ARGS__)
 
 #if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
 #   define __ARM_2D_LAYOUT_DEBUG_BEGIN__(__bool_debug)
@@ -3193,6 +3196,7 @@ extern "C" {
 
 #define arm_2d_dock_open(__region, ...)                                         \
             arm_2d_dock_with_margin_open(__region, ##__VA_ARGS__)
+
 /*!
  * \brief a template for implement a on draw event handler
  */
