@@ -1709,7 +1709,7 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     }
 
     int32_t             AngleFx = ARM_2D_LROUNDF(fAngle * ONE_BY_2PI_Q31);
-    int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);// (int32_t)((float)fScaleX * (float)reinterpret_q16_s16(1));
+    int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);
     int32_t             ScaleYFx = reinterpret_q16_f32(fScaleY);
 
     q16_t               cosAngleFx = reinterpret_q16_q31(arm_cos_q31(AngleFx));
@@ -1720,36 +1720,35 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     arm_2d_point_fx_t   srcPointQ16;
     arm_2d_point_fx_t   tOffsetQ16;
     arm_2d_point_fx_t   tmp;
-    //int32_t             iXQ16, iYQ16;
     arm_2d_point_q16_t  tPoint;  
 
 
     /* Q16 conversion */
-    centerQ16.X = reinterpret_q16_s16(center->iX);// reinterpret_q16_s16(center->iX);
-    centerQ16.Y = reinterpret_q16_s16(center->iY);
+    centerQ16.q16X = reinterpret_q16_s16(center->iX);// reinterpret_q16_s16(center->iX);
+    centerQ16.q16Y = reinterpret_q16_s16(center->iY);
 
-    srcPointQ16.X = reinterpret_q16_s16(pSrcPoint->iX);
-    srcPointQ16.Y = reinterpret_q16_s16(pSrcPoint->iY);
+    srcPointQ16.q16X = reinterpret_q16_s16(pSrcPoint->iX);
+    srcPointQ16.q16Y = reinterpret_q16_s16(pSrcPoint->iY);
 
-    tOffsetQ16.X = reinterpret_q16_s16(tOffset->iX);
-    tOffsetQ16.Y = reinterpret_q16_s16(tOffset->iY);
+    tOffsetQ16.q16X = reinterpret_q16_s16(tOffset->iX);
+    tOffsetQ16.q16Y = reinterpret_q16_s16(tOffset->iY);
 
 
     /* (0,0) corner */
-    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
-    tmp.Y = srcPointQ16.Y + 0 + tOffsetQ16.Y;
+    tmp.q16X = srcPointQ16.q16X + 0 + tOffsetQ16.q16X;
+    tmp.q16Y = srcPointQ16.q16Y + 0 + tOffsetQ16.q16Y;
 
-    tPoint.q16X = tmp.X - centerQ16.X;
-    tPoint.q16Y = tmp.Y - centerQ16.Y;
+    tPoint.q16X = tmp.q16X - centerQ16.q16X;
+    tPoint.q16Y = tmp.q16Y - centerQ16.q16Y;
 
 #define __PT_TRANSFORM(__PT) \
     do {                                                                            \
         /* rotation first, then scaling */                                          \
-        __PT.Y =qadd_q16(   centerQ16.Y,                                            \
+        __PT.q16Y =qadd_q16(   centerQ16.q16Y,                                      \
                             mul_q16(qadd_q16(   mul_q16(tPoint.q16Y, cosAngleFx),   \
                                                 mul_q16(tPoint.q16X, sinAngleFx)),  \
                                     ScaleYFx));                                     \
-        __PT.X =qadd_q16(   centerQ16.X,                                            \
+        __PT.q16X =qadd_q16(   centerQ16.q16X,                                      \
                             mul_q16(qsub_q16(   mul_q16(tPoint.q16X, cosAngleFx),   \
                                                 mul_q16(tPoint.q16Y, sinAngleFx)),  \
                                     ScaleXFx));                                     \
@@ -1758,21 +1757,21 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     __PT_TRANSFORM(tPointCornerFx[0][0]);
 
     /* ((iWidth - 1),0) corner */
-    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X + reinterpret_q16_s16(iWidth - 1);
-    tPoint.q16X = tmp.X - centerQ16.X;
+    tmp.q16X = srcPointQ16.q16X + 0 + tOffsetQ16.q16X + reinterpret_q16_s16(iWidth - 1);
+    tPoint.q16X = tmp.q16X - centerQ16.q16X;
 
 
     __PT_TRANSFORM(tPointCornerFx[1][0]);
 
     /* ((iWidth - 1),(iHeight - 1)) corner */
-    tmp.Y = srcPointQ16.Y + tOffsetQ16.Y + reinterpret_q16_s16(iHeight - 1);
-    tPoint.q16Y = tmp.Y - centerQ16.Y;
+    tmp.q16Y = srcPointQ16.q16Y + tOffsetQ16.q16Y + reinterpret_q16_s16(iHeight - 1);
+    tPoint.q16Y = tmp.q16Y - centerQ16.q16Y;
 
     __PT_TRANSFORM(tPointCornerFx[1][1]);
 
     /* (0,(iHeight - 1)) corner */
-    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
-    tPoint.q16X = tmp.X - centerQ16.X;
+    tmp.q16X = srcPointQ16.q16X + 0 + tOffsetQ16.q16X;
+    tPoint.q16X = tmp.q16X - centerQ16.q16X;
 
     __PT_TRANSFORM(tPointCornerFx[0][1]);
 #endif
@@ -1785,9 +1784,9 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
        returns a speculative overflow allowing to handle large offsets.
     */
     int32_t maxY = MAX(MAX
-                        (MAX(tPointCornerFx[0][0].Y, tPointCornerFx[0][1].Y),
-                            tPointCornerFx[1][0].Y),
-                                tPointCornerFx[1][1].Y);
+                        (MAX(tPointCornerFx[0][0].q16Y, tPointCornerFx[0][1].q16Y),
+                            tPointCornerFx[1][0].q16Y),
+                                tPointCornerFx[1][1].q16Y);
 
     if(MULTFX(reinterpret_q16_s16(iOrigStride), maxY) > UINT16_MAX)
         gatherLoadIdxOverflow = true;
@@ -1797,23 +1796,23 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     int32_t           slopeXFx, slopeYFx;
 
     /* interpolation in Y direction for 1st elements column */
-    slopeXFx = MULTFX((tPointCornerFx[0][1].X - tPointCornerFx[0][0].X), invHeightFx);
-    slopeYFx = MULTFX((tPointCornerFx[0][1].Y - tPointCornerFx[0][0].Y), invHeightFx);
+    slopeXFx = MULTFX((tPointCornerFx[0][1].q16X - tPointCornerFx[0][0].q16X), invHeightFx);
+    slopeYFx = MULTFX((tPointCornerFx[0][1].q16Y - tPointCornerFx[0][0].q16Y), invHeightFx);
 
     regrCoefs[0].slopeY = slopeYFx * 2;
     regrCoefs[0].slopeX = slopeXFx * 2;
-    regrCoefs[0].interceptY = tPointCornerFx[0][0].Y;
-    regrCoefs[0].interceptX = tPointCornerFx[0][0].X;
+    regrCoefs[0].interceptY = tPointCornerFx[0][0].q16Y;
+    regrCoefs[0].interceptX = tPointCornerFx[0][0].q16X;
 
 
     /* interpolation in Y direction for the last elements column */
-    slopeXFx = MULTFX((tPointCornerFx[1][1].X - tPointCornerFx[1][0].X), invHeightFx);
-    slopeYFx = MULTFX((tPointCornerFx[1][1].Y - tPointCornerFx[1][0].Y), invHeightFx);
+    slopeXFx = MULTFX((tPointCornerFx[1][1].q16X - tPointCornerFx[1][0].q16X), invHeightFx);
+    slopeYFx = MULTFX((tPointCornerFx[1][1].q16Y - tPointCornerFx[1][0].q16Y), invHeightFx);
 
     regrCoefs[1].slopeY = slopeYFx* 2;
     regrCoefs[1].slopeX = slopeXFx* 2;
-    regrCoefs[1].interceptY = tPointCornerFx[1][0].Y;
-    regrCoefs[1].interceptX = tPointCornerFx[1][0].X;
+    regrCoefs[1].interceptY = tPointCornerFx[1][0].q16Y;
+    regrCoefs[1].interceptX = tPointCornerFx[1][0].q16X;
 
     return gatherLoadIdxOverflow;
 }
