@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        24 March 2025
- * $Revision:    V.2.1.1
+ * $Date:        1 April 2025
+ * $Revision:    V.2.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -86,9 +86,6 @@ extern "C" {
                             (x * (PI / 4.0f) + 0.273f * x * (1.0f - xabs))
 #define EPS_ATAN2           1e-5f
 
-
-#define reinterpret_q16_s16(x)           ((int32_t)(x) << 16)
-
 /*----------------------------------------------------------------------------*
  * Code Template                                                              *
  *----------------------------------------------------------------------------*/
@@ -146,148 +143,6 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Utilities                                                                  *
  *----------------------------------------------------------------------------*/
-__arm_2d_point_adj_alpha_t
-__arm_2d_point_get_adjacent_alpha_fp(arm_2d_point_float_t *ptPoint)
-{
-    assert(NULL != ptPoint);
-    float x = ptPoint->fX - (int32_t)ptPoint->fX;
-    float y = ptPoint->fY - (int32_t)ptPoint->fY;
-
-    int16_t iXSign = x < 0 ;
-    int16_t iYSign = y < 0 ;
-
-    __arm_2d_point_adj_alpha_t tResult = {
-        .tMatrix = {
-            [0] = {
-                .tOffset = {
-                    .iX = -iXSign,
-                    .iY = -iYSign,
-                },
-            #if 0
-                .chAlpha = (uint8_t)(
-                                ((float)(1-iXSign)  - (float)x)     //!< x
-                            *   ((float)(1-iYSign)  - (float)y)     //!< y
-                            *   256.0f
-                            ),
-            #endif
-            },
-            [1] = {
-                .tOffset = {
-                    .iX = -iXSign + 1,
-                    .iY = -iYSign,
-                },
-                .chAlpha = (uint8_t)(
-                                ((float)iXSign      + (float)x)     //!< x
-                            *   ((float)(1-iYSign)  - (float)y)     //!< y
-                            *   256.0f
-                            ),
-            },
-            [2] = {
-                .tOffset = {
-                    .iX = -iXSign,
-                    .iY = -iYSign + 1,
-                },
-                .chAlpha = (uint8_t)(
-                                ((float)(1-iXSign)  - (float)x)     //!< x
-                            *   ((float)iYSign      + (float)y)     //!< y
-                            *   256.0f
-                            ),
-            },
-            [3] = {
-                .tOffset = {
-                    .iX = -iXSign + 1,
-                    .iY = -iYSign +1,
-                },
-                .chAlpha = (uint8_t)(
-                                ((float)iXSign      + (float)x)     //!< x
-                            *   ((float)iYSign      + (float)y)     //!< y
-                            *   256.0f
-                            ),
-            },
-        },
-    };
-#if 1
-    tResult.tMatrix[0].chAlpha  = 256
-                                - tResult.tMatrix[1].chAlpha
-                                - tResult.tMatrix[2].chAlpha
-                                - tResult.tMatrix[3].chAlpha;
-#endif
-    return tResult;
-}
-
-__arm_2d_point_adj_alpha_t
-__arm_2d_point_get_adjacent_alpha_q16(arm_2d_point_fx_t *ptPoint)
-{
-    assert(NULL != ptPoint);
-    int32_t x = ptPoint->X  & 0xFFFF;
-    int32_t y = ptPoint->Y  & 0xFFFF;
-
-    x |= ((ptPoint->X < 0) * 0xFFFF0000);
-    y |= ((ptPoint->Y < 0) * 0xFFFF0000);
-
-    int_fast16_t iXSign = x < 0;// ? 1 : 0;
-    int_fast16_t iYSign = y < 0;// ? 1 : 0;
-
-    __arm_2d_point_adj_alpha_t tResult = {
-        .tMatrix = {
-            [0] = {
-                .tOffset = {
-                    .iX = -iXSign,
-                    .iY = -iYSign,
-                },
-            #if 0
-                .chAlpha = (uint8_t)__USAT(
-             mul_q16(mul_q16(   (reinterpret_q16_s16(1-iXSign)   - x)        //!< x
-                            ,   (reinterpret_q16_s16(1-iYSign)   - y))       //!< y
-                            ,   reinterpret_q16_s16(256)
-                            ) >> 16, 8),
-            #endif
-            },
-            [1] = {
-                .tOffset = {
-                    .iX = -iXSign + 1,
-                    .iY = -iYSign,
-                },
-                .chAlpha = (uint8_t)__USAT(
-             mul_q16(mul_q16(   (reinterpret_q16_s16(iXSign)     + x)        //!< x
-                            ,   (reinterpret_q16_s16(1-iYSign)   - y))       //!< y
-                            ,   reinterpret_q16_s16(256)
-                            ) >> 16, 8),
-            },
-            [2] = {
-                .tOffset = {
-                    .iX = -iXSign,
-                    .iY = -iYSign + 1,
-                },
-                .chAlpha = (uint8_t)__USAT(
-             mul_q16(mul_q16(   (reinterpret_q16_s16(1-iXSign)   - x)        //!< x
-                            ,   (reinterpret_q16_s16(iYSign)     + y))       //!< y
-                            ,   reinterpret_q16_s16(256)
-                            ) >> 16, 8),
-            },
-            [3] = {
-                .tOffset = {
-                    .iX = -iXSign + 1,
-                    .iY = -iYSign +1,
-                },
-                .chAlpha = (uint8_t)__USAT(
-             mul_q16(mul_q16(   (reinterpret_q16_s16(iXSign)     + x)        //!< x
-                            ,   (reinterpret_q16_s16(iYSign)     + y))       //!< y
-                            ,   reinterpret_q16_s16(256)
-                            ) >> 16, 8),
-            },
-        },
-    };
-#if 1
-    tResult.tMatrix[0].chAlpha  = 256
-                                - tResult.tMatrix[1].chAlpha
-                                - tResult.tMatrix[2].chAlpha
-                                - tResult.tMatrix[3].chAlpha;
-#endif
-
-    return tResult;
-}
-
 
 static
 void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
@@ -312,7 +167,7 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     }
 
     int32_t             AngleFx = ARM_2D_LROUNDF(fAngle * ONE_BY_2PI_Q31);
-    int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);// (int32_t)((float)fScaleX * (float)reinterpret_q16_s16(1));
+    int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);
     int32_t             ScaleYFx = reinterpret_q16_f32(fScaleY);
 
     q16_t               cosAngleFx = reinterpret_q16_q31(arm_cos_q31(AngleFx));
@@ -323,7 +178,6 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     arm_2d_point_fx_t   srcPointQ16;
     arm_2d_point_fx_t   tOffsetQ16;
     arm_2d_point_fx_t   tmp;
-    //int32_t             iXQ16, iYQ16;
     arm_2d_point_q16_t  tPoint;  
 
 
@@ -549,10 +403,10 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
 
     //! angle validation
     ptTransform->fAngle = ARM_2D_FMODF(ptTransform->fAngle, ARM_2D_ANGLE(360));
-    if (0.0f == ptTransform->fScaleX) {
+    if (ptTransform->fScaleX <= 0.001f) {
         ptTransform->fScaleX = 1.0f;
     }
-    if (0.0f == ptTransform->fScaleY) {
+    if (ptTransform->fScaleY <= 0.001f) {
         ptTransform->fScaleY = ptTransform->fScaleX;
     }
 
@@ -660,7 +514,6 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
         ptTransform->fScaleX = 1.0f / ptTransform->fScaleX;
         ptTransform->fScaleY = 1.0f / ptTransform->fScaleY;
 
-        //ptTransform->tTargetRegion.tSize = ptSource->tRegion.tSize;
     } while(0);
 
     return ARM_2D_ERR_NONE;
