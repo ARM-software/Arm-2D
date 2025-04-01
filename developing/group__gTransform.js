@@ -2,6 +2,7 @@ var group__gTransform =
 [
     [ "__arm_2d_transform_info_t", "group__gTransform.html#struct____arm__2d__transform__info__t", [
       [ "fAngle", "group__gTransform.html#a598a27b28a4c799378c9b10c4a792f75", null ],
+      [ "fScaleX", "group__gTransform.html#a2f349a03ca50ba559e25292a5fbfaee8", null ],
       [ "fScaleY", "group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b", null ],
       [ "tCenter", "group__gTransform.html#af28938e370300a48f60257df2ff20241", null ]
     ] ],
@@ -23,17 +24,13 @@ var group__gTransform =
       [ "tTransform", "group__gTransform.html#a65cef0e460684c19c92ffa545facb4ec", null ],
       [ "chOpacity", "group__gTransform.html#ae05fa59574b1ed1cc0d1d94c76f00623", null ]
     ] ],
-    [ "__arm_2d_transform_info_t.__unnamed97__", "group__gTransform.html#union____arm__2d__transform__info__t_8____unnamed97____", [
-      [ "fScaleX", "group__gTransform.html#aba2ca7fe0b968dbec8bd0f8b715c8fd4", null ],
-      [ "fScale", "group__gTransform.html#ac9ccd97befc34f3437640157c2ba109d", null ]
-    ] ],
     [ "__arm_2d_transform_info_t.Mask", "group__gTransform.html#union____arm__2d__transform__info__t_8Mask", [
       [ "chColour", "group__gTransform.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "wColour", "group__gTransform.html#a9f162c8dd605b531b0443f4f8d74453d", null ],
       [ "hwColour", "group__gTransform.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ]
     ] ],
-    [ "__arm_2d_transform_info_t.__unnamed100__", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100____", null ],
-    [ "__arm_2d_transform_info_t.__unnamed100__.Target", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100_____8Target", null ],
+    [ "__arm_2d_transform_info_t.__unnamed98__", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed98____", null ],
+    [ "__arm_2d_transform_info_t.__unnamed98__.Target", "group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed98_____8Target", null ],
     [ "arm_2d_op_trans_t.Target", "group__gTransform.html#structarm__2d__op__trans__t_8Target", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gTransform.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
@@ -41,8 +38,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_t.Source", "group__gTransform.html#structarm__2d__op__trans__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_trans_t.__unnamed105__", "group__gTransform.html#unionarm__2d__op__trans__t_8____unnamed105____", null ],
-    [ "arm_2d_op_trans_t.__unnamed105__.__unnamed108__", "group__gTransform.html#structarm__2d__op__trans__t_8____unnamed105_____8____unnamed108____", null ],
+    [ "arm_2d_op_trans_t.__unnamed103__", "group__gTransform.html#unionarm__2d__op__trans__t_8____unnamed103____", null ],
+    [ "arm_2d_op_trans_t.__unnamed103__.__unnamed106__", "group__gTransform.html#structarm__2d__op__trans__t_8____unnamed103_____8____unnamed106____", null ],
     [ "arm_2d_op_trans_t.Origin", "group__gTransform.html#structarm__2d__op__trans__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
@@ -54,8 +51,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_opa_t.Source", "group__gTransform.html#structarm__2d__op__trans__opa__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_trans_opa_t.__unnamed112__", "group__gTransform.html#unionarm__2d__op__trans__opa__t_8____unnamed112____", null ],
-    [ "arm_2d_op_trans_opa_t.__unnamed112__.__unnamed115__", "group__gTransform.html#structarm__2d__op__trans__opa__t_8____unnamed112_____8____unnamed115____", null ],
+    [ "arm_2d_op_trans_opa_t.__unnamed110__", "group__gTransform.html#unionarm__2d__op__trans__opa__t_8____unnamed110____", null ],
+    [ "arm_2d_op_trans_opa_t.__unnamed110__.__unnamed113__", "group__gTransform.html#structarm__2d__op__trans__opa__t_8____unnamed110_____8____unnamed113____", null ],
     [ "arm_2d_op_trans_opa_t.Origin", "group__gTransform.html#structarm__2d__op__trans__opa__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
@@ -67,8 +64,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_msk_t.Source", "group__gTransform.html#structarm__2d__op__trans__msk__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_trans_msk_t.__unnamed119__", "group__gTransform.html#unionarm__2d__op__trans__msk__t_8____unnamed119____", null ],
-    [ "arm_2d_op_trans_msk_t.__unnamed119__.__unnamed123__", "group__gTransform.html#structarm__2d__op__trans__msk__t_8____unnamed119_____8____unnamed123____", null ],
+    [ "arm_2d_op_trans_msk_t.__unnamed117__", "group__gTransform.html#unionarm__2d__op__trans__msk__t_8____unnamed117____", null ],
+    [ "arm_2d_op_trans_msk_t.__unnamed117__.__unnamed121__", "group__gTransform.html#structarm__2d__op__trans__msk__t_8____unnamed117_____8____unnamed121____", null ],
     [ "arm_2d_op_trans_msk_t.Origin", "group__gTransform.html#structarm__2d__op__trans__msk__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
@@ -84,8 +81,8 @@ var group__gTransform =
     [ "arm_2d_op_trans_msk_opa_t.Source", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8Source", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_trans_msk_opa_t.__unnamed127__", "group__gTransform.html#unionarm__2d__op__trans__msk__opa__t_8____unnamed127____", null ],
-    [ "arm_2d_op_trans_msk_opa_t.__unnamed127__.__unnamed131__", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8____unnamed127_____8____unnamed131____", null ],
+    [ "arm_2d_op_trans_msk_opa_t.__unnamed125__", "group__gTransform.html#unionarm__2d__op__trans__msk__opa__t_8____unnamed125____", null ],
+    [ "arm_2d_op_trans_msk_opa_t.__unnamed125__.__unnamed129__", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8____unnamed125_____8____unnamed129____", null ],
     [ "arm_2d_op_trans_msk_opa_t.Origin", "group__gTransform.html#structarm__2d__op__trans__msk__opa__t_8Origin", [
       [ "ptTile", "group__gTransform.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "tDummySource", "group__gTransform.html#a39295faf4a194862db89fae27f4b4860", null ]
