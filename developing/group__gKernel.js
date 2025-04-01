@@ -113,12 +113,8 @@ var group__gKernel =
       [ "bBigEndian", "group__gKernel.html#a00b36e47c8ccbf0a0b27b35bbae417b9", null ]
     ] ],
     [ "arm_2d_color_info_t.__unnamed21__", "group__gKernel.html#structarm__2d__color__info__t_8____unnamed21____", null ],
-    [ "arm_2d_point_fx_t.__unnamed23__", "group__gKernel.html#unionarm__2d__point__fx__t_8____unnamed23____", [
-      [ "X", "group__gKernel.html#a02129bb861061d1a052c592e2dc6b383", null ]
-    ] ],
-    [ "arm_2d_point_fx_t.__unnamed25__", "group__gKernel.html#unionarm__2d__point__fx__t_8____unnamed25____", [
-      [ "Y", "group__gKernel.html#a57cec4137b614c87cb4e24a3d003a3e0", null ]
-    ] ],
+    [ "arm_2d_point_fx_t.__unnamed23__", "group__gKernel.html#unionarm__2d__point__fx__t_8____unnamed23____", null ],
+    [ "arm_2d_point_fx_t.__unnamed25__", "group__gKernel.html#unionarm__2d__point__fx__t_8____unnamed25____", null ],
     [ "arm_2d_tile_t.__unnamed27__", "group__gKernel.html#structarm__2d__tile__t_8____unnamed27____", null ],
     [ "arm_2d_tile_t.__unnamed27__.Extension", "group__gKernel.html#unionarm__2d__tile__t_8____unnamed27_____8Extension", null ],
     [ "arm_2d_tile_t.__unnamed27__.Extension.PFB", "group__gKernel.html#structarm__2d__tile__t_8____unnamed27_____8Extension_8PFB", null ],
