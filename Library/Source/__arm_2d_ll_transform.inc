@@ -113,14 +113,14 @@ void __ARM_2D_FUNC(get_pixel_colour)(   arm_2d_point_fx_t  *ptFxPoint,
 
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
     __API_INT_TYPE *pSample = &pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
-    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
     __API_INT_TYPE uPoint0 = *pSample++;
     __API_INT_TYPE uPoint1 = *pSample;
@@ -147,8 +147,8 @@ void __ARM_2D_FUNC(get_pixel_colour)(   arm_2d_point_fx_t  *ptFxPoint,
     }
 #else
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
     //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
         __API_INT_TYPE Temp = pOrigin[   tPoint.iY * iOrigStride
@@ -208,26 +208,26 @@ void __ARM_2D_FUNC(transform)(   __arm_2d_param_copy_orig_t *ptParam,
         for (int_fast16_t x = 0; x < iWidth; x++) {
             arm_2d_point_fx_t tPointFast;
 
-            tPointFast.X = __QDADD(colFirstX, slopeX * x);
-            tPointFast.Y = __QDADD(colFirstY, slopeY * x);
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
 
 #define __CALIBFX 590
         #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPointFast.X > 0) {
-                tPointFast.X += __CALIBFX;
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
             } else {
-                tPointFast.X -= __CALIBFX;
+                tPointFast.q16X -= __CALIBFX;
             }
-            if (tPointFast.Y > 0) {
-                tPointFast.Y += __CALIBFX;
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
             } else {
-                tPointFast.Y -= __CALIBFX;
+                tPointFast.q16Y -= __CALIBFX;
             }
         #endif
 
             arm_2d_location_t tOriginLocation = {
-                .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
+                .iX = reinterpret_s16_q16(tPointFast.q16X) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+                .iY = reinterpret_s16_q16(tPointFast.q16Y) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
             if (    (tOriginLocation.iX < 0)
@@ -272,14 +272,14 @@ void __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
     __API_INT_TYPE *pSample = &pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
-    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
     __API_INT_TYPE uPoint0 = *pSample++;
     __API_INT_TYPE uPoint1 = *pSample;
@@ -308,9 +308,10 @@ void __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
 #else
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
+
     //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
     __API_INT_TYPE Temp = pOrigin[   tPoint.iY * iOrigStride
                                     +   tPoint.iX];
@@ -378,28 +379,28 @@ void __ARM_2D_FUNC(transform_with_opacity)(__arm_2d_param_copy_orig_t *ptParam,
         for (int_fast16_t x = 0; x < iWidth; x++) {
             arm_2d_point_fx_t tPointFast;
 
-            tPointFast.X = __QDADD(colFirstX, slopeX * x);
-            tPointFast.Y = __QDADD(colFirstY, slopeY * x);
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
 
 #define __CALIBFX 590
 
         #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPointFast.X > 0) {
-                tPointFast.X += __CALIBFX;
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
             } else {
-                tPointFast.X -= __CALIBFX;
+                tPointFast.q16X -= __CALIBFX;
             }
-            if (tPointFast.Y > 0) {
-                tPointFast.Y += __CALIBFX;
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
             } else {
-                tPointFast.Y -= __CALIBFX;
+                tPointFast.q16Y -= __CALIBFX;
             }
         #endif
 
 
             arm_2d_location_t tOriginLocation = {
-                .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
+                .iX = (tPointFast.q16X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+                .iY = (tPointFast.q16Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
             if (    (tOriginLocation.iX < 0)
@@ -488,14 +489,14 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour)(   arm_2d_point_fx_t  *ptFxP
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
     __API_INT_TYPE *pSample = &pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
-    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
     __API_INT_TYPE uPoint0 = *pSample++;
     __API_INT_TYPE uPoint1 = *pSample;
@@ -520,9 +521,10 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour)(   arm_2d_point_fx_t  *ptFxP
 
 #else
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
+
     //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
         __API_INT_TYPE Temp = pOrigin[   tPoint.iY * iOrigStride
                                      +   tPoint.iX];
@@ -581,27 +583,27 @@ void __ARM_2D_FUNC(transform_only)( __arm_2d_param_copy_orig_t *ptParam,
         for (int_fast16_t x = 0; x < iWidth; x++) {
             arm_2d_point_fx_t tPointFast;
 
-            tPointFast.X = __QDADD(colFirstX, slopeX * x);
-            tPointFast.Y = __QDADD(colFirstY, slopeY * x);
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
 
 #define __CALIBFX 590
         #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPointFast.X > 0) {
-                tPointFast.X += __CALIBFX;
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
             } else {
-                tPointFast.X -= __CALIBFX;
+                tPointFast.q16X -= __CALIBFX;
             }
-            if (tPointFast.Y > 0) {
-                tPointFast.Y += __CALIBFX;
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
             } else {
-                tPointFast.Y -= __CALIBFX;
+                tPointFast.q16Y -= __CALIBFX;
             }
         #endif
 
 
             arm_2d_location_t tOriginLocation = {
-                .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
+                .iX = reinterpret_s16_q16(tPointFast.q16X) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+                .iY = reinterpret_s16_q16(tPointFast.q16Y) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
             if (    (tOriginLocation.iX < 0)
@@ -645,14 +647,14 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
     __API_INT_TYPE *pSample = &pOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
-    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
     __API_INT_TYPE uPoint0 = *pSample++;
     __API_INT_TYPE uPoint1 = *pSample;
@@ -681,9 +683,10 @@ void __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha)(
 #else
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
+
     //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
         __API_INT_TYPE Temp = pOrigin[   tPoint.iY * iOrigStride
                                      +   tPoint.iX];
@@ -751,27 +754,27 @@ void __ARM_2D_FUNC(transform_only_opacity)(
         for (int_fast16_t x = 0; x < iWidth; x++) {
             arm_2d_point_fx_t tPointFast;
 
-            tPointFast.X = __QDADD(colFirstX, slopeX * x);
-            tPointFast.Y = __QDADD(colFirstY, slopeY * x);
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
 
 #define __CALIBFX 590
 
         #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPointFast.X > 0) {
-                tPointFast.X += __CALIBFX;
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
             } else {
-                tPointFast.X -= __CALIBFX;
+                tPointFast.q16X -= __CALIBFX;
             }
-            if (tPointFast.Y > 0) {
-                tPointFast.Y += __CALIBFX;
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
             } else {
-                tPointFast.Y -= __CALIBFX;
+                tPointFast.q16Y -= __CALIBFX;
             }
         #endif
 
             arm_2d_location_t tOriginLocation = {
-                .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
+                .iX = reinterpret_s16_q16(tPointFast.q16X) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+                .iY = reinterpret_s16_q16(tPointFast.q16Y) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
             if (    (tOriginLocation.iX < 0)
@@ -884,12 +887,12 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
@@ -939,8 +942,8 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 #else
     
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
     uint16_t hwPixelAlpha = 0;
@@ -1013,27 +1016,27 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(
         for (int_fast16_t x = 0; x < iWidth; x++) {
             arm_2d_point_fx_t tPointFast;
 
-            tPointFast.X = __QDADD(colFirstX, slopeX * x);
-            tPointFast.Y = __QDADD(colFirstY, slopeY * x);
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
 
 #define __CALIBFX 590
 
         #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPointFast.X > 0) {
-                tPointFast.X += __CALIBFX;
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
             } else {
-                tPointFast.X -= __CALIBFX;
+                tPointFast.q16X -= __CALIBFX;
             }
-            if (tPointFast.Y > 0) {
-                tPointFast.Y += __CALIBFX;
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
             } else {
-                tPointFast.Y -= __CALIBFX;
+                tPointFast.q16Y -= __CALIBFX;
             }
         #endif
 
             arm_2d_location_t tOriginLocation = {
-                .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
+                .iX = reinterpret_s16_q16(tPointFast.q16X) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+                .iY = reinterpret_s16_q16(tPointFast.q16Y) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
             if (    (tOriginLocation.iX < 0)
@@ -1075,12 +1078,12 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
 
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint16_t hwAlphaX = (ptFxPoint->X >> 8) & 0xFF;
-    uint16_t hwAlphaY = (ptFxPoint->Y >> 8) & 0xFF;
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
     uint32_t *pwAlphaSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
@@ -1130,8 +1133,8 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 #else
     
     arm_2d_location_t  tPoint = {
-        .iX = ptFxPoint->X >> 16,
-        .iY = ptFxPoint->Y >> 16,
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
     uint16_t hwPixelAlpha = 0;
@@ -1203,27 +1206,27 @@ void __ARM_2D_FUNC(colour_filling_chn_mask_opacity_transform)(
         for (int_fast16_t x = 0; x < iWidth; x++) {
             arm_2d_point_fx_t tPointFast;
 
-            tPointFast.X = __QDADD(colFirstX, slopeX * x);
-            tPointFast.Y = __QDADD(colFirstY, slopeY * x);
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
 
 #define __CALIBFX 590
 
         #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
-            if (tPointFast.X > 0) {
-                tPointFast.X += __CALIBFX;
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
             } else {
-                tPointFast.X -= __CALIBFX;
+                tPointFast.q16X -= __CALIBFX;
             }
-            if (tPointFast.Y > 0) {
-                tPointFast.Y += __CALIBFX;
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
             } else {
-                tPointFast.Y -= __CALIBFX;
+                tPointFast.q16Y -= __CALIBFX;
             }
         #endif
 
             arm_2d_location_t tOriginLocation = {
-                .iX = (tPointFast.X >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iX,
-                .iY = (tPointFast.Y >> 16) - ptParam->tOrigin.tValidRegion.tLocation.iY,
+                .iX = reinterpret_s16_q16(tPointFast.q16X) - ptParam->tOrigin.tValidRegion.tLocation.iX,
+                .iY = reinterpret_s16_q16(tPointFast.q16Y) - ptParam->tOrigin.tValidRegion.tLocation.iY,
             };
 
             if (    (tOriginLocation.iX < 0)

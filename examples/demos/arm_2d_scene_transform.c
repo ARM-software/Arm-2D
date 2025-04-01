@@ -330,6 +330,10 @@ void __draw_transform_object_handler( void *pObj,
 
     float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 2.0f;
 
+    if (fScale <= 0.001f) {
+        return ;
+    }
+
     switch(ptTransObj->emType) {
         case TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY: {
 

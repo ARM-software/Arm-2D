@@ -568,11 +568,11 @@ typedef struct arm_2d_point_float_t {
  */
 typedef struct arm_2d_point_fx_t {
     union {
-        int32_t X;                          //!< x in Cartesian coordinate system
+        //int32_t X;                          //!< x in Cartesian coordinate system
         q16_t q16X;
     };
     union {
-        int32_t Y;                          //!< y in Cartesian coordinate system
+        //int32_t Y;                          //!< y in Cartesian coordinate system
         q16_t q16Y;
     };
 } arm_2d_point_fx_t;

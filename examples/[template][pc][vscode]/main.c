@@ -307,7 +307,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -448,7 +448,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_tjpgd_loader,
+        scene_transform_loader,
+        //scene_tjpgd_loader,
         //scene_text_reader_loader,
         //scene_ruler_loader,
         //scene_filters_loader,
