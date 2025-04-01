@@ -300,7 +300,6 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                 arm_2d_rot_linear_regr_t regrCoefs[])
 {
 #define ONE_BY_2PI_Q31      341782637.0f
-//#define reinterpret_q16_s16(x)           ((x) << 16)
 
     int_fast16_t        iHeight = ptCopySize->iHeight;
     int_fast16_t        iWidth = ptCopySize->iWidth;

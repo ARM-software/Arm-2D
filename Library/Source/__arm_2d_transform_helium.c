@@ -1613,18 +1613,21 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
 bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                             arm_2d_location_t * pSrcPoint,
                                             float fAngle,
-                                            float fScale,
+                                            float fScaleX,
+                                            float fScaleY,
                                             arm_2d_location_t * tOffset,
                                             arm_2d_location_t * center,
                                             int32_t             iOrigStride,
                                             arm_2d_rot_linear_regr_t regrCoefs[]
     )
 {
+    bool                gatherLoadIdxOverflow = false;
+#if 0
     int_fast16_t        iHeight = ptCopySize->iHeight;
     int_fast16_t        iWidth = ptCopySize->iWidth;
     q31_t               invHeightFx = iHeight > 1 ? INT32_MAX / (iHeight - 1) : INT32_MAX;
     int32_t             AngleFx = lroundf(fAngle * ONE_BY_2PI_Q31);
-    int32_t             ScaleFx = (int32_t)((float)fScale * (float)reinterpret_q16_s16(1));
+    int32_t             ScaleFx = (int32_t)((float)fScaleX * (float)reinterpret_q16_s16(1));
     q31_t               cosAngleFx = MULTFX(arm_cos_q31(AngleFx), ScaleFx);
     q31_t               sinAngleFx = MULTFX(arm_sin_q31(AngleFx), ScaleFx);
     arm_2d_point_fx_t   tPointCornerFx[2][2];
@@ -1633,7 +1636,6 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     arm_2d_point_fx_t   tOffsetQ16;
     arm_2d_point_fx_t   tmp;
     int32_t             iXQ16, iYQ16;
-    bool                gatherLoadIdxOverflow = 0;
 
     /* Q16 conversion */
     centerQ16.X = reinterpret_q16_s16(center->iX);
@@ -1695,6 +1697,85 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     tPointCornerFx[0][1].X =
         __QDSUB(__QDADD(centerQ16.X, mul_q16(iXQ16, cosAngleFx)),
                 mul_q16(iYQ16, sinAngleFx));
+#else
+    int_fast16_t        iHeight = ptCopySize->iHeight;
+    int_fast16_t        iWidth = ptCopySize->iWidth;
+    q31_t               invHeightFx;
+
+    if (1 == iHeight) {
+        invHeightFx = 0x7fffffff;
+    } else {
+        invHeightFx = 0x7fffffff / (iHeight - 1);
+    }
+
+    int32_t             AngleFx = ARM_2D_LROUNDF(fAngle * ONE_BY_2PI_Q31);
+    int32_t             ScaleXFx = reinterpret_q16_f32(fScaleX);// (int32_t)((float)fScaleX * (float)reinterpret_q16_s16(1));
+    int32_t             ScaleYFx = reinterpret_q16_f32(fScaleY);
+
+    q16_t               cosAngleFx = reinterpret_q16_q31(arm_cos_q31(AngleFx));
+    q16_t               sinAngleFx = reinterpret_q16_q31(arm_sin_q31(AngleFx));
+
+    arm_2d_point_fx_t   tPointCornerFx[2][2];
+    arm_2d_point_fx_t   centerQ16;
+    arm_2d_point_fx_t   srcPointQ16;
+    arm_2d_point_fx_t   tOffsetQ16;
+    arm_2d_point_fx_t   tmp;
+    //int32_t             iXQ16, iYQ16;
+    arm_2d_point_q16_t  tPoint;  
+
+
+    /* Q16 conversion */
+    centerQ16.X = reinterpret_q16_s16(center->iX);// reinterpret_q16_s16(center->iX);
+    centerQ16.Y = reinterpret_q16_s16(center->iY);
+
+    srcPointQ16.X = reinterpret_q16_s16(pSrcPoint->iX);
+    srcPointQ16.Y = reinterpret_q16_s16(pSrcPoint->iY);
+
+    tOffsetQ16.X = reinterpret_q16_s16(tOffset->iX);
+    tOffsetQ16.Y = reinterpret_q16_s16(tOffset->iY);
+
+
+    /* (0,0) corner */
+    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
+    tmp.Y = srcPointQ16.Y + 0 + tOffsetQ16.Y;
+
+    tPoint.q16X = tmp.X - centerQ16.X;
+    tPoint.q16Y = tmp.Y - centerQ16.Y;
+
+#define __PT_TRANSFORM(__PT) \
+    do {                                                                            \
+        /* rotation first, then scaling */                                          \
+        __PT.Y =qadd_q16(   centerQ16.Y,                                            \
+                            mul_q16(qadd_q16(   mul_q16(tPoint.q16Y, cosAngleFx),   \
+                                                mul_q16(tPoint.q16X, sinAngleFx)),  \
+                                    ScaleYFx));                                     \
+        __PT.X =qadd_q16(   centerQ16.X,                                            \
+                            mul_q16(qsub_q16(   mul_q16(tPoint.q16X, cosAngleFx),   \
+                                                mul_q16(tPoint.q16Y, sinAngleFx)),  \
+                                    ScaleXFx));                                     \
+    } while(0)
+
+    __PT_TRANSFORM(tPointCornerFx[0][0]);
+
+    /* ((iWidth - 1),0) corner */
+    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X + reinterpret_q16_s16(iWidth - 1);
+    tPoint.q16X = tmp.X - centerQ16.X;
+
+
+    __PT_TRANSFORM(tPointCornerFx[1][0]);
+
+    /* ((iWidth - 1),(iHeight - 1)) corner */
+    tmp.Y = srcPointQ16.Y + tOffsetQ16.Y + reinterpret_q16_s16(iHeight - 1);
+    tPoint.q16Y = tmp.Y - centerQ16.Y;
+
+    __PT_TRANSFORM(tPointCornerFx[1][1]);
+
+    /* (0,(iHeight - 1)) corner */
+    tmp.X = srcPointQ16.X + 0 + tOffsetQ16.X;
+    tPoint.q16X = tmp.X - centerQ16.X;
+
+    __PT_TRANSFORM(tPointCornerFx[0][1]);
+#endif
 
     /*
        Check whether rotated index offsets could exceed 16-bit limits
