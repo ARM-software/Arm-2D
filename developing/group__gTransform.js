@@ -3,8 +3,7 @@ var group__gTransform =
     [ "__arm_2d_transform_info_t", "group__gTransform.html#struct____arm__2d__transform__info__t", [
       [ "fAngle", "group__gTransform.html#a598a27b28a4c799378c9b10c4a792f75", null ],
       [ "fScaleX", "group__gTransform.html#a2f349a03ca50ba559e25292a5fbfaee8", null ],
-      [ "fScaleY", "group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b", null ],
-      [ "tCenter", "group__gTransform.html#af28938e370300a48f60257df2ff20241", null ]
+      [ "fScaleY", "group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b", null ]
     ] ],
     [ "arm_2d_op_trans_t", "group__gTransform.html#structarm__2d__op__trans__t", [
       [ "arm_2d_op_core_t", "group__gTransform.html#ab48735701a2bbe03784dd6a04cda9aff", null ],
