@@ -1616,7 +1616,7 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
                                             float fScaleX,
                                             float fScaleY,
                                             arm_2d_location_t * tOffset,
-                                            arm_2d_location_t * center,
+                                            arm_2d_point_float_t * center,
                                             int32_t             iOrigStride,
                                             arm_2d_rot_linear_regr_t regrCoefs[]
     )
@@ -1638,8 +1638,8 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
     int32_t             iXQ16, iYQ16;
 
     /* Q16 conversion */
-    centerQ16.X = reinterpret_q16_s16(center->iX);
-    centerQ16.Y = reinterpret_q16_s16(center->iY);
+    centerQ16.X = reinterpret_q16_f32(center->fX);
+    centerQ16.Y = reinterpret_q16_f32(center->fY);
 
     srcPointQ16.X = reinterpret_q16_s16(pSrcPoint->iX);
     srcPointQ16.Y = reinterpret_q16_s16(pSrcPoint->iY);
@@ -1724,8 +1724,8 @@ bool __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 
 
     /* Q16 conversion */
-    centerQ16.q16X = reinterpret_q16_s16(center->iX);// reinterpret_q16_s16(center->iX);
-    centerQ16.q16Y = reinterpret_q16_s16(center->iY);
+    centerQ16.q16X = reinterpret_q16_f32(center->fX);
+    centerQ16.q16Y = reinterpret_q16_f32(center->fY);
 
     srcPointQ16.q16X = reinterpret_q16_s16(pSrcPoint->iX);
     srcPointQ16.q16Y = reinterpret_q16_s16(pSrcPoint->iY);

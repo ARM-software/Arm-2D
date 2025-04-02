@@ -182,7 +182,7 @@ void __arm_2d_transform_regression(arm_2d_size_t * __RESTRICT ptCopySize,
 
 
     /* Q16 conversion */
-    centerQ16.q16X = reinterpret_q16_f32(ptCenter->fX);// reinterpret_q16_s16(center->iX);
+    centerQ16.q16X = reinterpret_q16_f32(ptCenter->fX);
     centerQ16.q16Y = reinterpret_q16_f32(ptCenter->fY);
 
     srcPointQ16.q16X = reinterpret_q16_s16(pSrcPoint->iX);
