@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        1 April 2025
- * $Revision:    V.2.1.2
+ * $Date:        2 April 2025
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3857,7 +3857,9 @@ typedef struct __arm_2d_transform_info_t {
     float                   fAngle;         //!< target angle
     float                   fScaleX;        //!< scaling factor
     float                   fScaleY;        //!< scaling factor
-    arm_2d_location_t       tCenter;        //!< pivot
+    //arm_2d_location_t       tCenter;        //!< pivot
+    arm_2d_point_float_t    tCenter;
+
     union {
         uint8_t             chColour;       //!< the key colour in 8bit
         uint32_t            wColour;        //!< the key colour in 16bit

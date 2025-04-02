@@ -62,7 +62,7 @@
 static
 arm_2d_point_float_t *__arm_2d_transform_point(
                                             const arm_2d_location_t *ptLocation,
-                                            const arm_2d_location_t *ptCenter,
+                                            const arm_2d_point_float_t *ptCenter,
                                             float fAngle,
                                             float fScaleX,
                                             float fScaleY,
@@ -75,7 +75,7 @@ void __arm_2d_transform_regression( arm_2d_size_t * __RESTRICT ptCopySize,
                                     float fScaleX,
                                     float fScaleY,
                                     arm_2d_location_t * tOffset,
-                                    arm_2d_location_t * ptCenter,
+                                    arm_2d_point_float_t * ptCenter,
                                     arm_2d_rot_linear_regr_t regrCoefs[]);
 
 
