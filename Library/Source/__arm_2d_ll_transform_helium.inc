@@ -66,7 +66,7 @@ void __ARM_2D_FUNC(transform)(  __arm_2d_param_copy_orig_t *ptParam,
     float32_t        fAngle = -ptInfo->fAngle;
     arm_2d_location_t tOffset =
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+    arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
     q31_t           invIWidth = (iWidth > 1) ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t    regrCoefs[2];
     arm_2d_location_t           SrcPt = ptInfo->tDummySourceOffset;
@@ -247,7 +247,7 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
     float32_t        fAngle = -ptInfo->fAngle;
     arm_2d_location_t tOffset =
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+    arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
     q31_t           invIWidth = (iWidth > 1) ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t    regrCoefs[2];
     arm_2d_location_t           SrcPt = ptInfo->tDummySourceOffset;
@@ -428,7 +428,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
     float           fAngle = -ptInfo->fAngle;
     arm_2d_location_t tOffset =
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+    arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
 
     q31_t           invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];
@@ -620,7 +620,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
     float           fAngle = -ptInfo->fAngle;
     arm_2d_location_t tOffset =
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+    arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
 
     q31_t           invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];
@@ -818,7 +818,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
     float           fAngle = -ptInfo->fAngle;
     arm_2d_location_t tOffset =
         ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
-    arm_2d_location_t *pCenter = &(ptInfo->tCenter);
+    arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
 
     q31_t           invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];
