@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_transform.h"
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        2 April 2025
- * $Revision:    V.2.2.0
+ * $Date:        3 April 2025
+ * $Revision:    V.2.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3856,15 +3856,15 @@ extern "C" {
 typedef struct __arm_2d_transform_info_t {
     float                   fAngle;         //!< target angle
     float                   fScaleX;        //!< scaling factor
-    float                   fScaleY;        //!< scaling factor
-    //arm_2d_location_t       tCenter;        //!< pivot
-    arm_2d_point_float_t    tCenter;
+    float                   fScaleY;        //!< scaling factor   
+    arm_2d_point_float_t    tCenter;        //!< pivot
 
     union {
         uint8_t             chColour;       //!< the key colour in 8bit
         uint32_t            wColour;        //!< the key colour in 16bit
         uint16_t            hwColour;       //!< the key colour in 32bit
     } Mask;
+
     
     /* private members used by runtime */
 ARM_PRIVATE(
@@ -4453,6 +4453,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
 
 /*!
  * \brief start a transform operation 
+ * \deprecated {this API is deprecated, please use arm_2dp_tile_transform_xy() instead}
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region
@@ -4465,6 +4466,21 @@ arm_fsm_rt_t arm_2dp_tile_transform( arm_2d_op_trans_t *ptOP,
                                      const arm_2d_tile_t *ptTarget,
                                      const arm_2d_region_t *ptRegion,
                                      const arm_2d_location_t *ptTargetCentre);
+
+/*!
+ * \brief start a transform operation 
+ *
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] ptTargetCentre the pivot in the target region
+ * \return arm_fsm_rt_t the operation result
+ */
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_tile_transform_xy( arm_2d_op_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_point_float_t *ptTargetCentre);
 
 /*! @} */
 
