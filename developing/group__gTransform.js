@@ -3,7 +3,8 @@ var group__gTransform =
     [ "__arm_2d_transform_info_t", "group__gTransform.html#struct____arm__2d__transform__info__t", [
       [ "fAngle", "group__gTransform.html#a598a27b28a4c799378c9b10c4a792f75", null ],
       [ "fScaleX", "group__gTransform.html#a2f349a03ca50ba559e25292a5fbfaee8", null ],
-      [ "fScaleY", "group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b", null ]
+      [ "fScaleY", "group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b", null ],
+      [ "tCenter", "group__gTransform.html#a8ccf8746acffe7839548a6195bc07bbd", null ]
     ] ],
     [ "arm_2d_op_trans_t", "group__gTransform.html#structarm__2d__op__trans__t", [
       [ "arm_2d_op_core_t", "group__gTransform.html#ab48735701a2bbe03784dd6a04cda9aff", null ],
@@ -112,5 +113,6 @@ var group__gTransform =
     [ "arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#gaba5c5d17108bff1283dfb564aa0f7c50", null ],
     [ "arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#ga22232f2fdf0d21ca0919baf6ecb0e0d5", null ],
     [ "arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#gad9d33d43c90d236486a4e9fd8c349f7f", null ],
-    [ "arm_2dp_tile_transform", "group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2", null ]
+    [ "arm_2dp_tile_transform", "group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2", null ],
+    [ "arm_2dp_tile_transform_xy", "group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6", null ]
 ];

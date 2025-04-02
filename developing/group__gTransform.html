@@ -608,6 +608,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga86c351a1272f5af292756c4f86f8e8d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2">arm_2dp_tile_transform</a> (<a class="el" href="group__gTransform.html#structarm__2d__op__trans__t">arm_2d_op_trans_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptTargetCentre)</td></tr>
 <tr class="memdesc:ga86c351a1272f5af292756c4f86f8e8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">start a transform operation  <a href="group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2">More...</a><br /></td></tr>
 <tr class="separator:ga86c351a1272f5af292756c4f86f8e8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8eb8867fca95508c4397ee0c0ddad6e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6">arm_2dp_tile_transform_xy</a> (<a class="el" href="group__gTransform.html#structarm__2d__op__trans__t">arm_2d_op_trans_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__point__float__t">arm_2d_point_float_t</a> *ptTargetCentre)</td></tr>
+<tr class="memdesc:ga8eb8867fca95508c4397ee0c0ddad6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">start a transform operation  <a href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6">More...</a><br /></td></tr>
+<tr class="separator:ga8eb8867fca95508c4397ee0c0ddad6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -642,13 +645,14 @@ scaling factor </td></tr>
 <td class="fieldname">
 fScaleY</td>
 <td class="fielddoc">
-scaling factor </td></tr>
+scaling factor <br  />
+ </td></tr>
 <tr><td class="fieldtype">
 <a id="a8ccf8746acffe7839548a6195bc07bbd" name="a8ccf8746acffe7839548a6195bc07bbd"></a><a class="el" href="group__gKernel.html#structarm__2d__point__float__t">arm_2d_point_float_t</a></td>
 <td class="fieldname">
 tCenter</td>
 <td class="fielddoc">
-</td></tr>
+pivot </td></tr>
 <tr><td class="fieldtype">
 <a id="aafadb262a91af02c629d0a57721044ae" name="aafadb262a91af02c629d0a57721044ae"></a>union <a class="el" href="group__gTransform.html#union____arm__2d__transform__info__t_8Mask">__arm_2d_transform_info_t.Mask</a></td>
 <td class="fieldname">
@@ -14990,6 +14994,59 @@ target side mask </td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTargetCentre</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>start a transform operation </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>{this API is deprecated, please use <a class="el" href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6" title="start a transform operation">arm_2dp_tile_transform_xy()</a> instead} </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTargetCentre</td><td>the pivot in the target region </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="ga8eb8867fca95508c4397ee0c0ddad6e6" name="ga8eb8867fca95508c4397ee0c0ddad6e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8eb8867fca95508c4397ee0c0ddad6e6">&#9670;&#160;</a></span>arm_2dp_tile_transform_xy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a> arm_2dp_tile_transform_xy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gTransform.html#structarm__2d__op__trans__t">arm_2d_op_trans_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTarget</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__point__float__t">arm_2d_point_float_t</a> *&#160;</td>
           <td class="paramname"><em>ptTargetCentre</em>&#160;</td>
         </tr>
         <tr>

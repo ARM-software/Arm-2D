@@ -279,19 +279,20 @@ var NAVTREE =
         [ "1.1 Issues and Labels", "md_contribution.html#autotoc_md193", null ]
       ] ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Reference", "modules.html", "modules" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"group__Deprecated.html",
-"group__gAlpha.html#ga68b7fdd26e2ac52f458457d428c2fa34",
-"group__gHelper.html#adfd244e234641aff86db898b9a0120cf",
-"group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad756321ec6360e1cd88ccaa9cc941b44",
-"group__gKernel.html#ga3ce97dd0898a88027fd88f0943dbcdc0",
-"group__gKernel.html#structarm__2d__op__core__t_8____unnamed76_____8Preference",
-"md_how_to_accelerate_arm_2d.html#autotoc_md184"
+"deprecated.html",
+"group__gAlpha.html#ga67bb801939d0a09c919b23554d2205f7",
+"group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37",
+"group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3ad37448bf20da2fc588ec0c151344d9fb",
+"group__gKernel.html#ga3ca0fed904ecae4e2f09d1064593417e",
+"group__gKernel.html#structarm__2d__op__core__t_8____unnamed76____",
+"md_how_to_accelerate_arm_2d.html#autotoc_md181"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

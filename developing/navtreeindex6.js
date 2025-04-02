@@ -1,5 +1,8 @@
 var NAVTREEINDEX6 =
 {
+"md_how_to_accelerate_arm_2d.html#autotoc_md181":[8,1,3,1],
+"md_how_to_accelerate_arm_2d.html#autotoc_md182":[8,1,3,2],
+"md_how_to_accelerate_arm_2d.html#autotoc_md183":[8,2],
 "md_how_to_accelerate_arm_2d.html#autotoc_md184":[8,2,0],
 "md_how_to_accelerate_arm_2d.html#autotoc_md185":[8,2,1],
 "md_how_to_accelerate_arm_2d.html#autotoc_md186":[8,2,2],
@@ -86,7 +89,7 @@ var NAVTREEINDEX6 =
 "md_introduction.html#autotoc_md97":[5,1,0,0],
 "md_introduction.html#autotoc_md98":[5,1,0,1],
 "md_introduction.html#autotoc_md99":[5,1,1],
-"modules.html":[11],
+"modules.html":[12],
 "pages.html":[],
 "use_tile.html":[7],
 "use_tile.html#autotoc_md144":[7,0],

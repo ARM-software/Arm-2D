@@ -134,8 +134,8 @@ $(document).ready(function(){initNavTree('arm__2d__transform_8h_source.html','')
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_transform.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file to contain the APIs for transform</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        2 April 2025</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.2.2.0</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        3 April 2025</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.2.2.1</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -3969,15 +3969,15 @@ $(document).ready(function(){initNavTree('arm__2d__transform_8h_source.html','')
 <div class="line"><a id="l03856" name="l03856"></a><span class="lineno"><a class="line" href="group__gTransform.html"> 3856</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="group__gTransform.html#struct____arm__2d__transform__info__t" title="transform runtime context">__arm_2d_transform_info_t</a> {</div>
 <div class="line"><a id="l03857" name="l03857"></a><span class="lineno"><a class="line" href="group__gTransform.html#a598a27b28a4c799378c9b10c4a792f75"> 3857</a></span>    <span class="keywordtype">float</span>                   <a class="code hl_variable" href="group__gTransform.html#a598a27b28a4c799378c9b10c4a792f75" title="target angle">fAngle</a>;         <span class="comment">//!&lt; target angle</span></div>
 <div class="line"><a id="l03858" name="l03858"></a><span class="lineno"><a class="line" href="group__gTransform.html#a2f349a03ca50ba559e25292a5fbfaee8"> 3858</a></span>    <span class="keywordtype">float</span>                   <a class="code hl_variable" href="group__gTransform.html#a2f349a03ca50ba559e25292a5fbfaee8" title="scaling factor">fScaleX</a>;        <span class="comment">//!&lt; scaling factor</span></div>
-<div class="line"><a id="l03859" name="l03859"></a><span class="lineno"><a class="line" href="group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b"> 3859</a></span>    <span class="keywordtype">float</span>                   <a class="code hl_variable" href="group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b" title="scaling factor">fScaleY</a>;        <span class="comment">//!&lt; scaling factor</span></div>
-<div class="line"><a id="l03860" name="l03860"></a><span class="lineno"> 3860</span>    <span class="comment">//arm_2d_location_t       tCenter;        //!&lt; pivot</span></div>
-<div class="line"><a id="l03861" name="l03861"></a><span class="lineno"> 3861</span>    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__point__float__t" title="a type for coordinates in floating point">arm_2d_point_float_t</a>    tCenter;</div>
-<div class="line"><a id="l03862" name="l03862"></a><span class="lineno"> 3862</span> </div>
-<div class="line"><a id="l03863" name="l03863"></a><span class="lineno"><a class="line" href="group__gTransform.html"> 3863</a></span>    <span class="keyword">union </span>{</div>
-<div class="line"><a id="l03864" name="l03864"></a><span class="lineno"> 3864</span>        uint8_t             chColour;       <span class="comment">//!&lt; the key colour in 8bit</span></div>
-<div class="line"><a id="l03865" name="l03865"></a><span class="lineno"> 3865</span>        uint32_t            wColour;        <span class="comment">//!&lt; the key colour in 16bit</span></div>
-<div class="line"><a id="l03866" name="l03866"></a><span class="lineno"> 3866</span>        uint16_t            hwColour;       <span class="comment">//!&lt; the key colour in 32bit</span></div>
-<div class="line"><a id="l03867" name="l03867"></a><span class="lineno"> 3867</span>    } Mask;</div>
+<div class="line"><a id="l03859" name="l03859"></a><span class="lineno"><a class="line" href="group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b"> 3859</a></span>    <span class="keywordtype">float</span>                   <a class="code hl_variable" href="group__gTransform.html#ac9e6e37a4d817fe8f970d7be20ce5a7b" title="scaling factor">fScaleY</a>;        <span class="comment">//!&lt; scaling factor   </span></div>
+<div class="line"><a id="l03860" name="l03860"></a><span class="lineno"><a class="line" href="group__gTransform.html#a8ccf8746acffe7839548a6195bc07bbd"> 3860</a></span>    <a class="code hl_struct" href="group__gKernel.html#structarm__2d__point__float__t" title="a type for coordinates in floating point">arm_2d_point_float_t</a>    <a class="code hl_variable" href="group__gTransform.html#a8ccf8746acffe7839548a6195bc07bbd" title="pivot">tCenter</a>;        <span class="comment">//!&lt; pivot</span></div>
+<div class="line"><a id="l03861" name="l03861"></a><span class="lineno"> 3861</span> </div>
+<div class="line"><a id="l03862" name="l03862"></a><span class="lineno"><a class="line" href="group__gTransform.html"> 3862</a></span>    <span class="keyword">union </span>{</div>
+<div class="line"><a id="l03863" name="l03863"></a><span class="lineno"> 3863</span>        uint8_t             chColour;       <span class="comment">//!&lt; the key colour in 8bit</span></div>
+<div class="line"><a id="l03864" name="l03864"></a><span class="lineno"> 3864</span>        uint32_t            wColour;        <span class="comment">//!&lt; the key colour in 16bit</span></div>
+<div class="line"><a id="l03865" name="l03865"></a><span class="lineno"> 3865</span>        uint16_t            hwColour;       <span class="comment">//!&lt; the key colour in 32bit</span></div>
+<div class="line"><a id="l03866" name="l03866"></a><span class="lineno"> 3866</span>    } Mask;</div>
+<div class="line"><a id="l03867" name="l03867"></a><span class="lineno"> 3867</span> </div>
 <div class="line"><a id="l03868" name="l03868"></a><span class="lineno"> 3868</span>    </div>
 <div class="line"><a id="l03869" name="l03869"></a><span class="lineno"> 3869</span>    <span class="comment">/* private members used by runtime */</span></div>
 <div class="line"><a id="l03870" name="l03870"></a><span class="lineno"> 3870</span>ARM_PRIVATE(</div>
@@ -4566,33 +4566,49 @@ $(document).ready(function(){initNavTree('arm__2d__transform_8h_source.html','')
 <div class="line"><a id="l04453" name="l04453"></a><span class="lineno"> 4453</span><span class="comment"></span> </div>
 <div class="line"><a id="l04454" name="l04454"></a><span class="lineno"> 4454</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l04455" name="l04455"></a><span class="lineno"> 4455</span><span class="comment"> * \brief start a transform operation </span></div>
-<div class="line"><a id="l04456" name="l04456"></a><span class="lineno"> 4456</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l04457" name="l04457"></a><span class="lineno"> 4457</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
-<div class="line"><a id="l04458" name="l04458"></a><span class="lineno"> 4458</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
-<div class="line"><a id="l04459" name="l04459"></a><span class="lineno"> 4459</span><span class="comment"> * \param[in] ptTargetCentre the pivot in the target region</span></div>
-<div class="line"><a id="l04460" name="l04460"></a><span class="lineno"> 4460</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l04461" name="l04461"></a><span class="lineno"> 4461</span><span class="comment"> */</span></div>
-<div class="line"><a id="l04462" name="l04462"></a><span class="lineno"> 4462</span>extern</div>
-<div class="line"><a id="l04463" name="l04463"></a><span class="lineno"> 4463</span>ARM_NONNULL(2)</div>
-<div class="line"><a id="l04464" name="l04464"></a><span class="lineno"><a class="line" href="group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2"> 4464</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2" title="start a transform operation">arm_2dp_tile_transform</a>( <a class="code hl_struct" href="group__gTransform.html#structarm__2d__op__trans__t" title="arm_2d_op_trans_t is inherit from arm_2d_op_src_orig_t">arm_2d_op_trans_t</a> *ptOP,</div>
-<div class="line"><a id="l04465" name="l04465"></a><span class="lineno"> 4465</span>                                     const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l04466" name="l04466"></a><span class="lineno"> 4466</span>                                     const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
-<div class="line"><a id="l04467" name="l04467"></a><span class="lineno"> 4467</span>                                     const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> *ptTargetCentre);</div>
-<div class="line"><a id="l04468" name="l04468"></a><span class="lineno"> 4468</span><span class="comment"></span> </div>
-<div class="line"><a id="l04469" name="l04469"></a><span class="lineno"> 4469</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l04470" name="l04470"></a><span class="lineno"> 4470</span> </div>
-<div class="line"><a id="l04471" name="l04471"></a><span class="lineno"> 4471</span><span class="comment">/*========================= POST INCLUDES ====================================*/</span></div>
-<div class="line"><a id="l04472" name="l04472"></a><span class="lineno"> 4472</span><span class="preprocessor">#include &quot;__arm_2d_tile_2xssaa_transform.h&quot;</span></div>
-<div class="line"><a id="l04473" name="l04473"></a><span class="lineno"> 4473</span> </div>
-<div class="line"><a id="l04474" name="l04474"></a><span class="lineno"> 4474</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l04475" name="l04475"></a><span class="lineno"> 4475</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l04476" name="l04476"></a><span class="lineno"> 4476</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l04477" name="l04477"></a><span class="lineno"> 4477</span> </div>
-<div class="line"><a id="l04478" name="l04478"></a><span class="lineno"> 4478</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l04479" name="l04479"></a><span class="lineno"> 4479</span>}</div>
-<div class="line"><a id="l04480" name="l04480"></a><span class="lineno"> 4480</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l04481" name="l04481"></a><span class="lineno"> 4481</span> </div>
-<div class="line"><a id="l04482" name="l04482"></a><span class="lineno"> 4482</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l04456" name="l04456"></a><span class="lineno"> 4456</span><span class="comment"> * \deprecated {this API is deprecated, please use arm_2dp_tile_transform_xy() instead}</span></div>
+<div class="line"><a id="l04457" name="l04457"></a><span class="lineno"> 4457</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l04458" name="l04458"></a><span class="lineno"> 4458</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l04459" name="l04459"></a><span class="lineno"> 4459</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l04460" name="l04460"></a><span class="lineno"> 4460</span><span class="comment"> * \param[in] ptTargetCentre the pivot in the target region</span></div>
+<div class="line"><a id="l04461" name="l04461"></a><span class="lineno"> 4461</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l04462" name="l04462"></a><span class="lineno"> 4462</span><span class="comment"> */</span></div>
+<div class="line"><a id="l04463" name="l04463"></a><span class="lineno"> 4463</span>extern</div>
+<div class="line"><a id="l04464" name="l04464"></a><span class="lineno"> 4464</span>ARM_NONNULL(2)</div>
+<div class="line"><a id="l04465" name="l04465"></a><span class="lineno"><a class="line" href="group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2"> 4465</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2" title="start a transform operation">arm_2dp_tile_transform</a>( <a class="code hl_struct" href="group__gTransform.html#structarm__2d__op__trans__t" title="arm_2d_op_trans_t is inherit from arm_2d_op_src_orig_t">arm_2d_op_trans_t</a> *ptOP,</div>
+<div class="line"><a id="l04466" name="l04466"></a><span class="lineno"> 4466</span>                                     const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l04467" name="l04467"></a><span class="lineno"> 4467</span>                                     const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line"><a id="l04468" name="l04468"></a><span class="lineno"> 4468</span>                                     const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__location__t" title="a type for coordinates (integer)">arm_2d_location_t</a> *ptTargetCentre);</div>
+<div class="line"><a id="l04469" name="l04469"></a><span class="lineno"> 4469</span><span class="comment"></span> </div>
+<div class="line"><a id="l04470" name="l04470"></a><span class="lineno"> 4470</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l04471" name="l04471"></a><span class="lineno"> 4471</span><span class="comment"> * \brief start a transform operation </span></div>
+<div class="line"><a id="l04472" name="l04472"></a><span class="lineno"> 4472</span><span class="comment"> *</span></div>
+<div class="line"><a id="l04473" name="l04473"></a><span class="lineno"> 4473</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l04474" name="l04474"></a><span class="lineno"> 4474</span><span class="comment"> * \param[in] ptTarget the target tile</span></div>
+<div class="line"><a id="l04475" name="l04475"></a><span class="lineno"> 4475</span><span class="comment"> * \param[in] ptRegion the target region</span></div>
+<div class="line"><a id="l04476" name="l04476"></a><span class="lineno"> 4476</span><span class="comment"> * \param[in] ptTargetCentre the pivot in the target region</span></div>
+<div class="line"><a id="l04477" name="l04477"></a><span class="lineno"> 4477</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l04478" name="l04478"></a><span class="lineno"> 4478</span><span class="comment"> */</span></div>
+<div class="line"><a id="l04479" name="l04479"></a><span class="lineno"> 4479</span>ARM_NONNULL(2)</div>
+<div class="line"><a id="l04480" name="l04480"></a><span class="lineno"><a class="line" href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6"> 4480</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6" title="start a transform operation">arm_2dp_tile_transform_xy</a>( <a class="code hl_struct" href="group__gTransform.html#structarm__2d__op__trans__t" title="arm_2d_op_trans_t is inherit from arm_2d_op_src_orig_t">arm_2d_op_trans_t</a> *ptOP,</div>
+<div class="line"><a id="l04481" name="l04481"></a><span class="lineno"> 4481</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l04482" name="l04482"></a><span class="lineno"> 4482</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion,</div>
+<div class="line"><a id="l04483" name="l04483"></a><span class="lineno"> 4483</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__point__float__t" title="a type for coordinates in floating point">arm_2d_point_float_t</a> *ptTargetCentre);</div>
+<div class="line"><a id="l04484" name="l04484"></a><span class="lineno"> 4484</span><span class="comment"></span> </div>
+<div class="line"><a id="l04485" name="l04485"></a><span class="lineno"> 4485</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l04486" name="l04486"></a><span class="lineno"> 4486</span> </div>
+<div class="line"><a id="l04487" name="l04487"></a><span class="lineno"> 4487</span><span class="comment">/*========================= POST INCLUDES ====================================*/</span></div>
+<div class="line"><a id="l04488" name="l04488"></a><span class="lineno"> 4488</span><span class="preprocessor">#include &quot;__arm_2d_tile_2xssaa_transform.h&quot;</span></div>
+<div class="line"><a id="l04489" name="l04489"></a><span class="lineno"> 4489</span> </div>
+<div class="line"><a id="l04490" name="l04490"></a><span class="lineno"> 4490</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l04491" name="l04491"></a><span class="lineno"> 4491</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l04492" name="l04492"></a><span class="lineno"> 4492</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l04493" name="l04493"></a><span class="lineno"> 4493</span> </div>
+<div class="line"><a id="l04494" name="l04494"></a><span class="lineno"> 4494</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l04495" name="l04495"></a><span class="lineno"> 4495</span>}</div>
+<div class="line"><a id="l04496" name="l04496"></a><span class="lineno"> 4496</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l04497" name="l04497"></a><span class="lineno"> 4497</span> </div>
+<div class="line"><a id="l04498" name="l04498"></a><span class="lineno"> 4498</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
