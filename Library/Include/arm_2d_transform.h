@@ -4137,7 +4137,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_only_prepare(
  * \param[in] fAngle the rotation angle
  * \param[in] fScale the scaling factor
  * \param[in] chFillColour the key colour
- * \param[in] chRatio the opacity
+ * \param[in] chOpacity the opacity
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
@@ -4159,7 +4159,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare
  * \param[in] fAngle the rotation angle
  * \param[in] fScale the scaling factor
  * \param[in] hwFillColour the key colour
- * \param[in] chRatio the opacity
+ * \param[in] chOpacity the opacity
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
@@ -4181,7 +4181,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepar
  * \param[in] fAngle the rotation angle
  * \param[in] fScale the scaling factor
  * \param[in] wFillColour the key colour
- * \param[in] chRatio the opacity
+ * \param[in] chOpacity the opacity
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
@@ -4197,12 +4197,13 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_and_opacity_prepa
 
 /*!
  * \brief prepare for a transform with opacity in gray8
+ * \deprecated this API is deprecated, please use arm_2dp_gray8_tile_transform_xy_only_with_opacity_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] tCentre the pivot in the source tile
  * \param[in] fAngle the rotation angle
  * \param[in] fScale the scaling factor
- * \param[in] chRatio the opacity
+ * \param[in] chOpacity the opacity
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
@@ -4214,9 +4215,31 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_only_with_opacity_prepare(
                                         float fAngle,
                                         float fScale,
                                         uint_fast8_t chRatio);
+/*!
+ * \brief prepare for a transform with opacity in gray8
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleX the scaling factor for Y axis
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_only_with_opacity_prepare(
+                                        arm_2d_op_trans_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_point_float_t tCentre,
+                                        float fAngle,
+                                        float fScaleX,
+                                        float fScaleY,
+                                        uint_fast8_t chOpacity);
 
 /*!
  * \brief prepare for a transform with opacity in rgb565
+ * \deprecated this API is deprecated, please use arm_2dp_rgb565_tile_transform_xy_only_with_opacity_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] tCentre the pivot in the source tile
@@ -4234,9 +4257,31 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_only_with_opacity_prepare(
                                         float fAngle,
                                         float fScale,
                                         uint_fast8_t chRatio);
+/*!
+ * \brief prepare for a transform with opacity in rgb565
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleX the scaling factor for Y axis
+ * \param[in] chRatio the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_only_with_opacity_prepare(
+                                        arm_2d_op_trans_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_point_float_t tCentre,
+                                        float fAngle,
+                                        float fScaleX,
+                                        float fScaleY,
+                                        uint_fast8_t chOpacity);
 
 /*!
  * \brief prepare for a transform with opacity in cccn888
+ * \deprecated this API is deprecated, please use arm_2dp_cccn888_tile_transform_xy_only_with_opacity_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] tCentre the pivot in the source tile
@@ -4254,6 +4299,27 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_only_with_opacity_prepare(
                                         float fAngle,
                                         float fScale,
                                         uint_fast8_t chRatio);
+/*!
+ * \brief prepare for a transform with opacity in cccn888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleX the scaling factor for Y axis
+ * \param[in] chRatio the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_only_with_opacity_prepare(
+                                        arm_2d_op_trans_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_point_float_t tCentre,
+                                        float fAngle,
+                                        float fScaleX,
+                                        float fScaleY,
+                                        uint_fast8_t chOpacity);
 
 /*!
  * \brief prepare for a transform with a source mask in gray8
