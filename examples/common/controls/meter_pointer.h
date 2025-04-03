@@ -49,6 +49,30 @@ extern "C" {
 #include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ > 199901L
+#define meter_pointer_show( __THIS_PTR,                                         \
+                            __TARGET_TILE_PTR,                                  \
+                            __REGION_PTR,                                       \
+                            __PIVOT_PTR,                                        \
+                            __OPACITY)                                          \
+    _Generic((__PIVOT_PTR),                                                     \
+        const arm_2d_location_t *   : meter_pointer_show_with_normal_pivot,     \
+        arm_2d_location_t *         : meter_pointer_show_with_normal_pivot,     \
+        void *                      : meter_pointer_show_with_fp_pivot,         \
+        const void *                : meter_pointer_show_with_fp_pivot,         \
+        const arm_2d_point_float_t *: meter_pointer_show_with_fp_pivot,         \
+        arm_2d_point_float_t *      : meter_pointer_show_with_fp_pivot          \
+    )(  (__THIS_PTR),                                                           \
+        (__TARGET_TILE_PTR),                                                    \
+        (__REGION_PTR),                                                         \
+        (__PIVOT_PTR),                                                          \
+        (__OPACITY))
+
+#else
+#   define meter_pointer_show    meter_pointer_show_with_normal_pivot
+#endif
+
 /*============================ TYPES =========================================*/
 
 
@@ -62,8 +86,6 @@ typedef struct meter_pointer_cfg_t {
 
     arm_2d_helper_pi_slider_cfg_t tPISliderCFG;
     int32_t nPISliderStartPosition;
-
-    
 
 } meter_pointer_cfg_t;
 
@@ -115,11 +137,19 @@ void meter_pointer_on_frame_complete( meter_pointer_t *ptThis);
 
 extern
 ARM_NONNULL(1, 2)
-void meter_pointer_show(meter_pointer_t *ptThis,
-                        const arm_2d_tile_t *ptTile,
-                        const arm_2d_region_t *ptRegion,
-                        const arm_2d_location_t *ptPivot,
-                        uint8_t chOpacity);
+void meter_pointer_show_with_normal_pivot(  meter_pointer_t *ptThis,
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity);
+
+extern
+ARM_NONNULL(1, 2)
+void meter_pointer_show_with_fp_pivot(  meter_pointer_t *ptThis,
+                                        const arm_2d_tile_t *ptTile,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_point_float_t *ptPivot,
+                                        uint8_t chOpacity);
 
 extern
 ARM_NONNULL(1)

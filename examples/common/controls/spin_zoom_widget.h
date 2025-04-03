@@ -55,11 +55,12 @@ extern "C" {
                                 __PIVOT_PTR,                                    \
                                 __OPACITY)                                      \
     _Generic((__PIVOT_PTR),                                                     \
-        const arm_2d_location_t *   : __spin_zoom_widget_show_with_normal_pivot,\
-        arm_2d_location_t *         : __spin_zoom_widget_show_with_normal_pivot,\
-        void *                      : __spin_zoom_widget_show_with_fp_pivot,    \
-        const arm_2d_point_float_t *: __spin_zoom_widget_show_with_fp_pivot,    \
-        arm_2d_point_float_t *      : __spin_zoom_widget_show_with_fp_pivot     \
+        const arm_2d_location_t *   : spin_zoom_widget_show_with_normal_pivot,  \
+        arm_2d_location_t *         : spin_zoom_widget_show_with_normal_pivot,  \
+        void *                      : spin_zoom_widget_show_with_fp_pivot,      \
+        const void *                : spin_zoom_widget_show_with_fp_pivot,      \
+        const arm_2d_point_float_t *: spin_zoom_widget_show_with_fp_pivot,      \
+        arm_2d_point_float_t *      : spin_zoom_widget_show_with_fp_pivot       \
     )(  (__THIS_PTR),                                                           \
         (__TARGET_TILE_PTR),                                                    \
         (__REGION_PTR),                                                         \
@@ -67,7 +68,7 @@ extern "C" {
         (__OPACITY))
 
 #else
-#   define spin_zoom_widget_show    __spin_zoom_widget_show_with_normal_pivot
+#   define spin_zoom_widget_show    spin_zoom_widget_show_with_normal_pivot
 #endif
 /*============================ TYPES =========================================*/
 
@@ -196,7 +197,7 @@ void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)
-void __spin_zoom_widget_show_with_normal_pivot( spin_zoom_widget_t *ptThis,
+void spin_zoom_widget_show_with_normal_pivot(   spin_zoom_widget_t *ptThis,
                                                 const arm_2d_tile_t *ptTile,
                                                 const arm_2d_region_t *ptRegion,
                                                 const arm_2d_location_t *ptPivot,
@@ -204,7 +205,7 @@ void __spin_zoom_widget_show_with_normal_pivot( spin_zoom_widget_t *ptThis,
 
 extern
 ARM_NONNULL(1,2)
-void __spin_zoom_widget_show_with_fp_pivot( spin_zoom_widget_t *ptThis,
+void spin_zoom_widget_show_with_fp_pivot(   spin_zoom_widget_t *ptThis,
                                             const arm_2d_tile_t *ptTile,
                                             const arm_2d_region_t *ptRegion,
                                             const arm_2d_point_float_t *ptPivot,

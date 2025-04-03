@@ -79,10 +79,13 @@ arm_2d_err_t meter_pointer_init(meter_pointer_t *ptThis,
     /* initialize base class */
     do {
         spin_zoom_widget_cfg_t tCFG = ptCFG->tSpinZoom;
+        
         if (ptCFG->Pointer.iRadius > 0) {
+            tCFG.bUseFloatPointInCentre = true;
             /* override the source centre configuration */
             if (ptCFG->Pointer.bIsSourceHorizontal) {
-                tCFG.Source.tCentre.iX = ptCFG->Pointer.iRadius;
+
+                tCFG.Source.tCentreFloat.fX = ptCFG->Pointer.iRadius;
                 
                 int16_t iHeight;
                 if (NULL != tCFG.Source.ptSource) {
@@ -94,9 +97,9 @@ arm_2d_err_t meter_pointer_init(meter_pointer_t *ptThis,
                     return ARM_2D_ERR_INVALID_PARAM;
                 }
 
-                tCFG.Source.tCentre.iY = iHeight >> 1;
+                tCFG.Source.tCentreFloat.fY = iHeight / 2.0f;
             } else {
-                tCFG.Source.tCentre.iY = ptCFG->Pointer.iRadius;
+                tCFG.Source.tCentreFloat.fY = ptCFG->Pointer.iRadius;
                 
                 int16_t iWidth;
                 if (NULL != tCFG.Source.ptSource) {
@@ -108,7 +111,7 @@ arm_2d_err_t meter_pointer_init(meter_pointer_t *ptThis,
                     return ARM_2D_ERR_INVALID_PARAM;
                 }
 
-                tCFG.Source.tCentre.iX = iWidth >> 1;
+                tCFG.Source.tCentreFloat.fX = iWidth / 2.0f;
             }
         }
 
@@ -204,17 +207,31 @@ void meter_pointer_on_frame_complete( meter_pointer_t *ptThis)
 }
 
 ARM_NONNULL(1, 2)
-void meter_pointer_show(meter_pointer_t *ptThis,
-                        const arm_2d_tile_t *ptTile,
-                        const arm_2d_region_t *ptRegion,
-                        const arm_2d_location_t *ptPivot,
-                        uint8_t chOpacity)
+void meter_pointer_show_with_normal_pivot(  meter_pointer_t *ptThis,
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_location_t *ptPivot,
+                                            uint8_t chOpacity)
 {
-    spin_zoom_widget_show(&this.use_as__spin_zoom_widget_t,
-                          ptTile,
-                          ptRegion,
-                          ptPivot,
-                          chOpacity);
+    spin_zoom_widget_show_with_normal_pivot(  &this.use_as__spin_zoom_widget_t,
+                                                ptTile,
+                                                ptRegion,
+                                                ptPivot,
+                                                chOpacity);
+}
+
+ARM_NONNULL(1, 2)
+void meter_pointer_show_with_fp_pivot(  meter_pointer_t *ptThis,
+                                        const arm_2d_tile_t *ptTile,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_point_float_t *ptPivot,
+                                        uint8_t chOpacity)
+{
+    spin_zoom_widget_show_with_fp_pivot(&this.use_as__spin_zoom_widget_t,
+                                        ptTile,
+                                        ptRegion,
+                                        ptPivot,
+                                        chOpacity);
 }
 
 ARM_NONNULL(1)

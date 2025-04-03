@@ -220,11 +220,11 @@ void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis)
 }
 
 ARM_NONNULL(1,2)
-void __spin_zoom_widget_show_with_normal_pivot(   spin_zoom_widget_t *ptThis,
-                                const arm_2d_tile_t *ptTile,
-                                const arm_2d_region_t *ptRegion,
-                                const arm_2d_location_t *ptPivot,
-                                uint8_t chOpacity)
+void spin_zoom_widget_show_with_normal_pivot(   spin_zoom_widget_t *ptThis,
+                                                const arm_2d_tile_t *ptTile,
+                                                const arm_2d_region_t *ptRegion,
+                                                const arm_2d_location_t *ptPivot,
+                                                uint8_t chOpacity)
 {
     if (-1 == (intptr_t)ptTile) {
         ptTile = arm_2d_get_default_frame_buffer();
@@ -256,7 +256,7 @@ void __spin_zoom_widget_show_with_normal_pivot(   spin_zoom_widget_t *ptThis,
 }
 
 ARM_NONNULL(1,2)
-void __spin_zoom_widget_show_with_fp_pivot( spin_zoom_widget_t *ptThis,
+void spin_zoom_widget_show_with_fp_pivot( spin_zoom_widget_t *ptThis,
                                             const arm_2d_tile_t *ptTile,
                                             const arm_2d_region_t *ptRegion,
                                             const arm_2d_point_float_t *ptPivot,
