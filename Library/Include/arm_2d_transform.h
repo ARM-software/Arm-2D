@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the APIs for transform
  *
  * $Date:        3 April 2025
- * $Revision:    V.2.2.1
+ * $Revision:    V.2.2.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
