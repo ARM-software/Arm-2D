@@ -22,7 +22,7 @@
  * Description:  APIs for tile transform
  *
  * $Date:        3 April 2025
- * $Revision:    V.2.2.1
+ * $Revision:    V.2.2.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -578,12 +578,13 @@ static void __arm_2d_transform_preprocess_target(
 }
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare(
                                             arm_2d_op_trans_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
-                                            const arm_2d_location_t tCentre,
+                                            const arm_2d_point_float_t tCentre,
                                             float fAngle,
-                                            float fScale,
+                                            float fScaleX,
+                                            float fScaleY,
                                             uint_fast8_t chFillColour)
 {
     assert(NULL != ptSource);
@@ -600,22 +601,42 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = chFillColour;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
 }
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
                                             arm_2d_op_trans_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale,
+                                            uint8_t chFillColour)
+{
+    return arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare(
+        ptOP,
+        ptSource,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale,
+        chFillColour
+    );
+}
+
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_colour_keying_prepare(
+                                            arm_2d_op_trans_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
                                             uint_fast16_t hwFillColour)
 {
     assert(NULL != ptSource);
@@ -632,22 +653,42 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = hwFillColour;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
 }
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_prepare(
+arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
                                             arm_2d_op_trans_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale,
+                                            uint16_t hwFillColour)
+{
+    return arm_2dp_rgb565_tile_transform_xy_with_colour_keying_prepare(
+        ptOP,
+        ptSource,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale,
+        hwFillColour
+    );
+}
+
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_colour_keying_prepare(
+                                            arm_2d_op_trans_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
                                             uint32_t wFillColour)
 {
     assert(NULL != ptSource);
@@ -664,13 +705,32 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.wColour = wFillColour;
 
     return __arm_2d_transform_preprocess_source(ptThis, &this.tTransform);
+}
+
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_prepare(
+                                            arm_2d_op_trans_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_location_t tCentre,
+                                            float fAngle,
+                                            float fScale,
+                                            uint32_t wFillColour)
+{
+    return arm_2dp_cccn888_tile_transform_xy_with_colour_keying_prepare(
+        ptOP,
+        ptSource,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale,
+        wFillColour
+    );
 }
 
 arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying(__arm_2d_sub_task_t *ptTask)

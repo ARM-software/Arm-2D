@@ -4015,7 +4015,8 @@ typedef struct arm_2d_op_trans_msk_opa_t {
 /*============================ PROTOTYPES ====================================*/
 
 /*!
- * \brief prepare for a transform with colour-keying in gray8 
+ * \brief prepare for a transform with colour-keying in gray8
+ * \deprecated this API is deprecated, please use arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] tCentre the pivot in the source tile
@@ -4032,10 +4033,33 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint_fast8_t chFillColour);
+                                        uint8_t chFillColour);
+
+/*!
+ * \brief prepare for a transform with colour-keying in gray8
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleX the scaling factor for Y axis
+ * \param[in] chFillColour the key colour
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare(
+                                            arm_2d_op_trans_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
+                                            uint8_t chFillColour);
 
 /*!
  * \brief prepare for a transform with colour-keying in rgb565
+ * \deprecated this API is deprecated, please use arm_2dp_rgb565_tile_transform_xy_with_colour_keying_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] tCentre the pivot in the source tile
@@ -4052,10 +4076,33 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint_fast16_t hwFillColour);
+                                        uint16_t hwFillColour);
+
+/*!
+ * \brief prepare for a transform with colour-keying in rgb565
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleX the scaling factor for Y axis
+ * \param[in] hwFillColour the key colour
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_colour_keying_prepare(
+                                            arm_2d_op_trans_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
+                                            uint16_t hwFillColour);
 
 /*!
  * \brief prepare for a transform with colour-keying in cccn888
+ * \deprecated this API is deprecated, please use arm_2dp_cccn888_tile_transform_xy_with_colour_keying_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] tCentre the pivot in the source tile
@@ -4074,6 +4121,27 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_colour_keying_prepare(
                                         float fScale,
                                         uint32_t wFillColour);
 
+/*!
+ * \brief prepare for a transform with colour-keying in cccn888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleX the scaling factor for Y axis
+ * \param[in] wFillColour the key colour
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_colour_keying_prepare(
+                                            arm_2d_op_trans_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
+                                            uint32_t wFillColour);
 
 /*!
  * \brief prepare for a transform in gray8
