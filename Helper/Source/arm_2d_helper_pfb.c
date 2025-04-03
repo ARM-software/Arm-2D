@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        20. March 2025
- * $Revision:    V.1.13.3
+ * $Date:        3. April 2025
+ * $Revision:    V.1.13.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4704,9 +4704,12 @@ void arm_2d_helper_dirty_region_transform_init(
 
     this.ptTransformOP = ptTransformOP;
     this.Angle.fStep = fAngleStep;
-    this.Scale.fStep = fScaleStep;
-    this.Scale.fValue = 1.0f;
-    this.fScale = 1.0f;
+    this.ScaleX.fStep = fScaleStep;
+    this.ScaleX.fValue = 1.0f;
+    this.fScaleX = 1.0f;
+    this.ScaleY.fStep = fScaleStep;
+    this.ScaleY.fValue = 0.0f;
+    this.fScaleY = 0.0f;
 
     this.bNeedUpdate = true;
     this.ptHelper = ptHelper;
@@ -4775,11 +4778,11 @@ void arm_2d_helper_dirty_region_transform_on_frame_start(
 
     /* make it thread safe */
     arm_irq_safe {
-
         if (this.bNeedUpdate) {
             this.bNeedUpdate = false;
             this.fAngle = this.Angle.fValue;
-            this.fScale = this.Scale.fValue;
+            this.fScaleX = this.ScaleX.fValue;
+            this.fScaleY = this.ScaleY.fValue;
         }
     }
 }
@@ -4818,7 +4821,7 @@ bool arm_2d_helper_dirty_region_transform_suspend_update(
 
 
 ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_transform_update_value(  
+void __arm_2d_helper_dirty_region_transform_update_value0(  
                                 arm_2d_helper_dirty_region_transform_t *ptThis,
                                 float fAngle,
                                 float fScale)
@@ -4838,11 +4841,51 @@ void arm_2d_helper_dirty_region_transform_update_value(
     }
 
     arm_irq_safe {
-        fDelta = this.Scale.fValue - fScale;
+        fDelta = this.ScaleX.fValue - fScale;
         fDelta = ABS(fDelta);
 
-        if (fDelta >= this.Scale.fStep) {
-            this.Scale.fValue = fScale;
+        if (fDelta >= this.ScaleX.fStep) {
+            this.ScaleX.fValue = fScale;
+            this.bNeedUpdate = true;
+        }
+    }
+}
+
+ARM_NONNULL(1)
+void __arm_2d_helper_dirty_region_transform_update_value1(  
+                                arm_2d_helper_dirty_region_transform_t *ptThis,
+                                float fAngle,
+                                float fScaleX,
+                                float fScaleY)
+{
+    assert(NULL != ptThis);
+    
+    float fDelta = 0.0f;
+
+    arm_irq_safe {
+        float fDelta = this.Angle.fValue - fAngle;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.Angle.fStep) {
+            this.Angle.fValue = fAngle;
+            this.bNeedUpdate = true;
+        }
+    }
+
+    arm_irq_safe {
+        fDelta = this.ScaleX.fValue - fScaleX;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.ScaleX.fStep) {
+            this.ScaleX.fValue = fScaleX;
+            this.bNeedUpdate = true;
+        }
+
+        fDelta = this.ScaleY.fValue - fScaleY;
+        fDelta = ABS(fDelta);
+
+        if (fDelta >= this.ScaleY.fStep) {
+            this.ScaleY.fValue = fScaleY;
             this.bNeedUpdate = true;
         }
     }

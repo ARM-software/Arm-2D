@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        20. March 2025
- * $Revision:    V.1.13.3
+ * $Date:        3. April 2025
+ * $Revision:    V.1.13.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -456,6 +456,16 @@ extern "C" {
                                 (__target_tile_ptr),                            \
                                 (__target_region_ptr),                          \
                                 (__consider_dry_run),##__VA_ARGS__)
+
+#define arm_2d_helper_dirty_region_transform_update_value(  __HELPER_PTR,       \
+                                                             __ANGLE,           \
+                                                             __SCALE,           \
+                                                             ...)               \
+            ARM_CONNECT2(   __arm_2d_helper_dirty_region_transform_update_value,\
+                            __ARM_VA_NUM_ARGS(__VA_ARGS__))((__HELPER_PTR),     \
+                                                            (__ANGLE),          \
+                                                            __SCALE,            \
+                                                            ##__VA_ARGS__)
 
 #define impl_arm_2d_region_list(__NAME, ...)                                    \
             IMPL_ARM_2D_REGION_LIST(__NAME,##__VA_ARGS__)
@@ -916,7 +926,12 @@ ARM_PRIVATE(
     struct {
         float fValue;
         float fStep;
-    } Scale;
+    } ScaleX;
+
+    struct {
+        float fValue;
+        float fStep;
+    } ScaleY;
 
     bool bNeedUpdate;
 )
@@ -1882,10 +1897,28 @@ bool arm_2d_helper_dirty_region_transform_suspend_update(
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_dirty_region_transform_update_value(  
-                                arm_2d_helper_dirty_region_transform_t *ptThis,
-                                float fAngle,
-                                float fScale);
+void __arm_2d_helper_dirty_region_transform_update_value0(  
+                                    arm_2d_helper_dirty_region_transform_t *ptThis,
+                                    float fAngle,
+                                    float fScale);
+
+/*!
+ * \brief update a given dirty region transform helper with new values
+ *
+ * \param[in] ptThis the target helper
+ * \param[in] fAngle the new angle value
+ * \param[in] fScaleX the new scale ratio for X axis
+ * \param[in] fScaleY the new scale ratio for Y axis
+ * \note The new value is only accepted when the change between the old value 
+ *       and the new value is larger than the minimal acceptable mount.
+ */
+extern
+ARM_NONNULL(1)
+void __arm_2d_helper_dirty_region_transform_update_value1(  
+                                    arm_2d_helper_dirty_region_transform_t *ptThis,
+                                    float fAngle,
+                                    float fScaleX,
+                                    float fScaleY);
 
 /*!
  * \brief update the dirty region after a transform operation
