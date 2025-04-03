@@ -4257,6 +4257,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_only_with_opacity_prepare(
 
 /*!
  * \brief prepare for a transform with a source mask in gray8
+ * \deprecated this API is deprecated, please use arm_2dp_gray8_tile_transform_xy_with_src_maskprepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] ptSourceMask the source mask
@@ -4276,7 +4277,30 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
                                         float fScale);
 
 /*!
+ * \brief prepare for a transform with a source mask in gray8
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSourceMask the source mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_src_mask_prepare(
+                                            arm_2d_op_trans_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY);
+
+/*!
  * \brief prepare for a transform with a source mask in rgb565
+ * \deprecated this API is deprecated, please use arm_2dp_rgb565_tile_transform_xy_with_src_mask_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] ptSourceMask the source mask
@@ -4296,7 +4320,30 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
                                         float fScale);
 
 /*!
+ * \brief prepare for a transform with a source mask in rgb565
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSourceMask the source mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_src_mask_prepare(
+                                            arm_2d_op_trans_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY);
+
+/*!
  * \brief prepare for a transform with a source mask in cccn888
+ * \deprecated this API is deprecated, please use arm_2dp_cccn888_tile_transform_xy_with_src_mask_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] ptSourceMask the source mask
@@ -4316,7 +4363,30 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
                                         float fScale);
 
 /*!
+ * \brief prepare for a transform with a source mask in cccn888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSourceMask the source mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_src_mask_prepare(
+                                            arm_2d_op_trans_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY);
+
+/*!
  * \brief prepare for a transform with a source mask and opacity in gray8
+ * \deprecated this API is deprecated, please use arm_2dp_gray8_tile_transform_xy_with_src_mask_and_opacity_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] ptSourceMask the source mask
@@ -4338,7 +4408,32 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
                                         uint_fast8_t chOpacity);
 
 /*!
+ * \brief prepare for a transform with a source mask and opacity in gray8
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSourceMask the source mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_src_mask_and_opacity_prepare(
+                                            arm_2d_op_trans_msk_opa_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
+                                            uint_fast8_t chOpacity);
+
+/*!
  * \brief prepare for a transform with a source mask and opacity in rgb565
+ * \deprecated this API is deprecated, please use arm_2dp_rgb565_tile_transform_xy_with_src_mask_and_opacity_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] ptSourceMask the source mask
@@ -4360,7 +4455,32 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
                                         uint_fast8_t chOpacity);
 
 /*!
+ * \brief prepare for a transform with a source mask and opacity in rgb565
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSourceMask the source mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_src_mask_and_opacity_prepare(
+                                            arm_2d_op_trans_msk_opa_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
+                                            uint_fast8_t chOpacity);
+
+/*!
  * \brief prepare for a transform with a source mask and opacity in cccn888
+ * \deprecated this API is deprecated, please use arm_2dp_cccn888_tile_transform_xy_with_src_mask_and_opacity_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
  * \param[in] ptSourceMask the source mask
@@ -4381,10 +4501,34 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
                                         float fScale,
                                         uint_fast8_t chOpacity);
 
+/*!
+ * \brief prepare for a transform with a source mask and opacity in cccn888
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSourceMask the source mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_src_mask_and_opacity_prepare(
+                                            arm_2d_op_trans_msk_opa_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
+                                            uint_fast8_t chOpacity);
 
 /*!
  * \brief prepare for a gray8 colour-filling with a mask, a given opacity and 
  *        transform
+ * \deprecated this API is deprecated, please use arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the target mask
  * \param[in] tCentre the pivot in the source tile
@@ -4406,8 +4550,35 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
                                         uint_fast8_t chOpacity);
 
 /*!
+ * \brief prepare for a gray8 colour-filling with a mask, a given opacity and 
+ *        transform
+ *
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptMask the target mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \param[in] chFillColour the colour to fill
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_point_float_t tCentre,
+                                        float fAngle,
+                                        float fScaleX,
+                                        float fScaleY,
+                                        uint_fast8_t chFillColour,
+                                        uint_fast8_t chOpacity);
+
+/*!
  * \brief prepare for a rgb565 colour-filling with a mask, a given opacity and 
  *        transform
+ * \deprecated this API is deprecated, please use arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the target mask
  * \param[in] tCentre the pivot in the source tile
@@ -4429,8 +4600,34 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
                                         uint_fast8_t chOpacity);
 
 /*!
+ * \brief prepare for a rgb565 colour-filling with a mask, a given opacity and 
+ *        transform
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptMask the target mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \param[in] hwFillColour the colour to fill
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_point_float_t tCentre,
+                                        float fAngle,
+                                        float fScaleX,
+                                        float fScaleY,
+                                        uint_fast16_t hwFillColour,
+                                        uint_fast8_t chOpacity);
+
+/*!
  * \brief prepare for a cccn888 colour-filling with a mask, a given opacity and 
  *        transform
+ * \deprecated this API is deprecated, please use arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the target mask
  * \param[in] tCentre the pivot in the source tile
@@ -4452,8 +4649,33 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
                                         uint_fast8_t chOpacity);
 
 /*!
+ * \brief prepare for a cccn888 colour-filling with a mask, a given opacity and 
+ *        transform
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptMask the target mask
+ * \param[in] tCentre the pivot in the source tile
+ * \param[in] fAngle the rotation angle
+ * \param[in] fScaleX the scaling factor for X axis
+ * \param[in] fScaleY the scaling factor for X axis
+ * \param[in] wFillColour the colour to fill
+ * \param[in] chOpacity the opacity
+ * \return arm_2d_err_t the result of the preparing process
+ */
+extern
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_point_float_t tCentre,
+                                        float fAngle,
+                                        float fScaleX,
+                                        float fScaleY,
+                                        uint32_t wFillColour,
+                                        uint_fast8_t chOpacity);
+
+/*!
  * \brief start a transform operation 
- * \deprecated {this API is deprecated, please use arm_2dp_tile_transform_xy() instead}
+ * \deprecated this API is deprecated, please use arm_2dp_tile_transform_xy() instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTarget the target tile
  * \param[in] ptRegion the target region

@@ -1274,13 +1274,14 @@ arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
 
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_src_mask_prepare(
                                             arm_2d_op_trans_msk_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
-                                            const arm_2d_location_t tCentre,
+                                            const arm_2d_point_float_t tCentre,
                                             float fAngle,
-                                            float fScale)
+                                            float fScaleX,
+                                            float fScaleY)
 {
     assert(NULL != ptSource);
 
@@ -1306,10 +1307,9 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = chFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
     this.Mask.ptTargetSide = NULL;
@@ -1319,13 +1319,34 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
 }
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_prepare(
                                             arm_2d_op_trans_msk_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale)
+{
+    return arm_2dp_gray8_tile_transform_xy_with_src_mask_prepare(
+        ptOP,
+        ptSource,
+        ptSourceMask,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale
+    );
+}
+
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_src_mask_prepare(
+                                            arm_2d_op_trans_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY)
 {
     assert(NULL != ptSource);
 
@@ -1351,10 +1372,9 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = hwFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
     this.Mask.ptTargetSide = NULL;
@@ -1364,13 +1384,35 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
 }
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
+arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_prepare(
                                             arm_2d_op_trans_msk_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale)
+{
+    return arm_2dp_rgb565_tile_transform_xy_with_src_mask_prepare(
+        ptOP,
+        ptSource,
+        ptSourceMask,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale
+    );
+}
+
+
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_src_mask_prepare(
+                                            arm_2d_op_trans_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY)
 {
     assert(NULL != ptSource);
 
@@ -1396,16 +1438,35 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = wFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
     this.Mask.ptTargetSide = NULL;
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
                                                 &this.tTransform);
+}
+
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_prepare(
+                                            arm_2d_op_trans_msk_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_location_t tCentre,
+                                            float fAngle,
+                                            float fScale)
+{
+    return arm_2dp_cccn888_tile_transform_xy_with_src_mask_prepare(
+        ptOP,
+        ptSource,
+        ptSourceMask,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale
+    );
 }
 
 arm_fsm_rt_t
@@ -1510,13 +1571,14 @@ __arm_2d_cccn888_sw_transform_with_src_mask(__arm_2d_sub_task_t *ptTask)
 
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_src_mask_and_opacity_prepare(
                                             arm_2d_op_trans_msk_opa_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
-                                            const arm_2d_location_t tCentre,
+                                            const arm_2d_point_float_t tCentre,
                                             float fAngle,
-                                            float fScale,
+                                            float fScaleX,
+                                            float fScaleY,
                                             uint_fast8_t chOpacity)
 {
     assert(NULL != ptSource);
@@ -1543,10 +1605,9 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = chFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
     this.Mask.ptTargetSide = NULL;
@@ -1557,13 +1618,36 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
 }
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
+arm_2d_err_t arm_2dp_gray8_tile_transform_with_src_mask_and_opacity_prepare(
                                             arm_2d_op_trans_msk_opa_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale,
+                                            uint_fast8_t chOpacity)
+{
+    return arm_2dp_gray8_tile_transform_xy_with_src_mask_and_opacity_prepare(
+        ptOP,
+        ptSource,
+        ptSourceMask,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale,
+        chOpacity
+    );
+}
+
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_src_mask_and_opacity_prepare(
+                                            arm_2d_op_trans_msk_opa_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
                                             uint_fast8_t chOpacity)
 {
     assert(NULL != ptSource);
@@ -1590,10 +1674,9 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = hwFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
     this.Mask.ptTargetSide = NULL;
@@ -1604,13 +1687,36 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
 }
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
+arm_2d_err_t arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity_prepare(
                                             arm_2d_op_trans_msk_opa_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptSourceMask,
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale,
+                                            uint_fast8_t chOpacity)
+{
+    return arm_2dp_rgb565_tile_transform_xy_with_src_mask_and_opacity_prepare(
+        ptOP,
+        ptSource,
+        ptSourceMask,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale,
+        chOpacity
+    );
+}
+
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_src_mask_and_opacity_prepare(
+                                            arm_2d_op_trans_msk_opa_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_point_float_t tCentre,
+                                            float fAngle,
+                                            float fScaleX,
+                                            float fScaleY,
                                             uint_fast8_t chOpacity)
 {
     assert(NULL != ptSource);
@@ -1637,10 +1743,9 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
     this.Origin.ptTile = ptSource;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     //this.tTransform.Mask.hwColour = wFillColour;
     this.Mask.ptOriginSide = ptSourceMask;
     this.Mask.ptTargetSide = NULL;
@@ -1648,6 +1753,28 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
 
     return __arm_2d_transform_preprocess_source((arm_2d_op_trans_t *)ptThis,
                                                 &this.tTransform);
+}
+
+ARM_NONNULL(2,3)
+arm_2d_err_t arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity_prepare(
+                                            arm_2d_op_trans_msk_opa_t *ptOP,
+                                            const arm_2d_tile_t *ptSource,
+                                            const arm_2d_tile_t *ptSourceMask,
+                                            const arm_2d_location_t tCentre,
+                                            float fAngle,
+                                            float fScale,
+                                            uint_fast8_t chOpacity)
+{
+    return arm_2dp_cccn888_tile_transform_xy_with_src_mask_and_opacity_prepare(
+        ptOP,
+        ptSource,
+        ptSourceMask,
+        (arm_2d_point_float_t){.fX = tCentre.iX, .fY = tCentre.iY,},
+        fAngle,
+        fScale,
+        fScale,
+        chOpacity
+    );
 }
 
 arm_fsm_rt_t
@@ -1808,12 +1935,13 @@ __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptT
 
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
+arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
-                                        const arm_2d_location_t tCentre,
+                                        const arm_2d_point_float_t tCentre,
                                         float fAngle,
-                                        float fScale,
+                                        float fScaleX,
+                                        float fScaleY,
                                         uint_fast8_t chFillColour,
                                         uint_fast8_t chOpacity)
 {
@@ -1841,10 +1969,9 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
     this.Origin.ptTile = ptMask;
     this.wMode = 0;
     this.tTransform.fAngle = fAngle;
-    this.tTransform.fScaleX = fScale;
-    this.tTransform.fScaleY = fScale;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.fScaleX = fScaleX;
+    this.tTransform.fScaleY = fScaleY;
+    this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.chColour = chFillColour;
     this.chOpacity = chOpacity;
 
@@ -1852,12 +1979,33 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
                                                 &this.tTransform);
 }
 
+ARM_NONNULL(2)
+arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
+                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptMask,
+                                        const arm_2d_location_t tCentre,
+                                        float fAngle,
+                                        float fScale,
+                                        uint_fast8_t chFillColour,
+                                        uint_fast8_t chOpacity)
+{
+    return arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+        ptOP, 
+        ptMask, 
+        (arm_2d_point_float_t){ .fX = tCentre.iX, .fY = tCentre.iY },
+        fAngle,
+        fScale,
+        fScale,
+        chFillColour,
+        chOpacity
+    );
+}
 
 ARM_NONNULL(2)
 arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
-                                        const arm_2d_location_t tCentre,
+                                        const arm_2d_point_float_t tCentre,
                                         float fAngle,
                                         float fScaleX,
                                         float fScaleY,
@@ -1890,8 +2038,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepa
     this.tTransform.fAngle = fAngle;
     this.tTransform.fScaleX = fScaleX;
     this.tTransform.fScaleY = fScaleY;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.hwColour = hwFillColour;
     this.chOpacity = chOpacity;
 
@@ -1910,14 +2057,22 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
                                         uint_fast8_t chOpacity)
 {
     return arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(
-            ptOP, ptMask, tCentre, fAngle, fScale, fScale, hwFillColour, chOpacity);
+                    ptOP, 
+                    ptMask, 
+                    (arm_2d_point_float_t){ .fX = tCentre.iX, .fY = tCentre.iY },
+                    fAngle,
+                    fScale,
+                    fScale,
+                    hwFillColour,
+                    chOpacity
+                );
 }
 
 ARM_NONNULL(2)
 arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
-                                        const arm_2d_location_t tCentre,
+                                        const arm_2d_point_float_t tCentre,
                                         float fAngle,
                                         float fScaleX,
                                         float fScaleY,
@@ -1950,8 +2105,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prep
     this.tTransform.fAngle = fAngle;
     this.tTransform.fScaleX = fScaleX;
     this.tTransform.fScaleY = fScaleY;
-    this.tTransform.tCenter.fX = tCentre.iX;
-    this.tTransform.tCenter.fY = tCentre.iY;
+    this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.wColour = wFillColour;
     this.chOpacity = chOpacity;
 
@@ -1970,7 +2124,15 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
                                         uint_fast8_t chOpacity)
 {
     return arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare(
-        ptOP, ptMask, tCentre, fAngle, fScale, fScale, wFillColour, chOpacity);
+                    ptOP, 
+                    ptMask, 
+                    (arm_2d_point_float_t){ .fX = tCentre.iX, .fY = tCentre.iY },
+                    fAngle,
+                    fScale,
+                    fScale,
+                    wFillColour,
+                    chOpacity
+                );
 }
 
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
