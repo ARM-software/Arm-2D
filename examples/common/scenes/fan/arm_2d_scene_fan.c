@@ -516,9 +516,13 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .bUseFloatPointInCentre = true,
             .Source = {
                 .ptMask = &c_tileFanBladeMask,
-                .tCentre = s_tFanCentre,
+                .tCentreFloat = (arm_2d_point_float_t){
+                    .fX = (c_tileFanBladeMask.tRegion.tSize.iWidth / 2.0f) - 5.0f,
+                    .fY = 70,
+                },
                 .tColourToFill = GLCD_COLOR_RED,
             },
             .ptScene = (arm_2d_scene_t *)ptThis,
@@ -539,9 +543,13 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .bUseFloatPointInCentre = true,
             .Source = {
                 .ptMask = &c_tileFanBladeMask,
-                .tCentre = s_tFanCentre,
+                .tCentreFloat = (arm_2d_point_float_t){
+                    .fX = (c_tileFanBladeMask.tRegion.tSize.iWidth / 2.0f) - 5.0f,
+                    .fY = 70,
+                },
                 .tColourToFill = GLCD_COLOR_RED,
             },
             .ptScene = (arm_2d_scene_t *)ptThis,
