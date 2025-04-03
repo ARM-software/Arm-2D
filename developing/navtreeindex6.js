@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"md_getting_started_as_an_application_designer.html#autotoc_md49":[2,1,1],
+"md_getting_started_as_an_application_designer.html#autotoc_md50":[2,1,2],
 "md_getting_started_as_an_application_designer.html#autotoc_md51":[2,1,3],
 "md_getting_started_as_an_application_designer.html#autotoc_md52":[2,1,4],
 "md_getting_started_as_an_application_designer.html#autotoc_md53":[2,1,5],
