@@ -47,6 +47,28 @@ extern "C" {
 #include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ > 199901L
+#define spin_zoom_widget_show(  __THIS_PTR,                                     \
+                                __TARGET_TILE_PTR,                              \
+                                __REGION_PTR,                                   \
+                                __PIVOT_PTR,                                    \
+                                __OPACITY)                                      \
+    _Generic((__PIVOT_PTR),                                                     \
+        const arm_2d_location_t *   : __spin_zoom_widget_show_with_normal_pivot,\
+        arm_2d_location_t *         : __spin_zoom_widget_show_with_normal_pivot,\
+        void *                      : __spin_zoom_widget_show_with_fp_pivot,    \
+        const arm_2d_point_float_t *: __spin_zoom_widget_show_with_fp_pivot,    \
+        arm_2d_point_float_t *      : __spin_zoom_widget_show_with_fp_pivot     \
+    )(  (__THIS_PTR),                                                           \
+        (__TARGET_TILE_PTR),                                                    \
+        (__REGION_PTR),                                                         \
+        (__PIVOT_PTR),                                                          \
+        (__OPACITY))
+
+#else
+#   define spin_zoom_widget_show    __spin_zoom_widget_show_with_normal_pivot
+#endif
 /*============================ TYPES =========================================*/
 
 
@@ -57,7 +79,7 @@ typedef const struct spin_zoom_widget_mode_t {
     arm_fsm_rt_t (*fnTransform)(spin_zoom_widget_t *ptThis, 
                                 const arm_2d_tile_t *ptTile,
                                 const arm_2d_region_t *ptRegion,
-                                const arm_2d_location_t *ptPivot,
+                                const arm_2d_point_float_t *ptPivot,
                                 uint8_t chOpacity);
 
 } spin_zoom_widget_mode_t;
@@ -68,7 +90,10 @@ typedef struct spin_zoom_widget_cfg_t {
     struct {
         const arm_2d_tile_t     *ptMask;
         const arm_2d_tile_t     *ptSource;
-        arm_2d_location_t       tCentre;
+        union {
+            arm_2d_point_float_t    tCentreFloat;
+            arm_2d_location_t       tCentre;
+        };
         union {
             COLOUR_INT     tColourForKeying;
             COLOUR_INT     tColourToFill;
@@ -90,9 +115,16 @@ typedef struct spin_zoom_widget_cfg_t {
 
         struct {
             float fAngle;
-            float fScale;
+            union {
+                float fScale;
+                float fScaleX;
+            };
+            float fScaleY;
         } Step;
     } Indicator;
+
+    uint32_t bUseFloatPointInCentre : 1;
+    uint32_t                        : 31;
 
 } spin_zoom_widget_cfg_t;
 
@@ -164,11 +196,19 @@ void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)
-void spin_zoom_widget_show( spin_zoom_widget_t *ptThis,
-                            const arm_2d_tile_t *ptTile,
-                            const arm_2d_region_t *ptRegion,
-                            const arm_2d_location_t *ptPivot,
-                            uint8_t chOpacity);
+void __spin_zoom_widget_show_with_normal_pivot( spin_zoom_widget_t *ptThis,
+                                                const arm_2d_tile_t *ptTile,
+                                                const arm_2d_region_t *ptRegion,
+                                                const arm_2d_location_t *ptPivot,
+                                                uint8_t chOpacity);
+
+extern
+ARM_NONNULL(1,2)
+void __spin_zoom_widget_show_with_fp_pivot( spin_zoom_widget_t *ptThis,
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity);
 extern
 ARM_NONNULL(1)
 void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT tColour);

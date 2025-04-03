@@ -219,10 +219,16 @@ extern "C" {
                 arm_2dp_gray8_tile_transform_with_colour_keying
 #   define arm_2dp_tile_transform_with_opacity                                  \
                 arm_2dp_gray8_tile_transform_with_opacity
+#   define arm_2dp_tile_transform_xy_with_opacity                                  \
+                arm_2dp_gray8_tile_transform_xy_with_opacity
 #   define arm_2dp_tile_transform_with_src_mask_and_opacity                     \
                 arm_2dp_gray8_tile_transform_with_src_mask_and_opacity
+#   define arm_2dp_tile_transform_xy_with_src_mask_and_opacity                  \
+                arm_2dp_gray8_tile_transform_xy_with_src_mask_and_opacity
 #   define arm_2dp_tile_transform_only_with_opacity                             \
                 arm_2dp_gray8_tile_transform_only_with_opacity
+#   define arm_2dp_tile_transform_xy_only_with_opacity                          \
+                arm_2dp_gray8_tile_transform_xy_only_with_opacity
 #   define arm_2dp_tile_rotation            arm_2dp_gray8_tile_rotation
 #   define arm_2dp_tile_rotation_with_colour_keying                             \
                 arm_2dp_gray8_tile_rotation_with_colour_keying
@@ -271,6 +277,8 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask_xy_mirror_and_opacity
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
+                arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_gray8_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
@@ -450,10 +458,16 @@ extern "C" {
                 arm_2dp_rgb565_tile_transform_with_colour_keying
 #   define arm_2dp_tile_transform_with_opacity                                  \
                 arm_2dp_rgb565_tile_transform_with_opacity
+#   define arm_2dp_tile_transform_xy_with_opacity                               \
+                arm_2dp_rgb565_tile_transform_xy_with_opacity
 #   define arm_2dp_tile_transform_with_src_mask_and_opacity                     \
                 arm_2dp_rgb565_tile_transform_with_src_mask_and_opacity
+#   define arm_2dp_tile_transform_xy_with_src_mask_and_opacity                  \
+                arm_2dp_rgb565_tile_transform_xy_with_src_mask_and_opacity
 #   define arm_2dp_tile_transform_only_with_opacity                             \
                 arm_2dp_rgb565_tile_transform_only_with_opacity
+#   define arm_2dp_tile_transform_xy_only_with_opacity                          \
+                arm_2dp_rgb565_tile_transform_xy_only_with_opacity
 #   define arm_2dp_tile_rotation            arm_2dp_rgb565_tile_rotation
 #   define arm_2dp_tile_rotation_with_colour_keying                             \
                 arm_2dp_rgb565_tile_rotation_with_colour_keying
@@ -502,6 +516,8 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
+                arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_rgb565_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
@@ -680,10 +696,16 @@ extern "C" {
                 arm_2dp_cccn888_tile_transform_with_colour_keying
 #   define arm_2dp_tile_transform_with_opacity                                  \
                 arm_2dp_cccn888_tile_transform_with_opacity
+#   define arm_2dp_tile_transform_xy_with_opacity                               \
+                arm_2dp_cccn888_tile_transform_xy_with_opacity
 #   define arm_2dp_tile_transform_with_src_mask_and_opacity                     \
                 arm_2dp_cccn888_tile_transform_with_src_mask_and_opacity
+#   define arm_2dp_tile_transform_xy_with_src_mask_and_opacity                  \
+                arm_2dp_cccn888_tile_transform_xy_with_src_mask_and_opacity
 #   define arm_2dp_tile_transform_only_with_opacity                             \
                 arm_2dp_cccn888_tile_transform_only_with_opacity
+#   define arm_2dp_tile_transform_xy_only_with_opacity                          \
+                arm_2dp_cccn888_tile_transform_xy_only_with_opacity
 #   define arm_2dp_tile_rotation            arm_2dp_cccn888_tile_rotation
 #   define arm_2dp_tile_rotation_with_colour_keying                             \
                 arm_2dp_cccn888_tile_rotation_with_colour_keying
@@ -732,6 +754,8 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
+                arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_cccn888_fill_colour_with_mask_opacity_and_transform
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \

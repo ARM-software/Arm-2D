@@ -215,7 +215,6 @@ void meter_pointer_show(meter_pointer_t *ptThis,
                           ptRegion,
                           ptPivot,
                           chOpacity);
-
 }
 
 ARM_NONNULL(1)

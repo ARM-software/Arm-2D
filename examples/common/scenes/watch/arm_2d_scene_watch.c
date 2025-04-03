@@ -492,9 +492,6 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
 
     // initialize minutes pointer
     do {
-        s_tPointerMinCenter.iX = (c_tilePointerMinMask.tRegion.tSize.iWidth >> 1);
-        s_tPointerMinCenter.iY = c_tilePointerMinMask.tRegion.tSize.iHeight;
-        
         spin_zoom_widget_cfg_t tCFG = {
             .Indicator = {
                 .LowerLimit = {
@@ -510,9 +507,14 @@ user_scene_watch_t *__arm_2d_scene_watch_init(   arm_2d_scene_player_t *ptDispAd
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+
+            .bUseFloatPointInCentre = true,
             .Source = {
                 .ptMask = &c_tilePointerMinMask,
-                .tCentre = s_tPointerMinCenter,
+                .tCentreFloat = (arm_2d_point_float_t){
+                    .fX = c_tilePointerMinMask.tRegion.tSize.iWidth / 2.0f,
+                    .fY = c_tilePointerMinMask.tRegion.tSize.iHeight,
+                },
                 .tColourToFill = GLCD_COLOR_WHITE,
             },
             .ptScene = (arm_2d_scene_t *)ptThis,

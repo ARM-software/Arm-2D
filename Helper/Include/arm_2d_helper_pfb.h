@@ -895,7 +895,12 @@ ARM_PRIVATE(
 typedef struct arm_2d_helper_dirty_region_transform_t {
 
     float fAngle;
-    float fScale;
+    union {
+        float fScale;
+        float fScaleX;
+    };
+    float fScaleY;
+
     arm_2d_helper_dirty_region_item_t tItem;
 ARM_PRIVATE(
     

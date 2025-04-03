@@ -373,6 +373,10 @@ static demo_scene_t const c_SceneLoaders[] = {
     },
     {
         10000,
+        scene_knob_loader,
+    },
+    {
+        10000,
         scene_alarm_clock_loader,
     },
     {
@@ -448,7 +452,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_transform_loader,
+        //scene_transform_loader,
         //scene_tjpgd_loader,
         //scene_text_reader_loader,
         //scene_ruler_loader,
@@ -462,7 +466,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_basics_loader,
         //scene_fitness_loader,
         //scene_user_defined_opcode_loader,
-        //scene_knob_loader,
+        scene_knob_loader,
         //scene_panel_loader,
     },
 #endif
