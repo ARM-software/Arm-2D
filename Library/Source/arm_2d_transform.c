@@ -2704,6 +2704,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_GRAY8 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour   = true,
+        #endif
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_t, tTransform),
@@ -2724,6 +2727,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_RGB565 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour   = true,
+        #endif
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_t, tTransform),
@@ -2745,6 +2751,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_CCCN888 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour   = true,
+        #endif
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_t, tTransform),
@@ -2827,6 +2836,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_GRAY8 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour   = true,
+        #endif
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
@@ -2848,6 +2860,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_RGB565 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour   = true,
+        #endif
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),
@@ -2869,6 +2884,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_ONLY_WITH_OPACITY_CCCN888 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour   = true,
+        #endif
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_ONLY_WITH_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_opa_t, tTransform),

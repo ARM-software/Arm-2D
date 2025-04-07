@@ -223,10 +223,12 @@ void scene_knob_loader(void)
     arm_2d_scene_knob_init(&DISP0_ADAPTER);
 }
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_user_defined_opcode_loader(void) 
 {
     arm_2d_scene_user_defined_opcode_init(&DISP0_ADAPTER);
 }
+#endif
 
 void scene_mono_loading_loader(void) 
 {
@@ -307,7 +309,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -427,10 +429,12 @@ static demo_scene_t const c_SceneLoaders[] = {
         15000,
         scene_filters_loader,
     },
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
     {
         28000,
         scene_user_defined_opcode_loader,
     },
+#endif
     {
         10000,
         scene_audiomark_loader,
@@ -452,8 +456,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_fan_loader,
-        //scene_transform_loader,
+        //scene_fan_loader,
+        scene_transform_loader,
         //scene_tjpgd_loader,
         //scene_text_reader_loader,
         //scene_ruler_loader,

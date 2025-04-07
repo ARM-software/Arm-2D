@@ -26,7 +26,8 @@
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
- && defined(RTE_Acceleration_Arm_2D_Demos_User_Defined_OPCODE)
+ && defined(RTE_Acceleration_Arm_2D_Demos_User_Defined_OPCODE)                  \
+ && __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #include "arm_2d_helper.h"
 

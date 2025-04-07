@@ -84,7 +84,6 @@ void __CCCA8888_TRANS_FUNC(transform)(
 
 /*============================ IMPLEMENTATION ================================*/
 
-
 __STATIC_INLINE
 void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
                                         arm_2d_region_t *ptOrigValidRegion,
@@ -96,7 +95,7 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
                                         __API_CCCA8888_TRANS_INT_TYPE *pTarget
                                     )
 {
-    uint32_t *pwOrigMask = pwOrigin;
+    uint32_t *pwOrigMask = (uint32_t *)(((uintptr_t)pwOrigin) + 3);
     int_fast16_t iOrigMaskStride = iOrigStride;
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
@@ -175,11 +174,11 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
         uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                               + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
-        __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #else
         uint16_t hwPixelAlpha = wTotalAlpha >> 8;
 
-        __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #endif
 
 #else
@@ -189,38 +188,20 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
         .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    __API_CCCA8888_TRANS_INT_TYPE uPixelResult 
-        = pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+    uint32_t uPixelResult = pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
-    #if __API_CCCA8888_TRANS_CFG_SUPPORT_SOURCE_MASK
-        #if __API_CCCA8888_TRANS_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-            uint16_t hwPixelAlpha 
-                = *(uint8_t *)&pwOrigMask[ tPoint.iY * iOrigMaskStride + tPoint.iX];
-        #else
-            uint16_t hwPixelAlpha = pchOrigMask[tPoint.iY * iOrigMaskStride
-                                            +   tPoint.iX];
-        #endif
+    uint16_t hwPixelAlpha = ((uint8_t *)&uPixelResult)[3];
 
-        #if __API_CCCA8888_TRANS_CFG_SUPPORT_OPACITY
-        hwPixelAlpha = hwPixelAlpha * hwOpacity >> 8;
-        assert(hwOpacity != 255);
-        #endif
+#if __API_CCCA8888_TRANS_CFG_SUPPORT_OPACITY
+    hwPixelAlpha = hwPixelAlpha * hwOpacity >> 8;
+    assert(hwOpacity != 255);
+#endif
 
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-        hwPixelAlpha += (hwPixelAlpha == 255);
-        #endif
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+    hwPixelAlpha += (hwPixelAlpha == 255);
+#endif
 
-        __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
-    #else
-
-        if (uPixelResult != MaskColour) {
-        #if __API_CCCA8888_TRANS_CFG_SUPPORT_OPACITY
-            __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, hwOpacity);
-        #else
-            *pTarget = uPixelResult;
-        #endif
-        }
-    #endif
+    __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, 256 - hwPixelAlpha);
 
 #endif
 }
