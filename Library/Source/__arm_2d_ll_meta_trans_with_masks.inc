@@ -19,10 +19,10 @@
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
  * Title:        __arm_2d_meta_trans_with_masks.inc
- * Description:  c code template for copy and fill like operations
+ * Description:  c code template for tile transform with masks operations
  *
  * $Date:        24. May 2022
- * $Revision:    V.1.1.1
+ * $Revision:    V.1.1.2
  *
  * -------------------------------------------------------------------- */
 

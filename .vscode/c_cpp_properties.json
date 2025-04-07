@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "MacOS M1",
+            "name": "MacOS Apple Silicon",
             "compilerPath": "/usr/bin/clang",
             "intelliSenseMode": "macos-clang-arm64",
             "includePath": [

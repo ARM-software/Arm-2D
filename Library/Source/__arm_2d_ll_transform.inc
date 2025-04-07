@@ -31,6 +31,10 @@
 #ifndef __API_COLOUR
 #   error You have to define __API_COLOUR before using this c template
 #endif
+#ifndef __API_COLOUR_UPPER_CASE
+#   error You have to define __API_COLOUR before using this c template
+#endif
+
 #ifndef __API_INT_TYPE
 #   error You have to define the __API_INT_TYPE before using this c template
 #endif
@@ -868,6 +872,44 @@ void __ARM_2D_FUNC(transform_only_opacity)(
 #   include "__arm_2d_ll_meta_trans_with_masks.inc"
 #endif
 
+/*----------------------------------------------------------------------------*
+ * CCCA8888 Transform                                                         *
+ *----------------------------------------------------------------------------*/
+
+#define __API_CCCA8888_TRANS_COLOUR                         __API_COLOUR
+#define __API_CCCA8888_TRANS_COLOUR_UPPER_CASE              __API_COLOUR_UPPER_CASE
+#define __API_CCCA8888_TRANS_INT_TYPE                       __API_INT_TYPE
+#define __API_CCCA8888_TRANS_INT_TYPE_BIT_NUM               __API_INT_TYPE_BIT_NUM
+
+#define __API_CCCA8888_TRANS_PIXEL_AVERAGE                  __ARM_2D_PIXEL_AVERAGE_CCCN888
+#if __API_INT_TYPE_BIT_NUM == 8
+#   define __API_CCCA8888_TRANS_PIXEL_AVERAGE_RESULT()      __API_CCCA8888_PIXEL_AVERAGE_RESULT_GRAY8()
+#else
+#   define __API_CCCA8888_TRANS_PIXEL_AVERAGE_RESULT        __API_PIXEL_AVERAGE_RESULT
+#endif
+#define __API_CCCA8888_TRANS_PIXEL_AVERAGE_INIT()           __arm_2d_color_fast_rgb_t tPixel = {0};
+
+#include "__arm_2d_ll_meta_ccca8888_trans.inc"
+
+
+#define __API_CCCA8888_TRANS_COLOUR                         __API_COLOUR
+#define __API_CCCA8888_TRANS_COLOUR_UPPER_CASE              __API_COLOUR_UPPER_CASE
+#define __API_CCCA8888_TRANS_INT_TYPE                       __API_INT_TYPE
+#define __API_CCCA8888_TRANS_INT_TYPE_BIT_NUM               __API_INT_TYPE_BIT_NUM
+
+#define __API_CCCA8888_TRANS_PIXEL_AVERAGE                  __ARM_2D_PIXEL_AVERAGE_CCCN888
+#if __API_INT_TYPE_BIT_NUM == 8
+#   define __API_CCCA8888_TRANS_PIXEL_AVERAGE_RESULT()      __API_CCCA8888_PIXEL_AVERAGE_RESULT_GRAY8()
+#else
+#   define __API_CCCA8888_TRANS_PIXEL_AVERAGE_RESULT        __API_PIXEL_AVERAGE_RESULT
+#endif
+#define __API_CCCA8888_TRANS_PIXEL_AVERAGE_INIT()           __arm_2d_color_fast_rgb_t tPixel = {0};
+#define __API_CCCA8888_TRANS_CFG_SUPPORT_OPACITY            1
+
+#define get_pixel_colour                                    get_pixel_colour_opa
+#define transform                                           transform_with_opacity
+
+#include "__arm_2d_ll_meta_ccca8888_trans.inc"
 
 /*----------------------------------------------------------------------------*
  * Fill Colour with Mask Opacity and Transform                                *
@@ -1257,6 +1299,7 @@ void __ARM_2D_FUNC(colour_filling_chn_mask_opacity_transform)(
 #undef ___ARM_2D_FUNC
 #undef __ARM_2D_FUNC
 #undef __API_COLOUR
+#undef __API_COLOUR_UPPER_CASE
 #undef __API_INT_TYPE
 #undef __API_INT_TYPE_BIT_NUM
 #undef __API_PIXEL_BLENDING
