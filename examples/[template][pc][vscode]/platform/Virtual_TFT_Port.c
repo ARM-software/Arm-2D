@@ -7,11 +7,23 @@
 #include <time.h>
 #include "arm_2d_disp_adapters.h"
 
+#include "__arm_2d_impl.h"
+
 #undef main
 
-//#define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
-#define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen */
-//#define monochrome_2_RGB888(color)                (color < 128 ? 0xb6c7e7 : 0x2043a4)             /* blue screen */
+
+
+#ifndef USE_NIXIE_TUBE_FOR_MONOCHROME
+#   define USE_NIXIE_TUBE_FOR_MONOCHROME           1
+#endif    
+
+#if USE_NIXIE_TUBE_FOR_MONOCHROME
+#define monochrome_2_RGB888(color)                (color < 128 ? 0x00000000 : __RGB32(0xFF, 0xA5, 0x00))             /* blue screen */
+#else
+//# define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
+#   define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen */
+//  #define monochrome_2_RGB888(color)                (color < 128 ? 0xb6c7e7 : 0x2043a4)             /* blue screen */
+#endif
 
 #define GRAY8_2_RGB888(color)                     (((color&0xFF)<<16)+((color&0xFF)<<8)+((color&0xFF)))
 #define RGB565_2_RGB888(color)                    (((color&0xF800)<<8)+((color&0x7E0)<<5)+((color&0x1F)<<3))
@@ -61,6 +73,7 @@ static SDL_Window * window;
 static SDL_Renderer * renderer;
 static SDL_Texture * texture;
 static uint32_t tft_fb[VT_WIDTH * VT_HEIGHT];
+static uint32_t tft_fb2[VT_WIDTH * VT_HEIGHT];
 
 uintptr_t __DISP_ADAPTER0_3FB_FB0_ADDRESS__;
 uintptr_t __DISP_ADAPTER0_3FB_FB1_ADDRESS__;
@@ -231,6 +244,15 @@ static void monitor_sdl_init(void)
     sdl_inited = true;
 }
 
+extern
+void __arm_2d_impl_cccn888_filter_iir_blur(
+    uint32_t *__RESTRICT pwTarget,
+    int16_t iTargetStride,
+    arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
+    arm_2d_region_t *ptTargetRegionOnVirtualScreen,
+    uint8_t chBlurDegree,
+    arm_2d_scratch_mem_t *ptScratchMemory);
+
 bool VT_sdl_refresh_task(void)
 {
     if (arm_2d_helper_is_time_out(1000/60)) {
@@ -250,7 +272,32 @@ bool VT_sdl_refresh_task(void)
         sdl_refr_cpl = true;
     #endif
 
+    #if USE_NIXIE_TUBE_FOR_MONOCHROME
+        arm_2d_region_t tValidRegionOnVirtualScree = {
+            .tSize = {
+                .iWidth = VT_WIDTH,
+                .iHeight = VT_HEIGHT,
+            },
+        };
+
+        arm_2d_scratch_mem_t tScratchMemory = {0};
+
+        memcpy(tft_fb2, tft_fb, sizeof(tft_fb2));
+
+        __arm_2d_impl_cccn888_filter_iir_blur(
+            tft_fb2,
+            VT_WIDTH,
+            &tValidRegionOnVirtualScree,
+            &tValidRegionOnVirtualScree,
+            64, 
+            &tScratchMemory
+        );
+        
+
+        SDL_UpdateTexture(texture, NULL, tft_fb2, VT_WIDTH * sizeof(uint32_t));
+    #else
         SDL_UpdateTexture(texture, NULL, tft_fb, VT_WIDTH * sizeof(uint32_t));
+    #endif
         SDL_RenderClear(renderer);
 
         /*Update the renderer with the texture containing the rendered image*/

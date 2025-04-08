@@ -844,6 +844,7 @@ extern "C" {
 #define GLCD_COLOR_YELLOW       __RGB( 255, 255, 0    )
 #define GLCD_COLOR_WHITE        __RGB( 255, 255, 255  )
 #define GLCD_COLOR_ORANGE       __RGB( 255, 128, 0    )
+#define GLCD_COLOR_NIXIE_TUBE   __RGB(0xFF, 0xA5, 0x00)
 
 /*!
  * \brief Please do NOT use this macro directly

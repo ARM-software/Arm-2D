@@ -47,7 +47,6 @@ extern "C" {
 #include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 
-#define GLCD_COLOR_NIXIE_TUBE       __RGB(0xFF, 0xA5, 0x00)
 #define GLCD_COLOR_NIXIE_TUBE_RGB32 __RGB32(0xFF, 0xA5, 0x00)
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
