@@ -20,9 +20,9 @@
 #if USE_NIXIE_TUBE_FOR_MONOCHROME
 #define monochrome_2_RGB888(color)                (color < 128 ? 0x00000000 : __RGB32(0xFF, 0xA5, 0x00))             /* blue screen */
 #else
-//# define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
-#   define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen */
-//  #define monochrome_2_RGB888(color)                (color < 128 ? 0xb6c7e7 : 0x2043a4)             /* blue screen */
+# define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
+//#   define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen */
+//#   define monochrome_2_RGB888(color)                (color < 128 ? 0xb6c7e7 : 0x2043a4)             /* blue screen */
 #endif
 
 #define GRAY8_2_RGB888(color)                     (((color&0xFF)<<16)+((color&0xFF)<<8)+((color&0xFF)))
@@ -272,7 +272,7 @@ bool VT_sdl_refresh_task(void)
         sdl_refr_cpl = true;
     #endif
 
-    #if USE_NIXIE_TUBE_FOR_MONOCHROME
+    #if VT_COLOR_DEPTH == 1
         arm_2d_region_t tValidRegionOnVirtualScree = {
             .tSize = {
                 .iWidth = VT_WIDTH,
