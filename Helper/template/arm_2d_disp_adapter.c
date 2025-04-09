@@ -226,6 +226,8 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                     DISP%Instance%_CONSOLE.chOpacity = lTimeElapsedInMs;
                 }
             }
+        } else {
+            arm_2d_dirty_region_item_ignore_set(&DISP%Instance%_CONSOLE.tBackground, true);
         }
     #endif
     }
