@@ -766,7 +766,7 @@ void disp_adapter%Instance%_navigator_init(void)
     do {
 
     #if __DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__
-        static uint8_t s_chInputBuffer[256];
+        static uint8_t s_chInputBuffer[__DISP%Instance%_CFG_CONSOLE_INPUT_BUFFER__];
     #endif
         static uint8_t s_chConsoleBuffer[   (__DISP%Instance%_CONSOLE_WIDTH__ / 6) 
                                         *   (__DISP%Instance%_CONSOLE_HEIGHT__ / 8)];
