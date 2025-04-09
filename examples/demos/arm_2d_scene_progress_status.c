@@ -287,21 +287,7 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
         /* a dirty region to be specified at runtime*/
         ADD_REGION_TO_LIST(s_tDirtyRegions),
 
-        ADD_REGION_TO_LIST(s_tDirtyRegions),
-
-       /* add the last region:
-         * it is the top left corner for text display 
-         */
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-            .tLocation = {
-                .iX = 0,
-                .iY = 0,
-            },
-            .tSize = {
-                .iWidth = __GLCD_CFG_SCEEN_WIDTH__,
-                .iHeight = 8,
-            },
-        ),
+        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions),
 
     END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 

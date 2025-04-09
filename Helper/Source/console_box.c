@@ -664,12 +664,10 @@ void console_box_show(  console_box_t *ptThis,
             
 
             /* make sure the operation is complete */
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
         }
 
     }
-
-    arm_2d_op_wait_async(NULL);
 }
 
 #if defined(__clang__)
