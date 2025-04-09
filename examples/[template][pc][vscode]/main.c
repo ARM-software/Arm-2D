@@ -135,12 +135,6 @@ void scene_atom_loader(void)
 
 void scene_basics_loader(void) 
 {
-#if 0
-    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
-#endif 
-
     arm_2d_scene_basics_init(&DISP0_ADAPTER);
 }
 
@@ -294,7 +288,6 @@ void scene_animate_background_loader(void)
 {
     arm_2d_scene_animate_background_init(&DISP0_ADAPTER);
 }
-
 
 void scene_virtual_resource_loader(void) 
 {
@@ -475,7 +468,6 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_panel_loader,
     },
 #endif
-
 
 };
 

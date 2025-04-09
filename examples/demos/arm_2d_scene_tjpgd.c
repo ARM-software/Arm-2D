@@ -21,7 +21,8 @@
 #define __USER_SCENE_TJPGD_IMPLEMENT__
 #include "arm_2d_scene_tjpgd.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
+ && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
 
 #include <stdlib.h>
 #include <string.h>

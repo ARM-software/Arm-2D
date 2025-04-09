@@ -426,7 +426,6 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
             }
         }
 
-
         /*! for each item (ptItem) inside array s_tGears */
         arm_foreach (demo_gears_t, s_tGears, ptItem) {
 

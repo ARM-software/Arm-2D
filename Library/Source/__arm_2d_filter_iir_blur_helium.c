@@ -222,7 +222,6 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (uint8_t * __RESTRICT pc
         ptStatusH += tOffset.iX;
     }
 
-
     /* columns direct path */
     for (iX = 0; iX < iWidth / 8; iX++) {
         uint8_t        *pchChannel = pchPixel;
