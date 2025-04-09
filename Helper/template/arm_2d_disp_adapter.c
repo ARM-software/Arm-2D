@@ -211,6 +211,8 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
             }
             DISP%Instance%_CONSOLE.bShowConsole = true;
             DISP%Instance%_CONSOLE.chOpacity = 255;
+        } else {
+            arm_2d_dirty_region_item_ignore_set(&DISP%Instance%_CONSOLE.tBackground, true);
         }
 
     #if __DISP%Instance%_CFG_CONSOLE_DISPALY_TIME__ >= 1000                              \
@@ -225,6 +227,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
                 } else {
                     DISP%Instance%_CONSOLE.chOpacity = lTimeElapsedInMs;
                 }
+                arm_2d_dirty_region_item_ignore_set(&DISP%Instance%_CONSOLE.tBackground, false);
             }
         } else {
             arm_2d_dirty_region_item_ignore_set(&DISP%Instance%_CONSOLE.tBackground, true);
