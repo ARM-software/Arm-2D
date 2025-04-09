@@ -59,6 +59,7 @@ extern "C" {
     _Generic((__PIVOT_PTR),                                                     \
         const arm_2d_location_t *   : meter_pointer_show_with_normal_pivot,     \
         arm_2d_location_t *         : meter_pointer_show_with_normal_pivot,     \
+        intptr_t                    : meter_pointer_show_with_fp_pivot,         \
         void *                      : meter_pointer_show_with_fp_pivot,         \
         const void *                : meter_pointer_show_with_fp_pivot,         \
         const arm_2d_point_float_t *: meter_pointer_show_with_fp_pivot,         \

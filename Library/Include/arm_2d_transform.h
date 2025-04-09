@@ -4365,7 +4365,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint8_t chFillColour);
+                                        uint_fast8_t chFillColour);
 
 /*!
  * \brief prepare for a transform with colour-keying in gray8
@@ -4387,7 +4387,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare(
                                             float fAngle,
                                             float fScaleX,
                                             float fScaleY,
-                                            uint8_t chFillColour);
+                                            uint_fast8_t chFillColour);
 
 /*!
  * \brief prepare for a transform with colour-keying in rgb565
@@ -4408,7 +4408,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint16_t hwFillColour);
+                                        uint_fast16_t hwFillColour);
 
 /*!
  * \brief prepare for a transform with colour-keying in rgb565
@@ -4430,7 +4430,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_colour_keying_prepare(
                                             float fAngle,
                                             float fScaleX,
                                             float fScaleY,
-                                            uint16_t hwFillColour);
+                                            uint_fast16_t hwFillColour);
 
 /*!
  * \brief prepare for a transform with colour-keying in cccn888
@@ -4612,7 +4612,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint8_t chFillColour,
+                                        uint_fast8_t chFillColour,
                                         uint_fast8_t chRatio);
 
 /*!
@@ -4636,7 +4636,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_colour_keying_and_opacity_prep
                                         float fAngle,
                                         float fScaleX,
                                         float fScaleY,
-                                        uint8_t chFillColour,
+                                        uint_fast8_t chFillColour,
                                         uint_fast8_t chOpacity);
 
 /*!
@@ -4659,7 +4659,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepar
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint16_t hwFillColour,
+                                        uint_fast16_t hwFillColour,
                                         uint_fast8_t chRatio);
 
 /*!
@@ -4683,7 +4683,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_xy_with_colour_keying_and_opacity_pre
                                         float fAngle,
                                         float fScaleX,
                                         float fScaleY,
-                                        uint16_t hwFillColour,
+                                        uint_fast16_t hwFillColour,
                                         uint_fast8_t chOpacity);
 
 /*!

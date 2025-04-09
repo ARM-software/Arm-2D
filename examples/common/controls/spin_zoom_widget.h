@@ -57,6 +57,7 @@ extern "C" {
     _Generic((__PIVOT_PTR),                                                     \
         const arm_2d_location_t *   : spin_zoom_widget_show_with_normal_pivot,  \
         arm_2d_location_t *         : spin_zoom_widget_show_with_normal_pivot,  \
+        intptr_t                    : spin_zoom_widget_show_with_fp_pivot,      \
         void *                      : spin_zoom_widget_show_with_fp_pivot,      \
         const void *                : spin_zoom_widget_show_with_fp_pivot,      \
         const arm_2d_point_float_t *: spin_zoom_widget_show_with_fp_pivot,      \

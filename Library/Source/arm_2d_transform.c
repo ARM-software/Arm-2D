@@ -621,7 +621,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_prepare(
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale,
-                                            uint8_t chFillColour)
+                                            uint_fast8_t chFillColour)
 {
     return arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare(
         ptOP,
@@ -673,7 +673,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_prepare(
                                             const arm_2d_location_t tCentre,
                                             float fAngle,
                                             float fScale,
-                                            uint16_t hwFillColour)
+                                            uint_fast16_t hwFillColour)
 {
     return arm_2dp_rgb565_tile_transform_xy_with_colour_keying_prepare(
         ptOP,
@@ -1034,7 +1034,7 @@ arm_2d_err_t arm_2dp_gray8_tile_transform_with_colour_keying_and_opacity_prepare
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint8_t chFillColour,
+                                        uint_fast8_t chFillColour,
                                         uint_fast8_t chOpacity)
 {
     return arm_2dp_gray8_tile_transform_xy_with_colour_keying_and_opacity_prepare(
@@ -1092,7 +1092,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_transform_with_colour_keying_and_opacity_prepar
                                         const arm_2d_location_t tCentre,
                                         float fAngle,
                                         float fScale,
-                                        uint16_t hwFillColour,
+                                        uint_fast16_t hwFillColour,
                                         uint_fast8_t chOpacity)
 {
     return arm_2dp_rgb565_tile_transform_xy_with_colour_keying_and_opacity_prepare(
