@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        24. Feb 2025
- * $Revision:    V.2.3.0
+ * $Date:        10. April 2025
+ * $Revision:    V.2.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -438,10 +438,11 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
 /*!
  * \brier move to the next frame of a given film
  * \param[in] ptThis the target film
+ * \return bool whether the film reaches the end or not
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis);
+bool arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis);
 
 /*!
  * \brier reset the frame index to zero

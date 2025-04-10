@@ -63,6 +63,8 @@
 enum {
     JDEC_CONTEXT_START,
     JDEC_CONTEXT_PREVIOUS_START,
+    JDEC_CONTEXT_PREVIOUS_FRAME_START,
+    JDEC_CONTEXT_PREVIOUS_LINE,
     JDEC_CONTEXT_CURRENT,
 };
 
@@ -440,8 +442,10 @@ bool __arm_tjpgd_decode_prepare(arm_tjpgd_loader_t *ptThis)
         this.tContext[JDEC_CONTEXT_START].marker = this.Decoder.tJDEC.marker;
 
 
-        this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_START];
-        this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_START];
+        this.tContext[JDEC_CONTEXT_PREVIOUS_START]          = this.tContext[JDEC_CONTEXT_START];
+        this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START]    = this.tContext[JDEC_CONTEXT_START];
+        this.tContext[JDEC_CONTEXT_PREVIOUS_LINE]           = this.tContext[JDEC_CONTEXT_START];
+        this.tContext[JDEC_CONTEXT_CURRENT]                 = this.tContext[JDEC_CONTEXT_START];
 
     } while(0);
 
@@ -1301,10 +1305,45 @@ JRESULT jd_decomp_rect (
     };
 
     if (NULL != ptRegion) {
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            0, 
+            "TJpgDec",
+            "\r\nTJpgDec Decoding...\r\n"
+            "==============================================================\r\n"
+            "Interested Region: x=%d, y=%d, width=%d, height=%d",
+            ptRegion->tLocation.iX,
+            ptRegion->tLocation.iY,
+            ptRegion->tSize.iWidth,
+            ptRegion->tSize.iHeight
+        );
+
         if (!arm_2d_region_intersect(&tDrawRegion, ptRegion, &tDrawRegion)) {
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "[SKIP] The interested region is outside of the image: width=%d, height=%d.",
+                tDrawRegion.tSize.iWidth,
+                tDrawRegion.tSize.iHeight
+            );
+
             /* nothing to load */
             return JDR_OK;
         }
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            1, 
+            "TJpgDec", 
+            "Decoding Region: x=%d, y=%d, width=%d, height=%d",
+            tDrawRegion.tLocation.iX,
+            tDrawRegion.tLocation.iY,
+            tDrawRegion.tSize.iWidth,
+            tDrawRegion.tSize.iHeight
+        );
     }
 
 	if (scale > (JD_USE_SCALE ? 3 : 0)) {
@@ -1324,21 +1363,87 @@ JRESULT jd_decomp_rect (
     if (bUseContex) {
 
         do {
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "Check the current location: x=%d, y=%d...",
+                this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX,
+                this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY
+            );
+
             if (    (this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY <= tDrawRegion.tLocation.iY)
                &&   (this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX <= tDrawRegion.tLocation.iX)) {
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TJpgDec", 
+                    "The current location is right before the target location!"
+                );
+
                 /* next position */
                 break;
             }
 
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "Check the previous-line location: x=%d, y=%d...",
+                this.tContext[JDEC_CONTEXT_PREVIOUS_LINE].tLocation.iX,
+                this.tContext[JDEC_CONTEXT_PREVIOUS_LINE].tLocation.iY
+            );
+
+            if (__arm_2d_tjpgd_is_context_before_the_target_region(
+                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE],
+                                            tDrawRegion.tLocation,
+                                            this.Decoder.tBlockRegion.tSize)) {
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TJpgDec", 
+                    "The previous-line location is right before the target location!"
+                );
+
+                /* use previous start point */
+                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_LINE];
+                break;
+            }
         
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "Check the previous-start location: x=%d, y=%d...",
+                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iX,
+                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY
+            );
+
             if (__arm_2d_tjpgd_is_context_before_the_target_region(
                                             &this.tContext[JDEC_CONTEXT_PREVIOUS_START],
                                             tDrawRegion.tLocation,
                                             this.Decoder.tBlockRegion.tSize)) {
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TJpgDec", 
+                    "The previous-start location is right before the target location!"
+                );
+
                 /* use previous start point */
                 this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_START];
                 break;
             }
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "Check reference points..."
+            );
 
             /* scan reference points */
             arm_tjpgd_context_t *ptReference = this.Reference.ptList;
@@ -1346,11 +1451,27 @@ JRESULT jd_decomp_rect (
 
             while(NULL != ptReference) {
 
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TJpgDec", 
+                    "Reference Point: x=%d, y=%d...",
+                    ptReference->tLocation.iX,
+                    ptReference->tLocation.iY
+                );
+
                 if (__arm_2d_tjpgd_is_context_before_the_target_region(
                                         ptReference,
                                         tDrawRegion.tLocation,
                                         this.Decoder.tBlockRegion.tSize)) {
-                    /* use previous start point */
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        3, 
+                        "TJpgDec", 
+                        "The reference point is right before the target location!"
+                    );
+                    
+                    /* find the reference point */
                     this.tContext[JDEC_CONTEXT_CURRENT] = *ptReference;
                     bFindReferencePoint = true;
                     break;
@@ -1362,6 +1483,12 @@ JRESULT jd_decomp_rect (
                 break;
             }
 
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "Failed to find any context...Reset to the start."
+            );
 
             /* use the very start point*/
             this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_START];
@@ -1369,6 +1496,15 @@ JRESULT jd_decomp_rect (
 
         } while(0);
 
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            1, 
+            "TJpgDec", 
+            "Decoding...\r\n"
+            "---------------------------------------------"
+        );
+
+        
 
         /* resume context */
         memcpy(jd->dcv, this.tContext[JDEC_CONTEXT_CURRENT].dcv, sizeof(jd->dcv));
@@ -1407,12 +1543,22 @@ JRESULT jd_decomp_rect (
         y = 0;
     }
 
+
 	for (;y < jd->height; y += my) {		/* Vertical loop of MCUs */
         this.Decoder.tBlockRegion.tLocation.iY = y;
         x = 0;
 		for (; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
 
 label_context_entry:
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                2, 
+                "TJpgDec", 
+                "Decoding Block: x=%d, y=%d...",
+                x,
+                y
+            );
 
             this.Decoder.tBlockRegion.tLocation.iX = x;
 
@@ -1448,7 +1594,21 @@ label_context_entry:
 
             if (!arm_2d_region_intersect(&this.Decoder.tBlockRegion, &tDrawRegion, NULL)) {
 
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    3, 
+                    "TJpgDec", 
+                    "Out of interested region..."
+                );
+
                 if (bUseContex) {
+
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        3, 
+                        "TJpgDec", 
+                        "Save context to slot [JDEC_CONTEXT_CURRENT]"
+                    );
                     __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_CURRENT], x, y, rst, rsc);
                 }
 
@@ -1467,14 +1627,37 @@ label_context_entry:
                     /* copy context */
                     if (y <= tDrawRegion.tLocation.iY) {
                         if (x <= tDrawRegion.tLocation.iX) {
+                            ARM_2D_LOG_INFO(
+                                CONTROLS, 
+                                3, 
+                                "TJpgDec", 
+                                "Save context to slot [JDEC_CONTEXT_PREVIOUS_START]"
+                            );
                             this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_CURRENT];
                         } else if ((y + my) <= tDrawRegion.tLocation.iY) {
+                            ARM_2D_LOG_INFO(
+                                CONTROLS, 
+                                3, 
+                                "TJpgDec", 
+                                "Save context to slot [JDEC_CONTEXT_PREVIOUS_START]"
+                            );
                             this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_CURRENT];
                         }
                     } 
                 }
 
                 continue;
+            }
+
+            if (x == 0) {
+                /* the start of a line */
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    3, 
+                    "TJpgDec", 
+                    "Save context to slot [JDEC_CONTEXT_PREVIOUS_LINE]"
+                );
+                __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE], x, y, rst, rsc);
             }
 
             rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
@@ -1485,9 +1668,18 @@ label_context_entry:
 			rc = mcu_output(jd, outfunc, x, y);	/* Output the MCU (YCbCr to RGB, scaling and output) */
 			if (rc != JDR_OK) return rc;
 		}
+        
 	}
 
 label_normal_exit:
+
+    ARM_2D_LOG_INFO(
+        CONTROLS, 
+        1, 
+        "TJpgDec", 
+        "End of Decoding...\r\n"
+        "==============================================================\r\n"
+    );
 
 	return rc;
 }

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        24. Feb 2025
- * $Revision:    V.2.3.0
+ * $Date:        10. April 2025
+ * $Revision:    V.2.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -651,8 +651,9 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
 }
 
 ARM_NONNULL(1)
-void arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis)
+bool arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis)
 {
+    bool bReachTheEnd = false;
     assert(NULL != ptThis);
     
     arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
@@ -665,9 +666,12 @@ void arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis)
     this.hwFrameIndex++;
     if (this.hwFrameIndex >= this.hwFrameNum) {
         this.hwFrameIndex = 0;
+        bReachTheEnd = true;
         ptFrame->tRegion.tLocation.iX = 0;
         ptFrame->tRegion.tLocation.iY = 0;
     }
+
+    return bReachTheEnd;
 }
 
 ARM_NONNULL(1)

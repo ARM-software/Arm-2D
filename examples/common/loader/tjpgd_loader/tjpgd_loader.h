@@ -209,7 +209,7 @@ ARM_PRIVATE(
         } PreviousRead;
     } Decoder;
 
-    arm_tjpgd_context_t tContext[3];
+    arm_tjpgd_context_t tContext[5];
 
     struct {
         arm_tjpgd_context_t *ptCandidates;
