@@ -237,24 +237,22 @@ IMPL_PFB_ON_DRAW(__disp_adapter%Instance%_draw_navigation)
 
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
-        if (DISP%Instance%_CONSOLE.bShowConsole) {
             arm_2d_align_top_left(  __navigation_canvas, 
                                     __DISP%Instance%_CONSOLE_WIDTH__ + 8, 
                                     __DISP%Instance%_CONSOLE_HEIGHT__ + 8) {
-
-                draw_round_corner_box(  ptTile, 
-                                        &__top_left_region, 
-                                        GLCD_COLOR_DARK_GREY, 
-                                        (128 * DISP%Instance%_CONSOLE.chOpacity) >> 8,
-                                        bIsNewFrame);
-
+                if (DISP%Instance%_CONSOLE.bShowConsole) {
+                    draw_round_corner_box(  ptTile, 
+                                            &__top_left_region, 
+                                            GLCD_COLOR_DARK_GREY, 
+                                            (128 * DISP%Instance%_CONSOLE.chOpacity) >> 8,
+                                            bIsNewFrame);
+                }
                 console_box_show(&DISP%Instance%_CONSOLE.tConsole,
                                 ptTile,
                                 &__top_left_region,
                                 bIsNewFrame,
                                 DISP%Instance%_CONSOLE.chOpacity);
             }
-        }
     }
 
 #endif

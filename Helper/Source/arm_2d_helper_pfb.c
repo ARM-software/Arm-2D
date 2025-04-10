@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        3. April 2025
- * $Revision:    V.1.13.4
+ * $Date:        10. April 2025
+ * $Revision:    V.1.13.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -2369,7 +2369,8 @@ label_start_iteration:
                 assert(NULL != this.Adapter.ptDirtyRegion);
                 if (!this.Adapter.bFailedToOptimizeDirtyRegion) {
 
-                    if (!(bFirstIteration && this.Adapter.bEncounterDynamicDirtyRegion)) {
+                    if (    !(bFirstIteration && this.Adapter.bEncounterDynamicDirtyRegion) 
+                      &&    !this.Adapter.ptDirtyRegion->bIgnore) {
                         /* NOTE: we won't take the first dynamic dirty region into the 
                         * consideration as there is no valid value 
                         */
