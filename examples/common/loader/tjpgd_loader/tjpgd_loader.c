@@ -775,6 +775,8 @@ void arm_tjpgd_loader_on_frame_start( arm_tjpgd_loader_t *ptThis)
 {
     assert(NULL != ptThis);
 
+    this.bIsNewFrame = true;
+
     if (!this.bInitialized) {
         return ;
     }
@@ -1411,32 +1413,6 @@ JRESULT jd_decomp_rect (
                 this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_LINE];
                 break;
             }
-        
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                1, 
-                "TJpgDec", 
-                "Check the previous-start location: x=%d, y=%d...",
-                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iX,
-                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY
-            );
-
-            if (__arm_2d_tjpgd_is_context_before_the_target_region(
-                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_START],
-                                            tDrawRegion.tLocation,
-                                            this.Decoder.tBlockRegion.tSize)) {
-
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    2, 
-                    "TJpgDec", 
-                    "The previous-start location is right before the target location!"
-                );
-
-                /* use previous start point */
-                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_START];
-                break;
-            }
 
             ARM_2D_LOG_INFO(
                 CONTROLS, 
@@ -1487,6 +1463,58 @@ JRESULT jd_decomp_rect (
                 CONTROLS, 
                 1, 
                 "TJpgDec", 
+                "Check the previous-frame location: x=%d, y=%d...",
+                this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START].tLocation.iX,
+                this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START].tLocation.iY
+            );
+
+            if (__arm_2d_tjpgd_is_context_before_the_target_region(
+                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START],
+                                            tDrawRegion.tLocation,
+                                            this.Decoder.tBlockRegion.tSize)) {
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TJpgDec", 
+                    "The previous-frame location is right before the target location!"
+                );
+
+                /* use previous start point */
+                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START];
+                break;
+            }
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
+                "Check the previous-start location: x=%d, y=%d...",
+                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iX,
+                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY
+            );
+
+            if (__arm_2d_tjpgd_is_context_before_the_target_region(
+                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_START],
+                                            tDrawRegion.tLocation,
+                                            this.Decoder.tBlockRegion.tSize)) {
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TJpgDec", 
+                    "The previous-start location is right before the target location!"
+                );
+
+                /* use previous start point */
+                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_START];
+                break;
+            }
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TJpgDec", 
                 "Failed to find any context...Reset to the start."
             );
 
@@ -1496,6 +1524,18 @@ JRESULT jd_decomp_rect (
 
         } while(0);
 
+        if (this.bIsNewFrame) {
+            this.bIsNewFrame = false;
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                3, 
+                "TJpgDec", 
+                "Encounter a new frame, copy current context to slot [JDEC_CONTEXT_PREVIOUS_FRAME_START]"
+            );
+            this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START] = this.tContext[JDEC_CONTEXT_CURRENT];
+        }
+
         ARM_2D_LOG_INFO(
             CONTROLS, 
             1, 
@@ -1503,8 +1543,6 @@ JRESULT jd_decomp_rect (
             "Decoding...\r\n"
             "---------------------------------------------"
         );
-
-        
 
         /* resume context */
         memcpy(jd->dcv, this.tContext[JDEC_CONTEXT_CURRENT].dcv, sizeof(jd->dcv));

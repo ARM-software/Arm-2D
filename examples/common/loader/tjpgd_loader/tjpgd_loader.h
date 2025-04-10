@@ -218,7 +218,8 @@ ARM_PRIVATE(
 
     uint16_t u3PixelByteSize        : 3;
     uint16_t u5BitsPerPixel         : 5;
-    uint16_t                        : 6;
+    uint16_t                        : 5;
+    uint16_t bIsNewFrame            : 1;
     uint16_t bErrorDetected         : 1;
     uint16_t bInitialized           : 1;
 
