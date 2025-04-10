@@ -1178,8 +1178,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="separator:gaf0581f6d478d0a665cd4ae477e6be6db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd0e2f64404ceef7412a3715c0bc47fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gacd0e2f64404ceef7412a3715c0bc47fd">arm_2d_helper_draw_box</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, int16_t iBorderWidth, COLOUR_INT tColour, uint8_t chOpacity)</td></tr>
 <tr class="separator:gacd0e2f64404ceef7412a3715c0bc47fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8973bb94243b6b082f9e2888267bea04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8973bb94243b6b082f9e2888267bea04">arm_2d_helper_film_next_frame</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis)</td></tr>
-<tr class="separator:ga8973bb94243b6b082f9e2888267bea04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa371738fb467e2ef847627a27c7c7418"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa371738fb467e2ef847627a27c7c7418">arm_2d_helper_film_next_frame</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis)</td></tr>
+<tr class="separator:gaa371738fb467e2ef847627a27c7c7418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa3dd9a9991d2cf374924d7d3e57ff69b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa3dd9a9991d2cf374924d7d3e57ff69b">arm_2d_helper_film_reset</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis)</td></tr>
 <tr class="separator:gaa3dd9a9991d2cf374924d7d3e57ff69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga335d382332ef7ac57ecb84698fec8584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga335d382332ef7ac57ecb84698fec8584">arm_2d_helper_film_set_frame</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *ptThis, int32_t nIndex)</td></tr>
@@ -12968,14 +12968,14 @@ false line buffer is full </dd></dl>
 
 </div>
 </div>
-<a id="ga8973bb94243b6b082f9e2888267bea04" name="ga8973bb94243b6b082f9e2888267bea04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8973bb94243b6b082f9e2888267bea04">&#9670;&#160;</a></span>arm_2d_helper_film_next_frame()</h2>
+<a id="gaa371738fb467e2ef847627a27c7c7418" name="gaa371738fb467e2ef847627a27c7c7418"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa371738fb467e2ef847627a27c7c7418">&#9670;&#160;</a></span>arm_2d_helper_film_next_frame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arm_2d_helper_film_next_frame </td>
+          <td class="memname">bool arm_2d_helper_film_next_frame </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__film__t">arm_2d_helper_film_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em></td><td>)</td>
@@ -12989,6 +12989,7 @@ false line buffer is full </dd></dl>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>bool whether the film reaches the end or not </dd></dl>
 
 </div>
 </div>
