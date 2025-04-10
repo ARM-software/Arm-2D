@@ -52,12 +52,16 @@ static uint32_t s_tFramebuffer[3][VT_WIDTH * VT_HEIGHT];
 
 #endif
 
+#ifndef VT_SCALING_RATIO
+#   define VT_SCALING_RATIO     1
+#endif
+
 #if VT_WIDTH >= 1024 || VT_HEIGHT >= 1024
 #   define VT_WINDOW_WIDTH     (VT_WIDTH / 4)
 #   define VT_WINDOW_HEIGHT    (VT_HEIGHT / 4)
 #elif VT_WIDTH >= 240 || VT_HEIGHT >= 240
-#   define VT_WINDOW_WIDTH     VT_WIDTH
-#   define VT_WINDOW_HEIGHT    VT_HEIGHT
+#   define VT_WINDOW_WIDTH     (VT_WIDTH * VT_SCALING_RATIO)
+#   define VT_WINDOW_HEIGHT    (VT_HEIGHT * VT_SCALING_RATIO)
 #else
 #   define VT_WINDOW_WIDTH      (VT_WIDTH * 2)
 #   define VT_WINDOW_HEIGHT     (VT_HEIGHT * 2)
