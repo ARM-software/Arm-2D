@@ -210,6 +210,8 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
             }
             DISP0_CONSOLE.bShowConsole = true;
             DISP0_CONSOLE.chOpacity = 255;
+        } else {
+            arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
         }
 
     #if __DISP0_CFG_CONSOLE_DISPALY_TIME__ >= 1000                              \
@@ -224,31 +226,34 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
                 } else {
                     DISP0_CONSOLE.chOpacity = lTimeElapsedInMs;
                 }
+                arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, false);
             }
+        } else {
+            arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
         }
     #endif
     }
 
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
-        if (DISP0_CONSOLE.bShowConsole) {
-            arm_2d_align_top_left(  __navigation_canvas, 
-                                    __DISP0_CONSOLE_WIDTH__ + 8, 
-                                    __DISP0_CONSOLE_HEIGHT__ + 8) {
-
+        
+        arm_2d_align_top_left(  __navigation_canvas, 
+                                __DISP0_CONSOLE_WIDTH__ + 8, 
+                                __DISP0_CONSOLE_HEIGHT__ + 8) {
+            if (DISP0_CONSOLE.bShowConsole) {
                 draw_round_corner_box(  ptTile, 
                                         &__top_left_region, 
                                         GLCD_COLOR_DARK_GREY, 
                                         (128 * DISP0_CONSOLE.chOpacity) >> 8,
                                         bIsNewFrame);
-
-                console_box_show(&DISP0_CONSOLE.tConsole,
-                                ptTile,
-                                &__top_left_region,
-                                bIsNewFrame,
-                                DISP0_CONSOLE.chOpacity);
             }
+            console_box_show(&DISP0_CONSOLE.tConsole,
+                            ptTile,
+                            &__top_left_region,
+                            bIsNewFrame,
+                            DISP0_CONSOLE.chOpacity);
         }
+        
     }
 
 #endif
