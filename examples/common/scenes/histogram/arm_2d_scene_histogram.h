@@ -101,7 +101,6 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
     uint8_t bUserAllocated                      : 1;
-    uint8_t bOnLoad                             : 1;
     uint8_t bIsDirtyRegionOptimizationEnabled   : 1;
 
     histogram_t tHistogram;

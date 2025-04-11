@@ -105,15 +105,15 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
 {
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
+#endif
 
     this.bIsDirtyRegionOptimizationEnabled = !!
         arm_2d_helper_pfb_disable_dirty_region_optimization(
             &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
 
-#endif
-    this.bOnLoad = true;
 }
 
 static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
@@ -205,14 +205,12 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     if (this.bIsDirtyRegionOptimizationEnabled) {
         arm_2d_helper_pfb_enable_dirty_region_optimization(
                 &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
                 NULL,
                 0);
     }
-#endif
 }
 
 static
@@ -248,13 +246,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
                                 ptTile,
                                 &__centre_region);
 
-            if (this.bOnLoad) {
-                this.bOnLoad = false;
-                
-        /* add reference point */
-            
-                
-            }
         }
     #endif
 #endif
@@ -373,11 +364,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             .fnBeforeSwitchOut = &__before_scene_histogram_switching_out,
             .fnOnFrameCPL   = &__on_scene_histogram_frame_complete,
             .fnDepose       = &__on_scene_histogram_depose,
-        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
-            .bUseDirtyRegionHelper = false,
-        #else
+
             .bUseDirtyRegionHelper = true,
-        #endif
+
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -447,46 +436,25 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
         arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
 
-        arm_2d_align_centre(tScreen, this.tJPGBackground.vres.tTile.tRegion.tSize) {
-            #define REFERENCE_POINT_NUMBER      5
-            arm_2d_location_t tReferencePoint;
+        arm_2d_location_t tReferencePoint;
 
-                arm_2d_location_t tBackgroundLocation = __centre_region.tLocation;
+        #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+            arm_2d_align_bottom_centre(tScreen, 100, 24) {
+                tReferencePoint = __bottom_centre_region.tLocation;
+                tReferencePoint.iY -= 16;
+            }
 
-                arm_2d_align_centre(tScreen, 240, 240) {
+        #else
+            tReferencePoint.iX = 0;
+            tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+        #endif
 
-                    tReferencePoint = __centre_region.tLocation;
-
-                    int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
-                    for (int n = 1; n < REFERENCE_POINT_NUMBER; n++) {
-
-                        tReferencePoint.iY = __centre_region.tLocation.iY + n * nDelta;
-
-                        arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
-                                                            tBackgroundLocation,
-                                                            tReferencePoint);
-                            
-                            
-                    }
-                }
-
-            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
-                arm_2d_align_bottom_centre(tScreen, 100, 24) {
-                    tReferencePoint = __bottom_centre_region.tLocation;
-                    tReferencePoint.iY -= 16;
-                }
-
-            #else
-                tReferencePoint.iX = 0;
-                tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
-            #endif
-
-            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
-                arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
-                                                        __centre_region.tLocation,
-                                                        tReferencePoint);
-            #endif
-        }
+        #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+            arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
+                                                    __centre_region.tLocation,
+                                                    tReferencePoint);
+        #endif
+        
     } while(0);
 #endif
 
