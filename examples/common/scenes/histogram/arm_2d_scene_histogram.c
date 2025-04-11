@@ -108,12 +108,12 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
-#endif
-
+#else
     this.bIsDirtyRegionOptimizationEnabled = !!
         arm_2d_helper_pfb_disable_dirty_region_optimization(
             &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
 
+#endif
 }
 
 static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
@@ -205,12 +205,14 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
     if (this.bIsDirtyRegionOptimizationEnabled) {
         arm_2d_helper_pfb_enable_dirty_region_optimization(
                 &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
                 NULL,
                 0);
     }
+#endif
 }
 
 static
