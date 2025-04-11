@@ -369,8 +369,8 @@
             <file category="sourceC"     name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.c" attr="template"  select="Scene Template: Alarm Clock"   version="1.1.2" />
             <file category="header"      name="examples/common/scenes/alarm_clock/arm_2d_scene_alarm_clock.h" attr="template"  select="Scene Template: Alarm Clock"   version="1.1.2" />
 
-            <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="2.3.0" />
-            <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="2.3.0" />
+            <file category="sourceC"     name="examples/common/scenes/histogram/arm_2d_scene_histogram.c" attr="template"  select="Scene Template: Histogram"   version="2.4.0" />
+            <file category="header"      name="examples/common/scenes/histogram/arm_2d_scene_histogram.h" attr="template"  select="Scene Template: Histogram"   version="2.4.0" />
 
             <file category="sourceC"     name="examples/common/scenes/fan/arm_2d_scene_fan.c"   attr="template"  select="Scene Template: Fan"   version="2.1.4" />
             <file category="header"      name="examples/common/scenes/fan/arm_2d_scene_fan.h"   attr="template"  select="Scene Template: Fan"   version="2.1.4" />
