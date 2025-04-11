@@ -108,11 +108,9 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
 
-#if 0
     this.bIsDirtyRegionOptimizationEnabled = !!
         arm_2d_helper_pfb_disable_dirty_region_optimization(
             &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
-#endif
 
 #endif
     this.bOnLoad = true;
@@ -208,7 +206,6 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
-
     if (this.bIsDirtyRegionOptimizationEnabled) {
         arm_2d_helper_pfb_enable_dirty_region_optimization(
                 &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
@@ -277,7 +274,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
                                 &__bottom_centre_region,
                                 255);
             
-            #if 0 //ARM_2D_SCENE_HISTOGRAM_USE_JPG
+            #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
                 /* update dirty region */
                 arm_2d_helper_dirty_region_update_item( 
                     &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
@@ -376,11 +373,11 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             .fnBeforeSwitchOut = &__before_scene_histogram_switching_out,
             .fnOnFrameCPL   = &__on_scene_histogram_frame_complete,
             .fnDepose       = &__on_scene_histogram_depose,
-        //#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
-        //    .bUseDirtyRegionHelper = false,
-        //#else
+        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
+            .bUseDirtyRegionHelper = false,
+        #else
             .bUseDirtyRegionHelper = true,
-        //#endif
+        #endif
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -406,9 +403,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
                 .wTo =    __RGB32(0xFF, 0xFF, 0xFF),//__RGB32(0xFF, 0, 0), 
             },
 
-        //#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
+        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
             .ptParent = &this.use_as__arm_2d_scene_t,
-        //#endif
+        #endif
             .evtOnGetBinValue = {
                 .fnHandler = &histogram_get_bin_value,
                 .pTarget = ptThis,
