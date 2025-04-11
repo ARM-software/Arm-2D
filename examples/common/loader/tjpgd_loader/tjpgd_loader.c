@@ -1299,6 +1299,8 @@ JRESULT jd_decomp_rect (
 	uint16_t rst, rsc;
 	JRESULT rc;
 
+    bool bIsNewLine = false;
+
     arm_2d_region_t tDrawRegion = {
         .tSize = {
             .iWidth = jd->width,
@@ -1524,18 +1526,6 @@ JRESULT jd_decomp_rect (
 
         } while(0);
 
-        if (this.bIsNewFrame) {
-            this.bIsNewFrame = false;
-
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                3, 
-                "TJpgDec", 
-                "Encounter a new frame, copy current context to slot [JDEC_CONTEXT_PREVIOUS_FRAME_START]"
-            );
-            this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START] = this.tContext[JDEC_CONTEXT_CURRENT];
-        }
-
         ARM_2D_LOG_INFO(
             CONTROLS, 
             1, 
@@ -1650,6 +1640,20 @@ label_context_entry:
                     __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_CURRENT], x, y, rst, rsc);
                 }
 
+                if (x == 0 || bIsNewLine) {
+
+                    bIsNewLine = false;
+    
+                    /* the start of a line */
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        3, 
+                        "TJpgDec", 
+                        "Save context to slot [JDEC_CONTEXT_PREVIOUS_LINE]"
+                    );
+                    __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE], x, y, rst, rsc);
+                }
+
                 rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
                 if (rc != JDR_OK) {
                     return rc;
@@ -1687,7 +1691,22 @@ label_context_entry:
                 continue;
             }
 
-            if (x == 0) {
+            if (this.bIsNewFrame) {
+                this.bIsNewFrame = false;
+    
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    3, 
+                    "TJpgDec", 
+                    "Encounter a new frame, copy current context to slot [JDEC_CONTEXT_PREVIOUS_FRAME_START]"
+                );
+                this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START] = this.tContext[JDEC_CONTEXT_CURRENT];
+            }
+
+            if (x == 0 || bIsNewLine) {
+
+                bIsNewLine = false;
+
                 /* the start of a line */
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
@@ -1706,6 +1725,8 @@ label_context_entry:
 			rc = mcu_output(jd, outfunc, x, y);	/* Output the MCU (YCbCr to RGB, scaling and output) */
 			if (rc != JDR_OK) return rc;
 		}
+
+        bIsNewLine = true;
         
 	}
 

@@ -495,8 +495,8 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
 
         /* add reference point */
-    #define REFERENCE_POINT_NUMBER      4
-    arm_2d_location_t tReferencePoint;
+    #define REFERENCE_POINT_NUMBER      5
+        arm_2d_location_t tReferencePoint;
 
         arm_2d_align_centre(tScreen, this.tJPGBackground.vres.tTile.tRegion.tSize) {
             arm_2d_location_t tBackgroundLocation = __centre_region.tLocation;
@@ -506,13 +506,15 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
                 tReferencePoint = __centre_region.tLocation;
 
                 int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
-                for (int n = 0; n < REFERENCE_POINT_NUMBER; n++) {
+                for (int n = 1; n < REFERENCE_POINT_NUMBER; n++) {
+
+                    tReferencePoint.iY = __centre_region.tLocation.iY + n * nDelta;
 
                     arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
                                                           tBackgroundLocation,
                                                           tReferencePoint);
                         
-                        tReferencePoint.iY += nDelta;
+                        
                 }
             }
 
