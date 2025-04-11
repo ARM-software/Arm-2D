@@ -399,8 +399,8 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
 
             .Colour = {
-                .wFrom =  __RGB32(0xFF, 0xFF, 0xFF),//__RGB32(0, 0xFF, 0),
-                .wTo =    __RGB32(0xFF, 0xFF, 0xFF),//__RGB32(0xFF, 0, 0), 
+                .wFrom =  __RGB32(0, 0xFF, 0),
+                .wTo =    __RGB32(0xFF, 0, 0), 
             },
 
         #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
