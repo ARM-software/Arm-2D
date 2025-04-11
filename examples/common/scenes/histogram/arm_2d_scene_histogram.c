@@ -438,24 +438,26 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
         arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
 
-        arm_2d_location_t tReferencePoint;
+        arm_2d_align_centre(tScreen, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tReferencePoint;
 
-        #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
-            arm_2d_align_bottom_centre(tScreen, 100, 24) {
-                tReferencePoint = __bottom_centre_region.tLocation;
-                tReferencePoint.iY -= 16;
-            }
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+                arm_2d_align_bottom_centre(tScreen, 100, 24) {
+                    tReferencePoint = __bottom_centre_region.tLocation;
+                    tReferencePoint.iY -= 16;
+                }
 
-        #else
-            tReferencePoint.iX = 0;
-            tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
-        #endif
+            #else
+                tReferencePoint.iX = 0;
+                tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+            #endif
 
-        #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
-            arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
-                                                    __centre_region.tLocation,
-                                                    tReferencePoint);
-        #endif
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+                arm_tjpgd_loader_add_reference_point( &this.tJPGBackground, 
+                                                        __centre_region.tLocation,
+                                                        tReferencePoint);
+            #endif
+        }
         
     } while(0);
 #endif
