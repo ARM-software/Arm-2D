@@ -1640,6 +1640,7 @@ label_context_entry:
                     __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_CURRENT], x, y, rst, rsc);
                 }
 
+            #if 0
                 if (x == 0 || bIsNewLine) {
 
                     bIsNewLine = false;
@@ -1653,6 +1654,7 @@ label_context_entry:
                     );
                     __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE], x, y, rst, rsc);
                 }
+            #endif
 
                 rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
                 if (rc != JDR_OK) {
