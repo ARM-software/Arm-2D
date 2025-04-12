@@ -331,7 +331,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.5.11" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="2.6.0" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -728,12 +728,12 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cversion="1.2.1" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cversion="1.2.2" condition="Arm-2D-Demos">
           <description>How to create a list with small reading windows.  </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_hollow_out_list.c" attr="config" version="1.2.1" />
-            <file category="sourceC"     name="examples/demos/hollow_out_mask.c"              attr="config" version="1.2.1" />
-            <file category="header"      name="examples/demos/arm_2d_scene_hollow_out_list.h" attr="config" version="1.2.1" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_hollow_out_list.c" attr="config" version="1.2.2" />
+            <file category="sourceC"     name="examples/demos/hollow_out_mask.c"              attr="config" version="1.2.2" />
+            <file category="header"      name="examples/demos/arm_2d_scene_hollow_out_list.h" attr="config" version="1.2.2" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Hollow_Out_List

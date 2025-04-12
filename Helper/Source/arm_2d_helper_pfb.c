@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        10. April 2025
- * $Revision:    V.1.13.5
+ * $Date:        12. April 2025
+ * $Revision:    V.1.13.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -593,8 +593,8 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 
     __arm_2d_helper_enqueue_pfb(ptThis);
 
-    /* as PFBs have been sent to LCD, we should reset the flag: bPreviousFrameWasSkipped */
-    this.Adapter.bPreviousFrameWasSkipped = false;
+    /* as PFBs have been sent to LCD, we should reset the flag: bIngoreLowLevelSyncUp */
+    this.Adapter.bIngoreLowLevelSyncUp = false;
 
     this.Adapter.bFirstIteration = false;
 
@@ -1962,11 +1962,6 @@ label_iteration_begin_start:
                             this.Adapter.bFirstIteration = true;
                             this.Adapter.bIsDryRun = false;
 
-                            /* As we want to skip this frame, so for the following frame(s) 
-                             * the flag bPreviousFrameWasSkipped should be set.
-                             */
-                            this.Adapter.bPreviousFrameWasSkipped = true;
-
                             // out of lcd 
                             return (arm_2d_tile_t *)-1;
                         } while(0);
@@ -2002,11 +1997,6 @@ label_iteration_begin_start:
                     this.Adapter.bFirstIteration = true;
                     this.Adapter.bIsDryRun = false;
 
-                    /* As we want to skip this frame, so for the following frame(s) 
-                     * the flag bPreviousFrameWasSkipped should be set.
-                     */
-                    this.Adapter.bPreviousFrameWasSkipped = true;
-
                     // out of lcd 
                     return (arm_2d_tile_t *)-1;
                 } else {
@@ -2030,7 +2020,7 @@ label_iteration_begin_start:
                 HELPER_PFB, 
                 1, 
                 "Iteration Begin", 
-                "The start of a frame in normal mode, get the first dirty region in ptDirtyRegions [%p] ",
+                "Start a frame in normal mode, get the first dirty region in ptDirtyRegions [%p] ",
                 ptDirtyRegions
             );
 
@@ -2715,9 +2705,20 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         assert(NULL == this.Adapter.OptimizedDirtyRegions.ptCandidateList);
     }
     
-ARM_PT_ENTRY();
+
     /* wait until LCD finish rendering the previous frame */
-    if (!this.Adapter.bPreviousFrameWasSkipped) {
+    if (!this.Adapter.bIngoreLowLevelSyncUp) {
+
+        /* reset it to true */
+        this.Adapter.bIngoreLowLevelSyncUp = true;
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            0, 
+            "PFB TASK", 
+            "Sync with the low-level display driver...usually waiting for flushing previous frame..."
+        );
+
+ARM_PT_ENTRY();
         if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
             // wait until lcd is ready
             if (!(*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
@@ -2725,6 +2726,14 @@ ARM_PT_ENTRY();
                 ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_async);
             }
         }
+
+    } else {
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            0, 
+            "PFB TASK", 
+            "Previous frame was skipped, no need to sync with the low-level display driver."
+        );
     }
 
     __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp,

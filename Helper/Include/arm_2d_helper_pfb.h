@@ -22,7 +22,7 @@
  * Description:  Public header file for the PFB helper service 
  *
  * $Date:        12. April 2025
- * $Revision:    V.1.13.6
+ * $Revision:    V.1.13.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -810,7 +810,7 @@ ARM_PRIVATE(
             uint16_t                bFailedToOptimizeDirtyRegion            : 1;
             uint16_t                bIsUsingOptimizedDirtyRegionList        : 1;
             uint16_t                bDirtyRegionDebugModeSkipFrame          : 1;
-            uint16_t                bPreviousFrameWasSkipped                : 1;
+            uint16_t                bIngoreLowLevelSyncUp                   : 1;
 
             uint16_t                bIsNewFrame                             : 1;
             uint16_t                bIgnoreCanvasColour                     : 1;

@@ -162,7 +162,7 @@ static void __after_scene_hollow_out_list_switch(arm_2d_scene_t *ptScene)
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
+    //arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
 }
 
 static void __on_scene_hollow_out_list_depose(arm_2d_scene_t *ptScene)
@@ -456,7 +456,6 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-            
 
             //.fnOnBGStart    = &__on_scene_hollow_out_list_background_start,
             //.fnOnBGComplete = &__on_scene_hollow_out_list_background_complete,
@@ -483,8 +482,8 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
                 
                 .tFontColour = GLCD_COLOR_WHITE,
                 .tBackgroundColour = GLCD_COLOR_BLACK,
-                .chNextPadding = 20,
-                .chPreviousPadding = 20,
+                .chNextPadding = 17,
+                .chPreviousPadding = 17,
 
                 .tListSize = {
                     .iWidth = 76,

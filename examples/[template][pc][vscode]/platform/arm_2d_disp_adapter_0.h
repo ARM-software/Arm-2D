@@ -225,7 +225,7 @@ extern "C" {
 // <q>Enable the helper service for 3FB (LCD Direct Mode)
 // <i> You can select this option when your LCD controller supports direct mode
 #ifndef __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
-#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                 0
+#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                 1
 #endif
 
 // <q>Disable the default scene
