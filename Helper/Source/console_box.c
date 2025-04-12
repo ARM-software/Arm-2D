@@ -215,7 +215,7 @@ bool __console_box_peek_utf8(arm_2d_byte_fifo_t *ptFIFO, uint32_t *pwUTF8)
 }
 
 static
-uint_fast16_t __console_box_peek_line(console_box_t *ptThis, arm_2d_byte_fifo_t *ptFIFO)
+int_fast16_t __console_box_peek_line(console_box_t *ptThis, arm_2d_byte_fifo_t *ptFIFO)
 {
     uint32_t wUTF8;
     uint_fast16_t hwColumn = 0;
@@ -223,7 +223,7 @@ uint_fast16_t __console_box_peek_line(console_box_t *ptThis, arm_2d_byte_fifo_t 
     do {
         wUTF8 = 0;
         if (!__console_box_peek_utf8(ptFIFO, &wUTF8)) {
-            break;
+            return -1;
         }
 
         switch ((char)wUTF8) {
@@ -263,6 +263,8 @@ exit_peek_line:
 static 
 void __console_box_remove_top_line(console_box_t *ptThis)
 {
+    this.Console.hwScrollUpCount++;
+
     arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
 
     uint16_t hwColumn = 0;
@@ -426,11 +428,13 @@ bool console_box_on_frame_start(console_box_t *ptThis)
         this.Console.hwLastColumn = 0;
     }
 
+    this.Console.hwScrollUpCount = 0;
+
     do {
         if (this.bCFGNoInputFIFO) {
             break;
         }
-
+        
         uint8_t chByte;
         if (!arm_2d_byte_fifo_dequeue(&this.tInputFIFO, &chByte)){
             /* nothing to read */
@@ -502,6 +506,7 @@ bool console_box_on_frame_start(console_box_t *ptThis)
 
         }
 
+        this.Console.iDirtyRegionPreviousRowWidth = this.Console.hwMaxColumn * tCharSize.iWidth;
         arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, CONSOLE_BOX_DIRTY_REGION_START);
 
         this.Console.hwLastColumn = this.Console.hwCurrentColumn;
@@ -578,14 +583,21 @@ void console_box_show(  console_box_t *ptThis,
                                                     &__console_box,
                                                     &this.tReDrawRegion,
                                                     CONSOLE_BOX_DIRTY_REGION_DONE);
+                            } else if (this.bCFGNoInputFIFO || this.Console.hwScrollUpCount > 4) {
+
+                                arm_2d_dynamic_dirty_region_update(
+                                    &this.tDirtyRegion,
+                                    &__console_box,
+                                    &this.tReDrawRegion,
+                                    CONSOLE_BOX_DIRTY_REGION_DONE);
+
                             } else {
                                 arm_2d_size_t tCharSize = this.ptFont->tCharSize;
                                 uint_fast16_t hwRowToSkip = this.Console.hwDirtyRegionRow;
-
                                 bool bEndOfFIFO = false;
                                 arm_2d_byte_fifo_reset_peeked(&this.tConsoleFIFO);
                                 while(hwRowToSkip--) {
-                                    if (0 == __console_box_peek_line(ptThis, &this.tConsoleFIFO)) {
+                                    if (__console_box_peek_line(ptThis, &this.tConsoleFIFO) < 0) {
                                         bEndOfFIFO = true;
                                         break;
                                     }
@@ -602,7 +614,24 @@ void console_box_show(  console_box_t *ptThis,
                                     this.tReDrawRegion.tSize.iWidth
                                         =   __console_box_peek_line(ptThis, &this.tConsoleFIFO)
                                         *   tCharSize.iWidth;
-                                    this.tReDrawRegion.tSize.iHeight = tCharSize.iHeight;
+                                    
+                                    if (this.Console.iDirtyRegionPreviousRowWidth > this.tReDrawRegion.tSize.iWidth) {
+                                        /* for scrolling up condition, we have to erase the old place */
+                                        int16_t iTemp = this.tReDrawRegion.tSize.iWidth;
+                                        this.tReDrawRegion.tSize.iWidth = this.Console.iDirtyRegionPreviousRowWidth;
+                                        this.tReDrawRegion.tSize.iHeight = tCharSize.iHeight * (1 + this.Console.hwScrollUpCount);
+
+                                        /* update the iDirtyRegionPreviousRowWidth */
+                                        this.Console.iDirtyRegionPreviousRowWidth = iTemp;
+                                    } else {
+
+                                        this.tReDrawRegion.tSize.iHeight = tCharSize.iHeight;
+
+                                        /* update the iDirtyRegionPreviousRowWidth */
+                                        this.Console.iDirtyRegionPreviousRowWidth = this.tReDrawRegion.tSize.iWidth;
+                                    }
+
+                                    arm_2d_region_intersect(&__centre_region, &this.tReDrawRegion, &this.tReDrawRegion);
 
                                     arm_2d_dynamic_dirty_region_update(
                                                         &this.tDirtyRegion,
@@ -633,9 +662,10 @@ void console_box_show(  console_box_t *ptThis,
             arm_lcd_text_set_font(this.ptFont);
             arm_lcd_text_set_draw_region(&__centre_region);
             arm_lcd_text_set_scale(0.0f);
+            arm_lcd_text_set_line_spacing(0);
+            arm_lcd_text_set_char_spacing(0);
 
             arm_lcd_text_set_colour(this.tColor, GLCD_COLOR_BLACK);
-
 
             arm_lcd_text_set_opacity(chOpacity);
             /* force all char use the same with in display */

@@ -90,6 +90,8 @@ ARM_PRIVATE(
         uint16_t hwCurrentRow;
         uint16_t hwCurrentColumn;
         uint16_t hwDirtyRegionRow;
+        int16_t  iDirtyRegionPreviousRowWidth;
+        uint16_t hwScrollUpCount;
     } Console;
 
     arm_2d_scene_t                  *ptTargetScene;
