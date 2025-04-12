@@ -593,6 +593,9 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 
     __arm_2d_helper_enqueue_pfb(ptThis);
 
+    /* as PFBs have been sent to LCD, we should reset the flag: bPreviousFrameWasSkipped */
+    this.Adapter.bPreviousFrameWasSkipped = false;
+
     this.Adapter.bFirstIteration = false;
 
 }
@@ -1949,7 +1952,6 @@ label_iteration_begin_start:
                                 "No valid dirty region in the list, this frame SHOULD BE ignored"
                             );
                             
-                        #if 1
                             /* free pfb */
                             arm_irq_safe {
                                 __arm_2d_helper_pfb_free(ptThis, this.Adapter.ptCurrent);
@@ -1960,10 +1962,15 @@ label_iteration_begin_start:
                             this.Adapter.bFirstIteration = true;
                             this.Adapter.bIsDryRun = false;
 
+                            /* As we want to skip this frame, so for the following frame(s) 
+                             * the flag bPreviousFrameWasSkipped should be set.
+                             */
+                            this.Adapter.bPreviousFrameWasSkipped = true;
+
                             // out of lcd 
                             return (arm_2d_tile_t *)-1;
                         } while(0);
-                    #endif
+
                     } else {
                         this.Adapter.bDirtyRegionDebugModeSkipFrame = false;
                     }
@@ -1994,6 +2001,11 @@ label_iteration_begin_start:
                     /* reset flag */
                     this.Adapter.bFirstIteration = true;
                     this.Adapter.bIsDryRun = false;
+
+                    /* As we want to skip this frame, so for the following frame(s) 
+                     * the flag bPreviousFrameWasSkipped should be set.
+                     */
+                    this.Adapter.bPreviousFrameWasSkipped = true;
 
                     // out of lcd 
                     return (arm_2d_tile_t *)-1;
@@ -2705,11 +2717,13 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     
 ARM_PT_ENTRY();
     /* wait until LCD finish rendering the previous frame */
-    if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
-        // wait until lcd is ready
-        if (!(*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
-                this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget)) {
-            ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_async);
+    if (!this.Adapter.bPreviousFrameWasSkipped) {
+        if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
+            // wait until lcd is ready
+            if (!(*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
+                    this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget)) {
+                ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_async);
+            }
         }
     }
 

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        10. April 2025
- * $Revision:    V.1.13.5
+ * $Date:        12. April 2025
+ * $Revision:    V.1.13.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -810,7 +810,7 @@ ARM_PRIVATE(
             uint16_t                bFailedToOptimizeDirtyRegion            : 1;
             uint16_t                bIsUsingOptimizedDirtyRegionList        : 1;
             uint16_t                bDirtyRegionDebugModeSkipFrame          : 1;
-            uint16_t                                                        : 1;
+            uint16_t                bPreviousFrameWasSkipped                : 1;
 
             uint16_t                bIsNewFrame                             : 1;
             uint16_t                bIgnoreCanvasColour                     : 1;
