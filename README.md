@@ -132,7 +132,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Implicit colour conversion for **ARGB8888** (**ccca8888**)
   - Ready for **monochrome LCD** (the 1bit colour) and **E-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside the Display Adapter, e.g. `Disp0_DrawBitmap`
-    - **[new]** Provides a dedicated colour solution in the display adapter service for monochrome display devices.
+    - Provides a dedicated colour solution in the display adapter service for monochrome display devices.
 
 - **Display Adapter Service for connecting LCD**
   
@@ -141,6 +141,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - No limitation on screen resolution **(See note 1)**
     - Flexible in PFB size and shape (it could be a line or a rectangular with any size)  **(See note 2)**
     - Supports PFB alignment for both width and height.
+
     > [!NOTE]
     >
     > 1. As long as the size is smaller than 32767 * 32767. 
@@ -167,11 +168,13 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Supports Anti-Alias.
     - You can enable it by defining the macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
   - Supports source masks
+  - **[new]** Supports specifying different scaling ratios for X and Y axes, respectively
+  - **[new]** Supports using floating point numbers (i.e. `float`) to specify the pivot coordinate.
 
 - **Filters**
 
   - Generic Anti-alias and Fast IIR-Blur
-  - **[new]** Colour Inversion
+  - Colour Inversion
 
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
@@ -223,7 +226,11 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - **Demos**
     - Demos for various scenarios
     - A dedicated demo for Helium-ACI acceleration. 
-    - **[new]** A set of demos for monochrome devices
+    - A set of demos for monochrome devices
+  
+  - **Project Templates**
+    - A project template for Windows, Linux and MacOS platform
+    - A project template for Raspberry Pi Pico
 
 - **Ready and Welcome 3rd party adoption**
 
@@ -233,7 +240,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - Perspective Transform
 - Supports DMAC-350
-- **[new]** SVE2 Acceleration
+- SVE2 Acceleration
 
 ## 1 Introduction
 
