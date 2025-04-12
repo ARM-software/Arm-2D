@@ -209,7 +209,7 @@ Table of Content</h1>
 <li>How to Get Started</li>
 <li>Table of Content</li>
 <li>Features<ul>
-<li>In this version (v1.2.2-dev)</li>
+<li>In this version (v1.2.2-rc1)</li>
 <li>New Features Planned in the Future</li>
 </ul>
 </li>
@@ -240,7 +240,7 @@ Table of Content</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Features</h1>
 <h2><a class="anchor" id="autotoc_md6"></a>
-In this version (v1.2.2-dev)</h2>
+In this version (v1.2.2-rc1)</h2>
 <p >The Arm-2D library provides <b>Low-Level 2D Image Processing Services</b> mainly used in <b>Deep Embedded Display system</b>. The supported features include but not limited to:</p>
 <ul>
 <li><b>CMSIS-Pack is available.</b></li>
@@ -274,7 +274,7 @@ In this version (v1.2.2-dev)</h2>
 <li>Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
 </ul>
 </li>
-<li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>e-ink displays</b> (the 2bits and 4bits colour formats)<ul>
+<li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>E-ink displays</b> (the 2bits and 4bits colour formats)<ul>
 <li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside the Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
 <li><b>[new]</b> Provides a dedicated colour solution in the display adapter service for monochrome display devices.</li>
 </ul>
@@ -308,7 +308,7 @@ In this version (v1.2.2-dev)</h2>
 <li>Provides a <b>Scene Player</b> with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)</li>
 <li>Supports various buffering Modes with a built-in frame buffer pool.<ul>
 <li>Single Buffer/Double-Buffers</li>
-<li>Provides a helper service for Direct Mode</li>
+<li>Provides a helper service for Direct Mode (i.e. 3FB Mode)</li>
 <li>Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)</li>
 </ul>
 </li>
@@ -349,6 +349,10 @@ In this version (v1.2.2-dev)</h2>
 <li><b>Virtual Resource</b><ul>
 <li>Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.</li>
 <li>Supports background-image-loading mode that requests <b>NO</b> extra PFB block.</li>
+<li><b>[new]</b> A JPEG loader derived from TJpgDec<ul>
+<li>Supports and Optimized for PFB and Dirty Regions</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><b>Layout Assistant</b><ul>
@@ -367,14 +371,6 @@ In this version (v1.2.2-dev)</h2>
 <li>Provides a template for adding new RTOS support.</li>
 </ul>
 </li>
-<li><b>Other Helper services</b><ul>
-<li>A dedicated helper service for transform operations<ul>
-<li>Provide dynamic dirty region tracking</li>
-<li>Double-buffered Angle and Scale updating</li>
-</ul>
-</li>
-</ul>
-</li>
 <li><b>Tools</b><ul>
 <li>A <code>img2c.py</code> for generating arm-2d resources from user-specified images</li>
 <li>A <code>ttf2c.py</code> for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font</li>
@@ -390,15 +386,14 @@ In this version (v1.2.2-dev)</h2>
 </ul>
 <p ><b>Ready and Welcome 3rd party adoption</b></p>
 <ul>
-<li>Successful story: accelerating LVGL as soft-GPU when Helium is ready</li>
+<li>Accelerating LVGL as soft-GPU when Helium is ready</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md7"></a>
 New Features Planned in the Future</h2>
 <ul>
-<li>Stretch and Perspective Transform</li>
+<li>Perspective Transform</li>
 <li>Supports DMAC-350</li>
-<li><b>[new] ** NEON Acceleration</b></li>
-<li><b>**[new] ** 2x Super-Sampling-Anti-Alias (**2xSSAA</b>) transform</li>
+<li><b>[new]</b> SVE2 Acceleration</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md8"></a>
 1 Introduction</h1>
