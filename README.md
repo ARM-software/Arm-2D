@@ -80,7 +80,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (v1.2.2-dev)](#in-this-version-v122-dev)
+  - [In this version (v1.2.2-rc1)](#in-this-version-v122-rc1)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -100,7 +100,7 @@ Potential users of Arm-2D may have different backgrounds and purposes. Whether y
 
 ## Features
 
-### In this version (v1.2.2-dev)
+### In this version (v1.2.2-rc1)
 
 The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
 
@@ -130,7 +130,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
     - Implicit colour conversion for **ARGB8888** (**ccca8888**)
-  - Ready for **monochrome LCD** (the 1bit colour) and **e-ink displays** (the 2bits and 4bits colour formats)
+  - Ready for **monochrome LCD** (the 1bit colour) and **E-ink displays** (the 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside the Display Adapter, e.g. `Disp0_DrawBitmap`
     - **[new]** Provides a dedicated colour solution in the display adapter service for monochrome display devices.
 
@@ -158,7 +158,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
   
   - Supports various buffering Modes with a built-in frame buffer pool.
     - Single Buffer/Double-Buffers
-    - Provides a helper service for Direct Mode
+    - Provides a helper service for Direct Mode (i.e. 3FB Mode)
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
   
 - **Transform** (i.e. rotation and scaling)
@@ -192,6 +192,8 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
     - Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.
     - Supports background-image-loading mode that requests **NO** extra PFB block. 
+    - **[new]** A JPEG loader derived from TJpgDec
+      - Supports and Optimized for PFB and Dirty Regions
 
   - **Layout Assistant**
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
@@ -212,15 +214,12 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Provides templates for user controls and scenes.
     - Scene templates for Meter, Watch and Fitness trackers
     - Provides a template for adding new RTOS support.
-
-  - **Other Helper services**
-    - A dedicated helper service for transform operations
-      - Provide dynamic dirty region tracking
-      - Double-buffered Angle and Scale updating
+    
   - **Tools**
     - A `img2c.py` for generating arm-2d resources from user-specified images
     - A `ttf2c.py` for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font
     - A `jinja2c.py` for code generation.
+
   - **Demos**
     - Demos for various scenarios
     - A dedicated demo for Helium-ACI acceleration. 
@@ -228,14 +227,13 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - **Ready and Welcome 3rd party adoption**
 
-  - Successful story: accelerating LVGL as soft-GPU when Helium is ready
+  - Accelerating LVGL as soft-GPU when Helium is ready
 
 ### New Features Planned in the Future
 
-- Stretch and Perspective Transform
+- Perspective Transform
 - Supports DMAC-350
-- **[new] ** NEON Acceleration
-- **[new] ** 2x Super-Sampling-Anti-Alias (**2xSSAA**) transform
+- **[new]** SVE2 Acceleration
 
 ## 1 Introduction
 
