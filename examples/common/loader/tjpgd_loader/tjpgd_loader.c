@@ -1308,6 +1308,34 @@ JRESULT jd_decomp_rect (
         },
     };
 
+#define __CHECK_CONTEXT(__CONTEXT_NAME)                                         \
+        ARM_2D_LOG_INFO(                                                        \
+            CONTROLS,                                                           \
+            1,                                                                  \
+            "TJpgDec",                                                          \
+            "Check the context [" #__CONTEXT_NAME "] location: x=%d, y=%d...",  \
+            this.tContext[__CONTEXT_NAME].tLocation.iX,                         \
+            this.tContext[__CONTEXT_NAME].tLocation.iY                          \
+        );                                                                      \
+                                                                                \
+        if (__arm_2d_tjpgd_is_context_before_the_target_region(                 \
+                                        &this.tContext[__CONTEXT_NAME],         \
+                                        tDrawRegion.tLocation,                  \
+                                        this.Decoder.tBlockRegion.tSize)) {     \
+                                                                                \
+            ARM_2D_LOG_INFO(                                                    \
+                CONTROLS,                                                       \
+                2,                                                              \
+                "TJpgDec",                                                      \
+                "The the context [" #__CONTEXT_NAME                             \
+                "] location is right before the target location!"               \
+            );                                                                  \
+                                                                                \
+            /* use previous start point */                                      \
+            this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[__CONTEXT_NAME];\
+            break;                                                              \
+        }
+
     if (NULL != ptRegion) {
 
         ARM_2D_LOG_INFO(
@@ -1367,6 +1395,7 @@ JRESULT jd_decomp_rect (
     if (bUseContex) {
 
         do {
+
             ARM_2D_LOG_INFO(
                 CONTROLS, 
                 1, 
@@ -1376,8 +1405,10 @@ JRESULT jd_decomp_rect (
                 this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY
             );
 
-            if (    (this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iY <= tDrawRegion.tLocation.iY)
-               &&   (this.tContext[JDEC_CONTEXT_CURRENT].tLocation.iX <= tDrawRegion.tLocation.iX)) {
+            if (__arm_2d_tjpgd_is_context_before_the_target_region(
+                                            &this.tContext[JDEC_CONTEXT_CURRENT],
+                                            tDrawRegion.tLocation,
+                                            this.Decoder.tBlockRegion.tSize)) {
 
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
@@ -1390,31 +1421,8 @@ JRESULT jd_decomp_rect (
                 break;
             }
 
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                1, 
-                "TJpgDec", 
-                "Check the previous-line location: x=%d, y=%d...",
-                this.tContext[JDEC_CONTEXT_PREVIOUS_LINE].tLocation.iX,
-                this.tContext[JDEC_CONTEXT_PREVIOUS_LINE].tLocation.iY
-            );
-
-            if (__arm_2d_tjpgd_is_context_before_the_target_region(
-                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE],
-                                            tDrawRegion.tLocation,
-                                            this.Decoder.tBlockRegion.tSize)) {
-
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    2, 
-                    "TJpgDec", 
-                    "The previous-line location is right before the target location!"
-                );
-
-                /* use previous start point */
-                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_LINE];
-                break;
-            }
+            __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_START);
+            __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_LINE);
 
             ARM_2D_LOG_INFO(
                 CONTROLS, 
@@ -1461,57 +1469,19 @@ JRESULT jd_decomp_rect (
                 break;
             }
 
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                1, 
-                "TJpgDec", 
-                "Check the previous-frame location: x=%d, y=%d...",
-                this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START].tLocation.iX,
-                this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START].tLocation.iY
-            );
-
-            if (__arm_2d_tjpgd_is_context_before_the_target_region(
-                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START],
-                                            tDrawRegion.tLocation,
-                                            this.Decoder.tBlockRegion.tSize)) {
-
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    2, 
-                    "TJpgDec", 
-                    "The previous-frame location is right before the target location!"
-                );
-
-                /* use previous start point */
-                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START];
-                break;
+        #if 0
+            if (    this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY 
+                >   this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START].tLocation.iY) {
+                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_START);
+                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_FRAME_START);
+                
+            } else {
+                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_FRAME_START);
+                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_START);
             }
-
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                1, 
-                "TJpgDec", 
-                "Check the previous-start location: x=%d, y=%d...",
-                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iX,
-                this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY
-            );
-
-            if (__arm_2d_tjpgd_is_context_before_the_target_region(
-                                            &this.tContext[JDEC_CONTEXT_PREVIOUS_START],
-                                            tDrawRegion.tLocation,
-                                            this.Decoder.tBlockRegion.tSize)) {
-
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    2, 
-                    "TJpgDec", 
-                    "The previous-start location is right before the target location!"
-                );
-
-                /* use previous start point */
-                this.tContext[JDEC_CONTEXT_CURRENT] = this.tContext[JDEC_CONTEXT_PREVIOUS_START];
-                break;
-            }
+        #else
+            __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_FRAME_START);
+        #endif
 
             ARM_2D_LOG_INFO(
                 CONTROLS, 
@@ -1629,68 +1599,47 @@ label_context_entry:
                     "Out of interested region..."
                 );
 
-                if (bUseContex) {
-
-                    ARM_2D_LOG_INFO(
-                        CONTROLS, 
-                        3, 
-                        "TJpgDec", 
-                        "Save context to slot [JDEC_CONTEXT_CURRENT]"
-                    );
-                    __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_CURRENT], x, y, rst, rsc);
+                if (    this.Decoder.tBlockRegion.tLocation.iY 
+                   >=   (tDrawRegion.tLocation.iY + tDrawRegion.tSize.iHeight)) {
+                    /* lower than the bottom of the draw region, terminate the job earlier */
+                    goto label_normal_exit;
+                } else if ((y + my) >= (tDrawRegion.tLocation.iY + tDrawRegion.tSize.iHeight)) {
+                    /* next line is out of region */
+                    if (x>= (tDrawRegion.tLocation.iX + tDrawRegion.tSize.iWidth)) {
+                        /* finish drawing the last line  */
+                        goto label_normal_exit;
+                    }
                 }
-
-            #if 0
-                if (x == 0 || bIsNewLine) {
-
-                    bIsNewLine = false;
-    
-                    /* the start of a line */
-                    ARM_2D_LOG_INFO(
-                        CONTROLS, 
-                        3, 
-                        "TJpgDec", 
-                        "Save context to slot [JDEC_CONTEXT_PREVIOUS_LINE]"
-                    );
-                    __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE], x, y, rst, rsc);
-                }
-            #endif
 
                 rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
                 if (rc != JDR_OK) {
                     return rc;
                 }
-                
-                if (    this.Decoder.tBlockRegion.tLocation.iY 
-                   >=   (tDrawRegion.tLocation.iY + tDrawRegion.tSize.iHeight)) {
-                    /* lower than the bottom of the draw region, terminate the job earlier */
-                    goto label_normal_exit;
-                }
-
-                if (bUseContex) {
-                    /* copy context */
-                    if (y <= tDrawRegion.tLocation.iY) {
-                        if (x <= tDrawRegion.tLocation.iX) {
-                            ARM_2D_LOG_INFO(
-                                CONTROLS, 
-                                3, 
-                                "TJpgDec", 
-                                "Save context to slot [JDEC_CONTEXT_PREVIOUS_START]"
-                            );
-                            this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_CURRENT];
-                        } else if ((y + my) <= tDrawRegion.tLocation.iY) {
-                            ARM_2D_LOG_INFO(
-                                CONTROLS, 
-                                3, 
-                                "TJpgDec", 
-                                "Save context to slot [JDEC_CONTEXT_PREVIOUS_START]"
-                            );
-                            this.tContext[JDEC_CONTEXT_PREVIOUS_START] = this.tContext[JDEC_CONTEXT_CURRENT];
-                        }
-                    } 
-                }
 
                 continue;
+            }
+
+            if (bUseContex) {
+                /* copy context */
+                if (y <= tDrawRegion.tLocation.iY) {
+                    if (x <= tDrawRegion.tLocation.iX) {
+                        ARM_2D_LOG_INFO(
+                            CONTROLS, 
+                            3, 
+                            "TJpgDec", 
+                            "Save context to slot [JDEC_CONTEXT_PREVIOUS_START]"
+                        );
+                        __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_START], x, y, rst, rsc);
+                    } else if ((y + my) <= tDrawRegion.tLocation.iY) {
+                        ARM_2D_LOG_INFO(
+                            CONTROLS, 
+                            3, 
+                            "TJpgDec", 
+                            "Save context to slot [JDEC_CONTEXT_PREVIOUS_START]"
+                        );
+                        __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_START], x, y, rst, rsc);
+                    }
+                } 
             }
 
             if (this.bIsNewFrame) {
@@ -1700,9 +1649,10 @@ label_context_entry:
                     CONTROLS, 
                     3, 
                     "TJpgDec", 
-                    "Encounter a new frame, copy current context to slot [JDEC_CONTEXT_PREVIOUS_FRAME_START]"
+                    "Encounter a new frame, Save context to slot [JDEC_CONTEXT_PREVIOUS_FRAME_START]"
                 );
-                this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START] = this.tContext[JDEC_CONTEXT_CURRENT];
+
+                __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START], x, y, rst, rsc);
             }
 
             if (x == 0 || bIsNewLine) {
@@ -1726,6 +1676,7 @@ label_context_entry:
 
 			rc = mcu_output(jd, outfunc, x, y);	/* Output the MCU (YCbCr to RGB, scaling and output) */
 			if (rc != JDR_OK) return rc;
+
 		}
 
         bIsNewLine = true;
@@ -1733,6 +1684,16 @@ label_context_entry:
 	}
 
 label_normal_exit:
+    if (bUseContex) {
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            3, 
+            "TJpgDec", 
+            "Save context to slot [JDEC_CONTEXT_CURRENT]"
+        );
+        __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_CURRENT], x, y, rst, rsc);
+    }
 
     ARM_2D_LOG_INFO(
         CONTROLS, 
