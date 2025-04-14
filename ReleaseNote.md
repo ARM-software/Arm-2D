@@ -2,6 +2,93 @@
 
 
 
+## Release v1.2.2 (May 2025)
+
+### Core and Library
+
+* Enhances the transform opereations
+  * Significantly improves the helium transform operations (~60%)
+  * Adds implicit colour format conversion support for CCCA8888
+  * Adds a new set of APIs that
+    * Supports applying different scaling ratios on X-axis and Y-axis resectievely
+    * Supports using floating point numbers (`arm_2d_point_float_t`) to specify pivots
+    * Implement the old APIs with the new APIs. The old APIs are marked as deprecated. Please use the new APIs in new designs. 
+  * Removes the floating-point based implementation and uses the fixed-point based acceleration only
+  * Fixes the black-boarder artifact issue in the Helium transform-only operations
+* Adds a new API `arm_2d_sw_normal_root_tile_copy()` to facilitate some low-level tile operations. 
+
+### Helper Services
+
+* Improve the Font Helper service
+  * Fixes issues found in Font scaling
+  * Adds a text-buffer centric APIs to improve the printf user experience
+    * `arm_lcd_print_to_buffer()`, `arm_lcd_print_buffer()`, etc.
+  * Adds support for specifying line-spacing and char-spacing
+  * Treats `arm_2d_helper_get_utf8_byte_valid_length()` as a static inline function
+  * Updates built-in fonts 
+  * 
+* Improves the support for 3FP helper service
+  * Fixes a frame-synchronization issue in the 3FP helper service
+  * Implements 3FB mode in the PC project template
+  * 
+* Fixes a selection region calculation issue in the List helper service
+* Improves the Display Adatper service
+  * Updates the display adapter template for fixing navigation layer display issues
+  * Updates the display adapter tempalte for fixing floating-console display issues
+* Enhances the Layout Assistant
+  * Improves the user application performance with a PFB optimization mode (Enabled by set macro `__ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__` to `1` in `arm_2d_cfg.h`).
+    * Introduces a new hint `__arm_2d_hint_optimize_for_pfb__()`
+    * Introduces a new set of keywords with postfix `_open`, which provide the same functionality as the one without the postfix but without PFB optimization.
+* Improves the PFB Helper Service
+  * Adds new prototypes to the existing API `arm_2d_helper_pfb_is_region_active()`
+  * Fixes infinite-loop issue when invalid dirty region is added to the working list.
+* Updates the Dirty Region Transform helper serivce to support the new transform APIs
+
+### Examples and Templates
+
+* Updates `spin_zoom_widget_t` to use the new transform APIs.
+* Improves example controls
+  * Progressbar-flowing
+  * Busy-wheel
+* Improves the SDL2 driver in the PC project template
+  * Adds different outlook styles for monochrome displaying, i.e. nixie-tube, untra-low-power LCD (gray), green (backlight) LCD and blue (backlight) LCD. 
+  * Applys the Blur filter to the monochrome display
+* Improves the scene templates
+  * Adds missing event handlers
+* Adds a new example control: Text-Box (`text_box_t`)
+  * Supports popular alignment modes: Left-Align, Right-Align and **Justified-Align**
+  * Supports Extra-Large texts, Font-Scaling, Char-Spacing, Line-Spacing and **Paragraph-Spacing**.
+  * Adds a built-in dirty region service.
+  * Adds a new Demo, `arm_2d_scene_text_reader`, for Text-Box.
+* Improves the console box (`console_box_t`)
+  * Replaces the `arm_lcd_putchar()` with the newly introduces text-buffer-centric APIs, i.e. `arm_lcd_printf_buffer()` and `arm_lcd_putchar_to_buffer()`.
+* Use the Time-of-Compilation as the start time of the system timestamp
+* Adds an new category of examples, **Asset Loader**, for loading GUI resources
+  * Asset Loaders are derived from the virtual resource
+  * Adds a dedicated asset loader for JPEG images based on TJpgDec
+    * Implements **Region of Interests** mode that only decodes the areas addressed by dirty regions
+    * Ultra-small memory footprint
+      * 4K Heap for allocating working memory 
+      * **No dedicated Framebuffer is required** to store the decoded pixels when used together with tile-copy-only operations. 
+    * Adds a demo for showing how to decode JPEG images, i.e. `arm_2d_scene_tjpgd`.
+    * Adds a demo for showing a GIF-like animation using JPEG image, i.e. `arm_2d_scene_rickrolling`.
+    * Updates scene templates (i.e. meter and histogram) to use JPEG images as the background
+* Updates benchmarks
+
+### Documentation and Misc
+
+* Adds a section in `how_to_deploy_the_arm_2d_library.md` to introduce how to synchronize with the low-level display driver
+* Adds a section in `how_to_use_layout_assistant.md` for docking related keywords and syntaxs
+* Improves the support for LVGL
+* Improves the support for GCC
+* Improves the support for Linux
+* Updates `ttf2c.py` 
+  * Fixes the support for the Font scaling.
+  * Adds an ASCII mode to ease the font generation of the ASCII character set.
+* Update README.md and ReleaseNote.md
+
+
+
 ## Release v1.2.1 (20 December 2024)
 
 ### Core and Library
