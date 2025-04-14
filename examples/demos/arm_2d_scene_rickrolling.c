@@ -275,7 +275,7 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
             .fnOnFrameCPL   = &__on_scene_rickrolling_frame_complete,
             .fnDepose       = &__on_scene_rickrolling_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
