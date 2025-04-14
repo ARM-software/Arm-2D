@@ -313,7 +313,7 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
         arm_tjpgd_loader_init(&this.tAnimation, &tCFG);
     } while(0);
 
-    this.tFilm = (arm_2d_helper_film_t)impl_film(this.tAnimation, 100, 108, 1, 62, 30);
+    this.tFilm = (arm_2d_helper_film_t)impl_film(this.tAnimation, 100, 108, 1, 62, 16);
 
     /* ------------   initialize members of user_scene_rickrolling_t end   ---------------*/
 
