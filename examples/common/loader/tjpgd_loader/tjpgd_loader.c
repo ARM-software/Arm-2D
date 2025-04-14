@@ -1590,6 +1590,20 @@ label_context_entry:
                                                 true);
             }
 
+            if (x == 0 || bIsNewLine) {
+
+                bIsNewLine = false;
+
+                /* the start of a line */
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    3, 
+                    "TJpgDec", 
+                    "Save context to slot [JDEC_CONTEXT_PREVIOUS_LINE]"
+                );
+                __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE], x, y, rst, rsc);
+            }
+
             if (!arm_2d_region_intersect(&this.Decoder.tBlockRegion, &tDrawRegion, NULL)) {
 
                 ARM_2D_LOG_INFO(
@@ -1653,20 +1667,6 @@ label_context_entry:
                 );
 
                 __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START], x, y, rst, rsc);
-            }
-
-            if (x == 0 || bIsNewLine) {
-
-                bIsNewLine = false;
-
-                /* the start of a line */
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    3, 
-                    "TJpgDec", 
-                    "Save context to slot [JDEC_CONTEXT_PREVIOUS_LINE]"
-                );
-                __arm_tjpgd_save_context_to(ptThis, &this.tContext[JDEC_CONTEXT_PREVIOUS_LINE], x, y, rst, rsc);
             }
 
             rc = mcu_load(jd);					/* Load an MCU (decompress huffman coded stream, dequantize and apply IDCT) */
