@@ -283,6 +283,11 @@ void scene_tjpgd_loader(void)
     arm_2d_scene_tjpgd_init(&DISP0_ADAPTER);
 }
 
+void scene_rickrolling_loader(void) 
+{
+    arm_2d_scene_rickrolling_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -302,7 +307,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -370,6 +375,16 @@ static demo_scene_t const c_SceneLoaders[] = {
         10000,
         scene_knob_loader,
     },
+#if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
+    {
+        5000,
+        scene_tjpgd_loader,
+    },
+    {
+        8000,
+        scene_rickrolling_loader,
+    },
+#endif
     {
         10000,
         scene_alarm_clock_loader,
@@ -449,8 +464,10 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        //scene_tjpgd_loader,
+        scene_rickrolling_loader,
         //scene_fan_loader,
-        scene_transform_loader,
+        //scene_transform_loader,
         //scene_tjpgd_loader,
         //scene_text_reader_loader,
         //scene_ruler_loader,
