@@ -396,11 +396,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -514,6 +509,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1456,11 +1456,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -1574,6 +1569,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2517,11 +2517,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -2635,6 +2630,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3509,11 +3509,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -3627,6 +3622,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4501,11 +4501,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -4619,6 +4614,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5562,11 +5562,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -5680,6 +5675,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6237,7 +6237,7 @@
       <TargetName>STM32F746G-Discovery</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -6565,7 +6565,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-nonportable-include-path</MiscControls>
-              <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=28</Define>
+              <Define>__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=28,ARM_2D_SCENE_METER_USE_JPG,ARM_2D_SCENE_HISTOGRAM_USE_JPG</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
@@ -6621,11 +6621,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
@@ -6741,6 +6736,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7144,6 +7144,75 @@
         </Group>
         <Group>
           <GroupName>::CMSIS Driver</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <uGnu>2</uGnu>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <ClangAsOpt>0</ClangAsOpt>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
         </Group>
         <Group>
           <GroupName>::Compiler</GroupName>
@@ -7615,11 +7684,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -7733,6 +7797,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8676,11 +8745,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -8794,6 +8858,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9668,11 +9737,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -9786,6 +9850,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10729,11 +10798,6 @@
               <FilePath>..\..\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_alarm_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\alarm_clock\arm_2d_scene_alarm_clock.c</FilePath>
@@ -10847,6 +10911,11 @@
               <FileName>knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\knob_circle_quater.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11374,11 +11443,6 @@
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery">
-            <c>
-              <MiscControls>-fno-lto</MiscControls>
-            </c>
-          </targetInfo>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
           <targetInfo name="V2M-MPS2-CM0+"/>
           <targetInfo name="V2M-MPS2-CM33"/>
@@ -11459,7 +11523,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11716,22 +11780,6 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-Demos">
-        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-AN556"/>
-          <targetInfo name="AN552_Cortex-M55"/>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
-          <targetInfo name="V2M-MPS3-CM85"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-Generic" Cvendor="ARM" Cversion="1.4.5" condition="Arm-2D-Benchmark-Generic">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12080,16 +12128,6 @@
         <package name="STM32F7xx_DFP" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="Keil" version="2.15.2"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
-        </targetInfos>
-      </component>
-      <component Capiversion="2.4.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="3.0.0" condition="CMSIS Driver requirements" isTargetSpecific="1">
-        <package name="CMSIS-Driver_STM32" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
-        <targetInfos>
-          <targetInfo name="STM32F746G-Discovery">
-            <c>
-              <MiscControls>-fno-lto</MiscControls>
-            </c>
-          </targetInfo>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="Event Recorder" Cvariant="DAP" Cvendor="Keil" Cversion="1.5.1" condition="Cortex-M Device">
@@ -12671,9 +12709,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_console_window.c" version="1.0.2">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_console_window.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_console_window.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12689,9 +12727,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_console_window.h" version="1.0.2">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_console_window.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_console_window.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.0.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="ConsoleWindow" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13680,10 +13718,12 @@
         <targetInfos/>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC6" name="Device\ARMCM55\Config\ARMCM55_ac6.sct" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\ARMCM55\ARMCM55_ac6.sct</instance>
+        <instance index="0">RTE\Device\ARMCM55\ARMCM55_ac6.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM55 CMSIS" isDefaultVariant="1"/>
         <package name="Cortex_DFP" schemaVersion="1.7.33" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM55_Deprecated"/>
+        </targetInfos>
       </file>
       <file attr="config" category="header" name="template\RTE_Device.h">
         <instance index="0" removed="1">RTE\Device\ARMCM55\RTE_Device.h</instance>
@@ -13708,10 +13748,12 @@
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC6" name="Device\ARMCM85\Config\ARMCM85_ac6.sct" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\ARMCM85\ARMCM85_ac6.sct</instance>
+        <instance index="0">RTE\Device\ARMCM85\ARMCM85_ac6.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.2.0" condition="ARMCM85 CMSIS" isDefaultVariant="1"/>
         <package name="Cortex_DFP" schemaVersion="1.7.33" url="https://www.keil.com/pack/" vendor="ARM" version="1.1.0"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="Device\ARMCM85\Source\startup_ARMCM85.c" version="1.0.0">
         <instance index="0">RTE\Device\ARMCM85\startup_ARMCM85.c</instance>
@@ -13738,16 +13780,20 @@
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\ac6_arm.sct" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\CMSDK_CM0plus\ac6_arm.sct</instance>
+        <instance index="0">RTE\Device\CMSDK_CM0plus\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM0plus\Source\ARM\startup_CMSDK_CM0plus.S" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\CMSDK_CM0plus\startup_CMSDK_CM0plus.S</instance>
+        <instance index="0">RTE\Device\CMSDK_CM0plus\startup_CMSDK_CM0plus.S</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="Device\CMSDK_CM0plus\Source\system_CMSDK_CM0plus.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\system_CMSDK_CM0plus.c</instance>
@@ -13791,16 +13837,22 @@
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\ac6_arm.sct" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\CMSDK_CM4_FP\ac6_arm.sct</instance>
+        <instance index="0">RTE\Device\CMSDK_CM4_FP\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM4\Source\ARM\startup_CMSDK_CM4.S" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\CMSDK_CM4_FP\startup_CMSDK_CM4.S</instance>
+        <instance index="0">RTE\Device\CMSDK_CM4_FP\startup_CMSDK_CM4.S</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM4 CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="Device\CMSDK_CM4\Source\system_CMSDK_CM4.c" version="1.0.0">
         <instance index="0">RTE\Device\CMSDK_CM4_FP\system_CMSDK_CM4.c</instance>
@@ -13820,16 +13872,20 @@
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\ac6_arm.sct" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\CMSDK_CM7_DP\ac6_arm.sct</instance>
+        <instance index="0">RTE\Device\CMSDK_CM7_DP\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM7"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceAsm" condition="ARMCC" name="Device\CMSDK_CM7\Source\ARM\startup_CMSDK_CM7.S" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\CMSDK_CM7_DP\startup_CMSDK_CM7.S</instance>
+        <instance index="0">RTE\Device\CMSDK_CM7_DP\startup_CMSDK_CM7.S</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM7 CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM7"/>
+        </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="Device\CMSDK_CM7\Source\system_CMSDK_CM7.c" version="1.1.0">
         <instance index="0">RTE\Device\CMSDK_CM7_DP\system_CMSDK_CM7.c</instance>
@@ -13848,10 +13904,12 @@
         </targetInfos>
       </file>
       <file attr="config" category="linkerScript" condition="ARMCC" name="Device\IOTKit_CM33\Source\ARM\ac6_arm.sct" version="1.0.0">
-        <instance index="0" removed="1">RTE\Device\IOTKit_CM33_FP\ac6_arm.sct</instance>
+        <instance index="0">RTE\Device\IOTKit_CM33_FP\ac6_arm.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="Keil" Cversion="1.2.0" condition="IOTKit_CM33 CMSIS" isDefaultVariant="1"/>
         <package name="V2M-MPS2_IOTKit_BSP" schemaVersion="1.4.9" url="https://www.keil.com/pack/" vendor="Keil" version="1.5.1"/>
-        <targetInfos/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS2-CM33"/>
+        </targetInfos>
       </file>
       <file attr="config" category="header" name="Device\IOTKit_CM33\Include\Template\partition_IOTKit_CM33.h" version="1.0.0">
         <instance index="0">RTE\Device\IOTKit_CM33_FP\partition_IOTKit_CM33.h</instance>
