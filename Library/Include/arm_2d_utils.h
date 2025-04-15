@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        08. Dec 2024
- * $Revision:    V.1.4.9
+ * $Date:        15. April 2025
+ * $Revision:    V.1.4.10
  *
  * -------------------------------------------------------------------- */
 
@@ -1290,6 +1290,10 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
                          const char *pchFormatString,
                          ...);
 
+#if __IS_COMPILER_ARM_COMPILER__
+extern
+size_t strnlen(const char *pchString, size_t tMaxSize);
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
