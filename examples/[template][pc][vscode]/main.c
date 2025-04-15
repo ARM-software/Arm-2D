@@ -277,7 +277,7 @@ void scene_mono_icon_menu_loader(void)
 
     arm_2d_scene_mono_icon_menu_init(&DISP0_ADAPTER);
 }
-
+#if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
 void scene_tjpgd_loader(void) 
 {
     arm_2d_scene_tjpgd_init(&DISP0_ADAPTER);
@@ -287,6 +287,7 @@ void scene_rickrolling_loader(void)
 {
     arm_2d_scene_rickrolling_init(&DISP0_ADAPTER);
 }
+#endif
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
