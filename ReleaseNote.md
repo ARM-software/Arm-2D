@@ -6,11 +6,11 @@
 
 ### Core and Library
 
-* Enhances the transform opereations
+* Enhances the transform operations
   * Significantly improves the helium transform operations (~60%)
   * Adds implicit colour format conversion support for CCCA8888
   * Adds a new set of APIs that
-    * Supports applying different scaling ratios on X-axis and Y-axis resectievely
+    * Supports applying different scaling ratios on the X-axis and Y-axis respectively
     * Supports using floating point numbers (`arm_2d_point_float_t`) to specify pivots
     * Implement the old APIs with the new APIs. The old APIs are marked as deprecated. Please use the new APIs in new designs. 
   * Removes the floating-point based implementation and uses the fixed-point based acceleration only
@@ -26,11 +26,9 @@
   * Adds support for specifying line-spacing and char-spacing
   * Treats `arm_2d_helper_get_utf8_byte_valid_length()` as a static inline function
   * Updates built-in fonts 
-  * 
 * Improves the support for 3FP helper service
   * Fixes a frame-synchronization issue in the 3FP helper service
   * Implements 3FB mode in the PC project template
-  * 
 * Fixes a selection region calculation issue in the List helper service
 * Improves the Display Adatper service
   * Updates the display adapter template for fixing navigation layer display issues
@@ -43,6 +41,7 @@
   * Adds new prototypes to the existing API `arm_2d_helper_pfb_is_region_active()`
   * Fixes infinite-loop issue when invalid dirty region is added to the working list.
 * Updates the Dirty Region Transform helper serivce to support the new transform APIs
+* Fixes stop-updating issues in dirty region helper service when any dynamic dirty region is out of visual area. 
 
 ### Examples and Templates
 
