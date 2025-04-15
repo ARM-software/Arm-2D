@@ -500,10 +500,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         50000,
         scene_filters_loader,
     },
-    {
-        10000,
-        scene_audiomark_loader,
-    },
+//    {
+//        10000,
+//        scene_audiomark_loader,
+//    },
     
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     {

@@ -243,7 +243,7 @@
             <uThumb>1</uThumb>
             <VariousControls>
               <MiscControls>-Ofast -fdata-sections -ffunction-sections -fms-extensions -mcpu=cortex-m7 -mfloat-abi=soft -mfpu=fpv5-sp-d16 -std=gnu11</MiscControls>
-              <Define>__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=27</Define>
+              <Define>__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=28,ARM_2D_SCENE_METER_USE_JPG,ARM_2D_SCENE_HISTOGRAM_USE_JPG</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;..\..\..\common\scenes\animate_background;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
@@ -291,11 +291,6 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -406,6 +401,11 @@
               <FileName>wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>MeterPanel.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\asset\MeterPanel.c</FilePath>
             </File>
           </Files>
         </Group>
