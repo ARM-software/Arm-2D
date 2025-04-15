@@ -116,11 +116,11 @@ Release v1.2.2 (May 2025)</h1>
 <h2><a class="anchor" id="autotoc_md25"></a>
 Core and Library</h2>
 <ul>
-<li>Enhances the transform opereations<ul>
+<li>Enhances the transform operations<ul>
 <li>Significantly improves the helium transform operations (~60%)</li>
 <li>Adds implicit colour format conversion support for CCCA8888</li>
 <li>Adds a new set of APIs that<ul>
-<li>Supports applying different scaling ratios on X-axis and Y-axis resectievely</li>
+<li>Supports applying different scaling ratios on the X-axis and Y-axis respectively</li>
 <li>Supports using floating point numbers (<code><a class="el" href="group__gKernel.html#structarm__2d__point__float__t" title="a type for coordinates in floating point">arm_2d_point_float_t</a></code>) to specify pivots</li>
 <li>Implement the old APIs with the new APIs. The old APIs are marked as deprecated. Please use the new APIs in new designs.</li>
 </ul>
@@ -143,13 +143,11 @@ Helper Services</h2>
 <li>Adds support for specifying line-spacing and char-spacing</li>
 <li>Treats <code><a class="el" href="group__gHelper.html#gadecd1cd60238deb51e495eb8e19469ce" title="return a valid code length of a given UTF8 char">arm_2d_helper_get_utf8_byte_valid_length()</a></code> as a static inline function</li>
 <li>Updates built-in fonts</li>
-<li></li>
 </ul>
 </li>
 <li>Improves the support for 3FP helper service<ul>
 <li>Fixes a frame-synchronization issue in the 3FP helper service</li>
 <li>Implements 3FB mode in the PC project template</li>
-<li></li>
 </ul>
 </li>
 <li>Fixes a selection region calculation issue in the List helper service</li>
@@ -172,6 +170,7 @@ Helper Services</h2>
 </ul>
 </li>
 <li>Updates the Dirty Region Transform helper serivce to support the new transform APIs</li>
+<li>Fixes stop-updating issues in dirty region helper service when any dynamic dirty region is out of visual area.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md27"></a>
 Examples and Templates</h2>
