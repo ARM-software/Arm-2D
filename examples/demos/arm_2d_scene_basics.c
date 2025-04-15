@@ -385,7 +385,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene 0");
+        arm_lcd_puts("Basic");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
