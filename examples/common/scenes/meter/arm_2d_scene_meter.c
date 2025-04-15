@@ -337,7 +337,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
+    #if ARM_2D_SCENE_METER_USE_JPG
+        arm_lcd_puts("Scene meter with TJpgDec");
+    #else
         arm_lcd_puts("Scene meter");
+    #endif
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
