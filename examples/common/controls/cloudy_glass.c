@@ -216,9 +216,9 @@ void cloudy_glass_on_frame_complete( cloudy_glass_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void cloudy_glass_show(   cloudy_glass_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion)
+void cloudy_glass_show( cloudy_glass_t *ptThis,
+                        const arm_2d_tile_t *ptTile, 
+                        const arm_2d_region_t *ptRegion)
 {
     if (-1 == (intptr_t)ptTile) {
         ptTile = arm_2d_get_default_frame_buffer();
