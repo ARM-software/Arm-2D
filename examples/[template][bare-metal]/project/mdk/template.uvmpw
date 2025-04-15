@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName>Y:\Work\git\Arm-2D\examples\[template][bare-metal]\project\mdk\template.uvmpw</WorkspaceName>
+  <WorkspaceName>template</WorkspaceName>
 
   <project>
     <PathAndName>.\template.uvprojx</PathAndName>

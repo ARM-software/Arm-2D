@@ -211,6 +211,8 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
             }
             DISP0_CONSOLE.bShowConsole = true;
             DISP0_CONSOLE.chOpacity = 255;
+        } else {
+            arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
         }
 
     #if __DISP0_CFG_CONSOLE_DISPALY_TIME__ >= 1000                              \
@@ -218,6 +220,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
         if (DISP0_CONSOLE.bShowConsole) {
             if (arm_2d_helper_is_time_out(__DISP0_CFG_CONSOLE_DISPALY_TIME__, &DISP0_CONSOLE.lTimestamp)) {
                 DISP0_CONSOLE.bShowConsole = false;
+                DISP0_CONSOLE.chOpacity = 0;
             } else {
                 int64_t lTimeElapsedInMs = -arm_2d_helper_time_elapsed(&DISP0_CONSOLE.lTimestamp);
                 if (lTimeElapsedInMs > 255) {
@@ -226,35 +229,40 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
                     DISP0_CONSOLE.chOpacity = lTimeElapsedInMs;
                 }
             }
+            arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, false);
+        } else {
+            arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
         }
     #endif
     }
 
     arm_2d_canvas(ptTile, __navigation_canvas) {
 
-        if (DISP0_CONSOLE.bShowConsole) {
-            arm_2d_align_top_left(  __navigation_canvas, 
-                                    __DISP0_CONSOLE_WIDTH__ + 8, 
-                                    __DISP0_CONSOLE_HEIGHT__ + 8) {
+        arm_2d_align_top_left(  __navigation_canvas, 
+                                __DISP0_CONSOLE_WIDTH__ + 8, 
+                                __DISP0_CONSOLE_HEIGHT__ + 8) {
 
-                draw_round_corner_box(  ptTile, 
-                                        &__top_left_region, 
-                                        GLCD_COLOR_DARK_GREY, 
-                                        (128 * DISP0_CONSOLE.chOpacity) >> 8,
-                                        bIsNewFrame);
+            draw_round_corner_box(  ptTile, 
+                                    &__top_left_region, 
+                                    GLCD_COLOR_DARK_GREY, 
+                                    (128 * DISP0_CONSOLE.chOpacity) >> 8,
+                                    bIsNewFrame);
 
-                console_box_show(&DISP0_CONSOLE.tConsole,
-                                ptTile,
-                                &__top_left_region,
-                                bIsNewFrame,
-                                DISP0_CONSOLE.chOpacity);
-            }
+            console_box_show(&DISP0_CONSOLE.tConsole,
+                            ptTile,
+                            &__top_left_region,
+                            bIsNewFrame,
+                            DISP0_CONSOLE.chOpacity);
         }
     }
 
 #endif
 
     arm_lcd_text_set_scale(0.0f);
+    arm_lcd_text_set_opacity(255);
+    arm_lcd_text_set_char_spacing(0);
+    arm_lcd_text_set_line_spacing(0);
+    arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
 
 #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
     /* round mode */
@@ -723,14 +731,18 @@ static void __user_scene_player_init(void)
 __WEAK 
 void disp_adapter0_navigator_init(void)
 {
-#if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
-    
     static const arm_2d_region_t tScreen = {
         .tSize = {
             .iWidth = __DISP0_CFG_SCEEN_WIDTH__,
             .iHeight = __DISP0_CFG_SCEEN_HEIGHT__,
         },
     };
+
+    ARM_2D_UNUSED(tScreen);
+
+#if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+    
+
     
     arm_2d_align_bottom_centre(tScreen, s_tNavDirtyRegionList[0].tRegion.tSize) {
         s_tNavDirtyRegionList[0].tRegion = __bottom_centre_region;
@@ -758,7 +770,7 @@ void disp_adapter0_navigator_init(void)
     do {
 
     #if __DISP0_CFG_CONSOLE_INPUT_BUFFER__
-        static uint8_t s_chInputBuffer[256];
+        static uint8_t s_chInputBuffer[__DISP0_CFG_CONSOLE_INPUT_BUFFER__];
     #endif
         static uint8_t s_chConsoleBuffer[   (__DISP0_CONSOLE_WIDTH__ / 6) 
                                         *   (__DISP0_CONSOLE_HEIGHT__ / 8)];
@@ -792,13 +804,6 @@ void disp_adapter0_navigator_init(void)
     } while(0);
 
     arm_2d_dirty_region_item_ignore_set(&DISP0_CONSOLE.tBackground, true);
-    
-    arm_2d_region_t tScreen = {
-        .tSize = {
-            __DISP0_CFG_SCEEN_WIDTH__, 
-            __DISP0_CFG_SCEEN_HEIGHT__
-        },
-    };
 
     arm_2d_align_top_left(tScreen, 220, 200) {
         DISP0_CONSOLE.tBackground.tRegion = __top_left_region;
@@ -958,7 +963,7 @@ void * __disp_adapter0_aligned_malloc(size_t nSize, size_t nAlign)
     /* ensure nAlign is 2^n */
     assert((((~nAlign) + 1) & nAlign) == nAlign);
 
-    void * pMem = malloc(nSize);
+    void * pMem = __arm_2d_allocate_scratch_memory(nSize, 4, ARM_2D_MEM_TYPE_UNSPECIFIED);
     assert( 0 == ((uintptr_t)pMem & (nAlign - 1)));
     return pMem;
 }
@@ -967,7 +972,7 @@ __WEAK
 void __disp_adapter0_free(void *pMem)
 {
     if (NULL != pMem) {
-        free(pMem);
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, pMem);
     }
 }
 

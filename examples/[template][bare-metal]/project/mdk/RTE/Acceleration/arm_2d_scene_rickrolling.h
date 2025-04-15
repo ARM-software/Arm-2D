@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_TRANSFORM_H__
-#define __ARM_2D_SCENE_TRANSFORM_H__
+#ifndef __ARM_2D_SCENE_RICKROLLING_H__
+#define __ARM_2D_SCENE_RICKROLLING_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -25,10 +25,11 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
+ && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
 
 #include "arm_2d_helper.h"
-#include "arm_2d_example_controls.h"
+#include "arm_2d_example_loaders.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -51,70 +52,55 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_TRANSFORM_IMPLEMENT__
+#ifdef __USER_SCENE_RICKROLLING_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_TRANSFORM_INHERIT__
+#ifdef __USER_SCENE_RICKROLLING_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
+
+#ifndef ARM_2D_DEMO_TJPGD_USE_FILE
+#   define ARM_2D_DEMO_TJPGD_USE_FILE  0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_transform and add it to a user specified scene player
+ * \brief initalize scene_rickrolling and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_transform_t will be allocated from HEAP and freed on
+ *            user_scene_rickrolling_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_transform_t* the user_scene_transform_t instance
+ * \return user_scene_rickrolling_t* the user_scene_rickrolling_t instance
  */
-#define arm_2d_scene_transform_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_transform_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_rickrolling_init(__DISP_ADAPTER_PTR, ...)                  \
+            __arm_2d_scene_rickrolling_init((__DISP_ADAPTER_PTR),               \
+                                            (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
-
-
-typedef struct __transform_obj_t {
-    implement(dynamic_nebula_particle_t);
-
-    union {
-        arm_2d_op_trans_opa_t               tTransOpa;
-        arm_2d_op_trans_msk_opa_t           tTransMaskOpa;
-        arm_2d_op_fill_cl_msk_opa_trans_t   tFillColorMaskOpa;             
-    } tOP;
-
-    arm_2d_helper_dirty_region_transform_t tHelper;
-
-    enum {
-        TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY = 0,
-        TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY,
-        TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY,
-        TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY,
-
-    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-        TRANSFORM_TYPE_TILE_CCCA8888_ONLY_AND_OPACITY,
-    #endif
-        __TRANSFORM_TYPE_COUNT,
-    } emType;
-} __transform_obj_t;
-
 /*!
- * \brief a user class for scene transform
+ * \brief a user class for scene rickrolling
  */
-typedef struct user_scene_transform_t user_scene_transform_t;
+typedef struct user_scene_rickrolling_t user_scene_rickrolling_t;
 
-struct user_scene_transform_t {
+struct user_scene_rickrolling_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[1];
     bool bUserAllocated;
 
-    dynamic_nebula_t    tNebula;
-    __transform_obj_t   tObjects[__TRANSFORM_TYPE_COUNT];
+    arm_tjpgd_loader_t tAnimation;
+    union {
+        arm_tjpgd_io_file_loader_t tFile;
+        arm_tjpgd_io_binary_loader_t tBinary;
+    } LoaderIO;
+
+    arm_2d_helper_film_t tFilm;
 
 )
     /* place your public member here */
@@ -126,8 +112,9 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_transform_t *ptScene);
+user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(
+                                        arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_rickrolling_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -135,8 +122,8 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_TRANSFORM_IMPLEMENT__
-#undef __USER_SCENE_TRANSFORM_INHERIT__
+#undef __USER_SCENE_RICKROLLING_IMPLEMENT__
+#undef __USER_SCENE_RICKROLLING_INHERIT__
 
 #ifdef   __cplusplus
 }

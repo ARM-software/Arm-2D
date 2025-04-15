@@ -20,7 +20,6 @@
 #define __ARM_2D_USER_DRAW_CIRCLE_H__
 
 /*============================ INCLUDES ======================================*/
-#include "arm_2d_types.h"
 
 #include "arm_2d_helper.h"
 

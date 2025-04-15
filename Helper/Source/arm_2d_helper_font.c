@@ -1141,7 +1141,7 @@ int arm_lcd_printf(const char *format, ...)
                                 sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, 
                                 format, 
                                 ap);
-        real_size = MAX(0, real_size);
+        real_size = real_size;
     va_end(ap);
     real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
     s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
@@ -1161,7 +1161,7 @@ arm_2d_size_t arm_lcd_printf_to_buffer( const arm_2d_font_t *ptFont,
                                 sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, 
                                 format, 
                                 ap);
-        real_size = MAX(0, real_size);
+        real_size = real_size;
     va_end(ap);
     real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
     s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
