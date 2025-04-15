@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        20. Dec 2024
- * $Revision:    V.1.2.1
+ * $Date:        15. April 2025
+ * $Revision:    V.1.2.2-rc
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -72,6 +72,7 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wunused-value"
 #   pragma GCC diagnostic ignored "-Wnonnull-compare"
 #   pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#   pragma GCC diagnostic ignored "-Wunused-const-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 1296,174,64,177,1
 #endif

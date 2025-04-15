@@ -856,9 +856,9 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
     uint8_t chBrickDetectorPT = 0;
 
     int16_t iLineWidth = 0;
-    int16_t iFontCharWidth = this.tCFG.ptFont->tCharSize.iWidth;
+    //int16_t iFontCharWidth = this.tCFG.ptFont->tCharSize.iWidth;
     bool bGetAValidLine = false;
-    arm_2d_char_descriptor_t tDescriptor;
+    //arm_2d_char_descriptor_t tDescriptor;
     int16_t iWhiteSpaceWidth = arm_lcd_get_char_advance(tUTF8Char.chByte)
                              + arm_lcd_text_get_actual_spacing().iWidth;
 
