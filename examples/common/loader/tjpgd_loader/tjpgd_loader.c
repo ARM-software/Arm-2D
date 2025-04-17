@@ -226,11 +226,6 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
 
     } while(0);
 
-    /* unsupported yet
-    if (ARM_TJPGD_MODE_PARTIAL_DECODED == this.tCFG.u2WorkMode) {
-        this.tCFG.u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED_TINY;
-    }*/
-
     this.bInitialized = true;
 
     /* try to decode */
@@ -1469,19 +1464,7 @@ JRESULT jd_decomp_rect (
                 break;
             }
 
-        #if 0
-            if (    this.tContext[JDEC_CONTEXT_PREVIOUS_START].tLocation.iY 
-                >   this.tContext[JDEC_CONTEXT_PREVIOUS_FRAME_START].tLocation.iY) {
-                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_START);
-                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_FRAME_START);
-                
-            } else {
-                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_FRAME_START);
-                __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_START);
-            }
-        #else
             __CHECK_CONTEXT(JDEC_CONTEXT_PREVIOUS_FRAME_START);
-        #endif
 
             ARM_2D_LOG_INFO(
                 CONTROLS, 
@@ -1547,6 +1530,14 @@ JRESULT jd_decomp_rect (
         x = 0;
 		for (; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
 
+            this.Decoder.tBlockRegion.tLocation.iX = x;
+
+			if (jd->nrst && rst++ == jd->nrst) {	/* Process restart interval if enabled */
+				rc = restart(jd, rsc++);
+				if (rc != JDR_OK) return rc;
+				rst = 1;
+			}
+
 label_context_entry:
 
             ARM_2D_LOG_INFO(
@@ -1557,14 +1548,6 @@ label_context_entry:
                 x,
                 y
             );
-
-            this.Decoder.tBlockRegion.tLocation.iX = x;
-
-			if (jd->nrst && rst++ == jd->nrst) {	/* Process restart interval if enabled */
-				rc = restart(jd, rsc++);
-				if (rc != JDR_OK) return rc;
-				rst = 1;
-			}
 
             /* scan reference candidates */
             arm_tjpgd_context_t *ptCandiate = NULL;
