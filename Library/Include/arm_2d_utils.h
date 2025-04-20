@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        15. April 2025
- * $Revision:    V.1.4.10
+ * $Date:        20. April 2025
+ * $Revision:    V.1.4.11
  *
  * -------------------------------------------------------------------- */
 
@@ -541,6 +541,19 @@ extern "C" {
  */
 #define arm_with(...)                                                           \
             ARM_CONNECT2(__ARM_WITH, __ARM_VA_NUM_ARGS(__VA_ARGS__))(__VA_ARGS__)
+
+
+/*!
+ * \brief access each items in a given array
+ * \param __array the target array
+ * \note you can use "_" as the current object (iterator)
+ */
+#define ARM_FOREACH1(__array)                                                   \
+            arm_using(typeof(__array[0]) *_ = __array)                          \
+            for (   uint_fast32_t ARM_CONNECT2(count,__LINE__) = dimof(__array);\
+                    ARM_CONNECT2(count,__LINE__) > 0;                           \
+                    _++, ARM_CONNECT2(count,__LINE__)--                         \
+                )
 
 /*!
  * \brief access each items in a given array

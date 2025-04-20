@@ -197,12 +197,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
     ARM_2D_PARAM(bIsNewFrame);
 
     user_scene_<name>_t *ptThis = (user_scene_<name>_t *)pTarget;
-    arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
-
-    ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {
-    /*-----------------------draw the foreground begin-----------------------*/
+    /*-----------------------draw the scene begin-----------------------*/
         
         /* following code is just a demo, you can remove them */
 
@@ -256,7 +253,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_<name>_handler)
         arm_lcd_text_location(0,0);
         arm_lcd_puts("Scene <name>");
 
-    /*-----------------------draw the foreground end  -----------------------*/
+    /*-----------------------draw the scene end  -----------------------*/
     }
     ARM_2D_OP_WAIT_ASYNC();
 
