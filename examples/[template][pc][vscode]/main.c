@@ -169,6 +169,10 @@ void scene_menu_loader(void)
 
 void scene_fan_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+
     arm_2d_scene_fan_init(&DISP0_ADAPTER);
 }
 
@@ -215,6 +219,15 @@ void scene_compass_loader(void)
 void scene_knob_loader(void) 
 {
     arm_2d_scene_knob_init(&DISP0_ADAPTER);
+}
+
+void scene_matrix_loader(void) 
+{
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 2000);
+
+    arm_2d_scene_matrix_init(&DISP0_ADAPTER);
 }
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 16
@@ -345,6 +358,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_progress_status_loader,
     },
     {
+        20000,
+        scene_matrix_loader,
+    },
+    {
         13000,
         scene_fan_loader,
     },
@@ -465,8 +482,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        scene_matrix_loader,
         //scene_tjpgd_loader,
-        scene_rickrolling_loader,
+        //scene_rickrolling_loader,
         //scene_fan_loader,
         //scene_transform_loader,
         //scene_tjpgd_loader,
