@@ -57,6 +57,7 @@
 #   pragma GCC diagnostic ignored "-Wunused-function"
 #   pragma GCC diagnostic ignored "-Wunused-variable"
 #   pragma GCC diagnostic ignored "-Wunused-value"
+#   pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 #elif __IS_COMPILER_IAR__
 #   pragma diag_suppress=Pa089,Pe188,Pe177,Pe174
 #endif
@@ -230,7 +231,7 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre_open(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -287,7 +288,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
     }
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre_open(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -347,7 +348,7 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre_open(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -401,7 +402,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
     int32_t nSize = 100 * q7ScaleRatio >> 8;
 
     arm_2d_canvas(ptTile, __canvas) {
-        arm_2d_align_top_centre(__canvas, nSize, nSize) {
+        arm_2d_align_top_centre_open(__canvas, nSize, nSize) {
 
             /* adjust item position around a curve*/
             do {
@@ -509,7 +510,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_menu_background_handler)
 
 
     /*-----------------------draw back ground end  -----------------------*/
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -523,20 +524,24 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_menu_handler)
     
     /*-----------------------draw the foreground begin-----------------------*/
     
-    /* following code is just a demo, you can remove them */
+    arm_2d_canvas(ptTile, __top_canvas) {
 
-    while(arm_fsm_rt_cpl != list_view_show(&this.tListView, ptTile, NULL, bIsNewFrame));
+        while(arm_fsm_rt_cpl != list_view_show( &this.tListView, 
+                                                ptTile, 
+                                                &__top_canvas, 
+                                                bIsNewFrame));
 
-    /* draw text at the top-left corner */
-    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-    arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-    arm_lcd_text_set_draw_region(NULL);
-    arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
-    arm_lcd_text_location(0,0);
-    arm_lcd_printf("Scene Menu");
+        /* draw text at the top-left corner */
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+        arm_lcd_printf("Scene Menu");
+    }
 
     /*-----------------------draw the foreground end  -----------------------*/
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }

@@ -295,7 +295,7 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
 {
     arm_2d_container(ptTile, __panel, ptRegion) {
 
-        arm_2d_align_centre(__panel_canvas, 200, 200) {
+        arm_2d_align_centre_open(__panel_canvas, 200, 200) {
             arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
             arm_lcd_text_set_opacity(32);
@@ -342,7 +342,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_face_01_handler)
 
         arm_2d_align_centre(__canvas, 240, 240) {
 
-
             cloudy_glass_show(&this.tCloudyGlass,
                               ptTile,
                               &__centre_region);
@@ -350,14 +349,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_face_01_handler)
             __draw_watch_panel(ptTile, &__centre_region, ptThis);
 
             arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
-                spin_zoom_widget_show(ptPointer, ptTile, &__centre_region, NULL, 255);
+                spin_zoom_widget_show(  ptPointer, 
+                                        ptTile, 
+                                        &__centre_region, 
+                                        NULL, 
+                                        255);
             }
 
         }
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
-    arm_2d_op_wait_async(NULL);
+
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }

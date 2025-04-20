@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_TRANSFORM_H__
-#define __ARM_2D_SCENE_TRANSFORM_H__
+#ifndef __ARM_2D_SCENE_MATRIX_H__
+#define __ARM_2D_SCENE_MATRIX_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -51,61 +51,78 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_TRANSFORM_IMPLEMENT__
+#ifdef __USER_SCENE_MATRIX_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_TRANSFORM_INHERIT__
+#ifdef __USER_SCENE_MATRIX_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef MATRIX_LETTER_TRAIN_USE_BLUR
+#   define MATRIX_LETTER_TRAIN_USE_BLUR           0
+#endif
+
+
+#ifndef MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT
+#   define MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT    30
+#endif
+
+#ifndef MATRIX_LETTER_TRAIN_MID_STAGE_COUNT
+#   define MATRIX_LETTER_TRAIN_MID_STAGE_COUNT    30
+#endif
+
+#ifndef MATRIX_LETTER_TRAIN_NEAR_STAGE_COUNT
+#   define MATRIX_LETTER_TRAIN_NEAR_STAGE_COUNT   10
+#endif
+
+#if !MATRIX_LETTER_TRAIN_USE_BLUR
+#   undef MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT
+#   define MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT      0
+#endif
+
+#define MATRIX_LETTER_TRAIN_COUNT                   \
+        (   MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT     \
+        +   MATRIX_LETTER_TRAIN_MID_STAGE_COUNT     \
+        +   MATRIX_LETTER_TRAIN_NEAR_STAGE_COUNT    )
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_transform and add it to a user specified scene player
+ * \brief initalize scene_matrix and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_transform_t will be allocated from HEAP and freed on
+ *            user_scene_matrix_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_transform_t* the user_scene_transform_t instance
+ * \return user_scene_matrix_t* the user_scene_matrix_t instance
  */
-#define arm_2d_scene_transform_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_transform_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_matrix_init(__DISP_ADAPTER_PTR, ...)                       \
+            __arm_2d_scene_matrix_init( (__DISP_ADAPTER_PTR),                   \
+                                        (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 
+typedef struct {
+    arm_2d_region_t tRegion;
 
-typedef struct __transform_obj_t {
-    implement(dynamic_nebula_particle_t);
+    uint32_t u2Stage            : 2;
+    uint32_t                    : 6;
+    uint32_t u8RandomSeed       : 8;
+    uint32_t u16NumberOfChars   : 16;
 
-    union {
-        arm_2d_op_trans_opa_t               tTransOpa;
-        arm_2d_op_trans_msk_opa_t           tTransMaskOpa;
-        arm_2d_op_fill_cl_msk_opa_trans_t   tFillColorMaskOpa;             
-    } tOP;
+    
 
-    arm_2d_helper_dirty_region_transform_t tHelper;
 
-    enum {
-        TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY = 0,
-        TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY,
-        TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY,
-        TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY,
+} __letter_train_t;
 
-    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-        TRANSFORM_TYPE_TILE_CCCA8888_ONLY_AND_OPACITY,
-    #endif
-        __TRANSFORM_TYPE_COUNT,
-    } emType;
-} __transform_obj_t;
 
 /*!
- * \brief a user class for scene transform
+ * \brief a user class for scene matrix
  */
-typedef struct user_scene_transform_t user_scene_transform_t;
+typedef struct user_scene_matrix_t user_scene_matrix_t;
 
-struct user_scene_transform_t {
+struct user_scene_matrix_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
@@ -113,9 +130,11 @@ ARM_PRIVATE(
     int64_t lTimestamp[2];
     bool bUserAllocated;
 
-    dynamic_nebula_t    tNebula;
-    __transform_obj_t   tObjects[__TRANSFORM_TYPE_COUNT];
+#if MATRIX_LETTER_TRAIN_USE_BLUR
+    arm_2d_filter_iir_blur_descriptor_t tBlurOP;
+#endif
 
+    __letter_train_t tTrains[MATRIX_LETTER_TRAIN_COUNT];
 )
     /* place your public member here */
     
@@ -126,8 +145,9 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_transform_t *ptScene);
+user_scene_matrix_t *__arm_2d_scene_matrix_init(
+                                        arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_matrix_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -135,8 +155,8 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_TRANSFORM_IMPLEMENT__
-#undef __USER_SCENE_TRANSFORM_INHERIT__
+#undef __USER_SCENE_MATRIX_IMPLEMENT__
+#undef __USER_SCENE_MATRIX_INHERIT__
 
 #ifdef   __cplusplus
 }

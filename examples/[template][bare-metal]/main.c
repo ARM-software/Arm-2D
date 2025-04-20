@@ -198,6 +198,11 @@ void scene_atom_loader(void)
     arm_2d_scene_atom_init(&DISP0_ADAPTER);
 }
 
+void scene_matrix_loader(void) 
+{
+    arm_2d_scene_matrix_init(&DISP0_ADAPTER);
+}
+
 void scene_basics_loader(void) 
 {
 #if 0
@@ -411,6 +416,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_progress_status_loader,
     },
     {
+        20000,
+        scene_matrix_loader,
+    },
+    {
         13000,
         scene_fan_loader,
     },
@@ -521,7 +530,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_filters_loader,
+        scene_matrix_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader
         //scene_mono_list_loader,

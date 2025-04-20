@@ -21,7 +21,7 @@
 #define __USER_SCENE_USER_DEFINED_OPCODE_IMPLEMENT__
 #include "arm_2d_scene_user_defined_opcode.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #include <stdlib.h>
 #include <string.h>
@@ -78,7 +78,21 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+enum {
+    BATTLESHIP_START,
+    BATTLESHIP_HYPER_JUMP,
+    BATTLESHIP_BATTLE,
+    BATTLESHIP_EXPLOSION,
+    BATTLESHIP_VANISH,
+    BATTLESHIP_IDLE,
+};
+
+
 /*============================ GLOBAL VARIABLES ==============================*/
+
+extern const arm_2d_tile_t c_tileBattleshipA4Mask;
+extern const arm_2d_tile_t c_tileBattleshipMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -162,6 +176,106 @@ static void __on_scene_user_defined_opcode_frame_start(arm_2d_scene_t *ptScene)
         this.iStartOffset = 100;
     }
     this.iStartOffset -= 4;
+
+    arm_2d_size_t tBattleZone = c_tileBattleshipA4Mask.tRegion.tSize;
+
+    switch(this.chBattleshipState) {
+
+        case BATTLESHIP_START:
+            memset(this.tHalos, 0, sizeof(this.tHalos));
+            this.chBattleshipState++;
+            this.chHyperJumpOpacity = 255;
+            this.lTimestamp[0] = 0;
+            //fall-through
+        
+        case BATTLESHIP_HYPER_JUMP: {
+                int32_t nResult;
+                if (arm_2d_helper_time_half_cos_slider(500, 0, 4000, &nResult, &this.lTimestamp[0])) {
+                    this.chBattleshipState = BATTLESHIP_BATTLE;
+                    this.lTimestamp[0] = 0;
+                }
+                this.chHyperJumpOpacity = MIN(255, nResult);
+            }
+            break;
+        
+        case BATTLESHIP_BATTLE:
+            srand(arm_2d_helper_get_system_timestamp());
+            arm_foreach(__explosion_halo_t, this.tHalos, ptHalo) {
+
+                if (ptHalo->chOpacity == 0) {
+
+                    ptHalo->tPivot.iX = rand() % tBattleZone.iWidth;
+                    ptHalo->tPivot.iY = rand() % tBattleZone.iHeight;
+                    ptHalo->iRadius = rand() & (_BV(4) - 1);
+                    ptHalo->chOpacity = 255;
+
+                } else if (ptHalo->chOpacity > 8) {
+                    ptHalo->chOpacity -= 8;
+                } else {
+                    ptHalo->chOpacity = 0;
+                }
+            }
+            if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+                this.lTimestamp[0] = 0;
+                this.chBattleshipState = BATTLESHIP_EXPLOSION;
+                this.iExplosionRadius = 0;
+            }
+            break;
+        
+        case BATTLESHIP_EXPLOSION:
+            {
+                int32_t nResult;
+                if (arm_2d_helper_time_half_cos_slider(0, 80, 8000, &nResult, &this.lTimestamp[0])) {
+                    this.chBattleshipState = BATTLESHIP_VANISH;
+                    this.lTimestamp[0] = 0;
+                }
+                this.iExplosionRadius = nResult;
+
+                this.tExplosion.tColour=  arm_2d_pixel_from_brga8888( 
+                                            __arm_2d_helper_colour_slider(
+                                                __RGB32(0xFF, 0xFF, 0xFF), 
+                                                __RGB32(0xFF, 0xFF, 0),
+                                                80,
+                                                nResult));
+
+            }
+
+            srand(arm_2d_helper_get_system_timestamp());
+            arm_foreach(__explosion_halo_t, this.tHalos, ptHalo) {
+
+                if (ptHalo->chOpacity == 0) {
+
+                    ptHalo->tPivot.iX = rand() % tBattleZone.iWidth;
+                    ptHalo->tPivot.iY = rand() % tBattleZone.iHeight;
+                    ptHalo->iRadius = rand() & (_BV(4) - 1);
+                    ptHalo->chOpacity = 255;
+
+                } else if (ptHalo->chOpacity > 8) {
+                    ptHalo->chOpacity -= 8;
+                } else {
+                    ptHalo->chOpacity = 0;
+                }
+            }
+            break;
+            
+        case BATTLESHIP_VANISH:
+            {
+                int32_t nResult;
+                if (arm_2d_helper_time_half_cos_slider(80, 0, 500, &nResult, &this.lTimestamp[0])) {
+                    this.chBattleshipState = BATTLESHIP_IDLE;
+                    this.lTimestamp[0] = 0;
+                }
+                this.iExplosionRadius = nResult;
+            }
+            break;
+        
+        case BATTLESHIP_IDLE:
+            if (arm_2d_helper_is_time_out(5000, &this.lTimestamp[0])) {
+                this.chBattleshipState = BATTLESHIP_START;
+            }
+            break;
+
+    }
 }
 
 static void __on_scene_user_defined_opcode_frame_complete(arm_2d_scene_t *ptScene)
@@ -272,6 +386,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
             }
         }
 
+    #if 0
         arm_2d_align_centre(__top_canvas, 100, 100) {
 
             /* draw circle */
@@ -287,13 +402,95 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
                                 &__centre_region,
                                 &tParam,
                                 (arm_2d_color_rgb565_t){__RGB( 255, 200, 0)},
-                                255);
+                                128);
                 
                 ARM_2D_OP_WAIT_ASYNC();
             } while(0);
+        }
+    #endif
 
+        arm_2d_dock_top_open(__top_canvas, (__top_canvas.tSize.iHeight >> 1)) {
+
+            arm_2d_dock_bottom_open(__top_region, 60, 50, 0) {
+
+                arm_2d_align_centre_open(__bottom_region, c_tileBattleshipA4Mask.tRegion.tSize) {
+
+                    if (BATTLESHIP_VANISH !=  this.chBattleshipState && this.chBattleshipState != BATTLESHIP_IDLE) {
+
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(ptTile,
+                                                                    &__centre_region,
+                                                                    &c_tileBattleshipA4Mask,
+                                                                    (__arm_2d_color_t){ __RGB(0, 64, 0)},
+                                                                    255);
+                    }
+
+
+                    if (BATTLESHIP_HYPER_JUMP ==  this.chBattleshipState) {
+
+                        arm_2d_fill_colour_with_a4_mask_and_opacity(ptTile,
+                                                                &__centre_region,
+                                                                &c_tileBattleshipA4Mask,
+                                                                (__arm_2d_color_t){ GLCD_COLOR_WHITE},
+                                                                this.chHyperJumpOpacity);
+
+                    } else if (BATTLESHIP_BATTLE == this.chBattleshipState 
+                            || BATTLESHIP_EXPLOSION == this.chBattleshipState) {
+                        arm_foreach(__explosion_halo_t, this.tHalos, ptHalo) {
+                            /* draw circle */
+
+                            arm_2d_location_t tPivot = ptHalo->tPivot;
+                            tPivot.iX += __centre_region.tLocation.iX;
+                            tPivot.iY += __centre_region.tLocation.iY;
+
+
+                            arm_2d_user_draw_circle_api_params_t tParam = {
+                                .iRadius = ptHalo->iRadius,
+                                .bAntiAlias = true,
+                                .ptPivot = &tPivot,
+                            };
+
+                            arm_2dp_rgb565_user_draw_circle(
+                                            NULL,
+                                            ptTile,
+                                            &__top_canvas,
+                                            &tParam,
+                                            (arm_2d_color_rgb565_t){__RGB( 255, 200, 0)},
+                                            ptHalo->chOpacity);
+                            
+                            ARM_2D_OP_WAIT_ASYNC();
+
+                        }
+                    }
+
+                    if ((BATTLESHIP_EXPLOSION == this.chBattleshipState)
+                    ||  (BATTLESHIP_VANISH == this.chBattleshipState)) {
+
+                        arm_2d_location_t tPivot = {
+                            .iX = (__centre_region.tSize.iWidth >> 1) + __centre_region.tLocation.iX,
+                            .iY = (__centre_region.tSize.iHeight >> 1) + __centre_region.tLocation.iY,
+                        };
+
+                        arm_2d_user_draw_circle_api_params_t tParam = {
+                            .iRadius = this.iExplosionRadius,
+                            .bAntiAlias = true,
+                            .ptPivot = &tPivot,
+                        };
+
+                        arm_2dp_rgb565_user_draw_circle(
+                                        NULL,
+                                        ptTile,
+                                        &__top_canvas,
+                                        &tParam,
+                                        (arm_2d_color_rgb565_t){this.tExplosion.tColour},
+                                        255);
+
+                    }
+
+                }
+            }
 
         }
+
 
 
     /*-----------------------draw the foreground end  -----------------------*/
@@ -369,7 +566,7 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
             //.fnAfterSwitch  = &__after_scene_user_defined_opcode_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_user_defined_opcode_background_start,

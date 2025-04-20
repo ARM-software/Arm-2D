@@ -43,6 +43,11 @@
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wpedantic"
+#   pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#   pragma GCC diagnostic ignored "-Wnonnull-compare"
 #endif
 
 /*============================ MACROS ========================================*/
@@ -213,7 +218,7 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
                 //nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
             } else {
                 /* for A1, A2 and A4 */
-                size_t nPixelPerByte = 1 << (3 - this.vres.tTile.tColourInfo.u3ColourSZ);
+                //size_t nPixelPerByte = 1 << (3 - this.vres.tTile.tColourInfo.u3ColourSZ);
                 //int16_t iOffset = ptRegion->tLocation.iX & (nPixelPerByte - 1);
                 
                 //uint32_t nBitsPerLine =  nBitsPerPixel * (iOffset + ptRegion->tSize.iWidth);
@@ -1525,18 +1530,18 @@ JRESULT jd_decomp_rect (
     }
 
 
-	for (;y < jd->height; y += my) {		/* Vertical loop of MCUs */
+    for (;y < jd->height; y += my) {		/* Vertical loop of MCUs */
         this.Decoder.tBlockRegion.tLocation.iY = y;
         x = 0;
-		for (; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
+        for (; x < jd->width; x += mx) {	/* Horizontal loop of MCUs */
 
             this.Decoder.tBlockRegion.tLocation.iX = x;
 
-			if (jd->nrst && rst++ == jd->nrst) {	/* Process restart interval if enabled */
-				rc = restart(jd, rsc++);
-				if (rc != JDR_OK) return rc;
-				rst = 1;
-			}
+            if (jd->nrst && rst++ == jd->nrst) {	/* Process restart interval if enabled */
+                rc = restart(jd, rsc++);
+                if (rc != JDR_OK) return rc;
+                rst = 1;
+            }
 
 label_context_entry:
 

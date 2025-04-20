@@ -183,7 +183,7 @@ typedef struct arm_tjpgd_loader_cfg_t {
  */
 
 struct arm_tjpgd_loader_t {
-    implement_ex(arm_2d_vres_t, vres);
+    inherit_ex(arm_2d_vres_t, vres);
 
 ARM_PRIVATE(
     arm_tjpgd_loader_cfg_t tCFG;

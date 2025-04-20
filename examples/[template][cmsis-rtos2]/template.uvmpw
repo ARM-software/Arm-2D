@@ -5,16 +5,16 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
 
-  <WorkspaceName>Y:\Work\git\Arm-2D\examples\[template][cmsis-rtos2]\template.uvmpw</WorkspaceName>
+  <WorkspaceName>template</WorkspaceName>
 
   <project>
     <PathAndName>.\template.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
     <PathAndName>.\gcc_template.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 

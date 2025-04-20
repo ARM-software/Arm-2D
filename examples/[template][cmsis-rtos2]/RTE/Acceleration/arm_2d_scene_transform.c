@@ -107,6 +107,7 @@
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
+extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
 extern const arm_2d_tile_t c_tileEarth;
 extern const arm_2d_tile_t c_tilePictureSun;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
@@ -323,22 +324,27 @@ void __draw_transform_object_handler( void *pObj,
 
     bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
 
-    arm_2d_region_t tBubbleRegion = c_tileRadialGradientMask.tRegion;
-
-    tBubbleRegion.tLocation.iX = tLocation.iX - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2;
-    tBubbleRegion.tLocation.iY = tLocation.iY - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2;
-
     float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 2.0f;
 
+    if (fScale <= 0.001f) {
+        return ;
+    }
+
+    arm_2d_point_float_t tPivot = {
+        .fX = tLocation.iX,
+        .fY = tLocation.iY,
+    };
+
     switch(ptTransObj->emType) {
+
         case TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY: {
 
-                arm_2d_location_t tCentre = {
-                    .iX = c_tileGlassBallMask.tRegion.tSize.iWidth >> 1,
-                    .iY = c_tileGlassBallMask.tRegion.tSize.iHeight >> 1,
+                arm_2d_point_float_t tCentre = {
+                    .fX = c_tileGlassBallMask.tRegion.tSize.iWidth / 2.0f,
+                    .fY = c_tileGlassBallMask.tRegion.tSize.iHeight / 2.0f,
                 };
 
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &ptTransObj->tOP.tFillColorMaskOpa,
                                                 &c_tileGlassBallMask,
                                                 ptTile,
@@ -346,9 +352,10 @@ void __draw_transform_object_handler( void *pObj,
                                                 tCentre,
                                                 ptTransObj->tHelper.fAngle,
                                                 fScale,
+                                                fScale,
                                                 GLCD_COLOR_NIXIE_TUBE,
                                                 chOpacity,
-                                                &tLocation);
+                                                &tPivot);
                             
                 arm_2d_helper_dirty_region_transform_update(
                                                 &ptTransObj->tHelper,
@@ -362,12 +369,12 @@ void __draw_transform_object_handler( void *pObj,
         
         case TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY: {
 
-                arm_2d_location_t tCentre = {
-                    .iX = c_tileCMSISLogo.tRegion.tSize.iWidth >> 1,
-                    .iY = c_tileCMSISLogo.tRegion.tSize.iHeight >> 1,
+                arm_2d_point_float_t tCentre = {
+                    .fX = c_tileCMSISLogo.tRegion.tSize.iWidth  / 2,
+                    .fY = c_tileCMSISLogo.tRegion.tSize.iHeight / 2,
                 };
 
-                arm_2dp_tile_transform_with_src_mask_and_opacity(
+                arm_2dp_tile_transform_xy_with_src_mask_and_opacity(
                         &ptTransObj->tOP.tTransMaskOpa,
                         &c_tileCMSISLogo,                                           //!< source tile
                         &c_tileCMSISLogoMask,                                       //!< source mask
@@ -375,10 +382,10 @@ void __draw_transform_object_handler( void *pObj,
                         NULL,                                                       //!< target region
                         tCentre,                                                    //!< pivot on source
                         ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale
+                        fScale,                                                     //!< scale x
+                        fScale,                                                     //!< scale y
                         chOpacity,                                                  //!< opacity
-                        &tLocation
-                );
+                        &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
                                                 &ptTransObj->tHelper,
@@ -390,22 +397,23 @@ void __draw_transform_object_handler( void *pObj,
             break;
 
         case TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY: {
-            arm_2d_location_t tCentre = {
-                    .iX = c_tileEarth.tRegion.tSize.iWidth >> 1,
-                    .iY = c_tileEarth.tRegion.tSize.iHeight >> 1,
+                arm_2d_point_float_t tCentre = {
+                    .fX = c_tileEarth.tRegion.tSize.iWidth / 2.0f,
+                    .fY = c_tileEarth.tRegion.tSize.iHeight /2.0f,
                 };
 
-                arm_2dp_tile_transform_with_opacity(
+                arm_2dp_tile_transform_xy_with_opacity(
                         &ptTransObj->tOP.tTransOpa,
                         &c_tileEarth,                                          //!< source tile
                         ptTile,                                                     //!< target tile
                         NULL,                                                       //!< target region
                         tCentre,                                                    //!< pivot on source
                         ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale
+                        fScale,                                                     //!< scale x
+                        fScale,                                                     //!< scale y
                         GLCD_COLOR_WHITE,
                         chOpacity,                                                  //!< opacity
-                        &tLocation);
+                        &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
                                                 &ptTransObj->tHelper,
@@ -415,23 +423,24 @@ void __draw_transform_object_handler( void *pObj,
                 ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
             }
             break;
-        
+
         case TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY: {
-            arm_2d_location_t tCentre = {
-                    .iX = c_tileEarth.tRegion.tSize.iWidth >> 1,
-                    .iY = c_tileEarth.tRegion.tSize.iHeight >> 1,
+                arm_2d_point_float_t tCentre = {
+                    .fX = c_tileEarth.tRegion.tSize.iWidth >> 1,
+                    .fY = c_tileEarth.tRegion.tSize.iHeight >> 1,
                 };
 
-                arm_2dp_tile_transform_only_with_opacity(
+                arm_2dp_tile_transform_xy_only_with_opacity(
                         &ptTransObj->tOP.tTransOpa,
                         &c_tileEarth,                                          //!< source tile
                         ptTile,                                                     //!< target tile
                         NULL,                                                       //!< target region
                         tCentre,                                                    //!< pivot on source
                         ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale
+                        fScale,                                                     //!< scale x
+                        fScale,                                                     //!< scale y
                         chOpacity,                                                  //!< opacity
-                        &tLocation);
+                        &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
                                                 &ptTransObj->tHelper,
@@ -441,6 +450,34 @@ void __draw_transform_object_handler( void *pObj,
                 ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
             }
             break;
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+        case TRANSFORM_TYPE_TILE_CCCA8888_ONLY_AND_OPACITY: {
+                arm_2d_point_float_t tCentre = {
+                    .fX = c_tileCMSISLogoCCCA8888.tRegion.tSize.iWidth  / 2,
+                    .fY = c_tileCMSISLogoCCCA8888.tRegion.tSize.iHeight / 2,
+                };
+
+                arm_2dp_tile_transform_xy_only_with_opacity(
+                        &ptTransObj->tOP.tTransOpa,
+                        &c_tileCMSISLogoCCCA8888,                                   //!< source tile
+                        ptTile,                                                     //!< target tile
+                        NULL,                                                       //!< target region
+                        tCentre,                                                    //!< pivot on source
+                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
+                        fScale,                                                     //!< scale x
+                        fScale,                                                     //!< scale y
+                        chOpacity,                                                  //!< opacity
+                        &tPivot);
+
+                arm_2d_helper_dirty_region_transform_update(
+                                                &ptTransObj->tHelper,
+                                                NULL,
+                                                bIsNewFrame);
+
+                ARM_2D_OP_WAIT_ASYNC(&ptTransObj->tOP);
+            }
+            break;
+    #endif
         default:
             break;
     }
@@ -551,7 +588,11 @@ user_scene_transform_t *__arm_2d_scene_transform_init(   arm_2d_scene_player_t *
 
         ARM_2D_OP_INIT(this.tObjects[TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY].tOP.tTransMaskOpa);
         this.tObjects[TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY].emType = TRANSFORM_TYPE_TILE_WITH_MASK_AND_OPACITY;
-        
+
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+        ARM_2D_OP_INIT(this.tObjects[TRANSFORM_TYPE_TILE_CCCA8888_ONLY_AND_OPACITY].tOP.tTransOpa);
+        this.tObjects[TRANSFORM_TYPE_TILE_CCCA8888_ONLY_AND_OPACITY].emType = TRANSFORM_TYPE_TILE_CCCA8888_ONLY_AND_OPACITY;
+    #endif
     } while(0);
 
     /* ------------   initialize members of user_scene_transform_t end   ---------------*/

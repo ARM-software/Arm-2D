@@ -18,19 +18,11 @@
 
 /*============================ INCLUDES ======================================*/
 
-#if defined(_RTE_)
-#   include "RTE_Components.h"
-#endif
+#define __USER_SCENE_TJPGD_IMPLEMENT__
+#include "arm_2d_scene_tjpgd.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
-#include "arm_2d.h"
-
-#define __USER_SCENE_CONSOLE_WINDOW_IMPLEMENT__
-#include "arm_2d_scene_console_window.h"
-
-#include "arm_2d_helper.h"
-
-#include "arm_2d_disp_adapters.h"
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
+ && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
 
 #include <stdlib.h>
 #include <string.h>
@@ -50,7 +42,8 @@
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
-#   pragma clang diagnostic ignored "-Wmissing-declarations"  
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion" 
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
 #elif __IS_COMPILER_IAR__
@@ -96,25 +89,34 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-static void __on_scene_console_window_load(arm_2d_scene_t *ptScene)
+static void __on_scene_tjpgd_load(arm_2d_scene_t *ptScene)
 {
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    arm_tjpgd_loader_on_load(&this.tJPGBackground);
+
+}
+
+static void __after_scene_tjpgd_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_console_window_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_tjpgd_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    arm_tjpgd_loader_depose(&this.tJPGBackground);
+
     ptScene->ptPlayer = NULL;
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
-    console_box_depose(&this.tConsole);
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
@@ -122,99 +124,72 @@ static void __on_scene_console_window_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene console_window                                                                    *
+ * Scene tjpgd                                                                *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene_console_window_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_tjpgd_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_console_window_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_tjpgd_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
-    ARM_2D_UNUSED(ptThis);
-}
-
-
-static void __on_scene_console_window_frame_start(arm_2d_scene_t *ptScene)
-{
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
-
-    if (arm_2d_helper_is_time_out(100, &this.lTimestamp[1])) {
-        static uint16_t s_hwCount = 0;
-
-        console_box_printf(&this.tConsole, "Hello World! \t[%d]\r\n",s_hwCount++);
-
-        if (!(s_hwCount & 0xF)) {
-            console_box_printf(&this.tConsole, "\r\nArm-2D Scene Demo: Console Windows\r\n");
-        }
-    }
-
-    console_box_on_frame_start(&this.tConsole);
-}
-
-static void __on_scene_console_window_frame_complete(arm_2d_scene_t *ptScene)
-{
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
-static void __before_scene_console_window_switching_out(arm_2d_scene_t *ptScene)
+
+static void __on_scene_tjpgd_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)ptScene;
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    arm_tjpgd_loader_on_frame_start(&this.tJPGBackground);
+
+}
+
+static void __on_scene_tjpgd_frame_complete(arm_2d_scene_t *ptScene)
+{
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
+
+}
+
+static void __before_scene_tjpgd_switching_out(arm_2d_scene_t *ptScene)
+{
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_window_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_tjpgd_handler)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(ptTile);
     ARM_2D_PARAM(bIsNewFrame);
 
-    user_scene_console_window_t *ptThis = (user_scene_console_window_t *)pTarget;
+    user_scene_tjpgd_t *ptThis = (user_scene_tjpgd_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     ARM_2D_UNUSED(tScreenSize);
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
-
+        
         /* following code is just a demo, you can remove them */
 
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
+        arm_2d_align_centre(__top_canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
 
-        arm_2d_align_centre(__top_canvas, 260, 260) {
-            /* draw console background */
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_BLACK, 
-                                    128,
-                                    bIsNewFrame);
-            /* draw console */
-            console_box_show(   &this.tConsole,
-                                ptTile,
-                                &__centre_region,
-                                bIsNewFrame,
-                                255);
+            arm_2d_tile_copy_only(&this.tJPGBackground.vres.tTile,
+                                  ptTile,
+                                  &__centre_region);
+
         }
 
         /* draw text at the top-left corner */
@@ -223,32 +198,26 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_window_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene Floating Console");
+        arm_lcd_puts("Scene tjpgd");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
 
 ARM_NONNULL(1)
-user_scene_console_window_t *__arm_2d_scene_console_window_init(
-                                        arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_console_window_t *ptThis)
+user_scene_tjpgd_t *__arm_2d_scene_tjpgd_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_tjpgd_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-    /* get the screen region */
-    arm_2d_region_t tScreen
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
     if (NULL == ptThis) {
-        ptThis = (user_scene_console_window_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_console_window_t),
-                                                        __alignof__(user_scene_console_window_t),
+        ptThis = (user_scene_tjpgd_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_tjpgd_t),
+                                                        __alignof__(user_scene_tjpgd_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -258,53 +227,70 @@ user_scene_console_window_t *__arm_2d_scene_console_window_init(
         bUserAllocated = true;
     }
 
-    memset(ptThis, 0, sizeof(user_scene_console_window_t));
+    memset(ptThis, 0, sizeof(user_scene_tjpgd_t));
 
-    *ptThis = (user_scene_console_window_t){
+    *ptThis = (user_scene_tjpgd_t){
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
             .tCanvas = {GLCD_COLOR_WHITE}, 
-        
+
             /* Please uncommon the callbacks if you need them
              */
-            .fnScene        = &__pfb_draw_scene_console_window_handler,
-            .fnOnLoad       = &__on_scene_console_window_load,
+            .fnOnLoad       = &__on_scene_tjpgd_load,
+            .fnScene        = &__pfb_draw_scene_tjpgd_handler,
+            //.fnAfterSwitch  = &__after_scene_tjpgd_switching,
+
+            /* if you want to use predefined dirty region list, please uncomment the following code */
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
-            //.fnOnBGStart    = &__on_scene_console_window_background_start,
-            //.fnOnBGComplete = &__on_scene_console_window_background_complete,
-            .fnOnFrameStart = &__on_scene_console_window_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_console_window_switching_out,
-            .fnOnFrameCPL   = &__on_scene_console_window_frame_complete,
-            .fnDepose       = &__on_scene_console_window_depose,
+
+            //.fnOnBGStart    = &__on_scene_tjpgd_background_start,
+            //.fnOnBGComplete = &__on_scene_tjpgd_background_complete,
+            .fnOnFrameStart = &__on_scene_tjpgd_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene_tjpgd_switching_out,
+            .fnOnFrameCPL   = &__on_scene_tjpgd_frame_complete,
+            .fnDepose       = &__on_scene_tjpgd_depose,
 
             .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
 
-    /* ------------   initialize members of user_scene_console_window_t begin ---------------*/
+    /* ------------   initialize members of user_scene_tjpgd_t begin ---------------*/
+
+    /* initialize TJpgDec loader */
     do {
-        static uint8_t s_chInputBuffer[256];
-        static uint8_t s_chConsoleBuffer[(240 / 6) * (240 / 8)];
-        console_box_cfg_t tCFG = {
-            .tBoxSize = {240, 240},
+    #if ARM_2D_DEMO_TJPGD_USE_FILE
+        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+    #else
+        extern const uint8_t c_chHeliumJPG[23656];
+        extern const uint8_t c_chHelium75JPG[10685];
+        extern const uint8_t c_chHelium30JPG[5411];
 
-            .pchConsoleBuffer = s_chConsoleBuffer,
-            .hwConsoleBufferSize = sizeof(s_chConsoleBuffer),
-
-            .pchInputBuffer = s_chInputBuffer,
-            .hwInputBufferSize = sizeof(s_chInputBuffer),
-            .tColor = GLCD_COLOR_GREEN,
-            .bUseDirtyRegion = true,
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chHelium75JPG, sizeof(c_chHelium75JPG));
+    #endif
+        arm_tjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED,
+        #if ARM_2D_DEMO_TJPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_TJPGD_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_TJPGD_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
         };
 
-        console_box_init(   &this.tConsole, 
-                            &this.use_as__arm_2d_scene_t, 
-                            &tCFG);
+        arm_tjpgd_loader_init(&this.tJPGBackground, &tCFG);
     } while(0);
 
-    /* ------------   initialize members of user_scene_console_window_t end   ---------------*/
+    /* ------------   initialize members of user_scene_tjpgd_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

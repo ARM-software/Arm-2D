@@ -150,8 +150,8 @@ const arm_2d_tile_t c_tChildImage =
 static arm_2d_vres_t s_vresA4Font = 
     disp_adapter0_impl_vres(   
         ARM_2D_COLOUR_MASK_A4, 
-        14, 
-        1222, 
+        16,        /* width */
+        1064,        /* height */ 
         .pTarget = (uintptr_t)c_bmpUTF8Arial14A4Font,
     );
 
@@ -242,12 +242,12 @@ struct {
                 s_vresA4Font,               /* use virtual resource here */
                 0,          /* x offset */
                 0,          /* y offset */
-                14,        /* width */
-                1222         /* height */
+                16,        /* width */
+                1064         /* height */
             ),
             .tCharSize = {
-                .iWidth = 14,
-                .iHeight = 13,
+                .iWidth = 16,
+                .iHeight = 15,
             },
             .nCount =  94,                             //!< Character count
             .fnGetCharDescriptor = &__utf8_a4_font_get_char_descriptor,
@@ -383,7 +383,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_virtual_resource_handler)
         #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ > 1
             /* draw A4 fonts that stored as a virtual resource */
 
-            arm_2d_dock_vertical(__centre_region, tCharSize.iHeight * 2, 32) {
+            arm_2d_dock_vertical_open(__centre_region, tCharSize.iHeight * 2, 32) {
                 arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                 arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_VRES_ARIAL14_A4);
                 arm_lcd_text_set_draw_region(&__vertical_region);

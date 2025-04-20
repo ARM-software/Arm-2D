@@ -210,6 +210,29 @@ typedef union arm_2d_log_chn_t {
 } arm_2d_log_chn_t;
 
 
+#if __IS_COMPILER_ARM_COMPILER__
+
+__WEAK
+size_t strnlen(const char *pchString, size_t tMaxSize)
+{
+    if (NULL == pchString || 0 == tMaxSize) {
+        return 0;
+    }
+    size_t tActualSize = 0;
+    do {
+        if (0 == *pchString++) {
+            break;
+        }
+
+        tActualSize++;
+    } while(--tMaxSize);
+
+    return tActualSize;
+}
+
+#endif
+
+
 #if __ARM_2D_CFG_ENABLE_LOG__
 __WEAK
 void __arm_2d_log_printf(int32_t nIndentLevel, 
