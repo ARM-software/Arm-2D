@@ -312,6 +312,7 @@ var group__gKernel =
     [ "__ARM_WITH2", "group__gKernel.html#gae7e2fbdc51acaa300e657e7338940fd4", null ],
     [ "__ARM_WITH3", "group__gKernel.html#ga347f0d62a99c1918cc6a139f5a6b09d2", null ],
     [ "arm_with", "group__gKernel.html#gab5199659d3ca1a57fe0d0b9929f3d0c7", null ],
+    [ "ARM_FOREACH1", "group__gKernel.html#gae2a2404489e6640ca045e4613e92b6eb", null ],
     [ "ARM_FOREACH2", "group__gKernel.html#gaf14ad7a196ed239d17d5d041843a8985", null ],
     [ "ARM_FOREACH3", "group__gKernel.html#ga548bd49836da620ec2641fd2b8382dc1", null ],
     [ "ARM_FOREACH4", "group__gKernel.html#ga6e3a3a45bb2eb94a1533de571e498752", null ],

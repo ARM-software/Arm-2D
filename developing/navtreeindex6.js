@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"md_getting_started_as_a_gui_stack_developer.html":[3],
 "md_getting_started_as_an_application_designer.html":[2],
 "md_getting_started_as_an_application_designer.html#autotoc_md50":[2,0],
 "md_getting_started_as_an_application_designer.html#autotoc_md51":[2,0,0],

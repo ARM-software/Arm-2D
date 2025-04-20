@@ -493,6 +493,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gab5199659d3ca1a57fe0d0b9929f3d0c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929f3d0c7">arm_with</a>(...)&#160;&#160;&#160;            <a class="el" href="group__gKernel.html#gad6a67ffa29074439ce99988dac033e42">ARM_CONNECT2</a>(__ARM_WITH, <a class="el" href="group__gKernel.html#gaca9883ddfc8f4f3382d9d0e4a93a5890">__ARM_VA_NUM_ARGS</a>(__VA_ARGS__))(__VA_ARGS__)</td></tr>
 <tr class="memdesc:gab5199659d3ca1a57fe0d0b9929f3d0c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">a with block to access members of a given object  <a href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929f3d0c7">More...</a><br /></td></tr>
 <tr class="separator:gab5199659d3ca1a57fe0d0b9929f3d0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2a2404489e6640ca045e4613e92b6eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gae2a2404489e6640ca045e4613e92b6eb">ARM_FOREACH1</a>(__array)</td></tr>
+<tr class="memdesc:gae2a2404489e6640ca045e4613e92b6eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">access each items in a given array  <a href="group__gKernel.html#gae2a2404489e6640ca045e4613e92b6eb">More...</a><br /></td></tr>
+<tr class="separator:gae2a2404489e6640ca045e4613e92b6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf14ad7a196ed239d17d5d041843a8985"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf14ad7a196ed239d17d5d041843a8985">ARM_FOREACH2</a>(__type,  __array)</td></tr>
 <tr class="memdesc:gaf14ad7a196ed239d17d5d041843a8985"><td class="mdescLeft">&#160;</td><td class="mdescRight">access each items in a given array  <a href="group__gKernel.html#gaf14ad7a196ed239d17d5d041843a8985">More...</a><br /></td></tr>
 <tr class="separator:gaf14ad7a196ed239d17d5d041843a8985"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -6566,6 +6569,38 @@ prototype 4 arm_using( local variable1 declaration, local variable2 with the sam
 <dl class="section note"><dt>Note</dt><dd>prototype 1 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929f3d0c7" title="a with block to access members of a given object">arm_with(object type, address of the object)</a> { you can use _.xxxx to access the members of the object }</dd>
 <dd>
 prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929f3d0c7" title="a with block to access members of a given object">arm_with(object type, address of the object, name of the iterator)</a> { you can use your own iterator to access the members of the object } </dd></dl>
+
+</div>
+</div>
+<a id="gae2a2404489e6640ca045e4613e92b6eb" name="gae2a2404489e6640ca045e4613e92b6eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2a2404489e6640ca045e4613e92b6eb">&#9670;&#160;</a></span>ARM_FOREACH1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_FOREACH1</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__array</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_define" href="group__gKernel.html#gac2418a94eedb5287b6ac4060df299891" title="create a code segment with up to two local variables and entering/leaving operations">arm_using</a>(typeof(__array[0]) *_ = __array)                          \</div>
+<div class="line">            for (   uint_fast32_t <a class="code hl_define" href="group__gKernel.html#gad6a67ffa29074439ce99988dac033e42" title="connect two symbol names as one">ARM_CONNECT2</a>(count,__LINE__) = <a class="code hl_define" href="group__gKernel.html#ga7b6c484887a402bba1af11b457264553" title="get the number of items in an given array">dimof</a>(__array);\</div>
+<div class="line">                    ARM_CONNECT2(count,__LINE__) &gt; 0;                           \</div>
+<div class="line">                    _++, <a class="code hl_define" href="group__gKernel.html#gad6a67ffa29074439ce99988dac033e42" title="connect two symbol names as one">ARM_CONNECT2</a>(count,__LINE__)--                         \</div>
+<div class="line">                )</div>
+</div><!-- fragment -->
+<p>access each items in a given array </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">__array</td><td>the target array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>you can use "_" as the current object (iterator) </dd></dl>
 
 </div>
 </div>
