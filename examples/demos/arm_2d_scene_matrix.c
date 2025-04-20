@@ -305,6 +305,8 @@ static void __before_scene_matrix_switching_out(arm_2d_scene_t *ptScene)
     user_scene_matrix_t *ptThis = (user_scene_matrix_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_lcd_text_force_char_use_same_width(false);
+
 }
 
 static
@@ -449,7 +451,7 @@ user_scene_matrix_t *__arm_2d_scene_matrix_init(
             //.fnOnBGStart    = &__on_scene_matrix_background_start,
             //.fnOnBGComplete = &__on_scene_matrix_background_complete,
             .fnOnFrameStart = &__on_scene_matrix_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_matrix_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_matrix_switching_out,
             .fnOnFrameCPL   = &__on_scene_matrix_frame_complete,
             .fnDepose       = &__on_scene_matrix_depose,
 
