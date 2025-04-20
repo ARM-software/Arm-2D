@@ -60,7 +60,7 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 #ifndef MATRIX_LETTER_TRAIN_USE_BLUR
-#   define MATRIX_LETTER_TRAIN_USE_BLUR           1
+#   define MATRIX_LETTER_TRAIN_USE_BLUR           0
 #endif
 
 
