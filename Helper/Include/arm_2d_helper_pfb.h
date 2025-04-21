@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        12. April 2025
- * $Revision:    V.1.13.7
+ * $Date:        21. April 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -772,6 +772,16 @@ typedef enum {
     __ARM_2D_PERFC_COUNT,
 } arm_2d_perfc_type_t;
 
+typedef enum {
+    
+    ARM_2D_PFB_SCAN_POLICY_HORIZONTAL_FIRST     = (0 << 0),     /* left to right first, then top to down */
+    ARM_2D_PFB_SCAN_POLICY_VERTICAL_FIRST       = (1 << 0),     /* top to down first, then left to right */
+
+    /* default */
+    ARM_2D_PFB_SCAN_POLICY_NORMAL = 0,
+
+} arm_2d_pfb_scan_policy_t;
+
 /*!
  * \brief the PFB helper control block
  * 
@@ -793,7 +803,6 @@ ARM_PRIVATE(
             arm_2d_region_list_item_t  *ptCandidateList;
             arm_2d_region_list_item_t  *ptFreeList;
             arm_2d_region_list_item_t  tWorkingItem;
-            int16_t                    iFreeCount;
         } OptimizedDirtyRegions;
 
         arm_2d_tile_t               tPFBTile;
@@ -802,27 +811,34 @@ ARM_PRIVATE(
 
         uint8_t                     chPT;
         uint8_t                     chFreePFBCount;
-        struct {
-            uint16_t                bIsDirtyRegionOptimizationEnabled       : 1;
-            uint16_t                bEnableDirtyRegionOptimizationRequest   : 1;
-            uint16_t                bDisableDirtyRegionOptimizationRequest  : 1;
-            uint16_t                bEncounterDynamicDirtyRegion            : 1;
-            uint16_t                bFailedToOptimizeDirtyRegion            : 1;
-            uint16_t                bIsUsingOptimizedDirtyRegionList        : 1;
-            uint16_t                bDirtyRegionDebugModeSkipFrame          : 1;
-            uint16_t                bIngoreLowLevelSyncUp                   : 1;
+        int16_t                     iDirtyRegionFreeCount;
 
-            uint16_t                bIsNewFrame                             : 1;
-            uint16_t                bIgnoreCanvasColour                     : 1;
-            uint16_t                bIgnoreLowLevelFlush                    : 1;
-            uint16_t                bHideNavigationLayer                    : 1;
-            uint16_t                bIsDryRun                               : 1;    //!< A flag to indicate whether the first iteration was a dry run
-            uint16_t                bNoAdditionalDirtyRegionList            : 1;
-            uint16_t                bFirstIteration                         : 1;
-            uint16_t                bIsRegionChanged                        : 1;
+        struct {
+            uint32_t                bIsDirtyRegionOptimizationEnabled       : 1;
+            uint32_t                bEnableDirtyRegionOptimizationRequest   : 1;
+            uint32_t                bDisableDirtyRegionOptimizationRequest  : 1;
+            uint32_t                bEncounterDynamicDirtyRegion            : 1;
+            uint32_t                bFailedToOptimizeDirtyRegion            : 1;
+            uint32_t                bIsUsingOptimizedDirtyRegionList        : 1;
+            uint32_t                bDirtyRegionDebugModeSkipFrame          : 1;
+            uint32_t                bIngoreLowLevelSyncUp                   : 1;
+
+            uint32_t                bIsNewFrame                             : 1;
+            uint32_t                bIgnoreCanvasColour                     : 1;
+            uint32_t                bIgnoreLowLevelFlush                    : 1;
+            uint32_t                bHideNavigationLayer                    : 1;
+            uint32_t                bIsDryRun                               : 1;    //!< A flag to indicate whether the first iteration was a dry run
+            uint32_t                bNoAdditionalDirtyRegionList            : 1;
+            uint32_t                bFirstIteration                         : 1;
+            uint32_t                bIsRegionChanged                        : 1;
+
+            uint32_t                bPFBScanPolicyVerticalFirst             : 1;
+            uint32_t                                                        : 7;
+
+            uint32_t                                                        : 8;
         };
 
-        arm_2d_colour_t tCanvas;
+        arm_2d_colour_t             tCanvas;
 
         uintptr_t                   pFPBPoolAvailable;
         arm_2d_pfb_t               *ptCurrent;
@@ -992,6 +1008,15 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_pfb_deinit(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief set PFB working policy
+ * \param[in] ptThis the pfb helper control block
+ * \param[in] chPolicyMask new policies defined in arm_2d_pfb_scan_policy_t
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_helper_pfb_policy(arm_2d_helper_pfb_t *ptThis, uint8_t chPolicyMask);
 
 /*!
  * \brief get the display (screen) region

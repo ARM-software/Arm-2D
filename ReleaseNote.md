@@ -40,6 +40,7 @@
 * Improves the PFB Helper Service
   * Adds new prototypes to the existing API `arm_2d_helper_pfb_is_region_active()`
   * Fixes infinite-loop issue when invalid dirty region is added to the working list.
+  * Adds veritical-first PFB scan policy for some special application scenarios.
 * Updates the Dirty Region Transform helper serivce to support the new transform APIs
 * Fixes stop-updating issues in dirty region helper service when any dynamic dirty region is out of visual area. 
 
@@ -73,6 +74,7 @@
     * Adds a demo for showing a GIF-like animation using JPEG image, i.e. `arm_2d_scene_rickrolling`.
     * Updates scene templates (i.e. meter and histogram) to use JPEG images as the background
 * Updates benchmarks
+* Adds a demo for the Matrix code-fall effect. 
 
 ### Documentation and Misc
 

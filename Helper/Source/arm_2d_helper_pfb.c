@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        12. April 2025
- * $Revision:    V.1.13.7
+ * $Date:        21. April 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -358,6 +358,15 @@ void arm_2d_helper_pfb_deinit(arm_2d_helper_pfb_t *ptThis)
 }
 
 ARM_NONNULL(1)
+void arm_2d_helper_pfb_policy(arm_2d_helper_pfb_t *ptThis, uint8_t chPolicyMask)
+{
+    assert(NULL != ptThis);
+
+    this.Adapter.bPFBScanPolicyVerticalFirst    
+        = chPolicyMask & ARM_2D_PFB_SCAN_POLICY_VERTICAL_FIRST;
+}
+
+ARM_NONNULL(1)
 arm_2d_region_t arm_2d_helper_pfb_get_display_area(arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
@@ -382,6 +391,8 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
     
     return arm_2d_get_absolute_location(ptTile, tLocation, true);
 }
+
+
 
 ARM_NONNULL(1)
 void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
@@ -831,8 +842,8 @@ static void __arm_2d_helper_dirty_region_pool_free(
             /* PUSH item to the pool in STACK-style */
             ptItem->ptInternalNext = this.Adapter.OptimizedDirtyRegions.ptFreeList;
             this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem;
-            this.Adapter.OptimizedDirtyRegions.iFreeCount++;
-            assert(this.Adapter.OptimizedDirtyRegions.iFreeCount > 0);
+            this.Adapter.iDirtyRegionFreeCount++;
+            assert(this.Adapter.iDirtyRegionFreeCount > 0);
         }
 
         ARM_2D_LOG_INFO(DIRTY_REGION_OPTIMISATION, 
@@ -840,7 +851,7 @@ static void __arm_2d_helper_dirty_region_pool_free(
                     "Dirty Region Pool", 
                     "Free Dirty Region Item [%p], %d items available", 
                     (void *)ptItem,
-                    this.Adapter.OptimizedDirtyRegions.iFreeCount);
+                    this.Adapter.iDirtyRegionFreeCount);
     }
 }
 
@@ -857,8 +868,8 @@ arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
         if (NULL != ptItem) {
             /* POP a dirty region item from the free list in STACK-style */
             this.Adapter.OptimizedDirtyRegions.ptFreeList = ptItem->ptInternalNext;
-            this.Adapter.OptimizedDirtyRegions.iFreeCount--;
-            assert(this.Adapter.OptimizedDirtyRegions.iFreeCount >= 0);
+            this.Adapter.iDirtyRegionFreeCount--;
+            assert(this.Adapter.iDirtyRegionFreeCount >= 0);
         }
     }
 
@@ -891,7 +902,7 @@ arm_2d_region_list_item_t *__arm_2d_helper_dirty_region_pool_new(
                 "Dirty Region Pool", 
                 "Allocate a new dirty region item [%p], %d item left", 
                 (void *)ptItem,
-                this.Adapter.OptimizedDirtyRegions.iFreeCount);
+                this.Adapter.iDirtyRegionFreeCount);
         }
     } else {
         ARM_2D_LOG_INFO(
@@ -2180,11 +2191,11 @@ label_iteration_begin_start:
 label_start_iteration:
 
             /* update this.Adapter.tTargetRegion to fulfill the pixel width
-             * alignment request 
-             */
+            * alignment request 
+            */
             if (this.tCFG.FrameBuffer.u3PixelWidthAlign) {
                 uint_fast8_t chPixelWidthAlignMask 
-                    = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign)-1;
+                    = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign) - 1;
                 
                 int_fast16_t iX = this.Adapter.tTargetRegion.tLocation.iX;
                 this.Adapter.tTargetRegion.tLocation.iX 
@@ -2194,16 +2205,16 @@ label_start_iteration:
                     += iX - this.Adapter.tTargetRegion.tLocation.iX;
                 this.Adapter.tTargetRegion.tSize.iWidth 
                     = ( this.Adapter.tTargetRegion.tSize.iWidth 
-                      + chPixelWidthAlignMask) 
+                    + chPixelWidthAlignMask) 
                     & ~chPixelWidthAlignMask;
             }
 
             /* update this.Adapter.tTargetRegion to fulfill the pixel height
-             * alignment request 
-             */
+            * alignment request 
+            */
             if (this.tCFG.FrameBuffer.u3PixelHeightAlign) {
                 uint_fast8_t chPixelHeightAlignMask 
-                    = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign)-1;
+                    = (1 << this.tCFG.FrameBuffer.u3PixelHeightAlign) - 1;
                 
                 int_fast16_t iY = this.Adapter.tTargetRegion.tLocation.iY;
                 this.Adapter.tTargetRegion.tLocation.iY 
@@ -2213,7 +2224,7 @@ label_start_iteration:
                     += iY - this.Adapter.tTargetRegion.tLocation.iY;
                 this.Adapter.tTargetRegion.tSize.iHeight
                     = ( this.Adapter.tTargetRegion.tSize.iHeight 
-                      + chPixelHeightAlignMask) 
+                    + chPixelHeightAlignMask) 
                     & ~chPixelHeightAlignMask;
             }
 
@@ -2223,16 +2234,16 @@ label_start_iteration:
                 // reset adapter frame size
                 this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
 
-            } else {
+            } else if (!this.Adapter.bPFBScanPolicyVerticalFirst) {
                 uint32_t wTargetPixelCount 
                     = this.Adapter.tTargetRegion.tSize.iWidth
                     * this.Adapter.tTargetRegion.tSize.iHeight;
                 
                 uint32_t wPFBPixelCount = this.Adapter.wPFBPixelCount;
                         
-                if (    (wTargetPixelCount <= wPFBPixelCount)
-                   ||   (   this.Adapter.tTargetRegion.tSize.iWidth 
-                        <   wPFBPixelCount)) {
+                if  (   (wTargetPixelCount <= wPFBPixelCount)
+                ||  (   this.Adapter.tTargetRegion.tSize.iWidth 
+                    <   wPFBPixelCount)) {
                     // redefine the shape of PFB
                     
                     this.Adapter.tFrameSize.iWidth 
@@ -2266,7 +2277,49 @@ label_start_iteration:
                     // reset adapter frame size
                     this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
                 }
-            } 
+            } else {
+                uint32_t wTargetPixelCount 
+                    = this.Adapter.tTargetRegion.tSize.iWidth
+                    * this.Adapter.tTargetRegion.tSize.iHeight;
+                
+                uint32_t wPFBPixelCount = this.Adapter.wPFBPixelCount;
+                        
+                if  (   (wTargetPixelCount <= wPFBPixelCount)
+                ||  (   this.Adapter.tTargetRegion.tSize.iHeight 
+                    <   wPFBPixelCount)) {
+                    // redefine the shape of PFB
+                    
+                    this.Adapter.tFrameSize.iHeight 
+                        = this.Adapter.tTargetRegion.tSize.iHeight;
+                    
+                    int32_t nWidth = (int32_t)
+                        (   wPFBPixelCount 
+                        /   (uint32_t)this.Adapter.tTargetRegion.tSize.iHeight);
+                
+                    nWidth = MIN(nWidth, this.Adapter.tTargetRegion.tSize.iWidth);
+
+                    if (this.tCFG.FrameBuffer.u3PixelWidthAlign) {
+                        uint_fast8_t chPixelWidthAlignMask 
+                            = (1 << this.tCFG.FrameBuffer.u3PixelWidthAlign) - 1;
+
+                        nWidth &= ~chPixelWidthAlignMask;
+
+                        if (0 == nWidth) {
+                            // reset adapter frame size
+                            this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
+                        } else {
+                            this.Adapter.tFrameSize.iWidth = (int16_t)nWidth;
+                        } 
+
+                    } else {
+                        this.Adapter.tFrameSize.iWidth = (int16_t)nWidth;
+                    }
+
+                } else {
+                    // reset adapter frame size
+                    this.Adapter.tFrameSize = this.tCFG.FrameBuffer.tFrameSize;
+                }
+            }
 
         }
         break;
@@ -2511,24 +2564,48 @@ bool __arm_2d_helper_pfb_drawing_iteration_end(arm_2d_helper_pfb_t *ptThis)
         arm_2d_set_default_frame_buffer(NULL);
     }
 
-    this.Adapter.tScanOffset.iX 
-        += ptPartialFrameBuffer->tRegion.tSize.iWidth;
+    if (!this.Adapter.bPFBScanPolicyVerticalFirst) {
+        /* horizontal first */
+        this.Adapter.tScanOffset.iX 
+            += ptPartialFrameBuffer->tRegion.tSize.iWidth;
 
-    if (    this.Adapter.tScanOffset.iX 
-        >=  this.Adapter.tTargetRegion.tSize.iWidth) {
+        if (    this.Adapter.tScanOffset.iX 
+            >=  this.Adapter.tTargetRegion.tSize.iWidth) {
 
-        this.Adapter.tScanOffset.iX = 0;
+            this.Adapter.tScanOffset.iX = 0;
 
+            this.Adapter.tScanOffset.iY 
+                += ptPartialFrameBuffer->tRegion.tSize.iHeight;
+            
+            if (    this.Adapter.tScanOffset.iY 
+                >=  this.Adapter.tTargetRegion.tSize.iHeight) {
+                // finished
+                this.Adapter.tScanOffset.iY = 0;
+
+                return __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
+                
+            }
+        }
+    } else {
+        /* vertical first */
         this.Adapter.tScanOffset.iY 
             += ptPartialFrameBuffer->tRegion.tSize.iHeight;
-        
+
         if (    this.Adapter.tScanOffset.iY 
             >=  this.Adapter.tTargetRegion.tSize.iHeight) {
-            // finished
+
             this.Adapter.tScanOffset.iY = 0;
 
-            return __arm_2d_helper_pfb_get_next_dirty_region(ptThis);
+            this.Adapter.tScanOffset.iX 
+                += ptPartialFrameBuffer->tRegion.tSize.iWidth;
             
+            if (    this.Adapter.tScanOffset.iX 
+                >=  this.Adapter.tTargetRegion.tSize.iWidth) {
+                // finished
+                this.Adapter.tScanOffset.iX = 0;
+
+                return __arm_2d_helper_pfb_get_next_dirty_region(ptThis);                
+            }
         }
     }
 
