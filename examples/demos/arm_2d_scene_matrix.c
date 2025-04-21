@@ -327,7 +327,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
         /* draw far background */
         arm_foreach(__letter_train_t, &this.tTrains[0], MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT, ptTrain) {
 
-            __arm_2d_hint_optimize_for_pfb__(ptTrain->tRegion) {
+            if (arm_2d_helper_pfb_is_region_active(ptTile, &ptTrain->tRegion, true)) {
 
                 arm_2d_fill_colour_with_vertical_alpha_gradient_and_opacity(
                                             ptTile, 
@@ -341,7 +341,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
             }
         }
 
-    
         /* add blur mask */
         arm_2dp_filter_iir_blur(&this.tBlurOP,
             ptTile,
@@ -360,32 +359,33 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
                     dimof(this.tTrains) - MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT, 
                     ptTrain) {
 
-            arm_2d_size_t tCharSize = {0};
-            uint8_t chMaxOpacity = 255;
-            switch (ptTrain->u2Stage) {
-                case STAGE_MID:
-                    /* use default font */
-                    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8); 
-                    tCharSize = ARM_2D_FONT_6x8.use_as__arm_2d_font_t.tCharSize;
-                    chMaxOpacity = 128;
-                    break;
-                
-                case STAGE_NEAR:
-                    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_Arial14_A1);
-                    tCharSize = ARM_2D_FONT_Arial14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-                    break;
-                default:
-                    assert(false);      /* this should not happen */
-                    break;
-            }
+            if (arm_2d_helper_pfb_is_region_active(ptTile, &ptTrain->tRegion, true)) {
+                arm_2d_size_t tCharSize = {0};
+                uint8_t chMaxOpacity = 255;
+                switch (ptTrain->u2Stage) {
+                    case STAGE_MID:
+                        /* use default font */
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8); 
+                        tCharSize = ARM_2D_FONT_6x8.use_as__arm_2d_font_t.tCharSize;
+                        chMaxOpacity = 128;
+                        break;
+                    
+                    case STAGE_NEAR:
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_Arial14_A1);
+                        tCharSize = ARM_2D_FONT_Arial14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
+                        break;
+                    default:
+                        assert(false);      /* this should not happen */
+                        break;
+                }
 
-            arm_lcd_text_set_draw_region(&ptTrain->tRegion);
-            arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
+                arm_lcd_text_set_draw_region(&ptTrain->tRegion);
+                arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
 
-            q16_t q16OpacityRatio = div_n_q16(  reinterpret_q16_s16(chMaxOpacity), 
-                                                ptTrain->u16NumberOfChars);
+                q16_t q16OpacityRatio = div_n_q16(  reinterpret_q16_s16(chMaxOpacity), 
+                                                    ptTrain->u16NumberOfChars);
 
-            __arm_2d_hint_optimize_for_pfb__(ptTrain->tRegion) {
+            
 
                 /* reset seed */
                 srand(ptTrain->u8RandomSeed);
