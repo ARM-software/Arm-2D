@@ -156,10 +156,8 @@ static void letter_train_relocate(__letter_train_t *ptThis, arm_2d_size_t tScree
                                         tScreenSize.iHeight));
     iHeight += tScreenSize.iHeight;
 
-
-
     this.tRegion.tLocation.iY = -iHeight;
-    //this.tRegion.tLocation.iY += iOffset;
+    this.tRegion.tLocation.iY += iOffset;
 
     this.tRegion.tSize.iHeight = iHeight;
 
@@ -194,6 +192,9 @@ static void __on_scene_matrix_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     this.lTimestamp[0] = arm_2d_helper_get_system_timestamp();
+
+    arm_2d_helper_pfb_policy(&ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+                             ARM_2D_PFB_SCAN_POLICY_VERTICAL_FIRST);
 
 }
 
@@ -257,7 +258,7 @@ static void __on_scene_matrix_frame_start(arm_2d_scene_t *ptScene)
     this.lTimestamp[0] = lTimestamp;
 
     bool bUpdateLetters = false;
-    if (arm_2d_helper_is_time_out(30, &this.lTimestamp[1])) {
+    if (arm_2d_helper_is_time_out(50, &this.lTimestamp[1])) {
         bUpdateLetters = true;
     }
 
@@ -295,6 +296,8 @@ static void __on_scene_matrix_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_matrix_t *ptThis = (user_scene_matrix_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_lcd_text_force_char_use_same_width(false);
+
 #if MATRIX_LETTER_TRAIN_USE_BLUR
     arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
 #endif
@@ -305,6 +308,8 @@ static void __before_scene_matrix_switching_out(arm_2d_scene_t *ptScene)
     user_scene_matrix_t *ptThis = (user_scene_matrix_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_pfb_policy(&ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+                             ARM_2D_PFB_SCAN_POLICY_NORMAL);
 }
 
 static
@@ -322,7 +327,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
         /* draw far background */
         arm_foreach(__letter_train_t, &this.tTrains[0], MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT, ptTrain) {
 
-            __arm_2d_hint_optimize_for_pfb__(ptTrain->tRegion) {
+            if (arm_2d_helper_pfb_is_region_active(ptTile, &ptTrain->tRegion, true)) {
 
                 arm_2d_fill_colour_with_vertical_alpha_gradient_and_opacity(
                                             ptTile, 
@@ -336,7 +341,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
             }
         }
 
-    
         /* add blur mask */
         arm_2dp_filter_iir_blur(&this.tBlurOP,
             ptTile,
@@ -355,32 +359,33 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
                     dimof(this.tTrains) - MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT, 
                     ptTrain) {
 
-            arm_2d_size_t tCharSize = {0};
-            uint8_t chMaxOpacity = 255;
-            switch (ptTrain->u2Stage) {
-                case STAGE_MID:
-                    /* use default font */
-                    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8); 
-                    tCharSize = ARM_2D_FONT_6x8.use_as__arm_2d_font_t.tCharSize;
-                    chMaxOpacity = 128;
-                    break;
-                
-                case STAGE_NEAR:
-                    arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_Arial14_A1);
-                    tCharSize = ARM_2D_FONT_Arial14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
-                    break;
-                default:
-                    assert(false);      /* this should not happen */
-                    break;
-            }
+            if (arm_2d_helper_pfb_is_region_active(ptTile, &ptTrain->tRegion, true)) {
+                arm_2d_size_t tCharSize = {0};
+                uint8_t chMaxOpacity = 255;
+                switch (ptTrain->u2Stage) {
+                    case STAGE_MID:
+                        /* use default font */
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8); 
+                        tCharSize = ARM_2D_FONT_6x8.use_as__arm_2d_font_t.tCharSize;
+                        chMaxOpacity = 128;
+                        break;
+                    
+                    case STAGE_NEAR:
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_Arial14_A1);
+                        tCharSize = ARM_2D_FONT_Arial14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
+                        break;
+                    default:
+                        assert(false);      /* this should not happen */
+                        break;
+                }
 
-            arm_lcd_text_set_draw_region(&ptTrain->tRegion);
-            arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
+                arm_lcd_text_set_draw_region(&ptTrain->tRegion);
+                arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
 
-            q16_t q16OpacityRatio = div_n_q16(  reinterpret_q16_s16(chMaxOpacity), 
-                                                ptTrain->u16NumberOfChars);
+                q16_t q16OpacityRatio = div_n_q16(  reinterpret_q16_s16(chMaxOpacity), 
+                                                    ptTrain->u16NumberOfChars);
 
-            __arm_2d_hint_optimize_for_pfb__(ptTrain->tRegion) {
+            
 
                 /* reset seed */
                 srand(ptTrain->u8RandomSeed);
@@ -449,7 +454,7 @@ user_scene_matrix_t *__arm_2d_scene_matrix_init(
             //.fnOnBGStart    = &__on_scene_matrix_background_start,
             //.fnOnBGComplete = &__on_scene_matrix_background_complete,
             .fnOnFrameStart = &__on_scene_matrix_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_matrix_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_matrix_switching_out,
             .fnOnFrameCPL   = &__on_scene_matrix_frame_complete,
             .fnDepose       = &__on_scene_matrix_depose,
 
@@ -500,8 +505,9 @@ user_scene_matrix_t *__arm_2d_scene_matrix_init(
 
         /* give each train a random start postion */
         srand(arm_2d_helper_get_system_timestamp());
-        arm_foreach(this.tTrains) {
-            _->tRegion.tLocation.iY += rand() % - _->tRegion.tSize.iHeight; 
+        arm_foreach(__letter_train_t, this.tTrains, ptTrain) {
+            _->tRegion.tLocation.iY += rand() % ptTrain->tRegion.tSize.iHeight;
+            _->tRegion.tLocation.iY -= ptTrain->tRegion.tSize.iHeight * 2;
         }
     } while(0);
 
