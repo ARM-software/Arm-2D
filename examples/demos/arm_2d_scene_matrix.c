@@ -156,10 +156,8 @@ static void letter_train_relocate(__letter_train_t *ptThis, arm_2d_size_t tScree
                                         tScreenSize.iHeight));
     iHeight += tScreenSize.iHeight;
 
-
-
     this.tRegion.tLocation.iY = -iHeight;
-    //this.tRegion.tLocation.iY += iOffset;
+    this.tRegion.tLocation.iY += iOffset;
 
     this.tRegion.tSize.iHeight = iHeight;
 
@@ -194,6 +192,9 @@ static void __on_scene_matrix_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     this.lTimestamp[0] = arm_2d_helper_get_system_timestamp();
+
+    arm_2d_helper_pfb_policy(&ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+                             ARM_2D_PFB_SCAN_POLICY_VERTICAL_FIRST);
 
 }
 
@@ -257,7 +258,7 @@ static void __on_scene_matrix_frame_start(arm_2d_scene_t *ptScene)
     this.lTimestamp[0] = lTimestamp;
 
     bool bUpdateLetters = false;
-    if (arm_2d_helper_is_time_out(30, &this.lTimestamp[1])) {
+    if (arm_2d_helper_is_time_out(50, &this.lTimestamp[1])) {
         bUpdateLetters = true;
     }
 
@@ -295,6 +296,8 @@ static void __on_scene_matrix_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_matrix_t *ptThis = (user_scene_matrix_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_lcd_text_force_char_use_same_width(false);
+
 #if MATRIX_LETTER_TRAIN_USE_BLUR
     arm_2dp_filter_iir_blur_depose(&this.tBlurOP);
 #endif
@@ -305,8 +308,8 @@ static void __before_scene_matrix_switching_out(arm_2d_scene_t *ptScene)
     user_scene_matrix_t *ptThis = (user_scene_matrix_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_lcd_text_force_char_use_same_width(false);
-
+    arm_2d_helper_pfb_policy(&ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+                             ARM_2D_PFB_SCAN_POLICY_NORMAL);
 }
 
 static
