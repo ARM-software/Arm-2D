@@ -505,8 +505,9 @@ user_scene_matrix_t *__arm_2d_scene_matrix_init(
 
         /* give each train a random start postion */
         srand(arm_2d_helper_get_system_timestamp());
-        arm_foreach(this.tTrains) {
-            _->tRegion.tLocation.iY += rand() % - _->tRegion.tSize.iHeight; 
+        arm_foreach(__letter_train_t, this.tTrains, ptTrain) {
+            _->tRegion.tLocation.iY += rand() % ptTrain->tRegion.tSize.iHeight;
+            _->tRegion.tLocation.iY -= ptTrain->tRegion.tSize.iHeight * 2;
         }
     } while(0);
 
