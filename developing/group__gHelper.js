@@ -350,6 +350,7 @@ var group__gHelper =
     [ "__arm_2d_list_core_get_item", "group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f", null ],
     [ "arm_2d_helper_pfb_init", "group__gHelper.html#ga14181b777abd2c6af671699f9bfd8f99", null ],
     [ "arm_2d_helper_pfb_deinit", "group__gHelper.html#ga91b9bd95fab04511c9ae935757341d6f", null ],
+    [ "arm_2d_helper_pfb_policy", "group__gHelper.html#ga18e28a72600ef35d051e6358e0f60364", null ],
     [ "arm_2d_helper_pfb_get_display_area", "group__gHelper.html#gaf0eef5fe61bc11d102d2180025ada377", null ],
     [ "arm_2d_helper_pfb_get_absolute_location", "group__gHelper.html#ga6cd67bb1aebd25b730cd1b52d762a18f", null ],
     [ "arm_2d_helper_pfb_get_pfb_size", "group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6", null ],
