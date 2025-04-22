@@ -22,7 +22,7 @@
  * Description:  Acceleration extensions using Helium.
  *
  * $Date:        22. April 2025
- * $Revision:    V.1.1.0
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -215,6 +215,10 @@ uint16x8_t __arm_2d_blend_n_cccn888(uint16x8_t        vTrg, uint16x8_t vChColour
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_alpha_gradient_helium.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_ccca8888_transform_helium.c"
+
 
 /*----------------------------------------------------------------------------*
  * Helper

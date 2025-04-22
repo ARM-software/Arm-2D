@@ -525,9 +525,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
     vAvgB = vminq(vAvgB, vdupq_n_u16(255));
 
-    vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
-
-    vst1q_p(pTarget, vBlended, predTail);
+    vst1q_p(pTarget, 
+            __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB), 
+            predTail);
 }
 
 
