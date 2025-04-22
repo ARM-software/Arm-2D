@@ -122,25 +122,36 @@ static void __on_scene_benchmark_generic_cover_frame_start(arm_2d_scene_t *ptSce
     user_scene_benchmark_generic_cover_t *ptThis = (user_scene_benchmark_generic_cover_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (this.chFrameCount > 0) {
+        this.chFrameCount--;
+    }
+
 }
 
 static void __on_scene_benchmark_generic_cover_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_benchmark_generic_cover_t *ptThis = (user_scene_benchmark_generic_cover_t *)ptScene;
+    user_scene_benchmark_generic_cover_t *ptThis 
+                                = (user_scene_benchmark_generic_cover_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* switch to the benchmark scene */
-    arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    if (0 == this.chFrameCount) {
+        /* disable low level flush */
+        arm_2d_helper_ignore_low_level_flush(
+                                &(ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
+
+        /* disable scene switching effect */
+        arm_2d_scene_player_set_switching_mode( ptScene->ptPlayer,
+                                                ARM_2D_SCENE_SWITCH_MODE_NONE);
+
+        /* switch to the benchmark scene */
+        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    }
 }
 
 static void __before_scene_benchmark_generic_cover_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_benchmark_generic_cover_t *ptThis = (user_scene_benchmark_generic_cover_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
-    /* disable scene switching effect */
-    arm_2d_scene_player_set_switching_mode( ptScene->ptPlayer,
-                                            ARM_2D_SCENE_SWITCH_MODE_NONE);
 
     /* add benchmark scene */
     arm_2d_scene_benchmark_generic_init(ptScene->ptPlayer);
@@ -240,6 +251,8 @@ user_scene_benchmark_generic_cover_t *
         },
         .bUserAllocated = bUserAllocated,
     };
+
+    this.chFrameCount = 2;
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

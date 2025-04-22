@@ -75,6 +75,7 @@ struct user_scene_benchmark_watch_panel_cover_t {
 
     ARM_PRIVATE(
         bool bUserAllocated;
+        uint8_t chFrameCount;
     )
 
 };

@@ -170,10 +170,6 @@ static void __after_scene_benchmark_generic_switching(arm_2d_scene_t *ptScene)
     user_scene_benchmark_generic_t *ptThis = (user_scene_benchmark_generic_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* disable low level flush */
-    arm_2d_helper_ignore_low_level_flush(
-        &(ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
-
 }
 
 /*----------------------------------------------------------------------------*

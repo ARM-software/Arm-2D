@@ -166,10 +166,6 @@ static void __after_scene_benchmark_watch_panel_switching(arm_2d_scene_t *ptScen
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    /* disable low level flush */
-    arm_2d_helper_ignore_low_level_flush(
-        &(ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
-
 }
 
 /*----------------------------------------------------------------------------*
