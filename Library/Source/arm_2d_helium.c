@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        04. Dec 2024
- * $Revision:    V.1.0.0
+ * $Date:        22. April 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
