@@ -588,7 +588,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
          *!       Use '__centre_region' when required as the target region in
          *!       2D operations inside the {...} .
          */
-        arm_2d_align_centre(__canvas, c_tileCMSISLogoMask.tRegion.tSize) {
+        //arm_2d_align_centre(__canvas, c_tileCMSISLogoMask.tRegion.tSize) {
 
 #if 0
             arm_2d_tile_copy_with_masks(
@@ -636,7 +636,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
             }
 #endif
             ARM_2D_OP_WAIT_ASYNC();
-        }
+        //}
 #else
         arm_2d_align_centre(__canvas, 
                             c_tileCMSISLogoMask.tRegion.tSize.iWidth,
