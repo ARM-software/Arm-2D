@@ -124,8 +124,6 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     int16x8_t vWX = ptPoint->X - ((vXi) << 6);
     int16x8_t vWY = ptPoint->Y - ((vYi) << 6);
 
-    //uint32x4_t vMaskForAlphaInWord = vdupq_n_u32(0xFF000000);
-
     vAreaTR = vmulq_u16(vWX, vWY);
     vAreaTL = vmulq_u16((vOne - vWX), vWY);
     vAreaBR = vmulq_u16(vWX, (vOne - vWY));
@@ -154,9 +152,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
@@ -164,9 +162,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
 
@@ -201,9 +199,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
     
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
@@ -211,9 +209,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
 
@@ -248,9 +246,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
@@ -258,9 +256,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -293,9 +291,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
@@ -303,9 +301,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -372,7 +370,6 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
 
     uint16x8_t vAvgTransparency;
     uint16x8_t vAvgR, vAvgG, vAvgB, vAvgTrans;
-    //uint32x4_t vMaskForAlphaInWord = vdupq_n_u32(0xFF000000);
 
     uint16x8_t R, G, B, vPixelAlpha;
     uint16x8_t vAreaTR, vAreaTL, vAreaBR, vAreaBL;
@@ -401,17 +398,17 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -439,17 +436,17 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -478,17 +475,17 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -516,17 +513,17 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
-        //maskVal = ptVal & vMaskForAlphaInWord;
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
+        maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -572,11 +569,15 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
     __arm_2d_param_copy_orig_t *ptParam =
         &(ptThis->use_as____arm_2d_param_copy_orig_t);
 
-    int_fast16_t iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
-    int_fast16_t iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
+    int_fast16_t iHeight 
+        = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
+    int_fast16_t iWidth 
+        = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
 
-    int_fast16_t iTargetStride = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
-    uint16_t *pTargetBase = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
+    int_fast16_t iTargetStride 
+        = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
+    uint16_t *pTargetBase 
+        = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
     int_fast16_t iOrigStride = ptParam->tOrigin.iStride;
 
     uint8_t *pOriginMask = (*ptThis).tOrigMask.pBuffer;
@@ -585,7 +586,8 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
     hwOpacity += (hwOpacity == 255);
 
     float fAngle = -ptInfo->fAngle;
-    arm_2d_location_t tOffset = ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
+    arm_2d_location_t tOffset 
+        = ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
     q31_t invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
     arm_2d_rot_linear_regr_t regrCoefs[2];
     arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
@@ -604,9 +606,15 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
     int32_t slopeY, slopeX;
 
     slopeY =
-        (q31_t)((q63_t)((q63_t)((regrCoefs[1].interceptY - regrCoefs[0].interceptY)) * (q63_t)(invIWidth)) >> 32);
+        (q31_t)((q63_t)( (q63_t)((  regrCoefs[1].interceptY 
+                                 -  regrCoefs[0].interceptY))
+                       * (q63_t)(invIWidth)) 
+                >> 32);
     slopeX =
-        (q31_t)((q63_t)((q63_t)((regrCoefs[1].interceptX - regrCoefs[0].interceptX)) * (q63_t)(invIWidth)) >> 32);
+        (q31_t)((q63_t)( (q63_t)((  regrCoefs[1].interceptX 
+                                 -  regrCoefs[0].interceptX))
+                       * (q63_t)(invIWidth)) 
+                >> 32);
 
     int32_t nrmSlopeX = 17 - __clz(((slopeX) > 0 ? (slopeX) : -(slopeX)));
     int32_t nrmSlopeY = 17 - __clz(((slopeY) > 0 ? (slopeY) : -(slopeY)));
@@ -614,9 +622,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
     slopeX = (nrmSlopeX > 0 ? slopeX >> nrmSlopeX : slopeX << (-nrmSlopeX));
     slopeY = (nrmSlopeY > 0 ? slopeY >> nrmSlopeY : slopeY << (-nrmSlopeY));
 
-    for (int_fast16_t y = 0; y < iHeight; y++)
-    {
-
+    for (int_fast16_t y = 0; y < iHeight; y++) {
         int32_t colFirstY =
             __qadd((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
         int32_t colFirstX =
@@ -631,8 +637,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
 
         vX = ((vX) << 6);
 
-        while (nbVecElts > 0)
-        {
+        while (nbVecElts > 0) {
             arm_2d_point_s16x8_t tPointV, tPointTemp;
 
             tPointV.X = vqdmulhq_n_s16(vX, slopeX);
@@ -667,6 +672,126 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
                     pTargetBaseCur,
 
                     hwOpacity,
+
+                    nbVecElts);
+            }
+
+            pTargetBaseCur += 8;
+            vX += ((8) << 6);
+            nbVecElts -= 8;
+        }
+        pTargetBase += iTargetStride;
+    }
+}
+
+
+
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_transform_to_rgb565(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo)
+{
+
+    __arm_2d_param_copy_orig_t *ptParam =
+        &(ptThis->use_as____arm_2d_param_copy_orig_t);
+
+    int_fast16_t iHeight 
+        = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
+    int_fast16_t iWidth 
+        = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
+
+    int_fast16_t iTargetStride 
+        = ptParam->use_as____arm_2d_param_copy_t.tTarget.iStride;
+    uint16_t *pTargetBase 
+        = ptParam->use_as____arm_2d_param_copy_t.tTarget.pBuffer;
+    int_fast16_t iOrigStride = ptParam->tOrigin.iStride;
+
+    uint8_t *pOriginMask = (*ptThis).tOrigMask.pBuffer;
+    int_fast16_t iOrigMaskStride = (*ptThis).tOrigMask.iStride;
+
+    float fAngle = -ptInfo->fAngle;
+    arm_2d_location_t tOffset 
+        = ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
+    q31_t invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
+
+    __arm_2d_transform_regression(
+        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
+        &SrcPt,
+        fAngle,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
+        &tOffset,
+        &(ptInfo->tCenter),
+        iOrigStride,
+        regrCoefs);
+
+    int32_t slopeY, slopeX;
+
+    slopeY =
+        (q31_t)((q63_t)((q63_t)((regrCoefs[1].interceptY - regrCoefs[0].interceptY)) * (q63_t)(invIWidth)) >> 32);
+    slopeX =
+        (q31_t)((q63_t)((q63_t)((regrCoefs[1].interceptX - regrCoefs[0].interceptX)) * (q63_t)(invIWidth)) >> 32);
+
+    int32_t nrmSlopeX = 17 - __clz(((slopeX) > 0 ? (slopeX) : -(slopeX)));
+    int32_t nrmSlopeY = 17 - __clz(((slopeY) > 0 ? (slopeY) : -(slopeY)));
+
+    slopeX = (nrmSlopeX > 0 ? slopeX >> nrmSlopeX : slopeX << (-nrmSlopeX));
+    slopeY = (nrmSlopeY > 0 ? slopeY >> nrmSlopeY : slopeY << (-nrmSlopeY));
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        int32_t colFirstY =
+            __qadd((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t colFirstX =
+            __qadd((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+        colFirstX = colFirstX >> 10;
+        colFirstY = colFirstY >> 10;
+
+        int32_t nbVecElts = iWidth;
+        int16x8_t vX = (int16x8_t)vidupq_n_u16(0, 1);
+        uint16_t *pTargetBaseCur = pTargetBase;
+
+        vX = ((vX) << 6);
+
+        while (nbVecElts > 0) {
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
+
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                &ptParam->tOrigin.tValidRegion,
+                &tPointTemp);
+
+            if (0xFFFF == p) {
+                __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_colour_inside_src(
+                    &tPointV,
+                    &ptParam->tOrigin.tValidRegion,
+                    ptParam->tOrigin.pBuffer,
+                    iOrigStride,
+                    pTargetBaseCur,
+
+                    255,
+
+                    nbVecElts);
+            } else if (0 != p) {
+                __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_colour(
+                    &tPointV,
+                    &ptParam->tOrigin.tValidRegion,
+                    ptParam->tOrigin.pBuffer,
+                    iOrigStride,
+                    pTargetBaseCur,
+
+                    255,
 
                     nbVecElts);
             }
