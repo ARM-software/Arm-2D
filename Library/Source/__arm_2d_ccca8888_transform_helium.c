@@ -92,14 +92,12 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     int16_t iOrigStride,
     uint16_t *pTarget,
 
-    uint8_t *pchOrigMask,
-    int16_t iOrigmaskStride,
-
     uint16_t hwOpacity,
 
     uint32_t elts)
 {
-    iOrigmaskStride *= 4;
+    int16_t iOrigmaskStride = iOrigStride * 4;
+    uint8_t *pchOrigMask = (uint8_t)((uintptr_t)pOrigin + 3);
 
     __attribute__((aligned(8))) uint32_t scratch32[32];
     int16_t *pscratch16 = (int16_t *)scratch32;
@@ -272,7 +270,7 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         vst1q(pscratch16, vPoint.Y);
         tPointLo.Y = vldrhq_s32(pscratch16);
         tPointHi.Y = vldrhq_s32(pscratch16 + 4);
-        mve_pred16_t p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
         //predGlbLo |= p;
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
@@ -334,14 +332,12 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     int16_t iOrigStride,
     uint16_t *pTarget,
 
-    uint8_t *pchOrigMask,
-    int16_t iOrigmaskStride,
-
     uint16_t hwOpacity,
 
     uint32_t elts)
 {
-    iOrigmaskStride *= 4;
+    int16_t iOrigmaskStride = iOrigStride * 4;
+    uint8_t *pchOrigMask = (uint8_t)((uintptr_t)pOrigin + 3);
 
     __attribute__((aligned(8))) uint32_t scratch32[32];
     int16_t *pscratch16 = (int16_t *)scratch32;
@@ -628,9 +624,6 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
                     iOrigStride,
                     pTargetBaseCur,
 
-                    pOriginMask,
-                    iOrigMaskStride,
-
                     hwOpacity,
 
                     nbVecElts);
@@ -641,9 +634,6 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
                     ptParam->tOrigin.pBuffer,
                     iOrigStride,
                     pTargetBaseCur,
-
-                    pOriginMask,
-                    iOrigMaskStride,
 
                     hwOpacity,
 
