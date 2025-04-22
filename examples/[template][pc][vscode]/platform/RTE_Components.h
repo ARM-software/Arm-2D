@@ -15,6 +15,7 @@
  */
 #define CMSIS_device_header "stdint.h"
 
+//#define __USE_FVP__
 //#define RTE_Acceleration_Arm_2D_Extra_Benchmark
 //    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic
 //    #define RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
