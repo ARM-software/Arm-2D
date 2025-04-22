@@ -892,9 +892,11 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_opacity)(   uint16_t *phwSour
             uint16x8_t      vecIn;
             uint16x8_t      vecR0, vecB0, vecG0;
             uint16x8_t      vecR1, vecB1, vecG1;
-
+            
+            mve_pred16_t pred = vctp16q(blkCnt);
+            
             /* unpack 1st stream */
-            vecIn = vld1q(phwSource);
+            vecIn = vld1q_z(phwSource, pred);
             vecR0 = vecIn & vecMaskR;
 
             vecB0 = vecIn >> 11;
@@ -929,7 +931,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_opacity)(   uint16_t *phwSour
                 | vmulq((vecB0 & vecMaskBpck), 256);
 
 
-            vst1q(phwTarget, vOut);
+            vst1q_p(phwTarget, vOut, pred);
 
             phwSource += 8;
             phwTarget += 8;
@@ -1084,8 +1086,10 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
             uint16x8_t      vecR0, vecB0, vecG0;
             uint16x8_t      vecR1, vecB1, vecG1;
 
+            mve_pred16_t pred = vctp16q(blkCnt);
+
             /* unpack stream */
-            vecIn = vld1q(phwTarget);
+            vecIn = vld1q_z(phwTarget, pred);
             vecR1 = vecIn & vecMaskR;
 
             vecB1 = vecIn >> 11;
@@ -1108,7 +1112,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
             uint16x8_t      vOut = vecR0 >> 3 | vmulq((vecG0 & vecMaskGpck), 8)
                 | vmulq((vecB0 & vecMaskBpck), 256);
 
-            vst1q(phwTarget, vOut);
+            vst1q_p(phwTarget, vOut, pred);
 
             phwTarget += 8;
             blkCnt -= 8;
@@ -1288,19 +1292,20 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
 
         blkCnt = iWidth & 7;
         if (blkCnt > 0U) {
+            mve_pred16_t pred = vctp16q(blkCnt);
             uint16x8_t      vecInSrc, vecInDst;
             uint16x8_t      vecR0, vecB0, vecG0;
             uint16x8_t      vecR1, vecB1, vecG1;
 
             /* unpack 1st stream */
-            vecInSrc = vld1q(pSource);
+            vecInSrc = vld1q_z(pSource, pred);
             vecR0 = vandq(vecInSrc, vecMaskR);
             vecB0 = vshrq(vecInSrc, 11);
             vecG0 = vshrq(vecInSrc, 5);
             vecG0 = vandq(vecG0, vecMaskG);
 
             /* unpack 2nd stream */
-            vecInDst = vld1q(pTarget);
+            vecInDst = vld1q_z(pTarget, pred);
             vecR1 = vandq(vecInDst, vecMaskR);
             vecB1 = vshrq(vecInDst, 11);
             vecG1 = vshrq(vecInDst, 5);
@@ -1322,7 +1327,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
                     vmulq(vandq(vecB0, vecMaskBpck), 256));
 
             vst1q_p(pTarget, vOut,
-                    vcmpneq_m_n_s16(vecInSrc, hwColour, vctp16q(blkCnt)));
+                    vcmpneq_m_n_s16(vecInSrc, hwColour, pred));
 
         }
 
@@ -2085,8 +2090,9 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
         int32_t         blkCnt = iWidth;                                                       \
                                                                                                \
         do {                                                                                   \
-            uint16x8_t      vecTarget = vld1q(pCurTarget);                                     \
-            uint16x8_t      vecTransp = TRGT_LOAD(pAlpha, STRIDE);                             \
+            mve_pred16_t    tailPred = vctp16q(blkCnt);                                        \
+            uint16x8_t      vecTarget = vld1q_z(pCurTarget, tailPred);                         \
+            uint16x8_t      vecTransp = TRGT_LOAD(pAlpha, STRIDE, tailPred);                   \
             vecTransp = SCAL_OPACITY(vecTransp, OPACITY);                                      \
                                                                                                \
             ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                          \
@@ -2112,7 +2118,7 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
             vecTarget = __arm_2d_rgb565_pack_single_vec(vecR, vecG, vecB);                     \
                                                                                                \
             /* tail predication */                                                             \
-            vst1q_p_u16(pCurTarget, vecTarget, vctp16q(blkCnt));                               \
+            vst1q_p_u16(pCurTarget, vecTarget, tailPred);                                      \
                                                                                                \
             pAlpha += (8 *  ALPHA_SZ);                                                         \
             pCurTarget += 8;                                                                   \
@@ -2200,8 +2206,8 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 #define C8BIT_SCAL_OPACITY_A1(transp, opac, pred)       (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
 
 
-#define RGB565_TRGT_LOAD(base, stride)                  vldrbq_u16(base)
-#define RGB565_TRGT_LOAD_STRIDE(base, stride)           vldrbq_gather_offset_u16(base, stride);
+#define RGB565_TRGT_LOAD(base, stride, pred)            vldrbq_z_u16(base, pred)
+#define RGB565_TRGT_LOAD_STRIDE(base, stride, pred)     vldrbq_gather_offset_z_u16(base, stride, pred);
 #define RGB565_SCAL_OPACITY_NONE(transp, opac)          transp
 #define RGB565_SCAL_OPACITY(transp, opac)               (uint16x8_t) vmulhq((uint8x16_t) transp, opac)
 #define RGB565_SCAL_OPACITY_A1(transp, opac)            (uint16x8_t) vmulq((uint8x16_t) transp, opac)
@@ -2274,10 +2280,10 @@ static int8_t A4_masks_shifts[4*3]= {
         vandq_x(vldrbq_gather_offset_z_u16(base, curA1Offs, pred), curA1Masks, pred),\
         curA1MasksShift, pred)
 
-#define RGB565_TRGT_LOAD_A1(base, stride)  \
-        vshlq_u16( \
-            vandq(vldrbq_gather_offset_u16(base, curA1Offs), curA1Masks),\
-            curA1MasksShift)
+#define RGB565_TRGT_LOAD_A1(base, stride, pred)  \
+        vshlq_x_u16( \
+            vandq_x(vldrbq_gather_offset_z_u16(base, curA1Offs, pred), curA1Masks, pred),\
+            curA1MasksShift, pred)
 
 
 /* 2-bit alpha expansion in a 8x16-bit vector */
@@ -2289,12 +2295,12 @@ static int8_t A4_masks_shifts[4*3]= {
             curA2MasksShift, pred), \
         85, pred)
 
-#define RGB565_TRGT_LOAD_A2(base, stride)  \
-    vmulq_n_u16( \
-        vshlq_u16( \
-            vandq(vldrbq_gather_offset_u16(base, curA2Offs), curA2Masks),\
-            curA2MasksShift), \
-        85)
+#define RGB565_TRGT_LOAD_A2(base, stride, pred)  \
+    vmulq_x_n_u16( \
+        vshlq_x_u16( \
+            vandq_x(vldrbq_gather_offset_z_u16(base, curA2Offs, pred), curA2Masks, pred),\
+            curA2MasksShift, pred), \
+        85, pred)
 
 #define CCCN888_TRGT_LOAD_A2(base, stride, pred)  C8BIT_TRGT_LOAD_A2(base, stride, pred)
 #define CCCN888_TRGT_LOAD_A1(base, stride, pred)  C8BIT_TRGT_LOAD_A1(base, stride, pred)
@@ -2311,12 +2317,12 @@ static int8_t A4_masks_shifts[4*3]= {
 
 /* 4-bit alpha expansion in a 8x16-bit vector */
 /* ((gather_load(alpha, curA4Off) & curA4Masks) >> curA4MasksShift) * 17 */
-#define RGB565_TRGT_LOAD_A4(base, stride)  \
-    vmulq_n_u16( \
-        vshlq_u16( \
-            vandq(vldrbq_gather_offset_u16(base, curA4Offs), curA4Masks),\
-            curA4MasksShift), \
-        17)
+#define RGB565_TRGT_LOAD_A4(base, stride, pred)  \
+    vmulq_x_n_u16( \
+        vshlq_x_u16( \
+            vandq_x(vldrbq_gather_offset_z_u16(base, curA4Offs, pred), curA4Masks, pred),\
+            curA4MasksShift, pred), \
+        17, pred)
 
 #define CCCN888_TRGT_LOAD_A4(base, stride, pred)  C8BIT_TRGT_LOAD_A4(base, stride, pred)
 
@@ -5505,7 +5511,7 @@ void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_src_msk_1h_des_msk_f
                 int32_t         blkCnt = wLength;
 
                 do {
-                    uint16x8_t      vecTarget = vld1q(ptTargetCur);
+                    uint16x8_t      vecTarget = vld1q_z(ptTargetCur, tTailPredict);
                     uint16x8_t      vecSource = vld1q(ptSrc);
                     uint16x8_t      vecSrcMsk = vldrbq_u16(pchSrcMsk);
                     uint16x8_t      vecTargetMask = vldrbq_u16(pchTargetMaskCur);
