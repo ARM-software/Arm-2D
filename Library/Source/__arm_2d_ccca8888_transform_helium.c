@@ -23,7 +23,7 @@
  *               colour format 
  * 
  * $Date:        22. April 2025
- * $Revision:    V.0.7.0
+ * $Revision:    V.0.8.0
  *
  * Target Processor:  Cortex-M cores with helium
  *
@@ -85,7 +85,8 @@ extern "C"
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_colour(
+static 
+void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_colour(
     arm_2d_point_s16x8_t *ptPoint,
     arm_2d_region_t *ptOrigValidRegion,
     uint32_t *pOrigin,
@@ -369,16 +370,12 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
@@ -407,16 +404,12 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
@@ -446,16 +439,12 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
@@ -484,16 +473,12 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32, ptVal);
-        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        //uint32x4_t maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         uint32x4_t maskVal = ptVal >> 24;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
         vst1q(scratch32 + 4, ptVal);
-        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        //maskVal = vldrbq_gather_offset_u32(pchOrigMask, maskOffs);
         maskVal = ptVal >> 24;
         vst1q(scratch32 + 12, maskVal);
 
@@ -657,6 +642,427 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
 
 
 
+static 
+void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
+                                            arm_2d_point_s16x8_t *ptPoint,
+                                            arm_2d_region_t *ptOrigValidRegion,
+                                            uint32_t *pOrigin,
+                                            int16_t iOrigStride,
+                                            uint16_t *pTarget,
+                                            uint32_t elts)
+{
+    int16_t iOrigmaskStride = iOrigStride * 4;
+    uint8_t *pchOrigMask = (uint8_t *)((uintptr_t)pOrigin + 3);
+
+    __attribute__((aligned(8))) uint32_t scratch32[32];
+    int16_t *pscratch16 = (int16_t *)scratch32;
+
+    uint16x8_t vTarget = vld1q(pTarget);
+
+    mve_pred16_t predTailLow = vctp32q(elts);
+    mve_pred16_t predTailHigh = elts - 4 > 0 ? vctp32q(elts - 4) : 0;
+    mve_pred16_t predTail = vctp16q(elts);
+
+    int16x8_t vXi = ((ptPoint->X) >> 6);
+    int16x8_t vYi = ((ptPoint->Y) >> 6);
+
+    uint16x8_t vAvgPixelR, vAvgPixelG, vAvgPixelB;
+
+    mve_pred16_t predGlb = 0;
+
+    uint16x8_t vAvgTransparency;
+    uint16x8_t vAvgR, vAvgG, vAvgB, vAvgTrans;
+
+    uint16x8_t R, G, B, vPixelAlpha;
+    uint16x8_t vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+    int16x8_t vOne = vdupq_n_s16(((1) << 6));
+    int16x8_t vWX = ptPoint->X - ((vXi) << 6);
+    int16x8_t vWY = ptPoint->Y - ((vYi) << 6);
+
+    vAreaTR = vmulq_u16(vWX, vWY);
+    vAreaTL = vmulq_u16((vOne - vWX), vWY);
+    vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+    vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+    vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+    vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+    vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+    vAreaBL = vqshlq_n_u16(vAreaBL, 4);
+    ;
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+
+        mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+    
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaBL >> 8), vPixelAlpha);
+        vAvgTransparency = vAreaBL - vAlpha;
+        vAvgPixelR = vrmulhq_u16(vAlpha, R);
+        vAvgPixelG = vrmulhq_u16(vAlpha, G);
+        vAvgPixelB = vrmulhq_u16(vAlpha, B);
+    }
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
+        mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
+
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+    
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaBR >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaBR - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+
+    }
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
+
+        mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaTL >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaTL - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    }
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
+        mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaTR >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaTR - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    };
+
+    vAvgR = (vAvgPixelR);
+    vAvgG = (vAvgPixelG);
+    vAvgB = (vAvgPixelB);
+    vAvgTrans = (vAvgTransparency);
+
+    uint16x8_t vBlended;
+    uint16x8_t vTargetR, vTargetG, vTargetB;
+
+    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+    vAvgR = vqaddq(vAvgR, vrmulhq(vTargetR, vAvgTrans));
+    vAvgR = vminq(vAvgR, vdupq_n_u16(255));
+    vAvgG = vqaddq(vAvgG, vrmulhq(vTargetG, vAvgTrans));
+    vAvgG = vminq(vAvgG, vdupq_n_u16(255));
+    vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
+    vAvgB = vminq(vAvgB, vdupq_n_u16(255));
+
+    vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
+
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vst1q_p(pTarget, vTarget, predTail);
+
+}
+
+static 
+void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
+                                            arm_2d_point_s16x8_t *ptPoint,
+                                            arm_2d_region_t *ptOrigValidRegion,
+                                            uint32_t *pOrigin,
+                                            int16_t iOrigStride,
+                                            uint16_t *pTarget,
+                                            uint32_t elts)
+{
+    int16_t iOrigmaskStride = iOrigStride * 4;
+    uint8_t *pchOrigMask = (uint8_t *)((uintptr_t)pOrigin + 3);
+
+    __attribute__((aligned(8))) uint32_t scratch32[32];
+    int16_t *pscratch16 = (int16_t *)scratch32;
+
+    uint16x8_t vTarget = vld1q(pTarget);
+
+    int16x8_t vXi = ((ptPoint->X) >> 6);
+    int16x8_t vYi = ((ptPoint->Y) >> 6);
+
+    uint16x8_t vAvgPixelR, vAvgPixelG, vAvgPixelB;
+
+    uint16x8_t vAvgTransparency;
+    uint16x8_t vAvgR, vAvgG, vAvgB, vAvgTrans;
+
+    uint16x8_t R, G, B, vPixelAlpha;
+    uint16x8_t vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+    int16x8_t vOne = vdupq_n_s16(((1) << 6));
+    int16x8_t vWX = ptPoint->X - ((vXi) << 6);
+    int16x8_t vWY = ptPoint->Y - ((vYi) << 6);
+    vAreaTR = vmulq_u16(vWX, vWY);
+    vAreaTL = vmulq_u16((vOne - vWX), vWY);
+    vAreaBR = vmulq_u16(vWX, (vOne - vWY));
+    vAreaBL = vmulq_u16((vOne - vWX), (vOne - vWY));
+    vAreaTR = vqshlq_n_u16(vAreaTR, 4);
+    vAreaTL = vqshlq_n_u16(vAreaTL, 4);
+    vAreaBR = vqshlq_n_u16(vAreaBR, 4);
+    vAreaBL = vqshlq_n_u16(vAreaBL, 4);
+    ;
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaBL >> 8), vPixelAlpha);
+        vAvgTransparency = vAreaBL - vAlpha;
+        vAvgPixelR = vrmulhq_u16(vAlpha, R);
+        vAvgPixelG = vrmulhq_u16(vAlpha, G);
+        vAvgPixelB = vrmulhq_u16(vAlpha, B);
+    }
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaBR >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaBR - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+        ;
+    }
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaTL >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaTL - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    }
+    {
+        arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
+        arm_2d_point_s32x4_t tPointLo, tPointHi;
+        vst1q(pscratch16, vPoint.X);
+        tPointLo.X = vldrhq_s32(pscratch16);
+        tPointHi.X = vldrhq_s32(pscratch16 + 4);
+        vst1q(pscratch16, vPoint.Y);
+        tPointLo.Y = vldrhq_s32(pscratch16);
+        tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
+        uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
+        uint32x4_t ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32, ptVal);
+        uint32x4_t maskVal = ptVal >> 24;
+        vst1q(scratch32 + 8, maskVal);
+
+        ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
+        ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);
+        vst1q(scratch32 + 4, ptVal);
+        maskVal = ptVal >> 24;
+        vst1q(scratch32 + 12, maskVal);
+
+        __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
+        vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
+        //vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
+        vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+        uint16x8_t vAlpha = vmulq_u16((vAreaTR >> 8), vPixelAlpha);
+        vAvgTransparency = vqaddq(vAvgTransparency, vAreaTR - vAlpha);
+        vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
+        vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
+        vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    };
+
+    vAvgR = (vAvgPixelR);
+    vAvgG = (vAvgPixelG);
+    vAvgB = (vAvgPixelB);
+    vAvgTrans = (vAvgTransparency);
+
+    uint16x8_t vTargetR, vTargetG, vTargetB;
+
+    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+    vAvgR = vqaddq(vAvgR, vrmulhq(vTargetR, vAvgTrans));
+    vAvgR = vminq(vAvgR, vdupq_n_u16(255));
+    vAvgG = vqaddq(vAvgG, vrmulhq(vTargetG, vAvgTrans));
+    vAvgG = vminq(vAvgG, vdupq_n_u16(255));
+    vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
+    vAvgB = vminq(vAvgB, vdupq_n_u16(255));
+
+    vst1q(pTarget, __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB));
+}
+
+
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_to_rgb565(
@@ -744,26 +1150,20 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565(
                 &tPointTemp);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_colour_inside_src(
+                __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
                     &tPointV,
                     &ptParam->tOrigin.tValidRegion,
                     ptParam->tOrigin.pBuffer,
                     iOrigStride,
                     pTargetBaseCur,
-
-                    255,
-
                     nbVecElts);
             } else if (0 != p) {
-                __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_colour(
+                __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
                     &tPointV,
                     &ptParam->tOrigin.tValidRegion,
                     ptParam->tOrigin.pBuffer,
                     iOrigStride,
                     pTargetBaseCur,
-
-                    255,
-
                     nbVecElts);
             }
 
