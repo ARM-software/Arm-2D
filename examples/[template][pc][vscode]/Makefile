@@ -50,8 +50,9 @@ CC_INC  += ../../examples/demos
 CC_INC  += ../../examples/demos/monochrome
 
 CC_DEF  := ARM_SECTION\(x\)=
-CC_DEF  += _RTE_=1
+CC_DEF  += _RTE_
 CC_DEF  += VT_SCALING_RATIO=1
+#CC_DEF  += __USE_FVP__
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
