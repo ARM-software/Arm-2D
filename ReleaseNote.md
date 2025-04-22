@@ -10,7 +10,7 @@
   * Significantly improves the helium transform operations (~60%)
   * Adds implicit colour format conversion support for CCCA8888
   * Adds a new set of APIs that
-    * Supports applying different scaling ratios on the X-axis and Y-axis respectively
+    * Supports applying different scaling ratios on the X-axis and Y-axis, respectively
     * Supports using floating point numbers (`arm_2d_point_float_t`) to specify pivots
     * Implement the old APIs with the new APIs. The old APIs are marked as deprecated. Please use the new APIs in new designs. 
   * Removes the floating-point based implementation and uses the fixed-point based acceleration only
