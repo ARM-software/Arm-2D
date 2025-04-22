@@ -18,12 +18,12 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_fill_colour_with_alpha_gradient_and_mask_helium.c
- * Description:  The source code of APIs for colour-filling-with-alpha-gradient
- *               -and-mask
- *
- * $Date:        15. Sept 2024
- * $Revision:    V.1.3.1
+ * Title:        __arm_2d_ccca8888_transform_helium.c
+ * Description:  The source code of APIs for ccca8888 transform to other 
+ *               colour format 
+ * 
+ * $Date:        22. April 2025
+ * $Revision:    V.0.5.0
  *
  * Target Processor:  Cortex-M cores with helium
  *
