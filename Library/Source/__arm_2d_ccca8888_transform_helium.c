@@ -119,7 +119,7 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     uint16x8_t vAvgR, vAvgG, vAvgB, vAvgTrans;
 
     uint16x8_t R, G, B, vPixelAlpha;
-    __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+    uint16x8_t vAreaTR, vAreaTL, vAreaBR, vAreaBL;
     int16x8_t vOne = vdupq_n_s16(((1) << 6));
     int16x8_t vWX = ptPoint->X - ((vXi) << 6);
     int16x8_t vWY = ptPoint->Y - ((vYi) << 6);
@@ -375,7 +375,7 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     //uint32x4_t vMaskForAlphaInWord = vdupq_n_u32(0xFF000000);
 
     uint16x8_t R, G, B, vPixelAlpha;
-    __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
+    uint16x8_t vAreaTR, vAreaTL, vAreaBR, vAreaBL;
     int16x8_t vOne = vdupq_n_s16(((1) << 6));
     int16x8_t vWX = ptPoint->X - ((vXi) << 6);
     int16x8_t vWY = ptPoint->Y - ((vYi) << 6);
