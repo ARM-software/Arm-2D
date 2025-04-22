@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_copy_with_masks_helium.inc
  * Description:  c code template for copy and fill like operations
  *
- * $Date:        12. July 2022
- * $Revision:    v1.0.1
+ * $Date:        22. April 2025
+ * $Revision:    v1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -36,14 +36,18 @@
 #if  CHECKPIXTYP(__API_MCWM_COLOUR, rgb565)
 #define __API_MCWM_PIXEL_BIT_NUM        16
 #define __API_MCWM_PIXEL_VECLOAD        vld1q
+#define __API_MCWM_PIXEL_VECLOAD_Z      vld1q_z
 #define __API_MCWM_PIXEL_GATHVECLOAD    vldrhq_gather_shifted_offset
+#define __API_MCWM_PIXEL_GATHVECLOAD_Z  vldrhq_gather_shifted_offset_z
 #define __API_MCWM_PIXEL_PVECSTORE      vst1q_p
 #define __API_MCWM_PIXEL_BLENDING       __arm_2d_rgb565_blending_opacity_single_vec
 
 #elif CHECKPIXTYP(__API_MCWM_COLOUR, gray8)
 #define __API_MCWM_PIXEL_BIT_NUM        16 /* widening involved */
 #define __API_MCWM_PIXEL_VECLOAD        vldrbq_u16
+#define __API_MCWM_PIXEL_VECLOAD_Z      vldrbq_z_u16
 #define __API_MCWM_PIXEL_GATHVECLOAD    vldrbq_gather_offset_u16
+#define __API_MCWM_PIXEL_GATHVECLOAD_Z  vldrbq_gather_offset_z_u16
 #define __API_MCWM_PIXEL_PVECSTORE      vstrbq_p_u16
 #define __API_MCWM_PIXEL_BLENDING       __arm_2d_gray8_blending_opacity_single_vec
 
@@ -51,13 +55,17 @@
 #if !ENABLE_ALT_MASK_FILL
 #define __API_MCWM_PIXEL_BIT_NUM        32
 #define __API_MCWM_PIXEL_VECLOAD        vld1q
+#define __API_MCWM_PIXEL_VECLOAD_Z      vld1q_z
 #define __API_MCWM_PIXEL_GATHVECLOAD    vldrwq_gather_shifted_offset
+#define __API_MCWM_PIXEL_GATHVECLOAD_Z  vldrwq_gather_shifted_offset_z
 #define __API_MCWM_PIXEL_PVECSTORE      vst1q_p
 #define __API_MCWM_PIXEL_BLENDING       __arm_2d_cccn888_blending_opacity_single_vec
 #else
 #define __API_MCWM_PIXEL_BIT_NUM        16 /* widening involved */
 #define __API_MCWM_PIXEL_VECLOAD        vldrbq_u16
+#define __API_MCWM_PIXEL_VECLOAD_Z      vldrbq_z_u16
 #define __API_MCWM_PIXEL_GATHVECLOAD    vldrbq_gather_offset_u16
+#define __API_MCWM_PIXEL_GATHVECLOAD_Z  vldrbq_gather_offset_z_u16
 #define __API_MCWM_PIXEL_PVECSTORE      vstrbq_p_u16
 #define __API_MCWM_PIXEL_BLENDING       __arm_2d_gray8_blending_opacity_single_vec
 #endif
@@ -224,24 +232,25 @@ void __MCWM_FUNC(masks_fill)(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
-                    __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD(ptSrc);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
+                    __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD_Z(ptSrc, tTailPredict);
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u,
-                                                            __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u,
+                                                            __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPredict);
                     #endif
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u,
-                                                            __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u,
+                                                            __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPredict);
                     #endif
 
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -255,8 +264,7 @@ void __MCWM_FUNC(masks_fill)(
                     vecTarget = __API_MCWM_PIXEL_BLENDING(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                                            ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE || \
                         __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
@@ -415,21 +423,22 @@ void __MCWM_FUNC(masks_fill_alt)(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = vldrbq_gather_offset_u16((uint8_t*)ptTargetCur, vIncStride4Offs);
-                    __API_MCWM_PIXEL_VECTYP      vecSource = vldrbq_gather_offset_u16((uint8_t*)ptSrc, vIncStride4Offs);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = vldrbq_gather_offset_z_u16((uint8_t*)ptTargetCur, vIncStride4Offs, tTailPredict);
+                    __API_MCWM_PIXEL_VECTYP      vecSource = vldrbq_gather_offset_z_u16((uint8_t*)ptSrc, vIncStride4Offs, tTailPredict);
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = vldrbq_gather_offset_u16(
-                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = vldrbq_gather_offset_z_u16(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPredict);
                     #endif
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = vldrbq_gather_offset_u16(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = vldrbq_gather_offset_z_u16(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPredict);
                     #endif
 
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -443,8 +452,7 @@ void __MCWM_FUNC(masks_fill_alt)(
                     vecTarget = __arm_2d_gray8_blending_opacity_single_vec(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    vstrbq_scatter_offset_p_u16((uint8_t*)ptTargetCur, vIncStride4Offs,
-                            vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    vstrbq_scatter_offset_p_u16((uint8_t*)ptTargetCur, vIncStride4Offs, vecTarget, tTailPredict);
 
                     vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
 
@@ -486,21 +494,22 @@ void __MCWM_FUNC(masks_fill_alt)(
                 blkCnt = wLength;
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = vldrbq_gather_offset_u16(((uint8_t*)ptTargetCur)+1, vIncStride4Offs);
-                    __API_MCWM_PIXEL_VECTYP      vecSource = vldrbq_gather_offset_u16(((uint8_t*)ptSrc)+1, vIncStride4Offs);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = vldrbq_gather_offset_z_u16(((uint8_t*)ptTargetCur)+1, vIncStride4Offs, tTailPredict);
+                    __API_MCWM_PIXEL_VECTYP      vecSource = vldrbq_gather_offset_z_u16(((uint8_t*)ptSrc)+1, vIncStride4Offs, tTailPredict);
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = vldrbq_gather_offset_u16(
-                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = vldrbq_gather_offset_z_u16(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPredict);
                     #endif
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = vldrbq_gather_offset_u16(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = vldrbq_gather_offset_z_u16(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPredict);
                     #endif
 
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -514,8 +523,7 @@ void __MCWM_FUNC(masks_fill_alt)(
                     vecTarget = __arm_2d_gray8_blending_opacity_single_vec(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    vstrbq_scatter_offset_p_u16(((uint8_t*)ptTargetCur)+1, vIncStride4Offs,
-                            vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    vstrbq_scatter_offset_p_u16(((uint8_t*)ptTargetCur)+1, vIncStride4Offs, vecTarget, tTailPredict);
 
                     vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
 
@@ -558,21 +566,22 @@ void __MCWM_FUNC(masks_fill_alt)(
                 blkCnt = wLength;
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = vldrbq_gather_offset_u16(((uint8_t*)ptTargetCur)+2, vIncStride4Offs);
-                    __API_MCWM_PIXEL_VECTYP      vecSource = vldrbq_gather_offset_u16(((uint8_t*)ptSrc)+2, vIncStride4Offs);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = vldrbq_gather_offset_z_u16(((uint8_t*)ptTargetCur)+2, vIncStride4Offs, tTailPredict);
+                    __API_MCWM_PIXEL_VECTYP      vecSource = vldrbq_gather_offset_z_u16(((uint8_t*)ptSrc)+2, vIncStride4Offs, tTailPredict);
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = vldrbq_gather_offset_u16(
-                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = vldrbq_gather_offset_z_u16(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPredict);
                     #endif
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = vldrbq_gather_offset_u16(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = vldrbq_gather_offset_z_u16(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPredict);
                     #endif
 
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -586,8 +595,7 @@ void __MCWM_FUNC(masks_fill_alt)(
                     vecTarget = __arm_2d_gray8_blending_opacity_single_vec(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    vstrbq_scatter_offset_p_u16(((uint8_t*)ptTargetCur)+2, vIncStride4Offs,
-                            vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    vstrbq_scatter_offset_p_u16(((uint8_t*)ptTargetCur)+2, vIncStride4Offs, vecTarget, tTailPredict);
 
                     vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
 
@@ -746,25 +754,26 @@ void __MCWM_FUNC(masks_fill_x_mirror)(
 
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
                     __API_MCWM_PIXEL_VECTYP      vecSource =
-                        __API_MCWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                        __API_MCWM_PIXEL_GATHVECLOAD_Z(ptSrc, vDecrStride1Offs, tTailPredict);
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                        ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)
-                                        ((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                        ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)
+                                        ((uint8_t *)ptSrcMsk, vDecrStride4Offs, tTailPredict);
             #else
                     __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                        ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)
-                                        (ptSrcMsk, vDecrStride1Offs);
+                        ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)
+                                        (ptSrcMsk, vDecrStride1Offs, tTailPredict);
             #endif
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
             #else
                     __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                                ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                                ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tTailPredict);
             #endif
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
                         vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
@@ -779,8 +788,7 @@ void __MCWM_FUNC(masks_fill_x_mirror)(
                                                                     vecHwOpacity);
 
                     /* tail predication */
-                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                                        ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -932,21 +940,22 @@ void __MCWM_FUNC(masks_fill_y_mirror)(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
-                    __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD(ptSrc);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
+                    __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD_Z(ptSrc, tTailPredict);
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPredict);
                     #endif
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
                     #else
-                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPredict);
                     #endif
 
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -960,7 +969,7 @@ void __MCWM_FUNC(masks_fill_y_mirror)(
                     vecTarget = __API_MCWM_PIXEL_BLENDING(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
                     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE || \
                         __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
@@ -1124,24 +1133,25 @@ void __MCWM_FUNC(masks_fill_xy_mirror)(
 
 
                 do {
-                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
+                    mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
                     __API_MCWM_PIXEL_VECTYP      vecSource =
-                        __API_MCWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                        __API_MCWM_PIXEL_GATHVECLOAD_Z(ptSrc, vDecrStride1Offs, tTailPredict);
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs, tTailPredict);
 
             #else
                     __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs);
+                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs, tTailPredict);
             #endif
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                     __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
             #else
                     __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                            ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                            ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tTailPredict);
             #endif
                     __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
                         vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
@@ -1156,7 +1166,7 @@ void __MCWM_FUNC(masks_fill_xy_mirror)(
                                                                     vecHwOpacity);
 
                     /* tail predication */
-                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -1292,20 +1302,21 @@ void __MCWM_FUNC(masks_copy)(
         int32_t         blkCnt = iWidth;
 
         do {
-            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
-            __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD(ptSrc);
+            mve_pred16_t tTailPrediction = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPrediction);
+            __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD_Z(ptSrc, tTailPrediction);
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
-            __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+            __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPrediction);
             #else
-            __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+            __API_MCWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPrediction);
             #endif
 
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
-            __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+            __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPrediction);
             #else
-            __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+            __API_MCWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPrediction);
             #endif
 
             __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -1319,7 +1330,7 @@ void __MCWM_FUNC(masks_copy)(
             vecTarget = __API_MCWM_PIXEL_BLENDING(
                                             vecTarget, vecSource, vecHwOpacity);
             /* tail predication */
-            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPrediction);
 
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE || \
                 __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
@@ -1444,25 +1455,26 @@ void __MCWM_FUNC(masks_copy_x_mirror)(
         __API_MCWM_PIXEL_VECTYP      vDecrStride1Offs =
                 ARM_CONNECT2(vddupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curDecrStride1Idx, 1);
 
-
         do {
-            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
+            mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
             __API_MCWM_PIXEL_VECTYP      vecSource =
-                __API_MCWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+               __API_MCWM_PIXEL_GATHVECLOAD_Z(ptSrc, vDecrStride1Offs, tTailPredict);
+
     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
             __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs, tTailPredict);
     #else
             __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs, tTailPredict);
     #endif
     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
             __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
     #else
             __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tTailPredict);
     #endif
             __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
                 vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
@@ -1473,11 +1485,10 @@ void __MCWM_FUNC(masks_copy_x_mirror)(
     #endif
 
             vecTarget =
-                __API_MCWM_PIXEL_BLENDING(vecTarget, vecSource,
-                                                            vecHwOpacity);
+                __API_MCWM_PIXEL_BLENDING(vecTarget, vecSource, vecHwOpacity);
 
             /* tail predication */
-            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
             vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -1600,24 +1611,25 @@ void __MCWM_FUNC(masks_copy_y_mirror)(
         int32_t         blkCnt = iWidth;
 
         do {
-            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
-            __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD(ptSrc);
+            mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
+            __API_MCWM_PIXEL_VECTYP      vecSource = __API_MCWM_PIXEL_VECLOAD_Z(ptSrc, tTailPredict);
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
             __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs, tTailPredict);
             #else
             __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                    ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, tTailPredict);
             #endif
 
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
             __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
             #else
             __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                    ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tTailPredict);
             #endif
 
             __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
@@ -1631,8 +1643,7 @@ void __MCWM_FUNC(masks_copy_y_mirror)(
             vecTarget = __API_MCWM_PIXEL_BLENDING(
                                             vecTarget, vecSource, vecHwOpacity);
             /* tail predication */
-            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                    ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
             #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE || \
                 __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
@@ -1768,23 +1779,24 @@ void __MCWM_FUNC(masks_copy_xy_mirror)(
 
 
         do {
-            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD(ptTargetCur);
+            mve_pred16_t tTailPredict = ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt);
+            __API_MCWM_PIXEL_VECTYP      vecTarget = __API_MCWM_PIXEL_VECLOAD_Z(ptTargetCur, tTailPredict);
             __API_MCWM_PIXEL_VECTYP      vecSource =
-                __API_MCWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                __API_MCWM_PIXEL_GATHVECLOAD_Z(ptSrc, vDecrStride1Offs, tTailPredict);
     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
             __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs, tTailPredict);
     #else
             __API_MCWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs, tTailPredict);
     #endif
     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
             __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_MCWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_MCWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tTailPredict);
     #else
             __API_MCWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                ARM_CONNECT2(vldrbq_z_u, __API_MCWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tTailPredict);
     #endif
             __API_MCWM_PIXEL_VECTYP      vecHwOpacity =
                 vsubq(v256, (vecSrcMsk * vecTargetMask) >> 8);
@@ -1799,7 +1811,7 @@ void __MCWM_FUNC(masks_copy_xy_mirror)(
                                                             vecHwOpacity);
 
             /* tail predication */
-            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_MCWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_MCWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tTailPredict);
 
     #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
             vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_MCWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -1870,9 +1882,11 @@ void __MCWM_FUNC(masks_copy_xy_mirror)(
 #undef __MCWM_TYPE
 #undef __API_MCWM_PIXEL_BIT_NUM
 #undef __API_MCWM_PIXEL_VECLOAD
+#undef __API_MCWM_PIXEL_VECLOAD_Z
 #undef __API_MCWM_PIXEL_PVECSTORE
 #undef __API_MCWM_PIXEL_BLENDING
 #undef __API_MCWM_PIXEL_GATHVECLOAD
+#undef __API_MCWM_PIXEL_GATHVECLOAD_Z
 #undef __API_MCWM_VEC_INCR
 #undef __API_MCWM_CFG_SUPPORT_SRC_MSK_WRAPING
 #undef __API_MCWM_CFG_1_HORIZONTAL_LINE
