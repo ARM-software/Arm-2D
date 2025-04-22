@@ -68,7 +68,7 @@ extern "C" {
 // <q>Enable ccca8888(ARGB8888) implicit conversion 
 // <i> This feature is disabled by default to save code size
 #ifndef __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-#   define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__      0
+#   define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__      1
 #endif
 
 // <q>Improve the Quality of IIR Blur
