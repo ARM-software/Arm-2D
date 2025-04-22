@@ -23,7 +23,7 @@
  *               colour format 
  * 
  * $Date:        22. April 2025
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores with helium
  *
@@ -123,6 +123,9 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     int16x8_t vOne = vdupq_n_s16(((1) << 6));
     int16x8_t vWX = ptPoint->X - ((vXi) << 6);
     int16x8_t vWY = ptPoint->Y - ((vYi) << 6);
+
+    uint32x4_t vMaskForAlphaInWord = vdupq_n_u32(0xFF000000);
+
     vAreaTR = vmulq_u16(vWX, vWY);
     vAreaTL = vmulq_u16((vOne - vWX), vWY);
     vAreaBR = vmulq_u16(vWX, (vOne - vWY));
@@ -145,23 +148,28 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         vst1q(pscratch16, vPoint.Y);
         tPointLo.Y = vldrhq_s32(pscratch16);
         tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+    
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
-        
         //predGlbLo |= p;
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
         //predGlbHi |= p;
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
@@ -193,17 +201,22 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+    
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
         //predGlbHi |= p;
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
@@ -235,17 +248,21 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
         //predGlbHi |= p;
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
@@ -270,22 +287,27 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         vst1q(pscratch16, vPoint.Y);
         tPointLo.Y = vldrhq_s32(pscratch16);
         tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointLo);
         //predGlbLo |= p;
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow & p);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow & p);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+
         p = arm_2d_is_point_vec_inside_region_s32(ptOrigValidRegion, &tPointHi);
         //predGlbHi |= p;
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh & p);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
@@ -315,7 +337,6 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
     vAvgG = vminq(vAvgG, vdupq_n_u16(255));
     vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
     vAvgB = vminq(vAvgB, vdupq_n_u16(255));
-
 
     vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
 
@@ -355,6 +376,7 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
 
     uint16x8_t vAvgTransparency;
     uint16x8_t vAvgR, vAvgG, vAvgB, vAvgTrans;
+    uint32x4_t vMaskForAlphaInWord = vdupq_n_u32(0xFF000000);
 
     uint16x8_t R, G, B, vPixelAlpha;
     __typeof__(vAvgPixelR) vAreaTR, vAreaTL, vAreaBR, vAreaBL;
@@ -383,17 +405,17 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow);
         vst1q(scratch32, ptVal);
-
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
 
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh);
         vst1q(scratch32 + 4, ptVal);
-
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
 
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
@@ -417,18 +439,23 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         vst1q(pscratch16, vPoint.Y);
         tPointLo.Y = vldrhq_s32(pscratch16);
         tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
@@ -451,18 +478,23 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         vst1q(pscratch16, vPoint.Y);
         tPointLo.Y = vldrhq_s32(pscratch16);
         tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
@@ -484,18 +516,23 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
         vst1q(pscratch16, vPoint.Y);
         tPointLo.Y = vldrhq_s32(pscratch16);
         tPointHi.Y = vldrhq_s32(pscratch16 + 4);
+
         uint32x4_t ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;
         uint32x4_t ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow);
         vst1q(scratch32, ptVal);
-        uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
-        uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        //uint32x4_t maskOffs = 4 * tPointLo.X + tPointLo.Y * iOrigmaskStride;
+        //uint32x4_t maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailLow);
+        uint32x4_t maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 8, maskVal);
+
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;
         ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh);
         vst1q(scratch32 + 4, ptVal);
-        maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
-        maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        //maskOffs = 4 * tPointHi.X + tPointHi.Y * iOrigmaskStride;
+        //maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh);
+        maskVal = ptVal & vMaskForAlphaInWord;
         vst1q(scratch32 + 12, maskVal);
+
         __arm_2d_unpack_rgb888_from_mem((uint8_t *)scratch32, &R, &G, &B);
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *)&scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
