@@ -282,3 +282,4 @@ arm_fsm_rt_t __MCM_SW_FUNC(tile_copy)( __arm_2d_sub_task_t *ptTask)
 #undef __API_MCM_COLOUR
 #undef __API_MCM_INT_TYPE
 #undef __MCM_COLOR_TYPE
+#undef __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION
