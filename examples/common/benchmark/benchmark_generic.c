@@ -446,6 +446,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                 &c_tFillRegion,
                                 ptLayers[BENCHMARK_LAYER_ICON].wMode);
     #else
+
         switch (ptLayers[BENCHMARK_LAYER_ICON].wMode) {
             case ARM_2D_CP_MODE_FILL | ARM_2D_CP_MODE_X_MIRROR:
                 arm_2d_tile_fill_with_x_mirror( &c_tileCMSISLogo,
@@ -489,6 +490,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                         &c_tFillRegion);
                 break;
         }
+
     #endif
     } while(0);
 #else

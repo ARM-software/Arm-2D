@@ -72,6 +72,8 @@
 #define __API_MCM_MIRROR_TYPE                x_mirror
 #define __API_MCM_MIRROR_TYPE_UPPERCASE      X_MIRROR
 
+#define __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION      0
+
 #define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
 #define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 
@@ -90,6 +92,8 @@
 #define __API_MCM_MIRROR_TYPE                y_mirror
 #define __API_MCM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
 
+#define __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION      0
+
 #define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
 #define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH
 #include "__arm_2d_meta_copy_mirror.inc"
@@ -105,6 +109,8 @@
 #define __API_MCM_OP_TYPE                    arm_2d_op_cp_t
 #define __API_MCM_MIRROR_TYPE                xy_mirror
 #define __API_MCM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
+
+#define __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION      0
 
 #define __API_MCM_OP_IDX                     __ARM_2D_OP_IDX_COPY_WITH
 #define __API_MCM_IO                         __ARM_2D_IO_COPY_WITH

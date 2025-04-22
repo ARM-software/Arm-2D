@@ -22,8 +22,8 @@
  * Title:        __arm_2d_meta_copy_mirror.inc
  * Description:  c code template for tile copying
  *
- * $Date:        03. Sept 2024
- * $Revision:    V.1.1.0
+ * $Date:        22. April 2025
+ * $Revision:    V.1.2.0
  *
  * -------------------------------------------------------------------- */
 
@@ -60,6 +60,10 @@
 
 #ifndef __API_MCM_OP_TYPE
 #   error You have to define __API_MCM_OP_TYPE before using this c template
+#endif
+
+#ifndef __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION
+#   define __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION       1
 #endif
 
 #undef ____MCM_OPCODE
@@ -204,7 +208,7 @@ arm_fsm_rt_t __MCM_SW_FUNC(tile_copy)( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(__API_MCM_OP_TYPE, ptTask->ptOP);
     assert(__API_MCM_COLOUR_SZ == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending) && __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
