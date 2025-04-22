@@ -161,6 +161,17 @@ static void __on_scene_benchmark_watch_panel_depose(arm_2d_scene_t *ptScene)
     }
 }
 
+static void __after_scene_benchmark_watch_panel_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    /* disable low level flush */
+    arm_2d_helper_ignore_low_level_flush(
+        &(ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
+
+}
+
 /*----------------------------------------------------------------------------*
  * Scene benchmark_watch_panel                                                                    *
  *----------------------------------------------------------------------------*/
@@ -394,6 +405,8 @@ user_scene_benchmark_watch_panel_t *
 
     *ptThis = (user_scene_benchmark_watch_panel_t){
         .use_as__arm_2d_scene_t = {
+            .fnAfterSwitch  = &__after_scene_benchmark_watch_panel_switching,
+
             .fnScene        = &__pfb_draw_scene_benchmark_watch_panel_handler,
             //.fnOnBGStart    = &__on_scene_benchmark_watch_panel_background_start,
             //.fnOnBGComplete = &__on_scene_benchmark_watch_panel_background_complete,
@@ -406,11 +419,6 @@ user_scene_benchmark_watch_panel_t *
         },
         .bUserAllocated = bUserAllocated,
     };
-
-    
-    /* disable low level flush */
-    arm_2d_helper_ignore_low_level_flush(
-                                &(ptDispAdapter->use_as__arm_2d_helper_pfb_t));
     
     do {
         /* get the screen region */

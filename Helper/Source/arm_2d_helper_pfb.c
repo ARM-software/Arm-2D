@@ -346,6 +346,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     } while(0);
 
     this.Adapter.bFirstIteration = true;
+    this.Adapter.bIngoreLowLevelSyncUp = true;
     
     return ARM_2D_ERR_NONE;
 }
@@ -2784,7 +2785,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     
 
     /* wait until LCD finish rendering the previous frame */
-    if (!this.Adapter.bIngoreLowLevelSyncUp) {
+    if (!this.Adapter.bIngoreLowLevelSyncUp && !this.Adapter.bIgnoreLowLevelFlush) {
 
         /* reset it to true */
         this.Adapter.bIngoreLowLevelSyncUp = true;

@@ -165,8 +165,19 @@ static void __on_scene_benchmark_generic_depose(arm_2d_scene_t *ptScene)
     }
 }
 
+static void __after_scene_benchmark_generic_switching(arm_2d_scene_t *ptScene)
+{
+    user_scene_benchmark_generic_t *ptThis = (user_scene_benchmark_generic_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    /* disable low level flush */
+    arm_2d_helper_ignore_low_level_flush(
+        &(ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
+
+}
+
 /*----------------------------------------------------------------------------*
- * Scene benchmark_generic                                                                    *
+ * Scene benchmark_generic                                                    *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_benchmark_generic_background_start(arm_2d_scene_t *ptScene)
@@ -359,6 +370,8 @@ user_scene_benchmark_generic_t *__arm_2d_scene_benchmark_generic_init(   arm_2d_
 
     *ptThis = (user_scene_benchmark_generic_t){
         .use_as__arm_2d_scene_t = {
+            .fnAfterSwitch = &__after_scene_benchmark_generic_switching,
+
             .fnScene        = &__pfb_draw_scene_benchmark_generic_handler,
             //.fnOnBGStart    = &__on_scene_benchmark_generic_background_start,
             //.fnOnBGComplete = &__on_scene_benchmark_generic_background_complete,
@@ -369,11 +382,6 @@ user_scene_benchmark_generic_t *__arm_2d_scene_benchmark_generic_init(   arm_2d_
         },
         .bUserAllocated = bUserAllocated,
     };
-
-    
-    /* disable low level flush */
-    arm_2d_helper_ignore_low_level_flush(
-                                &(ptDispAdapter->use_as__arm_2d_helper_pfb_t));
     
     /* initialize benchmark generic */
     benchmark_generic_init();
