@@ -55,23 +55,30 @@
   - The Backend is the place of Low-level implementations for specific 2D processing algorithms.
     - **Those algorithms are usually unusable if you take them out of arm-2d** because the data are validated in the Frontend, and tasks are simplified in the Frontend also.
     - **The linker will remove unused low-level implementations.**
+
+<img src="./documentation/pictures/PixelPipeline.png" alt="PositionInEcosystem" style="zoom:67%;" />
+
 - **Arm-2D always keeps backward compatibility**
   - Older APIs will still be usable in newer versions (even if they are marked as deprecated)
   - Arm-2D available for ALL Cortex-M processors
 
 ## How to Get Started
 
-Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer based on the purpose of using Arm-2D, there are two ways to get started:
+Potential users of Arm-2D may have different backgrounds and purposes. Whoever you are,  e.g. an application engineer from a silicon vendor who develops drivers, a GUI stack system engineer, or an application developer, based on the purposes , there are two ways to get started with Arm-2D:
 
-- [Getting Started as an Application Designer](./documentation/getting_started_as_an_application_designer.md)
+- [Getting Started as a GUI Application Designer](./documentation/getting_started_as_an_application_designer.md)
+  - In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, such systems cannot afford the cost of a decent GUI stack.
+    Meanwhile, these kinds of low-cost systems usually don't have a complex HMI, it is possible to use the arm-2d APIs to design applications directly .
+  - Engineers focused on embedded video processing can preprocess the frame buffer just captured from cameras with Arm-2D. 
+- [Getting Started as a GUI System Developer](./documentation/getting_started_as_a_gui_stack_developer.md)
+    - Silicon vendors can provide drivers to [further accelerate Arm-2D](./documentation/how_to_accelerate_arm_2d.md) in order to take advantage of the proprietary hardware accelerators for their customers. 
+    - System engineers from GUI stack providers can use the Arm-2D APIs to accelerate GUI's low-level operations. 
+    - Homebrew GUI designers can create entirely-new GUI stacks faster and easier with Arm-2D.
+    - ...
 
-	In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, so such systems cannot afford the cost of a decent GUI stack.
-	Meanwhile, such a low-cost system usually won't have a complex graphical user interface, hence application developers can directly use the arm-2d APIs to draw the panels and scenes.
+In general, anyone from opensource community can find something interesting from Arm-2D.
 
-- [Getting Started as a GUI Stack Developer](./documentation/getting_started_as_a_gui_stack_developer.md)
 
-    Application engineers from silicon vendors often need to write drivers for proprietary hardware accelerators. System engineers from GUI software providers may wish to use the APIs provided by Arm-2D to accelerate low-level operations. Engineers focused on embedded video processing may try using the Arm-2D APIs to process the frame buffer just captured from the camera. People from the open-source community may find something interesting to contribute.
-    All developers mentioned above are seen as professional users.
 
 ## Table of Content
 
@@ -418,4 +425,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-23 Dec 2024
+24 April 2025
