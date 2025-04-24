@@ -1,4 +1,4 @@
-# Getting Started as a Professional User
+# Getting Started as a GUI stack developer
 
 ### "I am interested in the implementation"
 
