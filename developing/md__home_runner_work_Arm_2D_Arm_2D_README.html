@@ -184,6 +184,9 @@ Key Messages for You</h1>
 </li>
 </ul>
 </li>
+</ul>
+<p ><img src="./documentation/pictures/PixelPipeline.png" alt="PositionInEcosystem" style="zoom:67%;" class="inline"/></p>
+<ul>
 <li><b>Arm-2D always keeps backward compatibility</b><ul>
 <li>Older APIs will still be usable in newer versions (even if they are marked as deprecated)</li>
 <li>Arm-2D available for ALL Cortex-M processors</li>
@@ -192,15 +195,22 @@ Key Messages for You</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
 How to Get Started</h1>
-<p >Potential users of Arm-2D may have different backgrounds and purposes. Whether you are an application engineer for developing drivers from a silicon vendor, a system engineer of a GUI stack, or an application developer based on the purpose of using Arm-2D, there are two ways to get started:</p>
+<p >Potential users of Arm-2D may have different backgrounds and purposes. Whoever you are, e.g. an application engineer from a silicon vendor who develops drivers, a GUI stack system engineer, or an application developer, based on the purposes , there are two ways to get started with Arm-2D:</p>
 <ul>
-<li><p class="startli"><a class="el" href="md_getting_started_as_an_application_designer.html">Getting Started as an Application Designer</a></p>
-<p class="startli">In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, so such systems cannot afford the cost of a decent GUI stack. Meanwhile, such a low-cost system usually won't have a complex graphical user interface, hence application developers can directly use the arm-2d APIs to draw the panels and scenes.</p>
+<li><a class="el" href="md_getting_started_as_an_application_designer.html">Getting Started as a GUI Application Designer</a><ul>
+<li>In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, such systems cannot afford the cost of a decent GUI stack. Meanwhile, these kinds of low-cost systems usually don't have a complex HMI, it is possible to use the arm-2d APIs to design applications directly .</li>
+<li>Engineers focused on embedded video processing can preprocess the frame buffer just captured from cameras with Arm-2D.</li>
+</ul>
 </li>
-<li><p class="startli"><a class="el" href="md_getting_started_as_a_gui_stack_developer.html">Getting Started as a GUI Stack Developer</a></p>
-<p class="startli">Application engineers from silicon vendors often need to write drivers for proprietary hardware accelerators. System engineers from GUI software providers may wish to use the APIs provided by Arm-2D to accelerate low-level operations. Engineers focused on embedded video processing may try using the Arm-2D APIs to process the frame buffer just captured from the camera. People from the open-source community may find something interesting to contribute. All developers mentioned above are seen as professional users.</p>
+<li><a class="el" href="md_getting_started_as_a_gui_stack_developer.html">Getting Started as a GUI System Developer</a><ul>
+<li>Silicon vendors can provide drivers to <a class="el" href="md_how_to_accelerate_arm_2d.html">further accelerate Arm-2D</a> in order to take advantage of the proprietary hardware accelerators for their customers.</li>
+<li>System engineers from GUI stack providers can use the Arm-2D APIs to accelerate GUI's low-level operations.</li>
+<li>Homebrew GUI designers can create entirely-new GUI stacks faster and easier with Arm-2D.</li>
+<li>...</li>
+</ul>
 </li>
 </ul>
+<p >In general, anyone from opensource community can find something interesting from Arm-2D.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Table of Content</h1>
 <ul>
@@ -608,7 +618,7 @@ Performance Comparison among some Cortex-M processors</div></div>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >23 Dec 2024 </p>
+<p >24 April 2025 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
