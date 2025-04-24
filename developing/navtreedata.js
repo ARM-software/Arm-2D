@@ -106,7 +106,7 @@ var NAVTREE =
         [ "\"I am a library user, I only care about how to use the library\"", "md_getting_started_as_an_application_designer.html#autotoc_md63", null ]
       ] ]
     ] ],
-    [ "Getting Started as an Professional User", "md_getting_started_as_a_gui_stack_developer.html", null ],
+    [ "Getting Started as a Professional User", "md_getting_started_as_a_gui_stack_developer.html", null ],
     [ "How to Deploy the Arm-2D Library {#deploy} <!-- omit from toc -->", "md_how_to_deploy_the_arm_2d_library.html", [
       [ "1 How to get the Arm-2D", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md68", null ],
       [ "2 How to Deploy Arm-2D", "md_how_to_deploy_the_arm_2d_library.html#autotoc_md69", [
