@@ -99,6 +99,9 @@ arm_fsm_rt_t arm_2dp_cccn888_user_<user opcode template>(
                             const arm_2d_region_t *ptRegion,
                             const arm_2d_user_<user opcode template>_api_params_t *ptParams)
 {
+    /*! 
+     * \NOTE usually, you do NOT need to modify this function 
+     */
 
     assert(NULL != ptSource);
     assert(NULL != ptTarget);
@@ -127,6 +130,10 @@ arm_fsm_rt_t arm_2dp_cccn888_user_<user opcode template>(
  */
 arm_fsm_rt_t __arm_2d_cccn888_sw_user_<user opcode template>( __arm_2d_sub_task_t *ptTask)
 {
+    /*! 
+     * \NOTE usually, you do NOT need to modify this function 
+     */
+
     ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
@@ -205,6 +212,8 @@ void __arm_2d_impl_cccn888_user_<user opcode template>(
     int_fast16_t iWidth = ptCopySize->iWidth;
     int_fast16_t iHeight = ptCopySize->iHeight;
 
+    /*------------------ Your Code Begin ---------------------*/
+
     uint_fast8_t chTargetChannel = ptParam->chChannel;
 
     for (int_fast16_t iY = 0; iY < ptCopySize->iHeight; iY++) {
@@ -226,6 +235,8 @@ void __arm_2d_impl_cccn888_user_<user opcode template>(
         pwSource += iSourceStride;
         pwTarget += iTargetStride;
     }
+
+    /*------------------  Your Code END  ---------------------*/
 }
 
 /*

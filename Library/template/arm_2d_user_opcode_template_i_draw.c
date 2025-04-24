@@ -95,7 +95,7 @@ arm_2d_err_t arm_2dp_rgb565_user_<user opcode template>_prepare(
     assert(NULL != ptThis);
     assert(NULL != ptParams);
 
-    /* some preparation work */
+    /* add some preparation work */
 
     return ARM_2D_ERR_NONE;
 }
@@ -114,6 +114,9 @@ arm_fsm_rt_t arm_2dp_rgb565_user_<user opcode template>(
                             arm_2d_color_rgb565_t tColour,
                             uint8_t chOpacity)
 {
+    /*! 
+     * \NOTE usually, you do NOT need to modify this function 
+     */
 
     assert(NULL != ptTarget);
     assert(NULL != ptParams);
@@ -170,6 +173,10 @@ arm_fsm_rt_t arm_2dp_rgb565_user_<user opcode template>(
  */
 arm_fsm_rt_t __arm_2d_rgb565_sw_user_<user opcode template>( __arm_2d_sub_task_t *ptTask)
 {
+    /*! 
+     * \NOTE usually, you do NOT need to modify this function 
+     */
+
     ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptTask->ptOP);
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
@@ -246,6 +253,7 @@ void __arm_2d_impl_rgb565_user_<user opcode template>(
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
 
+    /*------------------ Your Code Begin ---------------------*/
     for (int_fast16_t iY = 0; iY < iHeight; iY++) {
 
         uint16_t *phwTargetLine = phwTarget;
@@ -259,6 +267,7 @@ void __arm_2d_impl_rgb565_user_<user opcode template>(
 
         phwTarget += iTargetStride;
     }
+    /*------------------  Your Code End  ---------------------*/
 
 }
 
