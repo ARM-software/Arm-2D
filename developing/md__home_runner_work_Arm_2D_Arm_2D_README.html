@@ -395,7 +395,8 @@ In this version (v1.2.2-rc6)</h2>
 </ul>
 </li>
 <li><b>Ready and Welcome 3rd party adoption</b><ul>
-<li>Accelerating LVGL as soft-GPU when Helium is ready</li>
+<li>Accelerating <a href="https://lvgl.io/">LVGL</a> as <a href="https://docs.lvgl.io/master/details/integration/renderers/arm2d.html">soft-GPU</a> when Helium is ready</li>
+<li>Accelerating <a href="https://www.cranksoftware.com/">CrankSoftware</a> as <a href="https://info.cranksoftware.com/platforms/demo-images/renesas/ra8d1">soft-GPU</a> when Helium is ready</li>
 </ul>
 </li>
 </ul>
@@ -406,7 +407,10 @@ New Features Planned in the Future</h2>
 <li>Supports DMAC-350</li>
 <li>SVE2 Acceleration</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<div class="image">
+<img src="FuturePlans.png" alt=""/>
+</div>
+    <h1><a class="anchor" id="autotoc_md8"></a>
 1 Introduction</h1>
 <h2><a class="anchor" id="autotoc_md9"></a>
 1.1 The Background</h2>
@@ -493,22 +497,20 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <li><b>Simulate a typical application scenario with sufficient complexity</b><ul>
 <li>Background with Texture Tiling (switching mirroring modes every 4 seconds)</li>
 <li>Foreground picture</li>
-<li>Two constructed layers for alpha-blending and tiling with colour keying</li>
+<li>Two layers for alpha-blending and tiling with colour keying</li>
 <li>Moving icons</li>
-<li>Spinning busy wheel</li>
+<li>Spinning wheels</li>
 </ul>
 </li>
 <li><b>Choose a typical low-cost LCD resolution 320*240 in RGB565</b></li>
-<li><b>Let those layers float at different angles and speeds to cover a sufficient number of conditions.</b></li>
-<li><b>Record the cycle count used for blending one frame and run 1000 iterations (frames).</b></li>
+<li><b>Let those layers float with different speeds and directions to cover corner cases.</b></li>
+<li><b>Accumulate the cycle count used for 1000 frames (iterations)</b></li>
 </ul>
 <p ><b>Figure 1-4 A snapshot of the generic benchmark running in Simulation</b></p>
-<p ><img src="./documentation/pictures/benchmark.png" alt="Benchmark" class="inline"/></p>
+<p ><img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom:50%;" class="inline"/></p>
 <ul>
-<li><b>Use the average cycle count in 1000 iterations as the benchmark score.</b><ul>
-<li>Based on that, for typical embedded application requirements, we derive more meaningful metrics called the <b>Minimal Frequency Required for 30 FPS (MHz)</b> as shown in <b>Figure 1-5</b>.</li>
-</ul>
-</li>
+<li><b>Calculate the average cycle count of 1000 frames, and use as the benchmark score (FPS30Freq)</b></li>
+<li>For typical embedded applications, we derive a more meaningful metric called the <b>Minimal Frequency Required for 30 FPS (MHz), a.k.a FPS30Freq</b> as shown in <b>Figure 1-5</b>.</li>
 </ul>
 <p ><b>Figure 1-5 Performance Comparison among some Cortex-M processors</b></p>
 <div class="image">
@@ -520,7 +522,7 @@ Performance Comparison among some Cortex-M processors</div></div>
 <h2><a class="anchor" id="autotoc_md18"></a>
 4.1 The Generic Limitations</h2>
 <ul>
-<li>The library focuses on Cortex-M processors.</li>
+<li>The library focuses on Cortex-M processors and is also available for other platforms, e.g. Cortex-A processors and other 32/64 bit architectures.</li>
 <li>The library supports the following compilers:<ul>
 <li>Arm Compiler 5 (<b>Deprecated</b>)</li>
 <li>Arm Compiler 6</li>
@@ -531,10 +533,10 @@ Performance Comparison among some Cortex-M processors</div></div>
 </li>
 <li>The library focus on <b>Accelerating Low Level Pixel Processing</b><ul>
 <li>In principle, the library will <b>NOT</b> provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.<ul>
-<li><b>[new]</b> We provides demos to illustrate how to draw basic shapes using User-Defined-OPCODE.</li>
+<li>We provides demos to illustrate how to draw basic shapes using User-Defined-OPCODE.</li>
 </ul>
 </li>
-<li>In principle, the library will <b>NOT</b> provide a ready-to-use element tree, or GUI message handling, but some meta data structrues that homebrew GUI developers can use or take as references.</li>
+<li>In principle, the library will <b>NOT</b> provide a ready-to-use element tree, or GUI message handling, but some meta data structrues that homebrew GUI developers can use directly(or take as references).</li>
 </ul>
 </li>
 </ul>
