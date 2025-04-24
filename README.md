@@ -109,11 +109,10 @@ In general, anyone from opensource community can find something interesting from
 
 ### In this version (v1.2.2-rc6)
 
-The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly used in **Deep Embedded Display system**. The supported features include but not limited to:
-
-- **CMSIS-Pack is available.**
+Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many **Deep Embedded Display systems** soon after it debuted in 2020.  Now you can find its [precence](https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&origin=HASH_TAG_FROM_FEED) from the [tiniest Cortex-M0](https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg) to the [Raspberry Pi 5 powerhouse](https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg).  The supported features include but not limited to:
 
 - **Alpha-Blending** / **Masks**
+
   - With or without Colour-Keying
   - Filling-Colour with a mask and an optional opacity
     - For drawing anti-alias icons/texts in a specified colour
@@ -122,15 +121,15 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.
       - Supports Mask
       - Supports an optional Opacity
-  
+
 - **Image Copy (Blit)**
-  
+
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
   - Provides API variants that accept **Opacity** as arguments.
   -  Implicit colour conversion for **ARGB8888** (**ccca8888**)
-  
+
 - **Supported Colour formats**
 
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
@@ -142,7 +141,7 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Provides a dedicated colour solution in the display adapter service for monochrome display devices.
 
 - **Display Adapter Service for connecting LCD**
-  
+
   - Generic Partial Frame-buffer (PFB)
     - Easy to Use: transparent for applications
     - No limitation on screen resolution **(See note 1)**
@@ -161,14 +160,14 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Provides dirty region helper services for ease of use.
     
   - Supports swapping high and low bytes for RGB16 pixels
-  
+
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-  
+
   - Supports various buffering Modes with a built-in frame buffer pool.
     - Single Buffer/Double-Buffers
     - Provides a helper service for Direct Mode (i.e. 3FB Mode)
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
-  
+
 - **Transform** (i.e. rotation and scaling)
   - With/Without Colour-keying
   - Supports an optional **Opacity** ratio
@@ -234,10 +233,12 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
     - Demos for various scenarios
     - A dedicated demo for Helium-ACI acceleration. 
     - A set of demos for monochrome devices
-  
+
   - **Project Templates**
     - A project template for Windows, Linux and MacOS platform
     - A project template for Raspberry Pi Pico
+
+- **CMSIS-Pack is available.**
 
 - **Ready and Welcome 3rd party adoption**
 
