@@ -350,9 +350,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
         ARM_2D_OP_WAIT_ASYNC();
     #endif
 
-        arm_lcd_text_set_target_framebuffer(NULL);
+        arm_lcd_text_set_target_framebuffer(ptTile);
         arm_lcd_text_force_char_use_same_width(true);
-
+        arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
         /* draw mid and near letter trains */
         arm_foreach(__letter_train_t, 
                     &this.tTrains[MATRIX_LETTER_TRAIN_FAR_STAGE_COUNT], 
@@ -380,23 +380,43 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
                 }
 
                 arm_lcd_text_set_draw_region(&ptTrain->tRegion);
-                arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
+                
 
                 q16_t q16OpacityRatio = div_n_q16(  reinterpret_q16_s16(chMaxOpacity), 
                                                     ptTrain->u16NumberOfChars);
 
-            
-
                 /* reset seed */
                 srand(ptTrain->u8RandomSeed);
+                uint16_t hwCharsCount = ptTrain->u16NumberOfChars;
 
-                for (int_fast16_t n = 0; n < ptTrain->u16NumberOfChars; n++) {
-                    
-                    char tChar = (rand() % (126 - 32)) + 32;
+                if (ptTrain->u2Stage == STAGE_NEAR) {
+                    for (int_fast16_t n = 0; n < hwCharsCount; n++) {
+                        
+                        char tChar = (rand() % (126 - 32)) + 32;
 
-                    uint8_t chOpacity = reinterpret_s16_q16( mul_n_q16(q16OpacityRatio, n));
-                    arm_lcd_text_set_opacity( chOpacity );
-                    arm_lcd_putchar(&tChar);
+                        uint8_t chOpacity = reinterpret_s16_q16( mul_n_q16(q16OpacityRatio, n));
+
+                        arm_lcd_text_set_opacity( chOpacity );
+
+                        if ( n > (hwCharsCount - 2)) {
+                            //arm_lcd_text_set_scale(1.3f);
+                            arm_lcd_text_set_colour(__RGB(255 - 32, 255, 255 - 32), GLCD_COLOR_BLACK);
+                        } else {
+                            //arm_lcd_text_set_scale(1.0f);
+                            arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
+                        }
+                        arm_lcd_putchar(&tChar);
+                    }
+                } else {
+                    for (int_fast16_t n = 0; n < hwCharsCount; n++) {
+                        
+                        char tChar = (rand() % (126 - 32)) + 32;
+
+                        uint8_t chOpacity = reinterpret_s16_q16( mul_n_q16(q16OpacityRatio, n));
+
+                        arm_lcd_text_set_opacity( chOpacity );
+                        arm_lcd_putchar(&tChar);
+                    }
                 }
             }
         }
