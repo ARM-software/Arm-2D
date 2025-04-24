@@ -20,10 +20,10 @@
  * Project:      Arm-2D Library
  * Title:        __arm_2d_ccca8888_transform_helium.c
  * Description:  The source code of APIs for ccca8888 transform to other 
- *               colour format 
+ *               colour formats: gray8, rgb565 and cccn888
  * 
  * $Date:        24. April 2025
- * $Revision:    V.0.9.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores with helium
  *
@@ -374,7 +374,6 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
     vAvgB = vminq(vAvgB, vdupq_n_u16(255));
 
     vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
-
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
 
     vst1q_p(p{{colour_int_prefix}}Target, vTarget, predTail);
@@ -393,13 +392,10 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
     __arm_2d_pack_rgb888_to_mem((uint8_t *)scratch32, vAvgR, vAvgG, vAvgB);
 
     uint32x4_t TempPixel = vld1q(scratch32);
-
     TempPixel = vpselq_u32(TempPixel, vTargetLo, predGlbLo);
-
     vst1q_p(pwTarget, TempPixel, predTailLow);
 
     TempPixel = vld1q(scratch32 + 4);
-
     TempPixel = vpselq_u32(TempPixel, vTargetHi, predGlbHi);
 
     vst1q_p(pwTarget + 4, TempPixel, predTailHigh);
@@ -1029,7 +1025,6 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
     vAvgB = vminq(vAvgB, vdupq_n_u16(255));
 
     vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
-
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
 
     vst1q_p(p{{colour_int_prefix}}Target, vTarget, predTail);
@@ -1049,17 +1044,13 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
 
     __arm_2d_pack_rgb888_to_mem((uint8_t *)scratch32, vAvgR, vAvgG, vAvgB);
 
-    uint32x4_t TempPixel = vld1q(scratch32);
+    uint32x4_t vTempPixel = vld1q(scratch32);
+    vTempPixel = vpselq_u32(vTempPixel, vTargetLo, predGlbLo);
+    vst1q_p(pwTarget, vTempPixel, predTailLow);
 
-    TempPixel = vpselq_u32(TempPixel, vTargetLo, predGlbLo);
-
-    vst1q_p(pwTarget, TempPixel, predTailLow);
-
-    TempPixel = vld1q(scratch32 + 4);
-
-    TempPixel = vpselq_u32(TempPixel, vTargetHi, predGlbHi);
-
-    vst1q_p(pwTarget + 4, TempPixel, predTailHigh);
+    vTempPixel = vld1q(scratch32 + 4);
+    vTempPixel = vpselq_u32(vTempPixel, vTargetHi, predGlbHi);
+    vst1q_p(pwTarget + 4, vTempPixel, predTailHigh);
 {%- endif %}
 }
 
