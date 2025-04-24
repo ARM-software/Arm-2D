@@ -298,7 +298,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8_get_pixel_colour(
     uint16x8_t vTarget = vldrbq_u16(pchTarget);
     uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
     vAvg = vAvg / 3;
-    vAvg = vqaddq(vAvg, vmulq(vTarget, vAvgTrans));
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
     vAvg = vminq(vAvg, vdupq_n_u16(255));
 
     vTarget = vpselq_u16(vAvg, vTarget, predGlb);
@@ -489,6 +489,13 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8_get_pixel_col
     vAvgTrans = (vAvgTransparency);
 
     uint16x8_t vTargetR, vTargetG, vTargetB;
+    uint16x8_t vTarget = vldrbq_u16(pchTarget);
+    uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
+    vAvg = vAvg / 3;
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
+    vAvg = vminq(vAvg, vdupq_n_u16(255));
+
+    vstrbq_u16(pchTarget, vAvg);
 
 }
 
@@ -820,7 +827,7 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour(
     uint16x8_t vTarget = vldrbq_u16(pchTarget);
     uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
     vAvg = vAvg / 3;
-    vAvg = vqaddq(vAvg, vmulq(vTarget, vAvgTrans));
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
     vAvg = vminq(vAvg, vdupq_n_u16(255));
 
     vTarget = vpselq_u16(vAvg, vTarget, predGlb);
@@ -1006,6 +1013,12 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
     vAvgTrans = (vAvgTransparency);
 
     uint16x8_t vTargetR, vTargetG, vTargetB;
+    uint16x8_t vTarget = vldrbq_u16(pchTarget);
+    uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
+    vAvg = vAvg / 3;
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
+    vAvg = vminq(vAvg, vdupq_n_u16(255));
+    vstrbq_u16(pchTarget, vAvg);
 
 }
 

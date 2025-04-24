@@ -355,7 +355,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
     uint16x8_t vTarget = vldrbq_u16(pchTarget);
     uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
     vAvg = vAvg / 3;
-    vAvg = vqaddq(vAvg, vmulq(vTarget, vAvgTrans));
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
     vAvg = vminq(vAvg, vdupq_n_u16(255));
 
     vTarget = vpselq_u16(vAvg, vTarget, predGlb);
@@ -591,7 +591,15 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get
 
     uint16x8_t vTargetR, vTargetG, vTargetB;
 
-{%- if colour_name == 'rgb565' %}
+{%- if colour_name == 'gray8' %}
+    uint16x8_t vTarget = vldrbq_u16(pchTarget);
+    uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
+    vAvg = vAvg / 3;
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
+    vAvg = vminq(vAvg, vdupq_n_u16(255));
+
+    vstrbq_u16(pchTarget, vAvg);
+{%- elif colour_name == 'rgb565' %}
     uint16x8_t vTarget = vld1q(p{{colour_int_prefix}}Target);
     __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
 
@@ -1002,7 +1010,7 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
     uint16x8_t vTarget = vldrbq_u16(pchTarget);
     uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
     vAvg = vAvg / 3;
-    vAvg = vqaddq(vAvg, vmulq(vTarget, vAvgTrans));
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
     vAvg = vminq(vAvg, vdupq_n_u16(255));
 
     vTarget = vpselq_u16(vAvg, vTarget, predGlb);
@@ -1235,7 +1243,14 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
 
     uint16x8_t vTargetR, vTargetG, vTargetB;
 
-{%- if colour_name == 'rgb565' %}
+{%- if colour_name == 'gray8' %}
+    uint16x8_t vTarget = vldrbq_u16(pchTarget);
+    uint16x8_t vAvg = vAvgG + vAvgR + vAvgB;
+    vAvg = vAvg / 3;
+    vAvg = vqaddq(vAvg, vrmulhq(vTarget, vAvgTrans));
+    vAvg = vminq(vAvg, vdupq_n_u16(255));
+    vstrbq_u16(pchTarget, vAvg);
+{%- elif colour_name == 'rgb565' %}
     uint16x8_t vTarget = vld1q(p{{colour_int_prefix}}Target);
     __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
 
