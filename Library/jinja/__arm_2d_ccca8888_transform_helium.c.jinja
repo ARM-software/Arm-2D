@@ -379,19 +379,21 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
     vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
     vAvgB = vminq(vAvgB, vdupq_n_u16(255));
 
+    uint32x4_t vTargetLo = vld1q(pwTarget);
+    uint32x4_t vTargetHi = vld1q(pwTarget + 4);
     __arm_2d_pack_rgb888_to_mem((uint8_t *)scratch32, vAvgR, vAvgG, vAvgB);
 
     uint32x4_t TempPixel = vld1q(scratch32);
 
     TempPixel = vpselq_u32(TempPixel, vTargetLo, predGlbLo);
 
-    vst1q_p(pTarget, TempPixel, predTailLow);
+    vst1q_p(pwTarget, TempPixel, predTailLow);
 
     TempPixel = vld1q(scratch32 + 4);
 
     TempPixel = vpselq_u32(TempPixel, vTargetHi, predGlbHi);
 
-    vst1q_p(pTarget + 4, TempPixel, predTailHigh);
+    vst1q_p(pwTarget + 4, TempPixel, predTailHigh);
 {%- endif %}
 
 }
@@ -1016,19 +1018,22 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
     vAvgB = vqaddq(vAvgB, vrmulhq(vTargetB, vAvgTrans));
     vAvgB = vminq(vAvgB, vdupq_n_u16(255));
 
+    uint32x4_t vTargetLo = vld1q(pwTarget);
+    uint32x4_t vTargetHi = vld1q(pwTarget + 4);
+
     __arm_2d_pack_rgb888_to_mem((uint8_t *)scratch32, vAvgR, vAvgG, vAvgB);
 
     uint32x4_t TempPixel = vld1q(scratch32);
 
     TempPixel = vpselq_u32(TempPixel, vTargetLo, predGlbLo);
 
-    vst1q_p(pTarget, TempPixel, predTailLow);
+    vst1q_p(pwTarget, TempPixel, predTailLow);
 
     TempPixel = vld1q(scratch32 + 4);
 
     TempPixel = vpselq_u32(TempPixel, vTargetHi, predGlbHi);
 
-    vst1q_p(pTarget + 4, TempPixel, predTailHigh);
+    vst1q_p(pwTarget + 4, TempPixel, predTailHigh);
 {%- endif %}
 }
 
