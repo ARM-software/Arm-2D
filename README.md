@@ -344,7 +344,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 **Figure 1-4 A snapshot of the generic benchmark running in Simulation**
 
-<img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom:25%;" /> 
+<img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom:55%;" /> 
 
 - **Calculate the average cycle count of 1000 frames, and use as the benchmark score (FPS30Freq)**
 - For typical embedded applications, we derive a more meaningful metric called the **Minimal Frequency Required for 30 FPS (MHz), a.k.a FPS30Freq** as shown in **Figure 1-5**.
