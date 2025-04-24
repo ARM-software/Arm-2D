@@ -241,13 +241,16 @@ The Arm-2D library provides **Low-Level 2D Image Processing Services** mainly us
 
 - **Ready and Welcome 3rd party adoption**
 
-  - Accelerating LVGL as soft-GPU when Helium is ready
+  - Accelerating [LVGL](https://lvgl.io/) as [soft-GPU](https://docs.lvgl.io/master/details/integration/renderers/arm2d.html) when Helium is ready
+  - Accelerating [CrankSoftware](https://www.cranksoftware.com/) as [soft-GPU](https://info.cranksoftware.com/platforms/demo-images/renesas/ra8d1) when Helium is ready
 
 ### New Features Planned in the Future
 
 - Perspective Transform
 - Supports DMAC-350
 - SVE2 Acceleration
+
+![](./documentation/pictures/FuturePlans.png)
 
 ## 1 Introduction
 
@@ -332,20 +335,19 @@ There is no public 2D image processing benchmark available for microcontrollers.
 - **Simulate a typical application scenario with sufficient complexity**
   - Background with Texture Tiling (switching mirroring modes every 4 seconds)
   - Foreground picture
-  - Two constructed layers for alpha-blending and tiling with colour keying
+  - Two layers for alpha-blending and tiling with colour keying
   - Moving icons
-  - Spinning busy wheel
+  - Spinning wheels
 - **Choose a typical low-cost LCD resolution 320*240 in RGB565**
-- **Let those layers float at different angles and speeds to cover a sufficient number of conditions.**
-- **Record the cycle count used for blending one frame and run 1000 iterations (frames).**
+- **Let those layers float with different speeds and directions to cover corner cases.**
+- **Accumulate the cycle count used for 1000 frames (iterations)**
 
 **Figure 1-4 A snapshot of the generic benchmark running in Simulation**
 
-<img src="./documentation/pictures/benchmark.png" alt="Benchmark"  /> 
+<img src="./documentation/pictures/benchmark.png" alt="Benchmark" style="zoom:50%;" /> 
 
-- **Use the average cycle count in 1000 iterations as the benchmark score.**
-
-  - Based on that, for typical embedded application requirements, we derive more meaningful metrics called the **Minimal Frequency Required for 30 FPS (MHz)** as shown in **Figure 1-5**.
+- **Calculate the average cycle count of 1000 frames, and use as the benchmark score (FPS30Freq)**
+- For typical embedded applications, we derive a more meaningful metric called the **Minimal Frequency Required for 30 FPS (MHz), a.k.a FPS30Freq** as shown in **Figure 1-5**.
 
 **Figure 1-5 Performance Comparison among some Cortex-M processors**
 
@@ -357,7 +359,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 
 ### 4.1 The Generic Limitations
 
-- The library focuses on Cortex-M processors.
+- The library focuses on Cortex-M processors and is also available for other platforms, e.g. Cortex-A processors and other 32/64 bit architectures.
 - The library supports the following compilers:
   - Arm Compiler 5 (**Deprecated**)
   - Arm Compiler 6
@@ -366,8 +368,8 @@ There is no public 2D image processing benchmark available for microcontrollers.
   - IAR
 - The library focus on **Accelerating Low Level Pixel Processing**
   - In principle, the library will **NOT** provide APIs for content creation, such as drawing shapes, text display, etc., but simple point drawing and colour-filling APIs.
-    - **[new]** We provides demos to illustrate how to draw basic shapes using User-Defined-OPCODE.
-  - In principle, the library will **NOT** provide a ready-to-use element tree, or GUI message handling, but some meta data structrues that homebrew GUI developers can use or take as references. 
+    - We provides demos to illustrate how to draw basic shapes using User-Defined-OPCODE.
+  - In principle, the library will **NOT** provide a ready-to-use element tree, or GUI message handling, but some meta data structrues that homebrew GUI developers can use directly(or take as references). 
 
 ### 4.2 The Temporary Limitations
 
