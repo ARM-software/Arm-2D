@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        4. April 2024
- * $Revision:    V.1.1.1
+ * $Date:        24. April 2025
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -70,12 +70,24 @@ extern "C" {
 #   if (__ARM_FEATURE_MVE & 2)
 #       define __ARM_2D_HAS_HELIUM_FLOAT__              1       //!< target MCU has the Helium floating point extension
 #   else
-#       define __ARM_2D_HAS_HELIUM_FLOAT__              0       //!< target MCU has no Helium floating point extension
+#       define __ARM_2D_HAS_HELIUM_FLOAT__              0       //!< target MCU has does not have Helium floating point extension
 #   endif
 #else
-#   define __ARM_2D_HAS_HELIUM__                        0       //!< target MCU has no Helium extension
-#   define __ARM_2D_HAS_HELIUM_INTEGER__                0       //!< target MCU has no Helium integer extension
-#   define __ARM_2D_HAS_HELIUM_FLOAT__                  0       //!< target MCU has no Helium floating point extension
+#   define __ARM_2D_HAS_HELIUM__                        0       //!< target MCU has does not have Helium extension
+#   define __ARM_2D_HAS_HELIUM_INTEGER__                0       //!< target MCU has does not have Helium integer extension
+#   define __ARM_2D_HAS_HELIUM_FLOAT__                  0       //!< target MCU has does not have Helium floating point extension
+#endif
+
+#if defined(__ARM_NEON) && __ARM_NEON
+#   define __ARM_2D_HAS_NEON__                          1       //!< target processor has the NEON extension
+#else
+#   define __ARM_2D_HAS_NEON__                          0       //!< target processor does not have NEON extension
+#endif
+
+#if defined(__ARM_FEATURE_SVE2) && __ARM_FEATURE_SVE2
+#   define __ARM_2D_HAS_SVE2__                          1       //!< target processor has the SVE2 extension
+#else
+#   define __ARM_2D_HAS_SVE2__                          0       //!< target processor does not have the SVE2 extension
 #endif
 
 #if defined(__ARM_FEATURE_CDE) && __ARM_FEATURE_CDE

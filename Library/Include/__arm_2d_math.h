@@ -57,9 +57,12 @@ Arm Compiler 5 instead. If you insist using Arm Compiler 5,\
 #   define __ARM_2D_HAS_HELIUM__            0
 #endif
 
-
 #if defined(__ARM_2D_HAS_HELIUM__) && __ARM_2D_HAS_HELIUM__
-#include <arm_mve.h>
+#   include <arm_mve.h>
+#elif defined(__ARM_2D_HAS_NEON__) && __ARM_2D_HAS_NEON__
+#   include <arm_neon.h>
+#elif defined(__ARM_2D_HAS_SVE2__) && __ARM_2D_HAS_SVE2__
+#   include <arm_sve.h>
 #elif !defined(__linux__)
 // if MVE is not defined, use float type for bilinear interpolation
 typedef float float16_t;
