@@ -432,6 +432,8 @@ var group__gKernel =
     [ "__ARM_2D_HAS_HELIUM__", "group__gKernel.html#gaf53e5d3339794160c3b742536cc1783d", null ],
     [ "__ARM_2D_HAS_HELIUM_INTEGER__", "group__gKernel.html#ga06a44c9b3da26f938ebf0780fc693e9b", null ],
     [ "__ARM_2D_HAS_HELIUM_FLOAT__", "group__gKernel.html#ga81fc3edf4e9b9ed199f262d2e8634d1a", null ],
+    [ "__ARM_2D_HAS_NEON__", "group__gKernel.html#ga407af7d3f1f093c335f8018b25323376", null ],
+    [ "__ARM_2D_HAS_SVE2__", "group__gKernel.html#gaf8cf0ae59f7c15fd9295706a4ad880ed", null ],
     [ "__ARM_2D_HAS_ACI__", "group__gKernel.html#gaffba2221fe2bc0dce63b975c4256802b", null ],
     [ "__ARM_2D_HAS_TIGHTLY_COUPLED_ACC__", "group__gKernel.html#ga25908e166b33d5f00cf5824a4a32f30f", null ],
     [ "__ARM_2D_HAS_HW_ACC__", "group__gKernel.html#gafc15611a43cb4dafc518b4948ab380f8", null ],
