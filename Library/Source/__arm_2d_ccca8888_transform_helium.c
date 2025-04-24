@@ -651,8 +651,8 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -687,8 +687,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -724,9 +725,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -762,8 +763,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -799,7 +801,7 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
@@ -845,8 +847,8 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -878,8 +880,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -911,9 +914,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -945,8 +948,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -978,7 +982,7 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
@@ -1693,8 +1697,8 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -1729,8 +1733,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -1766,9 +1771,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -1804,8 +1809,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
@@ -1841,7 +1847,7 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
@@ -1904,8 +1910,8 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -1937,8 +1943,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -1970,9 +1977,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2004,8 +2011,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2037,7 +2045,7 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
@@ -2218,6 +2226,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888_get_pixel_colour(
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2257,6 +2266,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888_get_pixel_colour(
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2296,6 +2306,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888_get_pixel_colour(
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2335,6 +2346,7 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888_get_pixel_colour(
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2772,9 +2784,10 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+        mve_pred16_t p;
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
         tPointLo.X = vldrhq_s32(pscratch16);
@@ -2808,9 +2821,11 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2845,10 +2860,11 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2883,9 +2899,11 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
+        mve_pred16_t p;
 
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -2920,7 +2938,7 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
@@ -2988,8 +3006,8 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour_inside_src(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -3021,8 +3039,9 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour_inside_src(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -3054,9 +3073,9 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -3088,8 +3107,9 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -3121,7 +3141,7 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour_inside_src(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);

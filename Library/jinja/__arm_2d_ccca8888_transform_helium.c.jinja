@@ -150,7 +150,9 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -197,7 +199,9 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -244,7 +248,9 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -291,7 +297,9 @@ void __arm_2d_impl_ccca8888_transform_with_opacity_to_{{colour_name}}_get_pixel_
 
     do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -780,11 +788,12 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
-        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
 
-    {%- if colour_name != 'cccn888' %}
+    do {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -825,10 +834,13 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -870,11 +882,13 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -916,10 +930,13 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
-    {%- if colour_name != 'cccn888' %}
+    {%- if colour_name == 'cccn888' %}
+        mve_pred16_t p;
+    {%- else %}
         mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
         predGlb |= p;
     {%- endif %}
@@ -961,7 +978,7 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour(
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
@@ -1051,8 +1068,8 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
     vAreaTL = vqshlq_n_u16(vAreaTL, 4);
     vAreaBR = vqshlq_n_u16(vAreaBR, 4);
     vAreaBL = vqshlq_n_u16(vAreaBL, 4);
-    ;
-    {
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -1084,8 +1101,9 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
         vAvgPixelR = vrmulhq_u16(vAlpha, R);
         vAvgPixelG = vrmulhq_u16(vAlpha, G);
         vAvgPixelB = vrmulhq_u16(vAlpha, B);
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vYi};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -1117,9 +1135,9 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
+    } while(0);
 
-    }
-    {
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -1151,8 +1169,9 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    }
-    {
+    } while(0);
+
+    do {
         arm_2d_point_s16x8_t vPoint = {.X = vaddq_n_s16(vXi, 1), .Y = vaddq_n_s16(vYi, 1)};
         arm_2d_point_s32x4_t tPointLo, tPointHi;
         vst1q(pscratch16, vPoint.X);
@@ -1184,7 +1203,7 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
         vAvgPixelR = vqaddq(vAvgPixelR, vrmulhq_u16(vAlpha, R));
         vAvgPixelG = vqaddq(vAvgPixelG, vrmulhq_u16(vAlpha, G));
         vAvgPixelB = vqaddq(vAvgPixelB, vrmulhq_u16(vAlpha, B));
-    };
+    } while(0);
 
     vAvgR = (vAvgPixelR);
     vAvgG = (vAvgPixelG);
