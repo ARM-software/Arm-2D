@@ -398,9 +398,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
 
                         arm_lcd_text_set_opacity( chOpacity );
 
-                        if ( n > (hwCharsCount - 2)) {
+                        if ( n == (hwCharsCount - 1)) {
                             //arm_lcd_text_set_scale(1.3f);
                             arm_lcd_text_set_colour(__RGB(255 - 32, 255, 255 - 32), GLCD_COLOR_BLACK);
+                        } else if ( n == (hwCharsCount - 2)) {
+                            arm_lcd_text_set_colour(__RGB(255 - 64, 255, 255 - 64), GLCD_COLOR_BLACK);
+                        } else if ( n == (hwCharsCount - 3)) {
+                            arm_lcd_text_set_colour(__RGB(255 - 128, 255, 255 - 128), GLCD_COLOR_BLACK);
                         } else {
                             //arm_lcd_text_set_scale(1.0f);
                             arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_BLACK);
