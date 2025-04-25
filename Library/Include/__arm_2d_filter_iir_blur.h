@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.h
  * Description:  APIs for IIR Blur
  *
- * $Date:        4. Dec 2024
- * $Revision:    V.1.2.3
+ * $Date:        25. April 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -48,7 +48,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 174,177,188,68,513,144,64,1
+#   pragma diag_suppress 174,177,188,68,513,144,64
 #endif
 
 /*!
@@ -75,6 +75,16 @@ typedef struct __arm_2d_iir_blur_acc_gray8_t {
 typedef struct arm_2d_filter_iir_blur_descriptor_t {
 ARM_PRIVATE(
     implement(arm_2d_op_t);                         /* inherit from base class arm_2d_op_cp_t*/
+
+    union {
+        uint8_t chBlurPath;
+        struct {
+            uint8_t bForwardHorizontal  : 1;
+            uint8_t bForwardVertical    : 1;
+            uint8_t bReverseHorizontal  : 1;
+            uint8_t bReverseVertical    : 1;
+        };
+    };
 
     uint8_t chBlurDegree;
 )

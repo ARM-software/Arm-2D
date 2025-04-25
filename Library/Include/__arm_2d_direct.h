@@ -9543,7 +9543,7 @@ void __arm_2d_impl_gray8_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory);
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
 void __arm_2d_impl_rgb565_filter_iir_blur(
                             uint16_t *__RESTRICT phwTarget,
@@ -9551,7 +9551,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory);
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
 void __arm_2d_impl_cccn888_filter_iir_blur(
                             uint32_t *__RESTRICT pwTarget,
@@ -9559,7 +9559,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory);
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
 void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,

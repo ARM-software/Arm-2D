@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        4. Dec 2024
- * $Revision:    V.1.2.3
+ * $Date:        25. April 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -154,6 +154,18 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
+    if (0 == this.chBlurPath) {
+        /* use the default value */
+        this.bForwardHorizontal = true;
+        this.bForwardVertical = true;
+
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+        this.bReverseHorizontal = true;
+        this.bReverseVertical = true;
+#endif
+    }
+
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
@@ -175,8 +187,10 @@ void __arm_2d_impl_gray8_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory)
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
+
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
   
@@ -202,6 +216,9 @@ void __arm_2d_impl_gray8_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
+    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+                                                ptTargetRegionOnVirtualScreen,
+                                                ptValidRegionOnVirtualScreen));
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -227,128 +244,132 @@ void __arm_2d_impl_gray8_filter_iir_blur(
                   working buffer on the virtual screen. Only the valid region
                   contains a valid buffer.
      */
-    
-    uint8_t *pchPixel = pchTarget;
+    if (this.bForwardHorizontal) {
+        uint8_t *pchPixel = pchTarget;
 
-    if (NULL != ptStatusV) {
-        /* rows direct path */
-        ptStatusV += tOffset.iY;
-    }
+        if (NULL != ptStatusV) {
+            /* rows direct path */
+            ptStatusV += tOffset.iY;
+        }
 
-    for (iY = 0; iY < iHeight; iY++) {   
+        for (iY = 0; iY < iHeight; iY++) {   
 
-        if (NULL != ptStatusV && tOffset.iX > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusV;
-        } else {
-            
+            if (NULL != ptStatusV && tOffset.iX > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusV;
+            } else {
+                
             pchChannel = pchPixel;
             tAcc.hwC = *pchChannel;
     
+            }
+
+            pchChannel = pchPixel;
+
+            for (iX = 0; iX < iWidth; iX++) {
+                tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
+                
+            }
+
+            if (NULL != ptStatusV) {
+                /* save the last pixel */
+                *ptStatusV++ = tAcc;
+            }
+
+            pchPixel +=iTargetStride;
         }
-
-        pchChannel = pchPixel;
-
-        for (iX = 0; iX < iWidth; iX++) {
-            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
-            
-        }
-
-        if (NULL != ptStatusV) {
-            /* save the last pixel */
-            *ptStatusV++ = tAcc;
-        }
-
-        pchPixel +=iTargetStride;
-          
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
-    
-    pchPixel = &(pchTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
-    
-    for (iY = iHeight-1; iY > 0; iY--) {   
+    if (this.bReverseHorizontal && bAllowReversePath) {
+        uint8_t *pchPixel = &(pchTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
         
-        /* initialize the accumulator */
-        do {
+        for (iY = iHeight-1; iY > 0; iY--) {   
             
+            /* initialize the accumulator */
+            do {
+                
             pchChannel = pchPixel;
             tAcc.hwC = *pchChannel;
     
-        } while(0);
+            } while(0);
 
-        pchChannel = pchPixel;
+            pchChannel = pchPixel;
 
-        for (iX = 0; iX < iWidth; iX++) {   
-            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
-            pchChannel -= 2;
+            for (iX = 0; iX < iWidth; iX++) {   
+                tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
+                pchChannel -= 2;
+            }
+            
+            pchPixel -=iTargetStride;
         }
-        
-        pchPixel -=iTargetStride;
     }
 #endif 
 
+    if (this.bForwardVertical) {
+        uint8_t *pchPixel = pchTarget;
 
-    pchPixel = pchTarget;
+        if (NULL != ptStatusH) {
+            ptStatusH += tOffset.iX;
+        }
 
-    if (NULL != ptStatusH) {
-        ptStatusH += tOffset.iX;
-    }
+        /* columns direct path */
+        for (iX = 0; iX < iWidth; iX++) {     
 
-    /* columns direct path */
-    for (iX = 0; iX < iWidth; iX++) {     
-
-        if (NULL != ptStatusH && tOffset.iY > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusH;
-        } else {
-            
+            if (NULL != ptStatusH && tOffset.iY > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusH;
+            } else {
+                
             pchChannel = pchPixel;
             tAcc.hwC = *pchChannel;
     
-        }
+            }
 
-        pchChannel = pchPixel;
+            pchChannel = pchPixel;
 
-        for (iY = 0; iY < iHeight; iY++) {
-            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
-            pchChannel += iTargetStride - 1;
-        }
+            for (iY = 0; iY < iHeight; iY++) {
+                tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
+                pchChannel += iTargetStride - 1;
+            }
 
-        pchPixel++;
+            pchPixel++;
 
-        if (NULL != ptStatusH) {
-            /* save the last pixel */
-            *ptStatusH++ = tAcc;
+            if (NULL != ptStatusH) {
+                /* save the last pixel */
+                *ptStatusH++ = tAcc;
+            }
         }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
-    pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+    if (this.bReverseVertical && bAllowReversePath) {
+        uint8_t pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
-    /* columns reverse path */
-    for (iX = iWidth-1; iX > 0; iX--)
-    {   
-        /* initialize the accumulator */
-        do {
-            
+        /* columns reverse path */
+        for (iX = iWidth-1; iX > 0; iX--)
+        {   
+            /* initialize the accumulator */
+            do {
+                
             pchChannel = pchPixel;
             tAcc.hwC = *pchChannel;
     
-        } while(0);
+            } while(0);
 
-        pchChannel = pchPixel;
+            pchChannel = pchPixel;
 
-        for (iY = 0; iY < iHeight; iY++) {   
-            tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
-            pchChannel -= 1 + iTargetStride;
+            for (iY = 0; iY < iHeight; iY++) {   
+                tAcc.hwC += ((*pchChannel) - tAcc.hwC) * hwRatio >> 8;  *pchChannel++ = tAcc.hwC;
+                pchChannel -= 1 + iTargetStride;
+            }
+
+            pchPixel--;
         }
-
-        pchPixel--;
     }
 #endif  
 }
@@ -384,7 +405,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
                         this.chBlurDegree,
-                        &this.tScratchMemory);
+                        ptThis);
 
     return arm_fsm_rt_cpl;
 }
@@ -482,6 +503,18 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
+    if (0 == this.chBlurPath) {
+        /* use the default value */
+        this.bForwardHorizontal = true;
+        this.bForwardVertical = true;
+
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+        this.bReverseHorizontal = true;
+        this.bReverseVertical = true;
+#endif
+    }
+
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
@@ -503,8 +536,10 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory)
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
+
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
   
@@ -530,6 +565,9 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
+    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+                                                ptTargetRegionOnVirtualScreen,
+                                                ptValidRegionOnVirtualScreen));
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -555,30 +593,30 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
                   working buffer on the virtual screen. Only the valid region
                   contains a valid buffer.
      */
-    
-    uint16_t *phwPixel = phwTarget;
+    if (this.bForwardHorizontal) {
+        uint16_t *phwPixel = phwTarget;
 
-    if (NULL != ptStatusV) {
-        /* rows direct path */
-        ptStatusV += tOffset.iY;
-    }
+        if (NULL != ptStatusV) {
+            /* rows direct path */
+            ptStatusV += tOffset.iY;
+        }
 
-    for (iY = 0; iY < iHeight; iY++) {   
+        for (iY = 0; iY < iHeight; iY++) {   
 
-        if (NULL != ptStatusV && tOffset.iX > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusV;
-        } else {
-            
+            if (NULL != ptStatusV && tOffset.iX > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusV;
+            } else {
+                
             __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
-        }
+            }
 
-        uint16_t *phwTargetPixel = phwPixel;
+            uint16_t *phwTargetPixel = phwPixel;
 
-        for (iX = 0; iX < iWidth; iX++) {
-            
+            for (iX = 0; iX < iWidth; iX++) {
+                
             __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
@@ -587,38 +625,38 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             *phwTargetPixel = __arm_2d_rgb565_pack(&tPixel);
     
-            phwTargetPixel++;
-        }
+                phwTargetPixel++;
+            }
 
-        if (NULL != ptStatusV) {
-            /* save the last pixel */
-            *ptStatusV++ = tAcc;
-        }
+            if (NULL != ptStatusV) {
+                /* save the last pixel */
+                *ptStatusV++ = tAcc;
+            }
 
-        phwPixel +=iTargetStride;
-          
+            phwPixel +=iTargetStride;
+        }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
-    
-    phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
-    
-    for (iY = iHeight-1; iY > 0; iY--) {   
+    if (this.bReverseHorizontal && bAllowReversePath) {
+        uint16_t *phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
         
-        /* initialize the accumulator */
-        do {
+        for (iY = iHeight-1; iY > 0; iY--) {   
             
+            /* initialize the accumulator */
+            do {
+                
             __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
-        } while(0);
+            } while(0);
 
-        uint16_t *phwTargetPixel = phwPixel;
+            uint16_t *phwTargetPixel = phwPixel;
 
-        for (iX = 0; iX < iWidth; iX++) {   
-            
+            for (iX = 0; iX < iWidth; iX++) {   
+                
             __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
@@ -627,37 +665,38 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             *phwTargetPixel = __arm_2d_rgb565_pack(&tPixel);
     
-            phwTargetPixel--;
+                phwTargetPixel--;
+            }
+            
+            phwPixel -=iTargetStride;
         }
-        
-        phwPixel -=iTargetStride;
     }
 #endif 
 
+    if (this.bForwardVertical) {
+        uint16_t *phwPixel = phwTarget;
 
-    phwPixel = phwTarget;
+        if (NULL != ptStatusH) {
+            ptStatusH += tOffset.iX;
+        }
 
-    if (NULL != ptStatusH) {
-        ptStatusH += tOffset.iX;
-    }
+        /* columns direct path */
+        for (iX = 0; iX < iWidth; iX++) {     
 
-    /* columns direct path */
-    for (iX = 0; iX < iWidth; iX++) {     
-
-        if (NULL != ptStatusH && tOffset.iY > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusH;
-        } else {
-            
+            if (NULL != ptStatusH && tOffset.iY > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusH;
+            } else {
+                
             __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
-        }
+            }
 
-        uint16_t *phwTargetPixel = phwPixel;
+            uint16_t *phwTargetPixel = phwPixel;
 
-        for (iY = 0; iY < iHeight; iY++) {
-            
+            for (iY = 0; iY < iHeight; iY++) {
+                
             __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
@@ -666,37 +705,39 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             *phwTargetPixel = __arm_2d_rgb565_pack(&tPixel);
     
-            phwTargetPixel += iTargetStride;
-        }
+                phwTargetPixel += iTargetStride;
+            }
 
-        phwPixel++;
+            phwPixel++;
 
-        if (NULL != ptStatusH) {
-            /* save the last pixel */
-            *ptStatusH++ = tAcc;
+            if (NULL != ptStatusH) {
+                /* save the last pixel */
+                *ptStatusH++ = tAcc;
+            }
         }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
-    phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+    if (this.bReverseVertical && bAllowReversePath) {
+        uint16_t phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
-    /* columns reverse path */
-    for (iX = iWidth-1; iX > 0; iX--)
-    {   
-        /* initialize the accumulator */
-        do {
-            
+        /* columns reverse path */
+        for (iX = iWidth-1; iX > 0; iX--)
+        {   
+            /* initialize the accumulator */
+            do {
+                
             __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
-        } while(0);
+            } while(0);
 
-        uint16_t *phwTargetPixel = phwPixel;
+            uint16_t *phwTargetPixel = phwPixel;
 
-        for (iY = 0; iY < iHeight; iY++) {   
-            
+            for (iY = 0; iY < iHeight; iY++) {   
+                
             __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
@@ -705,10 +746,11 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             *phwTargetPixel = __arm_2d_rgb565_pack(&tPixel);
     
-            phwTargetPixel -= iTargetStride;
-        }
+                phwTargetPixel -= iTargetStride;
+            }
 
-        phwPixel--;
+            phwPixel--;
+        }
     }
 #endif  
 }
@@ -744,7 +786,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
                         this.chBlurDegree,
-                        &this.tScratchMemory);
+                        ptThis);
 
     return arm_fsm_rt_cpl;
 }
@@ -842,6 +884,18 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
+    if (0 == this.chBlurPath) {
+        /* use the default value */
+        this.bForwardHorizontal = true;
+        this.bForwardVertical = true;
+
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+        this.bReverseHorizontal = true;
+        this.bReverseVertical = true;
+#endif
+    }
+
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
@@ -863,8 +917,10 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory)
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
+
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
   
@@ -890,6 +946,9 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
+    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+                                                ptTargetRegionOnVirtualScreen,
+                                                ptValidRegionOnVirtualScreen));
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -915,152 +974,156 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
                   working buffer on the virtual screen. Only the valid region
                   contains a valid buffer.
      */
-    
-    uint32_t *pwPixel = pwTarget;
+    if (this.bForwardHorizontal) {
+        uint32_t *pwPixel = pwTarget;
 
-    if (NULL != ptStatusV) {
-        /* rows direct path */
-        ptStatusV += tOffset.iY;
-    }
+        if (NULL != ptStatusV) {
+            /* rows direct path */
+            ptStatusV += tOffset.iY;
+        }
 
-    for (iY = 0; iY < iHeight; iY++) {   
+        for (iY = 0; iY < iHeight; iY++) {   
 
-        if (NULL != ptStatusV && tOffset.iX > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusV;
-        } else {
-            
+            if (NULL != ptStatusV && tOffset.iX > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusV;
+            } else {
+                
             pchChannel = (uint8_t *)pwPixel;
             tAcc.hwB = *pchChannel++;
             tAcc.hwG = *pchChannel++;
             tAcc.hwR = *pchChannel++;
     
-        }
+            }
 
-        pchChannel = (uint8_t *)pwPixel;
+            pchChannel = (uint8_t *)pwPixel;
 
-        for (iX = 0; iX < iWidth; iX++) {
-            
+            for (iX = 0; iX < iWidth; iX++) {
+                
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * hwRatio >> 8;  *pchChannel++ = tAcc.hwB; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * hwRatio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * hwRatio >> 8;  *pchChannel++ = tAcc.hwR;
     
-            pchChannel++;
-        }
+                pchChannel++;
+            }
 
-        if (NULL != ptStatusV) {
-            /* save the last pixel */
-            *ptStatusV++ = tAcc;
-        }
+            if (NULL != ptStatusV) {
+                /* save the last pixel */
+                *ptStatusV++ = tAcc;
+            }
 
-        pwPixel +=iTargetStride;
-          
+            pwPixel +=iTargetStride;
+        }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
-    
-    pwPixel = &(pwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
-    
-    for (iY = iHeight-1; iY > 0; iY--) {   
+    if (this.bReverseHorizontal && bAllowReversePath) {
+        uint32_t *pwPixel = &(pwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
         
-        /* initialize the accumulator */
-        do {
+        for (iY = iHeight-1; iY > 0; iY--) {   
             
+            /* initialize the accumulator */
+            do {
+                
             pchChannel = (uint8_t *)pwPixel;
             tAcc.hwB = *pchChannel++;
             tAcc.hwG = *pchChannel++;
             tAcc.hwR = *pchChannel++;
     
-        } while(0);
+            } while(0);
 
-        pchChannel = (uint8_t *)pwPixel;
+            pchChannel = (uint8_t *)pwPixel;
 
-        for (iX = 0; iX < iWidth; iX++) {   
-            
+            for (iX = 0; iX < iWidth; iX++) {   
+                
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * hwRatio >> 8;  *pchChannel++ = tAcc.hwB; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * hwRatio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * hwRatio >> 8;  *pchChannel++ = tAcc.hwR;
     
-            pchChannel -= 7;
+                pchChannel -= 7;
+            }
+            
+            pwPixel -=iTargetStride;
         }
-        
-        pwPixel -=iTargetStride;
     }
 #endif 
 
+    if (this.bForwardVertical) {
+        uint32_t *pwPixel = pwTarget;
 
-    pwPixel = pwTarget;
+        if (NULL != ptStatusH) {
+            ptStatusH += tOffset.iX;
+        }
 
-    if (NULL != ptStatusH) {
-        ptStatusH += tOffset.iX;
-    }
+        /* columns direct path */
+        for (iX = 0; iX < iWidth; iX++) {     
 
-    /* columns direct path */
-    for (iX = 0; iX < iWidth; iX++) {     
-
-        if (NULL != ptStatusH && tOffset.iY > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusH;
-        } else {
-            
+            if (NULL != ptStatusH && tOffset.iY > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusH;
+            } else {
+                
             pchChannel = (uint8_t *)pwPixel;
             tAcc.hwB = *pchChannel++;
             tAcc.hwG = *pchChannel++;
             tAcc.hwR = *pchChannel++;
     
-        }
+            }
 
-        pchChannel = (uint8_t *)pwPixel;
+            pchChannel = (uint8_t *)pwPixel;
 
-        for (iY = 0; iY < iHeight; iY++) {
-            
+            for (iY = 0; iY < iHeight; iY++) {
+                
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * hwRatio >> 8;  *pchChannel++ = tAcc.hwB; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * hwRatio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * hwRatio >> 8;  *pchChannel++ = tAcc.hwR;
     
-            pchChannel += (iTargetStride * sizeof(uint32_t)) - 3;
-        }
+                pchChannel += (iTargetStride * sizeof(uint32_t)) - 3;
+            }
 
-        pwPixel++;
+            pwPixel++;
 
-        if (NULL != ptStatusH) {
-            /* save the last pixel */
-            *ptStatusH++ = tAcc;
+            if (NULL != ptStatusH) {
+                /* save the last pixel */
+                *ptStatusH++ = tAcc;
+            }
         }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
-    pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+    if (this.bReverseVertical && bAllowReversePath) {
+        uint32_t pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
-    /* columns reverse path */
-    for (iX = iWidth-1; iX > 0; iX--)
-    {   
-        /* initialize the accumulator */
-        do {
-            
+        /* columns reverse path */
+        for (iX = iWidth-1; iX > 0; iX--)
+        {   
+            /* initialize the accumulator */
+            do {
+                
             pchChannel = (uint8_t *)pwPixel;
             tAcc.hwB = *pchChannel++;
             tAcc.hwG = *pchChannel++;
             tAcc.hwR = *pchChannel++;
     
-        } while(0);
+            } while(0);
 
-        pchChannel = (uint8_t *)pwPixel;
+            pchChannel = (uint8_t *)pwPixel;
 
-        for (iY = 0; iY < iHeight; iY++) {   
-            
+            for (iY = 0; iY < iHeight; iY++) {   
+                
             tAcc.hwB += ((*pchChannel) - tAcc.hwB) * hwRatio >> 8;  *pchChannel++ = tAcc.hwB; 
             tAcc.hwG += ((*pchChannel) - tAcc.hwG) * hwRatio >> 8;  *pchChannel++ = tAcc.hwG;
             tAcc.hwR += ((*pchChannel) - tAcc.hwR) * hwRatio >> 8;  *pchChannel++ = tAcc.hwR;
     
-            pchChannel -= 3 + (iTargetStride * sizeof(uint32_t));
-        }
+                pchChannel -= 3 + (iTargetStride * sizeof(uint32_t));
+            }
 
-        pwPixel--;
+            pwPixel--;
+        }
     }
 #endif  
 }
@@ -1096,7 +1159,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_filter_iir_blur( __arm_2d_sub_task_t *ptTask)
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
                         this.chBlurDegree,
-                        &this.tScratchMemory);
+                        ptThis);
 
     return arm_fsm_rt_cpl;
 }

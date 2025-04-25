@@ -249,7 +249,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
     arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
     arm_2d_region_t *ptTargetRegionOnVirtualScreen,
     uint8_t chBlurDegree,
-    arm_2d_scratch_mem_t *ptScratchMemory);
+    arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
 bool VT_sdl_refresh_task(void)
 {
@@ -278,7 +278,7 @@ bool VT_sdl_refresh_task(void)
             },
         };
 
-        arm_2d_scratch_mem_t tScratchMemory = {0};
+        arm_2d_filter_iir_blur_descriptor_t tBlurOP = {0};
 
         memcpy(tft_fb2, tft_fb, sizeof(tft_fb2));
 
@@ -288,9 +288,8 @@ bool VT_sdl_refresh_task(void)
             &tValidRegionOnVirtualScree,
             &tValidRegionOnVirtualScree,
             64, 
-            &tScratchMemory
+            &tBlurOP
         );
-        
 
         SDL_UpdateTexture(texture, NULL, tft_fb2, VT_WIDTH * sizeof(uint32_t));
     #else

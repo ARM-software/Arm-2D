@@ -21,8 +21,8 @@
  * Title:        __arm_2d_filter_iir_blur.c
  * Description:  APIs for IIR Blur
  *
- * $Date:        4. Dec 2024
- * $Revision:    V.1.2.3
+ * $Date:        25. April 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -229,6 +229,18 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
+    if (0 == this.chBlurPath) {
+        /* use the default value */
+        this.bForwardHorizontal = true;
+        this.bForwardVertical = true;
+
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+        this.bReverseHorizontal = true;
+        this.bReverseVertical = true;
+#endif
+    }
+
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
@@ -250,8 +262,10 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
                             arm_2d_region_t *ptTargetRegionOnVirtualScreen,
                             uint8_t chBlurDegree,
-                            arm_2d_scratch_mem_t *ptScratchMemory)
+                            arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
+
     int_fast16_t iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
   
@@ -277,6 +291,9 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
+    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+                                                ptTargetRegionOnVirtualScreen,
+                                                ptValidRegionOnVirtualScreen));
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -302,116 +319,120 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
                   working buffer on the virtual screen. Only the valid region
                   contains a valid buffer.
      */
-    
-    {{colour_int}} *p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
-
-    if (NULL != ptStatusV) {
-        /* rows direct path */
-        ptStatusV += tOffset.iY;
-    }
-
-    for (iY = 0; iY < iHeight; iY++) {   
-
-        if (NULL != ptStatusV && tOffset.iX > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusV;
-        } else {
-            {{acc_init}}
-        }
-
-        {{before_inner_loop}}
-
-        for (iX = 0; iX < iWidth; iX++) {
-            {{blur_operation}}
-            {{next_pixel_in_row}}
-        }
+    if (this.bForwardHorizontal) {
+        {{colour_int}} *p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
 
         if (NULL != ptStatusV) {
-            /* save the last pixel */
-            *ptStatusV++ = tAcc;
+            /* rows direct path */
+            ptStatusV += tOffset.iY;
         }
 
-        p{{colour_int_prefix}}Pixel +=iTargetStride;
-          
+        for (iY = 0; iY < iHeight; iY++) {   
+
+            if (NULL != ptStatusV && tOffset.iX > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusV;
+            } else {
+                {{acc_init}}
+            }
+
+            {{before_inner_loop}}
+
+            for (iX = 0; iX < iWidth; iX++) {
+                {{blur_operation}}
+                {{next_pixel_in_row}}
+            }
+
+            if (NULL != ptStatusV) {
+                /* save the last pixel */
+                *ptStatusV++ = tAcc;
+            }
+
+            p{{colour_int_prefix}}Pixel +=iTargetStride;
+        }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
-    
-    p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[(iWidth-1) + (iHeight-1)*iTargetStride]);
-    
-    for (iY = iHeight-1; iY > 0; iY--) {   
+    if (this.bReverseHorizontal && bAllowReversePath) {
+        {{colour_int}} *p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[(iWidth-1) + (iHeight-1)*iTargetStride]);
         
-        /* initialize the accumulator */
-        do {
-            {{acc_init}}
-        } while(0);
+        for (iY = iHeight-1; iY > 0; iY--) {   
+            
+            /* initialize the accumulator */
+            do {
+                {{acc_init}}
+            } while(0);
 
-        {{before_inner_loop}}
+            {{before_inner_loop}}
 
-        for (iX = 0; iX < iWidth; iX++) {   
-            {{blur_operation}}
-            {{next_pixel_in_row_reverse}}
+            for (iX = 0; iX < iWidth; iX++) {   
+                {{blur_operation}}
+                {{next_pixel_in_row_reverse}}
+            }
+            
+            p{{colour_int_prefix}}Pixel -=iTargetStride;
         }
-        
-        p{{colour_int_prefix}}Pixel -=iTargetStride;
     }
 #endif 
 
-
-    p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
-
-    if (NULL != ptStatusH) {
-        ptStatusH += tOffset.iX;
-    }
-
-    /* columns direct path */
-    for (iX = 0; iX < iWidth; iX++) {     
-
-        if (NULL != ptStatusH && tOffset.iY > 0) {
-            /* recover the previous statues */
-            tAcc = *ptStatusH;
-        } else {
-            {{acc_init}}
-        }
-
-        {{before_inner_loop}}
-
-        for (iY = 0; iY < iHeight; iY++) {
-            {{blur_operation}}
-            {{next_pixel_in_column}}
-        }
-
-        p{{colour_int_prefix}}Pixel++;
+    if (this.bForwardVertical) {
+        {{colour_int}} *p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
 
         if (NULL != ptStatusH) {
-            /* save the last pixel */
-            *ptStatusH++ = tAcc;
+            ptStatusH += tOffset.iX;
+        }
+
+        /* columns direct path */
+        for (iX = 0; iX < iWidth; iX++) {     
+
+            if (NULL != ptStatusH && tOffset.iY > 0) {
+                /* recover the previous statues */
+                tAcc = *ptStatusH;
+            } else {
+                {{acc_init}}
+            }
+
+            {{before_inner_loop}}
+
+            for (iY = 0; iY < iHeight; iY++) {
+                {{blur_operation}}
+                {{next_pixel_in_column}}
+            }
+
+            p{{colour_int_prefix}}Pixel++;
+
+            if (NULL != ptStatusH) {
+                /* save the last pixel */
+                *ptStatusH++ = tAcc;
+            }
         }
     }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
-    p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[iWidth-1 + (iHeight-1)*iTargetStride]);
+    if (this.bReverseVertical && bAllowReversePath) {
+        {{colour_int}} p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[iWidth-1 + (iHeight-1)*iTargetStride]);
 
-    /* columns reverse path */
-    for (iX = iWidth-1; iX > 0; iX--)
-    {   
-        /* initialize the accumulator */
-        do {
-            {{acc_init}}
-        } while(0);
+        /* columns reverse path */
+        for (iX = iWidth-1; iX > 0; iX--)
+        {   
+            /* initialize the accumulator */
+            do {
+                {{acc_init}}
+            } while(0);
 
-        {{before_inner_loop}}
+            {{before_inner_loop}}
 
-        for (iY = 0; iY < iHeight; iY++) {   
-            {{blur_operation}}
-            {{next_pixel_in_column_reverse}}
+            for (iY = 0; iY < iHeight; iY++) {   
+                {{blur_operation}}
+                {{next_pixel_in_column_reverse}}
+            }
+
+            p{{colour_int_prefix}}Pixel--;
         }
-
-        p{{colour_int_prefix}}Pixel--;
     }
 #endif  
 }
@@ -447,7 +468,7 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_filter_iir_blur( __arm_2d_sub_t
                         &(ptTask->Param.tTileProcess.tValidRegionInVirtualScreen),
                         &tTargetRegion,
                         this.chBlurDegree,
-                        &this.tScratchMemory);
+                        ptThis);
 
     return arm_fsm_rt_cpl;
 }
