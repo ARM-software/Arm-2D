@@ -345,7 +345,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
         arm_2dp_filter_iir_blur(&this.tBlurOP,
             ptTile,
             &__top_canvas,
-            255);
+            255 - 16);
         
         ARM_2D_OP_WAIT_ASYNC();
     #endif

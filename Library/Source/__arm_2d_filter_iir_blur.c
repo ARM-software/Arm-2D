@@ -176,7 +176,7 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
-
+    arm_2dp_filter_iir_blur_mode_set(ptThis, this.chBlurMode);
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
@@ -515,7 +515,7 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
-
+    arm_2dp_filter_iir_blur_mode_set(ptThis, this.chBlurMode);
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
@@ -886,7 +886,7 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
-
+    arm_2dp_filter_iir_blur_mode_set(ptThis, this.chBlurMode);
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
