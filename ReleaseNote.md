@@ -16,6 +16,11 @@
   * Removes the floating-point based implementation and uses the fixed-point based acceleration only
   * Fixes the black-boarder artifact issue in the Helium transform-only operations
 * Adds a new API `arm_2d_sw_normal_root_tile_copy()` to facilitate some low-level tile operations. 
+* Improves IIR Blur
+  * Adds helium acceleration for the reverse paths
+  * Fixes RGB565 ghost-shadow issue
+  * Adds Blur mode control.
+
 
 ### Helper Services
 
