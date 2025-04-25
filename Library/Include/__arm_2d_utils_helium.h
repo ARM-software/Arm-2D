@@ -96,7 +96,7 @@ void __arm_2d_rgb565_unpack_single_vec_comp(uint16x8_t in,
     uint16x8_t      vecMaskG = vdupq_n_u16(0x003f);
 
     mve_pred16_t pred = vcmpneq_n_u16(in, 0x0000);
-    *B = vpselq_u16(vdupq_n_u16(0xFFFF), vdupq_n_u16(0x0000), pred);
+    *B = vpselq_u16(vdupq_n_u16(0xFF), vdupq_n_u16(0x00), pred);
     *R = *B;
     *G = *B;
 
