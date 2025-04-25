@@ -216,9 +216,14 @@ void __arm_2d_impl_gray8_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+    const bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
                                                 ptTargetRegionOnVirtualScreen,
                                                 ptValidRegionOnVirtualScreen));
+#else
+    const bool bAllowReversePath = false;
+#endif
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -280,8 +285,6 @@ void __arm_2d_impl_gray8_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
     if (this.bReverseHorizontal && bAllowReversePath) {
         uint8_t *pchPixel = &(pchTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
@@ -306,7 +309,6 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             pchPixel -=iTargetStride;
         }
     }
-#endif 
 
     if (this.bForwardVertical) {
         uint8_t *pchPixel = pchTarget;
@@ -344,9 +346,6 @@ void __arm_2d_impl_gray8_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-
     if (this.bReverseVertical && bAllowReversePath) {
         uint8_t *pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
@@ -371,7 +370,7 @@ void __arm_2d_impl_gray8_filter_iir_blur(
             pchPixel--;
         }
     }
-#endif  
+
 }
 
 /*
@@ -565,9 +564,14 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+    const bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
                                                 ptTargetRegionOnVirtualScreen,
                                                 ptValidRegionOnVirtualScreen));
+#else
+    const bool bAllowReversePath = false;
+#endif
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -637,8 +641,6 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
     if (this.bReverseHorizontal && bAllowReversePath) {
         uint16_t *phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
@@ -671,7 +673,6 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
             phwPixel -=iTargetStride;
         }
     }
-#endif 
 
     if (this.bForwardVertical) {
         uint16_t *phwPixel = phwTarget;
@@ -717,9 +718,6 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-
     if (this.bReverseVertical && bAllowReversePath) {
         uint16_t *phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
@@ -752,7 +750,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
             phwPixel--;
         }
     }
-#endif  
+
 }
 
 /*
@@ -946,9 +944,14 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+    const bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
                                                 ptTargetRegionOnVirtualScreen,
                                                 ptValidRegionOnVirtualScreen));
+#else
+    const bool bAllowReversePath = false;
+#endif
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -1016,8 +1019,6 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
     if (this.bReverseHorizontal && bAllowReversePath) {
         uint32_t *pwPixel = &(pwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
@@ -1048,7 +1049,6 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             pwPixel -=iTargetStride;
         }
     }
-#endif 
 
     if (this.bForwardVertical) {
         uint32_t *pwPixel = pwTarget;
@@ -1092,9 +1092,6 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-
     if (this.bReverseVertical && bAllowReversePath) {
         uint32_t *pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
@@ -1125,7 +1122,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
             pwPixel--;
         }
     }
-#endif  
+
 }
 
 /*

@@ -291,9 +291,14 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
 
-    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+    const bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
                                                 ptTargetRegionOnVirtualScreen,
                                                 ptValidRegionOnVirtualScreen));
+#else
+    const bool bAllowReversePath = false;
+#endif
     /*
          Virtual Screen
          +--------------------------------------------------------------+
@@ -352,8 +357,6 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* rows reverse path */
     if (this.bReverseHorizontal && bAllowReversePath) {
         {{colour_int}} *p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[(iWidth-1) + (iHeight-1)*iTargetStride]);
@@ -375,7 +378,6 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             p{{colour_int_prefix}}Pixel -=iTargetStride;
         }
     }
-#endif 
 
     if (this.bForwardVertical) {
         {{colour_int}} *p{{colour_int_prefix}}Pixel = p{{colour_int_prefix}}Target;
@@ -410,9 +412,6 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-
     if (this.bReverseVertical && bAllowReversePath) {
         {{colour_int}} *p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[iWidth-1 + (iHeight-1)*iTargetStride]);
 
@@ -434,7 +433,7 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
             p{{colour_int_prefix}}Pixel--;
         }
     }
-#endif  
+
 }
 
 /*
