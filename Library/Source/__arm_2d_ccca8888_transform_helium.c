@@ -1023,13 +1023,9 @@ void __arm_2d_impl_ccca8888_transform_to_gray8_get_pixel_colour_inside_src(
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_to_gray8(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
-
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int_fast16_t iWidth 
@@ -2092,13 +2088,9 @@ void __arm_2d_impl_ccca8888_transform_to_rgb565_get_pixel_colour_inside_src(
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_to_rgb565(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
-
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int_fast16_t iWidth 
@@ -3189,13 +3181,9 @@ void __arm_2d_impl_ccca8888_transform_to_cccn888_get_pixel_colour_inside_src(
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_to_cccn888(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
-
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int_fast16_t iWidth 

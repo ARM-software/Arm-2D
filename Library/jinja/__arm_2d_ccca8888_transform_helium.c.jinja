@@ -1277,13 +1277,9 @@ void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}_get_pixel_colour_inside
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_to_{{colour_name}}(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
-
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int_fast16_t iWidth 
