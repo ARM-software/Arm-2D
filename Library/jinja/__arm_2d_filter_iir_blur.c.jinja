@@ -122,7 +122,7 @@ in [
     'rgb565', 'uint16_t', 'hw', '16BIT',
     '__arm_2d_color_fast_rgb_t tPixel;',
     '
-            __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     ',
     'uint16_t *phwTargetPixel = phwPixel;',
@@ -131,7 +131,7 @@ in [
     'phwTargetPixel--;',
     'phwTargetPixel -= iTargetStride;',
     '
-            __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
             tAcc.hwG += (tPixel.G - tAcc.hwG) * hwRatio >> 8;  tPixel.G = tAcc.hwG;

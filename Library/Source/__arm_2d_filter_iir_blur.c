@@ -612,7 +612,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
                 tAcc = *ptStatusV;
             } else {
                 
-            __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
             }
@@ -621,7 +621,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             for (iX = 0; iX < iWidth; iX++) {
                 
-            __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
             tAcc.hwG += (tPixel.G - tAcc.hwG) * hwRatio >> 8;  tPixel.G = tAcc.hwG;
@@ -650,7 +650,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
             /* initialize the accumulator */
             do {
                 
-            __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
             } while(0);
@@ -659,7 +659,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             for (iX = 0; iX < iWidth; iX++) {   
                 
-            __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
             tAcc.hwG += (tPixel.G - tAcc.hwG) * hwRatio >> 8;  tPixel.G = tAcc.hwG;
@@ -689,7 +689,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
                 tAcc = *ptStatusH;
             } else {
                 
-            __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
             }
@@ -698,7 +698,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             for (iY = 0; iY < iHeight; iY++) {
                 
-            __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
             tAcc.hwG += (tPixel.G - tAcc.hwG) * hwRatio >> 8;  tPixel.G = tAcc.hwG;
@@ -727,7 +727,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
             /* initialize the accumulator */
             do {
                 
-            __arm_2d_rgb565_unpack(*phwPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwPixel, &tPixel);
             tAcc = *(__arm_2d_iir_blur_acc_rgb565_t *)&tPixel;
     
             } while(0);
@@ -736,7 +736,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
 
             for (iY = 0; iY < iHeight; iY++) {   
                 
-            __arm_2d_rgb565_unpack(*phwTargetPixel, &tPixel);
+            __arm_2d_rgb565_unpack_comp(*phwTargetPixel, &tPixel);
 
             tAcc.hwB += (tPixel.B - tAcc.hwB) * hwRatio >> 8;  tPixel.B = tAcc.hwB; 
             tAcc.hwG += (tPixel.G - tAcc.hwG) * hwRatio >> 8;  tPixel.G = tAcc.hwG;

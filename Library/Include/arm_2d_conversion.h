@@ -189,6 +189,28 @@ __STATIC_INLINE void __arm_2d_rgb565_unpack(uint16_t hwColor,
     ptRGB->A = 0xFF;
 }
 
+ARM_NONNULL(2)
+__STATIC_INLINE void __arm_2d_rgb565_unpack_comp(uint16_t hwColor,
+                                            __arm_2d_color_fast_rgb_t * ptRGB)
+{
+    assert(NULL != ptRGB);
+    
+    /* uses explicit extraction, leading to a more efficient autovectorized code */
+    uint16_t maskRunpk = 0x001f, maskGunpk = 0x003f;
+
+    if (hwColor) {
+        ptRGB->B = ((uint16_t) ((hwColor & maskRunpk) << 3)) | 0x7;
+        ptRGB->R = ((uint16_t) ((hwColor >> 11) << 3)) | 0x7;
+        ptRGB->G = ((uint16_t) (((hwColor >> 5) & maskGunpk)) << 2) | 0x03;
+    } else {
+        ptRGB->B = (uint16_t) ((hwColor & maskRunpk) << 3);
+        ptRGB->R = (uint16_t) ((hwColor >> 11) << 3);
+        ptRGB->G = (uint16_t) (((hwColor >> 5) & maskGunpk) << 2);
+    }
+    
+    ptRGB->A = 0xFF;
+}
+
 /*!
  * \brief unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object
  * \param[in] wColour the target brga888 colour
