@@ -22,8 +22,8 @@
  * Description:  The source code of APIs for ccca8888 transform to other 
  *               colour formats: gray8, rgb565 and cccn888
  * 
- * $Date:        24. April 2025
- * $Revision:    V.1.0.0
+ * $Date:        25. April 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores with helium
  *
@@ -502,13 +502,10 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8_get_pixel_col
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo,
     uint_fast16_t hwOpacity)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
 
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
@@ -1561,13 +1558,10 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565_get_pixel_co
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo,
     uint_fast16_t hwOpacity)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
 
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
@@ -2647,13 +2641,10 @@ static void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888_get_pixel_c
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888(
-    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_param_copy_orig_t *ptParam,
     __arm_2d_transform_info_t *ptInfo,
     uint_fast16_t hwOpacity)
 {
-
-    __arm_2d_param_copy_orig_t *ptParam =
-        &(ptThis->use_as____arm_2d_param_copy_orig_t);
 
     int_fast16_t iHeight 
         = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
