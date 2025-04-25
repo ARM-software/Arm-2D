@@ -317,6 +317,10 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
         .iX = ptValidRegionOnVirtualScreen->tLocation.iX - ptTargetRegionOnVirtualScreen->tLocation.iX,
         .iY = ptValidRegionOnVirtualScreen->tLocation.iY - ptTargetRegionOnVirtualScreen->tLocation.iY,
     };
+    
+    bool bAllowReversePath = (1 == arm_2d_is_region_inside_target(
+                                                ptTargetRegionOnVirtualScreen,
+                                                ptValidRegionOnVirtualScreen));
 
     /*
        Virtual Screen
@@ -448,8 +452,84 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
         }
     } while(0);
 
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+    /* right to left, down to top process */
+    if (bAllowReversePath) {
+        uint16_t *phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);;
 
-    /* top to down process, left to right */
+        uint16x8_t vstride = vidupq_n_u16(0, 1);
+        vstride = vstride * iTargetStride;
+
+        for (iY = 0; iY < iHeight / 8; iY++) {
+            int16x8_t voffs = vstride;
+
+            __arm_2d_rgb565_unpack_single_vec(  
+                            vldrhq_gather_shifted_offset_u16(phwPixel, voffs), 
+                            (uint16x8_t *)&vaccR, 
+                            (uint16x8_t *)&vaccG, 
+                            (uint16x8_t *)&vaccB);
+
+            for (iX = 0; iX < iWidth; iX++) {
+                uint16x8_t      in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
+                uint16x8_t      vR, vG, vB;
+
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
+
+                int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
+                int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
+                int16x8_t       vdiffB = vsubq_s16(vB, vaccB);
+
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+
+                vstrhq_scatter_shifted_offset_u16(  
+                        phwPixel, 
+                        voffs, 
+                        __arm_2d_rgb565_pack_single_vec(vaccR, vaccG, vaccB));
+                voffs = voffs - 1;
+            }
+
+            phwPixel -= (iTargetStride * 8);
+        }
+
+        if (iHeight & 7) {
+            int16x8_t      voffs = vstride;
+            mve_pred16_t    tailPred = vctp16q(iHeight & 7);
+
+            __arm_2d_rgb565_unpack_single_vec(  
+                            vldrhq_gather_shifted_offset_u16(phwPixel, voffs), 
+                            (uint16x8_t *)&vaccR, 
+                            (uint16x8_t *)&vaccG, 
+                            (uint16x8_t *)&vaccB);
+
+            for (iX = 0; iX < iWidth; iX++) {
+                uint16x8_t in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
+                uint16x8_t vR, vG, vB;
+
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
+
+                int16x8_t vdiffR = vsubq_s16(vR, vaccR);
+                int16x8_t vdiffG = vsubq_s16(vG, vaccG);
+                int16x8_t vdiffB = vsubq_s16(vB, vaccB);
+
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+
+                vstrhq_scatter_shifted_offset_p_u16(
+                    phwPixel, 
+                    voffs, 
+                    __arm_2d_rgb565_pack_single_vec(vaccR, vaccG, vaccB), tailPred);
+
+                voffs = voffs - 1;
+            }
+        }
+    }
+#endif
+
+    /* top to down, left to right */
     do {
         uint16_t *phwPixel = phwTarget;
 
@@ -548,6 +628,84 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
             }
         }
     } while(0);
+
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+    /* down to top, right to left */
+    if (bAllowReversePath) {
+        uint16_t *phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+
+        /* columns direct path */
+        for (iX = 0; iX < iWidth / 8; iX++) {
+            uint16_t  *phwChannel = phwPixel;
+
+            __arm_2d_rgb565_unpack_single_vec(  vldrhq_u16(phwChannel), 
+                                                (uint16x8_t *)&vaccR, 
+                                                (uint16x8_t *)&vaccG, 
+                                                (uint16x8_t *)&vaccB);
+
+            for (iY = 0; iY < iHeight; iY++) {
+
+                uint16x8_t      in = vldrhq_u16(phwChannel);
+                uint16x8_t      vR, vG, vB;
+
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
+
+                int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
+                int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
+                int16x8_t       vdiffB = vsubq_s16(vB, vaccB);
+
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+
+                vstrhq_u16( phwChannel, 
+                            __arm_2d_rgb565_pack_single_vec(vaccR, 
+                                                            vaccG, 
+                                                            vaccB));
+
+                phwChannel -= iTargetStride;
+            }
+
+            phwPixel -= 8;
+        }
+
+
+        if (iWidth & 7) {
+            mve_pred16_t    tailPred = vctp16q(iWidth & 7);
+            uint16_t       *phwChannel = phwPixel;
+
+            __arm_2d_rgb565_unpack_single_vec(  vldrhq_u16(phwChannel), 
+                                                (uint16x8_t *)&vaccR, 
+                                                (uint16x8_t *)&vaccG, 
+                                                (uint16x8_t *)&vaccB);
+
+            for (iY = 0; iY < iHeight; iY++) {
+                uint16x8_t      in = vldrhq_u16(phwChannel);
+                uint16x8_t      vR, vG, vB;
+
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
+
+                int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
+                int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
+                int16x8_t       vdiffB = vsubq_s16(vB, vaccB);
+
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+
+                vstrhq_p_u16(   phwChannel, 
+                                __arm_2d_rgb565_pack_single_vec(vaccR, 
+                                                                vaccG, 
+                                                                vaccB), 
+                                tailPred);
+
+                phwChannel -= iTargetStride;
+            }
+        }
+    }
+#endif
+
 }
 
 
@@ -806,7 +964,6 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT
             vaccG = vld1q(pAccBase + 8);
             vaccR = vld1q(pAccBase + 16);
         } else {
-
             vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
             vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
             vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
