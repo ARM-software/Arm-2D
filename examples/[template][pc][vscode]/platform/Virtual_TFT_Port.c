@@ -279,6 +279,7 @@ bool VT_sdl_refresh_task(void)
         };
 
         arm_2d_filter_iir_blur_descriptor_t tBlurOP = {0};
+        arm_2dp_filter_iir_blur_mode_set(&tBlurOP, ARM_IIR_BLUR_MODE_FORWARD);
 
         memcpy(tft_fb2, tft_fb, sizeof(tft_fb2));
 
