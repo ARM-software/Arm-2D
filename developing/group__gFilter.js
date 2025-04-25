@@ -11,5 +11,6 @@ var group__gFilter =
     [ "arm_2dp_rgb565_filter_iir_blur", "group__gFilter.html#ga8845d84def0e90162db90b4e61469196", null ],
     [ "arm_2dp_rgb565_filter_iir_blur_depose", "group__gFilter.html#ga4e21331f4432ff1c0f86e776b377d792", null ],
     [ "arm_2dp_cccn888_filter_iir_blur", "group__gFilter.html#ga7af49eb02f128466838791437412fb63", null ],
-    [ "arm_2dp_cccn888_filter_iir_blur_depose", "group__gFilter.html#ga94e1a62365b0f115c5b18ad1028dabc6", null ]
+    [ "arm_2dp_cccn888_filter_iir_blur_depose", "group__gFilter.html#ga94e1a62365b0f115c5b18ad1028dabc6", null ],
+    [ "arm_2dp_filter_iir_blur_mode_set", "group__gFilter.html#gac20eed3011fb6a6c6d926ec3753cdc2b", null ]
 ];

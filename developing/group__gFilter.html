@@ -111,6 +111,7 @@ $(document).ready(function(){initNavTree('group__gFilter.html',''); initResizabl
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">7 Filter Operations</div></div>
 </div><!--header-->
@@ -137,6 +138,32 @@ Typedefs</h2></td></tr>
 typedef <a class="el" href="group__gFilter.html#struct____arm__2d__iir__blur__acc__cccn888__t">__arm_2d_iir_blur_acc_cccn888_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>__arm_2d_iir_blur_acc_rgb565_t</b></td></tr>
 <tr class="separator:ga74c6844acae63a1be4ec9617b2298c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga41f93dae2f9f9277f78ba0d847ba5f72"><td class="memItemLeft" align="right" valign="top"><a id="ga41f93dae2f9f9277f78ba0d847ba5f72" name="ga41f93dae2f9f9277f78ba0d847ba5f72"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_iir_blur_mode_t</b> { <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_HORIZONTAL</b> = (1 &lt;&lt; 0)
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_VERTICAL</b> = (1 &lt;&lt; 1)
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_REVERSE_HORIZONTAL</b> = (1 &lt;&lt; 2)
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_REVERSE_VERTICAL</b> = (1 &lt;&lt; 3)
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_FORWARD</b>
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_REVERSE</b>
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_DEFAULT</b> = 0
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_BEST</b>
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_BEST_HORIZONTAL</b>
+, <br />
+&#160;&#160;<b>ARM_IIR_BLUR_MODE_BEST_VERTICAL</b>
+<br />
+ }</td></tr>
+<tr class="separator:ga41f93dae2f9f9277f78ba0d847ba5f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gad406283eb31f0c21fd75d80a619d651b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gFilter.html#gad406283eb31f0c21fd75d80a619d651b">arm_2dp_gray8_filter_iir_blur</a> (<a class="el" href="group__gFilter.html#structarm__2d__filter__iir__blur__descriptor__t">arm_2d_filter_iir_blur_descriptor_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, uint8_t chBlurDegree)</td></tr>
@@ -157,6 +184,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga94e1a62365b0f115c5b18ad1028dabc6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gFilter.html#ga94e1a62365b0f115c5b18ad1028dabc6">arm_2dp_cccn888_filter_iir_blur_depose</a> (<a class="el" href="group__gFilter.html#structarm__2d__filter__iir__blur__descriptor__t">arm_2d_filter_iir_blur_descriptor_t</a> *ptOP)</td></tr>
 <tr class="memdesc:ga94e1a62365b0f115c5b18ad1028dabc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release the resource used by the given IIR blur.  <a href="group__gFilter.html#ga94e1a62365b0f115c5b18ad1028dabc6">More...</a><br /></td></tr>
 <tr class="separator:ga94e1a62365b0f115c5b18ad1028dabc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac20eed3011fb6a6c6d926ec3753cdc2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gFilter.html#gac20eed3011fb6a6c6d926ec3753cdc2b">arm_2dp_filter_iir_blur_mode_set</a> (<a class="el" href="group__gFilter.html#structarm__2d__filter__iir__blur__descriptor__t">arm_2d_filter_iir_blur_descriptor_t</a> *ptOP, uint_fast8_t chModeMask)</td></tr>
+<tr class="memdesc:gac20eed3011fb6a6c6d926ec3753cdc2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set IIR blur working mode  <a href="group__gFilter.html#gac20eed3011fb6a6c6d926ec3753cdc2b">More...</a><br /></td></tr>
+<tr class="separator:gac20eed3011fb6a6c6d926ec3753cdc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -290,9 +320,9 @@ chBlurDegree</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a id="a07e0b602dbdbf64b38e54235307c0aba" name="a07e0b602dbdbf64b38e54235307c0aba"></a>uint8_t</td>
+<a id="aa3c4b0e63f1993d211e501383fa8f2b5" name="aa3c4b0e63f1993d211e501383fa8f2b5"></a>uint8_t</td>
 <td class="fieldname">
-chBlurPath</td>
+chBlurMode</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -388,7 +418,7 @@ bReverseVertical: 1</td>
 <p>Apply IIR blur to a specified region on the target tile. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">chBlurDegree</td><td>the blur degree, </td></tr>
@@ -422,7 +452,7 @@ bReverseVertical: 1</td>
 <p>Release the resource used by the given IIR blur. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
   </table>
   </dd>
 </dl>
@@ -471,7 +501,7 @@ bReverseVertical: 1</td>
 <p>Apply IIR blur to a specified region on the target tile. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">chBlurDegree</td><td>the blur degree, </td></tr>
@@ -505,7 +535,7 @@ bReverseVertical: 1</td>
 <p>Release the resource used by the given IIR blur. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
   </table>
   </dd>
 </dl>
@@ -554,7 +584,7 @@ bReverseVertical: 1</td>
 <p>Apply IIR blur to a specified region on the target tile. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptRegion</td><td>the target region </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">chBlurDegree</td><td>the blur degree, </td></tr>
@@ -588,11 +618,49 @@ bReverseVertical: 1</td>
 <p>Release the resource used by the given IIR blur. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operations result </dd></dl>
+
+</div>
+</div>
+<a id="gac20eed3011fb6a6c6d926ec3753cdc2b" name="gac20eed3011fb6a6c6d926ec3753cdc2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac20eed3011fb6a6c6d926ec3753cdc2b">&#9670;&#160;</a></span>arm_2dp_filter_iir_blur_mode_set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2dp_filter_iir_blur_mode_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gFilter.html#structarm__2d__filter__iir__blur__descriptor__t">arm_2d_filter_iir_blur_descriptor_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint_fast8_t&#160;</td>
+          <td class="paramname"><em>chModeMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set IIR blur working mode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chModeMask</td><td>working mode ARM_IIR_BLUR_MODE_xxxx </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
