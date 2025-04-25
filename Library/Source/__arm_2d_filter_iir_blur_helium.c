@@ -377,7 +377,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
 }
 
 
-
+#define __arm_2d_rgb565_unpack_single_vec   __arm_2d_rgb565_unpack_single_vec_comp
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
