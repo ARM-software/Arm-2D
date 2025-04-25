@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        01 Aug 2024
- * $Revision:    V.1.5.3
+ * $Date:        24 April 2025
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -10971,6 +10971,33 @@ void __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo,
                                          uint_fast16_t hwRatio);
+
+void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo,
+    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_transform_to_gray8(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo);
+
+void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo,
+    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_transform_to_rgb565(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo);
+
+void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo,
+    uint_fast16_t hwOpacity);
+
+void __arm_2d_impl_ccca8888_transform_to_cccn888(
+    __arm_2d_param_copy_orig_msk_t *ptThis,
+    __arm_2d_transform_info_t *ptInfo);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
