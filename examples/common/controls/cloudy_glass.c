@@ -254,7 +254,7 @@ void cloudy_glass_show( cloudy_glass_t *ptThis,
                     arm_2dp_filter_iir_blur(&this.tBlurOP,
                                             &__glass,
                                             &__centre_region,
-                                            255 - 16);
+                                            255);
                 }
 
                 if (NULL != this.tCFG.ptScene) {
