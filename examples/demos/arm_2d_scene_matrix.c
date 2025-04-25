@@ -345,7 +345,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
         arm_2dp_filter_iir_blur(&this.tBlurOP,
             ptTile,
             &__top_canvas,
-            255 - 16);
+            255);
         
         ARM_2D_OP_WAIT_ASYNC();
     #endif
@@ -537,6 +537,7 @@ user_scene_matrix_t *__arm_2d_scene_matrix_init(
 
 #if MATRIX_LETTER_TRAIN_USE_BLUR
     ARM_2D_OP_INIT(this.tBlurOP);
+    arm_2dp_filter_iir_blur_mode_set(&this.tBlurOP, ARM_IIR_BLUR_MODE_DEFAULT);
 #endif
 
     /* ------------   initialize members of user_scene_matrix_t end   ---------------*/
