@@ -73,6 +73,7 @@
 #define MASK_COLOR(sz)  (sz == 8) ? ptInfo->Mask.chColour : ((sz == 16) ?  ptInfo->Mask.hwColour :  ptInfo->Mask.wColour)
 
 /*============================ PROTOTYPES ====================================*/
+
 extern
 void __CCCA8888_TRANS_FUNC(transform)(
                                         __arm_2d_param_copy_orig_t *ptParam,
