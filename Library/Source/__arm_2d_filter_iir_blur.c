@@ -90,11 +90,33 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+ARM_NONNULL(1)
+void arm_2dp_filter_iir_blur_mode_set(arm_2d_filter_iir_blur_descriptor_t *ptOP,
+                                      uint_fast8_t chModeMask)
+{
+    ARM_2D_IMPL(arm_2d_filter_iir_blur_descriptor_t, ptOP);
+
+    this.chBlurMode = chModeMask;
+
+    if (0 == this.chBlurMode) {
+        /* use the default value */
+        this.bForwardHorizontal = true;
+        this.bForwardVertical = true;
+
+#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
+ && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
+        this.bReverseHorizontal = true;
+        this.bReverseVertical = true;
+#endif
+    }
+
+}
+
 /*
  * the Frontend API
  */
 
-ARM_NONNULL(2)
+ARM_NONNULL(1, 2)
 arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
@@ -154,21 +176,12 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
-    if (0 == this.chBlurPath) {
-        /* use the default value */
-        this.bForwardHorizontal = true;
-        this.bForwardVertical = true;
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-        this.bReverseHorizontal = true;
-        this.bReverseVertical = true;
-#endif
-    }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur_depose(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP)
 {
@@ -442,7 +455,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_GRAY8 = {
  * the Frontend API
  */
 
-ARM_NONNULL(2)
+ARM_NONNULL(1, 2)
 arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
@@ -502,21 +515,12 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
-    if (0 == this.chBlurPath) {
-        /* use the default value */
-        this.bForwardHorizontal = true;
-        this.bForwardVertical = true;
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-        this.bReverseHorizontal = true;
-        this.bReverseVertical = true;
-#endif
-    }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur_depose(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP)
 {
@@ -822,7 +826,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_RGB565 = {
  * the Frontend API
  */
 
-ARM_NONNULL(2)
+ARM_NONNULL(1, 2)
 arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(  
                             arm_2d_filter_iir_blur_descriptor_t *ptOP,
                             const arm_2d_tile_t *ptTarget,
@@ -882,21 +886,12 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
         return arm_fsm_rt_on_going;
     }
 
-    if (0 == this.chBlurPath) {
-        /* use the default value */
-        this.bForwardHorizontal = true;
-        this.bForwardVertical = true;
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-        this.bReverseHorizontal = true;
-        this.bReverseVertical = true;
-#endif
-    }
 
     return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
 }
 
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur_depose(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP)
 {

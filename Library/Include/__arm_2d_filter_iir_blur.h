@@ -60,6 +60,30 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+typedef enum {
+    ARM_IIR_BLUR_MODE_HORIZONTAL            = (1 << 0),
+    ARM_IIR_BLUR_MODE_VERTICAL              = (1 << 1),
+
+    ARM_IIR_BLUR_MODE_REVERSE_HORIZONTAL    = (1 << 2),
+    ARM_IIR_BLUR_MODE_REVERSE_VERTICAL      = (1 << 3),
+
+    ARM_IIR_BLUR_MODE_FORWARD               = ARM_IIR_BLUR_MODE_HORIZONTAL
+                                            | ARM_IIR_BLUR_MODE_VERTICAL,
+
+    ARM_IIR_BLUR_MODE_REVERSE               = ARM_IIR_BLUR_MODE_REVERSE_HORIZONTAL
+                                            | ARM_IIR_BLUR_MODE_REVERSE_VERTICAL,
+    
+    ARM_IIR_BLUR_MODE_DEFAULT               = 0,
+    ARM_IIR_BLUR_MODE_BEST                  = ARM_IIR_BLUR_MODE_FORWARD
+                                            | ARM_IIR_BLUR_MODE_REVERSE,
+
+    ARM_IIR_BLUR_MODE_BEST_HORIZONTAL       = ARM_IIR_BLUR_MODE_HORIZONTAL
+                                            | ARM_IIR_BLUR_MODE_REVERSE_HORIZONTAL,
+
+    ARM_IIR_BLUR_MODE_BEST_VERTICAL         = ARM_IIR_BLUR_MODE_VERTICAL
+                                            | ARM_IIR_BLUR_MODE_REVERSE_VERTICAL,
+} arm_2d_iir_blur_mode_t;
+
 typedef struct __arm_2d_iir_blur_acc_cccn888_t {
     uint16_t hwB;
     uint16_t hwG;
@@ -77,7 +101,7 @@ ARM_PRIVATE(
     implement(arm_2d_op_t);                         /* inherit from base class arm_2d_op_cp_t*/
 
     union {
-        uint8_t chBlurPath;
+        uint8_t chBlurMode;
         struct {
             uint8_t bForwardHorizontal  : 1;
             uint8_t bForwardVertical    : 1;
@@ -96,11 +120,9 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-extern
-ARM_NONNULL(2)
 /*!
  *  \brief Apply IIR blur to a specified region on the target tile
- *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptOP the control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
  *  \param[in] chBlurDegree the blur degree, 
@@ -108,6 +130,8 @@ ARM_NONNULL(2)
  *        - 128~239 works as blur
  *  \return arm_fsm_rt_t the operations result
  */
+extern
+ARM_NONNULL(1,2)
 arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
@@ -115,20 +139,20 @@ arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur(
                     uint8_t chBlurDegree);
 
 
-extern
+
 /*!
  *  \brief Release the resource used by the given IIR blur
- *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptOP the control block
  *  \return arm_fsm_rt_t the operations result
  */
+extern
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2dp_gray8_filter_iir_blur_depose(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP);
 
-extern
-ARM_NONNULL(2)
 /*!
  *  \brief Apply IIR blur to a specified region on the target tile
- *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptOP the control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
  *  \param[in] chBlurDegree the blur degree, 
@@ -136,6 +160,8 @@ ARM_NONNULL(2)
  *        - 128~239 works as blur
  *  \return arm_fsm_rt_t the operations result
  */
+extern
+ARM_NONNULL(1,2)
 arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
@@ -143,20 +169,20 @@ arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur(
                     uint8_t chBlurDegree);
 
 
-extern
+
 /*!
  *  \brief Release the resource used by the given IIR blur
- *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptOP the control block
  *  \return arm_fsm_rt_t the operations result
  */
+extern
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2dp_rgb565_filter_iir_blur_depose(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP);
 
-extern
-ARM_NONNULL(2)
 /*!
  *  \brief Apply IIR blur to a specified region on the target tile
- *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptOP the control block
  *  \param[in] ptTarget the target tile
  *  \param[in] ptRegion the target region
  *  \param[in] chBlurDegree the blur degree, 
@@ -164,6 +190,8 @@ ARM_NONNULL(2)
  *        - 128~239 works as blur
  *  \return arm_fsm_rt_t the operations result
  */
+extern
+ARM_NONNULL(1,2)
 arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP,
                     const arm_2d_tile_t *ptTarget,
@@ -171,14 +199,29 @@ arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur(
                     uint8_t chBlurDegree);
 
 
-extern
+
 /*!
  *  \brief Release the resource used by the given IIR blur
- *  \param[in] ptOP the control block, NULL means using the default control block
+ *  \param[in] ptOP the control block
  *  \return arm_fsm_rt_t the operations result
  */
+extern
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2dp_cccn888_filter_iir_blur_depose(  
                     arm_2d_filter_iir_blur_descriptor_t *ptOP);
+
+
+
+/*!
+ * \brief set IIR blur working mode
+ * \param[in] ptOP the control block
+ * \param[in] chModeMask working mode ARM_IIR_BLUR_MODE_xxxx
+ * \return none
+ */
+extern
+ARM_NONNULL(1)
+void arm_2dp_filter_iir_blur_mode_set(arm_2d_filter_iir_blur_descriptor_t *ptOP,
+                                      uint_fast8_t chModeMask);
 
 /*! @} */
 
