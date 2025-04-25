@@ -348,7 +348,7 @@ void __arm_2d_impl_gray8_filter_iir_blur(
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
     if (this.bReverseVertical && bAllowReversePath) {
-        uint8_t pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+        uint8_t *pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
         /* columns reverse path */
         for (iX = iWidth-1; iX > 0; iX--)
@@ -721,7 +721,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
     if (this.bReverseVertical && bAllowReversePath) {
-        uint16_t phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+        uint16_t *phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
         /* columns reverse path */
         for (iX = iWidth-1; iX > 0; iX--)
@@ -1096,7 +1096,7 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
     if (this.bReverseVertical && bAllowReversePath) {
-        uint32_t pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+        uint32_t *pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
         /* columns reverse path */
         for (iX = iWidth-1; iX > 0; iX--)

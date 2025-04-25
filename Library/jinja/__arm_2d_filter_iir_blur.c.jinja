@@ -414,7 +414,7 @@ void __arm_2d_impl_{{colour_name | lower}}_filter_iir_blur(
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
 
     if (this.bReverseVertical && bAllowReversePath) {
-        {{colour_int}} p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[iWidth-1 + (iHeight-1)*iTargetStride]);
+        {{colour_int}} *p{{colour_int_prefix}}Pixel = &(p{{colour_int_prefix}}Target[iWidth-1 + (iHeight-1)*iTargetStride]);
 
         /* columns reverse path */
         for (iX = iWidth-1; iX > 0; iX--)
