@@ -90,13 +90,15 @@ extern "C" {
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (uint8_t * __RESTRICT pchTarget,
-                                                         int16_t iTargetStride,
-                                                         arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
-                                                         arm_2d_region_t * ptTargetRegionOnVirtualScreen,
-                                                         uint8_t chBlurDegree, 
-                                                         arm_2d_scratch_mem_t * ptScratchMemory)
+void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
+                    uint8_t * __RESTRICT pchTarget,
+                    int16_t iTargetStride,
+                    arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
+                    arm_2d_region_t * ptTargetRegionOnVirtualScreen,
+                    uint8_t chBlurDegree, 
+                    arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
     int_fast16_t    iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t    iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
 
@@ -283,13 +285,15 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (uint8_t * __RESTRICT pc
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT phwTarget,
-                                                          int16_t iTargetStride,
-                                                          arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
-                                                          arm_2d_region_t * ptTargetRegionOnVirtualScreen,
-                                                          uint8_t chBlurDegree, 
-                                                          arm_2d_scratch_mem_t * ptScratchMemory)
+void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
+                    uint16_t * __RESTRICT phwTarget,
+                    int16_t iTargetStride,
+                    arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
+                    arm_2d_region_t * ptTargetRegionOnVirtualScreen,
+                    uint8_t chBlurDegree, 
+                    arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
     int_fast16_t    iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t    iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
 
@@ -349,7 +353,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
      */
 
     /* left to right, top to down process */
-    do {
+    if (this.bForwardHorizontal) {
         uint16_t *phwPixel = phwTarget;
 
         if (NULL != ptStatusV) {
@@ -450,12 +454,12 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
                 vst1q(pAccBase + 16, vaccB);
             }
         }
-    } while(0);
+    }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* right to left, down to top process */
-    if (bAllowReversePath) {
+    if (this.bReverseHorizontal && bAllowReversePath) {
         uint16_t *phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);;
 
         uint16x8_t vstride = vidupq_n_u16(0, 1);
@@ -530,7 +534,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
 #endif
 
     /* top to down, left to right */
-    do {
+    if (this.bForwardVertical) {
         uint16_t *phwPixel = phwTarget;
 
         if (NULL != ptStatusH) {
@@ -627,12 +631,12 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
                 vst1q(pAccBase + 16, vaccB);
             }
         }
-    } while(0);
+    }
 
 #if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
  && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* down to top, right to left */
-    if (bAllowReversePath) {
+    if (this.bReverseVertical && bAllowReversePath) {
         uint16_t *phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
 
         /* columns direct path */
@@ -712,13 +716,15 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
 
 
 __OVERRIDE_WEAK
-void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (uint32_t * __RESTRICT pwTarget,
-                                                           int16_t iTargetStride,
-                                                           arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
-                                                           arm_2d_region_t * ptTargetRegionOnVirtualScreen,
-                                                           uint8_t chBlurDegree, 
-                                                           arm_2d_scratch_mem_t * ptScratchMemory)
+void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
+                    uint32_t * __RESTRICT pwTarget,
+                    int16_t iTargetStride,
+                    arm_2d_region_t * __RESTRICT ptValidRegionOnVirtualScreen,
+                    arm_2d_region_t * ptTargetRegionOnVirtualScreen,
+                    uint8_t chBlurDegree, 
+                    arm_2d_filter_iir_blur_descriptor_t *ptThis)
 {
+    arm_2d_scratch_mem_t *ptScratchMemory = &this.tScratchMemory;
     int_fast16_t    iWidth = ptValidRegionOnVirtualScreen->tSize.iWidth;
     int_fast16_t    iHeight = ptValidRegionOnVirtualScreen->tSize.iHeight;
 
