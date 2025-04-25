@@ -228,6 +228,50 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
         }
     }
 
+    /* rows reverse path */
+    if (this.bReverseHorizontal && bAllowReversePath) {
+        uint8_t *pchPixel = &(pchTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
+
+        uint16x8_t vstride = vidupq_n_u16(0, 1);
+        vstride = vstride * iTargetStride;
+
+        for (iY = 0; iY < iHeight / 8; iY++) {
+            int16x8_t voffs = vstride;
+
+            vacc = vldrbq_gather_offset_u16(pchPixel, voffs);
+
+            for (iX = 0; iX < iWidth; iX++) {
+                uint16x8_t      in = vldrbq_gather_offset_u16(pchPixel, voffs);
+                int16x8_t       vdiff = vsubq_s16(in, vacc);
+
+                vacc = vaddq_s16(vacc, vqdmulhq(vdiff, hwRatio));
+
+                vstrbq_scatter_offset_u16(pchPixel, voffs, vacc);
+                voffs -= 1;
+            }
+
+            pchPixel -= (iTargetStride * 8);
+        }
+
+        /* residue for non-multiple of 8 height dimension */
+        if (iHeight & 7) {
+            int16x8_t voffs = vstride;
+            mve_pred16_t tailPred = vctp16q(iHeight & 7);
+
+            vacc = vldrbq_gather_offset_u16(pchPixel, voffs);
+
+            for (iX = 0; iX < iWidth; iX++) {
+                uint16x8_t in = vldrbq_gather_offset_u16(pchPixel, voffs);
+                int16x8_t vdiff = vsubq_s16(in, vacc);
+                vacc = vaddq_s16(vacc, vqdmulhq(vdiff, hwRatio));
+
+                vstrbq_scatter_offset_p_u16(pchPixel, voffs, vacc, tailPred);
+                voffs -= 1;
+            }
+
+        }
+    }
+
     if (this.bForwardVertical) {
         uint8_t *pchPixel = pchTarget;
 
@@ -288,6 +332,45 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
             if (NULL != ptStatusH) {
                 /* save the last pixels */
                 vst1q((int16_t *) ptStatusH, vacc);
+            }
+        }
+    }
+
+    if (this.bReverseVertical && bAllowReversePath) {
+        uint8_t *pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+
+        /* columns direct path */
+        for (iX = 0; iX < iWidth / 8; iX++) {
+            uint8_t *pchChannel = pchPixel;
+
+            vacc = vldrbq_u16(pchChannel);
+
+            for (iY = 0; iY < iHeight; iY++) {
+                uint16x8_t in = vldrbq_u16(pchChannel);
+                int16x8_t vdiff = vsubq_s16(in, vacc);
+                vacc = vaddq_s16(vacc, vqdmulhq(vdiff, hwRatio));
+
+                vstrbq_u16(pchChannel, vacc);
+                pchChannel -= iTargetStride;
+            }
+
+            pchPixel -= 8;
+        }
+
+        /* residue for non-multiple of 8 columns dimension */
+        if (iWidth & 7) {
+            mve_pred16_t tailPred = vctp16q(iWidth & 7);
+            uint8_t *pchChannel = pchPixel;
+
+            vacc = vldrbq_u16(pchChannel);
+
+            for (iY = 0; iY < iHeight; iY++) {
+                uint16x8_t in = vldrbq_u16(pchChannel);
+                int16x8_t vdiff = vsubq_s16(in, vacc);
+                vacc = vaddq_s16(vacc, vqdmulhq(vdiff, hwRatio));
+
+                vstrbq_p_u16(pchChannel, vacc, tailPred);
+                pchChannel -= iTargetStride;
             }
         }
     }
@@ -472,8 +555,6 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* right to left, down to top process */
     if (this.bReverseHorizontal && bAllowReversePath) {
         uint16_t *phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);;
@@ -547,7 +628,6 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             }
         }
     }
-#endif
 
     /* top to down, left to right */
     if (this.bForwardVertical) {
@@ -649,8 +729,6 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
         }
     }
 
-#if defined(__ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__)                    \
- && __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
     /* down to top, right to left */
     if (this.bReverseVertical && bAllowReversePath) {
         uint16_t *phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
@@ -724,7 +802,6 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             }
         }
     }
-#endif
 
 }
 
@@ -917,6 +994,85 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
         }
     }
 
+    if (this.bReverseHorizontal && bAllowReversePath) {
+        uint32_t *pwPixel = &(pwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
+
+        uint16x8_t vstride = vidupq_n_u16(0, 4);
+        vstride = vstride * iTargetStride;
+
+        for (iY = 0; iY < iHeight / 8; iY++) {
+            uint8_t        *pchPixelB = (uint8_t *) pwPixel;
+            uint8_t        *pchPixelG = pchPixelB + 1;
+            uint8_t        *pchPixelR = pchPixelB + 2;
+
+            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+
+            for (iX = 0; iX < iWidth; iX++) {
+
+                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+                int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
+                int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
+                int16x8_t       vdiffR = vsubq_s16(inR, vaccR);
+
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+
+                vstrbq_scatter_offset_u16(pchPixelB, vstride, vaccB);
+                vstrbq_scatter_offset_u16(pchPixelG, vstride, vaccG);
+                vstrbq_scatter_offset_u16(pchPixelR, vstride, vaccR);
+
+                pchPixelB -= 4;
+                pchPixelG -= 4;
+                pchPixelR -= 4;
+            }
+
+            pwPixel -= (iTargetStride * 8);
+        }
+
+        if (iHeight & 7) {
+
+            mve_pred16_t    tailPred = vctp16q(iHeight & 7);
+
+            uint8_t        *pchPixelB = (uint8_t *) pwPixel;
+            uint8_t        *pchPixelG = pchPixelB + 1;
+            uint8_t        *pchPixelR = pchPixelB + 2;
+
+            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+            for (iX = 0; iX < iWidth; iX++) {
+
+                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+                int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
+                int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
+                int16x8_t       vdiffR = vsubq_s16(inR, vaccR);
+
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+
+
+                vstrbq_scatter_offset_p_u16(pchPixelB, vstride, vaccB, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelG, vstride, vaccG, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelR, vstride, vaccR, tailPred);
+
+                pchPixelB -= 4;
+                pchPixelG -= 4;
+                pchPixelR -= 4;
+            }
+        }
+    }
 
     if (this.bReverseVertical) {
         uint32_t *pwPixel = pwTarget;
@@ -1030,6 +1186,85 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 vst1q(pAccBase + 8, vaccG);
                 vst1q(pAccBase + 16, vaccR);
 
+            }
+        }
+    }
+
+    if (this.bReverseVertical && bAllowReversePath) {
+        uint32_t *pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+
+        uint16x8_t vstride = vidupq_n_u16(0, 4);
+
+        /* columns direct path */
+        for (iX = 0; iX < iWidth / 8; iX++) {
+
+            uint8_t        *pchPixelB = (uint8_t *) pwPixel;
+            uint8_t        *pchPixelG = pchPixelB + 1;
+            uint8_t        *pchPixelR = pchPixelB + 2;
+
+            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+            for (iY = 0; iY < iHeight; iY++) {
+
+                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+                int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
+                int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
+                int16x8_t       vdiffR = vsubq_s16(inR, vaccR);
+
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+
+
+                vstrbq_scatter_offset_u16(pchPixelB, vstride, vaccB);
+                vstrbq_scatter_offset_u16(pchPixelG, vstride, vaccG);
+                vstrbq_scatter_offset_u16(pchPixelR, vstride, vaccR);
+
+                pchPixelB -= 4 * iTargetStride;
+                pchPixelG -= 4 * iTargetStride;
+                pchPixelR -= 4 * iTargetStride;
+
+            }
+
+            pwPixel -= 8;
+        }
+
+        if (iWidth & 7) {
+            mve_pred16_t    tailPred = vctp16q(iWidth & 7);
+            uint8_t        *pchPixelB = (uint8_t *) pwPixel;
+            uint8_t        *pchPixelG = pchPixelB + 1;
+            uint8_t        *pchPixelR = pchPixelB + 2;
+
+            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+            for (iY = 0; iY < iHeight; iY++) {
+                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
+                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
+                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+
+                int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
+                int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
+                int16x8_t       vdiffR = vsubq_s16(inR, vaccR);
+
+                vaccB += vqdmulhq(vdiffB, hwRatio);
+                vaccG += vqdmulhq(vdiffG, hwRatio);
+                vaccR += vqdmulhq(vdiffR, hwRatio);
+
+
+                vstrbq_scatter_offset_p_u16(pchPixelB, vstride, vaccB, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelG, vstride, vaccG, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelR, vstride, vaccR, tailPred);
+
+                pchPixelB -= 4 * iTargetStride;
+                pchPixelG -= 4 * iTargetStride;
+                pchPixelR -= 4 * iTargetStride;
             }
         }
     }
