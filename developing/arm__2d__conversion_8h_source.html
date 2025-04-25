@@ -301,187 +301,209 @@ $(document).ready(function(){initNavTree('arm__2d__conversion_8h_source.html',''
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    </div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    ptRGB-&gt;A = 0xFF;</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>}</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="comment"></span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment"> * \brief unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object</span></div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="comment"> * \param[in] wColour the target brga888 colour</span></div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="comment"> * \param[in] ptRGB a __arm_2d_color_fast_rgb_t object</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>ARM_NONNULL(2)</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno"><a class="line" href="group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038">  198</a></span>__STATIC_INLINE <span class="keywordtype">void</span> <a class="code hl_function" href="group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038" title="unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object">__arm_2d_ccca8888_unpack</a>( uint32_t wColor,</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                                            <a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>{</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    assert(NULL != ptRGB);</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    uint8_t *pchChannel = (uint8_t *)&amp;wColor;</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    ptRGB-&gt;B = (uint16_t) pchChannel[0];</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    ptRGB-&gt;G = (uint16_t) pchChannel[1];</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    ptRGB-&gt;R = (uint16_t) pchChannel[2];</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    ptRGB-&gt;A = (uint16_t) pchChannel[3];</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>}</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="comment"></span> </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment"> * \brief generate a gray8 colour from a __arm_2d_color_fast_rgb_t object </span></div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment"> * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object</span></div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment"> * \return uint8_t a gray8 colour</span></div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga6724d46af939985faf17e3c9697c6c38">  218</a></span>__STATIC_INLINE uint8_t <a class="code hl_function" href="group__gConversion.html#ga6724d46af939985faf17e3c9697c6c38" title="generate a gray8 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_gray8_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>{</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    assert(NULL != ptRGB);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    uint16_t tGrayScale = (ptRGB-&gt;R * 77 + ptRGB-&gt;G * 151 + ptRGB-&gt;B * 28) &gt;&gt; 8;</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordflow">return</span> (uint8_t)(   (tGrayScale &lt;= 255) * tGrayScale </div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                    +   (tGrayScale &gt; 255) * 255);</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>}</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="comment"></span> </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="comment"> * \brief generate a rgb565 colour from a __arm_2d_color_fast_rgb_t object </span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="comment"> * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object</span></div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment"> * \return uint16_t a rgb565 colour</span></div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno"><a class="line" href="group__gConversion.html#gad741f60e362467e251ef35febec37c28">  235</a></span>__STATIC_INLINE uint16_t <a class="code hl_function" href="group__gConversion.html#gad741f60e362467e251ef35febec37c28" title="generate a rgb565 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_rgb565_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>{</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    assert(NULL != ptRGB);</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tOutput = {</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        .u5B = (uint16_t) (ptRGB-&gt;B &gt;&gt; 3),</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        .u6G = (uint16_t) (ptRGB-&gt;G &gt;&gt; 2),</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        .u5R = (uint16_t) (ptRGB-&gt;R &gt;&gt; 3),</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    };</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordflow">return</span> tOutput.tValue;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>}</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="comment"></span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="comment"> * \brief generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object </span></div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="comment"> * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object</span></div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="comment"> * \return uint32_t a cccn888 colour</span></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span><span class="comment"> * \note the alpha channel will be kept in the output value</span></div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno"><a class="line" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07">  254</a></span>__STATIC_INLINE uint32_t <a class="code hl_function" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07" title="generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_ccca888_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>{</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    assert(NULL != ptRGB);</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__bgra8888__t" title="the colour type for brga8888">arm_2d_color_bgra8888_t</a> tOutput = {</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        .u8B = (uint16_t) ptRGB-&gt;B,</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        .u8G = (uint16_t) ptRGB-&gt;G,</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        .u8R = (uint16_t) ptRGB-&gt;R,</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        .u8A = (uint16_t) ptRGB-&gt;A,</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    };</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keywordflow">return</span> tOutput.tValue;</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>}</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="comment"> * Colour Conversion                                                          *</span></div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span><span class="comment"></span> </div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="comment"> * \brief convert the colour format of a given tile to gray8</span></div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>ARM_NONNULL(2,3)</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de">  281</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de" title="convert the colour format of a given tile to gray8">arm_2dp_convert_colour_to_gray8</a>(   <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget);</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span><span class="comment"></span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span><span class="comment"> * \brief copy a given tile to a gray8 target tile</span></div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment"> * \param[in] ptRegion the target region, NULL means using the region of the </span></div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment"> *            target tile.</span></div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>extern</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>ARM_NONNULL(2,3)</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno"><a class="line" href="group__gConversion.html#gad5ccb2bf539aa24018a4eaa0868ed711">  296</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#gad5ccb2bf539aa24018a4eaa0868ed711" title="copy a given tile to a gray8 target tile">arm_2dp_tile_copy_to_gray8</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment"></span> </div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span><span class="comment"> * \brief convert the colour format of a given tile to rgb565</span></div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>extern</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>ARM_NONNULL(2,3)</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno"><a class="line" href="group__gConversion.html#gad608978ecf403dee5bcf998c23674195">  310</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#gad608978ecf403dee5bcf998c23674195" title="convert the colour format of a given tile to rgb565">arm_2dp_convert_colour_to_rgb565</a>(  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget);</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="comment"></span> </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="comment"> * \brief copy a given tile to a rgb565 target tile</span></div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span><span class="comment"> * \param[in] ptRegion the target region, NULL means using the region of the </span></div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span><span class="comment"> *            target tile.</span></div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>extern</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>ARM_NONNULL(2,3)</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno"><a class="line" href="group__gConversion.html#gaa840bd826d66df37f7fc35eae8efe3bd">  325</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#gaa840bd826d66df37f7fc35eae8efe3bd" title="copy a given tile to a rgb565 target tile">arm_2dp_tile_copy_to_rgb565</a>(   <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="comment"></span> </div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="comment"> * \brief convert the colour format of a given tile to cccn888</span></div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>extern</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>ARM_NONNULL(2,3)</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga489460ad41c8cde224f143d54aaf1976">  339</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#ga489460ad41c8cde224f143d54aaf1976" title="convert the colour format of a given tile to cccn888">arm_2dp_convert_colour_to_cccn888</a>( <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget);</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="comment"></span> </div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="comment"> * \brief copy a given tile to a cccn888 target tile</span></div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span><span class="comment"> * \param[in] ptRegion the target region, NULL means using the region of the </span></div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span><span class="comment"> *            target tile.</span></div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>extern</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>ARM_NONNULL(2,3)</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga0c26f67aac00afc77224c36145947946">  354</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#ga0c26f67aac00afc77224c36145947946" title="copy a given tile to a cccn888 target tile">arm_2dp_tile_copy_to_cccn888</a>(  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span><span class="comment"></span> </div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span> </div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span><span class="preprocessor">#elif defined(__IS_COMPILER_IAR__)</span></div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span><span class="preprocessor">#   pragma diag_warning=Go029 </span></div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>}</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>ARM_NONNULL(2)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>__STATIC_INLINE <span class="keywordtype">void</span> __arm_2d_rgb565_unpack_comp(uint16_t hwColor,</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                                            <a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>{</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    assert(NULL != ptRGB);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="comment">/* uses explicit extraction, leading to a more efficient autovectorized code */</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    uint16_t maskRunpk = 0x001f, maskGunpk = 0x003f;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordflow">if</span> (hwColor) {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        ptRGB-&gt;B = ((uint16_t) ((hwColor &amp; maskRunpk) &lt;&lt; 3)) | 0x7;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        ptRGB-&gt;R = ((uint16_t) ((hwColor &gt;&gt; 11) &lt;&lt; 3)) | 0x7;</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        ptRGB-&gt;G = ((uint16_t) (((hwColor &gt;&gt; 5) &amp; maskGunpk)) &lt;&lt; 2) | 0x03;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        ptRGB-&gt;B = (uint16_t) ((hwColor &amp; maskRunpk) &lt;&lt; 3);</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        ptRGB-&gt;R = (uint16_t) ((hwColor &gt;&gt; 11) &lt;&lt; 3);</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        ptRGB-&gt;G = (uint16_t) (((hwColor &gt;&gt; 5) &amp; maskGunpk) &lt;&lt; 2);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    ptRGB-&gt;A = 0xFF;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>}</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="comment"></span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="comment"> * \brief unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="comment"> * \param[in] wColour the target brga888 colour</span></div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span><span class="comment"> * \param[in] ptRGB a __arm_2d_color_fast_rgb_t object</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>ARM_NONNULL(2)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038">  220</a></span>__STATIC_INLINE <span class="keywordtype">void</span> <a class="code hl_function" href="group__gConversion.html#gae27856c7d0a9aadfeaea9844e2a8c038" title="unpack a 32bit colour into a given __arm_2d_color_fast_rgb_t object">__arm_2d_ccca8888_unpack</a>( uint32_t wColor,</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                                            <a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>{</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    assert(NULL != ptRGB);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    uint8_t *pchChannel = (uint8_t *)&amp;wColor;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    ptRGB-&gt;B = (uint16_t) pchChannel[0];</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    ptRGB-&gt;G = (uint16_t) pchChannel[1];</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    ptRGB-&gt;R = (uint16_t) pchChannel[2];</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    ptRGB-&gt;A = (uint16_t) pchChannel[3];</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>}</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="comment"></span> </div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="comment"> * \brief generate a gray8 colour from a __arm_2d_color_fast_rgb_t object </span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="comment"> * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment"> * \return uint8_t a gray8 colour</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga6724d46af939985faf17e3c9697c6c38">  240</a></span>__STATIC_INLINE uint8_t <a class="code hl_function" href="group__gConversion.html#ga6724d46af939985faf17e3c9697c6c38" title="generate a gray8 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_gray8_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>{</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    assert(NULL != ptRGB);</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    uint16_t tGrayScale = (ptRGB-&gt;R * 77 + ptRGB-&gt;G * 151 + ptRGB-&gt;B * 28) &gt;&gt; 8;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keywordflow">return</span> (uint8_t)(   (tGrayScale &lt;= 255) * tGrayScale </div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                    +   (tGrayScale &gt; 255) * 255);</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>}</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span><span class="comment"></span> </div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span><span class="comment"> * \brief generate a rgb565 colour from a __arm_2d_color_fast_rgb_t object </span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span><span class="comment"> * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object</span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="comment"> * \return uint16_t a rgb565 colour</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno"><a class="line" href="group__gConversion.html#gad741f60e362467e251ef35febec37c28">  257</a></span>__STATIC_INLINE uint16_t <a class="code hl_function" href="group__gConversion.html#gad741f60e362467e251ef35febec37c28" title="generate a rgb565 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_rgb565_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>{</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    assert(NULL != ptRGB);</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    </div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__rgb565__t" title="the colour type for rgb565">arm_2d_color_rgb565_t</a> tOutput = {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        .u5B = (uint16_t) (ptRGB-&gt;B &gt;&gt; 3),</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        .u6G = (uint16_t) (ptRGB-&gt;G &gt;&gt; 2),</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        .u5R = (uint16_t) (ptRGB-&gt;R &gt;&gt; 3),</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    };</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keywordflow">return</span> tOutput.tValue;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>}</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="comment"></span> </div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="comment"> * \brief generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object </span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span><span class="comment"> * \param[in] ptRGB the target __arm_2d_color_fast_rgb_t object</span></div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="comment"> * \return uint32_t a cccn888 colour</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="comment"> * \note the alpha channel will be kept in the output value</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07">  276</a></span>__STATIC_INLINE uint32_t <a class="code hl_function" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07" title="generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_ccca888_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>{</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    assert(NULL != ptRGB);</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    </div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <a class="code hl_union" href="group__gKernel.html#unionarm__2d__color__bgra8888__t" title="the colour type for brga8888">arm_2d_color_bgra8888_t</a> tOutput = {</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        .u8B = (uint16_t) ptRGB-&gt;B,</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        .u8G = (uint16_t) ptRGB-&gt;G,</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        .u8R = (uint16_t) ptRGB-&gt;R,</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        .u8A = (uint16_t) ptRGB-&gt;A,</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    };</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="keywordflow">return</span> tOutput.tValue;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>}</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span><span class="comment"> * Colour Conversion                                                          *</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span><span class="comment"></span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="comment"> * \brief convert the colour format of a given tile to gray8</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>ARM_NONNULL(2,3)</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de">  303</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#ga60c2471e899128c2a21f02e1a38017de" title="convert the colour format of a given tile to gray8">arm_2dp_convert_colour_to_gray8</a>(   <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget);</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="comment"></span> </div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span><span class="comment"> * \brief copy a given tile to a gray8 target tile</span></div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="comment"> * \param[in] ptRegion the target region, NULL means using the region of the </span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="comment"> *            target tile.</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>extern</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>ARM_NONNULL(2,3)</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno"><a class="line" href="group__gConversion.html#gad5ccb2bf539aa24018a4eaa0868ed711">  318</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#gad5ccb2bf539aa24018a4eaa0868ed711" title="copy a given tile to a gray8 target tile">arm_2dp_tile_copy_to_gray8</a>(<a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                                        const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span><span class="comment"></span> </div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span><span class="comment"> * \brief convert the colour format of a given tile to rgb565</span></div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>extern</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>ARM_NONNULL(2,3)</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno"><a class="line" href="group__gConversion.html#gad608978ecf403dee5bcf998c23674195">  332</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#gad608978ecf403dee5bcf998c23674195" title="convert the colour format of a given tile to rgb565">arm_2dp_convert_colour_to_rgb565</a>(  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget);</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span><span class="comment"></span> </div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="comment"> * \brief copy a given tile to a rgb565 target tile</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="comment"> * \param[in] ptRegion the target region, NULL means using the region of the </span></div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="comment"> *            target tile.</span></div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>extern</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>ARM_NONNULL(2,3)</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno"><a class="line" href="group__gConversion.html#gaa840bd826d66df37f7fc35eae8efe3bd">  347</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#gaa840bd826d66df37f7fc35eae8efe3bd" title="copy a given tile to a rgb565 target tile">arm_2dp_tile_copy_to_rgb565</a>(   <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span><span class="comment"></span> </div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span><span class="comment"> * \brief convert the colour format of a given tile to cccn888</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>extern</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>ARM_NONNULL(2,3)</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga489460ad41c8cde224f143d54aaf1976">  361</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#ga489460ad41c8cde224f143d54aaf1976" title="convert the colour format of a given tile to cccn888">arm_2dp_convert_colour_to_cccn888</a>( <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>                                                const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget);</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span><span class="comment"></span> </div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="comment"> * \brief copy a given tile to a cccn888 target tile</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span><span class="comment"> * \param[in] ptOP the control block, NULL means using the default control block</span></div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span><span class="comment"> * \param[in] ptSource the source tile</span></div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span><span class="comment"> * \param[in] ptTarget the output tile (holding a buffer)</span></div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span><span class="comment"> * \param[in] ptRegion the target region, NULL means using the region of the </span></div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span><span class="comment"> *            target tile.</span></div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span><span class="comment"> * \return arm_fsm_rt_t the operation result</span></div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>extern</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>ARM_NONNULL(2,3)</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno"><a class="line" href="group__gConversion.html#ga0c26f67aac00afc77224c36145947946">  376</a></span><a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> <a class="code hl_function" href="group__gConversion.html#ga0c26f67aac00afc77224c36145947946" title="copy a given tile to a cccn888 target tile">arm_2dp_tile_copy_to_cccn888</a>(  <a class="code hl_struct" href="group__gKernel.html#structarm__2d__op__src__t" title="the base class for operations with a target tile and a source tile">arm_2d_op_cl_convt_t</a> *ptOP,</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptSource,</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *ptTarget,</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>                                            const <a class="code hl_struct" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> *ptRegion);</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span><span class="comment"></span> </div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span><span class="comment">/*! @} */</span></div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span><span class="preprocessor">#elif defined(__IS_COMPILER_IAR__)</span></div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span><span class="preprocessor">#   pragma diag_warning=Go029 </span></div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span> </div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>}</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> </div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
