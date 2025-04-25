@@ -346,7 +346,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
 
     /* left to right, top to down process */
     do {
-        uint16_t       *phwPixel = phwTarget;
+        uint16_t *phwPixel = phwTarget;
 
         if (NULL != ptStatusV) {
             /* rows direct path */
@@ -451,7 +451,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (uint16_t * __RESTRICT 
 
     /* top to down process, left to right */
     do {
-        phwPixel = phwTarget;
+        uint16_t *phwPixel = phwTarget;
 
         if (NULL != ptStatusH) {
             ptStatusH += tOffset.iX;
