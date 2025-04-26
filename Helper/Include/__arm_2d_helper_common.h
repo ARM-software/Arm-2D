@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        25. March 2025
- * $Revision:    V.1.8.0
+ * $Date:        26. April 2025
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -845,6 +845,13 @@ extern "C" {
 #define GLCD_COLOR_WHITE        __RGB( 255, 255, 255  )
 #define GLCD_COLOR_ORANGE       __RGB( 255, 128, 0    )
 #define GLCD_COLOR_NIXIE_TUBE   __RGB(0xFF, 0xA5, 0x00)
+
+#define GLCD_COLOR_GRAY(__lv)   ({                                              \
+        uint8_t ARM_2D_SAFE_NAME(GreyLevel) = (__lv);                           \
+        __RGB(255 - ARM_2D_SAFE_NAME(GreyLevel),                                \
+              255 - ARM_2D_SAFE_NAME(GreyLevel),                                \
+              255 - ARM_2D_SAFE_NAME(GreyLevel));                               \
+    })
 
 /*!
  * \brief Please do NOT use this macro directly
