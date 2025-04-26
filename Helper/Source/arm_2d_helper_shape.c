@@ -68,7 +68,6 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
                             const arm_2d_region_t *ptRegion,
                             COLOUR_INT tColour,
                             uint8_t chOpacity,
-                            bool bIsNewFrame,
                             const arm_2d_tile_t *ptCircleMask)
 {
     assert(NULL != ptTarget);
@@ -78,7 +77,6 @@ void __draw_round_corner_box( const arm_2d_tile_t *ptTarget,
     int16_t iCircleWidth = ((ptCircleMask->tRegion.tSize.iWidth + 1) >> 1);
     int16_t iCircleHeight = ((ptCircleMask->tRegion.tSize.iHeight + 1) >> 1);
 
-    ARM_2D_UNUSED(bIsNewFrame);
     uint16_t hwFillAlpha = (0xFF == chOpacity) ? 0xFF : (0xFF * chOpacity) >> 8;
     
     arm_2d_container(ptTarget, __box, ptRegion) {

@@ -86,6 +86,15 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+enum {
+    DIRTY_REGION_WIFI,
+    DIRTY_REGION_PROGRESS_BAR_SIMPLE,
+    DIRTY_REGION_PROGRESS_BAR_DRILL,
+    DIRTY_REGION_PROGRESS_BAR_FLOWING,
+
+};
+
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
@@ -105,6 +114,15 @@ static arm_2d_helper_film_t s_tileWIFISignalFilmMask =
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
+static void __on_scene_progress_status_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+    arm_2d_helper_dirty_region_add_items(   &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                            this.tDirtyRegionItems,
+                                            dimof(this.tDirtyRegionItems));
+}
 
 
 static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
@@ -112,6 +130,10 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
     user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    arm_2d_helper_dirty_region_remove_items(   &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+        this.tDirtyRegionItems,
+        dimof(this.tDirtyRegionItems));
+
     ptScene->ptPlayer = NULL;
     
     /* reset timestamp */
@@ -148,10 +170,17 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     if (arm_2d_helper_is_time_out(  s_tileWIFISignalFilm.hwPeriodPerFrame, 
-                                    &this.lTimestamp[2])) {
+                                    &this.lTimestamp[1])) {
 
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilmMask);
+    }
+
+    int32_t iResult;
+    if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[0])) {
+        this.iProgress = -1;
+    } else {
+        this.iProgress = (uint16_t)iResult;
     }
 }
 
@@ -159,17 +188,8 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-#if 0
-    /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
+
 }
-
-
-
 
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_background_handler)
@@ -200,65 +220,62 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
     /* following code is just a demo, you can remove them */
     arm_2d_canvas(ptTile, __canvas) {
 
-        if (bIsNewFrame) {
-            int32_t iResult;
-            if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[1])) {
-                this.hwProgress = -1;
-            } else {
-                this.hwProgress = (uint16_t)iResult;
-            }
-        }
-        arm_using(arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion .tSize) {
-
-            arm_2d_align_centre(__canvas, 
-                                tScreenSize.iWidth, 
-                                120+tWiFiLogoSize.iHeight) {
+        arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion.tSize;
+        arm_2d_dock_vertical(__canvas, 
+                            160+tWiFiLogoSize.iHeight) {
+            
+            arm_2d_layout(__vertical_region) {
+                __item_line_vertical(__vertical_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
+                    arm_2d_align_centre(__item_region, tWiFiLogoSize) {
+                        
+                        arm_2d_tile_copy_with_src_mask_only(
+                                (arm_2d_tile_t *)&s_tileWIFISignalFilm,
+                                (arm_2d_tile_t *)&s_tileWIFISignalFilmMask,
+                                ptTile,
+                                &__centre_region);
                 
-                arm_2d_layout(__centre_region, DEFAULT, true) {
-                    __item_line_vertical(__centre_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
-                        arm_2d_align_centre(__item_region, tWiFiLogoSize) {
-                            
-                            arm_2d_tile_copy_with_src_mask_only(
-                                    (arm_2d_tile_t *)&s_tileWIFISignalFilm,
-                                    (arm_2d_tile_t *)&s_tileWIFISignalFilmMask,
-                                    ptTile,
-                                    &__centre_region);
+                        arm_2d_helper_dirty_region_update_item( 
+                                                    &this.tDirtyRegionItems[DIRTY_REGION_WIFI],
+                                                    (arm_2d_tile_t *)ptTile,
+                                                    &__item_region,
+                                                    &__centre_region);
 
-                        }
                     }
-                    __item_line_vertical(tScreenSize.iWidth, 40) {
-                        arm_2d_container(ptTile, __progress_bar, &__item_region) {
-                            progress_bar_simple_show(&__progress_bar, NULL, this.hwProgress, bIsNewFrame);
-                        }
+                }
+                __item_line_dock_vertical(40) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_simple_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
+
+                        arm_2d_helper_dirty_region_update_item( 
+                                                    &this.tDirtyRegionItems[DIRTY_REGION_PROGRESS_BAR_SIMPLE],
+                                                    &__progress_bar,
+                                                    NULL,
+                                                    &__progress_bar_canvas);
                     }
-                    __item_line_vertical(tScreenSize.iWidth, 40) {
-                        arm_2d_container(ptTile, __progress_bar, &__item_region) {
-                            progress_bar_drill_show(&__progress_bar, NULL, this.hwProgress, bIsNewFrame);
-                        }
+                }
+                __item_line_dock_vertical(40) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_drill_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
+                        arm_2d_helper_dirty_region_update_item( 
+                                                    &this.tDirtyRegionItems[DIRTY_REGION_PROGRESS_BAR_DRILL],
+                                                    &__progress_bar,
+                                                    NULL,
+                                                    &__progress_bar_canvas);
                     }
-                    __item_line_vertical(tScreenSize.iWidth, 40) {
-                        arm_2d_container(ptTile, __progress_bar, &__item_region) {
-                            progress_bar_flowing_show(&__progress_bar, NULL, this.hwProgress, bIsNewFrame);
-                        }
+                }
+                __item_line_dock_vertical(40) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_flowing_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
+                        arm_2d_helper_dirty_region_update_item( 
+                                                    &this.tDirtyRegionItems[DIRTY_REGION_PROGRESS_BAR_FLOWING],
+                                                    &__progress_bar,
+                                                    NULL,
+                                                    &__progress_bar_canvas);
                     }
                 }
             }
         }
-/*
-        arm_2d_align_top_right( __canvas, 
-                                s_tileWIFISignalFilm
-                                    .use_as__arm_2d_tile_t
-                                        .tRegion
-                                            .tSize) {
 
-            arm_2d_tile_copy_with_src_mask_only(
-                                    (arm_2d_tile_t *)&s_tileWIFISignalFilm,
-                                    (arm_2d_tile_t *)&s_tileWIFISignalFilmMask,
-                                    ptTile,
-                                    &__top_right_region);
-
-        }
-*/
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
@@ -281,18 +298,6 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-    /*! define dirty regions */
-    IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-        /* a dirty region to be specified at runtime*/
-        ADD_REGION_TO_LIST(s_tDirtyRegions),
-
-        ADD_LAST_REGION_TO_LIST(s_tDirtyRegions),
-
-    END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
     if (NULL == ptScene) {
         ptScene = (user_scene_progress_status_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_progress_status_t),
@@ -312,41 +317,6 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
 
-    /* initialise dirty region 0 at runtime
-     */
-    arm_2d_align_centre(tScreen, tScreen.tSize.iWidth, 120) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
-
-    /* initialise dirty region 1 at runtime
-     */
-    arm_2d_align_top_right( tScreen, 
-                            s_tileWIFISignalFilm
-                                .use_as__arm_2d_tile_t
-                                    .tRegion
-                                        .tSize) {
-        s_tDirtyRegions[1].tRegion = __top_right_region;
-    }
-
-    arm_using(arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion .tSize) {
-
-        arm_2d_align_centre(tScreen, 
-                            tScreen.tSize.iWidth, 
-                            120+tWiFiLogoSize.iHeight) {
-            
-            arm_2d_layout(__centre_region) {
-                __item_line_vertical(__centre_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
-                    arm_2d_align_centre(__item_region, tWiFiLogoSize) {
-                        s_tDirtyRegions[1].tRegion = __centre_region;
-                    }
-                }
-                __item_line_vertical(tScreen.tSize.iWidth, 120) {
-                    s_tDirtyRegions[0].tRegion = __item_region;
-                }
-            }
-        }
-    }
-
     /* set to the last frame */
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
@@ -355,21 +325,22 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
     *ptScene = (user_scene_progress_status_t){
         .use_as__arm_2d_scene_t = {
         
-        /* the canvas colour */
-        .tCanvas = {GLCD_COLOR_WHITE}, 
-        
-        /* Please uncommon the callbacks if you need them
-         */
-        //.fnBackground   = &__pfb_draw_scene_progress_status_background_handler,
-        .fnScene        = &__pfb_draw_scene_progress_status_handler,
-        .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-        
+            /* the canvas colour */
+            .tCanvas = {GLCD_COLOR_WHITE}, 
+            
+            /* Please uncommon the callbacks if you need them
+            */
+            .fnOnLoad       = &__on_scene_progress_status_load,
+            .fnScene        = &__pfb_draw_scene_progress_status_handler,
+            
 
-        //.fnOnBGStart    = &__on_scene_progress_status_background_start,
-        //.fnOnBGComplete = &__on_scene_progress_status_background_complete,
-        .fnOnFrameStart = &__on_scene_progress_status_frame_start,
-        .fnOnFrameCPL   = &__on_scene_progress_status_frame_complete,
-        .fnDepose       = &__on_scene_progress_status_depose,
+            //.fnOnBGStart    = &__on_scene_progress_status_background_start,
+            //.fnOnBGComplete = &__on_scene_progress_status_background_complete,
+            .fnOnFrameStart = &__on_scene_progress_status_frame_start,
+            .fnOnFrameCPL   = &__on_scene_progress_status_frame_complete,
+            .fnDepose       = &__on_scene_progress_status_depose,
+
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };

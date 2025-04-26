@@ -29,6 +29,7 @@
 #include "./progress_bar_drill.h"
 #include "./progress_bar_flowing.h"
 #include "./progress_bar_simple.h"
+#include "./progress_bar_round.h"
 #include "./__simple_list.h"
 #include "./number_list.h"
 #include "./text_list.h"

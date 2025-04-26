@@ -82,10 +82,12 @@ struct user_scene_progress_status_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[3];
+    int64_t lTimestamp[2];
     
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[5];
+
     bool bUserAllocated;
-    uint16_t hwProgress;
+    int16_t iProgress;
 )
     /* place your public member here */
     
