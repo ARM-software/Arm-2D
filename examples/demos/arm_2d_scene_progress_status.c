@@ -91,7 +91,6 @@ enum {
     DIRTY_REGION_PROGRESS_BAR_SIMPLE,
     DIRTY_REGION_PROGRESS_BAR_DRILL,
     DIRTY_REGION_PROGRESS_BAR_FLOWING,
-
 };
 
 
@@ -122,6 +121,8 @@ static void __on_scene_progress_status_load(arm_2d_scene_t *ptScene)
     arm_2d_helper_dirty_region_add_items(   &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
                                             this.tDirtyRegionItems,
                                             dimof(this.tDirtyRegionItems));
+    
+    progress_bar_round_on_load(&this.tProgressBarRound);
 }
 
 
@@ -133,6 +134,8 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
     arm_2d_helper_dirty_region_remove_items(   &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
         this.tDirtyRegionItems,
         dimof(this.tDirtyRegionItems));
+
+    progress_bar_round_depose(&this.tProgressBarRound);
 
     ptScene->ptPlayer = NULL;
     
@@ -182,6 +185,8 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
     } else {
         this.iProgress = (uint16_t)iResult;
     }
+
+    progress_bar_round_on_frame_start(&this.tProgressBarRound);
 }
 
 static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
@@ -189,6 +194,7 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    progress_bar_round_on_frame_complete(&this.tProgressBarRound);
 }
 
 static
@@ -273,6 +279,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                     &__progress_bar_canvas);
                     }
                 }
+
+                __item_line_dock_vertical(40) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_round_show(&this.tProgressBarRound, 
+                                                &__progress_bar, 
+                                                NULL,
+                                                GLCD_COLOR_GRAY(32), 
+                                                GLCD_COLOR_BLUE, 
+                                                this.iProgress, 
+                                                255);
+                    }
+                }
+
             }
         }
 
@@ -293,23 +312,23 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
 
 ARM_NONNULL(1)
 user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_progress_status_t *ptScene)
+                                        user_scene_progress_status_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-    if (NULL == ptScene) {
-        ptScene = (user_scene_progress_status_t *)
+    if (NULL == ptThis) {
+        ptThis = (user_scene_progress_status_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_progress_status_t),
                                                         __alignof__(user_scene_progress_status_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
-        assert(NULL != ptScene);
-        if (NULL == ptScene) {
+        assert(NULL != ptThis);
+        if (NULL == ptThis) {
             return NULL;
         }
         bUserAllocated = true;
     } else {
-        memset(ptScene, 0, sizeof(user_scene_progress_status_t));
+        memset(ptThis, 0, sizeof(user_scene_progress_status_t));
     }
 
     /* get the screen region */
@@ -322,7 +341,7 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
 
 
-    *ptScene = (user_scene_progress_status_t){
+    *ptThis = (user_scene_progress_status_t){
         .use_as__arm_2d_scene_t = {
         
             /* the canvas colour */
@@ -345,11 +364,27 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
         .bUserAllocated = bUserAllocated,
     };
 
+    /* ------------   initialize members of user_scene_rickrolling_t begin ---------------*/
+
+    do {
+        progress_bar_round_cfg_t tCFG = {
+            .ptScene = &ptThis->use_as__arm_2d_scene_t,
+            .ValueRange = {
+                .iMin = 0,
+                .iMax = 1000,
+            },
+        };
+
+        progress_bar_round_init(&this.tProgressBarRound, &tCFG);
+    } while(0);
+
+    /* ------------   initialize members of user_scene_rickrolling_t end   ---------------*/
+
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
-                                        &ptScene->use_as__arm_2d_scene_t, 
+                                        &this.use_as__arm_2d_scene_t, 
                                         1);
 
-    return ptScene;
+    return ptThis;
 }
 
 

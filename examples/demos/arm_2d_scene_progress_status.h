@@ -26,6 +26,7 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper_scene.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -84,7 +85,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
     
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[5];
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[4];
+
+    progress_bar_round_t tProgressBarRound;
 
     bool bUserAllocated;
     int16_t iProgress;

@@ -64,6 +64,9 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
+extern
+const arm_2d_tile_t c_tileWhiteDotMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -75,6 +78,10 @@ void progress_bar_round_init( progress_bar_round_t *ptThis,
     assert(NULL!= ptThis);
     memset(ptThis, 0, sizeof(progress_bar_round_t));
     this.tCFG = *ptCFG;
+
+    if (NULL == this.tCFG.ptCircleMask) {
+        this.tCFG.ptCircleMask = &c_tileWhiteDotMask;
+    }
 
 
 }
@@ -109,28 +116,45 @@ void progress_bar_round_on_frame_complete( progress_bar_round_t *ptThis)
 
 ARM_NONNULL(1, 2)
 void progress_bar_round_show(   progress_bar_round_t *ptThis,
-                                const arm_2d_tile_t *ptTile, 
+                                const arm_2d_tile_t *ptTarget, 
                                 const arm_2d_region_t *ptRegion,
                                 COLOUR_INT tBackgroundColour,
                                 COLOUR_INT tBarColour,
                                 int16_t iProgress,
                                 uint8_t chOpacity)
 {
-    if (-1 == (intptr_t)ptTile) {
-        ptTile = arm_2d_get_default_frame_buffer();
+    if (-1 == (intptr_t)ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
     }
 
     assert(NULL!= ptThis);
+    assert(NULL != this.tCFG.ptCircleMask);
 
-    arm_2d_container(ptTile, __progress_bar, ptRegion) {
+    iProgress = MIN(this.tCFG.ValueRange.iMax, iProgress);
+    iProgress = MAX(this.tCFG.ValueRange.iMin, iProgress);
 
-        arm_2d_dock_vertical(__progress_bar_canvas, this.tCFG.ptCircleMask->tRegion.tSize.iHeight) {
+    arm_2d_container(ptTarget, __control, ptRegion) {
 
-            draw_round_corner_box(  &__progress_bar, 
-                                    &__vertical_region, 
-                                    tBackgroundColour, 
-                                    chOpacity);
+        arm_2d_size_t tBarSize = {
+            .iWidth = __control_canvas.tSize.iWidth,
+            .iHeight = this.tCFG.ptCircleMask->tRegion.tSize.iHeight,
+        };
+        if (NULL == ptRegion) {
+            tBarSize.iWidth = tBarSize.iWidth * 3 >> 3; //!< 3/8 Width
+        }
 
+        arm_2d_align_centre(__control_canvas, tBarSize) {
+
+            arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
+        
+                draw_round_corner_box(  &__progress_bar, 
+                                        NULL, 
+                                        tBackgroundColour, 
+                                        chOpacity,
+                                        true,
+                                        this.tCFG.ptCircleMask);
+
+            }
         }
 
     }
