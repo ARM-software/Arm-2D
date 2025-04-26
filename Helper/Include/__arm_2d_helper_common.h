@@ -1078,6 +1078,96 @@ extern "C" {
                                 __container_name,                               \
                                 (__region_ptr),##__VA_ARGS__)
 
+
+
+/*!
+ * \brief Please do NOT use this macro directly directly
+ * 
+ */
+#define __arm_2d_safe_canvas(   __tile_ptr,                                     \
+                                __new_canvas_name,                              \
+                                __region_ptr,                                   \
+                                ...)                                            \
+            for (arm_2d_margin_t ARM_2D_SAFE_NAME(tMargin),                     \
+                *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;              \
+                 ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
+                    (({                                                         \
+                    if (!__ARM_VA_NUM_ARGS(__VA_ARGS__)) {                      \
+                        ARM_2D_SAFE_NAME(tMargin) = (arm_2d_margin_t){0};       \
+                    } else {                                                    \
+                        ARM_2D_SAFE_NAME(tMargin)                               \
+                            = (arm_2d_margin_t){__VA_ARGS__};                   \
+                    };                                                          \
+                    }),1) : 0;)                                                 \
+            arm_using(                                                          \
+                arm_2d_region_t __new_canvas_name = {0},                        \
+                {                                                               \
+                    arm_2d_region_t                                             \
+                        ARM_2D_SAFE_NAME(ContainerRegion) = {0};                \
+                    arm_2d_tile_t *ARM_2D_SAFE_NAME(ptTile)                     \
+                        = (arm_2d_tile_t *)(__tile_ptr);                        \
+                                                                                \
+                    if (NULL == ARM_2D_SAFE_NAME(ptTile)) {                     \
+                        ARM_2D_SAFE_NAME(ptTile)                                \
+                            = arm_2d_get_default_frame_buffer();                \
+                        if (NULL == ARM_2D_SAFE_NAME(ptTile)) {                 \
+                            break;                                              \
+                        }                                                       \
+                    }                                                           \
+                    if (NULL == (__region_ptr)) {                               \
+                        ARM_2D_SAFE_NAME(ContainerRegion).tSize                 \
+                            = ARM_2D_SAFE_NAME(ptTile)->tRegion.tSize;          \
+                    } else {                                                    \
+                        ARM_2D_SAFE_NAME(ContainerRegion) = *(__region_ptr);    \
+                    }                                                           \
+                    ARM_2D_SAFE_NAME(ContainerRegion).tLocation.iX              \
+                        += ARM_2D_SAFE_NAME(tMargin).chLeft;                    \
+                    ARM_2D_SAFE_NAME(ContainerRegion).tLocation.iY              \
+                        += ARM_2D_SAFE_NAME(tMargin).chTop;                     \
+                    ARM_2D_SAFE_NAME(ContainerRegion).tSize.iWidth              \
+                        -= ARM_2D_SAFE_NAME(tMargin).chLeft                     \
+                         + ARM_2D_SAFE_NAME(tMargin).chRight;                   \
+                    ARM_2D_SAFE_NAME(ContainerRegion).tSize.iHeight             \
+                        -= ARM_2D_SAFE_NAME(tMargin).chTop                      \
+                        + ARM_2D_SAFE_NAME(tMargin).chBottom;                   \
+                    __new_canvas_name = ARM_2D_SAFE_NAME(ContainerRegion);      \
+                },                                                              \
+                {                                                               \
+                    ARM_2D_UNUSED(__new_canvas_name);                           \
+                }) arm_using(                                                   \
+                        const arm_2d_tile_t *ptCurrentTile =                    \
+                            (const arm_2d_tile_t *)(__tile_ptr),                \
+                        ({ARM_2D_UNUSED(ptCurrentTile);})                       \
+                    )
+
+/*!
+ * \brief generate a canvas with a reference region and an optional inner margin. 
+ * \note you should append a {} after the arm_2d_container.
+ *
+ * \param[in] __tile_ptr the address of the parent tile
+ * \param[in] __new_canvas_name the name of the new canvas
+ * \param[in] __reference_region_ptr the reference region in the parent tile
+ * \param[in] ... an optional inner margin. You can specify the left, right, top
+ *                and the bottom margin in order. You can also use .chLeft, 
+ *                .chRight, .chTop and .chBottom to set the specified margin. 
+ */
+#define arm_2d_safe_canvas( __tile_ptr,                                         \
+                            __new_canvas_name,                                  \
+                            __reference_region_ptr,                             \
+                            ...)                                                \
+            __arm_2d_safe_canvas( (__tile_ptr),                                 \
+                                __new_canvas_name,                              \
+                                (__reference_region_ptr),##__VA_ARGS__)         \
+                __arm_2d_hint_optimize_for_pfb__(__new_canvas_name)
+
+#define arm_2d_safe_canvas_open( __tile_ptr,                                    \
+                            __new_canvas_name,                                  \
+                            __reference_region_ptr,                             \
+                            ...)                                                \
+            __arm_2d_safe_canvas( (__tile_ptr),                                 \
+                                __new_canvas_name,                              \
+                                (__reference_region_ptr),##__VA_ARGS__)
+
 #if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
 #   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)
 #else

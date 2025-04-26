@@ -133,7 +133,7 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
     iProgress = MIN(this.tCFG.ValueRange.iMax, iProgress);
     iProgress = MAX(this.tCFG.ValueRange.iMin, iProgress);
 
-    arm_2d_container(ptTarget, __control, ptRegion) {
+    arm_2d_safe_canvas(ptTarget, __control_canvas, ptRegion) {
 
         arm_2d_size_t tBarSize = {
             .iWidth = __control_canvas.tSize.iWidth,
