@@ -71,7 +71,7 @@ extern "C" {
                                     __colour,                                   \
                                     __opacity,                                  \
                                     __is_new_frame)                             \
-    __draw_round_corner_box0(                                                   \
+    __draw_round_corner_box2(                                                   \
                 (__target_tile_ptr),                                            \
                 (__region_ptr),                                                 \
                 (__colour),                                                     \

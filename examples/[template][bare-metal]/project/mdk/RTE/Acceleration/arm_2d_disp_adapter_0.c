@@ -163,8 +163,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
             draw_round_corner_box(  ptTile,
                                     &__centre_region,
                                     GLCD_COLOR_BLACK,
-                                    64,
-                                    bIsNewFrame);
+                                    64);
         }
 #endif
 
@@ -245,8 +244,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
             draw_round_corner_box(  ptTile, 
                                     &__top_left_region, 
                                     GLCD_COLOR_DARK_GREY, 
-                                    (128 * DISP0_CONSOLE.chOpacity) >> 8,
-                                    bIsNewFrame);
+                                    (128 * DISP0_CONSOLE.chOpacity) >> 8);
 
             console_box_show(&DISP0_CONSOLE.tConsole,
                             ptTile,
@@ -274,8 +272,7 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_draw_navigation)
         draw_round_corner_box(  ptTile, 
                                 &(s_tNavDirtyRegionList[0].tRegion), 
                                 __RGB(64,64,64),
-                                255-32,
-                                bIsNewFrame);
+                                255-32);
 
         ARM_2D_OP_WAIT_ASYNC();
 

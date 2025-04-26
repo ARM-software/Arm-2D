@@ -197,8 +197,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
                                             GLCD_COLOR_WHITE, 
-                                            128,
-                                            bIsNewFrame);
+                                            128);
                     
                     ARM_2D_OP_WAIT_ASYNC();
 
@@ -269,8 +268,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
                                             GLCD_COLOR_WHITE, 
-                                            128,
-                                            bIsNewFrame);
+                                            128);
                     
                     ARM_2D_OP_WAIT_ASYNC();
 
@@ -306,8 +304,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
                                             GLCD_COLOR_WHITE, 
-                                            128,
-                                            bIsNewFrame);
+                                            128);
                     
                     ARM_2D_OP_WAIT_ASYNC();
 
@@ -343,8 +340,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                     draw_round_corner_box(  ptTile, 
                                             &__item_region, 
                                             GLCD_COLOR_WHITE, 
-                                            128,
-                                            bIsNewFrame);
+                                            128);
                     
                     ARM_2D_OP_WAIT_ASYNC();
 

@@ -209,7 +209,7 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
 
     arm_2d_container(ptTile, __button, ptRegion) {
     
-        draw_round_corner_box(&__button, NULL, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+        draw_round_corner_box(&__button, NULL, GLCD_COLOR_WHITE, chOpacity);
         
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__button);
         arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);

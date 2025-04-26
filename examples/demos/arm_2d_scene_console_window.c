@@ -207,8 +207,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_console_window_handler)
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
                                     GLCD_COLOR_BLACK, 
-                                    128,
-                                    bIsNewFrame);
+                                    128);
             /* draw console */
             console_box_show(   &this.tConsole,
                                 ptTile,

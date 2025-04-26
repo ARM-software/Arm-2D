@@ -72,8 +72,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
             draw_round_corner_box(  ptTile,
                                     &__centre_region,
                                     GLCD_COLOR_BLACK,
-                                    64,
-                                    bIsNewFrame);
+                                    64);
         }
 
         busy_wheel2_show(ptTile, bIsNewFrame);

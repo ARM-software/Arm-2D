@@ -257,8 +257,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
                                     GLCD_COLOR_BLACK, 
-                                    200,
-                                    bIsNewFrame);
+                                    200);
     #endif
             arm_2d_align_bottom_centre(__centre_region, 224, 140 ) {
 

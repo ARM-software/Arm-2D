@@ -370,8 +370,7 @@ static void show_icon_with_background(  const arm_2d_tile_t *ptTile,
             draw_round_corner_box(  ptTile, 
                                     &__centre_region,
                                     GLCD_COLOR_BLACK,
-                                    32,
-                                    bIsNewFrame);    
+                                    32);    
             arm_2d_op_wait_async(NULL);
         }
 
@@ -831,8 +830,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                 draw_round_corner_box(  &tTempPanel, 
                                         &__centre_region,
                                         GLCD_COLOR_BLACK,
-                                        64,
-                                        bIsNewFrame);    
+                                        64);    
                 ARM_2D_OP_WAIT_ASYNC();
             }
         }

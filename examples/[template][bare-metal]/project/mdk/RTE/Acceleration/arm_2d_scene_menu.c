@@ -241,7 +241,7 @@ arm_fsm_rt_t __list_view_item_0_draw_item(
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
             
-            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity);
 
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
@@ -298,7 +298,7 @@ arm_fsm_rt_t __list_view_item_1_draw_item(
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
 
-            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity);
 
             progress_wheel_show(&ptScene->tWheel, 
                                 ptTile, 
@@ -358,7 +358,7 @@ arm_fsm_rt_t __list_view_item_2_draw_item(
                 __top_centre_region.tLocation.iY += (int16_t) fYOffset;
             } while(0);
 
-            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity);
         
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);
@@ -413,7 +413,7 @@ arm_fsm_rt_t __list_view_item_3_draw_item(
             } while(0);
 
 
-            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity, bIsNewFrame);
+            draw_round_corner_box(ptTile, &__top_centre_region, GLCD_COLOR_WHITE, chOpacity);
 
             arm_lcd_text_set_target_framebuffer(ptTile);
             arm_lcd_text_set_colour(__RGB(0x94, 0xd2, 0x52), GLCD_COLOR_BLACK);

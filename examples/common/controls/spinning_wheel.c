@@ -102,8 +102,7 @@ void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
             draw_round_corner_box(  ptTarget, 
                                     &__centre_region,
                                     GLCD_COLOR_BLACK,
-                                    64,
-                                    bIsNewFrame);    
+                                    64);    
             ARM_2D_OP_WAIT_ASYNC();
         }
 

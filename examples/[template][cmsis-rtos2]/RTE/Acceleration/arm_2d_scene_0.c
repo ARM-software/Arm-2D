@@ -181,8 +181,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene0_handler)
             draw_round_corner_box(  ptTile, 
                                     &__centre_region, 
                                     GLCD_COLOR_WHITE, 
-                                    255,
-                                    bIsNewFrame);
+                                    255);
             
             arm_2d_op_wait_async(NULL);
             
