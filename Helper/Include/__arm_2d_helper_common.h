@@ -2412,10 +2412,12 @@ extern "C" {
  */
 #define arm_2d_align_left(...)      arm_2d_align_mid_left(__VA_ARGS__)
 
+#if 0
 /*!
  * \brief the alias of __mid_left_region
  */
 #define __left_region               __mid_left_region
+#endif
 
 /*!
  * \brief Please do NOT use this macro directly
@@ -2578,10 +2580,12 @@ extern "C" {
  */
 #define arm_2d_align_right(...)      arm_2d_align_mid_right(__VA_ARGS__)
 
+#if 0
 /*!
  * \brief the alias of __mid_right_region
  */
 #define __right_region               __mid_right_region
+#endif
 
 /*!
  * \brief Please do NOT use this macro directly
