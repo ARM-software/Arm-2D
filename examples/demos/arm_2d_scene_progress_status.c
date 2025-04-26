@@ -286,7 +286,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                 &__progress_bar, 
                                                 NULL,
                                                 GLCD_COLOR_GRAY(32), 
-                                                GLCD_COLOR_BLUE, 
+                                                GLCD_COLOR_NIXIE_TUBE, 
                                                 this.iProgress, 
                                                 255);
                     }
