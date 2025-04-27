@@ -152,6 +152,15 @@ extern "C" {
 //#define __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__ 
 // </c>
 
+// <c1> Remove the Helium RGB565 Patch in IIR Blur operations
+// <i> This option is used to remove helium rgb565 patch in IIR Blur to gain a better performance, a ghost-shadow effects might noticible when background is white or light.
+//#define __ARM_2D_CFG_UNSAFE_NO_HELIUM_RGB565_PATCH_IN_IIR_BLUR__ 
+// </c>
+
+// <c1> Remove the PFB support in IIR Blur Helium acceleration
+// <i> This option is used to remove the PFB support in IIR Blur Helium backend to gain a better performance.
+//#define __ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__ 
+// </c>
 
 // <q> Optimize the scaler version of transform operations for pointer-like resources
 // <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
@@ -173,6 +182,7 @@ extern "C" {
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__              0
 #endif
+
 // </h>
 
 

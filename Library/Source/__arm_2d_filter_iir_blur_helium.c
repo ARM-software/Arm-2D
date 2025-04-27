@@ -21,8 +21,8 @@
 * Title:        __arm_2d_filter_iir_blur_helium.c
 * Description:  APIs for IIR Blur
 *
-* $Date:        25. April 2025
-* $Revision:    V.2.0.0
+* $Date:        27. April 2025
+* $Revision:    V.2.0.1
 *
 * Target Processor:  Cortex-M cores with helium
 *
@@ -114,10 +114,12 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
     __arm_2d_iir_blur_acc_gray8_t *ptStatusV = NULL;
     int16x8_t       vacc;
 
+#if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
     if (NULL != (void *) (ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_gray8_t *) ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ROUND_UP_8(ptTargetRegionOnVirtualScreen->tSize.iWidth);
     }
+#endif
 
     /* calculate the offset between the target region and the valid region */
     arm_2d_location_t tOffset = {
@@ -162,10 +164,12 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
     if (this.bForwardHorizontal) {
         uint8_t *pchPixel = pchTarget;
 
+    #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
         if (NULL != ptStatusV) {
             /* rows direct path */
             ptStatusV += tOffset.iY;
         }
+    #endif
 
         uint16x8_t vstride = vidupq_n_u16(0, 1);
 
@@ -174,10 +178,13 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
         for (iY = 0; iY < iHeight / 8; iY++) {
             uint16x8_t      voffs = vstride;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV && tOffset.iX > 0) {
                 /* recover the previous accumulators */
                 vacc = vld1q((uint16_t *) ptStatusV);
-            } else {
+            } else 
+        #endif
+            {
                 vacc = vldrbq_gather_offset_u16(pchPixel, voffs);
             }
 
@@ -191,11 +198,13 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
                 voffs += 1;
             }
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV) {
                 /* save the last pixels */
                 vst1q((int16_t *) ptStatusV, vacc);
                 ptStatusV += 8;
             }
+        #endif
 
             pchPixel += (iTargetStride * 8);
         }
@@ -205,10 +214,13 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
             uint16x8_t      voffs = vstride;
             mve_pred16_t    tailPred = vctp16q(iHeight & 7);
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV && tOffset.iX > 0) {
                 /* recover the previous accumulators */
                 vacc = vld1q((uint16_t *) ptStatusV);
-            } else {
+            } else 
+        #endif
+            {
                 vacc = vldrbq_gather_offset_u16(pchPixel, voffs);
             }
 
@@ -221,10 +233,12 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
                 voffs += 1;
             }
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV) {
                 /* save the last pixels */
                 vst1q((int16_t *) ptStatusV, vacc);
             }
+        #endif
         }
     }
 
@@ -275,18 +289,23 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
     if (this.bForwardVertical) {
         uint8_t *pchPixel = pchTarget;
 
+    #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
         if (NULL != ptStatusH) {
             ptStatusH += tOffset.iX;
         }
+    #endif
 
         /* columns direct path */
         for (iX = 0; iX < iWidth / 8; iX++) {
             uint8_t *pchChannel = pchPixel;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH && tOffset.iY > 0) {
                 /* recover the previous accumulators */ ;
                 vacc = vld1q((uint16_t *) ptStatusH);
-            } else {
+            } else
+        #endif
+            {
                 vacc = vldrbq_u16(pchChannel);
             }
 
@@ -301,11 +320,13 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
 
             pchPixel += 8;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH) {
                 /* save the last pixels */
                 vst1q((int16_t *) ptStatusH, vacc);
                 ptStatusH += 8;
             }
+        #endif
         }
 
         /* residue for non-multiple of 8 columns dimension */
@@ -313,10 +334,13 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
             mve_pred16_t    tailPred = vctp16q(iWidth & 7);
             uint8_t        *pchChannel = pchPixel;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH && tOffset.iY > 0) {
                 /* recover the previous accumulators */ ;
                 vacc = vld1q((uint16_t *) ptStatusH);
-            } else {
+            } else 
+        #endif
+            {
                 vacc = vldrbq_u16(pchChannel);
             }
 
@@ -328,11 +352,12 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
                 vstrbq_p_u16(pchChannel, vacc, tailPred);
                 pchChannel += iTargetStride;
             }
-
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH) {
                 /* save the last pixels */
                 vst1q((int16_t *) ptStatusH, vacc);
             }
+        #endif
         }
     }
 
@@ -376,6 +401,10 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
     }
 }
 
+#if !defined(__ARM_2D_CFG_UNSAFE_NO_HELIUM_RGB565_PATCH_IN_IIR_BLUR__)
+#   define __arm_2d_rgb565_unpack_single_vec    __arm_2d_rgb565_unpack_single_vec_comp
+#endif
+
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
@@ -404,10 +433,12 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
     int16_t       *pAccBase = NULL;
     int16x8_t      vaccR, vaccG, vaccB;
 
+#if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
     if (NULL != (void *) (ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_rgb565_t *) ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ROUND_UP_8(ptTargetRegionOnVirtualScreen->tSize.iWidth);
     }
+#endif
 
     /* calculate the offset between the target region and the valid region */
     arm_2d_location_t tOffset = {
@@ -453,10 +484,12 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
     if (this.bForwardHorizontal) {
         uint16_t *phwPixel = phwTarget;
 
+    #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
         if (NULL != ptStatusV) {
             /* rows direct path */
             ptStatusV += tOffset.iY;
         }
+    #endif
 
         uint16x8_t      vstride = vidupq_n_u16(0, 1);
         vstride = vstride * iTargetStride;
@@ -464,15 +497,18 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
         for (iY = 0; iY < iHeight / 8; iY++) {
             uint16x8_t      voffs = vstride;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV && tOffset.iX > 0) {
                 /* recover the previous accumulators */
                 pAccBase = (int16_t *) ptStatusV;
                 vaccR = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccB = vld1q(pAccBase + 16);
-            } else {
+            } else 
+        #endif
+            {
                 int16x8_t       vacc = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
-                __arm_2d_rgb565_unpack_single_vec_comp(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
+                __arm_2d_rgb565_unpack_single_vec(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
             }
 
 
@@ -480,7 +516,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t      in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -494,6 +530,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 voffs += 1;
             }
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV) {
                 /* save the last pixels */
                 pAccBase = (int16_t *) ptStatusV;
@@ -502,6 +539,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vst1q(pAccBase + 16, vaccB);
                 ptStatusV += 8;
             }
+        #endif
 
             phwPixel += (iTargetStride * 8);
         }
@@ -510,6 +548,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             uint16x8_t      voffs = vstride;
             mve_pred16_t    tailPred = vctp16q(iHeight & 7);
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV && tOffset.iX > 0) {
                 /* recover the previous values */
                 pAccBase = (int16_t *) ptStatusV;
@@ -517,10 +556,12 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vaccG = vld1q(pAccBase + 8);
                 vaccB = vld1q(pAccBase + 16);
 
-            } else {
+            } else 
+        #endif
+            {
                 int16x8_t       vacc = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
 
-                __arm_2d_rgb565_unpack_single_vec_comp(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
+                __arm_2d_rgb565_unpack_single_vec(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
             }
 
 
@@ -528,7 +569,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t      in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -542,7 +583,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 voffs += 1;
 
             }
-
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV) {
                 /* save the last pixels */
                 pAccBase = (int16_t *) ptStatusV;
@@ -550,6 +591,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vst1q(pAccBase + 8, vaccG);
                 vst1q(pAccBase + 16, vaccB);
             }
+        #endif
         }
     }
 
@@ -563,7 +605,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
         for (iY = 0; iY < iHeight / 8; iY++) {
             int16x8_t voffs = vstride;
 
-            __arm_2d_rgb565_unpack_single_vec_comp(  
+            __arm_2d_rgb565_unpack_single_vec(  
                             vldrhq_gather_shifted_offset_u16(phwPixel, voffs), 
                             (uint16x8_t *)&vaccR, 
                             (uint16x8_t *)&vaccG, 
@@ -573,7 +615,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t      in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -597,7 +639,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             int16x8_t      voffs = vstride;
             mve_pred16_t    tailPred = vctp16q(iHeight & 7);
 
-            __arm_2d_rgb565_unpack_single_vec_comp(  
+            __arm_2d_rgb565_unpack_single_vec(  
                             vldrhq_gather_shifted_offset_u16(phwPixel, voffs), 
                             (uint16x8_t *)&vaccR, 
                             (uint16x8_t *)&vaccG, 
@@ -607,7 +649,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
                 uint16x8_t vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t vdiffG = vsubq_s16(vG, vaccG);
@@ -631,14 +673,17 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
     if (this.bForwardVertical) {
         uint16_t *phwPixel = phwTarget;
 
+    #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
         if (NULL != ptStatusH) {
             ptStatusH += tOffset.iX;
         }
+    #endif
 
         /* columns direct path */
         for (iX = 0; iX < iWidth / 8; iX++) {
             uint16_t       *phwChannel = phwPixel;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH && tOffset.iY > 0) {
 
                 /* recover the previous values */
@@ -646,10 +691,11 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vaccR = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccB = vld1q(pAccBase + 16);
-            } else {
-
+            } else 
+        #endif
+            {
                 int16x8_t       vacc = vldrhq_u16(phwChannel);
-                __arm_2d_rgb565_unpack_single_vec_comp(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
+                __arm_2d_rgb565_unpack_single_vec(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
             }
 
             for (iY = 0; iY < iHeight; iY++) {
@@ -657,7 +703,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t      in = vldrhq_u16(phwChannel);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -673,6 +719,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
 
             phwPixel += 8;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH) {
                 /* save the last pixels */
                 pAccBase = (int16_t *) ptStatusH;
@@ -681,6 +728,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vst1q(pAccBase + 16, vaccB);
                 ptStatusH += 8;
             }
+        #endif
         }
 
 
@@ -688,22 +736,25 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             mve_pred16_t    tailPred = vctp16q(iWidth & 7);
             uint16_t       *phwChannel = phwPixel;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH && tOffset.iY > 0) {
                 /* recover the previous values */
                 pAccBase = (int16_t *) ptStatusH;
                 vaccR = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccB = vld1q(pAccBase + 16);
-            } else {
+            } else 
+        #endif
+            {
                 int16x8_t       vacc = vldrhq_u16(phwChannel);
-                __arm_2d_rgb565_unpack_single_vec_comp(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
+                __arm_2d_rgb565_unpack_single_vec(vacc, (uint16x8_t *)&vaccR, (uint16x8_t *)&vaccG, (uint16x8_t *)&vaccB);
             }
 
             for (iY = 0; iY < iHeight; iY++) {
                 uint16x8_t      in = vldrhq_u16(phwChannel);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -716,7 +767,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vstrhq_p_u16(phwChannel, __arm_2d_rgb565_pack_single_vec(vaccR, vaccG, vaccB), tailPred);
                 phwChannel += iTargetStride;
             }
-
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH) {
                 /* save the last pixels */
                 pAccBase = (int16_t *) ptStatusH;
@@ -724,6 +775,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 vst1q(pAccBase + 8, vaccG);
                 vst1q(pAccBase + 16, vaccB);
             }
+        #endif
         }
     }
 
@@ -735,7 +787,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
         for (iX = 0; iX < iWidth / 8; iX++) {
             uint16_t  *phwChannel = phwPixel;
 
-            __arm_2d_rgb565_unpack_single_vec_comp(  vldrhq_u16(phwChannel), 
+            __arm_2d_rgb565_unpack_single_vec(  vldrhq_u16(phwChannel), 
                                                 (uint16x8_t *)&vaccR, 
                                                 (uint16x8_t *)&vaccG, 
                                                 (uint16x8_t *)&vaccB);
@@ -745,7 +797,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t      in = vldrhq_u16(phwChannel);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -771,7 +823,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             mve_pred16_t    tailPred = vctp16q(iWidth & 7);
             uint16_t       *phwChannel = phwPixel;
 
-            __arm_2d_rgb565_unpack_single_vec_comp(  vldrhq_u16(phwChannel), 
+            __arm_2d_rgb565_unpack_single_vec(  vldrhq_u16(phwChannel), 
                                                 (uint16x8_t *)&vaccR, 
                                                 (uint16x8_t *)&vaccG, 
                                                 (uint16x8_t *)&vaccB);
@@ -780,7 +832,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
                 uint16x8_t      in = vldrhq_u16(phwChannel);
                 uint16x8_t      vR, vG, vB;
 
-                __arm_2d_rgb565_unpack_single_vec_comp(in, &vR, &vG, &vB);
+                __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
 
                 int16x8_t       vdiffR = vsubq_s16(vR, vaccR);
                 int16x8_t       vdiffG = vsubq_s16(vG, vaccG);
@@ -831,10 +883,12 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
     int16_t        *pAccBase = NULL;
     int16x8_t       vaccB, vaccG, vaccR;
 
+#if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
     if (NULL != (void *) (ptScratchMemory->pBuffer)) {
         ptStatusH = (__arm_2d_iir_blur_acc_cccn888_t *) ptScratchMemory->pBuffer;
         ptStatusV = ptStatusH + ROUND_UP_8(ptTargetRegionOnVirtualScreen->tSize.iWidth);
     }
+#endif
 
     /* calculate the offset between the target region and the valid region */
     arm_2d_location_t tOffset = {
@@ -880,10 +934,12 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
     if (this.bForwardHorizontal) {
         uint32_t *pwPixel = pwTarget;
 
+    #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
         if (NULL != ptStatusV) {
             /* rows direct path */
             ptStatusV += tOffset.iY;
         }
+    #endif
 
         uint16x8_t vstride = vidupq_n_u16(0, 4);
         vstride = vstride * iTargetStride;
@@ -892,14 +948,17 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
             uint8_t        *pchPixelB = (uint8_t *) pwPixel;
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
-
+        
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV && tOffset.iX > 0) {
                 /* recover the previous accumulators */
                 pAccBase = (int16_t *) ptStatusV;
                 vaccB = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccR = vld1q(pAccBase + 16);
-            } else {
+            } else 
+        #endif
+            {
                 vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
                 vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
                 vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
@@ -929,6 +988,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 pchPixelR += 4;
             }
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV) {
                 pAccBase = (int16_t *) ptStatusV;
                 vst1q(pAccBase, vaccB);
@@ -936,6 +996,8 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 vst1q(pAccBase + 16, vaccR);
                 ptStatusV += 8;
             }
+        #endif
+
             pwPixel += (iTargetStride * 8);
         }
 
@@ -947,13 +1009,16 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV && tOffset.iX > 0) {
                 /* recover the previous accumulators */
                 pAccBase = (int16_t *) ptStatusV;
                 vaccB = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccR = vld1q(pAccBase + 16);
-            } else {
+            } else 
+        #endif
+            {
                 vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
                 vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
                 vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
@@ -983,12 +1048,14 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 pchPixelR += 4;
             }
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusV) {
                 pAccBase = (int16_t *) ptStatusV;
                 vst1q(pAccBase, vaccB);
                 vst1q(pAccBase + 8, vaccG);
                 vst1q(pAccBase + 16, vaccR);
             }
+        #endif
         }
     }
 
@@ -1075,9 +1142,11 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
     if (this.bReverseVertical) {
         uint32_t *pwPixel = pwTarget;
 
+    #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
         if (NULL != ptStatusH) {
             ptStatusH += tOffset.iX;
         }
+    #endif
 
         uint16x8_t vstride = vidupq_n_u16(0, 4);
 
@@ -1088,13 +1157,16 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH && tOffset.iY > 0) {
                 /* recover the previous accumulators */
                 pAccBase = (int16_t *) ptStatusH;
                 vaccB = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccR = vld1q(pAccBase + 16);
-            } else {
+            } else 
+        #endif
+            {
                 vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
                 vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
                 vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
@@ -1127,6 +1199,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
 
             pwPixel += 8;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH) {
                 pAccBase = (int16_t *) ptStatusH;
                 vst1q(pAccBase, vaccB);
@@ -1135,6 +1208,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
 
                 ptStatusH += 8;
             }
+        #endif
         }
 
         if (iWidth & 7) {
@@ -1143,13 +1217,16 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH && tOffset.iY > 0) {
                 /* recover the previous accumulators */
                 pAccBase = (int16_t *) ptStatusH;
                 vaccB = vld1q(pAccBase);
                 vaccG = vld1q(pAccBase + 8);
                 vaccR = vld1q(pAccBase + 16);
-            } else {
+            } else 
+        #endif
+            {
                 vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
                 vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
                 vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
@@ -1178,6 +1255,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 pchPixelR += 4 * iTargetStride;
             }
 
+        #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__
             if (NULL != ptStatusH) {
                 pAccBase = (int16_t *) ptStatusH;
                 vst1q(pAccBase, vaccB);
@@ -1185,6 +1263,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 vst1q(pAccBase + 16, vaccR);
 
             }
+        #endif
         }
     }
 
@@ -1274,4 +1353,5 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
 }
 #endif
 
+#undef __arm_2d_rgb565_unpack_single_vec
 #endif                          /* __ARM_2D_COMPILATION_UNIT */
