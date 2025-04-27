@@ -88,6 +88,7 @@ ARM_PRIVATE(
     arm_2d_helper_dirty_region_item_t tDirtyRegionItems[4];
 
     progress_bar_round_t tProgressBarRound;
+    progress_bar_round_t tProgressBarRound2;
 
     bool bUserAllocated;
     int16_t iProgress;

@@ -83,14 +83,23 @@ void progress_bar_round_init( progress_bar_round_t *ptThis,
         this.tCFG.ptCircleMask = &c_tileWhiteDotMask;
     }
 
-
+    if (0 == this.tCFG.ValueRange.iMax && 0 == this.tCFG.ValueRange.iMin) {
+        this.tCFG.ValueRange.iMax = 1000;
+    }
 }
 
 ARM_NONNULL(1)
 void progress_bar_round_depose( progress_bar_round_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_remove_items(   
+            &this.tCFG.ptScene->tDirtyRegionHelper,
+            &this.tDirtyRegionItem,
+            1);
+        
+    }
 }
 
 ARM_NONNULL(1)
@@ -98,12 +107,25 @@ void progress_bar_round_on_load( progress_bar_round_t *ptThis)
 {
     assert(NULL != ptThis);
     
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_add_items(   
+            &this.tCFG.ptScene->tDirtyRegionHelper,
+            &this.tDirtyRegionItem,
+            1);
+        
+        arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure(
+                                                    &this.tDirtyRegionItem,
+                                                    true);
+    }
 }
 
 ARM_NONNULL(1)
 void progress_bar_round_on_frame_start( progress_bar_round_t *ptThis)
 {
     assert(NULL != ptThis);
+
+    arm_2d_helper_dirty_region_item_suspend_update( &this.tDirtyRegionItem,
+                                                    true);
     
 }
 
@@ -130,8 +152,21 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
     assert(NULL!= ptThis);
     assert(NULL != this.tCFG.ptCircleMask);
 
-    iProgress = MIN(this.tCFG.ValueRange.iMax, iProgress);
-    iProgress = MAX(this.tCFG.ValueRange.iMin, iProgress);
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTarget);
+
+    if (bIsNewFrame) {
+
+        iProgress = MIN(this.tCFG.ValueRange.iMax, iProgress);
+        iProgress = MAX(this.tCFG.ValueRange.iMin, iProgress);
+
+        arm_2d_helper_dirty_region_item_suspend_update( 
+                                                &this.tDirtyRegionItem,
+                                                (iProgress == this.iProgress));
+
+
+        this.iProgress = iProgress;
+
+    }
 
     arm_2d_safe_canvas(ptTarget, __control_canvas, ptRegion) {
 
@@ -147,13 +182,238 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
 
             arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
         
+                if (bIsNewFrame) {
+
+                    int16_t iFullLength = this.tCFG.ValueRange.iMax - this.tCFG.ValueRange.iMin;
+                    int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth;
+
+                    this.q16Ratio 
+                        = div_n_q16(reinterpret_q16_s16(iProgressBarLength),
+                                    iFullLength);
+                }
+
                 draw_round_corner_box(  &__progress_bar, 
                                         NULL, 
                                         tBackgroundColour, 
                                         chOpacity,
                                         true,
                                         this.tCFG.ptCircleMask);
+                
+                int16_t iBarLength 
+                    = reinterpret_s16_q16(
+                        mul_n_q16(  this.q16Ratio, 
+                                    this.iProgress - this.tCFG.ValueRange.iMin));
 
+                int16_t iHalfCircleWidth = this.tCFG.ptCircleMask->tRegion.tSize.iWidth >> 1;
+                int16_t iStrideMaxWidth = __progress_bar_canvas.tSize.iWidth - iHalfCircleWidth;
+
+                arm_2d_dock_left(__progress_bar_canvas, iBarLength) {
+                    do {
+                        arm_2d_fill_colour_with_mask_and_opacity(
+                                &__progress_bar,
+                                &__left_region,
+                                this.tCFG.ptCircleMask,
+                                (__arm_2d_color_t){tBarColour}, 
+                                chOpacity);
+                        if (iBarLength <= iHalfCircleWidth) {
+                            break;
+                        }
+
+                        arm_2d_region_t tTempRegion = __left_region;
+                        tTempRegion.tLocation.iX += iHalfCircleWidth;
+                        tTempRegion.tSize.iWidth -= iHalfCircleWidth;
+
+                        if ( iBarLength <= iStrideMaxWidth) {
+                            arm_2d_fill_colour_with_opacity(&__progress_bar, 
+                                &tTempRegion, 
+                                (__arm_2d_color_t){tBarColour}, 
+                                chOpacity );
+                            break;
+                        }
+
+                        tTempRegion.tSize.iWidth = iStrideMaxWidth - iHalfCircleWidth;
+
+                        arm_2d_fill_colour_with_opacity(&__progress_bar, 
+                                                        &tTempRegion, 
+                                                        (__arm_2d_color_t){tBarColour}, 
+                                                        chOpacity );
+                        
+                        arm_2d_dock_right(__progress_bar_canvas, iHalfCircleWidth) {
+
+                            if (arm_2d_region_intersect(&__left_region, &__right_region, &tTempRegion)) {
+                                arm_2d_tile_t tRightCircileMask = 
+                                    impl_child_tile(
+                                        *this.tCFG.ptCircleMask, 
+                                        iHalfCircleWidth, 
+                                        0, 
+                                        iHalfCircleWidth, 
+                                        this.tCFG.ptCircleMask->tRegion.tSize.iHeight);
+
+                                arm_2d_fill_colour_with_mask_and_opacity(
+                                    &__progress_bar,
+                                    &tTempRegion,
+                                    &tRightCircileMask,
+                                    (__arm_2d_color_t){tBarColour}, 
+                                    chOpacity);
+
+                            }
+                        }
+                            
+                    } while(0);
+
+                    /* tracking the right edge to update the dirty region */
+                    arm_2d_dock_right(__left_region, 1) {
+                        arm_2d_helper_dirty_region_update_item( 
+                                                        &this.tDirtyRegionItem,
+                                                        &__progress_bar,
+                                                        &__progress_bar_canvas,
+                                                        &__right_region);
+                    }
+                }
+
+                if (0 == iBarLength) {
+                    arm_2d_helper_dirty_region_update_item( 
+                        &this.tDirtyRegionItem,
+                        &__progress_bar,
+                        NULL,
+                        &__progress_bar_canvas);
+                }
+            }
+        }
+
+    }
+
+    ARM_2D_OP_WAIT_ASYNC();
+}
+
+
+ARM_NONNULL(1, 2)
+void progress_bar_round_show2(   progress_bar_round_t *ptThis,
+                                const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                COLOUR_INT tBackgroundColour,
+                                COLOUR_INT tBarColour,
+                                int16_t iProgress,
+                                uint8_t chOpacity)
+{
+    if (-1 == (intptr_t)ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
+    }
+
+    assert(NULL!= ptThis);
+    assert(NULL != this.tCFG.ptCircleMask);
+
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTarget);
+
+    if (bIsNewFrame) {
+
+        iProgress = MIN(this.tCFG.ValueRange.iMax, iProgress);
+        iProgress = MAX(this.tCFG.ValueRange.iMin, iProgress);
+
+        arm_2d_helper_dirty_region_item_suspend_update( 
+                                                &this.tDirtyRegionItem,
+                                                (iProgress == this.iProgress));
+
+
+        this.iProgress = iProgress;
+
+    }
+
+    arm_2d_safe_canvas(ptTarget, __control_canvas, ptRegion) {
+
+        arm_2d_size_t tBarSize = {
+            .iWidth = __control_canvas.tSize.iWidth,
+            .iHeight = this.tCFG.ptCircleMask->tRegion.tSize.iHeight,
+        };
+        if (NULL == ptRegion) {
+            tBarSize.iWidth = tBarSize.iWidth * 3 >> 3; //!< 3/8 Width
+        }
+
+        arm_2d_align_centre(__control_canvas, tBarSize) {
+
+            arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
+        
+                if (bIsNewFrame) {
+
+                    int16_t iFullLength = this.tCFG.ValueRange.iMax - this.tCFG.ValueRange.iMin;
+                    int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth - this.tCFG.ptCircleMask->tRegion.tSize.iWidth;
+
+                    this.q16Ratio 
+                        = div_n_q16(reinterpret_q16_s16(iProgressBarLength),
+                                    iFullLength);
+                }
+
+                draw_round_corner_box(  &__progress_bar, 
+                                        NULL, 
+                                        tBackgroundColour, 
+                                        chOpacity,
+                                        true,
+                                        this.tCFG.ptCircleMask);
+                
+                int16_t iHalfCircleLength = this.tCFG.ptCircleMask->tRegion.tSize.iWidth >> 1;
+
+                arm_2d_dock_left(__progress_bar_canvas, iHalfCircleLength) {
+
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                        &__progress_bar,
+                        &__left_region,
+                        this.tCFG.ptCircleMask,
+                        (__arm_2d_color_t){tBarColour}, 
+                        chOpacity);
+                }
+
+                
+                int16_t iBarLength 
+                        = reinterpret_s16_q16(
+                            mul_n_q16(  this.q16Ratio, 
+                                        this.iProgress - this.tCFG.ValueRange.iMin));
+
+                arm_2d_dock_vertical(__progress_bar_canvas, 
+                                    this.tCFG.ptCircleMask->tRegion.tSize.iHeight, 
+                                    iHalfCircleLength) {
+
+                    /* draw the stride */
+                    arm_2d_dock_left(__vertical_region, iBarLength) {
+
+                        arm_2d_fill_colour_with_opacity(&__progress_bar, 
+                            &__left_region, 
+                            (__arm_2d_color_t){tBarColour}, 
+                            chOpacity );
+                    }
+
+
+                    /* draw the right semicircle */
+                    arm_2d_dock_left(__vertical_region, iBarLength + iHalfCircleLength) {
+
+                        arm_2d_dock_right(__left_region, iHalfCircleLength) {
+                            arm_2d_tile_t tRightCircileMask = 
+                                            impl_child_tile(
+                                                *this.tCFG.ptCircleMask, 
+                                                iHalfCircleLength, 
+                                                0, 
+                                                iHalfCircleLength, 
+                                                this.tCFG.ptCircleMask->tRegion.tSize.iHeight);
+        
+                            arm_2d_fill_colour_with_mask_and_opacity(
+                                &__progress_bar,
+                                &__right_region,
+                                &tRightCircileMask,
+                                (__arm_2d_color_t){tBarColour}, 
+                                chOpacity);
+                            
+                            /* tracking the right semicircle to update the dirty region */
+                            arm_2d_helper_dirty_region_update_item( 
+                                    &this.tDirtyRegionItem,
+                                    &__progress_bar,
+                                    &__left_region,
+                                    &__right_region);
+                        }
+
+                    }
+                }
+
+
+                
             }
         }
 

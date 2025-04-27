@@ -123,6 +123,7 @@ static void __on_scene_progress_status_load(arm_2d_scene_t *ptScene)
                                             dimof(this.tDirtyRegionItems));
     
     progress_bar_round_on_load(&this.tProgressBarRound);
+    progress_bar_round_on_load(&this.tProgressBarRound2);
 }
 
 
@@ -136,6 +137,7 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
         dimof(this.tDirtyRegionItems));
 
     progress_bar_round_depose(&this.tProgressBarRound);
+    progress_bar_round_depose(&this.tProgressBarRound2);
 
     ptScene->ptPlayer = NULL;
     
@@ -187,6 +189,7 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
     }
 
     progress_bar_round_on_frame_start(&this.tProgressBarRound);
+    progress_bar_round_on_frame_start(&this.tProgressBarRound2);
 }
 
 static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
@@ -195,6 +198,7 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     progress_bar_round_on_frame_complete(&this.tProgressBarRound);
+    progress_bar_round_on_frame_complete(&this.tProgressBarRound2);
 }
 
 static
@@ -228,7 +232,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
 
         arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion.tSize;
         arm_2d_dock_vertical(__canvas, 
-                            160+tWiFiLogoSize.iHeight) {
+                            200+tWiFiLogoSize.iHeight) {
             
             arm_2d_layout(__vertical_region) {
                 __item_line_vertical(__vertical_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
@@ -287,6 +291,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                 NULL,
                                                 GLCD_COLOR_GRAY(32), 
                                                 GLCD_COLOR_NIXIE_TUBE, 
+                                                this.iProgress, 
+                                                255);
+                    }
+                }
+
+                __item_line_dock_vertical(40) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_round_show2(&this.tProgressBarRound2, 
+                                                &__progress_bar,
+                                                NULL,
+                                                GLCD_COLOR_GRAY(32), 
+                                                __RGB(0x94, 0xd2, 0x52), 
                                                 this.iProgress, 
                                                 255);
                     }
@@ -376,6 +392,18 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
         };
 
         progress_bar_round_init(&this.tProgressBarRound, &tCFG);
+    } while(0);
+
+    do {
+        progress_bar_round_cfg_t tCFG = {
+            .ptScene = &ptThis->use_as__arm_2d_scene_t,
+            .ValueRange = {
+                .iMin = 0,
+                .iMax = 1000,
+            },
+        };
+
+        progress_bar_round_init(&this.tProgressBarRound2, &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_rickrolling_t end   ---------------*/

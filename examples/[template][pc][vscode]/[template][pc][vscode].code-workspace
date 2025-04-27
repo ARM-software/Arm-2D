@@ -74,7 +74,8 @@
 			"arm_2d_scene_text_reader.h": "c",
 			"arm_2d_scene_compass.h": "c",
 			"arm_2d_scene_filters.h": "c",
-			"arm_2d_scene_watch.h": "c"
+			"arm_2d_scene_watch.h": "c",
+			"__simple_list.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

@@ -71,6 +71,11 @@ struct progress_bar_round_t {
 
 ARM_PRIVATE(
     progress_bar_round_cfg_t tCFG;
+
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+    q16_t q16Ratio;
+    int16_t iProgress;
+
 )
     /* place your public member here */
     
@@ -109,6 +114,15 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
                                 int16_t iProgress,
                                 uint8_t chOpacity);
 
+extern
+ARM_NONNULL(1, 2)
+void progress_bar_round_show2(   progress_bar_round_t *ptThis,
+                                const arm_2d_tile_t *ptTile, 
+                                const arm_2d_region_t *ptRegion,
+                                COLOUR_INT tBackgroundColour,
+                                COLOUR_INT tBarColour,
+                                int16_t iProgress,
+                                uint8_t chOpacity);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
