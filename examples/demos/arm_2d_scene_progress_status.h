@@ -58,6 +58,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
+#   define PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION     1
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!

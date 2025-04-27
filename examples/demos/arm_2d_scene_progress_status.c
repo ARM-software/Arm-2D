@@ -99,6 +99,7 @@ enum {
 extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 
+#if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
 extern const arm_2d_tile_t c_tileWIFISignal;
 extern const arm_2d_tile_t c_tileWIFISignalMask;
 
@@ -108,6 +109,7 @@ static arm_2d_helper_film_t s_tileWIFISignalFilm =
 
 static arm_2d_helper_film_t s_tileWIFISignalFilmMask = 
     impl_film(c_tileWIFISignalMask, 32, 32, 6, 36, 33);
+#endif
 
 
 /*============================ PROTOTYPES ====================================*/
@@ -174,12 +176,14 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
     user_scene_progress_status_t *ptThis = (user_scene_progress_status_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
     if (arm_2d_helper_is_time_out(  s_tileWIFISignalFilm.hwPeriodPerFrame, 
                                     &this.lTimestamp[1])) {
 
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilmMask);
     }
+#endif
 
     int32_t iResult;
     if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[0])) {
@@ -230,11 +234,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
     /* following code is just a demo, you can remove them */
     arm_2d_canvas(ptTile, __canvas) {
 
+    #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
         arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion.tSize;
+
+
         arm_2d_dock_vertical(__canvas, 
-                            200+tWiFiLogoSize.iHeight) {
-            
+                            200 + tWiFiLogoSize.iHeight) {
+    #else
+        arm_2d_dock_vertical(__canvas, 200) {
+    #endif
             arm_2d_layout(__vertical_region) {
+            #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
                 __item_line_vertical(__vertical_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
                     arm_2d_align_centre(__item_region, tWiFiLogoSize) {
                         
@@ -252,6 +262,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
 
                     }
                 }
+            #endif
                 __item_line_dock_vertical(40) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_simple_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
@@ -352,10 +363,11 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
 
+#if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
     /* set to the last frame */
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
     arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
-
+#endif
 
     *ptThis = (user_scene_progress_status_t){
         .use_as__arm_2d_scene_t = {
