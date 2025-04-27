@@ -95,14 +95,13 @@ void __arm_2d_rgb565_unpack_single_vec_comp(uint16x8_t in,
     uint16x8_t      vecMaskB = vdupq_n_u16(0x001f);
     uint16x8_t      vecMaskG = vdupq_n_u16(0x003f);
 
-    mve_pred16_t pred = vcmpneq_n_u16(in, 0x0000);
-    *B = vpselq_u16(vdupq_n_u16(0xFF), vdupq_n_u16(0x00), pred);
-    *R = *B;
-    *G = *B;
-
-    *B = vsliq_n_u16(*B, (in & vecMaskB),  3);
-    *R = vsliq_n_u16(*R, (in >> 11),  3);
-    *G = vsliq_n_u16(*G, ((in >> 5) & vecMaskG),  2);
+    *B = (in & vecMaskB) * 8;
+    *R = ((in >> 11)) * 8;
+    *G = ((in >> 5) & vecMaskG) * 4;
+    
+    *B = vorrq_m_n(*B, 0x7, vcmphiq_n_u16(*B, 0x007F));
+    *R = vorrq_m_n(*R, 0x7, vcmphiq_n_u16(*R, 0x007F));
+    *G = vorrq_m_n(*G, 0x3, vcmphiq_n_u16(*G, 0x007F));
 }
 
 
