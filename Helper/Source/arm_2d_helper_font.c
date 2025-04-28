@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        19. March 2025
- * $Revision:    V.2.11.0
+ * $Date:        28 April 2025
+ * $Revision:    V.2.11.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1141,7 +1141,6 @@ int arm_lcd_printf(const char *format, ...)
                                 sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, 
                                 format, 
                                 ap);
-        real_size = real_size;
     va_end(ap);
     real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
     s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';
@@ -1161,7 +1160,6 @@ arm_2d_size_t arm_lcd_printf_to_buffer( const arm_2d_font_t *ptFont,
                                 sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, 
                                 format, 
                                 ap);
-        real_size = real_size;
     va_end(ap);
     real_size = MIN(sizeof(s_tLCDTextControl.TXBuf.chBuffer)-1, real_size);
     s_tLCDTextControl.TXBuf.chBuffer[real_size] = '\0';

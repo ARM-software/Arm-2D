@@ -58,6 +58,7 @@
 #   pragma clang diagnostic ignored "-Wvector-conversion"
 #   pragma clang diagnostic ignored "-Wundef"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#   pragma clang diagnostic ignored "-Wunused-variable"
 #endif
 
 

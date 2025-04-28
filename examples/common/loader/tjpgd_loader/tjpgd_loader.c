@@ -43,6 +43,7 @@
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+#   pragma clang diagnostic ignored "-Wunused-parameter"
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wpedantic"
@@ -585,12 +586,12 @@ void __arm_tjpgd_decode_partial(arm_tjpgd_loader_t *ptThis,
     /* allocate memory */
     do {
     
-        uint8_t chAlign = 0;
-        if (3 == this.u3PixelByteSize) {
-            chAlign = 1;
-        } else {
-            chAlign = this.u3PixelByteSize;
-        }
+//        uint8_t chAlign = 0;
+//        if (3 == this.u3PixelByteSize) {
+//            chAlign = 1;
+//        } else {
+//            chAlign = this.u3PixelByteSize;
+//        }
 
         this.ImageBuffer.pchBuffer = pchBuffer;
         this.iTargetStrideInByte = iStrideInByte;
@@ -809,13 +810,13 @@ void arm_tjpgd_loader_on_frame_complete( arm_tjpgd_loader_t *ptThis)
 
 static 
 void __arm_tjpgd_vres_asset_2dcopy( uintptr_t pObj,
-                                        arm_2d_vres_t *ptVRES,
-                                        arm_2d_region_t *ptRegion,
-                                        uintptr_t pSrc,
-                                        uintptr_t pDes,
-                                        int16_t iTargetStride,
-                                        int16_t iSourceStride,
-                                        int16_t iPixelSize)
+                                    arm_2d_vres_t *ptVRES,
+                                    arm_2d_region_t *ptRegion,
+                                    uintptr_t pSrc,
+                                    uintptr_t pDes,
+                                    int16_t iTargetStride,
+                                    int16_t iSourceStride,
+                                    int16_t iPixelSize)
 {
     assert(NULL != ptRegion);
     assert(NULL != ptVRES);
@@ -1844,14 +1845,14 @@ bool __arm_tjpgd_io_binary_seek(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader,
 
     switch (whence) {
         case SEEK_SET:
-            if (offset < 0 || offset >= this.tSize) {
+            if (offset < 0 || offset >= (int32_t)this.tSize) {
                 return false;
             }
             this.tPostion = offset;
             break;
         
         case SEEK_END:
-            if (offset > 0 || (-offset >= this.tSize)) {
+            if (offset > 0 || (-offset >= (int32_t)this.tSize)) {
                 return false;
             }
             this.tPostion = this.tSize + offset - 1;

@@ -469,6 +469,7 @@ void __text_box_draw_line(text_box_t *ptThis,
         tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
     }
 
+    arm_lcd_text_set_target_framebuffer(ptTile);
     arm_lcd_text_set_draw_region(&tLineRegion);
 
     //arm_2d_draw_box(ptTile, &tLineRegion, 1, GLCD_COLOR_BLUE, 200);
@@ -1099,13 +1100,15 @@ text_box_c_str_reader_t *text_box_c_str_reader_init(
 }
 
 static 
-int32_t __c_string_io_read_char(   text_box_t *ptTextBox, 
-                                        uintptr_t pObj, 
-                                        uint8_t *pchBuffer,
-                                        uint_fast16_t hwSize)
+int32_t __c_string_io_read_char(text_box_t *ptTextBox, 
+                                uintptr_t pObj, 
+                                uint8_t *pchBuffer,
+                                uint_fast16_t hwSize)
 {
     text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
     assert(NULL != ptThis);
+    
+    ARM_2D_UNUSED(ptTextBox);
     
     if (NULL == pchBuffer) {
         return -1;
@@ -1115,7 +1118,7 @@ int32_t __c_string_io_read_char(   text_box_t *ptTextBox,
         return 0;
     }
 
-    uintptr_t wReadPosition = this.nPosition + (uintptr_t)this.pchString;
+    uintptr_t wReadPosition = (uintptr_t)(this.nPosition + (uintptr_t)this.pchString);
 
     int32_t tLeftToRead = this.nSizeInByte - this.nPosition;
     hwSize = MIN(tLeftToRead, hwSize);
@@ -1134,6 +1137,8 @@ int32_t __c_string_io_seek( text_box_t *ptTextBox,
 {
     text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
     assert(NULL != ptThis);
+    ARM_2D_UNUSED(ptTextBox);
+    
     int64_t lPosition = this.nPosition;
     switch (enWhence) {
         case TEXT_BOX_SEEK_SET:
@@ -1165,6 +1170,7 @@ bool __c_string_io_eof( text_box_t *ptTextBox,
 {
     text_box_c_str_reader_t *ptThis = (text_box_c_str_reader_t *)pObj;
     assert(NULL != ptThis);
+    ARM_2D_UNUSED(ptTextBox);
 
     return this.nPosition >= this.nSizeInByte;
 
