@@ -167,15 +167,15 @@ int32_t __text_box_read_bytes(  text_box_t *ptThis,
                             hwSize));
 }
 
-__STATIC_INLINE
-bool __text_box_is_eof(text_box_t *ptThis)
-{
-    assert(NULL != ptThis);
+//__STATIC_INLINE
+//bool __text_box_is_eof(text_box_t *ptThis)
+//{
+//    assert(NULL != ptThis);
 
-    return ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnEOF,
-            ARM_2D_PARAM(   ptThis, 
-                            this.tCFG.tStreamIO.pTarget));
-}
+//    return ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnEOF,
+//            ARM_2D_PARAM(   ptThis, 
+//                            this.tCFG.tStreamIO.pTarget));
+//}
 
 #if 0
 static
@@ -1120,8 +1120,8 @@ int32_t __c_string_io_read_char(text_box_t *ptTextBox,
 
     uintptr_t wReadPosition = (uintptr_t)(this.nPosition + (uintptr_t)this.pchString);
 
-    int32_t tLeftToRead = this.nSizeInByte - this.nPosition;
-    hwSize = MIN(tLeftToRead, hwSize);
+    uint32_t wLeftToRead = this.nSizeInByte - this.nPosition;
+    hwSize = MIN(wLeftToRead, hwSize);
 
     memcpy(pchBuffer, (uint8_t *)wReadPosition, hwSize);
     this.nPosition += hwSize;
