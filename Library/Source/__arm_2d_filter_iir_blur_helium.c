@@ -597,13 +597,14 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
 
     /* right to left, down to top process */
     if (this.bReverseHorizontal && bAllowReversePath) {
-        uint16_t *phwPixel = &(phwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);;
+        uint16_t *phwPixel = &(phwTarget[(iHeight - 1 - 7)*iTargetStride]);
 
-        uint16x8_t vstride = vidupq_n_u16(0, 1);
+        uint16x8_t vstride = vidupq_n_u16(1, 1);
         vstride = vstride * iTargetStride;
+        vstride -= 1;
 
         for (iY = 0; iY < iHeight / 8; iY++) {
-            int16x8_t voffs = vstride;
+            uint16x8_t voffs = vstride;
 
             __arm_2d_rgb565_unpack_single_vec(  
                             vldrhq_gather_shifted_offset_u16(phwPixel, voffs), 
@@ -636,17 +637,17 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
         }
 
         if (iHeight & 7) {
-            int16x8_t      voffs = vstride;
+            uint16x8_t      voffs = vstride;
             mve_pred16_t    tailPred = vctp16q(iHeight & 7);
 
             __arm_2d_rgb565_unpack_single_vec(  
-                            vldrhq_gather_shifted_offset_u16(phwPixel, voffs), 
+                            vldrhq_gather_shifted_offset_z_u16(phwPixel, voffs, tailPred), 
                             (uint16x8_t *)&vaccR, 
                             (uint16x8_t *)&vaccG, 
                             (uint16x8_t *)&vaccB);
 
             for (iX = 0; iX < iWidth; iX++) {
-                uint16x8_t in = vldrhq_gather_shifted_offset_u16(phwPixel, voffs);
+                uint16x8_t in = vldrhq_gather_shifted_offset_z_u16(phwPixel, voffs, tailPred);
                 uint16x8_t vR, vG, vB;
 
                 __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
@@ -781,7 +782,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
 
     /* down to top, right to left */
     if (this.bReverseVertical && bAllowReversePath) {
-        uint16_t *phwPixel = &(phwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+        uint16_t *phwPixel = &(phwTarget[iWidth - 1 - 7 + (iHeight-1)*iTargetStride]);
 
         /* columns direct path */
         for (iX = 0; iX < iWidth / 8; iX++) {
@@ -823,13 +824,13 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_filter_iir_blur) (
             mve_pred16_t    tailPred = vctp16q(iWidth & 7);
             uint16_t       *phwChannel = phwPixel;
 
-            __arm_2d_rgb565_unpack_single_vec(  vldrhq_u16(phwChannel), 
+            __arm_2d_rgb565_unpack_single_vec(  vldrhq_z_u16(phwChannel, tailPred), 
                                                 (uint16x8_t *)&vaccR, 
                                                 (uint16x8_t *)&vaccG, 
                                                 (uint16x8_t *)&vaccB);
 
             for (iY = 0; iY < iHeight; iY++) {
-                uint16x8_t      in = vldrhq_u16(phwChannel);
+                uint16x8_t      in = vldrhq_z_u16(phwChannel, tailPred);
                 uint16x8_t      vR, vG, vB;
 
                 __arm_2d_rgb565_unpack_single_vec(in, &vR, &vG, &vB);
