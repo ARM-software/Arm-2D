@@ -75,6 +75,7 @@ ARM_PRIVATE(
     arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
     q16_t q16Ratio;
     int16_t iProgress;
+    bool bFullyRedraw;
 
 )
     /* place your public member here */

@@ -145,6 +145,9 @@ void progress_bar_round_set_circle_mask(progress_bar_round_t *ptThis,
     if (NULL == this.tCFG.ptCircleMask) {
         this.tCFG.ptCircleMask = &c_tileWhiteDotMask;
     }
+
+    this.bFullyRedraw = true;
+
 }
 
 ARM_NONNULL(1, 2)
@@ -273,16 +276,19 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
                     } while(0);
 
                     /* tracking the right edge to update the dirty region */
-                    arm_2d_dock_right(__left_region, 1) {
-                        arm_2d_helper_dirty_region_update_item( 
-                                                        &this.tDirtyRegionItem,
-                                                        &__progress_bar,
-                                                        &__progress_bar_canvas,
-                                                        &__right_region);
+                    if (!this.bFullyRedraw) {
+                        arm_2d_dock_right(__left_region, 1) {
+                            arm_2d_helper_dirty_region_update_item( 
+                                                            &this.tDirtyRegionItem,
+                                                            &__progress_bar,
+                                                            &__progress_bar_canvas,
+                                                            &__right_region);
+                        }
                     }
                 }
 
-                if (0 == iBarLength) {
+                if (0 == iBarLength || this.bFullyRedraw) {
+                    this.bFullyRedraw = false;
                     arm_2d_helper_dirty_region_update_item( 
                         &this.tDirtyRegionItem,
                         &__progress_bar,
@@ -391,27 +397,28 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
                             (__arm_2d_color_t){tBarColour}, 
                             chOpacity );
                     }
+                }
 
+                /* draw the right semicircle */
+                arm_2d_dock_left(__progress_bar_canvas, iBarLength + iHalfCircleLength * 2) {
 
-                    /* draw the right semicircle */
-                    arm_2d_dock_left(__vertical_region, iBarLength + iHalfCircleLength) {
-
-                        arm_2d_dock_right(__left_region, iHalfCircleLength) {
-                            arm_2d_tile_t tRightCircileMask = 
-                                            impl_child_tile(
-                                                *this.tCFG.ptCircleMask, 
-                                                iHalfCircleLength, 
-                                                0, 
-                                                iHalfCircleLength, 
-                                                this.tCFG.ptCircleMask->tRegion.tSize.iHeight);
-        
-                            arm_2d_fill_colour_with_mask_and_opacity(
-                                &__progress_bar,
-                                &__right_region,
-                                &tRightCircileMask,
-                                (__arm_2d_color_t){tBarColour}, 
-                                chOpacity);
-                            
+                    arm_2d_dock_right(__left_region, iHalfCircleLength) {
+                        arm_2d_tile_t tRightCircileMask = 
+                                        impl_child_tile(
+                                            *this.tCFG.ptCircleMask, 
+                                            iHalfCircleLength, 
+                                            0, 
+                                            iHalfCircleLength, 
+                                            this.tCFG.ptCircleMask->tRegion.tSize.iHeight);
+    
+                        arm_2d_fill_colour_with_mask_and_opacity(
+                            &__progress_bar,
+                            &__right_region,
+                            &tRightCircileMask,
+                            (__arm_2d_color_t){tBarColour}, 
+                            chOpacity);
+                        
+                        if (!this.bFullyRedraw) {
                             /* tracking the right semicircle to update the dirty region */
                             arm_2d_helper_dirty_region_update_item( 
                                     &this.tDirtyRegionItem,
@@ -419,8 +426,18 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
                                     &__left_region,
                                     &__right_region);
                         }
-
                     }
+
+                }
+                
+
+                if (0 == iBarLength || this.bFullyRedraw) {
+                    this.bFullyRedraw = false;
+                    arm_2d_helper_dirty_region_update_item( 
+                        &this.tDirtyRegionItem,
+                        &__progress_bar,
+                        NULL,
+                        &__progress_bar_canvas);
                 }
 
 
