@@ -23,7 +23,7 @@ LR_CODE S_CODE_START {
     ER_CODE S_CODE_START {
         * (RESET +First)
         * (Region$$Table)
-        * (+RO-DATA)
+        * (+RO-CODE)
     }
 
     /*
@@ -56,25 +56,26 @@ LR_CODE S_CODE_START {
     ScatterAssert(ImageLimit(CODE_WATERMARK) <= S_CODE_START + S_CODE_SIZE)
 }
 
-LR_CODE2 S_CODE2_START {
-    ER_CODE2 S_CODE2_START {
-        .ANY (+RO-CODE)
-    }
+;LR_CODE2 S_CODE2_START {
+;    ER_CODE2 S_CODE2_START {
+;        .ANY (+RO-DATA)
+;    }
 
-    /* This empty, zero long execution region is here to mark the limit address
-     * of the last execution region that is allocated in SRAM.
-     */
-    CODE2_WATERMARK +0 EMPTY 0x0 {
-    }
-    /* Make sure that the sections allocated in the SRAM does not exceed the
-     * size of the SRAM available.
-     */
-    ScatterAssert(ImageLimit(CODE2_WATERMARK) <= S_CODE2_START + S_CODE2_SIZE)
-}
+;    /* This empty, zero long execution region is here to mark the limit address
+;     * of the last execution region that is allocated in SRAM.
+;     */
+;    CODE2_WATERMARK +0 EMPTY 0x0 {
+;    }
+;    /* Make sure that the sections allocated in the SRAM does not exceed the
+;     * size of the SRAM available.
+;     */
+;    ScatterAssert(ImageLimit(CODE2_WATERMARK) <= S_CODE2_START + S_CODE2_SIZE)
+;}
 
 
 LD_DATA S_DATA_START {
     ER_DATA +0 {
+        * (+RO-DATA)
         * (+ZI +RW)
     }
 
@@ -102,6 +103,7 @@ LD_DATA S_DATA_START {
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
 }
 
+#if 0
 LD_DATA2 S_DATA2_START {
     ER_DATA2 +0 {
         .ANY (+ZI +RW)
@@ -117,3 +119,4 @@ LD_DATA2 S_DATA2_START {
      */
     ScatterAssert(ImageLimit(SRAM2_WATERMARK) <= S_DATA2_START + S_DATA2_SIZE)
 }
+#endif

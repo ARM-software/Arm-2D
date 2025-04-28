@@ -13,8 +13,4 @@
     <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
-  <project>
-    <PathAndName>.\gcc_template.uvprojx</PathAndName>
-  </project>
-
 </ProjectWorkspace>

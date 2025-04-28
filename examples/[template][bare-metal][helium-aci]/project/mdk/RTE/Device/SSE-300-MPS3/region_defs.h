@@ -33,17 +33,17 @@
 #define S_CODE_SIZE      ( TOTAL_S_ROM_SIZE )
 #define S_CODE_LIMIT     ( S_CODE_START + S_CODE_SIZE )
 
-#define S_CODE2_START     ( S_ROM2_ALIAS )
-#define S_CODE2_SIZE      ( TOTAL_S_ROM2_SIZE )
-#define S_CODE2_LIMIT     ( S_CODE2_START + S_CODE2_SIZE )
+#define S_CODE2_START    ( S_ROM2_ALIAS )
+#define S_CODE2_SIZE     ( TOTAL_S_ROM2_SIZE )
+#define S_CODE2_LIMIT    ( S_CODE2_START + S_CODE2_SIZE )
 
 #define S_DATA_START     ( S_RAM_ALIAS )
 #define S_DATA_SIZE      ( TOTAL_S_RAM_SIZE )
 #define S_DATA_LIMIT     ( S_DATA_START + S_DATA_SIZE )
 
-#define S_DATA2_START     ( S_RAM2_ALIAS )
-#define S_DATA2_SIZE      ( TOTAL_S_RAM2_SIZE )
-#define S_DATA2_LIMIT     ( S_DATA2_START + S_DATA2_SIZE )
+#define S_DATA2_START    ( S_RAM2_ALIAS )
+#define S_DATA2_SIZE     ( TOTAL_S_RAM2_SIZE )
+#define S_DATA2_LIMIT    ( S_DATA2_START + S_DATA2_SIZE )
 
 #define S_DDR4_START     ( S_DDR4_ALIAS )
 #define S_DDR4_SIZE      ( TOTAL_S_DDR4_SIZE )
