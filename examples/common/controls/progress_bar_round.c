@@ -196,11 +196,10 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
 
             arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
         
+                int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth;
                 if (bIsNewFrame) {
 
                     int16_t iFullLength = this.tCFG.ValueRange.iMax - this.tCFG.ValueRange.iMin;
-                    int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth;
-
                     this.q16Ratio 
                         = div_n_q16(reinterpret_q16_s16(iProgressBarLength),
                                     iFullLength);
@@ -217,6 +216,9 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
                     = reinterpret_s16_q16(
                         mul_n_q16(  this.q16Ratio, 
                                     this.iProgress - this.tCFG.ValueRange.iMin));
+                if (this.iProgress == this.tCFG.ValueRange.iMax) {
+                    iBarLength = iProgressBarLength;
+                }
 
                 int16_t iHalfCircleWidth = this.tCFG.ptCircleMask->tRegion.tSize.iWidth >> 1;
                 int16_t iStrideMaxWidth = __progress_bar_canvas.tSize.iWidth - iHalfCircleWidth;
@@ -350,11 +352,11 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
 
             arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
         
+                int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth - this.tCFG.ptCircleMask->tRegion.tSize.iWidth;
+
                 if (bIsNewFrame) {
 
                     int16_t iFullLength = this.tCFG.ValueRange.iMax - this.tCFG.ValueRange.iMin;
-                    int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth - this.tCFG.ptCircleMask->tRegion.tSize.iWidth;
-
                     this.q16Ratio 
                         = div_n_q16(reinterpret_q16_s16(iProgressBarLength),
                                     iFullLength);
@@ -384,6 +386,10 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
                         = reinterpret_s16_q16(
                             mul_n_q16(  this.q16Ratio, 
                                         this.iProgress - this.tCFG.ValueRange.iMin));
+
+                if (this.iProgress == this.tCFG.ValueRange.iMax) {
+                    iBarLength = iProgressBarLength;
+                }
 
                 arm_2d_dock_vertical(__progress_bar_canvas, 
                                     this.tCFG.ptCircleMask->tRegion.tSize.iHeight, 
