@@ -21,9 +21,9 @@
 
 LR_CODE S_CODE_START {
     ER_CODE S_CODE_START {
-        *.o (RESET +First)
-        *.o (Region$$Table)
-        .ANY (+RO-CODE)
+        * (RESET +First)
+        * (Region$$Table)
+        * (+RO-DATA)
     }
 
     /*
@@ -54,10 +54,33 @@ LR_CODE S_CODE_START {
      * size of the SRAM available.
      */
     ScatterAssert(ImageLimit(CODE_WATERMARK) <= S_CODE_START + S_CODE_SIZE)
+}
 
-    ER_DATA S_DATA_START {
-        .ANY (+ZI +RW)
-        .ANY (+RO-DATA)
+LR_CODE2 S_CODE2_START {
+    ER_CODE2 S_CODE2_START {
+        .ANY (+RO-CODE)
+    }
+
+    /* This empty, zero long execution region is here to mark the limit address
+     * of the last execution region that is allocated in SRAM.
+     */
+    CODE2_WATERMARK +0 EMPTY 0x0 {
+    }
+    /* Make sure that the sections allocated in the SRAM does not exceed the
+     * size of the SRAM available.
+     */
+    ScatterAssert(ImageLimit(CODE2_WATERMARK) <= S_CODE2_START + S_CODE2_SIZE)
+}
+
+
+LD_DATA S_DATA_START {
+    ER_DATA +0 {
+        * (+ZI +RW)
+    }
+
+    RW_IRAM_UNINIT +0 UNINIT {
+        *(.uninitialized_data*)
+        *(.bss.noinit)
     }
 
     #if HEAP_SIZE > 0
@@ -65,7 +88,7 @@ LR_CODE S_CODE_START {
     }
     #endif
 
-    ARM_LIB_STACK +0 ALIGN 32 EMPTY STACK_SIZE {   ; Reserve empty region for stack
+    ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
     }
 
     /* This empty, zero long execution region is here to mark the limit address
@@ -79,10 +102,18 @@ LR_CODE S_CODE_START {
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
 }
 
-#if 0
-LR_RO_DATA 0x11000000 {
-    ER_RO_DATA +0 {
-        .ANY (+RO-DATA)
+LD_DATA2 S_DATA2_START {
+    ER_DATA2 +0 {
+        .ANY (+ZI +RW)
     }
+    
+    /* This empty, zero long execution region is here to mark the limit address
+     * of the last execution region that is allocated in SRAM.
+     */
+    SRAM2_WATERMARK +0 EMPTY 0x0 {
+    }
+    /* Make sure that the sections allocated in the SRAM does not exceed the
+     * size of the SRAM available.
+     */
+    ScatterAssert(ImageLimit(SRAM2_WATERMARK) <= S_DATA2_START + S_DATA2_SIZE)
 }
-#endif
