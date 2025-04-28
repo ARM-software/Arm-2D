@@ -79,9 +79,7 @@ void progress_bar_round_init( progress_bar_round_t *ptThis,
     memset(ptThis, 0, sizeof(progress_bar_round_t));
     this.tCFG = *ptCFG;
 
-    if (NULL == this.tCFG.ptCircleMask) {
-        this.tCFG.ptCircleMask = &c_tileWhiteDotMask;
-    }
+    progress_bar_round_set_circle_mask(ptThis, ptCFG->ptCircleMask);
 
     if (0 == this.tCFG.ValueRange.iMax && 0 == this.tCFG.ValueRange.iMin) {
         this.tCFG.ValueRange.iMax = 1000;
@@ -134,6 +132,19 @@ void progress_bar_round_on_frame_complete( progress_bar_round_t *ptThis)
 {
     assert(NULL != ptThis);
     
+}
+
+ARM_NONNULL(1, 2)
+void progress_bar_round_set_circle_mask(progress_bar_round_t *ptThis, 
+                                        const arm_2d_tile_t *ptCircleMask)
+{
+    assert(NULL != ptThis);
+
+    this.tCFG.ptCircleMask = ptCircleMask;
+
+    if (NULL == this.tCFG.ptCircleMask) {
+        this.tCFG.ptCircleMask = &c_tileWhiteDotMask;
+    }
 }
 
 ARM_NONNULL(1, 2)

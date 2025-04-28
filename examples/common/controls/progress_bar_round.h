@@ -106,6 +106,10 @@ void progress_bar_round_on_frame_complete( progress_bar_round_t *ptThis);
 
 extern
 ARM_NONNULL(1, 2)
+void progress_bar_round_set_circle_mask(progress_bar_round_t *ptThis, 
+                                        const arm_2d_tile_t *ptCircleMask);
+extern
+ARM_NONNULL(1, 2)
 void progress_bar_round_show(   progress_bar_round_t *ptThis,
                                 const arm_2d_tile_t *ptTile, 
                                 const arm_2d_region_t *ptRegion,
