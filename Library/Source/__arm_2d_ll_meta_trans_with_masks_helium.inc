@@ -25,8 +25,8 @@
  *                  - transform_with_src_chn_mask
  *                  - transform_with_src_mask
  *
- * $Date:        7. Dec 2025
- * $Revision:    V.2.0.0
+ * $Date:        28. April 2025
+ * $Revision:    V.2.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -272,7 +272,7 @@ void __MTWM_FUNC(transform_with_mask)(
                                                            vecX, vecY,                              \
                                                            pOrigin, ptOrigValidRegion, iOrigStride, \
                                                            pMaskArr, maskStrd, maskScal,            \
-                                                           opacity, predTail,                       \
+                                                           opacity,                                 \
                                                            /* outputs */                            \
                                                            vPixVal, vPixelAlpha)                    \
         arm_2d_point_s16x8_t vPoint = {.X = vecX,.Y = vecY };                                       \
@@ -285,13 +285,13 @@ void __MTWM_FUNC(transform_with_mask)(
         uint8_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);               \
         /* retrieve all point values */                                                             \
         vPixVal =                                                                                   \
-            vldrbq_gather_offset_z_u16(pOriginCorrected, ptOffs, predTail);                         \
+            vldrbq_gather_offset_u16(pOriginCorrected, ptOffs);                                     \
                                                                                                     \
         uint16x8_t     maskOffs = maskScal * vPoint.X + (vPoint.Y - correctionOffset) * maskStrd;   \
         uint8_t       *pMaskCorrected = pMaskArr + (correctionOffset * maskStrd);                   \
         /* retrieve all mask values */                                                              \
         vPixelAlpha =                                                                               \
-            vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail);                         \
+            vldrbq_gather_offset_u16(pMaskCorrected, maskOffs);                                     \
                                                                                                     \
         SCALE_BY_OPACITY(vPixelAlpha, opacity);                                                     \
                                                                                                     \
@@ -361,7 +361,7 @@ void __MTWM_FUNC(transform_with_mask)(
                                                  ptPoint, vXi, vYi,                                       \
                                                  Origin, ptOrigValidRegion, iOrigStride,                  \
                                                  pMaskArr, maskStride,                                    \
-                                                 vTarget, opacity, predTail,                              \
+                                                 vTarget, opacity,                                        \
                                                  /* outputs */                                            \
                                                  vAvgPixel, vAvgTransparency)                             \
                                                                                                           \
@@ -379,7 +379,7 @@ void __MTWM_FUNC(transform_with_mask)(
     {                                                                                                     \
         __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_MASK_ARR_FAR_INSIDE_SRC(vXi, vYi, pOrigin, ptOrigValidRegion,\
                                                   iOrigStride, pMaskArr, maskStride, MASK_STRIDE_SCALE,   \
-                                                  opacity, predTail,                                      \
+                                                  opacity,                                                \
                                                   ptVal8, vPixelAlpha);                                   \
                                                                                                           \
         __ARM_2D_SCALE_MASK_GRAY8VEC(vAvgPixel, vAvgTransparency, ptVal8, vAreaBL, vPixelAlpha);          \
@@ -389,7 +389,7 @@ void __MTWM_FUNC(transform_with_mask)(
     {                                                                                                     \
         __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_MASK_ARR_FAR_INSIDE_SRC(vaddq_n_s16(vXi, 1), vYi, pOrigin,   \
                                 ptOrigValidRegion, iOrigStride, pMaskArr, maskStride, MASK_STRIDE_SCALE,  \
-                                            opacity, predTail, ptVal8, vPixelAlpha);                      \
+                                            opacity, ptVal8, vPixelAlpha);                                \
                                                                                                           \
         __ARM_2D_SCALE_MASK_GRAY8VEC_ACC(vAvgPixel, vAvgTransparency, ptVal8, vAreaBR, vPixelAlpha);      \
     }                                                                                                     \
@@ -398,7 +398,7 @@ void __MTWM_FUNC(transform_with_mask)(
     {                                                                                                     \
         __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_MASK_ARR_FAR_INSIDE_SRC(vXi, vaddq_n_s16(vYi, 1), pOrigin,   \
                                 ptOrigValidRegion, iOrigStride, pMaskArr,maskStride, MASK_STRIDE_SCALE,   \
-                                opacity, predTail,                                                        \
+                                opacity,                                                                  \
                                 ptVal8, vPixelAlpha);                                                     \
                                                                                                           \
         __ARM_2D_SCALE_MASK_GRAY8VEC_ACC(vAvgPixel, vAvgTransparency, ptVal8, vAreaTL, vPixelAlpha);      \
@@ -409,7 +409,7 @@ void __MTWM_FUNC(transform_with_mask)(
         __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_MASK_ARR_FAR_INSIDE_SRC(                                     \
                         vaddq_n_s16(vXi, 1), vaddq_n_s16(vYi, 1),                                         \
                         pOrigin, ptOrigValidRegion, iOrigStride, pMaskArr, maskStride, MASK_STRIDE_SCALE, \
-                        opacity, predTail,ptVal8, vPixelAlpha);                                           \
+                        opacity,ptVal8, vPixelAlpha);                                                     \
                                                                                                           \
         __ARM_2D_SCALE_MASK_GRAY8VEC_ACC(vAvgPixel, vAvgTransparency, ptVal8, vAreaTR, vPixelAlpha);      \
     }
@@ -467,7 +467,7 @@ void __MTWM_FUNC(transform_with_mask)(
                                                                vecX, vecY, pOrigin,                        \
                                                                ptOrigValidRegion, iOrigStride,             \
                                                                pMaskArr, maskStrd, maskScal,               \
-                                                               opacity, predTail,                          \
+                                                               opacity,                                    \
                                                                /* outputs */                               \
                                                                R, G, B,                                    \
                                                                vPixelAlpha)                                \
@@ -480,7 +480,7 @@ void __MTWM_FUNC(transform_with_mask)(
         uint16_t       *pOriginCorrected = pOrigin + (correctionOffset * iOrigStride);                     \
         /* retrieve all point values */                                                                    \
         uint16x8_t      ptVal =                                                                            \
-            vldrhq_gather_shifted_offset_z_u16(pOriginCorrected, ptOffs, predTail);                        \
+            vldrhq_gather_shifted_offset_u16(pOriginCorrected, ptOffs);                                    \
                                                                                                            \
         /* expand channels */                                                                              \
         __arm_2d_rgb565_unpack_single_vec(ptVal, &R, &G, &B);                                              \
@@ -488,7 +488,7 @@ void __MTWM_FUNC(transform_with_mask)(
         uint8_t       *pMaskCorrected = pMaskArr + (correctionOffset * maskStrd);                          \
         /* retrieve all mask values */                                                                     \
         vPixelAlpha =                                                                                      \
-            vldrbq_gather_offset_z_u16(pMaskCorrected, maskOffs, predTail);                                \
+            vldrbq_gather_offset_u16(pMaskCorrected, maskOffs);                                            \
                                                                                                            \
         SCALE_BY_OPACITY(vPixelAlpha, opacity);                                                            \
                                                                                                            \
@@ -568,7 +568,7 @@ void __MTWM_FUNC(transform_with_mask)(
 #define __ARM2D_AVG_NEIGHBR_RGB565_PIX_MASK_ARR_INSIDE_SRC(ptPoint, vXi, vYi,                             \
                                                         pOrigin, ptOrigValidRegion, iOrigStride,          \
                                                         pMaskArr, maskStride, vTarget,                    \
-                                                        opacity, predTail,                                \
+                                                        opacity,                                          \
                                                         /* outputs */                                     \
                                                         vAvgPixelR, vAvgPixelG, vAvgPixelB,               \
                                                         vAvgTransparency)                                 \
@@ -586,7 +586,7 @@ void __MTWM_FUNC(transform_with_mask)(
                                                             vXi, vYi, pOrigin, ptOrigValidRegion,         \
                                                             iOrigStride,                                  \
                                                             pMaskArr, maskStride, MASK_STRIDE_SCALE,      \
-                                                            opacity, predTail,                            \
+                                                            opacity,                                      \
                                                             R, G, B, vPixelAlpha);                        \
                                                                                                           \
         __ARM_2D_SCALE_MASK_RGBVEC(vAvgPixelR, vAvgPixelG, vAvgPixelB, vAvgTransparency, R,               \
@@ -599,7 +599,7 @@ void __MTWM_FUNC(transform_with_mask)(
         __ARM_2D_RGB565_GET_RGBVEC_FROM_POINT_MASK_ARRR_FAR_INSIDE_SRC(vaddq_n_s16(vXi, 1), vYi,          \
                                                                 pOrigin, ptOrigValidRegion, iOrigStride,  \
                                                                 pMaskArr,maskStride, MASK_STRIDE_SCALE,   \
-                                                                opacity, predTail,                        \
+                                                                opacity,                                  \
                                                                 R, G, B, vPixelAlpha);                    \
                                                                                                           \
         __ARM_2D_SCALE_MASK_RGBVEC_ACC(vAvgPixelR, vAvgPixelG, vAvgPixelB,                                \
@@ -611,7 +611,7 @@ void __MTWM_FUNC(transform_with_mask)(
         __ARM_2D_RGB565_GET_RGBVEC_FROM_POINT_MASK_ARRR_FAR_INSIDE_SRC(vXi, vaddq_n_s16(vYi, 1),          \
                                                                 pOrigin, ptOrigValidRegion, iOrigStride,  \
                                                                 pMaskArr, maskStride, MASK_STRIDE_SCALE,  \
-                                                                opacity, predTail,                        \
+                                                                opacity,                                  \
                                                                 R, G, B, vPixelAlpha);                    \
                                                                                                           \
         __ARM_2D_SCALE_MASK_RGBVEC_ACC(vAvgPixelR, vAvgPixelG, vAvgPixelB,                                \
@@ -624,7 +624,7 @@ void __MTWM_FUNC(transform_with_mask)(
                                                                 vaddq_n_s16(vXi, 1), vaddq_n_s16(vYi, 1), \
                                                                 pOrigin, ptOrigValidRegion, iOrigStride,  \
                                                                 pMaskArr, maskStride, MASK_STRIDE_SCALE,  \
-                                                                opacity,predTail,                         \
+                                                                opacity,                                  \
                                                                 R, G, B, vPixelAlpha);                    \
                                                                                                           \
         __ARM_2D_SCALE_MASK_RGBVEC_ACC(vAvgPixelR, vAvgPixelG, vAvgPixelB,                                \
@@ -715,7 +715,6 @@ void __MTWM_FUNC(transform_with_mask)(
                                                         vecX, vecY,                                       \
                                                         pOrigin, ptOrigValidRegion, iOrigStride,          \
                                                         pMaskArr, maskStrd, maskScal, opacity,            \
-                                                        predTailLow, predTailHigh,                        \
                                                        /* outputs */                                      \
                                                         R, G, B, vPixelAlpha)                             \
         arm_2d_point_s16x8_t vPoint = {.X = vecX,.Y = vecY };                                             \
@@ -737,13 +736,12 @@ void __MTWM_FUNC(transform_with_mask)(
         uint32x4_t      ptOffs = tPointLo.X + tPointLo.Y * iOrigStride;                                   \
                                                                                                           \
         /* retrieve all point values */                                                                   \
-        uint32x4_t      ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailLow);         \
+        uint32x4_t      ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);                        \
                                                                                                           \
         vst1q(scratch32, ptVal);                                                                          \
                                                                                                           \
         uint32x4_t     maskOffs = maskScal * tPointLo.X + tPointLo.Y * maskStrd;                          \
-        uint32x4_t      maskVal =                                                                         \
-            vldrbq_gather_offset_z_u32(pMaskArr, maskOffs, predTailLow);                                  \
+        uint32x4_t      maskVal = vldrbq_gather_offset_u32(pMaskArr, maskOffs);                           \
                                                                                                           \
         vst1q(scratch32+8, maskVal);                                                                      \
                                                                                                           \
@@ -754,13 +752,13 @@ void __MTWM_FUNC(transform_with_mask)(
         ptOffs = tPointHi.X + tPointHi.Y * iOrigStride;                                                   \
                                                                                                           \
         /* retrieve all point values */                                                                   \
-        ptVal = vldrwq_gather_shifted_offset_z_u32(pOrigin, ptOffs, predTailHigh);                        \
+        ptVal = vldrwq_gather_shifted_offset_u32(pOrigin, ptOffs);                                        \
                                                                                                           \
         vst1q(scratch32 + 4, ptVal);                                                                      \
                                                                                                           \
         maskOffs = maskScal * tPointHi.X + tPointHi.Y * maskStrd;                                         \
          maskVal =                                                                                        \
-        vldrbq_gather_offset_z_u32(pMaskArr, maskOffs, predTailHigh);                                     \
+        vldrbq_gather_offset_u32(pMaskArr, maskOffs);                                                     \
                                                                                                           \
         vst1q(scratch32+12, maskVal);                                                                     \
                                                                                                           \
@@ -847,7 +845,6 @@ void __MTWM_FUNC(transform_with_mask)(
 #define __ARM2D_AVG_NEIGHBR_RGB888_PIX_MASK_ARR_INSIDE_SRC(ptPoint, vXi, vYi,                            \
                                                     pOrigin, ptOrigValidRegion, iOrigStride,             \
                                                     pMaskArr, maskStride, vTarget,  opacity,             \
-                                                    predTail,                                            \
                                                     /* outputs */                                        \
                                                     vAvgPixelR, vAvgPixelG, vAvgPixelB, vAvgTransparency)\
                                                                                                          \
@@ -867,7 +864,6 @@ void __MTWM_FUNC(transform_with_mask)(
         __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_MASK_ARR_INSIDE_SRC(vXi, vYi, pOrigin, ptOrigValidRegion,  \
                                                        iOrigStride, pMaskArr,                            \
                                                        maskStride, MASK_STRIDE_SCALE, opacity,           \
-                                                       predTailLow, predTailHigh,                        \
                                                         R, G, B, vPixelAlpha);                           \
                                                                                                          \
         __ARM_2D_SCALE_MASK_RGBVEC(vAvgPixelR, vAvgPixelG, vAvgPixelB, vAvgTransparency, R,              \
@@ -879,7 +875,7 @@ void __MTWM_FUNC(transform_with_mask)(
         __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_MASK_ARR_INSIDE_SRC(vaddq_n_s16(vXi, 1), vYi,              \
                                                             pOrigin, ptOrigValidRegion, iOrigStride,     \
                                                             pMaskArr, maskStride, MASK_STRIDE_SCALE,     \
-                                                            opacity, predTailLow, predTailHigh,          \
+                                                            opacity,                                     \
                                                             R, G, B, vPixelAlpha);                       \
                                                                                                          \
         __ARM_2D_SCALE_MASK_RGBVEC_ACC(vAvgPixelR, vAvgPixelG, vAvgPixelB,                               \
@@ -891,7 +887,7 @@ void __MTWM_FUNC(transform_with_mask)(
         __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_MASK_ARR_INSIDE_SRC(vXi, vaddq_n_s16(vYi, 1),              \
                                                        pOrigin, ptOrigValidRegion, iOrigStride,          \
                                                        pMaskArr, maskStride, MASK_STRIDE_SCALE,          \
-                                                       opacity, predTailLow, predTailHigh,               \
+                                                       opacity,                                          \
                                                        R, G, B, vPixelAlpha);                            \
                                                                                                          \
         __ARM_2D_SCALE_MASK_RGBVEC_ACC(vAvgPixelR, vAvgPixelG, vAvgPixelB,                               \
@@ -904,7 +900,7 @@ void __MTWM_FUNC(transform_with_mask)(
                                                         vaddq_n_s16(vXi, 1), vaddq_n_s16(vYi, 1),        \
                                                         pOrigin, ptOrigValidRegion, iOrigStride,         \
                                                         pMaskArr, maskStride, MASK_STRIDE_SCALE,         \
-                                                        opacity, predTailLow, predTailHigh,              \
+                                                        opacity,                                         \
                                                         R, G, B, vPixelAlpha);                           \
                                                                                                          \
         __ARM_2D_SCALE_MASK_RGBVEC_ACC(vAvgPixelR, vAvgPixelG, vAvgPixelB,                               \
@@ -994,18 +990,17 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask_insi
                                  uint8_t * pOrigin, int16_t iOrigStride,
                                  uint8_t * pTarget,
                     #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
-                                 uint8_t * pchOrigMask, int16_t iOrigmaskStride,
+                                 uint8_t * pchOrigMask, int16_t iOrigmaskStride
                     #else
-                                 __API_INT_TYPE MaskColour,
+                                 __API_INT_TYPE MaskColour
                     #endif
                     #if __API_MTWM_CFG_SUPPORT_OPACITY
-                                 uint16_t hwOpacity,
+                                 ,uint16_t hwOpacity
                     #endif
-                                 uint32_t elts)
+                                )
 {
     iOrigmaskStride *= MASK_STRIDE_SCALE;
 
-    mve_pred16_t    predTail = vctp16q(elts);
     uint16x8_t      vTarget = vldrbq_u16(pTarget);
 
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
@@ -1025,7 +1020,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask_insi
         __ARM2D_AVG_NEIGHBR_GRAY8_PIX_MASK_ARR_INSIDE_SRC(
                             ptPoint, vXi, vYi, pOrigin, ptOrigValidRegion,
                             iOrigStride, pchOrigMask, iOrigmaskStride, vTarget,
-                            hwOpacity, predTail,
+                            hwOpacity, 
                             vAvgPixel, vAvgTransparency);
     }
 #else
@@ -1035,7 +1030,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask_insi
         __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_MASK_ARR_FAR_INSIDE_SRC(
                                     vXi, vYi, pOrigin, ptOrigValidRegion,
                                     iOrigStride, pchOrigMask, iOrigmaskStride,
-                                    MASK_STRIDE_SCALE, hwOpacity, predTail,
+                                    MASK_STRIDE_SCALE, hwOpacity, 
                                     ptVal8, vPixelAlpha);
 
         __ARM_2D_SCALE_MASK_GRAY8VEC(vAvgPixel, vAvgTransparency, ptVal8, AREA_UNITY, vPixelAlpha);
@@ -1049,10 +1044,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_gray8_, get_pixel_colour_mask_insi
                                                             vTarget, 
                                                             vAvgTransparency);
 
-    /* select between target pixel, averaged pixed */
-    //vTarget = vpselq_u16(vBlended, vTarget, predGlb);
-
-    vstrbq_p_u16(pTarget, vBlended, predTail);
+    vstrbq_u16(pTarget, vBlended);
 }
 
 #elif __API_MTWM_COLOUR == ARM_2D_M_COLOUR_RGB565
@@ -1153,18 +1145,18 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask_ins
                                             uint16_t * pTarget,
                                     #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
                                            uint8_t * pchOrigMask,
-                                           int16_t iOrigmaskStride,
+                                           int16_t iOrigmaskStride
                                     #else
-                                        __API_INT_TYPE MaskColour,
+                                        __API_INT_TYPE MaskColour
                                     #endif
                                     #if __API_MTWM_CFG_SUPPORT_OPACITY
-                                           uint16_t hwOpacity,
+                                           ,uint16_t hwOpacity
                                     #endif
-                                            uint32_t elts)
+                                           )
 {
     iOrigmaskStride *= MASK_STRIDE_SCALE;
 
-    mve_pred16_t    predTail = vctp16q(elts);
+
     uint16x8_t      vTarget = vld1q(pTarget);
     PIX_VEC_TYP     vAvgTransparency;
 
@@ -1185,7 +1177,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask_ins
     __ARM2D_AVG_NEIGHBR_RGB565_PIX_MASK_ARR_INSIDE_SRC(
                             ptPoint, vXi, vYi, pOrigin, ptOrigValidRegion,
                             iOrigStride, pchOrigMask, iOrigmaskStride, vTarget,
-                            hwOpacity, predTail, vAvgPixelR,
+                            hwOpacity, vAvgPixelR,
                             vAvgPixelG, vAvgPixelB, vAvgTransparency);
 
 #else
@@ -1196,7 +1188,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask_ins
                             vXi, vYi, pOrigin, ptOrigValidRegion,   iOrigStride,
                             pchOrigMask,
                             iOrigmaskStride, MASK_STRIDE_SCALE,
-                            hwOpacity, predTail, R, G, B,
+                            hwOpacity, R, G, B,
                             vPixelAlpha);
 
         __ARM_2D_SCALE_MASK_RGBVEC(
@@ -1223,10 +1215,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_rgb565_, get_pixel_colour_mask_ins
 
     vBlended = __arm_2d_rgb565_pack_single_vec(vAvgR, vAvgG, vAvgB);
 
-    /* select between target pixel, averaged pixed */
-    //vTarget = vpselq_u16(vBlended, vTarget, predGlb);
-
-    vst1q_p(pTarget, vBlended, predTail);
+    vst1q(pTarget, vBlended);
 }
 
 
@@ -1339,14 +1328,13 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask_in
                                         uint32_t *pTarget,
                                         #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
                                                uint8_t * pchOrigMask,
-                                               int16_t iOrigmaskStride,
+                                               int16_t iOrigmaskStride
                                         #else
-                                            __API_INT_TYPE MaskColour,
+                                            __API_INT_TYPE MaskColour
                                         #endif
                                         #if __API_MTWM_CFG_SUPPORT_OPACITY
-                                               uint16_t hwOpacity,
+                                               ,uint16_t hwOpacity
                                         #endif
-                                        uint32_t elts
                                        )
 {
     iOrigmaskStride *= MASK_STRIDE_SCALE;
@@ -1355,8 +1343,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask_in
     int16_t        *pscratch16 = (int16_t *) scratch32;
     //uint32x4_t      vTargetLo = vld1q(pTarget);
     //uint32x4_t      vTargetHi = vld1q(pTarget + 4);
-    mve_pred16_t    predTailLow = vctp32q(elts);
-    mve_pred16_t    predTailHigh = elts - 4 > 0 ? vctp32q(elts - 4) : 0;
+
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
 
@@ -1377,7 +1364,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask_in
     __ARM2D_AVG_NEIGHBR_RGB888_PIX_MASK_ARR_INSIDE_SRC(
                         ptPoint, vXi, vYi, pOrigin, ptOrigValidRegion,
                         iOrigStride, pchOrigMask, iOrigmaskStride, vTarget,
-                        hwOpacity, predTail,
+                        hwOpacity, 
                         vAvgPixelR, vAvgPixelG, vAvgPixelB, vAvgTransparency);
 #else
     {
@@ -1387,7 +1374,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask_in
                         vXi, vYi, pOrigin, ptOrigValidRegion,
                         iOrigStride, pchOrigMask,
                         iOrigmaskStride, MASK_STRIDE_SCALE,
-                        hwOpacity, predTailLow, predTailHigh,
+                        hwOpacity,
                         R, G, B, vPixelAlpha);
 
         __ARM_2D_SCALE_MASK_RGBVEC(vAvgPixelR, vAvgPixelG, vAvgPixelB, vAvgTransparency, R,
@@ -1417,14 +1404,14 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask_in
     /* select between target pixel, averaged pixed */
     //TempPixel = vpselq_u32(TempPixel, vTargetLo, predGlbLo);
 
-    vst1q_p(pTarget, TempPixel, predTailLow);
+    vst1q(pTarget, TempPixel);
 
     TempPixel = vld1q(scratch32 + 4);
 
     /* select between target pixel, averaged pixed */
     //TempPixel = vpselq_u32(TempPixel, vTargetHi, predGlbHi);
 
-    vst1q_p(pTarget + 4, TempPixel, predTailHigh);
+    vst1q(pTarget + 4, TempPixel);
 }
 
 
@@ -1547,14 +1534,13 @@ void __MTWM_FUNC(transform_with_mask)(
                                     pTargetBaseCur,
                                 #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
                                     pOriginMask,
-                                    iOrigMaskStride,
+                                    iOrigMaskStride
                                 #else
-                                    MaskColour,
+                                    MaskColour
                                 #endif
                                 #if __API_MTWM_CFG_SUPPORT_OPACITY
-                                    hwOpacity,
+                                    ,hwOpacity
                                 #endif
-                                    nbVecElts
                                 );
             } else if (0 != p) {
                 __ARM_2D_FUNC(get_pixel_colour_mask)(

@@ -21,8 +21,8 @@
  * Title:        arm_2d_rgb565_aci_lib.c
  * Description:  Provides RGB565 ACI acceleration
  *
- * $Date:        22 Aug 2024
- * $Revision:    V.1.1.0
+ * $Date:        28 April 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores with Helium & RGB565 Vector CDE
  *
