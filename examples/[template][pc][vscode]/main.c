@@ -230,6 +230,11 @@ void scene_matrix_loader(void)
     arm_2d_scene_matrix_init(&DISP0_ADAPTER);
 }
 
+void scene_iir_blur_loader(void) 
+{
+    arm_2d_scene_iir_blur_init(&DISP0_ADAPTER);
+}
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_user_defined_opcode_loader(void) 
 {
@@ -416,6 +421,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_histogram_loader,
     },
     {
+        20000,
+        scene_iir_blur_loader,
+    },
+    {
         30000,
         scene_bubble_charging_loader,
     },
@@ -482,6 +491,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        //scene_iir_blur_loader,
+        //scene_progress_status_loader,
         scene_matrix_loader,
         //scene_tjpgd_loader,
         //scene_rickrolling_loader,
