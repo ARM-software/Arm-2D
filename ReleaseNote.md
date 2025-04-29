@@ -80,6 +80,7 @@
     * Updates scene templates (i.e. meter and histogram) to use JPEG images as the background
 * Updates benchmarks
 * Adds a demo for the Matrix code-fall effect. 
+* Adds a demo for the IIR Blur.
 * Adds an example control, progress-bar-round, with two different styles.
 
 ### Documentation and Misc
