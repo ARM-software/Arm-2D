@@ -239,9 +239,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
 
 
         arm_2d_dock_vertical(__canvas, 
-                            200 + tWiFiLogoSize.iHeight) {
+                            150 + tWiFiLogoSize.iHeight) {
     #else
-        arm_2d_dock_vertical(__canvas, 200) {
+        arm_2d_dock_vertical(__canvas, 150) {
     #endif
             arm_2d_layout(__vertical_region) {
             #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
@@ -263,7 +263,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                     }
                 }
             #endif
-                __item_line_dock_vertical(40) {
+                __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_simple_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
 
@@ -274,7 +274,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                     &__progress_bar_canvas);
                     }
                 }
-                __item_line_dock_vertical(40) {
+                __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_drill_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
                         arm_2d_helper_dirty_region_update_item( 
@@ -284,7 +284,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                     &__progress_bar_canvas);
                     }
                 }
-                __item_line_dock_vertical(40) {
+                __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_flowing_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
                         arm_2d_helper_dirty_region_update_item( 
@@ -295,7 +295,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                     }
                 }
 
-                __item_line_dock_vertical(40) {
+                __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_round_show(&this.tProgressBarRound, 
                                                 &__progress_bar, 
@@ -307,7 +307,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                     }
                 }
 
-                __item_line_dock_vertical(40) {
+                __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_round_show2(&this.tProgressBarRound2, 
                                                 &__progress_bar,
