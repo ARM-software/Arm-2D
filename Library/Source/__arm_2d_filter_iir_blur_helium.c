@@ -244,13 +244,15 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
 
     /* rows reverse path */
     if (this.bReverseHorizontal && bAllowReversePath) {
-        uint8_t *pchPixel = &(pchTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
 
-        uint16x8_t vstride = vidupq_n_u16(0, 1);
+        uint8_t *pchPixel = &(pchTarget[(iHeight - 1 - 7)*iTargetStride]);
+
+        uint16x8_t vstride = vidupq_n_u16(1, 1);
         vstride = vstride * iTargetStride;
+        vstride -= 1;
 
         for (iY = 0; iY < iHeight / 8; iY++) {
-            int16x8_t voffs = vstride;
+            uint16x8_t voffs = vstride;
 
             vacc = vldrbq_gather_offset_u16(pchPixel, voffs);
 
@@ -272,10 +274,10 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
             int16x8_t voffs = vstride;
             mve_pred16_t tailPred = vctp16q(iHeight & 7);
 
-            vacc = vldrbq_gather_offset_u16(pchPixel, voffs);
+            vacc = vldrbq_gather_offset_z_u16(pchPixel, voffs, tailPred);
 
             for (iX = 0; iX < iWidth; iX++) {
-                uint16x8_t in = vldrbq_gather_offset_u16(pchPixel, voffs);
+                uint16x8_t in = vldrbq_gather_offset_z_u16(pchPixel, voffs, tailPred);
                 int16x8_t vdiff = vsubq_s16(in, vacc);
                 vacc = vaddq_s16(vacc, vqdmulhq(vdiff, hwRatio));
 
@@ -362,7 +364,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
     }
 
     if (this.bReverseVertical && bAllowReversePath) {
-        uint8_t *pchPixel = &(pchTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+        uint8_t *pchPixel = &(pchTarget[iWidth-1 - 7 + (iHeight-1)*iTargetStride]);
 
         /* columns direct path */
         for (iX = 0; iX < iWidth / 8; iX++) {
@@ -387,10 +389,10 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_filter_iir_blur) (
             mve_pred16_t tailPred = vctp16q(iWidth & 7);
             uint8_t *pchChannel = pchPixel;
 
-            vacc = vldrbq_u16(pchChannel);
+            vacc = vldrbq_z_u16(pchChannel, tailPred);
 
             for (iY = 0; iY < iHeight; iY++) {
-                uint16x8_t in = vldrbq_u16(pchChannel);
+                uint16x8_t in = vldrbq_z_u16(pchChannel, tailPred);
                 int16x8_t vdiff = vsubq_s16(in, vacc);
                 vacc = vaddq_s16(vacc, vqdmulhq(vdiff, hwRatio));
 
@@ -1061,26 +1063,29 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
     }
 
     if (this.bReverseHorizontal && bAllowReversePath) {
-        uint32_t *pwPixel = &(pwTarget[(iWidth-1) + (iHeight-1)*iTargetStride]);
+        uint32_t *pwPixel = &(pwTarget[(iHeight - 1 - 7)*iTargetStride]);
 
-        uint16x8_t vstride = vidupq_n_u16(0, 4);
+        uint16x8_t vstride = vidupq_n_u16(4, 4);
         vstride = vstride * iTargetStride;
+        vstride -= 4;
 
         for (iY = 0; iY < iHeight / 8; iY++) {
             uint8_t        *pchPixelB = (uint8_t *) pwPixel;
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
 
-            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
-            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
-            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+            uint16x8_t voff = vstride;
 
+            vaccB = vldrbq_gather_offset_u16(pchPixelB, voff);
+            vaccG = vldrbq_gather_offset_u16(pchPixelG, voff);
+            vaccR = vldrbq_gather_offset_u16(pchPixelR, voff);
+            
 
             for (iX = 0; iX < iWidth; iX++) {
 
-                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
-                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
-                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, voff);
+                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, voff);
+                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, voff);
 
                 int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
                 int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
@@ -1090,13 +1095,11 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 vaccG += vqdmulhq(vdiffG, hwRatio);
                 vaccR += vqdmulhq(vdiffR, hwRatio);
 
-                vstrbq_scatter_offset_u16(pchPixelB, vstride, vaccB);
-                vstrbq_scatter_offset_u16(pchPixelG, vstride, vaccG);
-                vstrbq_scatter_offset_u16(pchPixelR, vstride, vaccR);
+                vstrbq_scatter_offset_u16(pchPixelB, voff, vaccB);
+                vstrbq_scatter_offset_u16(pchPixelG, voff, vaccG);
+                vstrbq_scatter_offset_u16(pchPixelR, voff, vaccR);
 
-                pchPixelB -= 4;
-                pchPixelG -= 4;
-                pchPixelR -= 4;
+                voff -= 4;
             }
 
             pwPixel -= (iTargetStride * 8);
@@ -1109,16 +1112,18 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
             uint8_t        *pchPixelB = (uint8_t *) pwPixel;
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
+            
+            uint16x8_t voff = vstride;
 
-            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
-            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
-            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+            vaccB = vldrbq_gather_offset_z_u16(pchPixelB, voff, tailPred);
+            vaccG = vldrbq_gather_offset_z_u16(pchPixelG, voff, tailPred);
+            vaccR = vldrbq_gather_offset_z_u16(pchPixelR, voff, tailPred);
 
             for (iX = 0; iX < iWidth; iX++) {
 
-                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
-                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
-                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+                uint16x8_t      inB = vldrbq_gather_offset_z_u16(pchPixelB, voff, tailPred);
+                uint16x8_t      inG = vldrbq_gather_offset_z_u16(pchPixelG, voff, tailPred);
+                uint16x8_t      inR = vldrbq_gather_offset_z_u16(pchPixelR, voff, tailPred);
 
                 int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
                 int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
@@ -1129,18 +1134,16 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 vaccR += vqdmulhq(vdiffR, hwRatio);
 
 
-                vstrbq_scatter_offset_p_u16(pchPixelB, vstride, vaccB, tailPred);
-                vstrbq_scatter_offset_p_u16(pchPixelG, vstride, vaccG, tailPred);
-                vstrbq_scatter_offset_p_u16(pchPixelR, vstride, vaccR, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelB, voff, vaccB, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelG, voff, vaccG, tailPred);
+                vstrbq_scatter_offset_p_u16(pchPixelR, voff, vaccR, tailPred);
 
-                pchPixelB -= 4;
-                pchPixelG -= 4;
-                pchPixelR -= 4;
+                voff -= 1;
             }
         }
     }
 
-    if (this.bReverseVertical) {
+    if (this.bForwardVertical) {
         uint32_t *pwPixel = pwTarget;
 
     #if !defined(__ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__)
@@ -1269,7 +1272,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
     }
 
     if (this.bReverseVertical && bAllowReversePath) {
-        uint32_t *pwPixel = &(pwTarget[iWidth-1 + (iHeight-1)*iTargetStride]);
+        uint32_t *pwPixel = &(pwTarget[iWidth - 1 - 7 + (iHeight-1)*iTargetStride]);
 
         uint16x8_t vstride = vidupq_n_u16(0, 4);
 
@@ -1318,14 +1321,14 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
             uint8_t        *pchPixelG = pchPixelB + 1;
             uint8_t        *pchPixelR = pchPixelB + 2;
 
-            vaccB = vldrbq_gather_offset_u16(pchPixelB, vstride);
-            vaccG = vldrbq_gather_offset_u16(pchPixelG, vstride);
-            vaccR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+            vaccB = vldrbq_gather_offset_z_u16(pchPixelB, vstride, tailPred);
+            vaccG = vldrbq_gather_offset_z_u16(pchPixelG, vstride, tailPred);
+            vaccR = vldrbq_gather_offset_z_u16(pchPixelR, vstride, tailPred);
 
             for (iY = 0; iY < iHeight; iY++) {
-                uint16x8_t      inB = vldrbq_gather_offset_u16(pchPixelB, vstride);
-                uint16x8_t      inG = vldrbq_gather_offset_u16(pchPixelG, vstride);
-                uint16x8_t      inR = vldrbq_gather_offset_u16(pchPixelR, vstride);
+                uint16x8_t      inB = vldrbq_gather_offset_z_u16(pchPixelB, vstride, tailPred);
+                uint16x8_t      inG = vldrbq_gather_offset_z_u16(pchPixelG, vstride, tailPred);
+                uint16x8_t      inR = vldrbq_gather_offset_z_u16(pchPixelR, vstride, tailPred);
 
                 int16x8_t       vdiffB = vsubq_s16(inB, vaccB);
                 int16x8_t       vdiffG = vsubq_s16(inG, vaccG);
@@ -1334,7 +1337,6 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_filter_iir_blur) (
                 vaccB += vqdmulhq(vdiffB, hwRatio);
                 vaccG += vqdmulhq(vdiffG, hwRatio);
                 vaccR += vqdmulhq(vdiffR, hwRatio);
-
 
                 vstrbq_scatter_offset_p_u16(pchPixelB, vstride, vaccB, tailPred);
                 vstrbq_scatter_offset_p_u16(pchPixelG, vstride, vaccG, tailPred);
