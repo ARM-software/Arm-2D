@@ -87,7 +87,7 @@ In general, anyone from opensource community can find something interesting from
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (v1.2.2-rc7)](#in-this-version-v122-rc7)
+  - [In this version (v1.2.2-rc8)](#in-this-version-v122-rc8)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -107,7 +107,7 @@ In general, anyone from opensource community can find something interesting from
 
 ## Features
 
-### In this version (v1.2.2-rc7)
+### In this version (v1.2.2-rc8)
 
 Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many **Deep Embedded Display systems** soon after it debuted in 2020.  Now you can find its [precence](https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&origin=HASH_TAG_FROM_FEED) from the [tiniest Cortex-M0](https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg) to the [Raspberry Pi 5 powerhouse](https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg).  The supported features include but not limited to:
 
@@ -428,4 +428,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-24 April 2025
+29 April 2025
