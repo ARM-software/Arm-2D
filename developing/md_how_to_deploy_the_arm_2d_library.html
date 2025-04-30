@@ -297,7 +297,7 @@ AddDisplayAdapter</div></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
 <div class="line">        <span class="comment">/* lock framerate */</span></div>
-<div class="line">        disp_adapter0_task(LCD_TARGET_FPS);</div>
+<div class="line">        <span class="keywordflow">while</span>(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> != disp_adapter0_task(LCD_TARGET_FPS)) __NOP();</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Or the thread function if you want to run Arm-2d in an RTOS environment:</p>
