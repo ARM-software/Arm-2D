@@ -76,7 +76,8 @@
 			"arm_2d_scene_filters.h": "c",
 			"arm_2d_scene_watch.h": "c",
 			"__simple_list.h": "c",
-			"arm_2d_scene_rickrolling.h": "c"
+			"arm_2d_scene_rickrolling.h": "c",
+			"__arm_2d_expanded_helium.log": "c",
 		},
 		"cSpell.words": [
 			"cccn"
