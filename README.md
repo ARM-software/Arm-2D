@@ -312,13 +312,17 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 ### 3.1 Summary
 
-| Projects                     | Description                                                  | Folder                                | Note    |
-| ---------------------------- | ------------------------------------------------------------ | ------------------------------------- | ------- |
-| \[template\]\[bare-metal\]   | It is a project template for the bare-metal environment.     | examples/\[template\]\[bare-metal\]   |         |
-| \[template\]\[cmsis-rtos2\]  | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]  |         |
-| \[template\]\[pc\]\[vscode\] | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\] |         |
-| \[template\]\[csolution\]    | It is a csolution project template.                          | examples/\[template\]\[csolution\]    |         |
-| \[template\]\[pico\]\[oled]  | An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display. | examples/\[template\]\[pico\]\[oled]  | **New** |
+| Projects                                          | Description                                                  | Folder                                                       | Note                                   |
+| :------------------------------------------------ | :----------------------------------------------------------- | :----------------------------------------------------------- | :------------------------------------- |
+| \[template\]\[bare-metal\]\[mps2\]                | It is a bare-metal project for processors running on the [MPS2 platforms](https://developer.arm.com/Tools%20and%20Software/MPS2%20Plus%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[mps2\]                  |                                        |
+| \[template\]\[bare-metal\]\[an552\]               | It is a bare-metal project for the Cortex-M55 processor([AN552](https://developer.arm.com/downloads/view/AN552)) running on the [MPS3 platforms](https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[an552\]                 |                                        |
+| \[template\]\[bare-metal\]\[cortex-m85\]          | It is a bare-metal project for the Cortex-M85 processor.     | examples/\[template\]\[bare-metal\]\[cortex-m85\]            |                                        |
+| \[template\]\[bare-metal\]\[helium-aci\]          | It is a bare-metal project to demonstrate the Cortex-M55 ([AN552](https://developer.arm.com/downloads/view/AN552))  Helium ACI running on [MPS3 platforms](https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[helium-aci\]            |                                        |
+| \[template\]\[bare-metal\]\[STM32F746G-Discovery] | It is a bare-metal project for the [STM32F746G-Discovery](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) board. | examples/\[template\]\[bare-metal\]\[cSTM32F746G-Discovery\] | Arm Compiler 5, Arm Compiler 6 and GCC |
+| \[template\]\[cmsis-rtos2\]                       | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]                         |                                        |
+| \[template\]\[pc\]\[vscode\]                      | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\]                        |                                        |
+| \[template\]\[csolution\]                         | It is a csolution project template.                          | examples/\[template\]\[csolution\]                           |                                        |
+| \[template\]\[pico\]\[oled]                       | An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display. | examples/\[template\]\[pico\]\[oled]                         |                                        |
 
 ### 3.2 Benchmark
 
@@ -385,7 +389,7 @@ There is no public 2D image processing benchmark available for microcontrollers.
 | **Helper**      | Folder  | This folder contains the source files and header files of helper functions/services. |
 | Acceleration    | Folder  | This folder contains hardware specific accelerations, e.g. Helium-ACI example in FVP |
 | documentation   | Folder  | This folder contains all the documents.                      |
-| examples        | Folder  | This folder contains all the examples, controls and templates, etc. |
+| **examples**    | Folder  | This folder contains all the examples, controls and templates, etc. |
 | README          | .md     | The README.md you are currently reading.                     |
 | LICENSE         | License | The Apache 2.0 License                                       |
 | tools           | Folder  | This folder contains useful utilities for using the library. For example, img2c.py is a Python script that converts specified pictures into the arm2-d tile data structures. |
