@@ -226,7 +226,7 @@ int main (void)
 
     while (1) {
         /* lock framerate */
-        disp_adapter0_task(LCD_TARGET_FPS);
+        while(arm_fsm_rt_cpl != disp_adapter0_task(LCD_TARGET_FPS)) __NOP();
     }
 }
 ```
