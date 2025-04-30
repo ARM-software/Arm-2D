@@ -467,17 +467,25 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 3.1 Summary</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Projects   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Folder   </th><th class="markdownTableHeadNone">Note    </th></tr>
+<th class="markdownTableHeadLeft">Projects   </th><th class="markdownTableHeadLeft">Description   </th><th class="markdownTableHeadLeft">Folder   </th><th class="markdownTableHeadLeft">Note    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">[template][bare-metal]   </td><td class="markdownTableBodyNone">It is a project template for the bare-metal environment.   </td><td class="markdownTableBodyNone">examples/[template][bare-metal]   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyLeft">[template][bare-metal][mps2]   </td><td class="markdownTableBodyLeft">It is a bare-metal project for processors running on the <a href="https://developer.arm.com/Tools%20and%20Software/MPS2%20Plus%20FPGA%20Prototyping%20Board">MPS2 platforms</a>.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][mps2]   </td><td class="markdownTableBodyLeft"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">[template][cmsis-rtos2]   </td><td class="markdownTableBodyNone">It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyNone">examples/[template][cmsis-rtos2]   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyLeft">[template][bare-metal][an552]   </td><td class="markdownTableBodyLeft">It is a bare-metal project for the Cortex-M55 processor(<a href="https://developer.arm.com/downloads/view/AN552">AN552</a>) running on the <a href="https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board">MPS3 platforms</a>.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][an552]   </td><td class="markdownTableBodyLeft"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">[template][pc][vscode]   </td><td class="markdownTableBodyNone">It is a project template for PC (i.e. <b>MacOS</b>, <b>Windows</b> and <b>Linux</b>) using <b>VS Code + SDL2</b>   </td><td class="markdownTableBodyNone">examples/[template][pc][vscode]   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyLeft">[template][bare-metal][cortex-m85]   </td><td class="markdownTableBodyLeft">It is a bare-metal project for the Cortex-M85 processor.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][cortex-m85]   </td><td class="markdownTableBodyLeft"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">[template][csolution]   </td><td class="markdownTableBodyNone">It is a csolution project template.   </td><td class="markdownTableBodyNone">examples/[template][csolution]   </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyLeft">[template][bare-metal][helium-aci]   </td><td class="markdownTableBodyLeft">It is a bare-metal project to demonstrate the Cortex-M55 (<a href="https://developer.arm.com/downloads/view/AN552">AN552</a>) Helium ACI running on <a href="https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board">MPS3 platforms</a>.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][helium-aci]   </td><td class="markdownTableBodyLeft"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">[template][pico][oled]   </td><td class="markdownTableBodyNone">An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display.   </td><td class="markdownTableBodyNone">examples/[template][pico][oled]   </td><td class="markdownTableBodyNone"><b>New</b>   </td></tr>
+<td class="markdownTableBodyLeft">[template][bare-metal][STM32F746G-Discovery]   </td><td class="markdownTableBodyLeft">It is a bare-metal project for the <a href="https://www.st.com/en/evaluation-tools/32f746gdiscovery.html">STM32F746G-Discovery</a> board.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][cSTM32F746G-Discovery]   </td><td class="markdownTableBodyLeft">Arm Compiler 5, Arm Compiler 6 and GCC    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">[template][cmsis-rtos2]   </td><td class="markdownTableBodyLeft">It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyLeft">examples/[template][cmsis-rtos2]   </td><td class="markdownTableBodyLeft"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">[template][pc][vscode]   </td><td class="markdownTableBodyLeft">It is a project template for PC (i.e. <b>MacOS</b>, <b>Windows</b> and <b>Linux</b>) using <b>VS Code + SDL2</b>   </td><td class="markdownTableBodyLeft">examples/[template][pc][vscode]   </td><td class="markdownTableBodyLeft"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">[template][csolution]   </td><td class="markdownTableBodyLeft">It is a csolution project template.   </td><td class="markdownTableBodyLeft">examples/[template][csolution]   </td><td class="markdownTableBodyLeft"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">[template][pico][oled]   </td><td class="markdownTableBodyLeft">An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display.   </td><td class="markdownTableBodyLeft">examples/[template][pico][oled]   </td><td class="markdownTableBodyLeft"></td></tr>
 </table>
 <h2><a class="anchor" id="autotoc_md16"></a>
 3.2 Benchmark</h2>
@@ -560,7 +568,7 @@ Performance Comparison among some Cortex-M processors</div></div>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">documentation   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains all the documents.    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">examples   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains all the examples, controls and templates, etc.    </td></tr>
+<td class="markdownTableBodyLeft"><b>examples</b>   </td><td class="markdownTableBodyNone">Folder   </td><td class="markdownTableBodyNone">This folder contains all the examples, controls and templates, etc.    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">README   </td><td class="markdownTableBodyNone">.md   </td><td class="markdownTableBodyNone">The README.md you are currently reading.    </td></tr>
 <tr class="markdownTableRowOdd">
