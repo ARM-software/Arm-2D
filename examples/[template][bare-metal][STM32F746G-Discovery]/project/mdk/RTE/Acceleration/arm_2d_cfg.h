@@ -75,7 +75,7 @@ extern "C" {
 // <i> Note that enabling this feature will half the performance of IIR Blur and only works correctly in Full framebuffer mode
 // <i> This feature is disabled by default to improve performance
 #ifndef __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__
-#   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                 1
+#   define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                 0
 #endif
 
 // <q>Support Scaling for A1, A2 and A4 fonts
@@ -211,14 +211,14 @@ extern "C" {
 // <i> The width of your screen for running benchmark
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__                                     320
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     480
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen for running benchmark
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    272
 #endif
 
 // <o>Number of iterations <1-2000>

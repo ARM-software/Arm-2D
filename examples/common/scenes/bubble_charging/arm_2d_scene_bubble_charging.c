@@ -268,9 +268,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
 
         }
 
-        arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
+        arm_2d_size_t tStringSize = arm_lcd_get_string_line_box("000", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
-        arm_2d_align_centre(__charging_canvas, tStringSize) {
+        arm_2d_align_centre_open(__charging_canvas, tStringSize) {
 
             arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
             arm_lcd_text_set_draw_region(&__centre_region);

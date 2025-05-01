@@ -65,14 +65,14 @@ extern "C" {
 // <i> The width of your screen
 // <i> Default: 320
 #ifndef __DISP0_CFG_SCEEN_WIDTH__
-#   define __DISP0_CFG_SCEEN_WIDTH__                               320
+#   define __DISP0_CFG_SCEEN_WIDTH__                               480
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen
 // <i> Default: 240
 #ifndef __DISP0_CFG_SCEEN_HEIGHT__
-#   define __DISP0_CFG_SCEEN_HEIGHT__                              240
+#   define __DISP0_CFG_SCEEN_HEIGHT__                              272
 #endif
 
 /*
@@ -96,13 +96,13 @@ extern "C" {
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           320
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           480
 #endif
 
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          24
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          28
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -165,7 +165,7 @@ extern "C" {
 //     <1=>     Real FPS
 // <i> Decide the meaning of the real time FPS display
 #ifndef __DISP0_CFG_FPS_CACULATION_MODE__
-#   define __DISP0_CFG_FPS_CACULATION_MODE__                       0
+#   define __DISP0_CFG_FPS_CACULATION_MODE__                       1
 #endif
 
 // <q> Enable Console
