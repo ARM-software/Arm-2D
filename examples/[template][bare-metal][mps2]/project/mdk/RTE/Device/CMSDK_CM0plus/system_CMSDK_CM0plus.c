@@ -1,11 +1,8 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     system_CMSDK_CM0plus.c
- * @brief    CMSIS Device System Source File for
- *           CMSDK_M0plus Device
- * @version  V4.00
- * @date     02. November 2015
+ * @brief    CMSIS System Source File for CMSDK_M0plus Device
  ******************************************************************************/
-/* Copyright (c) 2011 - 2015 ARM LIMITED
+/* Copyright (c) 2011 - 2022 ARM LIMITED
 
    All rights reserved.
    Redistribution and use in source and binary forms, with or without
@@ -32,29 +29,46 @@
    POSSIBILITY OF SUCH DAMAGE.
    ---------------------------------------------------------------------------*/
 
+#if defined (CMSDK_CM0plus) || defined (CMSDK_CM0plus_VHT)
+  #include "CMSDK_CM0plus.h"
+#else
+  #error device not specified!
+#endif
 
-#include "CMSDK_CM0plus.h"
 
 /*----------------------------------------------------------------------------
   Define clocks
  *----------------------------------------------------------------------------*/
 #define  XTAL            (50000000UL)     /* Oscillator frequency */
 
-#define  SYSTEM_CLOCK    (XTAL / 2)
+#define  SYSTEM_CLOCK    (XTAL / 2U)
 
+/*----------------------------------------------------------------------------
+  Exception / Interrupt Vector table
+ *----------------------------------------------------------------------------*/
+extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
 
 /*----------------------------------------------------------------------------
   System Core Clock Variable
  *----------------------------------------------------------------------------*/
 uint32_t SystemCoreClock = SYSTEM_CLOCK;  /* System Core Clock Frequency */
 
-
+/*----------------------------------------------------------------------------
+  System Core Clock update function
+ *----------------------------------------------------------------------------*/
 void SystemCoreClockUpdate (void)
 {
   SystemCoreClock = SYSTEM_CLOCK;
 }
 
+/*----------------------------------------------------------------------------
+  System initialization function
+ *----------------------------------------------------------------------------*/
 void SystemInit (void)
 {
-    SystemCoreClock = SYSTEM_CLOCK;
+#if defined (__VTOR_PRESENT) && (__VTOR_PRESENT == 1U)
+  SCB->VTOR = (uint32_t) &(__VECTOR_TABLE[0]);
+#endif
+
+  SystemCoreClock = SYSTEM_CLOCK;
 }

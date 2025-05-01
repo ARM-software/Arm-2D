@@ -10,7 +10,7 @@
       <TargetName>V2M-MPS2-CM4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1437,7 +1437,7 @@
       <TargetName>V2M-MPS2-CM33</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2082,7 +2082,7 @@
       <TargetName>V2M-MPS2-CM0+</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -2796,7 +2796,7 @@
       <TargetName>V2M-MPS2-CM7</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::.\ArmCompilerforEmbedded6.24</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -3592,7 +3592,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.1.1" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3662,7 +3662,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3752,7 +3752,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.11.0" condition="Arm-2D-Printf">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.11.1" condition="Arm-2D-Printf">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4305,9 +4305,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_gas_gauge.c" version="1.1.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_gas_gauge.c" version="1.2.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_gas_gauge.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.1.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4317,9 +4317,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_gas_gauge.h" version="1.1.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_gas_gauge.h" version="1.2.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_gas_gauge.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.1.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.2.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4593,9 +4593,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_progress_status.c" version="2.1.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_progress_status.c" version="2.2.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_progress_status.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4605,9 +4605,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_progress_status.h" version="2.1.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_progress_status.h" version="2.2.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_progress_status.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -5037,7 +5037,7 @@
           <targetInfo name="V2M-MPS2-CM0+"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Device\CMSDK_CM0plus\Source\system_CMSDK_CM0plus.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="Device\CMSDK_CM0plus\Source\system_CMSDK_CM0plus.c" version="1.1.0">
         <instance index="0">RTE\Device\CMSDK_CM0plus\system_CMSDK_CM0plus.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.1.0" condition="CMSDK_CM0plus CMSIS"/>
         <package name="V2M-MPS2_CMx_BSP" schemaVersion="1.2" url="https://www.keil.com/pack/" vendor="Keil" version="1.8.1"/>

@@ -187,9 +187,16 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
 
     int32_t iResult;
     if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[0])) {
-        this.iProgress = -1;
+        this.iProgress[0] = -1;
     } else {
-        this.iProgress = (uint16_t)iResult;
+        this.iProgress[0] = (uint16_t)iResult;
+    }
+
+    if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[2])) {
+        this.iProgress[1] = 0;
+        this.lTimestamp[2] = 0;
+    } else {
+        this.iProgress[1] = (uint16_t)iResult;
     }
 
     progress_bar_round_on_frame_start(&this.tProgressBarRound);
@@ -265,7 +272,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
             #endif
                 __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
-                        progress_bar_simple_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
+                        progress_bar_simple_show(&__progress_bar, NULL, this.iProgress[1], bIsNewFrame);
 
                         arm_2d_helper_dirty_region_update_item( 
                                                     &this.tDirtyRegionItems[DIRTY_REGION_PROGRESS_BAR_SIMPLE],
@@ -276,7 +283,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                 }
                 __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
-                        progress_bar_drill_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
+                        progress_bar_drill_show(&__progress_bar, NULL, this.iProgress[0], bIsNewFrame);
                         arm_2d_helper_dirty_region_update_item( 
                                                     &this.tDirtyRegionItems[DIRTY_REGION_PROGRESS_BAR_DRILL],
                                                     &__progress_bar,
@@ -286,7 +293,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                 }
                 __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
-                        progress_bar_flowing_show(&__progress_bar, NULL, this.iProgress, bIsNewFrame);
+                        progress_bar_flowing_show(&__progress_bar, NULL, this.iProgress[0], bIsNewFrame);
                         arm_2d_helper_dirty_region_update_item( 
                                                     &this.tDirtyRegionItems[DIRTY_REGION_PROGRESS_BAR_FLOWING],
                                                     &__progress_bar,
@@ -302,7 +309,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                 NULL,
                                                 GLCD_COLOR_GRAY(32), 
                                                 GLCD_COLOR_NIXIE_TUBE, 
-                                                this.iProgress, 
+                                                this.iProgress[1], 
                                                 255);
                     }
                 }
@@ -314,7 +321,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                                                 NULL,
                                                 GLCD_COLOR_GRAY(32), 
                                                 __RGB(0x94, 0xd2, 0x52), 
-                                                this.iProgress, 
+                                                this.iProgress[1], 
                                                 255);
                     }
                 }
