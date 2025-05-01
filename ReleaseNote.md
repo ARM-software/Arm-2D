@@ -2,7 +2,7 @@
 
 
 
-## Release v1.2.2 (May 2025)
+## Release v1.2.2 (1st May 2025)
 
 ### Core and Library
 
