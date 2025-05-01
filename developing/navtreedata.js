@@ -31,7 +31,7 @@ var NAVTREE =
       [ "How to Get Started", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md3", null ],
       [ "Table of Content", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md4", null ],
       [ "Features", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md5", [
-        [ "In this version (v1.2.2-rc8)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
+        [ "In this version (v1.2.2)", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md6", null ],
         [ "New Features Planned in the Future", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md7", null ]
       ] ],
       [ "1 Introduction", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md8", [
@@ -55,7 +55,7 @@ var NAVTREE =
       [ "7 Feedback", "md__home_runner_work_Arm_2D_Arm_2D_README.html#autotoc_md22", null ]
     ] ],
     [ "Release Note", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html", [
-      [ "Release v1.2.2 (May 2025)", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md24", [
+      [ "Release v1.2.2 (1st May 2025)", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md24", [
         [ "Core and Library", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md25", null ],
         [ "Helper Services", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md26", null ],
         [ "Examples and Templates", "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md27", null ],
