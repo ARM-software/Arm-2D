@@ -11,7 +11,7 @@ var group__Tile =
     [ "arm_2d_op_cp_cl_key_t.Source", "group__Tile.html#structarm__2d__op__cp__cl__key__t_8Source", [
       [ "ptTile", "group__Tile.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
-    [ "arm_2d_op_cp_cl_key_t.__unnamed129__", "group__Tile.html#unionarm__2d__op__cp__cl__key__t_8____unnamed129____", [
+    [ "arm_2d_op_cp_cl_key_t.__unnamed133__", "group__Tile.html#unionarm__2d__op__cp__cl__key__t_8____unnamed133____", [
       [ "chColour", "group__Tile.html#a4853c21ae19c1b2bc936685425c225b5", null ],
       [ "hwColour", "group__Tile.html#a3a90debdbc76b907ebc5d82ee18e56aa", null ],
       [ "wColour", "group__Tile.html#a9f162c8dd605b531b0443f4f8d74453d", null ]
@@ -32,6 +32,7 @@ var group__Tile =
     [ "arm_2d_tile_shape_compare", "group__Tile.html#gab1691a6b16079881afadce5014ebcefb", null ],
     [ "arm_2d_tile_get_absolute_location", "group__Tile.html#ga753c6eadedf66953c1e6ae0d6975f083", null ],
     [ "arm_2d_tile_region_diff", "group__Tile.html#gaa53736cddf99f0499661fcdee1b3b237", null ],
+    [ "arm_2d_sw_normal_root_tile_copy", "group__Tile.html#ga2462b8371a4843e771041481192e2e62", null ],
     [ "arm_2dp_c8bit_tile_copy", "group__Tile.html#ga6f1f5bda917f0444de5845dccabb4026", null ],
     [ "arm_2dp_rgb16_tile_copy", "group__Tile.html#ga603c00d1551df9270eb833b0ca704e60", null ],
     [ "arm_2dp_rgb32_tile_copy", "group__Tile.html#ga83115137cbe3b06798a540d3d222df9e", null ],
