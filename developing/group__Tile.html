@@ -113,7 +113,8 @@ $(document).ready(function(){initNavTree('group__Tile.html',''); initResizable()
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">2 Tile Operations</div></div>
 </div><!--header-->
 <div class="contents">
@@ -282,9 +283,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga970e2f57bdeb95b21295fb1b8003c6ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga970e2f57bdeb95b21295fb1b8003c6ef">arm_2d_region_get_minimal_enclosure</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptInput0, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptInput1, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptOutput)</td></tr>
 <tr class="memdesc:ga970e2f57bdeb95b21295fb1b8003c6ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the minimal enclosure region for the given two regions  <a href="group__Tile.html#ga970e2f57bdeb95b21295fb1b8003c6ef">More...</a><br /></td></tr>
 <tr class="separator:ga970e2f57bdeb95b21295fb1b8003c6ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b1525f76620d2624311ae469bbe0988"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga7b1525f76620d2624311ae469bbe0988">arm_2d_is_point_inside_region</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptPoint)</td></tr>
-<tr class="memdesc:ga7b1525f76620d2624311ae469bbe0988"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a point is inside a given region  <a href="group__Tile.html#ga7b1525f76620d2624311ae469bbe0988">More...</a><br /></td></tr>
-<tr class="separator:ga7b1525f76620d2624311ae469bbe0988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab97f387463f394c964baac693ec2f260"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gab97f387463f394c964baac693ec2f260">arm_2d_create_region_from_corner_points</a> (<a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptOutput, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tPointA, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tPointB) extern bool arm_2d_is_point_inside_region(const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion</td></tr>
+<tr class="memdesc:gab97f387463f394c964baac693ec2f260"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a point is inside a given region  <a href="group__Tile.html#gab97f387463f394c964baac693ec2f260">More...</a><br /></td></tr>
+<tr class="separator:gab97f387463f394c964baac693ec2f260"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga77b64272065500911f7e8c6734019106"><td class="memItemLeft" align="right" valign="top">int_fast8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga77b64272065500911f7e8c6734019106">arm_2d_is_region_inside_target</a> (const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptTarget)</td></tr>
 <tr class="memdesc:ga77b64272065500911f7e8c6734019106"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a given region is inside the target region  <a href="group__Tile.html#ga77b64272065500911f7e8c6734019106">More...</a><br /></td></tr>
 <tr class="separator:ga77b64272065500911f7e8c6734019106"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -483,6 +484,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gadd59979a0c2fc55eb2dbe06c8dec22a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gadd59979a0c2fc55eb2dbe06c8dec22a5">arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror</a> (<a class="el" href="group__Tile.html#structarm__2d__op__cp__cl__key__t">arm_2d_op_cp_cl_key_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptSource, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, uint32_t wMaskColour)</td></tr>
 <tr class="memdesc:gadd59979a0c2fc55eb2dbe06c8dec22a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">tile filling (tiling) with colour-keying and xy-mirroring  <a href="group__Tile.html#gadd59979a0c2fc55eb2dbe06c8dec22a5">More...</a><br /></td></tr>
 <tr class="separator:gadd59979a0c2fc55eb2dbe06c8dec22a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga9b8e750b6770821b82c53b8796cef844"><td class="memItemLeft" align="right" valign="top"><a id="ga9b8e750b6770821b82c53b8796cef844" name="ga9b8e750b6770821b82c53b8796cef844"></a>
+<a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ptPoint</b></td></tr>
+<tr class="separator:ga9b8e750b6770821b82c53b8796cef844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -3425,28 +3432,34 @@ wColour</td>
 </div><!-- fragment --> 
 </div>
 </div>
-<a id="ga7b1525f76620d2624311ae469bbe0988" name="ga7b1525f76620d2624311ae469bbe0988"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7b1525f76620d2624311ae469bbe0988">&#9670;&#160;</a></span>arm_2d_is_point_inside_region()</h2>
+<a id="gab97f387463f394c964baac693ec2f260" name="gab97f387463f394c964baac693ec2f260"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab97f387463f394c964baac693ec2f260">&#9670;&#160;</a></span>arm_2d_create_region_from_corner_points()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool arm_2d_is_point_inside_region </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> * arm_2d_create_region_from_corner_points </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
-          <td class="paramname"><em>ptRegion</em>, </td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOutput</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *&#160;</td>
-          <td class="paramname"><em>ptPoint</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td>
+          <td class="paramname"><em>tPointA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td>
+          <td class="paramname"><em>tPointB</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">

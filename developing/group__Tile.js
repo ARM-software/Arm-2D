@@ -20,7 +20,7 @@ var group__Tile =
     [ "arm_2d_is_root_tile", "group__Tile.html#gade3b9740d6009b516859df4259fbe3de", null ],
     [ "arm_2d_region_intersect", "group__Tile.html#ga2d00179a70df060121eec087a88f5d74", null ],
     [ "arm_2d_region_get_minimal_enclosure", "group__Tile.html#ga970e2f57bdeb95b21295fb1b8003c6ef", null ],
-    [ "arm_2d_is_point_inside_region", "group__Tile.html#ga7b1525f76620d2624311ae469bbe0988", null ],
+    [ "arm_2d_create_region_from_corner_points", "group__Tile.html#gab97f387463f394c964baac693ec2f260", null ],
     [ "arm_2d_is_region_inside_target", "group__Tile.html#ga77b64272065500911f7e8c6734019106", null ],
     [ "arm_2d_tile_get_root", "group__Tile.html#gaa2c90673706f32707b09561eb42e87a9", null ],
     [ "__arm_2d_tile_get_virtual_screen_or_root", "group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0", null ],
