@@ -881,7 +881,7 @@ ARM_NONNULL(1)
 arm_2d_region_t *arm_2d_create_region_from_corner_points(
                                                     arm_2d_region_t *ptOutput, 
                                                     arm_2d_location_t tPointA, 
-                                                    arm_2d_location_t tPointB)
+                                                    arm_2d_location_t tPointB);
 
 /*!
  * \brief check whether a point is inside a given region
