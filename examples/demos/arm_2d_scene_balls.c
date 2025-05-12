@@ -362,7 +362,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
     float fRadius = c_tileGlassBall40A4Mask.tRegion.tSize.iWidth / 2.0f;
 
 #define BORDER_WIDTH    16
-#define RESTITUTION     1.185f
+#define RESTITUTION     1.20f
     do {
         PhysicsBody tBoarder = CreatePhysicsBodyRectangle(
                                 (Vector2){ __top_canvas.tSize.iWidth / 2, __top_canvas.tSize.iHeight }, 

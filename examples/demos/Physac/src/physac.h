@@ -1066,6 +1066,7 @@ static PolygonData CreateRectanglePolygon(Vector2 pos, Vector2 size)
     return data;
 }
 
+#if !defined(PHYSAC_NO_THREADS)
 // Physics loop thread function
 static void *PhysicsLoop(void *arg)
 {
@@ -1090,6 +1091,7 @@ static void *PhysicsLoop(void *arg)
 
     return 0;
 }
+#endif
 
 // Physics steps calculations (dynamics, collisions and position corrections)
 static void PhysicsStep(void)
