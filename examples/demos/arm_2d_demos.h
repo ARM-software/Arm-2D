@@ -44,6 +44,7 @@
 #include "arm_2d_scene_rickrolling.h"
 #include "arm_2d_scene_matrix.h"
 #include "arm_2d_scene_iir_blur.h"
+#include "arm_2d_scene_balls.h"
 
 /* monochrome demos */
 #if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)
