@@ -70,6 +70,7 @@ if (ARM2D_HELPER)
 
             Helper/Source/WhiteDotSmall.c
             Helper/Source/cmsis_logo.c
+            Helper/Source/circle_small.c
 
             Helper/built_in/arm_2d_helper_built_in.c
             Helper/built_in/busy_wheel.c
@@ -173,7 +174,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/small_icon_sun.c
             examples/common/asset/software.c
             examples/common/asset/circle_mask.c
-            examples/common/asset/circle_small.c
+            
             examples/common/asset/wifi_signal.c
             examples/common/asset/helium.c
             examples/common/asset/background.c

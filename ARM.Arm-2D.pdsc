@@ -349,6 +349,7 @@
             <!-- asset -->
             <file category="sourceC"     name="Helper/Source/WhiteDotSmall.c" />
             <file category="sourceC"     name="Helper/Source/cmsis_logo.c" />
+            <file category="sourceC"     name="Helper/Source/circle_small.c" />
 
             <!-- built-in controls -->
             <file category="sourceC"     name="Helper/Source/arm_2d_helper_built_in.c" />
@@ -531,7 +532,7 @@
             <file category="sourceC"     name="examples/common/asset/small_icon_sun.c" />
             <file category="sourceC"     name="examples/common/asset/software.c" />
             <file category="sourceC"     name="examples/common/asset/circle_mask.c" />
-            <file category="sourceC"     name="examples/common/asset/circle_small.c" />
+            
             <file category="sourceC"     name="examples/common/asset/wifi_signal.c" />
             <file category="sourceC"     name="examples/common/asset/helium.c" />
             <file category="sourceC"     name="examples/common/asset/background.c" />
