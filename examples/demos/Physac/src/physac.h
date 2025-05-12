@@ -124,12 +124,12 @@
 #define     PHYSAC_PI                       3.14159265358979323846
 #define     PHYSAC_DEG2RAD                  (PHYSAC_PI/180.0f)
 
-#define     PHYSAC_MALLOC(size)                                                 \
-                __arm_2d_allocate_scratch_memory(   size,                       \
-                                                    4,                          \
-                                                    ARM_2D_MEM_TYPE_UNSPECIFIED)
-#define     PHYSAC_FREE(ptr)                                                    \
-                __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptr)
+#ifndef PHYSAC_MALLOC
+#   define     PHYSAC_MALLOC(size)             malloc(size)
+#endif
+#ifndef PHYSAC_FREE
+#   define     PHYSAC_FREE(ptr)                free(ptr)
+#endif
 
 //----------------------------------------------------------------------------------
 // Types and Structures Definition

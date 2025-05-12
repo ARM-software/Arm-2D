@@ -103,8 +103,14 @@ __STATIC_INLINE double get_current_ms(void)
 #define PHYSAC_IMPLEMENTATION
 #define PHYSAC_NO_THREADS
 #define PHYSAC_STANDALONE
-#define PHYSAC_MALLOC()
-#define PHYSAC_FREE()
+
+#define     PHYSAC_MALLOC(size)                                                 \
+                __arm_2d_allocate_scratch_memory(   size,                       \
+                                                    4,                          \
+                                                    ARM_2D_MEM_TYPE_UNSPECIFIED)
+#define     PHYSAC_FREE(ptr)                                                    \
+                __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptr)
+
 #ifndef _STDBOOL_H
 #   define _STDBOOL_H
 #endif
