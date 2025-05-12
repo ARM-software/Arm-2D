@@ -1998,10 +1998,11 @@ static Vector2 TriangleBarycenter(Vector2 v1, Vector2 v2, Vector2 v3)
     return result;
 }
 
+
 // Initializes hi-resolution MONOTONIC timer
 static void InitTimer(void)
 {
-    srand(time(NULL));              // Initialize random seed
+    srand(PHYSAC_GET_CURRENT_TIME());              // Initialize random seed
 
     #if defined(_WIN32)
         QueryPerformanceFrequency((unsigned long long int *) &frequency);
@@ -2052,6 +2053,7 @@ static uint64_t GetTimeCount(void)
 
     return value;
 }
+
 
 // Get current time in milliseconds
 static double GetCurrTime(void)
