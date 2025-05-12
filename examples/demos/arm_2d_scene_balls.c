@@ -127,12 +127,20 @@ static void __on_scene_balls_load(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_dirty_region_add_items(   &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                            this.tDirtyRegionItems,
+                                            dimof(this.tDirtyRegionItems));
+
+    this.bDirtyRegionOptimizationStatus 
+        = arm_2d_helper_pfb_disable_dirty_region_optimization(
+            &ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t);
 }
 
 static void __after_scene_balls_switching(arm_2d_scene_t *ptScene)
 {
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
 
 }
 
@@ -141,6 +149,9 @@ static void __on_scene_balls_depose(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_dirty_region_remove_items(   &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                            this.tDirtyRegionItems,
+                                            dimof(this.tDirtyRegionItems));
     ClosePhysics();
 
     ptScene->ptPlayer = NULL;
@@ -200,7 +211,7 @@ static void __on_scene_balls_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[0])) {
         apply_force();
     }
 
@@ -213,6 +224,12 @@ static void __before_scene_balls_switching_out(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (this.bDirtyRegionOptimizationStatus) {
+        arm_2d_helper_pfb_enable_dirty_region_optimization(
+            &ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+            NULL, 
+            0);
+    }
 }
 
 static
@@ -247,7 +264,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
             .tSize = c_tileRadialGradientMask.tRegion.tSize,
         };
 
-
+        int_fast8_t chBallIndex = 0;
         for (int32_t nIndex = 0; nIndex < GetPhysicsBodiesCount(); nIndex++) {
 
             PhysicsBody tBody = GetPhysicsBody(nIndex);
@@ -284,6 +301,17 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
 
                     ARM_2D_OP_WAIT_ASYNC();
                 }
+
+                arm_2d_region_t tUpdateRegion;
+
+                arm_2d_region_get_minimal_enclosure(&tShadowRegion, &tBallRegion, &tUpdateRegion);
+
+                arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItems[chBallIndex],
+                                                        (arm_2d_tile_t *)ptTile,
+                                                        &__top_canvas,
+                                                        &tUpdateRegion);
+                
+                chBallIndex++;
             } else {
                 Vector2 vertexA = GetPhysicsShapeVertex(tBody, 0);
                 Vector2 vertexB = GetPhysicsShapeVertex(tBody, 2);
@@ -374,7 +402,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
             .fnOnFrameCPL   = &__on_scene_balls_frame_complete,
             .fnDepose       = &__on_scene_balls_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
