@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        11. March 2025
- * $Revision:    V.1.5.0
+ * $Date:        12. May 2025
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -875,6 +875,13 @@ arm_2d_region_t *arm_2d_region_get_minimal_enclosure(
                                 const arm_2d_region_t *ptInput0,
                                 const arm_2d_region_t *ptInput1,
                                 arm_2d_region_t *ptOutput);
+
+extern
+ARM_NONNULL(1)
+arm_2d_region_t *arm_2d_create_region_from_corner_points(
+                                                    arm_2d_region_t *ptOutput, 
+                                                    arm_2d_location_t tPointA, 
+                                                    arm_2d_location_t tPointB)
 
 /*!
  * \brief check whether a point is inside a given region

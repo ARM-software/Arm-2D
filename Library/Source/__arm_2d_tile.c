@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        11. March 2025
- * $Revision:    V.1.5.0
+ * $Date:        12. May 2025
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -233,6 +233,28 @@ arm_2d_region_t *arm_2d_region_get_minimal_enclosure(const arm_2d_region_t *ptIn
     } while(0);
 
     return ptOutput;
+}
+
+ARM_NONNULL(1)
+arm_2d_region_t *arm_2d_create_region_from_corner_points(arm_2d_region_t *ptOutput, 
+                                                         arm_2d_location_t tPointA, 
+                                                         arm_2d_location_t tPointB)
+{
+    if (NULL == ptOutput) {
+        return NULL;
+    }
+
+    arm_2d_region_t tRegionA = {
+        .tLocation = tPointA,
+        .tSize = {1,1},
+    };
+
+    arm_2d_region_t tRegionB = {
+        .tLocation = tPointB,
+        .tSize = {1,1},
+    };
+
+    return arm_2d_region_get_minimal_enclosure(&tRegionA, &tRegionB, ptOutput);
 }
 
 ARM_NONNULL(1,2)
