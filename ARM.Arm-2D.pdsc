@@ -867,11 +867,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cversion="0.5.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cversion="0.5.1" condition="Arm-2D-Demos">
           <description>A demo of bouncing balls</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_balls.c" attr="config" version="0.5.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_balls.h" attr="config" version="0.5.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_balls.c" attr="config" version="0.5.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_balls.h" attr="config" version="0.5.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Balls

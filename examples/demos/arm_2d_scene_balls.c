@@ -108,7 +108,12 @@ __STATIC_INLINE double get_current_ms(void)
 #ifndef _STDBOOL_H
 #   define _STDBOOL_H
 #endif
+#define PHYSAC_COLLISION_ITERATIONS     2
 #define PHYSAC_GET_CURRENT_TIME()       get_current_ms()
+#define PHYSAC_MAX_VERTICES             4
+#define PHYSAC_MAX_MANIFOLDS            128
+#define PHYSAC_MAX_BODIES               (DEMO_BALL_COUNT + 4)
+
 #include "./Physac/src/physac.h"
 
 static void __on_scene_balls_load(arm_2d_scene_t *ptScene)
@@ -228,10 +233,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
             }
 
             if (tBody->shape.type == PHYSICS_CIRCLE) {
-
-
-
-                
 
                 tShadowRegion.tLocation.iX = tBody->position.x - c_tileRadialGradientMask.tRegion.tSize.iWidth / 2 - 5;
                 tShadowRegion.tLocation.iY = tBody->position.y - c_tileRadialGradientMask.tRegion.tSize.iHeight / 2 + 5;
@@ -411,6 +412,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
 
         tBall->restitution = RESTITUTION;
         tBall->useGravity = false;
+        tBall->freezeOrient = true;
         PhysicsAddForce(tBall, (Vector2){ rand() & 0x7FF , rand() & 0x7FF });
     }
 

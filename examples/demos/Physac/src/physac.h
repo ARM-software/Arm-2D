@@ -98,13 +98,26 @@
 //----------------------------------------------------------------------------------
 // Defines and Macros
 //----------------------------------------------------------------------------------
-#define     PHYSAC_MAX_BODIES               64
-#define     PHYSAC_MAX_MANIFOLDS            4096
-#define     PHYSAC_MAX_VERTICES             24
+#ifndef PHYSAC_MAX_BODIES
+#   define     PHYSAC_MAX_BODIES               64
+#endif
+
+#ifndef PHYSAC_MAX_MANIFOLDS
+#   define     PHYSAC_MAX_MANIFOLDS            4096
+#endif
+
+#ifndef PHYSAC_MAX_VERTICES
+#   define     PHYSAC_MAX_VERTICES             24
+#endif
+
 #define     PHYSAC_CIRCLE_VERTICES          24
 
 #define     PHYSAC_FIXED_TIME               1.0f/60.0f
-#define     PHYSAC_COLLISION_ITERATIONS     20
+
+#ifndef PHYSAC_COLLISION_ITERATIONS
+#   define     PHYSAC_COLLISION_ITERATIONS     20
+#endif
+
 #define     PHYSAC_PENETRATION_ALLOWANCE    0.05f
 #define     PHYSAC_PENETRATION_CORRECTION   0.4f
 
