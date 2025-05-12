@@ -175,10 +175,28 @@ static void __on_scene_balls_frame_start(arm_2d_scene_t *ptScene)
 
 }
 
+static void apply_force(void)
+{
+    srand(arm_2d_helper_get_system_timestamp());
+
+    for (int32_t nIndex = 0; nIndex < GetPhysicsBodiesCount(); nIndex++) {
+        PhysicsBody tBody = GetPhysicsBody(nIndex);
+
+        if (tBody->shape.type != PHYSICS_CIRCLE) {
+            continue;
+        }
+        PhysicsAddForce(tBody, (Vector2){ (rand() & 0xFFF) - 0x7FF , (rand() & 0xFFF) - 0x7FF });
+    }
+}
+
 static void __on_scene_balls_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
+        apply_force();
+    }
 
     RunPhysicsStep();
 
@@ -362,7 +380,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
     float fRadius = c_tileGlassBall40A4Mask.tRegion.tSize.iWidth / 2.0f;
 
 #define BORDER_WIDTH    16
-#define RESTITUTION     1.20f
+#define RESTITUTION     1.0f
     do {
         PhysicsBody tBoarder = CreatePhysicsBodyRectangle(
                                 (Vector2){ __top_canvas.tSize.iWidth / 2, __top_canvas.tSize.iHeight }, 
@@ -412,11 +430,9 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
 
         tBall->restitution = RESTITUTION;
         tBall->useGravity = false;
-        tBall->freezeOrient = true;
-        PhysicsAddForce(tBall, (Vector2){ rand() & 0x7FF , rand() & 0x7FF });
-    }
 
-    
+        PhysicsAddForce(tBall, (Vector2){ (rand() & 0xFFF) - 0x7FF , (rand() & 0xFFF) - 0x7FF });
+    }
 
     /* ------------   initialize members of user_scene_balls_t end   ---------------*/
 
@@ -426,7 +442,6 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
 
     return ptThis;
 }
-
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
