@@ -200,6 +200,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/radial_line_cover.c
             examples/common/asset/radial_line_pattern.c
             examples/common/asset/wedge_pattern.c
+            examples/common/asset/GlassBall40.c
 
             examples/common/asset/icon_automobile.c
             examples/common/asset/icon_compute.c 
