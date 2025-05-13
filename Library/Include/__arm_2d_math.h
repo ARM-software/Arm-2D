@@ -253,6 +253,13 @@ mul_n_q16(q16_t q16In0, int32_t nIn1)
 
 __STATIC_INLINE 
 q16_t
+mul_f_q16(q16_t q16In0, float fIn1)
+{
+    return mul_q16(q16In0, reinterpret_q16_f32(fIn1));
+}
+
+__STATIC_INLINE 
+q16_t
 div_q16(q16_t q16In0, q16_t q16In1)
 {
     if (0 == q16In1) {
@@ -271,6 +278,13 @@ div_n_q16(q16_t q16In0, int32_t nIn1)
         return 0;
     }
     return (q16_t)(q16In0 / nIn1);
+}
+
+__STATIC_INLINE 
+q16_t
+div_f_q16(q16_t q16In0, float fIn1)
+{
+    return div_q16(q16In0, reinterpret_q16_f32(fIn1));
 }
 
 __STATIC_INLINE 
