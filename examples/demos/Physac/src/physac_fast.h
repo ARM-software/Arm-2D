@@ -512,8 +512,8 @@ PHYSACDEF PhysicsBody CreatePhysicsBodyRectangle(Vector2 pos, float width, float
         // Note: this is not really necessary
         for (int i = 0; i < newBody->shape.vertexData.vertexCount; i++)
         {
-            newBody->shape.vertexData.positions[i].x -= center.x;
-            newBody->shape.vertexData.positions[i].y -= center.y;
+            newBody->shape.vertexData.positions[i].q16X -= center.q16X;
+            newBody->shape.vertexData.positions[i].q16Y -= center.q16Y;
         }
 
         newBody->mass = density*area;
@@ -578,29 +578,29 @@ PHYSACDEF PhysicsBody CreatePhysicsBodyPolygon(Vector2 pos, float radius, int si
             int nextIndex = (((i + 1) < newBody->shape.vertexData.vertexCount) ? (i + 1) : 0);
             Vector2 position2 = newBody->shape.vertexData.positions[nextIndex];
 
-            float cross = MathCrossVector2(position1, position2);
-            float triangleArea = cross/2;
+            q16_t cross = reinterpret_q16_f32( MathCrossVector2(position1, position2) );
+            q16_t triangleArea = div_n_q16(cross, 2);
 
-            area += triangleArea;
+            area += reinterpret_f32_q16( triangleArea );
 
             // Use area to weight the centroid average, not just vertex position
-            center.x += triangleArea*PHYSAC_K*(position1.x + position2.x);
-            center.y += triangleArea*PHYSAC_K*(position1.y + position2.y);
+            center.q16X += mul_q16( mul_q16( triangleArea, reinterpret_q16_f32(PHYSAC_K)), (position1.q16X + position2.q16X));
+            center.q16Y += mul_q16( mul_q16( triangleArea, reinterpret_q16_f32(PHYSAC_K)), (position1.q16Y + position2.q16Y));
 
-            float intx2 = position1.x*position1.x + position2.x*position1.x + position2.x*position2.x;
-            float inty2 = position1.y*position1.y + position2.y*position1.y + position2.y*position2.y;
-            inertia += (0.25f*PHYSAC_K*cross)*(intx2 + inty2);
+            float intx2 = reinterpret_f32_q16( mul_q16(position1.q16X, position1.q16X) + mul_q16(position2.q16X, position1.q16X) + mul_q16( position2.q16X, position2.q16X));
+            float inty2 = reinterpret_f32_q16( mul_q16(position1.q16Y, position1.q16Y) + mul_q16(position2.q16Y, position1.q16Y) + mul_q16( position2.q16Y, position2.q16Y));
+            inertia += (0.25f*PHYSAC_K* reinterpret_f32_q16(cross))*(intx2 + inty2);
         }
 
-        center.x *= 1.0f/area;
-        center.y *= 1.0f/area;
+        center.q16X = mul_q16( center.q16X, reinterpret_q16_f32( 1.0f/area ));
+        center.q16Y = mul_q16( center.q16Y, reinterpret_q16_f32( 1.0f/area ));
 
         // Translate vertices to centroid (make the centroid (0, 0) for the polygon in model space)
         // Note: this is not really necessary
         for (int i = 0; i < newBody->shape.vertexData.vertexCount; i++)
         {
-            newBody->shape.vertexData.positions[i].x -= center.x;
-            newBody->shape.vertexData.positions[i].y -= center.y;
+            newBody->shape.vertexData.positions[i].q16X -= center.q16X;
+            newBody->shape.vertexData.positions[i].q16Y -= center.q16Y;
         }
 
         newBody->mass = density*area;
@@ -644,6 +644,7 @@ PHYSACDEF void PhysicsAddTorque(PhysicsBody body, float amount)
         body->torque += amount;
 }
 
+#if 0
 // Shatters a polygon shape physics body to little physics bodies with explosion force
 PHYSACDEF void PhysicsShatter(PhysicsBody body, Vector2 position, float force)
 {
@@ -662,13 +663,23 @@ PHYSACDEF void PhysicsShatter(PhysicsBody body, Vector2 position, float force)
                 Vector2 positionC = Mat2MultiplyVector2(body->shape.transform, Vector2Add(body->position, vertexData.positions[nextIndex]));
 
                 // Check collision between each triangle
-                float alpha = ((positionB.y - positionC.y)*(position.x - positionC.x) + (positionC.x - positionB.x)*(position.y - positionC.y))/
-                              ((positionB.y - positionC.y)*(positionA.x - positionC.x) + (positionC.x - positionB.x)*(positionA.y - positionC.y));
+                q16_t alpha = div_q16(  (   mul_q16((positionB.q16Y - positionC.q16Y),  (position.q16X - positionC.q16X)) 
+                                        +   mul_q16((positionC.q16X - positionB.q16X),  (position.q16Y - positionC.q16Y))
+                                        ), 
+                                        (   mul_q16((positionB.q16Y - positionC.q16Y), (positionA.q16X - positionC.q16X)) 
+                                        +   mul_q16( (positionC.q16X - positionB.q16X), (positionA.q16Y - positionC.q16Y))
+                                        )
+                                    );
 
-                float beta = ((positionC.y - positionA.y)*(position.x - positionC.x) + (positionA.x - positionC.x)*(position.y - positionC.y))/
-                             ((positionB.y - positionC.y)*(positionA.x - positionC.x) + (positionC.x - positionB.x)*(positionA.y - positionC.y));
+                q16_t beta = div_q16(   (   mul_q16((positionC.q16Y - positionA.q16Y), (position.q16X - positionC.q16X)) 
+                                        +   mul_q16((positionA.q16X - positionC.q16X), (position.q16Y - positionC.q16Y))
+                                        ),
+                                        (   mul_q16((positionB.q16Y - positionC.q16Y), (positionA.q16X - positionC.q16X))
+                                        +   mul_q16((positionC.q16X - positionB.q16X), (positionA.q16Y - positionC.q16Y))
+                                        )
+                                    );
 
-                float gamma = 1.0f - alpha - beta;
+                q16_t gamma = reinterpret_q16_f32(1.0f) - alpha - beta;
 
                 if ((alpha > 0.0f) && (beta > 0.0f) && (gamma > 0.0f))
                 {
@@ -707,12 +718,12 @@ PHYSACDEF void PhysicsShatter(PhysicsBody body, Vector2 position, float force)
                     newData.positions[2] = Vector2Subtract(position, center);
 
                     // Separate vertices to avoid unnecessary physics collisions
-                    newData.positions[0].x *= 0.95f;
-                    newData.positions[0].y *= 0.95f;
-                    newData.positions[1].x *= 0.95f;
-                    newData.positions[1].y *= 0.95f;
-                    newData.positions[2].x *= 0.95f;
-                    newData.positions[2].y *= 0.95f;
+                    newData.positions[0].q16X = mul_q16(newData.positions[0].q16X, reinterpret_q16_f32(0.95f));
+                    newData.positions[0].q16Y = mul_q16(newData.positions[0].q16X, reinterpret_q16_f32(0.95f));
+                    newData.positions[1].q16X = mul_q16(newData.positions[1].q16X, reinterpret_q16_f32(0.95f));
+                    newData.positions[1].q16Y = mul_q16(newData.positions[1].q16X, reinterpret_q16_f32(0.95f));
+                    newData.positions[2].q16X = mul_q16(newData.positions[2].q16X, reinterpret_q16_f32(0.95f));
+                    newData.positions[2].q16Y = mul_q16(newData.positions[2].q16X, reinterpret_q16_f32(0.95f));
 
                     // Calculate polygon faces normals
                     for (int j = 0; j < newData.vertexCount; j++)
@@ -720,7 +731,7 @@ PHYSACDEF void PhysicsShatter(PhysicsBody body, Vector2 position, float force)
                         int nextVertex = (((j + 1) < newData.vertexCount) ? (j + 1) : 0);
                         Vector2 face = Vector2Subtract(newData.positions[nextVertex], newData.positions[j]);
 
-                        newData.normals[j] = (Vector2){ face.y, -face.x };
+                        newData.normals[j] = (Vector2){ face.q16Y, -face.q16X };
                         MathNormalize(&newData.normals[j]);
                     }
 
@@ -785,6 +796,7 @@ PHYSACDEF void PhysicsShatter(PhysicsBody body, Vector2 position, float force)
             printf("[PHYSAC] error when trying to shatter a null reference physics body");
     #endif
 }
+#endif
 
 // Returns the current amount of created physics bodies
 PHYSACDEF int GetPhysicsBodiesCount(void)
@@ -864,7 +876,8 @@ PHYSACDEF int GetPhysicsShapeVerticesCount(int index)
     return result;
 }
 
-// Returns transformed position of a body shape (body position + vertex transformed position)
+
+// Returns transformed position of a body shape (body position + vertex t%ransformed position)
 PHYSACDEF Vector2 GetPhysicsShapeVertex(PhysicsBody body, int vertex)
 {
     Vector2 position = { 0.0f, 0.0f };
@@ -875,8 +888,8 @@ PHYSACDEF Vector2 GetPhysicsShapeVertex(PhysicsBody body, int vertex)
         {
             case PHYSICS_CIRCLE:
             {
-                position.x = body->position.x + cosf(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius;
-                position.y = body->position.y + sinf(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius;
+                position.q16X = body->position.q16X + reinterpret_q16_f32( cosf(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius);
+                position.q16Y = body->position.q16Y + reinterpret_q16_f32( sinf(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius);
             } break;
             case PHYSICS_POLYGON:
             {
@@ -1025,8 +1038,8 @@ static PolygonData CreateRandomPolygon(float radius, int sides)
     // Calculate polygon vertices positions
     for (int i = 0; i < data.vertexCount; i++)
     {
-        data.positions[i].x = cosf(360.0f/sides*i*PHYSAC_DEG2RAD)*radius;
-        data.positions[i].y = sinf(360.0f/sides*i*PHYSAC_DEG2RAD)*radius;
+        data.positions[i].q16X = reinterpret_q16_f32( cosf(360.0f/sides*i*PHYSAC_DEG2RAD) * radius );
+        data.positions[i].q16Y = reinterpret_q16_f32( sinf(360.0f/sides*i*PHYSAC_DEG2RAD) * radius );
     }
 
     // Calculate polygon faces normals
@@ -1035,12 +1048,13 @@ static PolygonData CreateRandomPolygon(float radius, int sides)
         int nextIndex = (((i + 1) < sides) ? (i + 1) : 0);
         Vector2 face = Vector2Subtract(data.positions[nextIndex], data.positions[i]);
 
-        data.normals[i] = (Vector2){ face.y, -face.x };
+        data.normals[i] = (Vector2){ face.q16Y, -face.q16X };
         MathNormalize(&data.normals[i]);
     }
 
     return data;
 }
+
 
 // Creates a rectangle polygon shape based on a min and max positions
 static PolygonData CreateRectanglePolygon(Vector2 pos, Vector2 size)
@@ -1049,10 +1063,10 @@ static PolygonData CreateRectanglePolygon(Vector2 pos, Vector2 size)
     data.vertexCount = 4;
 
     // Calculate polygon vertices positions
-    data.positions[0] = (Vector2){ pos.x + size.x/2, pos.y - size.y/2 };
-    data.positions[1] = (Vector2){ pos.x + size.x/2, pos.y + size.y/2 };
-    data.positions[2] = (Vector2){ pos.x - size.x/2, pos.y + size.y/2 };
-    data.positions[3] = (Vector2){ pos.x - size.x/2, pos.y - size.y/2 };
+    data.positions[0] = (Vector2){ pos.q16X + size.q16X/2, pos.q16Y - size.q16Y/2 };
+    data.positions[1] = (Vector2){ pos.q16X + size.q16X/2, pos.q16Y + size.q16Y/2 };
+    data.positions[2] = (Vector2){ pos.q16X - size.q16X/2, pos.q16Y + size.q16Y/2 };
+    data.positions[3] = (Vector2){ pos.q16X - size.q16X/2, pos.q16Y - size.q16Y/2 };
 
     // Calculate polygon faces normals
     for (int i = 0; i < data.vertexCount; i++)
@@ -1060,7 +1074,7 @@ static PolygonData CreateRectanglePolygon(Vector2 pos, Vector2 size)
         int nextIndex = (((i + 1) < data.vertexCount) ? (i + 1) : 0);
         Vector2 face = Vector2Subtract(data.positions[nextIndex], data.positions[i]);
 
-        data.normals[i] = (Vector2){ face.y, -face.x };
+        data.normals[i] = (Vector2){ face.q16Y, -face.q16X };
         MathNormalize(&data.normals[i]);
     }
 
@@ -1363,7 +1377,7 @@ static void SolvePhysicsManifold(PhysicsManifold manifold)
 
     // Update physics body grounded state if normal direction is down and grounded state is not set yet in previous manifolds
     if (!manifold->bodyB->isGrounded)
-        manifold->bodyB->isGrounded = (manifold->normal.y < 0);
+        manifold->bodyB->isGrounded = (manifold->normal.q16Y < 0);
 }
 
 // Solves collision between two circle shape physics bodies
@@ -1400,13 +1414,16 @@ static void SolveCircleToCircle(PhysicsManifold manifold)
     else
     {
         manifold->penetration = radius - distance;
-        manifold->normal = (Vector2){ normal.x/distance, normal.y/distance }; // Faster than using MathNormalize() due to sqrt is already performed
-        manifold->contacts[0] = (Vector2){ manifold->normal.x*bodyA->shape.radius + bodyA->position.x, manifold->normal.y*bodyA->shape.radius + bodyA->position.y };
+        manifold->normal = (Vector2){ div_f_q16(normal.q16X, distance), div_f_q16(normal.q16Y, distance) }; // Faster than using MathNormalize() due to sqrt is already performed
+        manifold->contacts[0] = (Vector2){ 
+                             mul_f_q16(manifold->normal.q16X, bodyA->shape.radius) + bodyA->position.q16X, 
+                             mul_f_q16(manifold->normal.q16Y, bodyA->shape.radius) + bodyA->position.q16Y 
+                        };
     }
 
     // Update physics body grounded state if normal direction is down
     if (!bodyA->isGrounded)
-        bodyA->isGrounded = (manifold->normal.y < 0);
+        bodyA->isGrounded = (manifold->normal.q16Y < 0);
 }
 
 // Solves collision between a circle to a polygon shape physics bodies
@@ -1432,8 +1449,8 @@ static void SolvePolygonToCircle(PhysicsManifold manifold)
 
     SolveDifferentShapes(manifold, bodyB, bodyA);
     
-    manifold->normal.x *= -1.0f;
-    manifold->normal.y *= -1.0f;
+    manifold->normal.q16X *= -1;
+    manifold->normal.q16Y *= -1;
 }
 
 // Solve collision between two different types of shapes
@@ -1475,8 +1492,11 @@ static void SolveDifferentShapes(PhysicsManifold manifold, PhysicsBody bodyA, Ph
     {
         manifold->contactsCount = 1;
         Vector2 normal = Mat2MultiplyVector2(bodyB->shape.transform, vertexData.normals[faceNormal]);
-        manifold->normal = (Vector2){ -normal.x, -normal.y };
-        manifold->contacts[0] = (Vector2){ manifold->normal.x*bodyA->shape.radius + bodyA->position.x, manifold->normal.y*bodyA->shape.radius + bodyA->position.y };
+        manifold->normal = (Vector2){ -normal.q16X, -normal.q16Y };
+        manifold->contacts[0] = (Vector2){ 
+                                    mul_f_q16( manifold->normal.q16X, bodyA->shape.radius) + bodyA->position.q16X, 
+                                    mul_f_q16( manifold->normal.q16Y, bodyA->shape.radius) + bodyA->position.q16Y 
+                                };
         manifold->penetration = bodyA->shape.radius;
         return;
     }
@@ -1522,8 +1542,11 @@ static void SolveDifferentShapes(PhysicsManifold manifold, PhysicsBody bodyA, Ph
             return;
 
         normal = Mat2MultiplyVector2(bodyB->shape.transform, normal);
-        manifold->normal = (Vector2){ -normal.x, -normal.y };
-        manifold->contacts[0] = (Vector2){ manifold->normal.x*bodyA->shape.radius + bodyA->position.x, manifold->normal.y*bodyA->shape.radius + bodyA->position.y };
+        manifold->normal = (Vector2){ -normal.q16X, -normal.q16Y };
+        manifold->contacts[0] = (Vector2){ 
+                                    mul_f_q16( manifold->normal.q16X, bodyA->shape.radius) + bodyA->position.q16X,
+                                    mul_f_q16( manifold->normal.q16Y, bodyA->shape.radius) + bodyA->position.q16Y 
+                                };
         manifold->contactsCount = 1;
     }
 }
@@ -1594,20 +1617,20 @@ static void SolvePolygonToPolygon(PhysicsManifold manifold)
     MathNormalize(&sidePlaneNormal);
 
     // Orthogonalize
-    Vector2 refFaceNormal = { sidePlaneNormal.y, -sidePlaneNormal.x };
+    Vector2 refFaceNormal = { sidePlaneNormal.q16Y, -sidePlaneNormal.q16X };
     float refC = MathDot(refFaceNormal, v1);
     float negSide = MathDot(sidePlaneNormal, v1)*-1;
     float posSide = MathDot(sidePlaneNormal, v2);
 
     // Clip incident face to reference face side planes (due to floating point error, possible to not have required points
-    if (Clip((Vector2){ -sidePlaneNormal.x, -sidePlaneNormal.y }, negSide, &incidentFace[0], &incidentFace[1]) < 2)
+    if (Clip((Vector2){ -sidePlaneNormal.q16X, -sidePlaneNormal.q16Y }, negSide, &incidentFace[0], &incidentFace[1]) < 2)
         return;
 
     if (Clip(sidePlaneNormal, posSide, &incidentFace[0], &incidentFace[1]) < 2)
         return;
 
     // Flip normal if required
-    manifold->normal = (flip ? (Vector2){ -refFaceNormal.x, -refFaceNormal.y } : refFaceNormal);
+    manifold->normal = (flip ? (Vector2){ -refFaceNormal.q16X, -refFaceNormal.q16Y } : refFaceNormal);
 
     // Keep points behind reference face
     int currentPoint = 0; // Clipped points behind reference face
@@ -1643,13 +1666,15 @@ static void IntegratePhysicsForces(PhysicsBody body)
     if ((body == NULL) || (body->inverseMass == 0.0f) || !body->enabled)
         return;
 
-    body->velocity.x += (body->force.x*body->inverseMass)*(deltaTime/2.0);
-    body->velocity.y += (body->force.y*body->inverseMass)*(deltaTime/2.0);
+    body->velocity.q16X += mul_f_q16(   mul_f_q16(body->force.q16X, body->inverseMass), 
+                                        (deltaTime/2.0));
+    body->velocity.q16Y += mul_f_q16(   mul_f_q16(body->force.q16Y, body->inverseMass),
+                                        (deltaTime/2.0));
 
     if (body->useGravity)
     {
-        body->velocity.x += gravityForce.x*(deltaTime/1000/2.0);
-        body->velocity.y += gravityForce.y*(deltaTime/1000/2.0);
+        body->velocity.q16X += mul_f_q16( gravityForce.q16X, (deltaTime/1000/2.0));
+        body->velocity.q16Y += mul_f_q16( gravityForce.q16Y, (deltaTime/1000/2.0));
     }
 
     if (!body->freezeOrient)
@@ -1680,12 +1705,15 @@ static void InitializePhysicsManifolds(PhysicsManifold manifold)
         Vector2 crossB = MathCross(bodyB->angularVelocity, radiusB);
 
         Vector2 radiusV = { 0.0f, 0.0f };
-        radiusV.x = bodyB->velocity.x + crossB.x - bodyA->velocity.x - crossA.x;
-        radiusV.y = bodyB->velocity.y + crossB.y - bodyA->velocity.y - crossA.y;
+        radiusV.q16X = bodyB->velocity.q16X + crossB.q16X - bodyA->velocity.q16X - crossA.q16X;
+        radiusV.q16Y = bodyB->velocity.q16Y + crossB.q16Y - bodyA->velocity.q16Y - crossA.q16Y;
 
         // Determine if we should perform a resting collision or not;
         // The idea is if the only thing moving this object is gravity, then the collision should be performed without any restitution
-        if (MathLenSqr(radiusV) < (MathLenSqr((Vector2){ gravityForce.x*deltaTime/1000, gravityForce.y*deltaTime/1000 }) + PHYSAC_EPSILON))
+        if (MathLenSqr(radiusV) < (MathLenSqr((Vector2){ 
+                                                mul_f_q16(gravityForce.q16X, deltaTime/1000), 
+                                                mul_f_q16(gravityForce.q16Y, deltaTime/1000)
+                                            }) + PHYSAC_EPSILON))
             manifold->restitution = 0;
     }
 }
@@ -1715,8 +1743,8 @@ static void IntegratePhysicsImpulses(PhysicsManifold manifold)
 
         // Calculate relative velocity
         Vector2 radiusV = { 0.0f, 0.0f };
-        radiusV.x = bodyB->velocity.x + MathCross(bodyB->angularVelocity, radiusB).x - bodyA->velocity.x - MathCross(bodyA->angularVelocity, radiusA).x;
-        radiusV.y = bodyB->velocity.y + MathCross(bodyB->angularVelocity, radiusB).y - bodyA->velocity.y - MathCross(bodyA->angularVelocity, radiusA).y;
+        radiusV.q16X = bodyB->velocity.q16X + MathCross(bodyB->angularVelocity, radiusB).q16X - bodyA->velocity.q16X - MathCross(bodyA->angularVelocity, radiusA).q16X;
+        radiusV.q16Y = bodyB->velocity.q16Y + MathCross(bodyB->angularVelocity, radiusB).q16Y - bodyA->velocity.q16Y - MathCross(bodyA->angularVelocity, radiusA).q16Y;
 
         // Relative velocity along the normal
         float contactVelocity = MathDot(radiusV, manifold->normal);
@@ -1736,31 +1764,33 @@ static void IntegratePhysicsImpulses(PhysicsManifold manifold)
         impulse /= (float)manifold->contactsCount;
 
         // Apply impulse to each physics body
-        Vector2 impulseV = { manifold->normal.x*impulse, manifold->normal.y*impulse };
+        Vector2 impulseV = {mul_f_q16(manifold->normal.q16X, impulse), 
+                            mul_f_q16(manifold->normal.q16Y, impulse) };
 
         if (bodyA->enabled)
         {
-            bodyA->velocity.x += bodyA->inverseMass*(-impulseV.x);
-            bodyA->velocity.y += bodyA->inverseMass*(-impulseV.y);
+            bodyA->velocity.q16X += mul_f_q16((-impulseV.q16X), bodyA->inverseMass);
+            bodyA->velocity.q16Y += mul_f_q16((-impulseV.q16Y), bodyA->inverseMass);
             
             if (!bodyA->freezeOrient)
-                bodyA->angularVelocity += bodyA->inverseInertia*MathCrossVector2(radiusA, (Vector2){ -impulseV.x, -impulseV.y });
+                bodyA->angularVelocity += bodyA->inverseInertia 
+                                        * MathCrossVector2(radiusA, (Vector2){ -impulseV.q16X, -impulseV.q16Y });
         }
 
         if (bodyB->enabled)
         {
-            bodyB->velocity.x += bodyB->inverseMass*(impulseV.x);
-            bodyB->velocity.y += bodyB->inverseMass*(impulseV.y);
+            bodyB->velocity.q16X += mul_f_q16((impulseV.q16X), bodyB->inverseMass);
+            bodyB->velocity.q16Y += mul_f_q16((impulseV.q16Y), bodyB->inverseMass);
             
             if (!bodyB->freezeOrient)
                 bodyB->angularVelocity += bodyB->inverseInertia*MathCrossVector2(radiusB, impulseV);
         }
 
         // Apply friction impulse to each physics body
-        radiusV.x = bodyB->velocity.x + MathCross(bodyB->angularVelocity, radiusB).x - bodyA->velocity.x - MathCross(bodyA->angularVelocity, radiusA).x;
-        radiusV.y = bodyB->velocity.y + MathCross(bodyB->angularVelocity, radiusB).y - bodyA->velocity.y - MathCross(bodyA->angularVelocity, radiusA).y;
+        radiusV.q16X = bodyB->velocity.q16X + MathCross(bodyB->angularVelocity, radiusB).q16X - bodyA->velocity.q16X - MathCross(bodyA->angularVelocity, radiusA).q16X;
+        radiusV.q16Y = bodyB->velocity.q16Y + MathCross(bodyB->angularVelocity, radiusB).q16Y - bodyA->velocity.q16Y - MathCross(bodyA->angularVelocity, radiusA).q16Y;
 
-        Vector2 tangent = { radiusV.x - (manifold->normal.x*MathDot(radiusV, manifold->normal)), radiusV.y - (manifold->normal.y*MathDot(radiusV, manifold->normal)) };
+        Vector2 tangent = { radiusV.q16X - mul_f_q16(manifold->normal.q16X, MathDot(radiusV, manifold->normal)), radiusV.q16Y - mul_f_q16 (manifold->normal.q16Y, MathDot(radiusV, manifold->normal)) };
         MathNormalize(&tangent);
 
         // Calculate impulse tangent magnitude
@@ -1777,24 +1807,26 @@ static void IntegratePhysicsImpulses(PhysicsManifold manifold)
         // Apply coulumb's law
         Vector2 tangentImpulse = { 0.0f, 0.0f };
         if (absImpulseTangent < impulse*manifold->staticFriction)
-            tangentImpulse = (Vector2){ tangent.x*impulseTangent, tangent.y*impulseTangent };
+            tangentImpulse = (Vector2){ mul_f_q16(tangent.q16X, impulseTangent), mul_f_q16(tangent.q16Y, impulseTangent) };
         else
-            tangentImpulse = (Vector2){ tangent.x*-impulse*manifold->dynamicFriction, tangent.y*-impulse*manifold->dynamicFriction };
+            tangentImpulse = (Vector2){ mul_f_q16( tangent.q16X, (-impulse * manifold->dynamicFriction)), 
+                                        mul_f_q16( tangent.q16Y, (-impulse * manifold->dynamicFriction)),
+                                      };
 
         // Apply friction impulse
         if (bodyA->enabled)
         {
-            bodyA->velocity.x += bodyA->inverseMass*(-tangentImpulse.x);
-            bodyA->velocity.y += bodyA->inverseMass*(-tangentImpulse.y);
+            bodyA->velocity.q16X += mul_f_q16 ((-tangentImpulse.q16X), bodyA->inverseMass);
+            bodyA->velocity.q16Y += mul_f_q16 ((-tangentImpulse.q16Y), bodyA->inverseMass);
 
             if (!bodyA->freezeOrient)
-                bodyA->angularVelocity += bodyA->inverseInertia*MathCrossVector2(radiusA, (Vector2){ -tangentImpulse.x, -tangentImpulse.y });
+                bodyA->angularVelocity += bodyA->inverseInertia*MathCrossVector2(radiusA, (Vector2){ -tangentImpulse.q16X, -tangentImpulse.q16Y });
         }
 
         if (bodyB->enabled)
         {
-            bodyB->velocity.x += bodyB->inverseMass*(tangentImpulse.x);
-            bodyB->velocity.y += bodyB->inverseMass*(tangentImpulse.y);
+            bodyB->velocity.q16X += mul_f_q16((tangentImpulse.q16X), bodyB->inverseMass);
+            bodyB->velocity.q16Y += mul_f_q16((tangentImpulse.q16Y), bodyB->inverseMass);
 
             if (!bodyB->freezeOrient)
                 bodyB->angularVelocity += bodyB->inverseInertia*MathCrossVector2(radiusB, tangentImpulse);
@@ -1808,8 +1840,8 @@ static void IntegratePhysicsVelocity(PhysicsBody body)
     if ((body == NULL) ||!body->enabled)
         return;
 
-    body->position.x += body->velocity.x*deltaTime;
-    body->position.y += body->velocity.y*deltaTime;
+    body->position.q16X += mul_f_q16(body->velocity.q16X, deltaTime);
+    body->position.q16Y += mul_f_q16(body->velocity.q16X, deltaTime);
 
     if (!body->freezeOrient)
         body->orient += body->angularVelocity*deltaTime;
@@ -1829,19 +1861,27 @@ static void CorrectPhysicsPositions(PhysicsManifold manifold)
         return;
 
     Vector2 correction = { 0.0f, 0.0f };
-    correction.x = (max(manifold->penetration - PHYSAC_PENETRATION_ALLOWANCE, 0.0f)/(bodyA->inverseMass + bodyB->inverseMass))*manifold->normal.x*PHYSAC_PENETRATION_CORRECTION;
-    correction.y = (max(manifold->penetration - PHYSAC_PENETRATION_ALLOWANCE, 0.0f)/(bodyA->inverseMass + bodyB->inverseMass))*manifold->normal.y*PHYSAC_PENETRATION_CORRECTION;
+    correction.q16X = reinterpret_q16_f32 ((   max(manifold->penetration - PHYSAC_PENETRATION_ALLOWANCE, 0.0f)
+                                            /   (bodyA->inverseMass + bodyB->inverseMass)
+                                            )
+                                            *   reinterpret_f32_q16(manifold->normal.q16X)
+                                            *   PHYSAC_PENETRATION_CORRECTION);
+    correction.q16Y = reinterpret_q16_f32(  (   max(manifold->penetration - PHYSAC_PENETRATION_ALLOWANCE, 0.0f)
+                                            /   (bodyA->inverseMass + bodyB->inverseMass)
+                                            )
+                                            *   reinterpret_f32_q16(manifold->normal.q16Y)
+                                            *   PHYSAC_PENETRATION_CORRECTION);
 
     if (bodyA->enabled)
     {
-        bodyA->position.x -= correction.x*bodyA->inverseMass;
-        bodyA->position.y -= correction.y*bodyA->inverseMass;
+        bodyA->position.q16X -= mul_f_q16(correction.q16X, bodyA->inverseMass);
+        bodyA->position.q16Y -= mul_f_q16(correction.q16Y, bodyA->inverseMass);
     }
 
     if (bodyB->enabled)
     {
-        bodyB->position.x += correction.x*bodyB->inverseMass;
-        bodyB->position.y += correction.y*bodyB->inverseMass;
+        bodyB->position.q16X += mul_f_q16( correction.q16X, bodyB->inverseMass);
+        bodyB->position.q16Y += mul_f_q16( correction.q16Y, bodyB->inverseMass);
     }
 }
 
@@ -1886,7 +1926,7 @@ static float FindAxisLeastPenetration(int *faceIndex, PhysicsShape shapeA, Physi
         normal = Mat2MultiplyVector2(buT, transNormal);
 
         // Retrieve support point from B shape along -n
-        Vector2 support = GetSupport(shapeB, (Vector2){ -normal.x, -normal.y });
+        Vector2 support = GetSupport(shapeB, (Vector2){ -normal.q16X, -normal.q16Y });
 
         // Retrieve vertex on face from A shape, transform into B shape's model space
         Vector2 vertex = dataA.positions[i];
@@ -1969,8 +2009,8 @@ static int Clip(Vector2 normal, float clip, Vector2 *faceA, Vector2 *faceB)
         float alpha = distanceA/(distanceA - distanceB);
         out[sp] = *faceA;
         Vector2 delta = Vector2Subtract(*faceB, *faceA);
-        delta.x *= alpha;
-        delta.y *= alpha;
+        delta.q16X = mul_f_q16( delta.q16X, alpha);
+        delta.q16Y = mul_f_q16( delta.q16Y, alpha);
         out[sp] = Vector2Add(out[sp], delta);
         sp++;
     }
@@ -1993,8 +2033,8 @@ static Vector2 TriangleBarycenter(Vector2 v1, Vector2 v2, Vector2 v3)
 {
     Vector2 result = { 0.0f, 0.0f };
 
-    result.x = (v1.x + v2.x + v3.x)/3;
-    result.y = (v1.y + v2.y + v3.y)/3;
+    result.q16X = div_n_q16((v1.q16X + v2.q16X + v3.q16X), 3);
+    result.q16Y = div_n_q16((v1.q16Y + v2.q16Y + v3.q16Y), 3);
 
     return result;
 }
@@ -2065,25 +2105,28 @@ static double GetCurrTime(void)
 // Returns the cross product of a vector and a value
 static inline Vector2 MathCross(float value, Vector2 vector)
 {
-    return (Vector2){ -value*vector.y, value*vector.x };
+    return (Vector2){ 
+                        mul_f_q16(vector.q16Y, -value), 
+                        mul_f_q16(vector.q16X, value)
+                    };
 }
 
 // Returns the cross product of two vectors
 static inline float MathCrossVector2(Vector2 v1, Vector2 v2)
 {
-    return (v1.x*v2.y - v1.y*v2.x);
+    return reinterpret_f32_q16(  mul_q16(v1.q16X, v2.q16Y) - mul_q16(v1.q16Y, v2.q16X));
 }
 
 // Returns the len square root of a vector
 static inline float MathLenSqr(Vector2 vector)
 {
-    return (vector.x*vector.x + vector.y*vector.y);
+    return reinterpret_f32_q16 (mul_q16(vector.q16X, vector.q16X) + mul_q16(vector.q16Y, vector.q16Y));
 }
 
 // Returns the dot product of two vectors
 static inline float MathDot(Vector2 v1, Vector2 v2)
 {
-    return (v1.x*v2.x + v1.y*v2.y);
+    return reinterpret_f32_q16(mul_q16 (v1.q16X, v2.q16X) + mul_q16(v1.q16Y, v2.q16Y));
 }
 
 // Returns the square root of distance between two vectors
@@ -2099,36 +2142,37 @@ static void MathNormalize(Vector2 *vector)
     float length, ilength;
 
     Vector2 aux = *vector;
-    length = sqrtf(aux.x*aux.x + aux.y*aux.y);
+    length = sqrtf( reinterpret_f32_q16(  mul_q16(aux.q16X, aux.q16X) + mul_q16(aux.q16Y, aux.q16Y)));
 
-    if (length == 0)
+    if (length == 0) {
         length = 1.0f;
+    }
 
     ilength = 1.0f/length;
 
-    vector->x *= ilength;
-    vector->y *= ilength;
+    vector->q16X = mul_f_q16(vector->q16X, ilength);
+    vector->q16Y = mul_f_q16(vector->q16Y, ilength);
 }
 
 #if defined(PHYSAC_STANDALONE)
 // Returns the sum of two given vectors
 static inline Vector2 Vector2Add(Vector2 v1, Vector2 v2)
 {
-    return (Vector2){ v1.x + v2.x, v1.y + v2.y };
+    return (Vector2){ v1.q16X + v2.q16X, v1.q16Y + v2.q16Y };
 }
 
 // Returns the subtract of two given vectors
 static inline Vector2 Vector2Subtract(Vector2 v1, Vector2 v2)
 {
-    return (Vector2){ v1.x - v2.x, v1.y - v2.y };
+    return (Vector2){ v1.q16X - v2.q16X, v1.q16Y - v2.q16Y };
 }
 #endif
 
 // Creates a matrix 2x2 from a given radians value
 static Mat2 Mat2Radians(float radians)
 {
-    float c = cosf(radians);
-    float s = sinf(radians);
+    float c = arm_cos_f32(radians);
+    float s = arm_sin_f32(radians);
 
     return (Mat2){ c, -s, s, c };
 }
@@ -2154,7 +2198,10 @@ static inline Mat2 Mat2Transpose(Mat2 matrix)
 // Multiplies a vector by a matrix 2x2
 static inline Vector2 Mat2MultiplyVector2(Mat2 matrix, Vector2 vector)
 {
-    return (Vector2){ matrix.m00*vector.x + matrix.m01*vector.y, matrix.m10*vector.x + matrix.m11*vector.y };
+    return (Vector2){ 
+                mul_f_q16(vector.q16X, matrix.m00) + mul_f_q16(vector.q16Y, matrix.m01), 
+                mul_f_q16(vector.q16X, matrix.m10) + mul_f_q16(vector.q16Y, matrix.m11)
+            };
 }
 
 #endif  // PHYSAC_IMPLEMENTATION
