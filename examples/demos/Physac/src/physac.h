@@ -177,8 +177,14 @@ typedef struct PhysicsShape {
 } PhysicsShape;
 
 typedef struct PhysicsBodyData {
-    unsigned int id;                            // Reference unique identifier
-    bool enabled;                               // Enabled dynamics state (collisions are calculated anyway)
+    uint16_t id;                                // Reference unique identifier
+    uint8_t useGravity      : 1;                // Apply gravity force to dynamics
+    uint8_t isGrounded      : 1;                // Physics grounded on other body state
+    uint8_t freezeOrient    : 1;                // Physics rotation constraint
+    uint8_t enabled         : 1;                // Enabled dynamics state (collisions are calculated anyway)
+    uint8_t collision       : 1;                // Has there been a recent collision?
+    uint8_t User;
+
     Vector2 position;                           // Physics body shape pivot
     Vector2 velocity;                           // Current linear velocity applied to position
     Vector2 force;                              // Current linear force (reset to 0 every step)
@@ -192,20 +198,20 @@ typedef struct PhysicsBodyData {
     float staticFriction;                       // Friction when the body has not movement (0 to 1)
     float dynamicFriction;                      // Friction when the body has movement (0 to 1)
     float restitution;                          // Restitution coefficient of the body (0 to 1)
-    bool useGravity;                            // Apply gravity force to dynamics
-    bool isGrounded;                            // Physics grounded on other body state
-    bool freezeOrient;                          // Physics rotation constraint
+
     PhysicsShape shape;                         // Physics body shape information (type, radius, vertices, normals)
 } PhysicsBodyData;
 
 typedef struct PhysicsManifoldData {
-    unsigned int id;                            // Reference unique identifier
+    uint16_t id;                                // Reference unique identifier
+    uint16_t contactsCount;                     // Current collision number of contacts
+
     PhysicsBody bodyA;                          // Manifold first physics body reference
     PhysicsBody bodyB;                          // Manifold second physics body reference
     float penetration;                          // Depth of penetration from collision
     Vector2 normal;                             // Normal direction vector from 'a' to 'b'
     Vector2 contacts[2];                        // Points of contact during collision
-    unsigned int contactsCount;                 // Current collision number of contacts
+    
     float restitution;                          // Mixed restitution during collision
     float dynamicFriction;                      // Mixed dynamic friction during collision
     float staticFriction;                       // Mixed static friction during collision
@@ -1136,6 +1142,9 @@ static void PhysicsStep(void)
 
                     if (manifold->contactsCount > 0)
                     {
+                        bodyA->collision = true;
+                        bodyB->collision = true;
+
                         // Create a new manifold with same information as previously solved manifold and add it to the manifolds pool last slot
                         PhysicsManifold newManifold = CreatePhysicsManifold(bodyA, bodyB);
                         newManifold->penetration = manifold->penetration;

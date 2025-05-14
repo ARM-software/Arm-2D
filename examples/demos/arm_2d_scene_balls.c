@@ -215,6 +215,20 @@ static void __on_scene_balls_frame_complete(arm_2d_scene_t *ptScene)
 
     RunPhysicsStep();
 
+    for (int32_t nIndex = 0; nIndex < GetPhysicsBodiesCount(); nIndex++) {
+        PhysicsBody tBody = GetPhysicsBody(nIndex);
+
+        if (tBody->shape.type != PHYSICS_CIRCLE) {
+            continue;
+        }
+        
+        if (tBody->collision) {
+            tBody->collision = false;
+            tBody->User = 255;
+        } else if (tBody->User > (64 + 32)) {
+            tBody->User -= 4;
+        }
+    }
 }
 
 static void __before_scene_balls_switching_out(arm_2d_scene_t *ptScene)
@@ -282,7 +296,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
                         &tShadowRegion, 
                         &c_tileRadialGradientMask, 
                         (__arm_2d_color_t){GLCD_COLOR_ORANGE},
-                        128);
+                        tBody->User);
                     ARM_2D_OP_WAIT_ASYNC();
                 }
 
@@ -407,7 +421,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
 
     /* ------------   initialize members of user_scene_balls_t begin ---------------*/
 
-    startTime = get_current_ms();
+    InitPhysics();
 
     float fRadius = c_tileGlassBall40A4Mask.tRegion.tSize.iWidth / 2.0f;
 
