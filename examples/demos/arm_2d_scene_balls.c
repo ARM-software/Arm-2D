@@ -63,14 +63,18 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileBackground         c_tileBackgroundSmallGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileBackground         c_tileBackgroundSmallRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
+
 #else
 #   error Unsupported colour depth!
 #endif
@@ -90,6 +94,9 @@ extern const arm_2d_tile_t c_tileGlassBall40A4Mask;
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileRadialGradientA4Mask;
 extern const arm_2d_tile_t c_tileRadialGradientA2Mask;
+
+extern 
+const arm_2d_tile_t c_tileBackground;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -256,6 +263,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
         
+    #if DEMO_BALL_SHOW_BACKGROUND
+        arm_2d_align_centre(__top_canvas, c_tileBackground.tRegion.tSize) {
+            arm_2d_tile_copy_only(  &c_tileBackground, 
+                                    ptTile, 
+                                    &__centre_region);
+        }
+    #endif
 
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
