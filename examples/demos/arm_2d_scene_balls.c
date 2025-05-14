@@ -209,7 +209,7 @@ static void __on_scene_balls_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         apply_force();
     }
 
