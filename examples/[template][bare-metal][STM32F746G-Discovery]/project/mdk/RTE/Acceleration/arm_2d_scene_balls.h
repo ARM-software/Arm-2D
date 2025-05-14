@@ -60,7 +60,11 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 #ifndef DEMO_BALL_COUNT
-#   define DEMO_BALL_COUNT      8
+#   define DEMO_BALL_COUNT              8
+#endif
+
+#ifndef DEMO_BALL_SHOW_BACKGROUND
+#   define DEMO_BALL_SHOW_BACKGROUND    0
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/

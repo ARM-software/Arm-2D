@@ -63,14 +63,18 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileBackground         c_tileBackgroundSmallGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileBackground         c_tileBackgroundSmallRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
+
 #else
 #   error Unsupported colour depth!
 #endif
@@ -90,6 +94,9 @@ extern const arm_2d_tile_t c_tileGlassBall40A4Mask;
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileRadialGradientA4Mask;
 extern const arm_2d_tile_t c_tileRadialGradientA2Mask;
+
+extern 
+const arm_2d_tile_t c_tileBackground;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -209,12 +216,26 @@ static void __on_scene_balls_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(20000, &this.lTimestamp[0])) {
+    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         apply_force();
     }
 
     RunPhysicsStep();
 
+    for (int32_t nIndex = 0; nIndex < GetPhysicsBodiesCount(); nIndex++) {
+        PhysicsBody tBody = GetPhysicsBody(nIndex);
+
+        if (tBody->shape.type != PHYSICS_CIRCLE) {
+            continue;
+        }
+        
+        if (tBody->collision) {
+            tBody->collision = false;
+            tBody->User = 255;
+        } else if (tBody->User > (64 + 32)) {
+            tBody->User -= 4;
+        }
+    }
 }
 
 static void __before_scene_balls_switching_out(arm_2d_scene_t *ptScene)
@@ -242,6 +263,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
         
+    #if DEMO_BALL_SHOW_BACKGROUND
+        arm_2d_align_centre(__top_canvas, c_tileBackground.tRegion.tSize) {
+            arm_2d_tile_copy_only(  &c_tileBackground, 
+                                    ptTile, 
+                                    &__centre_region);
+        }
+    #endif
 
         /* draw the cmsis logo using mask in the centre of the screen */
         arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
@@ -282,7 +310,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_balls_handler)
                         &tShadowRegion, 
                         &c_tileRadialGradientMask, 
                         (__arm_2d_color_t){GLCD_COLOR_ORANGE},
-                        128);
+                        tBody->User);
                     ARM_2D_OP_WAIT_ASYNC();
                 }
 
@@ -407,7 +435,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
 
     /* ------------   initialize members of user_scene_balls_t begin ---------------*/
 
-    startTime = get_current_ms();
+    InitPhysics();
 
     float fRadius = c_tileGlassBall40A4Mask.tRegion.tSize.iWidth / 2.0f;
 
