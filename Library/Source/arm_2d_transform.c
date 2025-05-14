@@ -980,7 +980,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only(__arm_2d_sub_task_t *ptTask)
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     if (ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme == ARM_2D_COLOUR_CCCA8888) {
-        __arm_2d_impl_ccca8888_transform_to_rgb565( &(ptTask->Param.tCopyOrig),
+        __arm_2d_impl_ccca8888_transform_to_cccn888( &(ptTask->Param.tCopyOrig),
                                                     &this.tTransform);
     } else
 #endif
