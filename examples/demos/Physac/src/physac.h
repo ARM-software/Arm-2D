@@ -269,6 +269,7 @@ PHYSACDEF void ClosePhysics(void);                                              
 #include <stdlib.h>                 // Required for: malloc(), free(), srand(), rand()
 #include <math.h>                   // Required for: cosf(), sinf(), fabs(), sqrtf()
 #include <stdint.h>                 // Required for: uint64_t
+#include <arm_math.h>
 
 #if !defined(PHYSAC_STANDALONE)
     #include "raymath.h"            // Required for: Vector2Add(), Vector2Subtract()
@@ -880,8 +881,8 @@ PHYSACDEF Vector2 GetPhysicsShapeVertex(PhysicsBody body, int vertex)
         {
             case PHYSICS_CIRCLE:
             {
-                position.x = body->position.x + cosf(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius;
-                position.y = body->position.y + sinf(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius;
+                position.x = body->position.x + arm_cos_f32(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius;
+                position.y = body->position.y + arm_sin_f32(360.0f/PHYSAC_CIRCLE_VERTICES*vertex*PHYSAC_DEG2RAD)*body->shape.radius;
             } break;
             case PHYSICS_POLYGON:
             {
@@ -1030,8 +1031,8 @@ static PolygonData CreateRandomPolygon(float radius, int sides)
     // Calculate polygon vertices positions
     for (int i = 0; i < data.vertexCount; i++)
     {
-        data.positions[i].x = cosf(360.0f/sides*i*PHYSAC_DEG2RAD)*radius;
-        data.positions[i].y = sinf(360.0f/sides*i*PHYSAC_DEG2RAD)*radius;
+        data.positions[i].x = arm_cos_f32(360.0f/sides*i*PHYSAC_DEG2RAD)*radius;
+        data.positions[i].y = arm_sin_f32(360.0f/sides*i*PHYSAC_DEG2RAD)*radius;
     }
 
     // Calculate polygon faces normals
@@ -1396,7 +1397,12 @@ static void SolveCircleToCircle(PhysicsManifold manifold)
         return;
     }
 
+#if 0
     float distance = sqrtf(distSqr);
+#else
+    float distance;
+    arm_sqrt_f32(distSqr, &distance);
+#endif
     manifold->contactsCount = 1;
 
     if (distance == 0.0f)
@@ -1674,9 +1680,15 @@ static void InitializePhysicsManifolds(PhysicsManifold manifold)
         return;
 
     // Calculate average restitution, static and dynamic friction
+#if 0
     manifold->restitution = sqrtf(bodyA->restitution*bodyB->restitution);
     manifold->staticFriction = sqrtf(bodyA->staticFriction*bodyB->staticFriction);
     manifold->dynamicFriction = sqrtf(bodyA->dynamicFriction*bodyB->dynamicFriction);
+#else
+    arm_sqrt_f32(bodyA->restitution*bodyB->restitution, &manifold->restitution);
+    arm_sqrt_f32(bodyA->staticFriction*bodyB->staticFriction, &manifold->staticFriction);
+    arm_sqrt_f32(bodyA->dynamicFriction*bodyB->dynamicFriction, &manifold->dynamicFriction);
+#endif
 
     for (int i = 0; i < manifold->contactsCount; i++)
     {
@@ -2107,7 +2119,11 @@ static void MathNormalize(Vector2 *vector)
     float length, ilength;
 
     Vector2 aux = *vector;
+#if 0
     length = sqrtf(aux.x*aux.x + aux.y*aux.y);
+#else
+    arm_sqrt_f32(aux.x*aux.x + aux.y*aux.y, &length);
+#endif
 
     if (length == 0)
         length = 1.0f;
@@ -2135,8 +2151,8 @@ static inline Vector2 Vector2Subtract(Vector2 v1, Vector2 v2)
 // Creates a matrix 2x2 from a given radians value
 static Mat2 Mat2Radians(float radians)
 {
-    float c = cosf(radians);
-    float s = sinf(radians);
+    float c = arm_cos_f32(radians);
+    float s = arm_sin_f32(radians);
 
     return (Mat2){ c, -s, s, c };
 }
@@ -2144,8 +2160,8 @@ static Mat2 Mat2Radians(float radians)
 // Set values from radians to a created matrix 2x2
 static void Mat2Set(Mat2 *matrix, float radians)
 {
-    float cos = cosf(radians);
-    float sin = sinf(radians);
+    float cos = arm_cos_f32(radians);
+    float sin = arm_sin_f32(radians);
 
     matrix->m00 = cos;
     matrix->m01 = -sin;
