@@ -127,14 +127,13 @@ static void __on_scene_mono_histogram_depose(arm_2d_scene_t *ptScene)
     user_scene_mono_histogram_t *ptThis = (user_scene_mono_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    histogram_depose(&this.tHistogram);
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    histogram_depose(&this.tHistogram);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -226,6 +225,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_histogram_handler)
                     
                     arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_LEFT, " histogram");
                     arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "_x");
+
+                    arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
 
                 }
 

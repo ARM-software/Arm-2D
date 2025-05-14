@@ -156,19 +156,18 @@ static void __on_scene_watch_face_01_depose(arm_2d_scene_t *ptScene)
     user_scene_watch_face_01_t *ptThis = (user_scene_watch_face_01_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_depose(ptPointer);
+    }
+
+    cloudy_glass_depose(&this.tCloudyGlass);
     
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
-        spin_zoom_widget_depose(ptPointer);
-    }
-
-    cloudy_glass_depose(&this.tCloudyGlass);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -342,7 +341,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_face_01_handler)
 
         arm_2d_align_centre(__canvas, 240, 240) {
 
-
             cloudy_glass_show(&this.tCloudyGlass,
                               ptTile,
                               &__centre_region);
@@ -350,14 +348,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_watch_face_01_handler)
             __draw_watch_panel(ptTile, &__centre_region, ptThis);
 
             arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
-                spin_zoom_widget_show(ptPointer, ptTile, &__centre_region, NULL, 255);
+                spin_zoom_widget_show(  ptPointer, 
+                                        ptTile, 
+                                        &__centre_region, 
+                                        NULL, 
+                                        255);
             }
 
         }
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
-    arm_2d_op_wait_async(NULL);
+
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }

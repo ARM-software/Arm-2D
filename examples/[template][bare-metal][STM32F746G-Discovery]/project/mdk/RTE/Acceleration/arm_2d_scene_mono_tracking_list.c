@@ -113,14 +113,13 @@ static void __on_scene_mono_tracking_list_depose(arm_2d_scene_t *ptScene)
     user_scene_mono_tracking_list_t *ptThis = (user_scene_mono_tracking_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    ptScene->ptPlayer = NULL;
+    text_tracking_list_depose(&this.tList);
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    text_tracking_list_depose(&this.tList);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -211,6 +210,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_tracking_list_handler)
                 
                 arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_LEFT, " Month");
                 arm_lcd_printf_label(ARM_2D_ALIGN_MIDDLE_RIGHT, "_x");
+
+                arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
             }
 
             __item_line_dock_vertical(4,    /* left margin */

@@ -353,6 +353,11 @@ void scene_rickrolling_loader(void)
 }
 #endif
 
+void scene_balls_loader(void) 
+{
+    arm_2d_scene_balls_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -412,6 +417,10 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         20000,
         scene_matrix_loader,
+    },
+    {
+        20000,
+        scene_balls_loader,
     },
     {
         13000,
@@ -524,7 +533,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_matrix_loader,
+        scene_watch_face_01_loader,
+        //scene_balls_loader,
+        //scene_matrix_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader
         //scene_mono_list_loader,

@@ -434,15 +434,14 @@ static void __on_scene_menu_depose(arm_2d_scene_t *ptScene)
     user_scene_menu_t *ptThis = (user_scene_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    progress_wheel_depose(&this.tWheel);
     
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
     
-    progress_wheel_depose(&this.tWheel);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

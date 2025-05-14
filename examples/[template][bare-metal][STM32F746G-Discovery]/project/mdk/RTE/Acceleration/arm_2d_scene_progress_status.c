@@ -141,13 +141,12 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
     progress_bar_round_depose(&this.tProgressBarRound);
     progress_bar_round_depose(&this.tProgressBarRound2);
 
-    ptScene->ptPlayer = NULL;
-    
+
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
