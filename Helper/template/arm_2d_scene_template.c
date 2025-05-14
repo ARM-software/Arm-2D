@@ -131,13 +131,16 @@ static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    /*--------------------- insert your depose code begin --------------------*/
     
-    ptScene->ptPlayer = NULL;
-    
+
+    /*---------------------- insert your depose code end  --------------------*/
+
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -146,7 +149,7 @@ static void __on_scene_<name>_depose(arm_2d_scene_t *ptScene)
 /*----------------------------------------------------------------------------*
  * Scene <name>                                                                    *
  *----------------------------------------------------------------------------*/
-
+#if 0  /* deprecated */
 static void __on_scene_<name>_background_start(arm_2d_scene_t *ptScene)
 {
     user_scene_<name>_t *ptThis = (user_scene_<name>_t *)ptScene;
@@ -160,6 +163,7 @@ static void __on_scene_<name>_background_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 }
+#endif
 
 
 static void __on_scene_<name>_frame_start(arm_2d_scene_t *ptScene)
@@ -309,16 +313,15 @@ user_scene_<name>_t *__arm_2d_scene_<name>_init(   arm_2d_scene_player_t *ptDisp
              */
             .fnOnLoad       = &__on_scene_<name>_load,
             .fnScene        = &__pfb_draw_scene_<name>_handler,
-            //.fnAfterSwitch  = &__after_scene_<name>_switching,
+            .fnAfterSwitch  = &__after_scene_<name>_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
-
-            //.fnOnBGStart    = &__on_scene_<name>_background_start,
-            //.fnOnBGComplete = &__on_scene_<name>_background_complete,
+            //.fnOnBGStart    = &__on_scene_<name>_background_start,        /* deprecated */
+            //.fnOnBGComplete = &__on_scene_<name>_background_complete,     /* deprecated */
             .fnOnFrameStart = &__on_scene_<name>_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_<name>_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_<name>_switching_out,
             .fnOnFrameCPL   = &__on_scene_<name>_frame_complete,
             .fnDepose       = &__on_scene_<name>_depose,
 

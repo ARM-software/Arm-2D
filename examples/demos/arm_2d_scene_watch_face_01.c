@@ -156,19 +156,18 @@ static void __on_scene_watch_face_01_depose(arm_2d_scene_t *ptScene)
     user_scene_watch_face_01_t *ptThis = (user_scene_watch_face_01_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_depose(ptPointer);
+    }
+
+    cloudy_glass_depose(&this.tCloudyGlass);
     
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
-        spin_zoom_widget_depose(ptPointer);
-    }
-
-    cloudy_glass_depose(&this.tCloudyGlass);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

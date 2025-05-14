@@ -152,21 +152,22 @@ static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
 {
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-    
-    ptScene->ptPlayer = NULL;
+
+
+#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
+    meter_pointer_depose(&this.tSecPointer);
+#endif
+
+    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
+        spin_zoom_widget_depose(ptPointer);
+    }
     
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
-        spin_zoom_widget_depose(ptPointer);
-    }
-
-#if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
-    meter_pointer_depose(&this.tSecPointer);
-#endif
+    ptScene->ptPlayer = NULL;
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);

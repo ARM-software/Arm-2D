@@ -150,12 +150,12 @@ static void __on_scene_text_reader_depose(arm_2d_scene_t *ptScene)
     
     text_box_depose(&this.tTextPanel);
 
-    ptScene->ptPlayer = NULL;
+
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

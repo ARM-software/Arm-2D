@@ -102,14 +102,13 @@ static void __on_scene_console_depose(arm_2d_scene_t *ptScene)
     user_scene_console_t *ptThis = (user_scene_console_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    console_box_depose(&this.tConsole);
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    console_box_depose(&this.tConsole);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

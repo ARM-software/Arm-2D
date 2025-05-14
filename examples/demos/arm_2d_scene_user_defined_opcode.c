@@ -132,19 +132,18 @@ static void __on_scene_user_defined_opcode_depose(arm_2d_scene_t *ptScene)
     user_scene_user_defined_opcode_t *ptThis = (user_scene_user_defined_opcode_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     /* draw line */
     do {
         arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
             ARM_2D_OP_DEPOSE(*ptLineOP);
         }
     } while(0);
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

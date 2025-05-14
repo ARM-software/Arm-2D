@@ -126,8 +126,6 @@ static void __on_scene_bubble_charging_depose(arm_2d_scene_t *ptScene)
     user_scene_bubble_charging_t *ptThis = (user_scene_bubble_charging_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
@@ -135,6 +133,8 @@ static void __on_scene_bubble_charging_depose(arm_2d_scene_t *ptScene)
     dynamic_nebula_depose(&this.tNebula);
 
     ARM_2D_OP_DEPOSE(this.tBlurOP);
+
+    ptScene->ptPlayer = NULL;
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);

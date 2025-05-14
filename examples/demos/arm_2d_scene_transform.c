@@ -190,12 +190,6 @@ static void __on_scene_transform_depose(arm_2d_scene_t *ptScene)
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     ARM_2D_OP_DEPOSE(this.tObjects[TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY].tOP.tFillColorMaskOpa);
     ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY].tOP.tTransOpa);
     ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY].tOP.tTransOpa);
@@ -204,7 +198,12 @@ static void __on_scene_transform_depose(arm_2d_scene_t *ptScene)
     arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
         arm_2d_helper_dirty_region_transform_depose(&ptObjects->tHelper);
     }
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

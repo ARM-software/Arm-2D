@@ -154,12 +154,10 @@ static void __on_scene_balls_depose(arm_2d_scene_t *ptScene)
                                             dimof(this.tDirtyRegionItems));
     ClosePhysics();
 
-    ptScene->ptPlayer = NULL;
-    
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -398,7 +396,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
             //.fnOnBGStart    = &__on_scene_balls_background_start,
             //.fnOnBGComplete = &__on_scene_balls_background_complete,
             .fnOnFrameStart = &__on_scene_balls_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_balls_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_balls_switching_out,
             .fnOnFrameCPL   = &__on_scene_balls_frame_complete,
             .fnDepose       = &__on_scene_balls_depose,
 
