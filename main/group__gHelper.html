@@ -6585,7 +6585,7 @@ chPTState</td>
 <div class="line">            arm_2d_helper_control_enum_init(                                    \</div>
 <div class="line">                        &amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tEnum),                               \</div>
 <div class="line">                        &amp;(ARM_2D_CONTROL_ENUMERATION_POLICY_##__POLICY),        \</div>
-<div class="line">                        (__ROOT));                                              \</div>
+<div class="line">                        (<span class="keyword">const</span> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *)(__ROOT));               \</div>
 <div class="line">            ARM_2D_SAFE_NAME(ptPointer)++;                                      \</div>
 <div class="line">        }) == NULL);                                                            \</div>
 <div class="line">        ({                                                                      \</div>
