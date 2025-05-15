@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.c"
  * Description:  the helper service source code for control management
  *
- * $Date:        11. Aug 2024
- * $Revision:    V.0.7.6
+ * $Date:        15. May 2025
+ * $Revision:    V.0.7.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

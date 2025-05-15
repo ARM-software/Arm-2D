@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.h"
  * Description:  the helper service header file for control management
  *
- * $Date:        11. Aug 2024
- * $Revision:    V.0.7.6
+ * $Date:        15. May 2025
+ * $Revision:    V.0.7.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -78,7 +78,7 @@ extern "C" {
             arm_2d_helper_control_enum_init(                                    \
                         &ARM_2D_SAFE_NAME(tEnum),                               \
                         &(ARM_2D_CONTROL_ENUMERATION_POLICY_##__POLICY),        \
-                        (__ROOT));                                              \
+                        (const arm_2d_control_node_t *)(__ROOT));               \
             ARM_2D_SAFE_NAME(ptPointer)++;                                      \
         }) == NULL);                                                            \
         ({                                                                      \
