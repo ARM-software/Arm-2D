@@ -2,6 +2,27 @@
 
 
 
+## Release v1.2.3 (16th May 2025)
+
+### Core and Library
+
+* Fixes transform tail-prediction issue in helium backend
+* Fixes a typo in the implicit colour conversion from ccca8888 to cccn888 transform-only operation
+* Adds a new API: `arm_2d_create_region_from_corner_points()`
+
+### Helper Services
+
+* Moves `circle_small.c` from `examples\common\assets` folder to `Helper\source folder`.
+* Improves the scene templates
+* Improves the compatibility of the control helper service with 3rd party GUIs
+
+### Examples and Templates
+
+* Adds a new Demo: balls
+* Updates all scene templates and demos to improve the reliability
+
+
+
 ## Release v1.2.2 (1st May 2025)
 
 ### Core and Library
