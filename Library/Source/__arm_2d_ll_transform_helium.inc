@@ -22,8 +22,8 @@
  * Title:        __arm_2d_transform_helium.inc
  * Description:  c code template for transform
  *
- * $Date:        28. April 2025
- * $Revision:    V.2.2.0
+ * $Date:        15. May 2025
+ * $Revision:    V.2.3.0
  *
  * -------------------------------------------------------------------- */
 
@@ -140,7 +140,7 @@ void __ARM_2D_FUNC(transform)(  __arm_2d_param_copy_orig_t *ptParam,
             mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                     &ptParam->tOrigin.tValidRegion, 
                                     &tPointTemp);
-
+            p &= vctp16q(nbVecElts);
             if (0xFFFF == p) {
                 __ARM_2D_FUNC(get_pixel_colour_inside_src)(
                                                   &tPointV,
@@ -198,7 +198,7 @@ void __ARM_2D_FUNC(transform)(  __arm_2d_param_copy_orig_t *ptParam,
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
-
+                p &= vctp16q(nbVecElts);
                 if (0xFFFF == p) {
                     __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_offs_compensated_inside_src)(
                         &tPointV,
@@ -319,7 +319,7 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
             mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                     &ptParam->tOrigin.tValidRegion, 
                                     &tPointTemp);
-
+            p &= vctp16q(nbVecElts);
             if (0xFFFF == p) {
                 __ARM_2D_FUNC(transform_only_get_pixel_colour_inside_src)(
                                                 &tPointV,
@@ -379,7 +379,7 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
-
+                p &= vctp16q(nbVecElts);
                 if (0xFFFF == p) {
                     __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_offs_compensated_inside_src)(
                                                 &tPointV,
@@ -498,7 +498,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
-
+                p &= vctp16q(nbVecElts);
                 if (0xFFFF == p) {
                     __ARM_2D_FUNC(get_pixel_colour_with_alpha_inside_src)(
                                                  &tPointV,
@@ -569,7 +569,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
-
+                p &= vctp16q(nbVecElts);
                 if (0xFFFF == p) {
                     __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated_inside_src)(
                                                 &tPointV, 
@@ -692,7 +692,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
-
+                p &= vctp16q(nbVecElts);
                 if (0xFFFF == p) {
 
                     __ARM_2D_FUNC(transform_only_get_pixel_colour_with_alpha_inside_src)(
@@ -766,6 +766,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
+                p &= vctp16q(nbVecElts);
 
                 if (0xFFFF == p) {
                     __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_with_alpha_offs_compensated_inside_src)(
@@ -883,7 +884,8 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
                 mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                         &ptParam->tOrigin.tValidRegion, 
                                         &tPointTemp);
-
+                p &= vctp16q(nbVecElts);
+                
                 if (0xFFFF == p) {
                     __ARM_2D_FUNC(get_alpha_with_opacity_inside_src)(  &tPointV,
                                                             &ptParam->tOrigin.tValidRegion,

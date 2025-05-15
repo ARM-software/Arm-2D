@@ -25,8 +25,8 @@
  *                  - transform_with_src_chn_mask
  *                  - transform_with_src_mask
  *
- * $Date:        28. April 2025
- * $Revision:    V.2.1.0
+ * $Date:        15. May 2025
+ * $Revision:    V.2.2.0
  *
  * -------------------------------------------------------------------- */
 
@@ -1524,7 +1524,7 @@ void __MTWM_FUNC(transform_with_mask)(
             mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
                                     &ptParam->tOrigin.tValidRegion, 
                                     &tPointTemp);
-
+            p &= vctp16q(nbVecElts);
             if (0xFFFF == p) {
                 __ARM_2D_FUNC(get_pixel_colour_mask_inside_src)(
                                     &tPointV,
