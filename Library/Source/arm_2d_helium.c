@@ -1533,7 +1533,8 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
 #endif
     uint16_t        hwRatioCompl = 256 - (uint16_t) hwRatio;
 
-#ifdef USE_MVE_INTRINSICS
+// todo: check the difference between intrinsics version and assembly version
+#if 1 //def USE_MVE_INTRINSICS
     int32_t         blkCnt;
     int32_t         row = ptCopySize->iHeight;
     uint32_t        scratch[2];
