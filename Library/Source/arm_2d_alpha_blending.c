@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        19 Dec 2024
- * $Revision:    V.1.8.3
+ * $Date:        17 May 2025
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -197,23 +197,6 @@ extern "C" {
 #define __API_ABW_COLOUR_SZ                     ARM_2D_COLOUR_SZ_32BIT
 
 #include "__arm_2d_alpha_blending_wrapper.inc"
-
-extern
-void __arm_2d_impl_rgb565_tile_copy_with_opacity_direct(
-                                        const uint16_t *phwSource,
-                                        const uint16_t *phwBackground,
-                                        uint16_t *phwDestination,
-                                        uint32_t wPixelCount,
-                                        uint_fast16_t hwRatio);
-
-extern
-void __arm_2d_impl_cccn888_tile_copy_with_opacity_direct(
-                                        const uint32_t *__RESTRICT pwSource,
-                                        const uint32_t *__RESTRICT pwBackground,
-                                        uint32_t *pwDestination,
-                                        uint32_t wPixelCount,
-                                        uint_fast16_t hwRatio);
-
 
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with specified masks                              *

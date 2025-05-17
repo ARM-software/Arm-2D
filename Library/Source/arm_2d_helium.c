@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        22. April 2025
- * $Revision:    V.1.2.0
+ * $Date:        17. May 2025
+ * $Revision:    V.1.2.1
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -1456,23 +1456,23 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_opacity)(   uint32_t *pwSour
 
         const uint32_t *pwSource = pwSourceBase;
         uint32_t       *pwTarget = pwTargetBase;
-        /* byte extraction into 16-bit vector */
-        uint16x8_t      vecSrc = vldrbq_u16((const uint8_t *)pwSource);
-        uint16x8_t      vecTrg = vldrbq_u16((const uint8_t *)pwTarget);
 
-        pwSource += 2;
-        blkCnt = ptCopySize->iWidth;
+        blkCnt = ptCopySize->iWidth * 4;
 
         while (blkCnt > 0) {
-            vstrbq_u16((uint8_t *)pwTarget,
-                       vmlaq(vmulq(vecSrc, (uint16_t)hwRatio), vecTrg, hwRatioCompl) >> 8);
+            mve_pred16_t    pred = vctp16q(blkCnt);
+
+            /* byte extraction into 16-bit vector */
+            uint16x8_t vecSrc = vldrbq_z_u16((const uint8_t *)pwSource, pred);
+            uint16x8_t vecTrg = vldrbq_z_u16((const uint8_t *)pwTarget, pred);
+
+            vstrbq_p_u16(   (uint8_t *)pwTarget,
+                            vmlaq(vmulq(vecSrc, (uint16_t)hwRatio), vecTrg, hwRatioCompl) >> 8,
+                            pred);
 
             pwTarget += 2;
-
-            vecSrc = vldrbq_u16((const uint8_t *)pwSource);
-            vecTrg = vldrbq_u16((const uint8_t *)pwTarget);
             pwSource += 2;
-            blkCnt -= 2;
+            blkCnt -= 8;
         }
 
         pwSourceBase += iSourceStride;
@@ -1545,16 +1545,17 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
 
     while (row > 0) {
         uint32_t       *pTarget = pTargetBase;
-        blkCnt = ptCopySize->iWidth;
+        blkCnt = ptCopySize->iWidth * 4;
 
         while (blkCnt > 0) {
+            mve_pred16_t    pred = vctp16q(blkCnt);
             /* byte extraction into 16-bit vector */
-            uint16x8_t      vecTrg = vldrbq_u16((uint8_t *)pTarget);
+            uint16x8_t      vecTrg = vldrbq_z_u16((uint8_t *)pTarget, pred);
 
-            vstrbq_u16((uint8_t *)pTarget, vmlaq(vColor, vecTrg, hwRatioCompl) >> 8);
+            vstrbq_p_u16((uint8_t *)pTarget, vmlaq(vColor, vecTrg, hwRatioCompl) >> 8, pred);
 
             pTarget += 2;
-            blkCnt -= 2;
+            blkCnt -= 8;
         }
         pTargetBase += iTargetStride;
         row--;
@@ -1705,225 +1706,6 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity)(uint3
         pTargetBase += (iTargetStride);
     }
 }
-
-
-
-__OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_with_opacity_direct)(const uint16_t *phwSource,
-                                                const uint16_t *phwBackground,
-                                                uint16_t *phwDestination,
-                                                uint32_t wPixelCount,
-                                                uint_fast16_t hwRatio)
-{
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-    hwRatio += (hwRatio == 255);
-#endif
-
-#ifdef USE_MVE_INTRINSICS
-    int32_t         blkCnt;
-    uint16_t        ratio1x8 = hwRatio * 8;
-    uint16_t        ratio1x4 = hwRatio * 4;
-    uint16_t        ratio2x8 = (256 - hwRatio) * 8;
-    uint16_t        ratio2x4 = (256 - hwRatio) * 4;
-
-    uint16x8_t      vecMaskR = vdupq_n_u16(0x001f);
-    uint16x8_t      vecMaskG = vdupq_n_u16(0x003f);
-    uint16x8_t      vecMaskBpck = vdupq_n_u16(0x00f8);
-    uint16x8_t      vecMaskGpck = vdupq_n_u16(0x00fc);
-
-    blkCnt = wPixelCount;
-    do {
-
-        uint16x8_t      vecIn;
-        uint16x8_t      vecR0, vecB0, vecG0;
-        uint16x8_t      vecR1, vecB1, vecG1;
-
-        /* unpack 1st stream */
-        vecIn = vld1q(phwSource);
-        phwSource += 8;
-
-        vecR0 = vecIn & vecMaskR;
-
-        vecB0 = vecIn >> 11;
-
-        vecG0 = vecIn >> 5;
-        vecG0 = vecG0 & vecMaskG;
-
-
-        /* unpack 2nd stream */
-        vecIn = vld1q(phwBackground);
-        phwBackground += 8;
-
-        vecR1 = vecIn & vecMaskR;
-
-        vecB1 = vecIn >> 11;
-
-        vecG1 = vecIn >> 5;
-        vecG1 = vecG1 & vecMaskG;
-
-
-        /* merge */
-        vecR0 = vecR0 * ratio1x8 + vecR1 * ratio2x8;
-        vecR0 = vecR0 >> 8;
-
-        vecG0 = vecG0 * ratio1x4 + vecG1 * ratio2x4;
-        vecG0 = vecG0 >> 8;
-
-        vecB0 = vecB0 * ratio1x8 + vecB1 * ratio2x8;
-        vecB0 = vecB0 >> 8;
-
-
-        /* pack */
-        uint16x8_t      vOut =
-            vecR0 >> 3 | vmulq((vecG0 & vecMaskGpck), 8)
-            | vmulq((vecB0 & vecMaskBpck), 256);
-
-        vst1q(phwDestination, vOut);
-        phwDestination += 8;
-
-        blkCnt -= 8;
-    }
-    while (blkCnt > 0);
-
-#else /* USE_MVE_INTRINSICS */
-
-    uint16_t        ratio1x8 = hwRatio * 8;
-    uint16_t        ratio1x4 = hwRatio * 4;
-    uint16_t        ratio2x8 = (256 - hwRatio) * 8;
-    uint16_t        ratio2x4 = (256 - hwRatio) * 4;
-    uint16x8_t      vecMaskR = vdupq_n_u16(0x001f);
-    uint16x8_t      vecMaskG = vdupq_n_u16(0x003f);
-    uint16x8_t      vecMaskBpck = vdupq_n_u16(0x00f8);
-
-     register unsigned loopCnt  __asm("lr") = (wPixelCount);
-
-    __asm volatile(
-
-        "   vldrh.u16               q4, [%[in2]], #16            \n"
-        "   vmov.i16                q6, #0x00fc                  \n"
-        "   vstrw.32                q6, [sp]                     \n"
-        "   vldrh.u16               q5, [%[in1]], #16            \n"
-        "   wlstp.16                lr, %[loopCnt], 1f           \n"
-        "2:                                                      \n"
-
-        "   vand                    q6, q4, %q[vecMaskR]         \n"
-        "   vmul.i16                q6, q6, %[ratio2x8]          \n"
-        "   vshr.u16                q2, q4, #5                   \n"
-        "   vand                    q7, q5, %q[vecMaskR]         \n"
-        "   vmla.s16                q6, q7, %[ratio1x8]          \n"
-        "   vand                    q2, q2, %q[vecMaskG]         \n"
-        "   vshr.u16                q7, q5, #5                   \n"
-        "   vmul.i16                q2, q2, %[ratio2x4]          \n"
-        "   vand                    q7, q7, %q[vecMaskG]         \n"
-        "   vmla.s16                q2, q7, %[ratio1x4]          \n"
-        "   vshr.u16                q4, q4, #11                  \n"
-        "   vmul.i16                q7, q4, %[ratio2x8]          \n"
-        "   vshr.u16                q5, q5, #11                  \n"
-        "   vshr.u16                q2, q2, #8                   \n"
-        "   vmla.s16                q7, q5, %[ratio1x8]          \n"
-
-        //  "   vmov.i16                 q6, #0x00fc  \n"
-        "   vshr.u16                q7, q7, #8                   \n"
-        //  "   vmov.i16                 q6, #0x00fc  \n"
-        /* load 0x00fc instead of mov for better overlap opportunity */
-        "   vldrw.u32               q4, [sp]                     \n"
-        "   vand                    q2, q2, q4                   \n"
-        "   vmul.i16                q2, q2, %[eight]             \n"
-        "   vand                    q4, q7, %q[vecMaskBpck]      \n" // Q7 = vecB0
-        "   vldrh.u16               q5, [%[in1]], #16            \n"
-        "   vmla.s16                q2, q4, %[twofiftysix]       \n"
-        // (vecR0 >> 3) >> 8
-        "   vshr.u16                q6, q6, #11                  \n"
-        "   vldrh.u16               q4, [%[in2]], #16            \n"
-        "   vorr                    q2, q2, q6                   \n"
-        "   vstrh.16                q2, [%[out]], #16            \n"
-        "   letp                    lr, 2b                       \n"
-        "1:                                                      \n"
-
-        : [in1] "+r"(phwSource),  [in2] "+r"(phwBackground),
-          [out] "+r" (phwDestination), [loopCnt] "+r"(loopCnt)
-        : [vecMaskR] "t" (vecMaskR), [vecMaskG] "t" (vecMaskG),
-          [vecMaskBpck] "t" (vecMaskBpck),
-          [ratio1x8] "r" (ratio1x8), [ratio2x8] "r" (ratio2x8),
-          [ratio1x4] "r" (ratio1x4), [ratio2x4] "r" (ratio2x4),
-          [eight] "r" (8), [twofiftysix] "r" (256)
-        : "q2", "q4", "q5", "q6", "q7", "memory" );
-
-#endif
-}
-
-__OVERRIDE_WEAK
-void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_with_opacity_direct)(const uint32_t *pwSource,
-                                                const uint32_t *pwBackground,
-                                                uint32_t *pwDestination,
-                                                uint32_t wPixelCount,
-                                                uint_fast16_t hwRatio)
-{
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-    hwRatio += (hwRatio == 255);
-#endif
-    uint16_t        hwRatioCompl = 256 - hwRatio;
-
-#ifdef USE_MVE_INTRINSICS
-    int32_t         blkCnt;
-
-    uint16x8_t      vecSrc, vecBckg;
-
-
-    vecSrc = vldrbq_u16((uint8_t const *) pwSource);
-    pwSource += 2;
-    vecBckg = vldrbq_u16((uint8_t const *) pwBackground);
-    pwBackground += 2;
-
-
-    blkCnt = wPixelCount;
-    do {
-        uint16x8_t      vecOut;
-
-        vecOut = vmulq_n_u16(vecSrc, (uint16_t) hwRatio);
-        vecSrc = vldrbq_u16((uint8_t const *) pwSource);
-        pwSource += 2;
-
-        vecOut = vmlaq_n_u16(vecOut, vecBckg, hwRatioCompl);
-        vecBckg = vldrbq_u16((uint8_t const *) pwBackground);
-        pwBackground += 2;
-
-        vecOut = vecOut >> 8;
-
-        vstrbq_u16((uint8_t *) pwDestination, vecOut);
-        pwDestination += 2;
-
-        blkCnt -= 2;
-    }
-    while (blkCnt > 0);
-
-#else /* USE_MVE_INTRINSICS */
-    register unsigned blkCnt  __asm("lr") = (wPixelCount * 4);
-
-    __asm volatile(
-        "   vldrb.u16               q0, [%[pwSource]], #8          \n"
-        "   vldrb.u16               q1, [%[pwBackg]], #8           \n"
-
-        "   wlstp.16                lr, %[loopCnt], 1f             \n"
-        "2:                                                        \n"
-        "   vmul.u16                q2, q0, %[hwRatio]             \n"
-        "   vldrb.u16               q0, [%[pwSource]], #8          \n"
-        "   vmla.s16                q2, q1, %[hwRatioCompl]        \n"
-        "   vldrb.u16               q1, [%[pwBackg]], #8           \n"
-        "   vshr.u16                q2, q2, #8                     \n"
-        "   vstrb.16                q2, [%[pwDest]], #8            \n"
-        "   letp                    lr, 2b                         \n"
-        "1:                                                        \n"
-
-        : [pwSource] "+l"(pwSource),  [pwBackg] "+l"(pwBackground),
-          [pwDest] "+l" (pwDestination), [loopCnt] "+r"(blkCnt)
-        : [hwRatio] "r" (hwRatio), [hwRatioCompl] "r" (hwRatioCompl)
-        : "q0", "q1", "q2", "memory" );
-#endif
-
-}
-
-
 
 /* rgb8_draw_pattern helpers */
 
