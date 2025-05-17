@@ -1533,8 +1533,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
 #endif
     uint16_t        hwRatioCompl = 256 - (uint16_t) hwRatio;
 
-// todo: check the difference between intrinsics version and assembly version
-#if 1 //def USE_MVE_INTRINSICS
+#ifdef USE_MVE_INTRINSICS
     int32_t         blkCnt;
     int32_t         row = ptCopySize->iHeight;
     uint32_t        scratch[2];
@@ -4138,7 +4137,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __R
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#if 1//def USE_MVE_INTRINSICS
+#if 1 //def USE_MVE_INTRINSICS
 
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A4, _,
                                         CCCN888_SCAL_OPACITY_NONE, _, 1/2, 255);
@@ -4656,7 +4655,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_opacity)(uint32_t 
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#ifdef USE_MVE_INTRINSICS
+#if 0 //def USE_MVE_INTRINSICS
 
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD, _,
                                         CCCN888_SCAL_OPACITY, vOpacity, 1, 254);
