@@ -408,10 +408,10 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
 
     //! angle validation
     ptTransform->fAngle = ARM_2D_FMODF(ptTransform->fAngle, ARM_2D_ANGLE(360));
-    if (ptTransform->fScaleX <= 0.001f) {
+    if (fabs(ptTransform->fScaleX) <= 0.001f) {
         ptTransform->fScaleX = 1.0f;
     }
-    if (ptTransform->fScaleY <= 0.001f) {
+    if (fabs(ptTransform->fScaleY) <= 0.001f) {
         ptTransform->fScaleY = ptTransform->fScaleX;
     }
 
