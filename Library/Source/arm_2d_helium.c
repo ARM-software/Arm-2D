@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        17. May 2025
- * $Revision:    V.1.2.1
+ * $Date:        21. May 2025
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -1034,7 +1034,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_opacity)(   uint16_t *phwSour
           [ratio1x8] "r" (ratio1x8), [ratio2x8] "r" (ratio2x8),
           [ratio1x4] "r" (ratio1x4), [ratio2x4] "r" (ratio2x4),
           [eight] "r" (8), [twofiftysix] "r" (256), [rshft5] "r" (1024), [scratch] "r" (scratch)
-        : "q2", "q4", "q5", "q6", "q7", "memory" );
+        : "q2", "q4", "q5", "q6", "q7", "memory", "r14" );
 
         phwSourceBase += iSourceStride;
         phwTargetBase += iTargetStride;
@@ -1209,7 +1209,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_opacity)(
           [vecMaskBpck] "t" (vecMaskBpck),
           [ratio2x8] "r" (ratio2x8), [ratio2x4] "r" (ratio2x4),
           [eight] "r" (8), [twofiftysix] "r" (256), [scratch] "r" (scratch)
-        : "q2", "q4", "q5", "q6", "q7", "memory" );
+        : "q2", "q4", "q5", "q6", "q7", "memory", "r14" );
 
         pTargetBase += iTargetStride;
     } while (--row);
@@ -1424,7 +1424,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity)(
           [ratio1x8] "r" (ratio1x8), [ratio2x8] "r" (ratio2x8),
           [ratio1x4] "r" (ratio1x4), [ratio2x4] "r" (ratio2x4),
           [eight] "r" (8), [twofiftysix] "r" (256), [hwColour] "r" (hwColour), [scratch] "r" (scratch)
-        : "q2", "q4", "q5", "q6", "q7", "memory" );
+        : "q2", "q4", "q5", "q6", "q7", "memory", "r14" );
 
         phwSource += (iSourceStride);
         phwTarget += (iTargetStride);
@@ -1508,7 +1508,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_opacity)(   uint32_t *pwSour
             : [pwSource] "+l"(pwSource),  [pwTarget] "+l"(pwTarget),
               [loopCnt] "+r"(blkCnt)
             : [hwRatio] "r" (hwRatio), [hwRatioCompl] "r" (hwRatioCompl)
-            : "q0", "q1", "q2", "memory" );
+            : "q0", "q1", "q2", "memory", "r14" );
 
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
@@ -1591,7 +1591,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_opacity)(
         "1:                                                        \n"
         : [pTarget] "+l"(pTarget)
         : [loopCnt] "r"(blkCnt), [hwRatioCompl] "r" (hwRatioCompl), [vColor] "t" (vColor)
-        : "q0", "q1", "q2", "memory" );
+        : "q0", "q1", "q2", "memory", "r14" );
 
         pTargetBase += iTargetStride;
         row--;
@@ -1700,7 +1700,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity)(uint3
         :[targ] "+r" (pTarget), [src] "+r" (pSource)
         :[loopCnt] "r" (iWidth), [ratio] "r" (hwRatio),
          [ratioCmp] "r" (hwRatioCompl), [color] "r" (Colour)
-        :"r14", "q0", "q1", "q2", "q3", "memory");
+        :"r14", "q0", "q1", "q2", "q3", "memory", "r14");
 #endif
         pSourceBase += (iSourceStride);
         pTargetBase += (iTargetStride);
@@ -2253,7 +2253,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask)(uint8_t * __RESTRIC
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "memory");
+            :"q0", "q1", "q2", "q3", "memory", "r14");
 #endif
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -2381,7 +2381,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a2_mask_opacity)(uint8_t 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
          ,[opa254] "r" (254)
 #endif
-        :"q0", "q1", "q2", "q3", "memory");
+        :"q0", "q1", "q2", "q3", "memory", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -2466,7 +2466,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_a4_mask_opacity)(uint8_t 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
          ,[opa254] "r" (254)
 #endif
-        :"q0", "q1", "q2", "q3", "memory");
+        :"q0", "q1", "q2", "q3", "memory", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -2533,7 +2533,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_opacity)(uint8_t * _
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
          ,[opa254] "r" (254)
 #endif
-        :"q0", "q1", "q2", "q3", "memory");
+        :"q0", "q1", "q2", "q3", "memory", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -2597,7 +2597,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask)(uint8_t * _
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
         ,[alph255] "r" (255)
 #endif
-        :"q0", "q1", "q2", "q3", "memory");
+        :"q0", "q1", "q2", "q3", "memory", "r14");
 
 #endif
         pwAlpha += (iAlphaStride);
@@ -2671,7 +2671,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_opacity)(uin
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
          ,[opa254] "r" (254)
 #endif
-        :"q0", "q1", "q2", "q3", "memory");
+        :"q0", "q1", "q2", "q3", "memory", "r14");
 
 #endif
         pwAlpha += (iAlphaStride);
@@ -2830,7 +2830,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_a2_mask)(uint16_t * __RES
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -2989,7 +2989,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_a4_mask)(uint16_t * __RES
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -3135,7 +3135,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask)(uint16_t * __RESTR
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -3339,7 +3339,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity)(uint16_
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -3507,7 +3507,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_a4_mask_opacity)(uint16_
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -3664,7 +3664,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_opacity)(uint16_t *
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -3812,7 +3812,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask)(uint16_t *
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pwAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -3970,7 +3970,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity)(ui
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q4", "q5", "q6", "q7", "memory");
+            :"q0", "q1", "q2", "q4", "q5", "q6", "q7", "memory", "r14");
 
         pwAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
@@ -4092,7 +4092,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask)(uint32_t * __R
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -4213,7 +4213,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __R
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -4322,7 +4322,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask)(uint32_t * __REST
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -4496,7 +4496,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity)(uint32
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -4620,7 +4620,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity)(uint32
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -4732,7 +4732,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_opacity)(uint32_t 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pchAlpha += (iAlphaStride);
@@ -4841,7 +4841,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask)(uint32_t 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pwAlpha += (iAlphaStride);
@@ -4956,7 +4956,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity)(u
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
              ,[opa254] "r" (254)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
+            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
 
 #endif
         pwAlpha += (iAlphaStride);
@@ -5202,7 +5202,7 @@ void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_masks_fill))(
                      [loopCnt] "+r"(blkCnt)
                     :[scratch] "r"  (scratch),[eight] "r"(8),[inv_2pow3] "r"(inv_2pow3),
                      [one] "r" (1)
-                    :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+                    :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
 #endif
                 ptTarget += wLength;
@@ -5419,7 +5419,7 @@ void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_src_msk_1h_des_msk_f
                      [loopCnt] "+r"(blkCnt)
                     :[scratch] "r"  (scratch),[eight] "r"(8),[inv_2pow3] "r"(inv_2pow3),
                      [one] "r" (1)
-                    :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory");
+                    :"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "memory", "r14");
 
 #endif
                 ptTarget += wLength;
