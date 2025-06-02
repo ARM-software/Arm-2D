@@ -275,19 +275,17 @@ void histogram_show(histogram_t *ptThis,
             /* tPFBScanRegion is a mapping of the PFB region inside the __text_box_canvas,
             * with which we can ignore the lines that out of the PFB region.
             */
-            arm_2d_region_t tPFBScanRegion;
+            arm_2d_region_t tPFBScanRegion = {0};
             do {
                 arm_2d_region_t tValidRegion;
-                if (!__arm_2d_tile_get_virtual_screen_or_root(  
+                if (__arm_2d_tile_get_virtual_screen_or_root(  
                                                         &__panel,
                                                         &tValidRegion, 
                                                         &tPFBScanRegion.tLocation,
                                                         NULL,
                                                         false)) {
-                    return ;
+                    tPFBScanRegion.tSize = tValidRegion.tSize;
                 }
-
-                tPFBScanRegion.tSize = tValidRegion.tSize;
             } while(0);
 
 
@@ -331,6 +329,7 @@ void histogram_show(histogram_t *ptThis,
                     }
                 } else {
                 
+                #if 1
                     if (!arm_2d_region_intersect(&tBinRegion, &tPFBScanRegion, NULL)) {
                         if (tBinRegion.tLocation.iX
                         >= (tPFBScanRegion.tLocation.iX + tPFBScanRegion.tSize.iWidth)) {
@@ -340,6 +339,7 @@ void histogram_show(histogram_t *ptThis,
                             goto label_loop_end;
                         }
                     }
+                #endif
 
                     if (this.tCFG.Bin.bUseScanLine) {
                         if (iHeight > 0) {
