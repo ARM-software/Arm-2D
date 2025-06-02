@@ -131,10 +131,6 @@ void histogram_init( histogram_t *ptThis,
         this.tCFG.Bin.nMaxValue = INT32_MAX;
     }
 
-    if (this.tCFG.Bin.bDrawEndPointOnly) {
-        this.tCFG.Bin.bUseScanLine = false;
-    }
-
     int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth + this.tCFG.Bin.chPadding;
     if (iBinWidth < 16) {
         this.u5BinsPerDirtyRegion = ((16 + (iBinWidth - 1)) / iBinWidth) - 1;
@@ -276,6 +272,24 @@ void histogram_show(histogram_t *ptThis,
 
             tBaseLine.iY = this.tHistogramSize.iHeight >> (!!this.tCFG.Bin.bSupportNegative);
         
+            /* tPFBScanRegion is a mapping of the PFB region inside the __text_box_canvas,
+            * with which we can ignore the lines that out of the PFB region.
+            */
+            arm_2d_region_t tPFBScanRegion;
+            do {
+                arm_2d_region_t tValidRegion;
+                if (!__arm_2d_tile_get_virtual_screen_or_root(  
+                                                        &__panel,
+                                                        &tValidRegion, 
+                                                        &tPFBScanRegion.tLocation,
+                                                        NULL,
+                                                        false)) {
+                    return ;
+                }
+
+                tPFBScanRegion.tSize = tValidRegion.tSize;
+            } while(0);
+
 
             arm_foreach(histogram_bin_item_t, 
                         this.tCFG.Bin.ptItems, 
@@ -294,8 +308,28 @@ void histogram_show(histogram_t *ptThis,
                         .iHeight = ABS(iHeight),
                     },
                 };
+                
+                if (this.tCFG.Bin.bDrawEndPointOnly) {
+                    arm_2d_location_t tPointLocation = tBinRegion.tLocation;
+                    if (iHeight < 0) {
+                        tPointLocation.iY -= iHeight;
+                    }
 
-                if (this.tCFG.Bin.bUseScanLine) {
+                    if (arm_2d_is_point_inside_region(&tPFBScanRegion, &tPointLocation)) {
+                        arm_2d_draw_point(
+                            &__panel,
+                            tPointLocation,
+                            ptItem->tColour,
+                            chOpacity
+                        );
+
+                        ARM_2D_OP_WAIT_ASYNC();
+                    } else if   (tPointLocation.iX 
+                            >=  (tPFBScanRegion.tLocation.iX + tPFBScanRegion.tSize.iWidth)) {
+                        /* end earlier */
+                        break;
+                    }
+                } else if (this.tCFG.Bin.bUseScanLine) {
                 
                     if (iHeight > 0) {
                         arm_2d_container(&__panel, __bin, &tBinRegion) {
@@ -321,18 +355,8 @@ void histogram_show(histogram_t *ptThis,
                                 chOpacity);
                     }
 
-                } else if (this.tCFG.Bin.bDrawEndPointOnly) {
-                    arm_2d_location_t tPointLocation = tBinRegion.tLocation;
-                    if (iHeight < 0) {
-                        tPointLocation.iY -= iHeight;
-                    }
+                    ARM_2D_OP_WAIT_ASYNC();
 
-                    arm_2d_draw_point(
-                        &__panel,
-                        tPointLocation,
-                        ptItem->tColour,
-                        chOpacity
-                    );
                 } else {
                     arm_2d_fill_colour_with_opacity(
                         &__panel,
@@ -340,9 +364,9 @@ void histogram_show(histogram_t *ptThis,
                         (__arm_2d_color_t) {ptItem->tColour},
                         chOpacity
                     );
-                }
 
-                ARM_2D_OP_WAIT_ASYNC();
+                    ARM_2D_OP_WAIT_ASYNC();
+                }
 
                 tBaseLine.iX += iBinWidth + this.tCFG.Bin.chPadding;
 
