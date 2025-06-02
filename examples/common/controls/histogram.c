@@ -329,45 +329,58 @@ void histogram_show(histogram_t *ptThis,
                         /* end earlier */
                         break;
                     }
-                } else if (this.tCFG.Bin.bUseScanLine) {
+                } else {
                 
-                    if (iHeight > 0) {
-                        arm_2d_container(&__panel, __bin, &tBinRegion) {
-
-                            int16_t iOffset = this.tHistogramSize.iHeight - iHeight;
-                            arm_2d_region_t tOriginalRegion = __bin_canvas;
-                            tOriginalRegion.tLocation.iY -= this.tHistogramSize.iHeight - iHeight;
-                            tOriginalRegion.tSize.iHeight += iOffset;
-
-                            arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
-                                &__bin,
-                                &tOriginalRegion,
-                                this.tCFG.Bin.ptVerticalLineMask, //&c_tileLineVerticalLineMask,
-                                (__arm_2d_color_t) {ptItem->tColour},
-                                chOpacity);
+                    if (!arm_2d_region_intersect(&tBinRegion, &tPFBScanRegion, NULL)) {
+                        if (tBinRegion.tLocation.iX
+                        >= (tPFBScanRegion.tLocation.iX + tPFBScanRegion.tSize.iWidth)) {
+                            /* end earlier */
+                            break;
+                        } else {
+                            goto label_loop_end;
                         }
-                    } else {
-                        arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
-                                &__panel,
-                                &tBinRegion,
-                                this.tCFG.Bin.ptVerticalLineMask, //&c_tileLineVerticalLineMask,
-                                (__arm_2d_color_t) {ptItem->tColour},
-                                chOpacity);
                     }
 
-                    ARM_2D_OP_WAIT_ASYNC();
+                    if (this.tCFG.Bin.bUseScanLine) {
+                        if (iHeight > 0) {
+                            arm_2d_container(&__panel, __bin, &tBinRegion) {
 
-                } else {
-                    arm_2d_fill_colour_with_opacity(
-                        &__panel,
-                        &tBinRegion,
-                        (__arm_2d_color_t) {ptItem->tColour},
-                        chOpacity
-                    );
+                                int16_t iOffset = this.tHistogramSize.iHeight - iHeight;
+                                arm_2d_region_t tOriginalRegion = __bin_canvas;
+                                tOriginalRegion.tLocation.iY -= this.tHistogramSize.iHeight - iHeight;
+                                tOriginalRegion.tSize.iHeight += iOffset;
 
-                    ARM_2D_OP_WAIT_ASYNC();
+                                arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                    &__bin,
+                                    &tOriginalRegion,
+                                    this.tCFG.Bin.ptVerticalLineMask, //&c_tileLineVerticalLineMask,
+                                    (__arm_2d_color_t) {ptItem->tColour},
+                                    chOpacity);
+                            }
+                        } else {
+                            arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                    &__panel,
+                                    &tBinRegion,
+                                    this.tCFG.Bin.ptVerticalLineMask, //&c_tileLineVerticalLineMask,
+                                    (__arm_2d_color_t) {ptItem->tColour},
+                                    chOpacity);
+                        }
+
+                        ARM_2D_OP_WAIT_ASYNC();
+
+                    } else {
+                        arm_2d_fill_colour_with_opacity(
+                            &__panel,
+                            &tBinRegion,
+                            (__arm_2d_color_t) {ptItem->tColour},
+                            chOpacity
+                        );
+
+                        ARM_2D_OP_WAIT_ASYNC();
+                    }
                 }
 
+            label_loop_end:
                 tBaseLine.iX += iBinWidth + this.tCFG.Bin.chPadding;
 
                 ptItem++;

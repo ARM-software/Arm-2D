@@ -74,6 +74,10 @@ extern "C" {
 #endif
 
 
+#ifndef ARM_2D_SCENE_HISTOGRAM_DATA_WINDOW_SIZE
+#   define ARM_2D_SCENE_HISTOGRAM_DATA_WINDOW_SIZE  14
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -104,10 +108,10 @@ ARM_PRIVATE(
     uint8_t bIsDirtyRegionOptimizationEnabled   : 1;
 
     histogram_t tHistogram;
-    histogram_bin_item_t tBins[14];
+    histogram_bin_item_t tBins[ARM_2D_SCENE_HISTOGRAM_DATA_WINDOW_SIZE];
 
     struct {
-        int16_t iBuffer[14];
+        int16_t iBuffer[ARM_2D_SCENE_HISTOGRAM_DATA_WINDOW_SIZE];
         uint16_t hwPointer; 
     } WindowFIFO; 
 
