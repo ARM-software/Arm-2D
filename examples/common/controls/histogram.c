@@ -131,6 +131,10 @@ void histogram_init( histogram_t *ptThis,
         this.tCFG.Bin.nMaxValue = INT32_MAX;
     }
 
+    if (this.tCFG.Bin.bDrawEndPointOnly) {
+        this.tCFG.Bin.bUseScanLine = false;
+    }
+
     int16_t iBinWidth = this.tCFG.Bin.tSize.iWidth + this.tCFG.Bin.chPadding;
     if (iBinWidth < 16) {
         this.u5BinsPerDirtyRegion = ((16 + (iBinWidth - 1)) / iBinWidth) - 1;
