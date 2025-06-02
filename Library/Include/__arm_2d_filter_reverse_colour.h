@@ -57,9 +57,9 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_filter_reverse_colour(__TARGET_ADDR,  /* target tile */   \
+#define arm_2d_gray8_filter_reverse_colour(__TARGET_ADDR,  /* target tile */    \
                                             __REGION_ADDR)  /* target region */ \
-            arm_2dp_gray8_filter_reverse_colour(NULL,                          \
+            arm_2dp_gray8_filter_reverse_colour(NULL,                           \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR))
 
@@ -69,9 +69,9 @@ extern "C" {
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR))
 
-#define arm_2d_cccn888_filter_reverse_colour(__TARGET_ADDR,  /* target tile */   \
+#define arm_2d_cccn888_filter_reverse_colour(__TARGET_ADDR,  /* target tile */  \
                                             __REGION_ADDR)  /* target region */ \
-            arm_2dp_cccn888_filter_reverse_colour(NULL,                          \
+            arm_2dp_cccn888_filter_reverse_colour(NULL,                         \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR))
 /*============================ TYPES =========================================*/
