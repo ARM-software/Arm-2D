@@ -146,12 +146,6 @@ static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         ARM_2D_OP_DEPOSE(ptMarking->tOP);
     }
@@ -160,7 +154,12 @@ static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
                             &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
                             this.tNumberDirtyRegion,
                             dimof(this.tNumberDirtyRegion));
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
