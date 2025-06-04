@@ -191,7 +191,7 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_cfg_t.FrameBuffer", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t_8FrameBuffer", [
       [ "ptPFBs", "group__gHelper.html#ae32199e047789740867bc43fd74278d1", null ],
       [ "tFrameSize", "group__gHelper.html#a3b6ffb221416cc974d254f474a88bb0d", null ],
-      [ "u24BufferSize", "group__gHelper.html#a1e1257725564ed895ff82ac0b65ab918", null ],
+      [ "wBufferSize", "group__gHelper.html#a27d39436e100b1be4f63b84567acf7d2", null ],
       [ "u7ColourFormat", "group__gHelper.html#a25a30f7e12432aabb431448785012826", null ],
       [ "u8PFBNum", "group__gHelper.html#a26ab328c65e4015c58e21c63186427e6", null ],
       [ "bDoNOTUpdateDefaultFrameBuffer", "group__gHelper.html#a506e5cc591a5b598b60a4bbac83b5415", null ],

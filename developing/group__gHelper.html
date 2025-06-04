@@ -4297,9 +4297,9 @@ tFrameSize</td>
 <td class="fielddoc">
 the size of the frame </td></tr>
 <tr><td class="fieldtype">
-<a id="a1e1257725564ed895ff82ac0b65ab918" name="a1e1257725564ed895ff82ac0b65ab918"></a>uint32_t</td>
+<a id="a27d39436e100b1be4f63b84567acf7d2" name="a27d39436e100b1be4f63b84567acf7d2"></a>uint32_t</td>
 <td class="fieldname">
-u24BufferSize: 24</td>
+wBufferSize</td>
 <td class="fielddoc">
 the buffer size </td></tr>
 <tr><td class="fieldtype">
@@ -4341,7 +4341,7 @@ A flag to show dirty regions on screen for debug. </td></tr>
 <tr><td class="fieldtype">
 <a id="abb67792e94e88254ca5afecf7c26c912" name="abb67792e94e88254ca5afecf7c26c912"></a>uint32_t</td>
 <td class="fieldname">
-__pad1__: 10</td>
+__pad1__: 2</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -5660,7 +5660,7 @@ chPTState</td>
 <div class="line">                .iWidth = (__PFB_WIDTH),                                        \</div>
 <div class="line">                .iHeight = (__PFB_HEIGHT),                                      \</div>
 <div class="line">            },                                                                  \</div>
-<div class="line">            .FrameBuffer.u24BufferSize = <span class="keyword">sizeof</span>(s_tPFBs[0].tBuffer),            \</div>
+<div class="line">            .FrameBuffer.wBufferSize = <span class="keyword">sizeof</span>(s_tPFBs[0].tBuffer),              \</div>
 <div class="line">            .FrameBuffer.u7ColourFormat = (__COLOUR_FORMAT),                    \</div>
 <div class="line">            .FrameBuffer.u8PFBNum = <a class="code hl_define" href="group__gKernel.html#ga7b6c484887a402bba1af11b457264553" title="get the number of items in an given array">dimof</a>(s_tPFBs),                             \</div>
 <div class="line">            .Dependency =                                                       \</div>
