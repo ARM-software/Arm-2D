@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        21. April 2025
- * $Revision:    V.2.0.0
+ * $Date:        4. June 2025
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -301,7 +301,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     do {
         uint_fast8_t n = this.tCFG.FrameBuffer.u8PFBNum;
         arm_2d_pfb_t *ptItem = this.tCFG.FrameBuffer.ptPFBs;
-        uint32_t wBufferSize = this.tCFG.FrameBuffer.u24BufferSize;
+        uint32_t wBufferSize = this.tCFG.FrameBuffer.wBufferSize;
         arm_2d_color_info_t tColourFormat = {
             .u7ColourFormat = this.tCFG.FrameBuffer.u7ColourFormat,
         };
