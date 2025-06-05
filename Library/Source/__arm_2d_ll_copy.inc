@@ -22,8 +22,8 @@
  * Title:        __arm_2d_copy.inc
  * Description:  c code template for copy like operations
  *
- * $Date:        14. April 2020
- * $Revision:    V.1.0.0
+ * $Date:        5. June 2025
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
  
@@ -1306,16 +1306,27 @@ void __ARM_2D_FUNC(cl_key_copy)(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             __API_INT_TYPE Colour)
 {
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
-        for (int_fast16_t x = 0; x < ptCopySize->iWidth; x++){
-            if (pSource[x] == Colour) {
+    int16_t iHeight = ptCopySize->iHeight;
+    int16_t iWidth = ptCopySize->iWidth;
+
+    int_fast16_t y = iHeight; 
+    do {
+        __API_INT_TYPE *__RESTRICT pSrc = pSource;
+        __API_INT_TYPE *__RESTRICT pDes = pTarget;
+
+        int_fast16_t x = iWidth;
+        do {
+            __API_INT_TYPE tSourcePixel = *pSrc++;
+            if (tSourcePixel == Colour) {
+                pDes++;
                 continue;
             }
-            pTarget[x] = pSource[x];
-        }
+            *pDes++ = tSourcePixel;
+        } while(--x);
+
         pSource += iSourceStride;
         pTarget += iTargetStride;
-    }
+    } while(--y);
 }
 
 
