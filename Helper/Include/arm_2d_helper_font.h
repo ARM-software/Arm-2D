@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.h"
  * Description:  the font helper service header file
  *
- * $Date:        28 April 2025
- * $Revision:    V.2.11.1
+ * $Date:        7 June 2025
+ * $Revision:    V.2.12.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -148,6 +148,11 @@ extern "C" {
 
 #define arm_lcd_get_string_line_box(__STR, ...)                                 \
             __arm_lcd_get_string_line_box(                                      \
+                                (__STR),                                        \
+                                (const arm_2d_font_t *)(NULL, ##__VA_ARGS__))
+
+#define arm_lcd_get_string_box(__STR, ...)                                      \
+            __arm_lcd_get_string_box(                                           \
                                 (__STR),                                        \
                                 (const arm_2d_font_t *)(NULL, ##__VA_ARGS__))
 
@@ -502,7 +507,27 @@ extern
 arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont);
 
 extern
-arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t *ptFont);
+/*!
+ * \brief get the string line actual size. 
+ * \note the calculation stops at the first `\n`
+ * 
+ * \param[in] pchString the target UTF8 string
+ * \param[in] ptFont the target Font, NULL means using the current font
+ * return arm_2d_size_t the string line size
+ */
+ARM_NONNULL(1)
+arm_2d_size_t __arm_lcd_get_string_line_box(const char *pchString, const arm_2d_font_t *ptFont);
+
+extern
+/*!
+ * \brief get the string actual size. 
+ * 
+ * \param[in] pchString the target UTF8 string
+ * \param[in] ptFont the target Font, NULL means using the current font
+ * return arm_2d_size_t the string line size
+ */
+ARM_NONNULL(1)
+arm_2d_size_t __arm_lcd_get_string_box(const char *pchString, const arm_2d_font_t *ptFont);
 
 extern
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char);

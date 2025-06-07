@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        28 April 2025
- * $Revision:    V.2.11.1
+ * $Date:        7 June 2025
+ * $Revision:    V.2.12.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -884,7 +884,104 @@ static void __arm_lcd_draw_region_line_wrapping(arm_2d_size_t *ptCharSize,
     }
 }
 
+ARM_NONNULL(1)
 arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t *ptFont)
+{
+    if (NULL == ptFont) {
+        ptFont = s_tLCDTextControl.ptFont;
+    }
+    arm_2d_size_t tCharSize = ptFont->tCharSize;
+    arm_2d_size_t tCharBox = {
+        .iWidth = tCharSize.iWidth + s_tLCDTextControl.Spacing.chChar,
+        .iHeight = tCharSize.iHeight + s_tLCDTextControl.Spacing.chLine,
+    };
+
+    if (s_tLCDTextControl.q16Scale > 0) {
+        tCharBox.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharBox.iHeight));
+        tCharBox.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharBox.iWidth));
+
+    #if 0
+        tCharSize.iHeight = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iHeight)) 
+                          + 2;
+        tCharSize.iWidth = reinterpret_s16_q16( 
+                                mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                            tCharSize.iWidth)) 
+                          + 2;
+    #endif
+    }
+
+    arm_2d_region_t tDrawBox = {
+        .tSize.iHeight = tCharSize.iHeight,
+    };
+
+    while(*str) {
+        if (*str == '\r') {
+            tDrawBox.tLocation.iX = 0;
+        } else if (*str == '\n') {
+
+            /* stop when encounter `\n` */
+            break;
+
+        } else if (*str == '\t') { 
+            tDrawBox.tLocation.iX += tCharBox.iWidth * 4;
+            tDrawBox.tLocation.iX -= tDrawBox.tLocation.iX 
+                                   % tCharBox.iWidth;
+
+            tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
+
+        }else if (*str == '\b') {
+            if (tDrawBox.tLocation.iX >= tCharBox.iWidth) {
+                tDrawBox.tLocation.iX -= tCharBox.iWidth;
+            } else {
+                tDrawBox.tLocation.iX = 0;
+            }
+        } else {
+
+            int8_t chCodeLength = arm_2d_helper_get_utf8_byte_valid_length((uint8_t *)str);
+            if (chCodeLength <= 0) {
+                chCodeLength = 1;
+            }
+
+            arm_2d_char_descriptor_t tCharDescriptor, *ptDescriptor;
+            ptDescriptor = arm_2d_helper_get_char_descriptor(ptFont, 
+                                                             &tCharDescriptor,
+                                                             (uint8_t *)str);
+
+            if (NULL != ptDescriptor) {
+                int16_t iCharNewHeight = (ptFont->tCharSize.iHeight - tCharDescriptor.iBearingY) 
+                                       + tCharDescriptor.tileChar.tRegion.tSize.iHeight;
+                
+                if (s_tLCDTextControl.q16Scale > 0) {
+                    iCharNewHeight = reinterpret_s16_q16(
+                                        mul_n_q16(  s_tLCDTextControl.q16Scale, 
+                                                    iCharNewHeight));
+                }
+
+                tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, iCharNewHeight);
+            }
+
+            tDrawBox.tLocation.iX += __arm_lcd_get_char_advance(ptFont, ptDescriptor, (uint8_t *)str) + s_tLCDTextControl.Updated.tSpacing.iWidth;
+            tDrawBox.tSize.iWidth = MAX(tDrawBox.tSize.iWidth, tDrawBox.tLocation.iX);
+
+            str += chCodeLength;
+            continue;
+        }
+        
+        str++;
+    }
+
+    return tDrawBox.tSize;
+}
+
+
+ARM_NONNULL(1)
+arm_2d_size_t __arm_lcd_get_string_box(const char *str, const arm_2d_font_t *ptFont)
 {
     if (NULL == ptFont) {
         ptFont = s_tLCDTextControl.ptFont;
@@ -926,7 +1023,7 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             tDrawBox.tLocation.iX = 0;
             tDrawBox.tLocation.iY += tCharBox.iHeight;
 
-            tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, tDrawBox.tLocation.iY);
+            tDrawBox.tSize.iHeight = MAX(tDrawBox.tSize.iHeight, (tDrawBox.tLocation.iY + tCharBox.iHeight));
         } else if (*str == '\t') { 
             tDrawBox.tLocation.iX += tCharBox.iWidth * 4;
             tDrawBox.tLocation.iX -= tDrawBox.tLocation.iX 
@@ -1170,7 +1267,7 @@ arm_2d_size_t arm_lcd_printf_to_buffer( const arm_2d_font_t *ptFont,
 
     arm_lcd_text_set_font(ptFont);
 
-    return __arm_lcd_get_string_line_box(s_tLCDTextControl.TXBuf.chBuffer, ptFont);
+    return __arm_lcd_get_string_box(s_tLCDTextControl.TXBuf.chBuffer, ptFont);
 }
 
 ARM_NONNULL(1)
@@ -1195,7 +1292,7 @@ bool arm_lcd_putchar_to_buffer(uint8_t *pchChar, uint_fast8_t chUTF8Size)
 
 arm_2d_size_t arm_lcd_get_buffer_box_size(void)
 {
-    return __arm_lcd_get_string_line_box(
+    return __arm_lcd_get_string_box(
             &s_tLCDTextControl.TXBuf.chBuffer[s_tLCDTextControl.TXBuf.hwHead], 
             s_tLCDTextControl.ptFont);
 }
