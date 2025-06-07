@@ -443,6 +443,8 @@ var group__gHelper =
     [ "lcd_draw_char", "group__gHelper.html#gac2cc98970504fad6e7f3515535dc98a7", null ],
     [ "arm_lcd_text_force_char_use_same_width", "group__gHelper.html#ga0c1741450afbaca29bc8029b1e972c9a", null ],
     [ "arm_lcd_text_set_display_mode", "group__gHelper.html#ga6ea0ecd56b51e586aa50ab1998826e65", null ],
+    [ "__arm_lcd_get_string_line_box", "group__gHelper.html#ga8d2b118c36f530c23112032faf13e484", null ],
+    [ "__arm_lcd_get_string_box", "group__gHelper.html#gac83c3bd7507b213993857a6788bc58d4", null ],
     [ "arm_2d_helper_init", "group__gHelper.html#ga9ab5e975303c28c98f1ae62babb8286d", null ],
     [ "arm_2d_helper_backend_task", "group__gHelper.html#ga5161926583cc8da4c4b369b177845e42", null ],
     [ "arm_2d_helper_convert_ticks_to_ms", "group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf", null ],
