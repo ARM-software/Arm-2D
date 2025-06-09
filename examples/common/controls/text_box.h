@@ -151,8 +151,10 @@ ARM_PRIVATE(
         int32_t nTargetStartLineReq;
         int16_t iIntraLineOffset;
 
-        uint16_t bUpdateReq         : 1;
-        uint16_t                    : 15;
+        uint16_t bUpdateReq                 : 1;
+        uint16_t                            : 7;
+        uint16_t                            : 7;
+        uint16_t bHasEndOfStreamBeenReached : 1;
     } Request;
 
     int16_t iLineWidth;
@@ -232,6 +234,18 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine);
 extern
 ARM_NONNULL(1)
 int32_t text_box_get_start_line(text_box_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion);
+
+extern
+ARM_NONNULL(1)
+int64_t text_box_set_scrolling_position_offset(text_box_t *ptThis, int16_t iOffset);
+
+extern
+ARM_NONNULL(1)
+bool text_box_has_end_of_stream_been_reached(text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)

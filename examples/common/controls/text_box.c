@@ -160,11 +160,16 @@ int32_t __text_box_read_bytes(  text_box_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != pchBuffer);
 
-    return ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnGetChar,
+    int32_t iResult = ARM_2D_INVOKE(this.tCFG.tStreamIO.ptIO->fnGetChar,
             ARM_2D_PARAM(   ptThis, 
                             this.tCFG.tStreamIO.pTarget,
                             pchBuffer,
                             hwSize));
+    if (iResult <= 0 && this.Start.nPosition > 0 ) {
+        this.Request.bHasEndOfStreamBeenReached = true;
+    }
+
+    return iResult;
 }
 
 //__STATIC_INLINE
@@ -426,7 +431,13 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
         iOldStartLine = this.Request.nTargetStartLineReq;
 
         if (iStartLine >= 0) {
+
+            if (this.Request.bHasEndOfStreamBeenReached && this.nMaxLines > 0) {
+                iStartLine = MIN(iStartLine, this.nMaxLines );
+            }
+
             this.Request.nTargetStartLineReq = iStartLine;
+            this.Request.iIntraLineOffset = 0;
         }
     }
 
@@ -437,6 +448,62 @@ ARM_NONNULL(1)
 int32_t text_box_get_start_line(text_box_t *ptThis)
 {
     return this.Request.nTargetStartLineReq;
+}
+
+ARM_NONNULL(1)
+bool text_box_has_end_of_stream_been_reached(text_box_t *ptThis)
+{
+    return this.Request.bHasEndOfStreamBeenReached;
+}
+
+ARM_NONNULL(1)
+int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion)
+{
+    assert(NULL != ptThis);
+
+    int64_t lOldPosition = 0;
+
+    if (lPostion < 0) {
+        arm_irq_safe {
+            lOldPosition = this.Request.lTargetPosition;
+            this.Request.lTargetPosition = lPostion;
+
+            this.Request.nTargetStartLineReq = 0;
+            lPostion = MAX(-__INT16_MAX__, lPostion);
+            this.Request.iIntraLineOffset = lPostion;
+        }
+    } else {
+        arm_irq_safe {
+            lOldPosition = this.Request.lTargetPosition;
+            this.Request.lTargetPosition = lPostion;
+        
+            /* update line request and intra-line offset */
+            text_box_set_start_line(ptThis, lPostion / this.iLineHeight);
+            this.Request.iIntraLineOffset = lPostion - this.iLineHeight * text_box_get_start_line(ptThis);
+        };
+    }
+
+    return lOldPosition;
+}
+
+ARM_NONNULL(1)
+int64_t text_box_set_scrolling_position_offset(text_box_t *ptThis, int16_t iOffset)
+{
+    assert(NULL != ptThis);
+    int64_t lPosition = this.Request.lTargetPosition;
+
+    if (iOffset < 0) {
+        lPosition += iOffset;
+    } else {
+        uint64_t dwSafeMargin = __INT64_MAX__ - this.Request.lTargetPosition;
+        if (iOffset > dwSafeMargin) {
+            lPosition = __INT64_MAX__;
+        } else {
+            lPosition += iOffset;
+        }
+    }
+
+    return text_box_set_scrolling_position(ptThis, lPosition);
 }
 
 static
@@ -647,6 +714,8 @@ void text_box_show( text_box_t *ptThis,
             }
 
             if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
+                this.iLineWidth = __text_box_canvas.tSize.iWidth 
+                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
                 bRequestUpdate = true;
             }
 
@@ -654,11 +723,9 @@ void text_box_show( text_box_t *ptThis,
                 this.Request.bUpdateReq = false;
 
                 /* update line size */
-                this.iLineWidth = __text_box_canvas.tSize.iWidth 
-                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
-                this.iLineHeight = iFontCharBoxHeight + this.tCFG.chSpaceBetweenParagraph;
+                this.iLineHeight = iFontCharBoxHeight;
                 this.iLinesPerPage = (__text_box_canvas.tSize.iHeight + this.iLineHeight - 1) / this.iLineHeight;
-                this.nMaxLines = 0;
+                //this.nMaxLines = 0;
 
                 __text_box_update(ptThis);
 
@@ -707,17 +774,17 @@ void text_box_show( text_box_t *ptThis,
                 break;
             }
 
-            if (this.nMaxLines < this.tCurrentLine.nLineNo) {
-                this.nMaxLines = this.tCurrentLine.nLineNo;
+            if (this.nMaxLines < iLineNumber) {
+                this.nMaxLines = iLineNumber;
             }
 
             int32_t iLineOffset = iLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
-                    .iY = iLineOffset * iFontCharBoxHeight + iLineVerticalOffset,
+                    .iY = iLineOffset * iFontCharBoxHeight + iLineVerticalOffset - this.Request.iIntraLineOffset,
                 },
                 .tSize = {
-                    .iHeight = iFontCharHeight,
+                    .iHeight = this.iLineHeight,
                 },
             };
 
@@ -732,7 +799,7 @@ void text_box_show( text_box_t *ptThis,
 
             bool bIgnoreDrawing = false;
             if (0 != tLineRegion.tSize.iWidth ) {
-                if (!arm_2d_region_intersect(&__text_box_canvas, &tLineRegion, &tLineRegion)) {
+                if (!arm_2d_region_intersect(&__text_box_canvas, &tLineRegion, NULL)) {
                     /* out of text box canvas */
                     break;
                 }
@@ -1053,6 +1120,8 @@ void __text_box_update(text_box_t *ptThis)
     int32_t nLineNumber = 0;
 
     bool bFastUpdate = false;
+    //this.Request.bHasEndOfStreamBeenReached = false;
+
     if (this.Request.nTargetStartLineReq != this.Start.nLine) {
 
         if (    (this.Request.nTargetStartLineReq > this.Start.nLine)
@@ -1103,6 +1172,8 @@ void text_box_update(text_box_t *ptThis)
 
     arm_irq_safe {
         this.Request.bUpdateReq = true;
+        this.nMaxLines = 0;
+        this.Request.bHasEndOfStreamBeenReached = 0;
     }
 }
 
