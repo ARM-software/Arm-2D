@@ -144,12 +144,21 @@ ARM_PRIVATE(
     } Start;
 
     struct {
+        /*! \brief We convert lTargetPosition into nTargetStartLineReq 
+         *         and iIntraLineOffset.
+         */
+        int64_t lTargetPosition;
         int32_t nTargetStartLineReq;
+        int16_t iIntraLineOffset;
+
         uint16_t bUpdateReq         : 1;
         uint16_t                    : 15;
     } Request;
 
     int16_t iLineWidth;
+    int16_t iLineHeight;
+    int16_t iLinesPerPage;
+    int32_t nMaxLines;
 
     __text_box_line_info_t tCurrentLine;
 
@@ -223,6 +232,14 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine);
 extern
 ARM_NONNULL(1)
 int32_t text_box_get_start_line(text_box_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int16_t text_box_get_line_per_page(text_box_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int16_t text_box_get_current_line_count(text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

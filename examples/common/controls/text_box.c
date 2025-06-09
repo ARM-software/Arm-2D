@@ -603,6 +603,18 @@ void __text_box_draw_line(text_box_t *ptThis,
 }
 
 ARM_NONNULL(1)
+int16_t text_box_get_line_per_page(text_box_t *ptThis)
+{
+    return this.iLinesPerPage;
+}
+
+ARM_NONNULL(1)
+int16_t text_box_get_current_line_count(text_box_t *ptThis)
+{
+    return this.nMaxLines;
+}
+
+ARM_NONNULL(1)
 void text_box_show( text_box_t *ptThis,
                     const arm_2d_tile_t *ptTile, 
                     const arm_2d_region_t *ptRegion,
@@ -624,6 +636,9 @@ void text_box_show( text_box_t *ptThis,
         arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_text_set_scale(this.tCFG.fScale);
 
+        int16_t iFontCharBoxHeight = arm_lcd_text_get_actual_char_box().iHeight;
+        int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;
+
         if (bIsNewFrame) {
             bool bRequestUpdate = this.Request.bUpdateReq;
 
@@ -632,13 +647,19 @@ void text_box_show( text_box_t *ptThis,
             }
 
             if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
-                this.iLineWidth = __text_box_canvas.tSize.iWidth 
-                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
                 bRequestUpdate = true;
             }
 
             if (bRequestUpdate) {
                 this.Request.bUpdateReq = false;
+
+                /* update line size */
+                this.iLineWidth = __text_box_canvas.tSize.iWidth 
+                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
+                this.iLineHeight = iFontCharBoxHeight + this.tCFG.chSpaceBetweenParagraph;
+                this.iLinesPerPage = (__text_box_canvas.tSize.iHeight + this.iLineHeight - 1) / this.iLineHeight;
+                this.nMaxLines = 0;
+
                 __text_box_update(ptThis);
 
                 if (this.tCFG.bUseDirtyRegions) {
@@ -654,8 +675,7 @@ void text_box_show( text_box_t *ptThis,
         __text_box_set_current_position(ptThis, this.Start.nPosition);
         
         int32_t iLineNumber = this.Start.nLine;
-        int16_t iFontCharBoxHeight = arm_lcd_text_get_actual_char_box().iHeight;
-        int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;
+        
         /* tPFBScanRegion is a mapping of the PFB region inside the __text_box_canvas,
          * with which we can ignore the lines that out of the PFB region.
          */
@@ -685,6 +705,10 @@ void text_box_show( text_box_t *ptThis,
 
             if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine)) {
                 break;
+            }
+
+            if (this.nMaxLines < this.tCurrentLine.nLineNo) {
+                this.nMaxLines = this.tCurrentLine.nLineNo;
             }
 
             int32_t iLineOffset = iLineNumber - this.Start.nLine;
@@ -1070,7 +1094,6 @@ void __text_box_update(text_box_t *ptThis)
 
         nLineNumber++;
     } while(1);
-
 }
 
 ARM_NONNULL(1)
