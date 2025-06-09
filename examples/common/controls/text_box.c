@@ -423,10 +423,10 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
     int32_t iOldStartLine = 0;
     
     arm_irq_safe {
-        iOldStartLine = this.nTargetStartLineReq;
+        iOldStartLine = this.Request.nTargetStartLineReq;
 
         if (iStartLine >= 0) {
-            this.nTargetStartLineReq = iStartLine;
+            this.Request.nTargetStartLineReq = iStartLine;
         }
     }
 
@@ -436,7 +436,7 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 ARM_NONNULL(1)
 int32_t text_box_get_start_line(text_box_t *ptThis)
 {
-    return this.nTargetStartLineReq;
+    return this.Request.nTargetStartLineReq;
 }
 
 static
@@ -625,9 +625,9 @@ void text_box_show( text_box_t *ptThis,
         arm_lcd_text_set_scale(this.tCFG.fScale);
 
         if (bIsNewFrame) {
-            bool bRequestUpdate = this.bUpdateReq;
+            bool bRequestUpdate = this.Request.bUpdateReq;
 
-            if (this.nTargetStartLineReq != this.Start.nLine) {
+            if (this.Request.nTargetStartLineReq != this.Start.nLine) {
                 bRequestUpdate = true;
             }
 
@@ -638,7 +638,7 @@ void text_box_show( text_box_t *ptThis,
             }
 
             if (bRequestUpdate) {
-                this.bUpdateReq = false;
+                this.Request.bUpdateReq = false;
                 __text_box_update(ptThis);
 
                 if (this.tCFG.bUseDirtyRegions) {
@@ -1029,9 +1029,9 @@ void __text_box_update(text_box_t *ptThis)
     int32_t nLineNumber = 0;
 
     bool bFastUpdate = false;
-    if (this.nTargetStartLineReq != this.Start.nLine) {
+    if (this.Request.nTargetStartLineReq != this.Start.nLine) {
 
-        if (    (this.nTargetStartLineReq > this.Start.nLine)
+        if (    (this.Request.nTargetStartLineReq > this.Start.nLine)
            &&   (this.Start.nPosition > 0)) {
             bFastUpdate = true;
 
@@ -1039,7 +1039,7 @@ void __text_box_update(text_box_t *ptThis)
             __text_box_set_current_position(ptThis, this.Start.nPosition);
         }
 
-        this.Start.nLine = this.nTargetStartLineReq;
+        this.Start.nLine = this.Request.nTargetStartLineReq;
     }
 
     if (!bFastUpdate) {
@@ -1079,7 +1079,7 @@ void text_box_update(text_box_t *ptThis)
     assert(NULL != ptThis);
 
     arm_irq_safe {
-        this.bUpdateReq = true;
+        this.Request.bUpdateReq = true;
     }
 }
 

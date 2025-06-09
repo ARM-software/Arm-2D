@@ -162,7 +162,7 @@ static void __on_scene_text_reader_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene text_reader                                                                    *
+ * Scene text_reader                                                          *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_text_reader_background_start(arm_2d_scene_t *ptScene)
@@ -249,8 +249,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_text_reader_handler)
                                 (__arm_2d_color_t) {GLCD_COLOR_BLACK},
                                 255,
                                 bIsNewFrame);
-                
-                //arm_2d_helper_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_BLUE, 32);
 
             }
 

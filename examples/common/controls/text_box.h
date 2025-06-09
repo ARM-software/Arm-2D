@@ -143,11 +143,11 @@ ARM_PRIVATE(
         int32_t nPosition;
     } Start;
 
-    //struct {
+    struct {
         int32_t nTargetStartLineReq;
         uint16_t bUpdateReq         : 1;
         uint16_t                    : 15;
-    //} Request;
+    } Request;
 
     int16_t iLineWidth;
 
