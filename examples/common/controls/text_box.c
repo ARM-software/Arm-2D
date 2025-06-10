@@ -420,25 +420,22 @@ void text_box_on_frame_complete( text_box_t *ptThis)
     
 }
 
+static
 ARM_NONNULL(1)
-int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
+int32_t __text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 {
     assert(NULL != ptThis);
 
-    int32_t iOldStartLine = 0;
-    
-    arm_irq_safe {
-        iOldStartLine = this.Request.nTargetStartLineReq;
+    int32_t iOldStartLine = this.Request.nTargetStartLineReq;
 
-        if (iStartLine >= 0) {
+    if (iStartLine >= 0) {
 
-            if (this.Request.bHasEndOfStreamBeenReached && this.nMaxLines > 0) {
-                iStartLine = MIN(iStartLine, this.nMaxLines );
-            }
-
-            this.Request.nTargetStartLineReq = iStartLine;
-            this.Request.iIntraLineOffset = 0;
+        if (this.Request.bHasEndOfStreamBeenReached && this.nMaxLines > 0) {
+            iStartLine = MIN(iStartLine, this.nMaxLines );
         }
+
+        this.Request.nTargetStartLineReq = iStartLine;
+        this.Request.iIntraLineOffset = 0;
     }
 
     return iOldStartLine;
@@ -447,12 +444,30 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 ARM_NONNULL(1)
 int32_t text_box_get_start_line(text_box_t *ptThis)
 {
+    assert(NULL != ptThis);
     return this.Request.nTargetStartLineReq;
+}
+
+ARM_NONNULL(1)
+int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
+{
+    int32_t iOldStartLine = 0;
+    assert(NULL != ptThis);
+
+    arm_irq_safe {
+        iOldStartLine = __text_box_set_start_line(ptThis, iStartLine);
+
+        this.Request.lTargetPosition = text_box_get_start_line(ptThis) * this.iLineHeight;
+        this.Request.iIntraLineOffset = 0;
+    }
+
+    return iOldStartLine;
 }
 
 ARM_NONNULL(1)
 bool text_box_has_end_of_stream_been_reached(text_box_t *ptThis)
 {
+    assert(NULL != ptThis);
     return this.Request.bHasEndOfStreamBeenReached;
 }
 
@@ -478,7 +493,7 @@ int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion)
             this.Request.lTargetPosition = lPostion;
         
             /* update line request and intra-line offset */
-            text_box_set_start_line(ptThis, lPostion / this.iLineHeight);
+            __text_box_set_start_line(ptThis, lPostion / this.iLineHeight);
             this.Request.iIntraLineOffset = lPostion - this.iLineHeight * text_box_get_start_line(ptThis);
         };
     }
