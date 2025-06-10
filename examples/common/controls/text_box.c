@@ -478,24 +478,22 @@ int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion)
 
     int64_t lOldPosition = 0;
 
-    if (lPostion < 0) {
-        arm_irq_safe {
+    arm_irq_safe {
+        if (lPostion < 0) {
             lOldPosition = this.Request.lTargetPosition;
             this.Request.lTargetPosition = lPostion;
 
             this.Request.nTargetStartLineReq = 0;
             lPostion = MAX(-__INT16_MAX__, lPostion);
             this.Request.iIntraLineOffset = lPostion;
-        }
-    } else {
-        arm_irq_safe {
+        } else {
             lOldPosition = this.Request.lTargetPosition;
             this.Request.lTargetPosition = lPostion;
         
             /* update line request and intra-line offset */
             __text_box_set_start_line(ptThis, lPostion / this.iLineHeight);
             this.Request.iIntraLineOffset = lPostion - this.iLineHeight * text_box_get_start_line(ptThis);
-        };
+        }
     }
 
     return lOldPosition;
