@@ -479,21 +479,9 @@ int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion)
     int64_t lOldPosition = 0;
 
     arm_irq_safe {
-        if (lPostion < 0) {
-            lOldPosition = this.Request.lTargetPosition;
-            this.Request.lTargetPosition = lPostion;
-
-            this.Request.nTargetStartLineReq = 0;
-            lPostion = MAX(-__INT16_MAX__, lPostion);
-            this.Request.iIntraLineOffset = lPostion;
-        } else {
-            lOldPosition = this.Request.lTargetPosition;
-            this.Request.lTargetPosition = lPostion;
-        
-            /* update line request and intra-line offset */
-            __text_box_set_start_line(ptThis, lPostion / this.iLineHeight);
-            this.Request.iIntraLineOffset = lPostion - this.iLineHeight * text_box_get_start_line(ptThis);
-        }
+        lOldPosition = this.Request.lTargetPosition;
+        this.Request.lTargetPosition = lPostion;
+        this.Request.bPositionUpdateReq = true;
     }
 
     return lOldPosition;
@@ -721,6 +709,23 @@ void text_box_show( text_box_t *ptThis,
 
         if (bIsNewFrame) {
             bool bRequestUpdate = this.Request.bUpdateReq;
+
+
+            if (this.Request.bPositionUpdateReq && this.iLineHeight > 0) {
+                this.Request.bPositionUpdateReq = false;
+
+                int64_t lPosition = this.Request.lTargetPosition;
+                if (lPosition < 0) {
+
+                    this.Request.nTargetStartLineReq = 0;
+                    lPosition = MAX(-__INT16_MAX__, lPosition);
+                    this.Request.iIntraLineOffset = lPosition;
+                } else {
+                    /* update line request and intra-line offset */
+                    __text_box_set_start_line(ptThis, lPosition / this.iLineHeight);
+                    this.Request.iIntraLineOffset = lPosition - this.iLineHeight * text_box_get_start_line(ptThis);
+                }
+            }
 
             if (this.Request.nTargetStartLineReq != this.Start.nLine) {
                 bRequestUpdate = true;

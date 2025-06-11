@@ -152,7 +152,8 @@ ARM_PRIVATE(
         int16_t iIntraLineOffset;
 
         uint16_t bUpdateReq                 : 1;
-        uint16_t                            : 7;
+        uint16_t bPositionUpdateReq         : 1;
+        uint16_t                            : 6;
         uint16_t                            : 7;
         uint16_t bHasEndOfStreamBeenReached : 1;
     } Request;
