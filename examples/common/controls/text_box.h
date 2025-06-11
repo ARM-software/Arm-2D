@@ -257,6 +257,10 @@ ARM_NONNULL(1)
 int16_t text_box_get_current_line_count(text_box_t *ptThis);
 
 extern
+ARM_NONNULL(1)
+int16_t text_box_get_line_height(text_box_t *ptThis);
+
+extern
 ARM_NONNULL(1,2)
 text_box_c_str_reader_t *text_box_c_str_reader_init(
                                                 text_box_c_str_reader_t *ptThis,

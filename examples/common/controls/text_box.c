@@ -449,6 +449,13 @@ int32_t text_box_get_start_line(text_box_t *ptThis)
 }
 
 ARM_NONNULL(1)
+int16_t text_box_get_line_height(text_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.iLineHeight;
+}
+
+ARM_NONNULL(1)
 int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 {
     int32_t iOldStartLine = 0;
