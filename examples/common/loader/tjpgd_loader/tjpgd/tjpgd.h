@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#if defined(_WIN32)	/* VC++ or some compiler without stdint.h */
+#if (!defined(__STDC_VERSION__) || __STDC_VERSION__ < 199901L)
 typedef unsigned char	uint8_t;
 typedef unsigned short	uint16_t;
 typedef short			int16_t;
