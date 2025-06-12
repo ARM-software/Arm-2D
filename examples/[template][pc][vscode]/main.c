@@ -240,6 +240,11 @@ void scene_iir_blur_loader(void)
     arm_2d_scene_iir_blur_init(&DISP0_ADAPTER);
 }
 
+void scene_music_player_loader(void) 
+{
+    arm_2d_scene_music_player_init(&DISP0_ADAPTER);
+}
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_user_defined_opcode_loader(void) 
 {
@@ -300,6 +305,7 @@ void scene_mono_icon_menu_loader(void)
 
     arm_2d_scene_mono_icon_menu_init(&DISP0_ADAPTER);
 }
+
 #if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
 void scene_tjpgd_loader(void) 
 {
@@ -331,7 +337,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -496,7 +502,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_balls_loader,
+        scene_music_player_loader,
+        //scene_console_window_loader
+        //scene_balls_loader,
         //scene_iir_blur_loader,
         //scene_progress_status_loader,
         //scene_matrix_loader,

@@ -835,13 +835,26 @@
         </component>
 
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cversion="1.1.0" condition="Arm-2D-Demos">
-          <description>A demo for text reader.</description>
+          <description>A demo of a Text Reader.</description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_text_reader.c" attr="config" version="1.1.0" />
             <file category="header"      name="examples/demos/arm_2d_scene_text_reader.h" attr="config" version="1.1.0" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Text_Reader
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cversion="0.5.0" condition="Arm-2D-Demos">
+          <description>A demo of a Music Player.</description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_music_player.c" attr="config" version="0.5.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_music_player.h" attr="config" version="0.5.0" />
+
+            <file category="sourceC"     name="examples/demos/album_cover.c"               attr="config" version="0.5.0"/>
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Music_Player
           </RTE_Components_h>
         </component>
 

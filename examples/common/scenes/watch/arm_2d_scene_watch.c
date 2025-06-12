@@ -153,7 +153,7 @@ static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
     user_scene_watch_t *ptThis = (user_scene_watch_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-
+    /*--------------------- insert your depose code begin --------------------*/
 #if __SCENE_WATCH_CFG_UPDATE_SECOND_POINTER_ONCE_PER_SECOND__
     meter_pointer_depose(&this.tSecPointer);
 #endif
@@ -161,7 +161,8 @@ static void __on_scene_watch_depose(arm_2d_scene_t *ptScene)
     arm_foreach(spin_zoom_widget_t, this.tPointers, ptPointer) {
         spin_zoom_widget_depose(ptPointer);
     }
-    
+    /*---------------------- insert your depose code end  --------------------*/
+
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
