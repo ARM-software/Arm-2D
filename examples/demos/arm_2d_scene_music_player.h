@@ -74,6 +74,9 @@ extern "C" {
             __arm_2d_scene_music_player_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+typedef uint8_t __histogram_frame_t[64];
+
 /*!
  * \brief a user class for scene music_player
  */
@@ -84,7 +87,7 @@ struct user_scene_music_player_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
 
     struct {
@@ -94,6 +97,13 @@ ARM_PRIVATE(
         int16_t iPivotOffset;
         float fScaling;
     } AlbumCover;
+
+    struct {
+        histogram_t tWidget;
+        histogram_bin_item_t tBins[64];
+
+        __histogram_frame_t *ptFrame;
+    } Histogram;
 
 )
     /* place your public member here */

@@ -90,6 +90,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileAlbumCover;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -125,6 +126,8 @@ static void __on_scene_music_player_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.AlbumCover.tWidget);
+
+    
 }
 
 static void __after_scene_music_player_switching(arm_2d_scene_t *ptScene)
@@ -141,6 +144,7 @@ static void __on_scene_music_player_depose(arm_2d_scene_t *ptScene)
 
     /*--------------------- insert your depose code begin --------------------*/
     spin_zoom_widget_depose(&this.AlbumCover.tWidget);
+    histogram_depose(&this.Histogram.tWidget);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -172,6 +176,40 @@ static void __on_scene_music_player_background_complete(arm_2d_scene_t *ptScene)
 }
 #endif
 
+/* we generate fake FFT histogram data here */
+static void __fill_histogram_frame(__histogram_frame_t *ptFrame)
+{
+    assert(NULL != ptFrame);
+
+    srand(arm_2d_helper_get_system_timestamp());
+
+    int_fast16_t n = dimof((*ptFrame));
+    uint8_t *pchBin = *ptFrame;
+    do {
+        *pchBin++ = rand() & (64 - 1);
+    } while(--n);
+
+    float fDelta = ARM_2D_ANGLE(360.0f / (dimof((*ptFrame)) * 2));
+    
+    n = dimof((*ptFrame));
+    pchBin = *ptFrame;
+    float fAngle = ARM_2D_ANGLE(90.0f);
+    do {
+        float fRatio = arm_sin_f32(fAngle);
+        fAngle += fDelta;
+
+        fRatio = (fRatio * 32.0f + 32.0f);
+        uint32_t hwValue = (uint32_t)((float)*pchBin * fRatio) >> 6;
+        if (hwValue > 64) {
+            hwValue = 64;
+        }
+
+        hwValue += fRatio;
+
+        *pchBin++ = hwValue;
+    } while(--n);
+
+}
 
 static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
 {
@@ -186,6 +224,16 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
 
         spin_zoom_widget_on_frame_start(&this.AlbumCover.tWidget, this.AlbumCover.iAngle, this.AlbumCover.fScaling);
     }
+
+    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[1])) {
+        static __histogram_frame_t s_tDemoFrame;
+
+        __fill_histogram_frame(&s_tDemoFrame);
+
+        this.Histogram.ptFrame = &s_tDemoFrame;
+    }
+
+    histogram_on_frame_start(&this.Histogram.tWidget);
 }
 
 static void __on_scene_music_player_frame_complete(arm_2d_scene_t *ptScene)
@@ -228,13 +276,24 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
 
             spin_zoom_widget_show(  &this.AlbumCover.tWidget, 
                                     ptTile, 
-                                    NULL, 
+                                    &__top_right_region, 
                                     &tPivot, 
                                     255);
 
         }
 
+        /* draw histogram at the bottom */
+        arm_2d_dock_bottom(__top_canvas, histogram_get_size(&this.Histogram.tWidget).iHeight + 20) {
 
+            arm_2d_align_centre(__bottom_region, histogram_get_size(&this.Histogram.tWidget)) {
+                histogram_show( &this.Histogram.tWidget,
+                                ptTile,
+                                &__centre_region,
+                                128);
+            }
+
+            draw_glass_bar(ptTile, &__bottom_region, 64, true);
+        }
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -250,6 +309,22 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
 
     return arm_fsm_rt_cpl;
 }
+
+static
+int32_t histogram_get_bin_value(void *pTarget, 
+                                histogram_t *ptHistogram, 
+                                uint_fast16_t hwBinIndex)
+{
+    ARM_2D_UNUSED(ptHistogram);
+    user_scene_music_player_t *ptThis = (user_scene_music_player_t *)pTarget;
+
+    if (NULL == this.Histogram.ptFrame) {
+        return 0;
+    }
+
+    return (int32_t)(*this.Histogram.ptFrame)[hwBinIndex];
+}
+
 
 ARM_NONNULL(1)
 user_scene_music_player_t *__arm_2d_scene_music_player_init(   
@@ -314,7 +389,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
             .fnOnFrameCPL   = &__on_scene_music_player_frame_complete,
             .fnDepose       = &__on_scene_music_player_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -333,7 +408,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
                     .nValue = 3600,
                 },
                 .Step = {
-                    .fAngle = 0.1f,
+                    .fAngle = 0.2f,
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING,
@@ -372,6 +447,51 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
         } else {
             this.AlbumCover.iPivotOffset = this.AlbumCover.iRadius >> 1;
         }
+    } while(0);
+
+    do {
+        histogram_cfg_t tCFG = {
+            .Bin = {
+                .tSize = {(__top_canvas.tSize.iWidth - 20) >> 6, __top_canvas.tSize.iHeight >> 3},
+                .chPadding = 1,
+                .bUseScanLine = true,
+                .nMaxValue = 128,
+
+                .ptItems = this.Histogram.tBins,
+                .hwCount = dimof(this.Histogram.tBins),
+            },
+
+            .Colour = {
+                .wFrom =  __RGB32(0xB6, 0xC7, 0xE7),
+                .wTo =    __RGB32(0xB6, 0xC7, 0xE7),
+            },
+
+            .ptParent = &this.use_as__arm_2d_scene_t,
+
+            .evtOnGetBinValue = {
+                .fnHandler = &histogram_get_bin_value,
+                .pTarget = ptThis,
+            },
+        };
+
+        if (tCFG.Bin.tSize.iWidth == 0) {
+            tCFG.Bin.chPadding = 0;
+            if (__top_canvas.tSize.iWidth < (128 + 20)) {
+                __top_canvas.tSize.iWidth = 1;
+            }
+        } else if (tCFG.Bin.tSize.iWidth == 1) {
+            tCFG.Bin.chPadding = 0;
+        } else {
+            tCFG.Bin.tSize.iWidth -= 1;
+            tCFG.Bin.chPadding = 1;
+        }
+
+        if (tCFG.Bin.tSize.iHeight < 32) {
+            tCFG.Bin.tSize.iHeight = 32;
+            tCFG.Bin.bUseScanLine = false;
+        }
+
+        histogram_init(&this.Histogram.tWidget, &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_music_player_t end   ---------------*/
