@@ -105,6 +105,11 @@ ARM_PRIVATE(
         __histogram_frame_t *ptFrame;
     } Histogram;
 
+    struct {
+        text_box_c_str_reader_t tStringReader;
+        text_box_t tTextBox;
+    } Lyrics;
+
 )
     /* place your public member here */
     

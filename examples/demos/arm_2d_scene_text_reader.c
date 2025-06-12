@@ -150,8 +150,6 @@ static void __on_scene_text_reader_depose(arm_2d_scene_t *ptScene)
     
     text_box_depose(&this.tTextPanel);
 
-
-    
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }

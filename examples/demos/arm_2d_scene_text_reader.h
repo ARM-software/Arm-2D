@@ -85,7 +85,6 @@ struct user_scene_text_reader_t {
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
-    //int64_t lScrollingPosition;
 
     bool bUserAllocated;
     bool bDownScrolling;

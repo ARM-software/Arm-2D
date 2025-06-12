@@ -71,7 +71,7 @@
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_tileAlbumCover         c_tileAlbumCoverCCCN888
+#   define c_tileAlbumCover         c_tileAlbumCoverCCCA8888
 
 #else
 #   error Unsupported colour depth!
@@ -90,6 +90,16 @@ extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileAlbumCover;
+
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_Arial14_A1,
+  ARM_2D_FONT_Arial14_A2,
+  ARM_2D_FONT_Arial14_A4,
+  ARM_2D_FONT_Arial14_A8;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -118,6 +128,57 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
+const static char c_chLyrics[] = {
+    "Never Gonna Give You Up\n"
+    "Song by Rick Astley ‧ 1987\r\n"
+    "\r\n\r\n"
+    "We're no strangers to love\r\n"
+    "You know the rules and so do I\r\n"
+    "A full commitment's what I'm thinkin' of\r\n"
+    "You wouldn't get this from any other guy\r\n"
+    "I just wanna tell you how I'm feeling\r\n"
+    "Gotta make you understand\r\n"
+    "Never gonna give you up, never gonna let you down\r\n"
+    "Never gonna run around and desert you\r\n"
+    "Never gonna make you cry, never gonna say goodbye\r\n"
+    "Never gonna tell a lie and hurt you\r\n"
+    "We've known each other for so long\r\n"
+    "Your heart's been aching, but you're too shy to say it\r\n"
+    "Inside, we both know what's been going on\r\n"
+    "We know the game and we're gonna play it\r\n"
+    "And if you ask me how I'm feeling\r\n"
+    "Don't tell me you're too blind to see\r\n"
+    "Never gonna give you up, never gonna let you down\r\n"
+    "Never gonna run around and desert you\r\n"
+    "Never gonna make you cry, never gonna say goodbye\r\n"
+    "Never gonna tell a lie and hurt you\r\n"
+    "Never gonna give you up, never gonna let you down\r\n"
+    "Never gonna run around and desert you\r\n"
+    "Never gonna make you cry, never gonna say goodbye\r\n"
+    "Never gonna tell a lie and hurt you\r\n"
+    "We've known each other for so long\r\n"
+    "Your heart's been aching, but you're too shy to say it\r\n"
+    "Inside, we both know what's been going on\r\n"
+    "We know the game and we're gonna play it\r\n"
+    "I just wanna tell you how I'm feeling\r\n"
+    "Gotta make you understand\r\n"
+    "Never gonna give you up, never gonna let you down\r\n"
+    "Never gonna run around and desert you\r\n"
+    "Never gonna make you cry, never gonna say goodbye\r\n"
+    "Never gonna tell a lie and hurt you\r\n"
+    "Never gonna give you up, never gonna let you down\r\n"
+    "Never gonna run around and desert you\r\n"
+    "Never gonna make you cry, never gonna say goodbye\r\n"
+    "Never gonna tell a lie and hurt you\r\n"
+    "Never gonna give you up, never gonna let you down\r\n"
+    "Never gonna run around and desert you\r\n"
+    "Never gonna make you cry, never gonna say goodbye\r\n"
+    "Never gonna tell a lie and hurt you\r\n"
+    "\r\n"
+    "Songwriters: Peter Alan Waterman / Matthew James Aitken / Michael Stock\r\n"
+    "Never Gonna Give You Up lyrics © Sids Songs Ltd., Mike Stock Publishing Limited, Pw Ballads\r\n"
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_music_player_load(arm_2d_scene_t *ptScene)
@@ -126,7 +187,7 @@ static void __on_scene_music_player_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.AlbumCover.tWidget);
-
+    text_box_on_load(&this.Lyrics.tTextBox);
     
 }
 
@@ -145,6 +206,7 @@ static void __on_scene_music_player_depose(arm_2d_scene_t *ptScene)
     /*--------------------- insert your depose code begin --------------------*/
     spin_zoom_widget_depose(&this.AlbumCover.tWidget);
     histogram_depose(&this.Histogram.tWidget);
+    text_box_depose(&this.Lyrics.tTextBox);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -234,6 +296,23 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
     }
 
     histogram_on_frame_start(&this.Histogram.tWidget);
+
+    do {
+        /* get the screen region */
+        arm_2d_region_t __top_canvas
+            = arm_2d_helper_pfb_get_display_area(
+                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
+
+        int32_t iCurrentLine = text_box_get_start_line(&this.Lyrics.tTextBox);
+        if (text_box_has_end_of_stream_been_reached(&this.Lyrics.tTextBox) 
+        &&  iCurrentLine == text_box_get_current_line_count(&this.Lyrics.tTextBox)) {
+            text_box_set_scrolling_position(&this.Lyrics.tTextBox, -__top_canvas.tSize.iHeight);
+        } else {
+            text_box_set_scrolling_position_offset(&this.Lyrics.tTextBox, 1);
+        }
+
+        text_box_on_frame_start(&this.Lyrics.tTextBox);
+    } while(0);
 }
 
 static void __on_scene_music_player_frame_complete(arm_2d_scene_t *ptScene)
@@ -242,6 +321,7 @@ static void __on_scene_music_player_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_frame_complete(&this.AlbumCover.tWidget);
+    text_box_on_frame_complete(&this.Lyrics.tTextBox);
 }
 
 static void __before_scene_music_player_switching_out(arm_2d_scene_t *ptScene)
@@ -293,6 +373,28 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
             }
 
             draw_glass_bar(ptTile, &__bottom_region, 64, true);
+        }
+
+
+        arm_2d_size_t tLyricsBoxSize = {
+            .iWidth = __top_canvas.tSize.iWidth - iLength,
+            .iHeight = __top_canvas.tSize.iHeight - histogram_get_size(&this.Histogram.tWidget).iHeight - 20,
+        };
+
+        arm_2d_align_top_left(__top_canvas, tLyricsBoxSize) {
+            arm_2d_dock_with_margin(__top_left_region, 10) {
+
+                arm_lcd_text_set_char_spacing(1);
+                arm_lcd_text_set_line_spacing(4);
+
+                text_box_show(  &this.Lyrics.tTextBox, 
+                                ptTile, 
+                                &__dock_region,
+                                (__arm_2d_color_t) {__RGB(0xB6, 0xC7, 0xE7)},
+                                255,
+                                bIsNewFrame);
+
+            }
         }
 
         /* draw text at the top-left corner */
@@ -427,7 +529,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
         };
         spin_zoom_widget_init(&this.AlbumCover.tWidget, &tCFG);
 
-        int16_t iAlbumCoverWidth = c_tileAlbumCover.tRegion.tSize.iWidth;
+        int16_t iAlbumCoverWidth = c_tileAlbumCover.tRegion.tSize.iWidth - 86;
         if (__top_canvas.tSize.iWidth > 240 && __top_canvas.tSize.iWidth <= 320) {
             this.AlbumCover.fScaling = 1.0f;
             
@@ -493,6 +595,35 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
 
         histogram_init(&this.Histogram.tWidget, &tCFG);
     } while(0);
+
+
+    /* initialize Lyrics Box */
+    do {
+        text_box_c_str_reader_init( &this.Lyrics.tStringReader,
+                                    c_chLyrics,
+                                    sizeof(c_chLyrics));
+
+        text_box_cfg_t tCFG = {
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A8,
+            .tStreamIO = {
+                .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
+                .pTarget    = (uintptr_t)&this.Lyrics.tStringReader,
+            },
+            .u2LineAlign = TEXT_BOX_LINE_ALIGN_LEFT,
+            //.fScale = 1.2f,
+            //.chSpaceBetweenParagraph = 20,
+
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .bUseDirtyRegions = true,
+        };
+
+        text_box_init(&this.Lyrics.tTextBox, &tCFG);
+
+        /* set initial location */
+        text_box_set_scrolling_position(&this.Lyrics.tTextBox, -__top_canvas.tSize.iHeight);
+        
+    } while(0);
+
 
     /* ------------   initialize members of user_scene_music_player_t end   ---------------*/
 
