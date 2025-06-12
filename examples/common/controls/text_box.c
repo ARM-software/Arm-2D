@@ -542,6 +542,9 @@ void __text_box_draw_line(text_box_t *ptThis,
     if (TEXT_BOX_LINE_ALIGN_RIGHT == tAlign) {
         tLineRegion.tLocation.iX += this.iLineWidth - ptLineInfo->iLineWidth;
         tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
+    } else if (TEXT_BOX_LINE_ALIGN_CENTRE == tAlign) {
+        tLineRegion.tLocation.iX += (this.iLineWidth - ptLineInfo->iLineWidth) >> 1;
+        tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
     }
 
     arm_lcd_text_set_target_framebuffer(ptTile);

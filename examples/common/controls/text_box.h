@@ -82,6 +82,7 @@ typedef enum {
 typedef enum {
     TEXT_BOX_LINE_ALIGN_LEFT,
     TEXT_BOX_LINE_ALIGN_RIGHT,
+    TEXT_BOX_LINE_ALIGN_CENTRE,
     TEXT_BOX_LINE_ALIGN_JUSTIFIED,
 } text_box_line_alignment_t;
 
