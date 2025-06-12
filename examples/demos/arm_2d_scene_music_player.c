@@ -285,11 +285,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
         /* draw histogram at the bottom */
         arm_2d_dock_bottom(__top_canvas, histogram_get_size(&this.Histogram.tWidget).iHeight + 20) {
 
-            arm_2d_align_centre(__bottom_region, histogram_get_size(&this.Histogram.tWidget)) {
+            arm_2d_dock_vertical(__bottom_region, histogram_get_size(&this.Histogram.tWidget).iHeight, 10) {
                 histogram_show( &this.Histogram.tWidget,
-                                ptTile,
-                                &__centre_region,
-                                128);
+                                                ptTile,
+                                                &__vertical_region,
+                                                128);
             }
 
             draw_glass_bar(ptTile, &__bottom_region, 64, true);
@@ -408,7 +408,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
                     .nValue = 3600,
                 },
                 .Step = {
-                    .fAngle = 0.2f,
+                    .fAngle = 0.1f,
                 },
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING,
