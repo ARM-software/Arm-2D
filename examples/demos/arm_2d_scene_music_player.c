@@ -377,7 +377,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
 
 
         arm_2d_size_t tLyricsBoxSize = {
-            .iWidth = __top_canvas.tSize.iWidth - iLength,
+            .iWidth = __top_canvas.tSize.iWidth - this.AlbumCover.iRadius,
             .iHeight = __top_canvas.tSize.iHeight - histogram_get_size(&this.Histogram.tWidget).iHeight - 20,
         };
 
