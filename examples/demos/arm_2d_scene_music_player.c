@@ -297,7 +297,7 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
 
     histogram_on_frame_start(&this.Histogram.tWidget);
 
-    do {
+    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[2])) {
         /* get the screen region */
         arm_2d_region_t __top_canvas
             = arm_2d_helper_pfb_get_display_area(
@@ -310,9 +310,9 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
         } else {
             text_box_set_scrolling_position_offset(&this.Lyrics.tTextBox, 1);
         }
+    }
 
-        text_box_on_frame_start(&this.Lyrics.tTextBox);
-    } while(0);
+    text_box_on_frame_start(&this.Lyrics.tTextBox);
 }
 
 static void __on_scene_music_player_frame_complete(arm_2d_scene_t *ptScene)
@@ -380,6 +380,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
             .iWidth = __top_canvas.tSize.iWidth - iLength,
             .iHeight = __top_canvas.tSize.iHeight - histogram_get_size(&this.Histogram.tWidget).iHeight - 20,
         };
+
+        if (__top_canvas.tSize.iWidth <= 240) {
+            tLyricsBoxSize.iWidth = __top_canvas.tSize.iWidth - 10;
+            tLyricsBoxSize.iHeight = __top_canvas.tSize.iHeight - 16;
+        }
 
         arm_2d_align_top_left(__top_canvas, tLyricsBoxSize) {
             arm_2d_dock_with_margin(__top_left_region, 10) {
@@ -496,6 +501,11 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
         .bUserAllocated = bUserAllocated,
     };
 
+    if (__top_canvas.tSize.iWidth < 320) {
+        /* disable dynamic dirty region for small screen */
+        this.use_as__arm_2d_scene_t.bUseDirtyRegionHelper = false;
+    }
+
     /* ------------   initialize members of user_scene_music_player_t begin ---------------*/
     // initialize album cover
     do {
@@ -576,6 +586,11 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
             },
         };
 
+        if (__top_canvas.tSize.iWidth < 320) {
+            /* disable dynamic dirty region when screen is too small */
+            tCFG.ptParent = NULL;
+        }
+
         if (tCFG.Bin.tSize.iWidth == 0) {
             tCFG.Bin.chPadding = 0;
             if (__top_canvas.tSize.iWidth < (128 + 20)) {
@@ -616,6 +631,10 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
             .ptScene = (arm_2d_scene_t *)ptThis,
             .bUseDirtyRegions = true,
         };
+
+        if (__top_canvas.tSize.iWidth < 320) {
+            tCFG.ptFont = NULL;
+        }
 
         text_box_init(&this.Lyrics.tTextBox, &tCFG);
 
