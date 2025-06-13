@@ -130,7 +130,7 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 const static char c_chLyrics[] = {
     "Never Gonna Give You Up\n"
-    "Song by Rick Astley ‧ 1987\r\n"
+    "Song by Rick Astley 1987\r\n"
     "\r\n\r\n"
     "We're no strangers to love\r\n"
     "You know the rules and so do I\r\n"
@@ -176,7 +176,7 @@ const static char c_chLyrics[] = {
     "Never gonna tell a lie and hurt you\r\n"
     "\r\n"
     "Songwriters: Peter Alan Waterman / Matthew James Aitken / Michael Stock\r\n"
-    "Never Gonna Give You Up lyrics © Sids Songs Ltd., Mike Stock Publishing Limited, Pw Ballads\r\n"
+    "Never Gonna Give You Up lyrics(C) Sids Songs Ltd., Mike Stock Publishing Limited, Pw Ballads\r\n"
 };
 
 /*============================ IMPLEMENTATION ================================*/
