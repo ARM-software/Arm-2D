@@ -148,6 +148,7 @@ static void __after_scene_balls_switching(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    this.bSuspendPhysics = false;
 
 }
 
@@ -216,6 +217,10 @@ static void __on_scene_balls_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (this.bSuspendPhysics) {
+        return ;
+    }
+
     if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
         apply_force();
     }
@@ -242,6 +247,8 @@ static void __before_scene_balls_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_balls_t *ptThis = (user_scene_balls_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    this.bSuspendPhysics = true;
 
     if (this.bDirtyRegionOptimizationStatus) {
         arm_2d_helper_pfb_enable_dirty_region_optimization(
@@ -415,7 +422,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
              */
             .fnOnLoad       = &__on_scene_balls_load,
             .fnScene        = &__pfb_draw_scene_balls_handler,
-            //.fnAfterSwitch  = &__after_scene_balls_switching,
+            .fnAfterSwitch  = &__after_scene_balls_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
@@ -436,6 +443,7 @@ user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAd
     /* ------------   initialize members of user_scene_balls_t begin ---------------*/
 
     InitPhysics();
+    this.bSuspendPhysics = true;
 
     float fRadius = c_tileGlassBall40A4Mask.tRegion.tSize.iWidth / 2.0f;
 
