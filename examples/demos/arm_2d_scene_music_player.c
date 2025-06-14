@@ -624,7 +624,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
                 .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
                 .pTarget    = (uintptr_t)&this.Lyrics.tStringReader,
             },
-            .u2LineAlign = TEXT_BOX_LINE_ALIGN_LEFT,
+            .u2LineAlign = TEXT_BOX_LINE_ALIGN_CENTRE,
             //.fScale = 1.2f,
             //.chSpaceBetweenParagraph = 20,
 

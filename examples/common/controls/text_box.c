@@ -536,21 +536,10 @@ void __text_box_draw_line(text_box_t *ptThis,
         return ;
     }
 
-    arm_2d_region_t tLineRegion = *ptRegion;
-
-    /* handle draw region */
-    if (TEXT_BOX_LINE_ALIGN_RIGHT == tAlign) {
-        tLineRegion.tLocation.iX += this.iLineWidth - ptLineInfo->iLineWidth;
-        tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
-    } else if (TEXT_BOX_LINE_ALIGN_CENTRE == tAlign) {
-        tLineRegion.tLocation.iX += (this.iLineWidth - ptLineInfo->iLineWidth) >> 1;
-        tLineRegion.tSize.iWidth = ptLineInfo->iLineWidth;
-    }
-
     arm_lcd_text_set_target_framebuffer(ptTile);
-    arm_lcd_text_set_draw_region(&tLineRegion);
+    arm_lcd_text_set_draw_region(ptRegion);
 
-    //arm_2d_draw_box(ptTile, &tLineRegion, 1, GLCD_COLOR_BLUE, 200);
+    //arm_2d_draw_box(ptTile, ptRegion, 1, GLCD_COLOR_RED, 128);
     __text_box_set_current_position(ptThis, nPosition);
 
     if (TEXT_BOX_LINE_ALIGN_JUSTIFIED == tAlign && !ptLineInfo->bEndNaturally) {
@@ -822,6 +811,15 @@ void text_box_show( text_box_t *ptThis,
                 tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
             }
 
+            /* handle draw region */
+            if (TEXT_BOX_LINE_ALIGN_RIGHT == this.tCFG.u2LineAlign) {
+                tLineRegion.tLocation.iX += this.iLineWidth - this.tCurrentLine.iLineWidth;
+                tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
+            } else if (TEXT_BOX_LINE_ALIGN_CENTRE == this.tCFG.u2LineAlign) {
+                tLineRegion.tLocation.iX += (this.iLineWidth - this.tCurrentLine.iLineWidth) >> 1;
+                tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
+            }
+
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
 
@@ -853,7 +851,6 @@ void text_box_show( text_box_t *ptThis,
                                      &__text_box,
                                      &tLineRegion,
                                      this.tCFG.u2LineAlign);
-
             }
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
