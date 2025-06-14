@@ -805,6 +805,7 @@ void text_box_show( text_box_t *ptThis,
                 },
             };
 
+        #if 0
             if (this.tCFG.u2LineAlign == TEXT_BOX_LINE_ALIGN_JUSTIFIED) {
                 tLineRegion.tSize.iWidth = this.iLineWidth;
             } else {
@@ -819,6 +820,24 @@ void text_box_show( text_box_t *ptThis,
                 tLineRegion.tLocation.iX += (this.iLineWidth - this.tCurrentLine.iLineWidth) >> 1;
                 tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
             }
+        #else
+            tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
+
+            switch (this.tCFG.u2LineAlign) {
+                case TEXT_BOX_LINE_ALIGN_LEFT:
+                    break;
+                case TEXT_BOX_LINE_ALIGN_RIGHT:
+                    tLineRegion.tLocation.iX += this.iLineWidth - this.tCurrentLine.iLineWidth;
+                    break;
+                case TEXT_BOX_LINE_ALIGN_CENTRE:
+                    tLineRegion.tLocation.iX += (this.iLineWidth - this.tCurrentLine.iLineWidth) >> 1;
+                    break;
+                case TEXT_BOX_LINE_ALIGN_JUSTIFIED:
+                    tLineRegion.tSize.iWidth = this.iLineWidth;
+                    break;
+            }
+
+        #endif
 
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
