@@ -188,6 +188,8 @@ static void __on_scene_music_player_load(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_load(&this.AlbumCover.tWidget);
     text_box_on_load(&this.Lyrics.tTextBox);
+
+    this.nMusicTimeInMs = (60 * 3 + 33) * 1000ul;
     
 }
 
@@ -293,11 +295,7 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
         __fill_histogram_frame(&s_tDemoFrame);
 
         this.Histogram.ptFrame = &s_tDemoFrame;
-    }
 
-    histogram_on_frame_start(&this.Histogram.tWidget);
-
-    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[2])) {
         /* get the screen region */
         arm_2d_region_t __top_canvas
             = arm_2d_helper_pfb_get_display_area(
@@ -312,6 +310,18 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
         }
     }
 
+    int32_t nResult;
+    if (arm_2d_helper_time_liner_slider(0,                      /* from */
+                                        1000,                   /* to   */
+                                        this.nMusicTimeInMs,    /* time */
+                                        &nResult, 
+                                        &this.lTimestamp[2])) {
+        this.lTimestamp[2] = 0;
+    }
+
+    this.iPlayProgress = nResult;
+
+    histogram_on_frame_start(&this.Histogram.tWidget);
     text_box_on_frame_start(&this.Lyrics.tTextBox);
 }
 
@@ -365,14 +375,36 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
         /* draw histogram at the bottom */
         arm_2d_dock_bottom(__top_canvas, histogram_get_size(&this.Histogram.tWidget).iHeight + 20) {
 
-            arm_2d_dock_vertical(__bottom_region, histogram_get_size(&this.Histogram.tWidget).iHeight, 10) {
-                histogram_show( &this.Histogram.tWidget,
-                                                ptTile,
-                                                &__vertical_region,
-                                                128);
-            }
+            arm_2d_layout(__bottom_region) {
 
-            draw_glass_bar(ptTile, &__bottom_region, 64, true);
+                __item_line_dock_vertical(4) {
+                    progress_bar_flowing_show(  ptTile, 
+                                                &__item_region, 
+                                                this.iPlayProgress, 
+                                                bIsNewFrame,
+                                                GLCD_COLOR_GRAY(128),
+                                                GLCD_COLOR_WHITE,
+                                                GLCD_COLOR_BLACK);
+                    
+                    /* update dirty region */
+                    arm_2d_helper_dirty_region_update_item( &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                                                            (arm_2d_tile_t *)ptTile,
+                                                            &__top_canvas,
+                                                            &__item_region);
+                }
+
+                __item_line_dock_vertical() {
+
+                    arm_2d_dock_vertical(__item_region, histogram_get_size(&this.Histogram.tWidget).iHeight, 10) {
+                        histogram_show( &this.Histogram.tWidget,
+                                                        ptTile,
+                                                        &__vertical_region,
+                                                        128);
+                    }
+
+                    draw_glass_bar(ptTile, &__item_region, 64, true);
+                }
+            }
         }
 
 
@@ -383,6 +415,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
 
         if (__top_canvas.tSize.iWidth <= 240) {
             tLyricsBoxSize.iWidth = __top_canvas.tSize.iWidth - 10;
+        }
+
+        if (__top_canvas.tSize.iHeight < 128) {
             tLyricsBoxSize.iHeight = __top_canvas.tSize.iHeight - 16;
         }
 

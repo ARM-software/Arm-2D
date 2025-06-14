@@ -89,6 +89,8 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[3];
     bool bUserAllocated;
+    int16_t iPlayProgress;
+    uint32_t nMusicTimeInMs;
 
     struct {
         spin_zoom_widget_t tWidget;
@@ -109,6 +111,8 @@ ARM_PRIVATE(
         text_box_c_str_reader_t tStringReader;
         text_box_t tTextBox;
     } Lyrics;
+
+
 
 )
     /* place your public member here */
