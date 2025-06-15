@@ -289,7 +289,7 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
         spin_zoom_widget_on_frame_start(&this.AlbumCover.tWidget, this.AlbumCover.iAngle, this.AlbumCover.fScaling);
     }
 
-    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[1])) {
+    if (arm_2d_helper_is_time_out(80, &this.lTimestamp[1])) {
         static __histogram_frame_t s_tDemoFrame;
 
         __fill_histogram_frame(&s_tDemoFrame);
