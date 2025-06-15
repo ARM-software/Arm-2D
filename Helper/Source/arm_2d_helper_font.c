@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        7 June 2025
+ * $Date:        16 June 2025
  * $Revision:    V.2.12.0
  *
  * Target Processor:  Cortex-M cores
@@ -343,10 +343,9 @@ static void __arm_lcd_text_update_char_buffer(void)
                               ARM_2D_MEM_TYPE_FAST);
 }
 
-void arm_lcd_text_set_scale(float fScale)
+static
+void __arm_lcd_text_force_updated_scale(q16_t q16Scale)
 {
-    q16_t q16Scale = abs_q16(reinterpret_q16_f32(fScale));
-
     if ((q16Scale != 0) && abs_q16(q16Scale - reinterpret_q16_s16(1)) > reinterpret_q16_f32(0.01f)) {
         s_tLCDTextControl.q16Scale = q16Scale;
 
@@ -357,6 +356,12 @@ void arm_lcd_text_set_scale(float fScale)
 
     __arm_lcd_update_char_size();
     __arm_lcd_update_spacing();
+}
+
+void arm_lcd_text_set_scale(float fScale)
+{
+    __arm_lcd_text_force_updated_scale(
+        abs_q16(reinterpret_q16_f32(fScale)));
 }
 
 bool arm_lcd_text_force_char_use_same_width(bool bForced)
@@ -434,8 +439,8 @@ arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont)
 
         /* reset draw pointer */
         arm_lcd_text_location(0,0);
-        /* reset zoom */
-        arm_lcd_text_set_scale(0.0f);
+        /* update scaling parameters */
+        __arm_lcd_text_force_updated_scale(s_tLCDTextControl.q16Scale);
 
         return ARM_2D_ERR_NONE;
     } while(0);
