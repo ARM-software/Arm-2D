@@ -101,6 +101,12 @@ struct {
   ARM_2D_FONT_Arial14_A4,
   ARM_2D_FONT_Arial14_A8;
 
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_32_A4;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -186,6 +192,10 @@ static void __on_scene_music_player_load(arm_2d_scene_t *ptScene)
     user_scene_music_player_t *ptThis = (user_scene_music_player_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_dirty_region_add_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                         this.tDirtyRegionItems,
+                                         dimof(this.tDirtyRegionItems));
+
     spin_zoom_widget_on_load(&this.AlbumCover.tWidget);
     text_box_on_load(&this.Lyrics.tTextBox);
 
@@ -210,6 +220,9 @@ static void __on_scene_music_player_depose(arm_2d_scene_t *ptScene)
     histogram_depose(&this.Histogram.tWidget);
     text_box_depose(&this.Lyrics.tTextBox);
 
+    arm_2d_helper_dirty_region_remove_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                         this.tDirtyRegionItems,
+                                         dimof(this.tDirtyRegionItems));
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -317,6 +330,28 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
                                         &nResult, 
                                         &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
+    } else {
+
+        int32_t nElapsedMs = arm_2d_helper_convert_ticks_to_ms(
+                arm_2d_helper_get_system_timestamp() - this.lTimestamp[2]
+            );
+
+        int32_t iSecond = (nElapsedMs / 1000) % 60;
+
+        if (iSecond != this.u6Secends) {
+            this.u6Secends = iSecond;
+            this.u6Mins = nElapsedMs / 60000;
+
+            arm_2d_helper_dirty_region_item_suspend_update(
+                &this.tDirtyRegionItems[DIRTY_REGION_ITEM_PLAY_TIME],
+                false
+            );
+        } else {
+            arm_2d_helper_dirty_region_item_suspend_update(
+                &this.tDirtyRegionItems[DIRTY_REGION_ITEM_PLAY_TIME],
+                true
+            );
+        }
     }
 
     this.iPlayProgress = nResult;
@@ -373,7 +408,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
         }
 
         /* draw histogram at the bottom */
-        arm_2d_dock_bottom(__top_canvas, histogram_get_size(&this.Histogram.tWidget).iHeight + 20) {
+        arm_2d_dock_bottom( __top_canvas, 
+                            histogram_get_size(&this.Histogram.tWidget).iHeight + 20) {
 
             arm_2d_layout(__bottom_region) {
 
@@ -387,19 +423,49 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
                                                 GLCD_COLOR_BLACK);
                     
                     /* update dirty region */
-                    arm_2d_helper_dirty_region_update_item( &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
-                                                            (arm_2d_tile_t *)ptTile,
-                                                            &__top_canvas,
-                                                            &__item_region);
+                    arm_2d_helper_dirty_region_update_item( 
+                        &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                        (arm_2d_tile_t *)ptTile,
+                        &__top_canvas,
+                        &__item_region);
                 }
 
                 __item_line_dock_vertical() {
 
-                    arm_2d_dock_vertical(__item_region, histogram_get_size(&this.Histogram.tWidget).iHeight, 10) {
-                        histogram_show( &this.Histogram.tWidget,
-                                                        ptTile,
-                                                        &__vertical_region,
-                                                        128);
+                    arm_2d_dock_with_margin(__item_region, 10) {
+                    
+                        arm_2d_dock_vertical(
+                            __dock_region, 
+                            histogram_get_size(&this.Histogram.tWidget).iHeight) {
+                            histogram_show( &this.Histogram.tWidget,
+                                                            ptTile,
+                                                            &__vertical_region,
+                                                            128);
+                        }
+
+                        arm_lcd_text_set_scale(0.7f);
+                        arm_2d_size_t tPlayTimeSize 
+                            = arm_lcd_printf_to_buffer( 
+                                (const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4,
+                                "%02d:%02d ",
+                                this.u6Mins,
+                                this.u6Secends);
+                        
+                        arm_2d_align_bottom_right(__dock_region, tPlayTimeSize) {
+
+                            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                            arm_lcd_text_set_draw_region(&__bottom_right_region);
+                            arm_lcd_text_set_colour(__RGB(0xB6, 0xC7, 0xE7), GLCD_COLOR_BLACK);
+                            arm_lcd_printf_buffer(0);
+
+                            /* update dirty region */
+                            arm_2d_helper_dirty_region_update_item( 
+                                &this.tDirtyRegionItems[DIRTY_REGION_ITEM_PLAY_TIME],
+                                (arm_2d_tile_t *)ptTile,
+                                &__dock_region,
+                                &__bottom_right_region);
+                        }
+                        arm_lcd_text_set_scale(1.0f);
                     }
 
                     draw_glass_bar(ptTile, &__item_region, 64, true);

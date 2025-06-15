@@ -75,6 +75,11 @@ extern "C" {
 
 /*============================ TYPES =========================================*/
 
+enum {
+    DIRTY_REGION_ITEM_PLAY_TIME = 0,
+    __DIRTY_REGION_ITEM_COUNT,
+};
+
 typedef uint8_t __histogram_frame_t[64];
 
 /*!
@@ -88,9 +93,19 @@ struct user_scene_music_player_t {
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[3];
-    bool bUserAllocated;
-    int16_t iPlayProgress;
-    uint32_t nMusicTimeInMs;
+
+    struct {
+        uint32_t nMusicTimeInMs;
+        int16_t iPlayProgress;
+
+        uint16_t u6Secends          : 6;
+        uint16_t                    : 2;    
+        uint16_t u6Mins             : 6;
+        uint16_t                    : 1;
+        uint16_t bUserAllocated     : 1;
+
+        arm_2d_helper_dirty_region_item_t tDirtyRegionItems[__DIRTY_REGION_ITEM_COUNT];
+    };
 
     struct {
         spin_zoom_widget_t tWidget;

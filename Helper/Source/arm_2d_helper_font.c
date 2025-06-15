@@ -22,7 +22,7 @@
  * Description:  the font helper service source code
  *
  * $Date:        16 June 2025
- * $Revision:    V.2.12.0
+ * $Revision:    V.2.13.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
