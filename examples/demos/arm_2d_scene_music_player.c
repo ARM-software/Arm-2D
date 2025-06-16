@@ -306,12 +306,6 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
     }
 
     if (arm_2d_helper_is_time_out(80, &this.lTimestamp[1])) {
-        static __histogram_frame_t s_tDemoFrame;
-
-        __fill_histogram_frame(&s_tDemoFrame);
-
-        this.Histogram.ptFrame = &s_tDemoFrame;
-
         /* get the screen region */
         arm_2d_region_t __top_canvas
             = arm_2d_helper_pfb_get_display_area(
@@ -356,8 +350,15 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
             );
         }
     }
-
     this.iPlayProgress = nResult;
+
+    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[3])) {
+        static __histogram_frame_t s_tDemoFrame;
+
+        __fill_histogram_frame(&s_tDemoFrame);
+
+        this.Histogram.ptFrame = &s_tDemoFrame;
+    }
 
     histogram_on_frame_start(&this.Histogram.tWidget);
     text_box_on_frame_start(&this.Lyrics.tTextBox);
