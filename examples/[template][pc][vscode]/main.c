@@ -386,8 +386,12 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_console_window_loader,
     },
     {
-        8000,
+        20000,
         scene_text_reader_loader,
+    },
+    {
+        30000,
+        scene_music_player_loader,
     },
     {
         15000,
