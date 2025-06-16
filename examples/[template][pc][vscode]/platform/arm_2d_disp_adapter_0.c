@@ -483,11 +483,21 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 #   endif
 #endif
 
+__WEAK 
+void __disp_adapter0_user_on_frame_complete(void *ptTarget, bool bIsFrameSkipped)
+{
+    ARM_2D_PARAM(ptTarget);
+
+}
+
 static bool __on_each_frame_complete(void *ptTarget)
 {
     ARM_2D_PARAM(ptTarget);
     
     int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+    bool bIsFrameSkipped 
+            = arm_2d_helper_is_frame_skipped(
+                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
     
 #if __DISP0_CFG_FPS_CACULATION_MODE__ == ARM_2D_FPS_MODE_REAL
     static int64_t s_lLastTimeStamp = 0;
@@ -565,7 +575,15 @@ static bool __on_each_frame_complete(void *ptTarget)
             }
         }
     }
+
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+    if (!bIsFrameSkipped) {
+        arm_2d_helper_3fb_flush_frame(&s_tDirectModeHelper);
+    }
+#endif
     
+    __disp_adapter0_user_on_frame_complete(ptTarget, bIsFrameSkipped);
+
     return true;
 }
 

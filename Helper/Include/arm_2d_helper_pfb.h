@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        4. June 2025
- * $Revision:    V.2.1.0
+ * $Date:        16. June 2025
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -823,7 +823,7 @@ ARM_PRIVATE(
             uint32_t                bFailedToOptimizeDirtyRegion            : 1;
             uint32_t                bIsUsingOptimizedDirtyRegionList        : 1;
             uint32_t                bDirtyRegionDebugModeSkipFrame          : 1;
-            uint32_t                bIngoreLowLevelSyncUp                   : 1;
+            uint32_t                bIgnoreLowLevelSyncUp                   : 1;
 
             uint32_t                bIsNewFrame                             : 1;
             uint32_t                bIgnoreCanvasColour                     : 1;
@@ -1125,6 +1125,15 @@ ARM_NONNULL(1)
 void arm_2d_helper_pfb_flush(arm_2d_helper_pfb_t *ptThis);
 
 /*!
+ * \brief indicate whether a most recent completed frame is a skipped one or not
+ * \param[in] ptThis an initialised PFB helper control block
+ * \retval true the most recent completed frame is an skipped one
+ * \retval false the most recent completed frame is flushed
+ */
+ARM_NONNULL(1)
+bool arm_2d_helper_is_frame_skipped(arm_2d_helper_pfb_t *ptThis);
+
+/*!
  * \brief hide the navigation layer
  * \param[in] ptThis an initialised PFB helper control block
  */
@@ -1263,6 +1272,9 @@ ARM_NONNULL(1,2)
 bool __arm_2d_helper_3fb_draw_bitmap(arm_2d_helper_3fb_t *ptThis, 
                                      const arm_2d_pfb_t *ptPFB);
 
+extern
+ARM_NONNULL(1)
+uintptr_t arm_2d_helper_3fb_flush_frame(arm_2d_helper_3fb_t *ptThis);
 
 /*!
  * \brief rotate a given c8bit PFB for 90 degree

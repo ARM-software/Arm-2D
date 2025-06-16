@@ -346,7 +346,7 @@ arm_2d_err_t arm_2d_helper_pfb_init(arm_2d_helper_pfb_t *ptThis,
     } while(0);
 
     this.Adapter.bFirstIteration = true;
-    this.Adapter.bIngoreLowLevelSyncUp = true;
+    this.Adapter.bIgnoreLowLevelSyncUp = true;
     
     return ARM_2D_ERR_NONE;
 }
@@ -605,11 +605,19 @@ void __arm_2d_helper_low_level_rendering(arm_2d_helper_pfb_t *ptThis)
 
     __arm_2d_helper_enqueue_pfb(ptThis);
 
-    /* as PFBs have been sent to LCD, we should reset the flag: bIngoreLowLevelSyncUp */
-    this.Adapter.bIngoreLowLevelSyncUp = false;
+    /* as PFBs have been sent to LCD, we should reset the flag: bIgnoreLowLevelSyncUp */
+    this.Adapter.bIgnoreLowLevelSyncUp = false;
 
     this.Adapter.bFirstIteration = false;
 
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_is_frame_skipped(arm_2d_helper_pfb_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.Adapter.bIgnoreLowLevelSyncUp;
 }
 
 
@@ -2785,10 +2793,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     
 
     /* wait until LCD finish rendering the previous frame */
-    if (!this.Adapter.bIngoreLowLevelSyncUp && !this.Adapter.bIgnoreLowLevelFlush) {
+    if (!this.Adapter.bIgnoreLowLevelSyncUp && !this.Adapter.bIgnoreLowLevelFlush) {
 
         /* reset it to true */
-        this.Adapter.bIngoreLowLevelSyncUp = true;
+        this.Adapter.bIgnoreLowLevelSyncUp = true;
         ARM_2D_LOG_INFO(
             HELPER_PFB, 
             0, 
@@ -3289,7 +3297,7 @@ void * arm_2d_helper_3fb_get_flush_pointer(arm_2d_helper_3fb_t *ptThis)
 
 ARM_NONNULL(1)
 static uintptr_t 
-__arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNewFrame)
+__arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsFrameComplete)
 {
     assert(NULL != ptThis);
 
@@ -3306,7 +3314,7 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
     uintptr_t pnAddress = this.tCFG.pnAddress[chDrawingIndex];
     bool bPrepareForCopy = false;
 
-    if (bIsNewFrame) {
+    if (bIsFrameComplete) {
         arm_irq_safe {
 
             /* drawing: no */
@@ -3376,6 +3384,11 @@ __arm_2d_helper_3fb_get_drawing_pointer(arm_2d_helper_3fb_t *ptThis, bool bIsNew
     return pnAddress;
 }
 
+ARM_NONNULL(1)
+uintptr_t arm_2d_helper_3fb_flush_frame(arm_2d_helper_3fb_t *ptThis)
+{
+    return __arm_2d_helper_3fb_get_drawing_pointer(ptThis, true);
+}
 
 
 ARM_NONNULL(1,2)
@@ -3390,7 +3403,8 @@ bool __arm_2d_helper_3fb_draw_bitmap( arm_2d_helper_3fb_t *ptThis,
     //uint_fast8_t chBytesPerPixel = this.tCFG.chPixelBits >> 3;
     int16_t iLCDWidth = this.tCFG.tScreenSize.iWidth;
     int16_t iLCDHeight = this.tCFG.tScreenSize.iHeight;
-    uintptr_t pnAddress = __arm_2d_helper_3fb_get_drawing_pointer(ptThis, ptPFB->bIsNewFrame);
+    //uintptr_t pnAddress = __arm_2d_helper_3fb_get_drawing_pointer(ptThis, ptPFB->bIsNewFrame);
+    uintptr_t pnAddress = __arm_2d_helper_3fb_get_drawing_pointer(ptThis, false);
 
     uint_fast8_t chBytePerPixel = this.tCFG.chPixelBits >> 3;
     uint32_t wLCDStrideInByte = chBytePerPixel * iLCDWidth;
