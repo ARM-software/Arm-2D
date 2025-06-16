@@ -702,6 +702,7 @@ void text_box_show( text_box_t *ptThis,
         arm_lcd_text_set_colour(tColour.tValue, GLCD_COLOR_BLACK);
         arm_lcd_text_set_opacity(chOpacity);
         arm_lcd_text_set_scale(this.tCFG.fScale);
+        arm_lcd_clear_text_buffer();
 
         int16_t iFontCharBoxHeight = arm_lcd_text_get_actual_char_box().iHeight;
         int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;

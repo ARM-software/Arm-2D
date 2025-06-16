@@ -22,7 +22,7 @@
  * Description:  the font helper service header file
  *
  * $Date:        16 June 2025
- * $Revision:    V.2.13.0
+ * $Revision:    V.2.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -398,6 +398,9 @@ arm_2d_size_t arm_lcd_get_buffer_box_size(void);
  */
 extern
 size_t arm_lcd_get_residual_text_length_in_buffer(void);
+
+extern
+void arm_lcd_clear_text_buffer(void);
 
 extern
 ARM_NONNULL(1)

@@ -22,7 +22,7 @@
  * Description:  the font helper service source code
  *
  * $Date:        16 June 2025
- * $Revision:    V.2.13.0
+ * $Revision:    V.2.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1393,6 +1393,14 @@ void arm_lcd_printf_buffer(int16_t iNumber)
 size_t arm_lcd_get_residual_text_length_in_buffer(void)
 {
     return s_tLCDTextControl.TXBuf.hwLen;
+}
+
+void arm_lcd_clear_text_buffer(void)
+{
+    s_tLCDTextControl.TXBuf.hwLen = 0;
+    s_tLCDTextControl.TXBuf.hwTail = 0;
+    s_tLCDTextControl.TXBuf.hwHead = 0;
+    s_tLCDTextControl.TXBuf.chBuffer[0] = '\0';
 }
 
 ARM_NONNULL(1)
