@@ -299,7 +299,9 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
             this.AlbumCover.iAngle = 0;
         }
 
-        spin_zoom_widget_on_frame_start(&this.AlbumCover.tWidget, this.AlbumCover.iAngle, this.AlbumCover.fScaling);
+        spin_zoom_widget_on_frame_start(&this.AlbumCover.tWidget, 
+                                        this.AlbumCover.iAngle, 
+                                        this.AlbumCover.fScaling);
     }
 
     if (arm_2d_helper_is_time_out(80, &this.lTimestamp[1])) {
@@ -373,7 +375,6 @@ static void __before_scene_music_player_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_music_player_t *ptThis = (user_scene_music_player_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
 }
 
 static

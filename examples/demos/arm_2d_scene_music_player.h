@@ -98,11 +98,11 @@ ARM_PRIVATE(
         uint32_t nMusicTimeInMs;
         int16_t iPlayProgress;
 
-        uint16_t u6Secends          : 6;
-        uint16_t                    : 2;    
-        uint16_t u6Mins             : 6;
-        uint16_t                    : 1;
-        uint16_t bUserAllocated     : 1;
+        uint16_t u6Secends                      : 6;
+        uint16_t                                : 2;    
+        uint16_t u6Mins                         : 6;
+        uint16_t                                : 1;
+        uint16_t bUserAllocated                 : 1;
 
         arm_2d_helper_dirty_region_item_t tDirtyRegionItems[__DIRTY_REGION_ITEM_COUNT];
     };

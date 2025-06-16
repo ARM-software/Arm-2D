@@ -709,7 +709,6 @@ void text_box_show( text_box_t *ptThis,
         if (bIsNewFrame) {
             bool bRequestUpdate = this.Request.bUpdateReq;
 
-
             if (this.Request.bPositionUpdateReq && this.iLineHeight > 0) {
                 this.Request.bPositionUpdateReq = false;
 
@@ -724,13 +723,15 @@ void text_box_show( text_box_t *ptThis,
                     __text_box_set_start_line(ptThis, lPosition / this.iLineHeight);
                     this.Request.iIntraLineOffset = lPosition - this.iLineHeight * text_box_get_start_line(ptThis);
                 }
+
+                bRequestUpdate = true;
             }
 
             if (this.Request.nTargetStartLineReq != this.Start.nLine) {
                 bRequestUpdate = true;
             }
 
-            if (this.iLineWidth != __text_box_canvas.tSize.iWidth) {
+            if (this.iLineWidth <= 0 || this.Request.bUpdateReq) {
                 this.iLineWidth = __text_box_canvas.tSize.iWidth 
                                 - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
                 bRequestUpdate = true;
@@ -747,7 +748,8 @@ void text_box_show( text_box_t *ptThis,
                 __text_box_update(ptThis);
 
                 if (this.tCFG.bUseDirtyRegions) {
-                    arm_2d_helper_dirty_region_update_item( &this.tDirtyRegionItem[0],
+                    arm_2d_helper_dirty_region_update_item( 
+                        &this.tDirtyRegionItem[0],
                         (arm_2d_tile_t *)&__text_box,
                         NULL,
                         &__text_box_canvas);
