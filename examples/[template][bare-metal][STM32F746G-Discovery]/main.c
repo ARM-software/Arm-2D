@@ -358,6 +358,11 @@ void scene_balls_loader(void)
     arm_2d_scene_balls_init(&DISP0_ADAPTER);
 }
 
+void scene_music_player_loader(void) 
+{
+    arm_2d_scene_music_player_init(&DISP0_ADAPTER);
+}
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -450,6 +455,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         10000,
         scene_knob_loader,
     },
+    {
+        20000,
+        scene_music_player_loader,
+    },
 #if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
     {
         5000,
@@ -460,6 +469,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_rickrolling_loader,
     },
 #endif
+
     {
         10000,
         scene_alarm_clock_loader,
@@ -533,8 +543,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        scene_music_player_loader,
         //scene_watch_face_01_loader,
-        scene_balls_loader,
+        //scene_balls_loader,
         //scene_matrix_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader

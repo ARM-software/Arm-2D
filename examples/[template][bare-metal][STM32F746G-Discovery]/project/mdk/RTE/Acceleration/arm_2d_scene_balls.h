@@ -95,6 +95,7 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
     bool bUserAllocated;
     bool bDirtyRegionOptimizationStatus;
+    bool bSuspendPhysics;
 
     arm_2d_helper_dirty_region_item_t tDirtyRegionItems[DEMO_BALL_COUNT];
 
