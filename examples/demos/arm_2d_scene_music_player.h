@@ -125,6 +125,7 @@ ARM_PRIVATE(
     struct {
         text_box_c_str_reader_t tStringReader;
         text_box_t tTextBox;
+        uint8_t chOpacity;
     } Lyrics;
 
 

@@ -298,7 +298,9 @@ static void __fill_histogram_frame(__histogram_frame_t *ptFrame)
 static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_music_player_t *ptThis = (user_scene_music_player_t *)ptScene;
-    ARM_2D_UNUSED(ptThis);
+    arm_2d_region_t __top_canvas
+            = arm_2d_helper_pfb_get_display_area(
+                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
 
     if (arm_2d_helper_is_time_out(8, &this.lTimestamp[0])) {
         this.AlbumCover.iAngle += 2;
@@ -311,11 +313,9 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
                                         this.AlbumCover.fScaling);
     }
 
+    
     if (arm_2d_helper_is_time_out(80, &this.lTimestamp[1])) {
         /* get the screen region */
-        arm_2d_region_t __top_canvas
-            = arm_2d_helper_pfb_get_display_area(
-                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
 
         int32_t iCurrentLine = text_box_get_start_line(&this.Lyrics.tTextBox);
         if (text_box_has_end_of_stream_been_reached(&this.Lyrics.tTextBox) 
@@ -333,11 +333,18 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
                                         &nResult, 
                                         &this.lTimestamp[2])) {
         this.lTimestamp[2] = 0;
+        text_box_set_scrolling_position(&this.Lyrics.tTextBox, -__top_canvas.tSize.iHeight);
     } else {
 
         int32_t nElapsedMs = arm_2d_helper_convert_ticks_to_ms(
                 arm_2d_helper_get_system_timestamp() - this.lTimestamp[2]
             );
+
+        if ((this.nMusicTimeInMs - nElapsedMs) > (255 << 3)) {
+            this.Lyrics.chOpacity = 255;
+        } else {
+            this.Lyrics.chOpacity = (this.nMusicTimeInMs - nElapsedMs) >> 3;
+        }
 
         int32_t iSecond = (nElapsedMs / 1000) % 60;
 
@@ -509,7 +516,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
                                 ptTile, 
                                 &__dock_region,
                                 (__arm_2d_color_t) {__RGB(0xB6, 0xC7, 0xE7)},
-                                255,
+                                this.Lyrics.chOpacity,
                                 bIsNewFrame);
 
             }
@@ -753,7 +760,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
 
         /* set initial location */
         text_box_set_scrolling_position(&this.Lyrics.tTextBox, -__top_canvas.tSize.iHeight);
-        
+        this.Lyrics.chOpacity = 0;
     } while(0);
 
 
