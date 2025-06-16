@@ -812,6 +812,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8568abf593c04cf6df798e82cda60676"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">arm_2d_helper_pfb_flush</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga8568abf593c04cf6df798e82cda60676"><td class="mdescLeft">&#160;</td><td class="mdescRight">flush the FPB FIFO  <a href="group__gHelper.html#ga8568abf593c04cf6df798e82cda60676">More...</a><br /></td></tr>
 <tr class="separator:ga8568abf593c04cf6df798e82cda60676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga753bcde180a6c54fe8db00b48b174c1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga753bcde180a6c54fe8db00b48b174c1e">arm_2d_helper_is_frame_skipped</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
+<tr class="memdesc:ga753bcde180a6c54fe8db00b48b174c1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">indicate whether a most recent completed frame is a skipped one or not  <a href="group__gHelper.html#ga753bcde180a6c54fe8db00b48b174c1e">More...</a><br /></td></tr>
+<tr class="separator:ga753bcde180a6c54fe8db00b48b174c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaec3341ff7e558eb0665d1d2819e0e92c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c">arm_2d_helper_hide_navigation_layer</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gaec3341ff7e558eb0665d1d2819e0e92c"><td class="mdescLeft">&#160;</td><td class="mdescRight">hide the navigation layer  <a href="group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c">More...</a><br /></td></tr>
 <tr class="separator:gaec3341ff7e558eb0665d1d2819e0e92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -854,6 +857,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad9504b41c541cc4bbee54bfbba49f496"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">__arm_2d_helper_3fb_draw_bitmap</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis, const <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptPFB)</td></tr>
 <tr class="memdesc:gad9504b41c541cc4bbee54bfbba49f496"><td class="mdescLeft">&#160;</td><td class="mdescRight">please do NOT use this function. It is used by the display adapter.  <a href="group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496">More...</a><br /></td></tr>
 <tr class="separator:gad9504b41c541cc4bbee54bfbba49f496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7fb29b004b65b42744d51579968d806c"><td class="memItemLeft" align="right" valign="top"><a id="ga7fb29b004b65b42744d51579968d806c" name="ga7fb29b004b65b42744d51579968d806c"></a>
+uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_helper_3fb_flush_frame</b> (<a class="el" href="group__gHelper.html#structarm__2d__helper__3fb__t">arm_2d_helper_3fb_t</a> *ptThis)</td></tr>
+<tr class="separator:ga7fb29b004b65b42744d51579968d806c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga413b85a6582f1d894eae5c9ba88d9fe2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga413b85a6582f1d894eae5c9ba88d9fe2">__arm_2d_helper_pfb_rotate90_c8bit</a> (<a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptOrigin, <a class="el" href="group__gHelper.html#structarm__2d__pfb__t">arm_2d_pfb_t</a> *ptScratch, const <a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a> *ptScreenSize)</td></tr>
 <tr class="memdesc:ga413b85a6582f1d894eae5c9ba88d9fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotate a given c8bit PFB for 90 degree  <a href="group__gHelper.html#ga413b85a6582f1d894eae5c9ba88d9fe2">More...</a><br /></td></tr>
 <tr class="separator:ga413b85a6582f1d894eae5c9ba88d9fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4662,9 +4668,9 @@ bDirtyRegionDebugModeSkipFrame: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
-<a id="ae753517ace8d7f11c9e1a994b8817a2e" name="ae753517ace8d7f11c9e1a994b8817a2e"></a>uint32_t</td>
+<a id="a507bd9b5fde4f956b97ce12de618ada9" name="a507bd9b5fde4f956b97ce12de618ada9"></a>uint32_t</td>
 <td class="fieldname">
-bIngoreLowLevelSyncUp: 1</td>
+bIgnoreLowLevelSyncUp: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
@@ -9303,6 +9309,39 @@ For normal usage, please DO NOT use this function unless you know what you are d
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga753bcde180a6c54fe8db00b48b174c1e" name="ga753bcde180a6c54fe8db00b48b174c1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga753bcde180a6c54fe8db00b48b174c1e">&#9670;&#160;</a></span>arm_2d_helper_is_frame_skipped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_is_frame_skipped </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>indicate whether a most recent completed frame is a skipped one or not </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>an initialised PFB helper control block </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the most recent completed frame is an skipped one </td></tr>
+    <tr><td class="paramname">false</td><td>the most recent completed frame is flushed </td></tr>
   </table>
   </dd>
 </dl>

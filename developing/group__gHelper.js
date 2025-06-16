@@ -359,6 +359,7 @@ var group__gHelper =
     [ "__arm_2d_helper_pfb_is_region_active1", "group__gHelper.html#ga3edbdcc5a6f3ddecb62ae1b6e7d4d803", null ],
     [ "arm_2d_helper_pfb_task", "group__gHelper.html#gab2cec999a9abbf7ec42bed4352a17b88", null ],
     [ "arm_2d_helper_pfb_flush", "group__gHelper.html#ga8568abf593c04cf6df798e82cda60676", null ],
+    [ "arm_2d_helper_is_frame_skipped", "group__gHelper.html#ga753bcde180a6c54fe8db00b48b174c1e", null ],
     [ "arm_2d_helper_hide_navigation_layer", "group__gHelper.html#gaec3341ff7e558eb0665d1d2819e0e92c", null ],
     [ "arm_2d_helper_show_navigation_layer", "group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e", null ],
     [ "__arm_2d_helper_pfb_enable_drawing_canvas_colour", "group__gHelper.html#ga7aacbb555e295f1e12fdd85213d4db3c", null ],
