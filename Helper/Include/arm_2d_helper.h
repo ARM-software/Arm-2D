@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        30. April 2025
- * $Revision:    V.2.3.2
+ * $Date:        19. June 2025
+ * $Revision:    V.2.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -126,6 +126,32 @@ extern "C" {
                                             (__to),                             \
            arm_2d_helper_convert_ms_to_ticks(__ms),                             \
                                             (__stroke_ptr),                     \
+           (&arm_2d_safe_name(s_lTimestamp),##__VA_ARGS__));})
+
+/*!
+ * \brief calculate the stroke of a liner slider based on time
+ *
+ * \param[in] __from the start of the slider
+ * \param[in] __to the end of the slider
+ * \param[in] __ms a given period (ms) in which the slider should finish the 
+ *            whole stroke
+ * \param[out] __stroke_ptr the address of an int32_t stroke variable
+ * \param[in] ... an optional address of a timestamp variable, if you omit it,
+ *             NULL will be passed, and the code that call this funtion will not
+ *              be reentrant.
+ * \retval true the slider has finished the whole stroke
+ * \retval false the slider hasn't reach the target end
+ */
+#define arm_2d_helper_time_liner_slider_i64(    __from,                         \
+                                                __to,                           \
+                                                __ms,                           \
+                                                __stroke_ptr,                   \
+                                                ...)                            \
+           ({static int64_t arm_2d_safe_name(s_lTimestamp);                     \
+           __arm_2d_helper_time_liner_slider_i64(   (__from),                   \
+                                                    (__to),                     \
+                   arm_2d_helper_convert_ms_to_ticks(__ms),                     \
+                                                    (__stroke_ptr),             \
            (&arm_2d_safe_name(s_lTimestamp),##__VA_ARGS__));})
 
 /*!
@@ -354,13 +380,34 @@ void arm_2d_port_set_semaphore(uintptr_t pSemaphore);
  * \retval true the slider has finished the whole stroke
  * \retval false the slider hasn't reach the target end
  */
-ARM_NONNULL(4,5)
 extern
+ARM_NONNULL(4,5)
 bool __arm_2d_helper_time_liner_slider( int32_t nFrom, 
                                         int32_t nTo, 
                                         int64_t lPeriod,
                                         int32_t *pnStroke,
                                         int64_t *plTimestamp);
+
+/*!
+ * \brief calculate the stroke of a liner slider based on time
+ *
+ * \param[in] lFrom the start of the slider
+ * \param[in] lTo the end of the slider
+ * \param[in] lPeriod a given period in which the slider should finish the whole
+ *            stroke
+ * \param[out] plStroke the address of an int32_t stroke variable
+ * \param[in] plTimestamp the address of a timestamp variable, if you pass NULL
+ *            the code that call this funtion will not be reentrant.
+ * \retval true the slider has finished the whole stroke
+ * \retval false the slider hasn't reach the target end
+ */
+extern
+ARM_NONNULL(4,5)
+bool __arm_2d_helper_time_liner_slider_i64( int64_t lFrom, 
+                                            int64_t lTo, 
+                                            int64_t lPeriod,
+                                            int64_t *plStroke,
+                                            int64_t *plTimestamp);
 
 /*!
  * \brief calculate the stroke of a cosine slider (0~pi) based on time

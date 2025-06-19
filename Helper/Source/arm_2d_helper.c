@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        30. April 2025
- * $Revision:    V.2.3.2
+ * $Date:        19. June 2025
+ * $Revision:    V.2.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -272,6 +272,53 @@ bool __arm_2d_helper_time_liner_slider( int32_t nFrom,
                 /* timeout */
                 //if (NULL != pnStroke) {
                     (*pnStroke) = nTo;
+                //}
+                //*plTimestamp = lTimestamp;
+                
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+
+ARM_NONNULL(4,5)
+bool __arm_2d_helper_time_liner_slider_i64( int64_t lFrom, 
+                                            int64_t lTo, 
+                                            int64_t lPeriod,
+                                            int64_t *plStroke,
+                                            int64_t *plTimestamp)
+{
+    assert(NULL != plTimestamp);
+    assert(NULL != plStroke);
+
+    int64_t lTimestamp = arm_2d_helper_get_system_timestamp();
+
+    if (lFrom == lTo) {
+        *plStroke = lTo;
+        return true;
+    } else {
+        if (0 == *plTimestamp) {
+            *plTimestamp = lTimestamp;
+            (*plStroke) = lFrom;
+        } else {
+            /* code for update this.Runtime.iOffset */
+            int64_t lElapsed = (lTimestamp - *plTimestamp);
+            
+            int64_t lDelta = 0;
+            if (lElapsed < lPeriod) {
+                lDelta = lTo - lFrom;
+                lDelta = lElapsed * lDelta / lPeriod;
+
+                //if (NULL != pnStroke) { 
+                    (*plStroke) = lFrom + lDelta;
+                //}
+            } else {
+                /* timeout */
+                //if (NULL != pnStroke) {
+                    (*plStroke) = lTo;
                 //}
                 //*plTimestamp = lTimestamp;
                 
