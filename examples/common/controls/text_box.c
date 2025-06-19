@@ -394,9 +394,7 @@ void text_box_depose( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    if (    (this.tCFG.bUseDirtyRegions) 
-        &&  (NULL != this.tCFG.ptScene)) {
-        
+    if (NULL != this.tCFG.ptScene) {
         arm_2d_helper_dirty_region_remove_items(
                         &this.tCFG.ptScene->tDirtyRegionHelper,
                         this.tDirtyRegionItem,
