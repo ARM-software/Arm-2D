@@ -1189,6 +1189,8 @@ int32_t text_box_get_line_count(text_box_t *ptThis, int16_t iLineWidth)
     } while(1);
 
     this.nMaxLines = nLineCount;
+    __text_box_set_current_position(ptThis, 0);
+    this.Start.nLine = 0;
 
     return nLineCount;
 }
@@ -1230,12 +1232,12 @@ void __text_box_update(text_box_t *ptThis)
     do {
         /* get the current position */
         if (this.Start.nLine == nLineNumber) {
-            this.Start.nPosition = __text_box_get_current_position(ptThis);
             break;
         }
 
         if (!__text_box_get_and_analyze_one_line(ptThis, &tLineInfo, this.iLineWidth)) {
             /* failed to read a line */
+            this.Start.nLine = nLineNumber;
             break;
         }
         int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
@@ -1247,6 +1249,8 @@ void __text_box_update(text_box_t *ptThis)
 
         nLineNumber++;
     } while(1);
+
+    this.Start.nPosition = __text_box_get_current_position(ptThis);
 }
 
 ARM_NONNULL(1)

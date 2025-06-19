@@ -92,7 +92,7 @@ struct user_scene_music_player_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[4];
+    int64_t lTimestamp[3];
 
     struct {
         uint32_t nMusicTimeInMs;
@@ -126,6 +126,9 @@ ARM_PRIVATE(
         text_box_c_str_reader_t tStringReader;
         text_box_t tTextBox;
         uint8_t chOpacity;
+        arm_2d_size_t tSize;
+        int64_t lFullHeight;
+        int64_t lPosition;
     } Lyrics;
 
 
