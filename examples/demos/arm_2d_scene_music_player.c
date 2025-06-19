@@ -138,7 +138,7 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 const static char c_chLyrics[] = {
     "Never Gonna Give You Up\n"
     "Song by Rick Astley 1987\n"
-    "\n\n\n\n"
+    "\n\n\n\n\n\n\n\n"
     "We're no strangers to love\n\n"
     "You know the rules and so do I\n\n"
     "A full commitment's what I'm thinkin' of\n\n"
@@ -163,7 +163,7 @@ const static char c_chLyrics[] = {
     "Never gonna run around and desert you\n\n"
     "Never gonna make you cry, never gonna say goodbye\n\n"
     "Never gonna tell a lie and hurt you\n\n"
-    "\n\n"
+    "\n\n\n\n"
     "(Ooh, give you up)\n\n"
     "(Ooh, give you up)\n\n"
     "never gonna give, never gonna give, (give you up)\n\n"
