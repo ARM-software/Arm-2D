@@ -76,7 +76,11 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                                          __text_box_line_info_t *ptLineInfo,
                                          int16_t iMaxLineWidth);
 
-/*============================ LOCAL VARIABLES ===============================*/
+static
+ARM_NONNULL(1)
+int32_t __text_box_skip_tail_invisible_chars(   text_box_t *ptThis, 
+                                                int32_t nStartPositon);
+
 static 
 int32_t __c_string_io_read_char(text_box_t *ptThis, 
                                 uintptr_t pObj, 
@@ -105,6 +109,8 @@ bool __text_box_detect_brick(   uint8_t *pchPT,
 static
 ARM_NONNULL(1)
 void __text_box_update(text_box_t *ptThis);
+
+/*============================ LOCAL VARIABLES ===============================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
     .fnGetChar  = &__c_string_io_read_char,
@@ -815,22 +821,7 @@ void text_box_show( text_box_t *ptThis,
                 },
             };
 
-        #if 0
-            if (this.tCFG.u2LineAlign == TEXT_BOX_LINE_ALIGN_JUSTIFIED) {
-                tLineRegion.tSize.iWidth = this.iLineWidth;
-            } else {
-                tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
-            }
 
-            /* handle draw region */
-            if (TEXT_BOX_LINE_ALIGN_RIGHT == this.tCFG.u2LineAlign) {
-                tLineRegion.tLocation.iX += this.iLineWidth - this.tCurrentLine.iLineWidth;
-                tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
-            } else if (TEXT_BOX_LINE_ALIGN_CENTRE == this.tCFG.u2LineAlign) {
-                tLineRegion.tLocation.iX += (this.iLineWidth - this.tCurrentLine.iLineWidth) >> 1;
-                tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
-            }
-        #else
             tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
 
             switch (this.tCFG.u2LineAlign) {
@@ -846,8 +837,6 @@ void text_box_show( text_box_t *ptThis,
                     tLineRegion.tSize.iWidth = this.iLineWidth;
                     break;
             }
-
-        #endif
 
             /* update line info */
             this.tCurrentLine.nLineNo = iLineNumber;
@@ -886,7 +875,8 @@ void text_box_show( text_box_t *ptThis,
 
             if (this.tCurrentLine.hwBrickCount > 0) {
                 /* skip the `\n` in a paragraph */
-                nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
+                //nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
+                nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
             }
 
             __text_box_set_current_position(ptThis, nNewLinePosition);
@@ -1164,6 +1154,66 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
     return bGetAValidLine;
 }
 
+static
+ARM_NONNULL(1)
+int32_t __text_box_skip_tail_invisible_chars(text_box_t *ptThis, int32_t nStartPositon)
+{
+    assert(NULL != ptThis);
+
+    __text_box_set_current_position(ptThis, nStartPositon);
+    union {
+        uint32_t wValue;
+        uint8_t chByte[4];
+    } tUTF8Char = {.chByte = {[0] = ' '}};
+
+    do {
+        tUTF8Char.wValue = 0;
+
+        int32_t nPosition = __text_box_get_current_position(ptThis);
+        int32_t nActualReadSize = __text_box_read_bytes(ptThis, 
+                                                        tUTF8Char.chByte,
+                                                        4);
+
+        if (nActualReadSize <= 0) {
+            /* we reach end of the stream */
+            break;
+        }
+
+        uint_fast8_t chCharLen = arm_2d_helper_get_utf8_byte_length(tUTF8Char.chByte);
+        nActualReadSize -= chCharLen;
+        if (nActualReadSize > 0) {
+            /* move back */
+            __text_box_move_position(ptThis, -nActualReadSize);
+        }
+
+        if (chCharLen == 0) {
+            /* this should not happen, but just in case */
+            assert(false);
+            break;
+        }
+
+        if (chCharLen > 1) {
+            /* we encounter normal chars */
+            __text_box_move_position(ptThis, -chCharLen);
+            break;
+        }
+
+        if (tUTF8Char.chByte[0] >= 0x20) {
+            /* we encounter normal chars */
+            __text_box_move_position(ptThis, -chCharLen);
+            break;
+        }
+
+        if (tUTF8Char.chByte[0] == '\n') {
+            /* reach the natual end */
+            break;
+        }
+
+    } while(1);
+
+    return __text_box_get_current_position(ptThis);
+}
+
 ARM_NONNULL(1)
 int32_t text_box_get_line_count(text_box_t *ptThis, int16_t iLineWidth)
 {
@@ -1192,7 +1242,8 @@ int32_t text_box_get_line_count(text_box_t *ptThis, int16_t iLineWidth)
         int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
         if (tLineInfo.hwBrickCount > 0) {
             /* skip the `\n` in a paragraph */
-            nNewLinePosition += !!tLineInfo.bEndNaturally;
+            //nNewLinePosition += !!tLineInfo.bEndNaturally;
+            nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
         }
         __text_box_set_current_position(ptThis, nNewLinePosition);
 
@@ -1254,7 +1305,8 @@ void __text_box_update(text_box_t *ptThis)
         int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
         if (tLineInfo.hwBrickCount > 0) {
             /* skip the `\n` in a paragraph */
-            nNewLinePosition += !!tLineInfo.bEndNaturally;
+            //nNewLinePosition += !!tLineInfo.bEndNaturally;
+            nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
         }
         __text_box_set_current_position(ptThis, nNewLinePosition);
 
