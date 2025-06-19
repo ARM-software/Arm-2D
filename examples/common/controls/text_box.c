@@ -371,12 +371,9 @@ void text_box_init( text_box_t *ptThis,
     }
 #endif
 
-    if (ptCFG->bUseDirtyRegions && NULL != this.tCFG.ptScene) {
-
-
-
-    }
-
+    arm_lcd_text_set_font((const arm_2d_font_t *)this.tCFG.ptFont);
+    arm_lcd_text_set_scale(this.tCFG.fScale);
+    this.iLineHeight = arm_lcd_text_get_actual_char_box().iHeight;
 }
 
 ARM_NONNULL(1)
@@ -384,7 +381,7 @@ void text_box_on_load( text_box_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    if (NULL != this.tCFG.ptScene) {
+    if (NULL != this.tCFG.ptScene && this.tCFG.bUseDirtyRegions) {
         arm_2d_helper_dirty_region_add_items(
             &this.tCFG.ptScene->tDirtyRegionHelper,
             this.tDirtyRegionItem,
@@ -1158,8 +1155,45 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
     return bGetAValidLine;
 }
 
+ARM_NONNULL(1)
+int32_t text_box_get_line_count(text_box_t *ptThis, int16_t iLineWidth)
+{
+    assert(NULL != ptThis);
 
-//int32_t text_box_get_max_line_count()
+    int32_t nLineCount = 0;
+
+    if (iLineWidth <= 0) {
+        iLineWidth = this.iLineWidth;
+    }
+
+    if (iLineWidth <= 0) {
+        return -1;
+    }
+
+    __text_box_set_current_position(ptThis, 0);
+
+    __text_box_line_info_t tLineInfo;
+    /* find the reading position of the start line */
+    do {
+
+        if (!__text_box_get_and_analyze_one_line(ptThis, &tLineInfo, iLineWidth)) {
+            /* failed to read a line, it is seen as the end of the stream */
+            break;
+        }
+        int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
+        if (tLineInfo.hwBrickCount > 0) {
+            /* skip the `\n` in a paragraph */
+            nNewLinePosition += !!tLineInfo.bEndNaturally;
+        }
+        __text_box_set_current_position(ptThis, nNewLinePosition);
+
+        nLineCount++;
+    } while(1);
+
+    this.nMaxLines = nLineCount;
+
+    return nLineCount;
+}
 
 static
 ARM_NONNULL(1)

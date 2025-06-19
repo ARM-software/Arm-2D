@@ -253,9 +253,29 @@ extern
 ARM_NONNULL(1)
 int16_t text_box_get_line_per_page(text_box_t *ptThis);
 
+/*! 
+ * \brief get the maximum line count so far has been read. 
+ * \note when text_box_has_end_of_stream_been_reached() return true, the return
+ *       value is the exact line count of the target text.
+ */
 extern
 ARM_NONNULL(1)
 int16_t text_box_get_current_line_count(text_box_t *ptThis);
+
+/*!
+ * \brief Exhaust the stream and calculate the line count with the given line width. 
+ * \note if the stream is ultra-large, calling this API might cause long delay. 
+ *       Unless you are fully sure the target stream is short, please do NOT use
+ *       this API. 
+ * \param[in] ptThis the target text box object
+ * \param[in] iLineWidth the given line with, if 0 is passed, it will use the
+ *            line width calculated in text_box_show() function. 
+ * \retval -1 It is not possible to calculate the line count
+ * \retval >=0 the line count under given line width.
+ */
+extern
+ARM_NONNULL(1)
+int32_t text_box_get_line_count(text_box_t *ptThis, int16_t iLineWidth);
 
 extern
 ARM_NONNULL(1)
