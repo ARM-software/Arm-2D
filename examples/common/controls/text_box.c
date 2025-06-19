@@ -73,7 +73,8 @@ typedef enum {
 /*============================ PROTOTYPES ====================================*/
 static
 bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
-                                         __text_box_line_info_t *ptLineInfo);
+                                         __text_box_line_info_t *ptLineInfo,
+                                         int16_t iMaxLineWidth);
 
 /*============================ LOCAL VARIABLES ===============================*/
 static 
@@ -790,7 +791,7 @@ void text_box_show( text_box_t *ptThis,
             }
             #endif
 
-            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine)) {
+            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine, this.iLineWidth)) {
                 break;
             }
 
@@ -977,7 +978,8 @@ ARM_PT_END()
 
 static
 bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
-                                         __text_box_line_info_t *ptLineInfo)
+                                         __text_box_line_info_t *ptLineInfo,
+                                         int16_t iMaxLineWidth)
 {
     assert(NULL != ptThis);
     assert(NULL != this.tCFG.tStreamIO.ptIO);
@@ -1090,7 +1092,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             int16_t iAdvance = arm_lcd_get_char_advance(tUTF8Char.chByte);
             int16_t iNewLineWidth = iLineWidth + iAdvance;
 
-            if (iNewLineWidth > this.iLineWidth) {
+            if (iNewLineWidth > iMaxLineWidth) {
                 /* insufficient space for this char */
                 bEndOfStream = true;
                 __text_box_detect_brick(&chBrickDetectorPT,
@@ -1110,7 +1112,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
                                         iLineWidth,
                                         iPureCharWidth);
             }
-        } else if (iLineWidth >= this.iLineWidth) {
+        } else if (iLineWidth >= iMaxLineWidth) {
             /* end of line, cut off */
             bEndOfStream = true;
             __text_box_detect_brick(&chBrickDetectorPT,
@@ -1136,9 +1138,9 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             int16_t iResidualWidth = 0;
             
             if (TEXT_BOX_LINE_ALIGN_JUSTIFIED == this.tCFG.u2LineAlign) {
-                iResidualWidth = this.iLineWidth - ptLineInfo->iPureCharWidth;
+                iResidualWidth = iMaxLineWidth - ptLineInfo->iPureCharWidth;
             } else {
-                iResidualWidth = this.iLineWidth - ptLineInfo->iLineWidth;
+                iResidualWidth = iMaxLineWidth - ptLineInfo->iLineWidth;
             }
             assert(iResidualWidth >= 0);
 
@@ -1155,6 +1157,9 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
 
     return bGetAValidLine;
 }
+
+
+//int32_t text_box_get_max_line_count()
 
 static
 ARM_NONNULL(1)
@@ -1197,7 +1202,7 @@ void __text_box_update(text_box_t *ptThis)
             break;
         }
 
-        if (!__text_box_get_and_analyze_one_line(ptThis, &tLineInfo)) {
+        if (!__text_box_get_and_analyze_one_line(ptThis, &tLineInfo, this.iLineWidth)) {
             /* failed to read a line */
             break;
         }
