@@ -470,6 +470,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0">arm_2d_helper_time_liner_slider</a>(__from,  __to,  __ms,  __stroke_ptr,  ...)</td></tr>
 <tr class="memdesc:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a liner slider based on time  <a href="group__gHelper.html#gab9da2ee4cd3a208e7ff4ece9ac8086f0">More...</a><br /></td></tr>
 <tr class="separator:gab9da2ee4cd3a208e7ff4ece9ac8086f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17953af48a4087abb446cf7d6fea5b1e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga17953af48a4087abb446cf7d6fea5b1e">arm_2d_helper_time_liner_slider_i64</a>( __from,  __to,  __ms,  __stroke_ptr,  ...)</td></tr>
+<tr class="memdesc:ga17953af48a4087abb446cf7d6fea5b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a liner slider based on time  <a href="group__gHelper.html#ga17953af48a4087abb446cf7d6fea5b1e">More...</a><br /></td></tr>
+<tr class="separator:ga17953af48a4087abb446cf7d6fea5b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga687e4765c7e7085b14e53845dcd5e5ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga687e4765c7e7085b14e53845dcd5e5ae">arm_2d_helper_time_cos_slider</a>(__from,  __to,  __ms,  __phase,  __stroke_ptr,  ...)</td></tr>
 <tr class="memdesc:ga687e4765c7e7085b14e53845dcd5e5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a cosine slider based on time  <a href="group__gHelper.html#ga687e4765c7e7085b14e53845dcd5e5ae">More...</a><br /></td></tr>
 <tr class="separator:ga687e4765c7e7085b14e53845dcd5e5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1194,6 +1197,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="memitem:gad57c7db3d70edf15701baab069e7e410"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gad57c7db3d70edf15701baab069e7e410">__arm_2d_helper_time_liner_slider</a> (int32_t nFrom, int32_t nTo, int64_t lPeriod, int32_t *pnStroke, int64_t *plTimestamp)</td></tr>
 <tr class="memdesc:gad57c7db3d70edf15701baab069e7e410"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a liner slider based on time  <a href="group__gHelper.html#gad57c7db3d70edf15701baab069e7e410">More...</a><br /></td></tr>
 <tr class="separator:gad57c7db3d70edf15701baab069e7e410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad3b1010208d43f79fb12464b3b0fc08"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaad3b1010208d43f79fb12464b3b0fc08">__arm_2d_helper_time_liner_slider_i64</a> (int64_t lFrom, int64_t lTo, int64_t lPeriod, int64_t *plStroke, int64_t *plTimestamp)</td></tr>
+<tr class="memdesc:gaad3b1010208d43f79fb12464b3b0fc08"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a liner slider based on time  <a href="group__gHelper.html#gaad3b1010208d43f79fb12464b3b0fc08">More...</a><br /></td></tr>
+<tr class="separator:gaad3b1010208d43f79fb12464b3b0fc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9ade39134ac3f6e485b629f4c3a03ce7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7">__arm_2d_helper_time_half_cos_slider</a> (int32_t nFrom, int32_t nTo, int64_t lPeriod, int32_t *pnStroke, int64_t *plTimestamp)</td></tr>
 <tr class="memdesc:ga9ade39134ac3f6e485b629f4c3a03ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the stroke of a cosine slider (0~pi) based on time  <a href="group__gHelper.html#ga9ade39134ac3f6e485b629f4c3a03ce7">More...</a><br /></td></tr>
 <tr class="separator:ga9ade39134ac3f6e485b629f4c3a03ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -6922,6 +6928,77 @@ chPTState</td>
 <div class="line">                                            (__to),                             \</div>
 <div class="line">           <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
 <div class="line">                                            (__stroke_ptr),                     \</div>
+<div class="line">           (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
+</div><!-- fragment -->
+<p>calculate the stroke of a liner slider based on time </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__from</td><td>the start of the slider </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__to</td><td>the end of the slider </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__ms</td><td>a given period (ms) in which the slider should finish the whole stroke </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">__stroke_ptr</td><td>the address of an int32_t stroke variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>an optional address of a timestamp variable, if you omit it, NULL will be passed, and the code that call this funtion will not be reentrant. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the slider has finished the whole stroke </td></tr>
+    <tr><td class="paramname">false</td><td>the slider hasn't reach the target end </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga17953af48a4087abb446cf7d6fea5b1e" name="ga17953af48a4087abb446cf7d6fea5b1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga17953af48a4087abb446cf7d6fea5b1e">&#9670;&#160;</a></span>arm_2d_helper_time_liner_slider_i64</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_helper_time_liner_slider_i64</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__from, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__to, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__ms, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__stroke_ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">           ({<span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp);                     \</div>
+<div class="line">           __arm_2d_helper_time_liner_slider_i64(   (__from),                   \</div>
+<div class="line">                                                    (__to),                     \</div>
+<div class="line">                   <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                     \</div>
+<div class="line">                                                    (__stroke_ptr),             \</div>
 <div class="line">           (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
 </div><!-- fragment -->
 <p>calculate the stroke of a liner slider based on time </p>
@@ -12931,6 +13008,71 @@ false line buffer is full </dd></dl>
     <tr><td class="paramdir">[in]</td><td class="paramname">nTo</td><td>the end of the slider </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">lPeriod</td><td>a given period in which the slider should finish the whole stroke </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pnStroke</td><td>the address of an int32_t stroke variable </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">plTimestamp</td><td>the address of a timestamp variable, if you pass NULL the code that call this funtion will not be reentrant. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>the slider has finished the whole stroke </td></tr>
+    <tr><td class="paramname">false</td><td>the slider hasn't reach the target end </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaad3b1010208d43f79fb12464b3b0fc08" name="gaad3b1010208d43f79fb12464b3b0fc08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad3b1010208d43f79fb12464b3b0fc08">&#9670;&#160;</a></span>__arm_2d_helper_time_liner_slider_i64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool __arm_2d_helper_time_liner_slider_i64 </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>lFrom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>lTo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>lPeriod</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramname"><em>plStroke</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t *&#160;</td>
+          <td class="paramname"><em>plTimestamp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>calculate the stroke of a liner slider based on time </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lFrom</td><td>the start of the slider </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lTo</td><td>the end of the slider </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lPeriod</td><td>a given period in which the slider should finish the whole stroke </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plStroke</td><td>the address of an int32_t stroke variable </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">plTimestamp</td><td>the address of a timestamp variable, if you pass NULL the code that call this funtion will not be reentrant. </td></tr>
   </table>
   </dd>

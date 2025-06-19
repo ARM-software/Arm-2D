@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md41":[1,3,2],
+"md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md42":[1,3,3],
 "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md43":[1,4],
 "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md44":[1,4,0],
 "md__home_runner_work_Arm_2D_Arm_2D_ReleaseNote.html#autotoc_md45":[1,4,1],
