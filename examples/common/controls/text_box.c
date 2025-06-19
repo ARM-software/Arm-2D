@@ -424,15 +424,21 @@ int32_t __text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 
     int32_t iOldStartLine = this.Request.nTargetStartLineReq;
 
-    if (iStartLine >= 0) {
-
-        if (this.Request.bHasEndOfStreamBeenReached && this.nMaxLines > 0) {
-            iStartLine = MIN(iStartLine, this.nMaxLines );
+    do {
+        if (iOldStartLine == iStartLine) {
+            break;
         }
 
-        this.Request.nTargetStartLineReq = iStartLine;
-        this.Request.iIntraLineOffset = 0;
-    }
+        if (iStartLine >= 0) {
+
+            if (this.Request.bHasEndOfStreamBeenReached && this.nMaxLines > 0) {
+                iStartLine = MIN(iStartLine, this.nMaxLines );
+            }
+
+            this.Request.nTargetStartLineReq = iStartLine;
+            this.Request.iIntraLineOffset = 0;
+        }
+    } while(0);
 
     return iOldStartLine;
 }
@@ -458,10 +464,12 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
     assert(NULL != ptThis);
 
     arm_irq_safe {
-        iOldStartLine = __text_box_set_start_line(ptThis, iStartLine);
 
-        this.Request.lTargetPosition = text_box_get_start_line(ptThis) * this.iLineHeight;
-        this.Request.iIntraLineOffset = 0;
+        iOldStartLine = __text_box_set_start_line(ptThis, iStartLine);
+        if (iOldStartLine != iStartLine) {
+            this.Request.lTargetPosition = text_box_get_start_line(ptThis) * this.iLineHeight;
+            this.Request.iIntraLineOffset = 0;
+        }
     }
 
     return iOldStartLine;
@@ -483,8 +491,11 @@ int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion)
 
     arm_irq_safe {
         lOldPosition = this.Request.lTargetPosition;
-        this.Request.lTargetPosition = lPostion;
-        this.Request.bPositionUpdateReq = true;
+
+        if (lOldPosition != lPostion) {
+            this.Request.lTargetPosition = lPostion;
+            this.Request.bPositionUpdateReq = true;
+        }
     }
 
     return lOldPosition;
