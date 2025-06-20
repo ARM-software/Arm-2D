@@ -91,7 +91,7 @@ else
 	OUT     := build/arm_2d
 	RM      := rm -rf
 	CCFLAG  +=  -w
-	LD_LIB  := SDL2
+	LD_LIB  := SDL2 m
 	LDFLAG  +=  -Wl,--warn-common
 	LDFLAG  +=  -Wl,--gc-sections -lm
 app: $(OUT)
