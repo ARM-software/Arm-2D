@@ -202,6 +202,14 @@ void text_box_depose( text_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
+float text_box_set_scale(text_box_t *ptThis, float fScale);
+
+extern
+ARM_NONNULL(1)
+float text_box_get_scale(text_box_t *ptThis);
+
+extern
+ARM_NONNULL(1)
 void text_box_on_load( text_box_t *ptThis);
 
 extern

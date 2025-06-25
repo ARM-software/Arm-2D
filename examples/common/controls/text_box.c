@@ -377,9 +377,26 @@ void text_box_init( text_box_t *ptThis,
     }
 #endif
 
+    text_box_set_scale(ptThis, ptCFG->fScale);
+}
+
+ARM_NONNULL(1)
+float text_box_set_scale(text_box_t *ptThis, float fScale)
+{
+    float fOldScale = this.tCFG.fScale;
+
+    this.tCFG.fScale = fScale;
     arm_lcd_text_set_font((const arm_2d_font_t *)this.tCFG.ptFont);
-    arm_lcd_text_set_scale(this.tCFG.fScale);
+    arm_lcd_text_set_scale(fScale);
     this.iLineHeight = arm_lcd_text_get_actual_char_box().iHeight;
+
+    return fOldScale;
+}
+
+ARM_NONNULL(1)
+float text_box_get_scale(text_box_t *ptThis)
+{
+    return this.tCFG.fScale;
 }
 
 ARM_NONNULL(1)
