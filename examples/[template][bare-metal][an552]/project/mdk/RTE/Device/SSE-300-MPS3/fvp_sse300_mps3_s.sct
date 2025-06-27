@@ -76,14 +76,17 @@ LR_CODE2 S_CODE2_START {
 
 
 LD_DATA S_DATA_START {
+    ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
+    }
+
     ER_DATA +0 {
-        * (+ZI +RW)
-        * (+RO-DATA)
+        .ANY (+ZI +RW)
+        .ANY (+RO-DATA)
     }
 
     RW_IRAM_UNINIT +0 UNINIT {
-        *(.uninitialized_data*)
-        *(.bss.noinit)
+        .ANY (.uninitialized_data*)
+        .ANY (.bss.noinit)
     }
 
     #if HEAP_SIZE > 0
@@ -91,8 +94,7 @@ LD_DATA S_DATA_START {
     }
     #endif
 
-    ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
-    }
+
 
     /* This empty, zero long execution region is here to mark the limit address
      * of the last execution region that is allocated in SRAM.
@@ -106,10 +108,20 @@ LD_DATA S_DATA_START {
 }
 
 LD_DATA2 S_DATA2_START {
+    ER_ASSET +0 {
+        * (arm2d.asset.*)
+        * (arm2d.tile.*)
+    }
+
     ER_DATA2 +0 {
         .ANY (+ZI +RW)
     }
-    
+
+    RW_IRAM2_UNINIT +0 UNINIT {
+        .ANY (.uninitialized_data*)
+        .ANY (.bss.noinit)
+    }
+
     /* This empty, zero long execution region is here to mark the limit address
      * of the last execution region that is allocated in SRAM.
      */
