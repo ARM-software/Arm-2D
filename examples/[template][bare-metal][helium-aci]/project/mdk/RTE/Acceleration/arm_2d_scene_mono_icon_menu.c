@@ -180,18 +180,17 @@ static void __on_scene_mono_icon_menu_depose(arm_2d_scene_t *ptScene)
     user_scene_mono_icon_menu_t *ptThis = (user_scene_mono_icon_menu_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     arm_2d_helper_dirty_region_remove_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
                                             this.tDirtyRegionItems,
                                             dimof(this.tDirtyRegionItems));
 
     icon_list_depose(&this.tList);
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -287,7 +286,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
                             ARM_2D_ALIGN_CENTRE, "%s", 
                             c_pIconNameTable[
                                 icon_list_get_selected_item_id(&this.tList)]);
-                    
+                        
+                        arm_lcd_text_set_display_mode(ARM_2D_DRW_PATN_MODE_COPY);
 
                         if (this.bRedrawLabel) {
                             this.bRedrawLabel = false;

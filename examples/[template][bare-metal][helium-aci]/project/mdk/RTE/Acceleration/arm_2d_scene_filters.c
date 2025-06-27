@@ -423,14 +423,14 @@ static void __on_scene_filters_depose(arm_2d_scene_t *ptScene)
     user_scene_filters_t *ptThis = (user_scene_filters_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    ARM_2D_OP_DEPOSE(this.tBlurOP);
     
+
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    ARM_2D_OP_DEPOSE(this.tBlurOP);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -540,7 +540,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_filters_handler)
                                         ptTile, 
                                         &__top_region,
                                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                        (arm_2d_alpha_samples_2pts_t){{255, 0}});
+                                        (arm_2d_alpha_samples_2pts_t){255, 0});
             }
 
             arm_2d_dock_bottom(__centre_region, 60) {
@@ -548,7 +548,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_filters_handler)
                                         ptTile, 
                                         &__bottom_region,
                                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                        (arm_2d_alpha_samples_2pts_t){{0, 255}});
+                                        (arm_2d_alpha_samples_2pts_t){0, 255});
             }
 
             /* update dirty regions */

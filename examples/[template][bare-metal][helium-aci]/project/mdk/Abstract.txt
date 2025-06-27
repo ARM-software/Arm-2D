@@ -1,4 +1,4 @@
-The 'Blinky' project is a simple demo program for
+zaiThe 'Blinky' project is a simple demo program for
 ARM 'Cortex-M4' microcontroller using ARM 'V2M-MPS2' Evaluation Board.
 Compliant to Cortex Microcontroller Software Interface Standard (CMSIS).
 

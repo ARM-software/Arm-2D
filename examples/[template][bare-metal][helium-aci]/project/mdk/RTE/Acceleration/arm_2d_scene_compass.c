@@ -186,14 +186,13 @@ static void __on_scene_compass_depose(arm_2d_scene_t *ptScene)
     user_scene_compass_t *ptThis = (user_scene_compass_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+    meter_pointer_depose(&this.tCompass);
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    meter_pointer_depose(&this.tCompass);
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -227,7 +226,6 @@ static void __on_scene_compass_frame_start(arm_2d_scene_t *ptScene)
         /* generate a new position every 2000 sec */
         if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[1])) {
             this.lTimestamp[1] = 0;
-
 
             srand(arm_2d_helper_get_system_timestamp());
 

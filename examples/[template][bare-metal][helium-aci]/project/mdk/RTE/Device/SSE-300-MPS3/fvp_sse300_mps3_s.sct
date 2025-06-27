@@ -56,41 +56,48 @@ LR_CODE S_CODE_START {
     ScatterAssert(ImageLimit(CODE_WATERMARK) <= S_CODE_START + S_CODE_SIZE)
 }
 
-;LR_CODE2 S_CODE2_START {
-;    ER_CODE2 S_CODE2_START {
-;        .ANY (+RO-DATA)
-;    }
-
-;    /* This empty, zero long execution region is here to mark the limit address
-;     * of the last execution region that is allocated in SRAM.
-;     */
-;    CODE2_WATERMARK +0 EMPTY 0x0 {
-;    }
-;    /* Make sure that the sections allocated in the SRAM does not exceed the
-;     * size of the SRAM available.
-;     */
-;    ScatterAssert(ImageLimit(CODE2_WATERMARK) <= S_CODE2_START + S_CODE2_SIZE)
-;}
-
-
-LD_DATA S_DATA_START {
-    ER_DATA +0 {
+#if 0
+LR_CODE2 S_CODE2_START {
+    ER_CODE2 S_CODE2_START {
         * (+RO-DATA)
-        * (+ZI +RW)
+    }
+
+    /* This empty, zero long execution region is here to mark the limit address
+     * of the last execution region that is allocated in SRAM.
+     */
+    CODE2_WATERMARK +0 EMPTY 0x0 {
+    }
+    /* Make sure that the sections allocated in the SRAM does not exceed the
+     * size of the SRAM available.
+     */
+    ScatterAssert(ImageLimit(CODE2_WATERMARK) <= S_CODE2_START + S_CODE2_SIZE)
+}
+#endif
+
+
+LD_DATA S_DATA_START S_DATA_SIZE {
+    ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
+    }
+
+    ER_ASSET +0 {
+        .ANY (+RO-DATA)
+        .ANY (arm2d.asset.*)
+        .ANY (arm2d.tile.*)
+    }
+
+    ER_DATA +0 {
+        .ANY (+ZI +RW)
     }
 
     RW_IRAM_UNINIT +0 UNINIT {
-        *(.uninitialized_data*)
-        *(.bss.noinit)
+        .ANY (.uninitialized_data*)
+        .ANY (.bss.noinit)
     }
 
     #if HEAP_SIZE > 0
     ARM_LIB_HEAP +0 ALIGN 8 EMPTY  HEAP_SIZE  {   ; Reserve empty region for heap
     }
     #endif
-
-    ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
-    }
 
     /* This empty, zero long execution region is here to mark the limit address
      * of the last execution region that is allocated in SRAM.
@@ -103,12 +110,22 @@ LD_DATA S_DATA_START {
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
 }
 
-#if 0
+#if 1
 LD_DATA2 S_DATA2_START {
+    ER_ASSET2 +0 {
+        .ANY (arm2d.asset.*)
+        .ANY (arm2d.tile.*)
+    }
+
     ER_DATA2 +0 {
         .ANY (+ZI +RW)
     }
-    
+
+    RW_IRAM2_UNINIT +0 UNINIT {
+        .ANY (.uninitialized_data*)
+        .ANY (.bss.noinit)
+    }
+
     /* This empty, zero long execution region is here to mark the limit address
      * of the last execution region that is allocated in SRAM.
      */

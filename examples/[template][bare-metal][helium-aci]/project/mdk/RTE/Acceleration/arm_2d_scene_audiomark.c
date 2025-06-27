@@ -143,12 +143,6 @@ static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
     user_scene_audiomark_t *ptThis = (user_scene_audiomark_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     for (int_fast8_t n = 0; n < dimof(this.Processor); n ++) {
         progress_wheel_depose(&this.Processor[n].tWheel);
         this.Processor[n].lTimestamp = 0;
@@ -156,7 +150,12 @@ static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
 #if __FITNESS_CFG_NEBULA_ENABLE__
     dynamic_nebula_depose(&this.tNebula);
 #endif
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
