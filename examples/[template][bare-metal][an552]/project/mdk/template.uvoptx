@@ -120,7 +120,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DbgFMv8M</Key>
-          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O200710 -C0 -MC".\avh-fvp\bin\models\FVP_Corstone_SSE-300.exe" -MF -PF -MA</Name>
+          <Name>-I -S"System Generator:FVP_MPS3_Corstone_SSE_300" -L"cpu0" -O200710 -C0 -MC".\avh-fvp\bin\models\FVP_Corstone_SSE-300_Ethos-U55.exe" -MF -PF -MA</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>

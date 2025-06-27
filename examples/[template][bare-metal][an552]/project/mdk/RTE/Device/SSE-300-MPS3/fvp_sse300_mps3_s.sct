@@ -79,9 +79,14 @@ LD_DATA S_DATA_START {
     ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
     }
 
+    ER_ASSET +0 {
+        .ANY (+RO-DATA)
+        .ANY (arm2d.asset.*)
+        .ANY (arm2d.tile.*)
+    }
+
     ER_DATA +0 {
         .ANY (+ZI +RW)
-        .ANY (+RO-DATA)
     }
 
     RW_IRAM_UNINIT +0 UNINIT {
@@ -94,8 +99,6 @@ LD_DATA S_DATA_START {
     }
     #endif
 
-
-
     /* This empty, zero long execution region is here to mark the limit address
      * of the last execution region that is allocated in SRAM.
      */
@@ -107,10 +110,11 @@ LD_DATA S_DATA_START {
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
 }
 
+#if 1
 LD_DATA2 S_DATA2_START {
-    ER_ASSET +0 {
-        * (arm2d.asset.*)
-        * (arm2d.tile.*)
+    ER_ASSET2 +0 {
+        .ANY (arm2d.asset.*)
+        .ANY (arm2d.tile.*)
     }
 
     ER_DATA2 +0 {
@@ -132,3 +136,4 @@ LD_DATA2 S_DATA2_START {
      */
     ScatterAssert(ImageLimit(SRAM2_WATERMARK) <= S_DATA2_START + S_DATA2_SIZE)
 }
+#endif
