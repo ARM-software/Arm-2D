@@ -5081,17 +5081,18 @@ void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_masks_fill))(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    uint16x8_t      vecTarget = vld1q(ptTargetCur);
-                    uint16x8_t      vecSource = vld1q(ptSrc);
-                    uint16x8_t      vecSrcMsk = vldrbq_u16(pchSrcMsk);
-                    uint16x8_t      vecTargetMask = vldrbq_u16(pchTargetMaskCur);
+                    mve_pred16_t    pred = vctp16q(blkCnt);
+                    uint16x8_t      vecTarget = vld1q_z(ptTargetCur, pred);
+                    uint16x8_t      vecSource = vld1q_z(ptSrc, pred);
+                    uint16x8_t      vecSrcMsk = vldrbq_z_u16(pchSrcMsk, pred);
+                    uint16x8_t      vecTargetMask = vldrbq_z_u16(pchTargetMaskCur, pred);
                     uint16x8_t      vecHwOpacity =
                         vsubq_u16(v256, (vecSrcMsk * vecTargetMask) >> 8);
 
                     vecTarget = __arm_2d_rgb565_blending_opacity_single_vec(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    vst1q_p_u16(ptTargetCur, vecTarget, vctp16q(blkCnt));
+                    vst1q_p_u16(ptTargetCur, vecTarget, pred);
 
                     pchSrcMsk += 8;
                     pchTargetMaskCur += 8;
@@ -5298,17 +5299,18 @@ void ARM_2D_WRAP_FUNC(  __MVE_WRAPPER( __arm_2d_impl_rgb565_src_msk_1h_des_msk_f
                 int32_t         blkCnt = wLength;
 
                 do {
-                    uint16x8_t      vecTarget = vld1q_z(ptTargetCur, tTailPredict);
-                    uint16x8_t      vecSource = vld1q(ptSrc);
-                    uint16x8_t      vecSrcMsk = vldrbq_u16(pchSrcMsk);
-                    uint16x8_t      vecTargetMask = vldrbq_u16(pchTargetMaskCur);
+                    mve_pred16_t    pred = vctp16q(blkCnt);
+                    uint16x8_t      vecTarget = vld1q_z(ptTargetCur, pred);
+                    uint16x8_t      vecSource = vld1q_z(ptSrc, pred);
+                    uint16x8_t      vecSrcMsk = vldrbq_z_u16(pchSrcMsk, pred);
+                    uint16x8_t      vecTargetMask = vldrbq_z_u16(pchTargetMaskCur, pred);
                     uint16x8_t      vecHwOpacity =
                         vsubq_u16(v256, (vecSrcMsk * vecTargetMask) >> 8);
 
                     vecTarget = __arm_2d_rgb565_blending_opacity_single_vec(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    vst1q_p_u16(ptTargetCur, vecTarget, vctp16q(blkCnt));
+                    vst1q_p_u16(ptTargetCur, vecTarget, pred);
 
                     pchSrcMsk += 8;
                     pchTargetMaskCur += 8;
