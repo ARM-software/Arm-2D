@@ -75,7 +75,7 @@ LR_CODE2 S_CODE2_START {
 #endif
 
 
-LD_DATA S_DATA_START {
+LD_DATA S_DATA_START S_DATA_SIZE {
     ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
     }
 

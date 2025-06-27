@@ -665,6 +665,12 @@
           <targetInfo name="AN547-AN552"/>
         </targetInfos>
       </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.4.1" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
@@ -707,6 +713,12 @@
           <targetInfo name="AN547-AN552"/>
         </targetInfos>
       </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="IIR Blur" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.3" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
@@ -726,6 +738,12 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN552"/>
@@ -780,12 +798,6 @@
         </targetInfos>
       </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-Demos">
-        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="AN547-AN552"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Benchmark-Generic" Cvendor="ARM" Cversion="1.5.0" condition="Arm-2D-Benchmark-Generic">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN552"/>
@@ -975,6 +987,14 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
+      <file attr="config" category="sourceC" name="examples\demos\album_cover.c" version="2.0.0">
+        <instance index="0">RTE\Acceleration\album_cover.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.5.0">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
@@ -1111,6 +1131,22 @@
           <targetInfo name="AN547-AN552"/>
         </targetInfos>
       </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_balls.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_balls.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_balls.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_balls.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_basics.c" version="1.4.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_basics.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="1.4.1" condition="Arm-2D-Demos"/>
@@ -1202,6 +1238,22 @@
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_hollow_out_list.h" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_hollow_out_list.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_iir_blur.c" version="1.0.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_iir_blur.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="IIR Blur" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_iir_blur.h" version="1.0.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_iir_blur.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="IIR Blur" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN552"/>
@@ -1346,6 +1398,22 @@
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.h" version="1.1.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_music_player.c" version="2.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_music_player.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN552"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_music_player.h" version="2.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_music_player.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN552"/>
