@@ -109,7 +109,6 @@ ARM_PRIVATE(
 
     struct {
         spin_zoom_widget_t tWidget;
-        int16_t iAngle;
         int16_t iRadius;
         int16_t iPivotOffset;
         float fScaling;

@@ -297,16 +297,17 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_music_player_t *ptThis = (user_scene_music_player_t *)ptScene;
 
-    if (arm_2d_helper_is_time_out(8, &this.lTimestamp[0])) {
-        this.AlbumCover.iAngle += 2;
-        if (this.AlbumCover.iAngle >= 3600) {
-            this.AlbumCover.iAngle = 0;
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 3599, 30000, &nResult, &this.lTimestamp[0])) {
+            this.lTimestamp[0] = 0;
         }
 
         spin_zoom_widget_on_frame_start(&this.AlbumCover.tWidget, 
-                                        this.AlbumCover.iAngle, 
+                                        nResult, 
                                         this.AlbumCover.fScaling);
-    }
+
+    } while(0);
 
     if (arm_2d_helper_time_liner_slider_i64(-this.Lyrics.tSize.iHeight, 
                                             this.Lyrics.lFullHeight, 
