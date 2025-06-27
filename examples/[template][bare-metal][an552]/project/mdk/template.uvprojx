@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-padded</MiscControls>
-              <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
+              <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__,USE_MVE_INTRINSICS</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\common\platform;..\..\;..\..\..\common\platform\mps3\v2m_mps3;..\..\..\common\platform\mps3;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;.;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
             </VariousControls>
@@ -755,7 +755,7 @@
           <targetInfo name="AN547-AN556"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -803,7 +803,7 @@
           <targetInfo name="AN547-AN556"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.3.9" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -985,17 +985,17 @@
           <targetInfo name="AN547-AN556"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.3.9">
+      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.3.9" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.3.9">
+      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.3.9" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -1409,17 +1409,17 @@
           <targetInfo name="AN547-AN556"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_text_reader.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_text_reader.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_text_reader.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_text_reader.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_text_reader.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_text_reader.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>

@@ -163,6 +163,12 @@ const static char c_chLyrics[] = {
     "Never gonna run around and desert you\r\n"
     "Never gonna make you cry, never gonna say goodbye\r\n"
     "Never gonna tell a lie and hurt you\r\n"
+    "\r\n"
+    "(Ooh, give you up)\r\n"
+    "(Ooh, give you up)\r\n"
+    "never gonna give, never gonna give, (give you up)\r\n"
+    "never gonna give, never gonna give, (give you up)\r\n"
+    "\r\n"
     "We've known each other for so long\r\n"
     "Your heart's been aching, but you're too shy to say it\r\n"
     "Inside, we both know what's been going on\r\n"
@@ -306,12 +312,6 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
     }
 
     if (arm_2d_helper_is_time_out(80, &this.lTimestamp[1])) {
-        static __histogram_frame_t s_tDemoFrame;
-
-        __fill_histogram_frame(&s_tDemoFrame);
-
-        this.Histogram.ptFrame = &s_tDemoFrame;
-
         /* get the screen region */
         arm_2d_region_t __top_canvas
             = arm_2d_helper_pfb_get_display_area(
@@ -356,8 +356,15 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
             );
         }
     }
-
     this.iPlayProgress = nResult;
+
+    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[3])) {
+        static __histogram_frame_t s_tDemoFrame;
+
+        __fill_histogram_frame(&s_tDemoFrame);
+
+        this.Histogram.ptFrame = &s_tDemoFrame;
+    }
 
     histogram_on_frame_start(&this.Histogram.tWidget);
     text_box_on_frame_start(&this.Lyrics.tTextBox);
@@ -434,7 +441,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
 
                 __item_line_dock_vertical() {
 
-                    arm_2d_dock_with_margin(__item_region, 10) {
+                    arm_2d_dock_with_margin(__item_region, 10, 10, 10, 10) {
                     
                         arm_2d_dock_vertical(
                             __dock_region, 
@@ -445,13 +452,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
                                                             128);
                         }
 
+
                         arm_lcd_text_set_scale(0.7f);
                         arm_2d_size_t tPlayTimeSize 
                             = arm_lcd_printf_to_buffer( 
                                 (const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_32_A4,
-                                "%02d:%02d ",
+                                "%02d:%02d",
                                 this.u6Mins,
                                 this.u6Secends);
+                        tPlayTimeSize.iWidth += 2;  /* minor fix */
                         
                         arm_2d_align_bottom_right(__dock_region, tPlayTimeSize) {
 
@@ -468,6 +477,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
                                 &__bottom_right_region);
                         }
                         arm_lcd_text_set_scale(1.0f);
+
                     }
 
                     draw_glass_bar(ptTile, &__item_region, 64, true);
@@ -486,11 +496,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
         }
 
         if (__top_canvas.tSize.iHeight < 128) {
-            tLyricsBoxSize.iHeight = __top_canvas.tSize.iHeight - 16;
+            tLyricsBoxSize.iHeight = __top_canvas.tSize.iHeight - 20;
         }
 
         arm_2d_align_top_left(__top_canvas, tLyricsBoxSize) {
-            arm_2d_dock_with_margin(__top_left_region, 10) {
+            arm_2d_dock_with_margin(__top_left_region, 10, 10, 20, 10) {
 
                 arm_lcd_text_set_char_spacing(1);
                 arm_lcd_text_set_line_spacing(4);
