@@ -905,8 +905,8 @@
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
       </component>
-      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.4.0" condition="CMSIS-CORE">
-        <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="2.4.0"/>
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.5.0" condition="CMSIS-CORE">
+        <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN552_Cortex-M55"/>
         </targetInfos>
