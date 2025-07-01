@@ -96,6 +96,7 @@ extern
 void benchmark_generic_do_events(void);
 
 /*============================ LOCAL VARIABLES ===============================*/
+ARM_NOINIT
 static struct {
     uint32_t wMin;
     uint32_t wMax;
@@ -104,17 +105,7 @@ static struct {
     float fFPS30Freq;
     uint32_t wIterations;
     uint32_t wLCDLatency;
-} BENCHMARK = {
-    .wMin = UINT32_MAX,
-    .wMax = 0,
-    .dwTotal = 0,
-    .wAverage = 0,
-#if defined(__USE_FVP__)
-    .wIterations = 2,
-#else
-    .wIterations = ITERATION_CNT,
-#endif
-};
+} BENCHMARK;
 
 /*============================ IMPLEMENTATION ================================*/
 
@@ -381,6 +372,15 @@ user_scene_benchmark_generic_t *__arm_2d_scene_benchmark_generic_init(   arm_2d_
     
     /* initialize benchmark generic */
     benchmark_generic_init();
+    
+    memset(&BENCHMARK, 0, sizeof(BENCHMARK));
+    BENCHMARK.wMin = __UINT32_MAX__;
+#if defined(__USE_FVP__)
+    BENCHMARK.wIterations = 2;
+#else
+    BENCHMARK.wIterations = ITERATION_CNT;
+#endif
+    
     
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
