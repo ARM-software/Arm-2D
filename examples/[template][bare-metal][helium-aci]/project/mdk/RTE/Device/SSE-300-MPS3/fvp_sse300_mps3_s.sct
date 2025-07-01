@@ -54,29 +54,13 @@ LR_CODE S_CODE_START {
      * size of the SRAM available.
      */
     ScatterAssert(ImageLimit(CODE_WATERMARK) <= S_CODE_START + S_CODE_SIZE)
+
 }
 
-#if 0
-LR_CODE2 S_CODE2_START {
-    ER_CODE2 S_CODE2_START {
-        * (+RO-DATA)
-    }
 
-    /* This empty, zero long execution region is here to mark the limit address
-     * of the last execution region that is allocated in SRAM.
-     */
-    CODE2_WATERMARK +0 EMPTY 0x0 {
-    }
-    /* Make sure that the sections allocated in the SRAM does not exceed the
-     * size of the SRAM available.
-     */
-    ScatterAssert(ImageLimit(CODE2_WATERMARK) <= S_CODE2_START + S_CODE2_SIZE)
-}
-#endif
+LR_CODE2 S_CODE2_START S_CODE2_SIZE{
 
-
-LD_DATA S_DATA_START S_DATA_SIZE {
-    ARM_LIB_STACK +0 ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
+    ARM_LIB_STACK S_DATA_START ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
     }
 
     ER_ASSET +0 {
@@ -108,11 +92,9 @@ LD_DATA S_DATA_START S_DATA_SIZE {
      * size of the SRAM available.
      */
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
-}
 
-#if 1
-LD_DATA2 S_DATA2_START {
-    ER_ASSET2 +0 {
+#if 0
+    ER_ASSET2 S_DATA2_START {
         .ANY (arm2d.asset.*)
         .ANY (arm2d.tile.*)
     }
@@ -135,5 +117,7 @@ LD_DATA2 S_DATA2_START {
      * size of the SRAM available.
      */
     ScatterAssert(ImageLimit(SRAM2_WATERMARK) <= S_DATA2_START + S_DATA2_SIZE)
-}
 #endif
+
+}
+
