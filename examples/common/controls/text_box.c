@@ -190,9 +190,13 @@ int32_t __text_box_read_bytes(  text_box_t *ptThis,
 //}
 
 
-static void __line_cache_invalid_all(text_box_t *ptThis)
+static void __text_box_context_invalid_all(text_box_t *ptThis)
 {
-    ARM_2D_UNUSED(ptThis);
+    assert(NULL != ptThis);
+
+    arm_foreach(this.tContexts) {
+        _->bValid = false;
+    }
 }
 
 ARM_NONNULL(1,2)
@@ -555,6 +559,22 @@ int16_t text_box_get_current_line_count(text_box_t *ptThis)
     return this.nMaxLines;
 }
 
+static
+ARM_NONNULL(1,4)
+void __text_box_save_context(   __text_box_context_t *ptContext, 
+                                int16_t iLineVerticalOffset,
+                                int32_t nPosition,
+                                __text_box_line_info_t *ptInfo)
+{
+    assert(NULL != ptContext);
+    assert(NULL != ptInfo);
+
+    ptContext->bValid = true;
+    ptContext->iLineVerticalOffset = iLineVerticalOffset;
+    ptContext->nPosition = nPosition;
+    ptContext->tLineInfo = *ptInfo;
+}
+
 ARM_NONNULL(1)
 void text_box_show( text_box_t *ptThis,
                     const arm_2d_tile_t *ptTile, 
@@ -568,6 +588,8 @@ void text_box_show( text_box_t *ptThis,
     }
 
     assert(NULL!= ptThis);
+    bool bPerFrameContextSaved = true;
+    bool bPreviousStartSaved = false;
 
     arm_2d_container(ptTile, __text_box, ptRegion) {
 
@@ -582,6 +604,7 @@ void text_box_show( text_box_t *ptThis,
         int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;
 
         if (bIsNewFrame) {
+            bPerFrameContextSaved = false;
             bool bRequestUpdate = this.Request.bUpdateReq;
 
             if (this.Request.bPositionUpdateReq && this.iLineHeight > 0) {
@@ -589,7 +612,6 @@ void text_box_show( text_box_t *ptThis,
 
                 int64_t lPosition = this.Request.lTargetPositionInPixel;
                 if (lPosition < 0) {
-
                     this.Request.nTargetStartLineReq = 0;
                     lPosition = MAX(-__INT16_MAX__, lPosition);
                     this.Request.iIntraLineOffset = lPosition;
@@ -621,6 +643,7 @@ void text_box_show( text_box_t *ptThis,
                 //this.nMaxLines = 0;
 
                 __text_box_update(ptThis);
+                
 
                 if (this.tCFG.bUseDirtyRegions) {
                     arm_2d_helper_dirty_region_update_item( 
@@ -635,7 +658,7 @@ void text_box_show( text_box_t *ptThis,
         /* move to the start */
         __text_box_set_current_position(ptThis, this.Start.nPosition);
         
-        int32_t iLineNumber = this.Start.nLine;
+        int32_t nLineNumber = this.Start.nLine;
         
         /* tPFBScanRegion is a mapping of the PFB region inside the __text_box_canvas,
          * with which we can ignore the lines that out of the PFB region.
@@ -657,6 +680,15 @@ void text_box_show( text_box_t *ptThis,
 
         /* print all lines */
         int16_t iLineVerticalOffset = 0;
+
+
+        /* check contexts */
+        do {
+
+
+
+        } while(0);
+
         do {
             #if 0
             if (__text_box_is_eof(ptThis)) {
@@ -667,12 +699,16 @@ void text_box_show( text_box_t *ptThis,
             if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine, this.iLineWidth)) {
                 break;
             }
+            /* update line info */
+            this.tCurrentLine.nLineNo = nLineNumber;
 
-            if (this.nMaxLines < iLineNumber) {
-                this.nMaxLines = iLineNumber;
+            if (this.nMaxLines < nLineNumber) {
+                this.nMaxLines = nLineNumber;
             }
 
-            int32_t iLineOffset = iLineNumber - this.Start.nLine;
+label_context_entry_point:
+
+            int32_t iLineOffset = nLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
                     .iY = iLineOffset * iFontCharBoxHeight + iLineVerticalOffset - this.Request.iIntraLineOffset,
@@ -681,7 +717,6 @@ void text_box_show( text_box_t *ptThis,
                     .iHeight = this.iLineHeight,
                 },
             };
-
 
             tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
 
@@ -698,9 +733,6 @@ void text_box_show( text_box_t *ptThis,
                     tLineRegion.tSize.iWidth = this.iLineWidth;
                     break;
             }
-
-            /* update line info */
-            this.tCurrentLine.nLineNo = iLineNumber;
 
             bool bIgnoreDrawing = false;
             if (0 != tLineRegion.tSize.iWidth ) {
@@ -722,6 +754,26 @@ void text_box_show( text_box_t *ptThis,
                         break;
                     }
                 }
+
+                if (!bPreviousStartSaved) {
+                    bPreviousStartSaved = true;
+                    /* save previous start context */
+                    __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS_START],
+                                            iLineVerticalOffset,
+                                            __text_box_get_current_position(ptThis),
+                                            &this.tCurrentLine);
+                }
+
+                if (bIsNewFrame && !bPerFrameContextSaved) {
+                    bPerFrameContextSaved = true;
+                    /* save previous frame context */
+                    __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME],
+                                            iLineVerticalOffset,
+                                            __text_box_get_current_position(ptThis),
+                                            &this.tCurrentLine);
+                }
+            } else {
+                bIgnoreDrawing = true;
             }
 
             if (!bIgnoreDrawing) {
@@ -747,8 +799,16 @@ void text_box_show( text_box_t *ptThis,
                 iLineVerticalOffset += this.tCFG.chSpaceBetweenParagraph;
             }
 
-            iLineNumber++;
+            nLineNumber++;
         } while(1);
+
+        /* save previous context */
+        do {
+            __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS],
+                                    iLineVerticalOffset,
+                                    __text_box_get_current_position(ptThis),
+                                    &this.tCurrentLine);
+        } while(0);
     }
 
     ARM_2D_OP_WAIT_ASYNC();
@@ -1147,7 +1207,6 @@ void __text_box_update(text_box_t *ptThis)
     if (!bFastUpdate) {
         /* move to the begin */
         __text_box_set_current_position(ptThis, 0);
-        __line_cache_invalid_all(ptThis);
     } 
 
     __text_box_line_info_t tLineInfo;
@@ -1175,6 +1234,8 @@ void __text_box_update(text_box_t *ptThis)
     } while(1);
 
     this.Start.nPosition = __text_box_get_current_position(ptThis);
+
+    __text_box_context_invalid_all(ptThis);
 }
 
 ARM_NONNULL(1)

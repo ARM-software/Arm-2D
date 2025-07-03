@@ -112,6 +112,7 @@ typedef struct text_box_io_text_stream_reader_t {
 
 enum {
     __TEXT_BOX_LINE_CACHE_PREVIOUS = 0,
+    __TEXT_BOX_LINE_CACHE_PREVIOUS_START,
     __TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME,
     __TEXT_BOX_LINE_CACHE_COUNT,
 };
@@ -136,18 +137,17 @@ typedef struct text_box_cfg_t {
     
 } text_box_cfg_t;
 
-typedef struct __text_box_line_cache_t {
+typedef struct __text_box_context_t {
 ARM_PRIVATE(
     uint16_t bValid         : 1;
     uint16_t                : 15;
     int16_t iLineVerticalOffset;
 
     int32_t nPosition;
-    int32_t nLineNumber;
 
     __text_box_line_info_t tLineInfo;
 )
-} __text_box_line_cache_t;
+} __text_box_context_t;
 
 /*!
  * \brief a user class for user defined control
@@ -183,8 +183,7 @@ ARM_PRIVATE(
     int16_t iLinesPerPage;
     int32_t nMaxLines;
 
-    //__text_box_line_info_t tLines[__TEXT_BOX_LINE_CACHE_COUNT];
-    __text_box_line_cache_t tLineCaches[__TEXT_BOX_LINE_CACHE_COUNT];
+    __text_box_context_t tContexts[__TEXT_BOX_LINE_CACHE_COUNT];
     __text_box_line_info_t tCurrentLine;
 
     arm_2d_helper_dirty_region_item_t tDirtyRegionItem[1];
