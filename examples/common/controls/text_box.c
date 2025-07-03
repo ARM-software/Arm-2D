@@ -556,7 +556,7 @@ void __text_box_draw_line(text_box_t *ptThis,
     assert(NULL != ptLineInfo);
 
     int32_t nPosition = ptLineInfo->nStartPosition;
-    int32_t nBrickCount = ptLineInfo->hwBrickCount;
+    int32_t nBrickCount = ptLineInfo->u11BrickCount;
     int32_t nBlankCount = nBrickCount - 1;
 
     q16_t q16RisidualPixel = 0;
@@ -890,7 +890,7 @@ void text_box_show( text_box_t *ptThis,
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
 
-            if (this.tCurrentLine.hwBrickCount > 0) {
+            if (this.tCurrentLine.u11BrickCount > 0) {
                 /* skip the `\n` in a paragraph */
                 //nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
                 nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
@@ -932,7 +932,7 @@ ARM_PT_BEGIN(*pchPT)
         if (tType != TEXT_BOX_CHAR_NORMAL) {
 
             if (TEXT_BOX_CHAR_CUT_OFF == tType || TEXT_BOX_CHAR_END_OF_LINE == tType) {
-                if (0 == ptLineInfo->hwBrickCount) {
+                if (0 == ptLineInfo->u11BrickCount) {
                     ptLineInfo->nStartPosition = nPoistion;
                     ptLineInfo->hwByteCount = 1;
                 }
@@ -944,7 +944,7 @@ ARM_PT_BEGIN(*pchPT)
         }
 
         if (NULL != ptLineInfo) {
-            if (0 == ptLineInfo->hwBrickCount) {
+            if (0 == ptLineInfo->u11BrickCount) {
                 ptLineInfo->nStartPosition = nPoistion;
             }
         }
@@ -959,9 +959,9 @@ ARM_PT_BEGIN(*pchPT)
             /* end a line and cut a brick off */
 
             if (NULL != ptLineInfo) {
-                if (0 == ptLineInfo->hwBrickCount) {
+                if (0 == ptLineInfo->u11BrickCount) {
                     /* the box is too small to contain one brick */
-                    ptLineInfo->hwBrickCount++;
+                    ptLineInfo->u11BrickCount++;
                     ptLineInfo->iLineWidth = iLineWidth;
                     ptLineInfo->iPureCharWidth = iPureCharWidth;
                     ptLineInfo->hwByteCount = nPoistion - ptLineInfo->nStartPosition;
@@ -974,7 +974,7 @@ ARM_PT_BEGIN(*pchPT)
 
         /* normal end of a brick */
         if (NULL != ptLineInfo) {
-            ptLineInfo->hwBrickCount++;
+            ptLineInfo->u11BrickCount++;
             ptLineInfo->iLineWidth = iLineWidth;
             ptLineInfo->iPureCharWidth = iPureCharWidth;
             ptLineInfo->hwByteCount = nPoistion - ptLineInfo->nStartPosition;
@@ -1144,7 +1144,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
 
     if (NULL != ptLineInfo) {
         do {
-            if (ptLineInfo->hwBrickCount <= 1) {
+            if (ptLineInfo->u11BrickCount <= 1) {
                 break;
             }
 
@@ -1164,7 +1164,7 @@ bool __text_box_get_and_analyze_one_line(text_box_t *ptThis,
             /* calculate additional char space */
             ptLineInfo->q16PixelsPerBlank 
                 = div_n_q16(reinterpret_q16_s16(iResidualWidth), 
-                            (ptLineInfo->hwBrickCount - 1));        /* number of blanks */
+                            (ptLineInfo->u11BrickCount - 1));        /* number of blanks */
         } while(0);
     }
 
@@ -1257,7 +1257,7 @@ int32_t text_box_get_line_count(text_box_t *ptThis, int16_t iLineWidth)
             break;
         }
         int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
-        if (tLineInfo.hwBrickCount > 0) {
+        if (tLineInfo.u11BrickCount > 0) {
             /* skip the `\n` in a paragraph */
             //nNewLinePosition += !!tLineInfo.bEndNaturally;
             nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
@@ -1320,7 +1320,7 @@ void __text_box_update(text_box_t *ptThis)
             break;
         }
         int32_t nNewLinePosition = tLineInfo.nStartPosition + tLineInfo.hwByteCount;
-        if (tLineInfo.hwBrickCount > 0) {
+        if (tLineInfo.u11BrickCount > 0) {
             /* skip the `\n` in a paragraph */
             //nNewLinePosition += !!tLineInfo.bEndNaturally;
             nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);

@@ -58,11 +58,11 @@ ARM_PRIVATE(
     int32_t nLineNo;
     int32_t nStartPosition;
 
-    uint16_t hwActive;
+    //uint16_t hwActive;
     uint16_t bEndNaturally  : 1;
-    uint16_t                : 15;
+    uint16_t                : 4;
+    uint16_t u11BrickCount  : 11;
 
-    uint16_t hwBrickCount;
     int16_t iLineWidth;
     int16_t iPureCharWidth;
     uint16_t hwByteCount;
