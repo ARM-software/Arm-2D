@@ -68,9 +68,9 @@ if (ARM2D_HELPER)
             Helper/Source/arm_2d_helper_shape.c
             Helper/Source/arm_2d_helper_control.c
 
-            Helper/Source/WhiteDotSmall.c
-            Helper/Source/cmsis_logo.c
-            Helper/Source/circle_small.c
+            Helper/Source/arm_2d_asset_white_dot_small.c
+            Helper/Source/arm_2d_asset_cmsis_logo.c
+            Helper/Source/arm_2d_asset_circle_small.c
 
             Helper/built_in/arm_2d_helper_built_in.c
             Helper/built_in/busy_wheel.c
@@ -147,74 +147,73 @@ if (ARM2D_CONTROLS)
             examples/common/controls/meter_pointer.c
             examples/common/controls/text_box.c
 
+            examples/common/asset/arm_2d_asset_WhiteDotMiddle.c
+            examples/common/asset/arm_2d_asset_WhiteDotBig.c
+            examples/common/asset/arm_2d_asset_SpinWheel.c
+            examples/common/asset/arm_2d_asset_blue_slashes.c
+            examples/common/asset/arm_2d_asset_wave.c
+            examples/common/asset/arm_2d_asset_GreenCircle.c
+            examples/common/asset/arm_2d_asset_QuaterArcSmall.c
+            examples/common/asset/arm_2d_asset_QuaterArcMiddle.c
+            examples/common/asset/arm_2d_asset_QuaterArcBig.c
+            examples/common/asset/arm_2d_asset_ListCover.c
+            examples/common/asset/arm_2d_asset_battery_boarder_1.c
+            examples/common/asset/arm_2d_asset_battery_gasgauge_block.c
+            examples/common/asset/arm_2d_asset_battery_gasgauge_grade_boarder.c
+            examples/common/asset/arm_2d_asset_SinWave.c
+            examples/common/asset/arm_2d_asset_glass_reflection_wide.c
+            examples/common/asset/arm_2d_asset_glass_reflection_narrow.c
+            examples/common/asset/arm_2d_asset_Lighting.c
+            examples/common/asset/arm_2d_asset_Pointer.c
+            examples/common/asset/arm_2d_asset_watch_panel.c
+            examples/common/asset/arm_2d_asset_pointer_sec.c
+            examples/common/asset/arm_2d_asset_gear_01.c
+            examples/common/asset/arm_2d_asset_gear_02.c
+            examples/common/asset/arm_2d_asset_star.c
+            examples/common/asset/arm_2d_asset_small_icon_sun.c
+            examples/common/asset/arm_2d_asset_software.c
+            examples/common/asset/arm_2d_asset_circle_mask.c
             
-            examples/common/asset/WhiteDotMiddle.c
-            examples/common/asset/WhiteDotBig.c
-            examples/common/asset/SpinWheel.c
-            examples/common/asset/blue_slashes.c
-            examples/common/asset/wave.c
-            examples/common/asset/GreenCircle.c
-            examples/common/asset/QuaterArcSmall.c
-            examples/common/asset/QuaterArcMiddle.c
-            examples/common/asset/QuaterArcBig.c
-            examples/common/asset/ListCover.c
-            examples/common/asset/battery_boarder_1.c
-            examples/common/asset/battery_gasgauge_block.c
-            examples/common/asset/battery_gasgauge_grade_boarder.c
-            examples/common/asset/SinWave.c
-            examples/common/asset/glass_reflection_wide.c
-            examples/common/asset/glass_reflection_narrow.c
-            examples/common/asset/Lighting.c
-            examples/common/asset/Pointer.c
-            examples/common/asset/watch_panel.c
-            examples/common/asset/pointer_sec.c
-            examples/common/asset/gear_01.c
-            examples/common/asset/gear_02.c
-            examples/common/asset/star.c
-            examples/common/asset/small_icon_sun.c
-            examples/common/asset/software.c
-            examples/common/asset/circle_mask.c
-            
-            examples/common/asset/wifi_signal.c
-            examples/common/asset/helium.c
-            examples/common/asset/background.c
-            examples/common/asset/BackgroundSmall.c
-            examples/common/asset/WatchCoverRound.c
-            examples/common/asset/GlassHalo.c
-            examples/common/asset/alarm_clock_font32.c
-            examples/common/asset/alarm_clock_font64.c
-            examples/common/asset/ECG.c
-            examples/common/asset/ECGScan.c
-            examples/common/asset/fan_blade.c
-            examples/common/asset/RadialGradient.c
-            examples/common/asset/GlassBall.c
-            examples/common/asset/HallowOutCircleMask.c
-            examples/common/asset/Fire8x4.c
-            examples/common/asset/DigitsFont.c
-            examples/common/asset/alarm_clock_font32.c
-            examples/common/asset/alarm_clock_font64.c
-            examples/common/asset/arial_ascii_font14.c
-            examples/common/asset/ClockMarking.c
-            examples/common/asset/compass.c
-            examples/common/asset/Earth.c
-            examples/common/asset/knob_circle_quater.c
-            examples/common/asset/radial_line_cover.c
-            examples/common/asset/radial_line_pattern.c
-            examples/common/asset/wedge_pattern.c
-            examples/common/asset/GlassBall40.c
+            examples/common/asset/arm_2d_asset_wifi_signal.c
+            examples/common/asset/arm_2d_asset_helium.c
+            examples/common/asset/arm_2d_asset_background.c
+            examples/common/asset/arm_2d_asset_BackgroundSmall.c
+            examples/common/asset/arm_2d_asset_WatchCoverRound.c
+            examples/common/asset/arm_2d_asset_GlassHalo.c
+            examples/common/asset/arm_2d_asset_alarm_clock_font32.c
+            examples/common/asset/arm_2d_asset_alarm_clock_font64.c
+            examples/common/asset/arm_2d_asset_ECG.c
+            examples/common/asset/arm_2d_asset_ECGScan.c
+            examples/common/asset/arm_2d_asset_fan_blade.c
+            examples/common/asset/arm_2d_asset_RadialGradient.c
+            examples/common/asset/arm_2d_asset_GlassBall.c
+            examples/common/asset/arm_2d_asset_HallowOutCircleMask.c
+            examples/common/asset/arm_2d_asset_Fire8x4.c
+            examples/common/asset/arm_2d_asset_DigitsFont.c
+            examples/common/asset/arm_2d_asset_alarm_clock_font32.c
+            examples/common/asset/arm_2d_asset_alarm_clock_font64.c
+            examples/common/asset/arm_2d_asset_arial_ascii_font14.c
+            examples/common/asset/arm_2d_asset_ClockMarking.c
+            examples/common/asset/arm_2d_asset_compass.c
+            examples/common/asset/arm_2d_asset_Earth.c
+            examples/common/asset/arm_2d_asset_knob_circle_quater.c
+            examples/common/asset/arm_2d_asset_radial_line_cover.c
+            examples/common/asset/arm_2d_asset_radial_line_pattern.c
+            examples/common/asset/arm_2d_asset_wedge_pattern.c
+            examples/common/asset/arm_2d_asset_GlassBall40.c
 
-            examples/common/asset/icon_automobile.c
-            examples/common/asset/icon_compute.c 
-            examples/common/asset/icon_Developer.c 
-            examples/common/asset/icon_drone.c 
-            examples/common/asset/icon_Durability.c 
-            examples/common/asset/icon_enterprise.c 
-            examples/common/asset/icon_healthcare.c 
-            examples/common/asset/icon_mobile.c 
-            examples/common/asset/icon_multicore.c 
-            examples/common/asset/icon_smartmeter.c 
-            examples/common/asset/icon_visual_sensor.c 
-            examples/common/asset/icon_wearables.c
+            examples/common/asset/arm_2d_asset_icon_automobile.c
+            examples/common/asset/arm_2d_asset_icon_compute.c 
+            examples/common/asset/arm_2d_asset_icon_Developer.c 
+            examples/common/asset/arm_2d_asset_icon_drone.c 
+            examples/common/asset/arm_2d_asset_icon_Durability.c 
+            examples/common/asset/arm_2d_asset_icon_enterprise.c 
+            examples/common/asset/arm_2d_asset_icon_healthcare.c 
+            examples/common/asset/arm_2d_asset_icon_mobile.c 
+            examples/common/asset/arm_2d_asset_icon_multicore.c 
+            examples/common/asset/arm_2d_asset_icon_smartmeter.c 
+            examples/common/asset/arm_2d_asset_icon_visual_sensor.c 
+            examples/common/asset/arm_2d_asset_icon_wearables.c
             
 
           )
