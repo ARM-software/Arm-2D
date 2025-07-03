@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_control.c"
  * Description:  the helper service source code for control management
  *
- * $Date:        15. May 2025
- * $Revision:    V.0.7.7
+ * $Date:        03. July 2025
+ * $Revision:    V.0.7.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -153,6 +153,19 @@ arm_2d_region_t *arm_2d_helper_control_get_absolute_region(arm_2d_control_node_t
     return ptOutRegion;
 }
 
+__WEAK
+ARM_NONNULL(1,2)
+bool __arm_2d_helper_control_user_whether_ignore_node(  arm_2d_control_node_t *ptRoot, 
+                                                        arm_2d_control_node_t *ptNode, 
+                                                        arm_2d_location_t tLocation)
+{
+    ARM_2D_UNUSED(ptRoot);
+    ARM_2D_UNUSED(ptNode);
+    ARM_2D_UNUSED(tLocation);
+
+    return false;
+}
+
 ARM_NONNULL(1)
 arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
                                                 arm_2d_control_node_t *ptRoot, 
@@ -175,14 +188,16 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
         arm_2d_region_t tControlRegion;
         bool bInsideControlRegion = false;
 
-        if (NULL != arm_2d_helper_control_get_absolute_region(ptNode, &tControlRegion, true)) {
-            /* if it is inside the visible area, we check the touch point */
-            bInsideControlRegion = arm_2d_is_point_inside_region(&tControlRegion, &tLocation);
-        }
+        if (!__arm_2d_helper_control_user_whether_ignore_node(ptRoot, ptNode, tLocation)) {
+            if (NULL != arm_2d_helper_control_get_absolute_region(ptNode, &tControlRegion, true)) {
+                /* if it is inside the visible area, we check the touch point */
+                bInsideControlRegion = arm_2d_is_point_inside_region(&tControlRegion, &tLocation);
+            }
 
-        if (bInsideControlRegion) {
-            /* update candidate */
-            ptCandidate = ptNode;
+            if (bInsideControlRegion) {
+                /* update candidate */
+                ptCandidate = ptNode;
+            }
         }
 
         if (NULL != ptNode->ptNext) {
@@ -199,15 +214,15 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
             break;
         }
 
+        if (NULL == ptCandidate->ptChildList) {
+            /* the touch point hits a leaf, let's return the candidate */
+            break;
+        }
+
         if (ptCandidate == ptTheLastContainer) {
             /* the only candidate is the container, i.e. the touch point hits 
              * no controls in the container, let's return the container.
              */
-            break;
-        }
-
-        if (NULL == ptCandidate->ptChildList) {
-            /* the touch point hits a leaf, let's return the candidate */
             break;
         }
 
