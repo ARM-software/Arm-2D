@@ -62,10 +62,10 @@ ARM_PRIVATE(
     uint16_t bEndNaturally  : 1;
     uint16_t                : 4;
     uint16_t u11BrickCount  : 11;
+    uint16_t hwByteCount;
 
     int16_t iLineWidth;
     int16_t iPureCharWidth;
-    uint16_t hwByteCount;
     
     q16_t q16PixelsPerBlank;
 )
@@ -109,6 +109,13 @@ typedef struct text_box_io_text_stream_reader_t {
     const text_box_io_handler_t *ptIO;
     uintptr_t pTarget;
 } text_box_io_text_stream_reader_t;
+
+enum {
+    __TEXT_BOX_LINE_CACHE_CURRENT = 0,
+    __TEXT_BOX_LINE_CACHE_PREVIOUS,
+    __TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME,
+    __TEXT_BOX_LINE_CACHE_COUNT,
+};
 
 typedef struct text_box_cfg_t {
     const arm_2d_font_t *ptFont;
@@ -164,7 +171,7 @@ ARM_PRIVATE(
     int16_t iLinesPerPage;
     int32_t nMaxLines;
 
-    __text_box_line_info_t tCurrentLine;
+    __text_box_line_info_t tLines[__TEXT_BOX_LINE_CACHE_COUNT];
 
     arm_2d_helper_dirty_region_item_t tDirtyRegionItem[1];
 

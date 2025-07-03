@@ -820,7 +820,7 @@ void text_box_show( text_box_t *ptThis,
             }
             #endif
 
-            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine, this.iLineWidth)) {
+            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT], this.iLineWidth)) {
                 break;
             }
 
@@ -839,16 +839,16 @@ void text_box_show( text_box_t *ptThis,
             };
 
 
-            tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
+            tLineRegion.tSize.iWidth = this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].iLineWidth;
 
             switch (this.tCFG.u2LineAlign) {
                 case TEXT_BOX_LINE_ALIGN_LEFT:
                     break;
                 case TEXT_BOX_LINE_ALIGN_RIGHT:
-                    tLineRegion.tLocation.iX += this.iLineWidth - this.tCurrentLine.iLineWidth;
+                    tLineRegion.tLocation.iX += this.iLineWidth - this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].iLineWidth;
                     break;
                 case TEXT_BOX_LINE_ALIGN_CENTRE:
-                    tLineRegion.tLocation.iX += (this.iLineWidth - this.tCurrentLine.iLineWidth) >> 1;
+                    tLineRegion.tLocation.iX += (this.iLineWidth - this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].iLineWidth) >> 1;
                     break;
                 case TEXT_BOX_LINE_ALIGN_JUSTIFIED:
                     tLineRegion.tSize.iWidth = this.iLineWidth;
@@ -856,7 +856,7 @@ void text_box_show( text_box_t *ptThis,
             }
 
             /* update line info */
-            this.tCurrentLine.nLineNo = iLineNumber;
+            this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].nLineNo = iLineNumber;
 
             bool bIgnoreDrawing = false;
             if (0 != tLineRegion.tSize.iWidth ) {
@@ -882,23 +882,23 @@ void text_box_show( text_box_t *ptThis,
 
             if (!bIgnoreDrawing) {
                 __text_box_draw_line(ptThis,
-                                     &this.tCurrentLine,
+                                     &this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT],
                                      &__text_box,
                                      &tLineRegion,
                                      this.tCFG.u2LineAlign);
             }
 
-            int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
+            int32_t nNewLinePosition = this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].nStartPosition + this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].hwByteCount;
 
-            if (this.tCurrentLine.u11BrickCount > 0) {
+            if (this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].u11BrickCount > 0) {
                 /* skip the `\n` in a paragraph */
-                //nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
+                //nNewLinePosition += !!this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].bEndNaturally;
                 nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
             }
 
             __text_box_set_current_position(ptThis, nNewLinePosition);
             
-            if (this.tCurrentLine.bEndNaturally) {
+            if (this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].bEndNaturally) {
                 /* end of a paragraph, insert spacing */
                 iLineVerticalOffset += this.tCFG.chSpaceBetweenParagraph;
             }
