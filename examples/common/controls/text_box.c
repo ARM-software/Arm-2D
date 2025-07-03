@@ -189,167 +189,11 @@ int32_t __text_box_read_bytes(  text_box_t *ptThis,
 //                            this.tCFG.tStreamIO.pTarget));
 //}
 
-#if 0
-static
-ARM_NONNULL(1,2)
-void __scratch_memory_free( text_box_t *ptThis,
-                            __text_box_scratch_mem_t *ptItem)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ptItem);
-    
-    memset(ptItem, 0, sizeof(__text_box_scratch_mem_t));
 
-    //arm_irq_safe {
-        ARM_LIST_STACK_PUSH(this.ptFreeList, ptItem);
-    //}
-}
-
-static 
-ARM_NONNULL(1)
-__text_box_scratch_mem_t * __scratch_memory_get(text_box_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    __text_box_scratch_mem_t *ptItem = NULL;
-
-    //arm_irq_safe {
-        ARM_LIST_STACK_POP(this.ptFreeList, ptItem);
-    //}
-
-    return ptItem;
-}
-
-static
-ARM_NONNULL(1,2)
-void __line_cache_enter(text_box_t *ptThis,
-                        __text_box_scratch_mem_t *ptItem)
-{
-    assert(NULL != ptThis);
-    assert(NULL != ptItem);
-    int32_t iTargetLineNumber = ptItem->nLineNo;
-    bool bInserted = false;
-
-    __text_box_scratch_mem_t **pptItem = &this.ptLineCache;
-
-    while (NULL != *pptItem) {
-        int32_t iItemLineNumber = (*pptItem)->nLineNo;
-
-        if (iTargetLineNumber < iItemLineNumber) {
-
-            /* insert to the current place */
-            ptItem->ptNext = *pptItem;
-            *pptItem = ptItem;
-
-            bInserted = true;
-            this.hwLineCacheCount++;
-            break;
-        } else if (iItemLineNumber == iTargetLineNumber) {
-
-            /* replace the old item */
-            __text_box_scratch_mem_t *ptOldItem = (*pptItem);
-
-            ptItem->ptNext = ptOldItem->ptNext;
-            (*pptItem) = ptItem;
-
-            __scratch_memory_free(ptThis, ptOldItem);
-
-            bInserted = true;
-            break;
-        }
-
-        /* move to next item */
-        pptItem = &((*pptItem)->ptNext);
-    }
-
-    if (!bInserted) {
-        /* add to the end of the list  */
-        *pptItem = ptItem;
-        ptItem->ptNext = NULL;
-        this.hwLineCacheCount++;
-    }
-}
-
-static
-ARM_NONNULL(1)
-__text_box_scratch_mem_t * __line_cache_find(text_box_t *ptThis,
-                                             int32_t iLineNumber)
-{
-    assert(NULL != ptThis);
-   
-    __text_box_scratch_mem_t *ptItem = this.ptLineCache;
-
-    while (NULL != ptItem) {
-
-        if (iLineNumber == ptItem->nLineNo) {
-            ptItem->hwActive = MAX(this.tCFG.hwScratchMemoryCount, 4);
-            return ptItem;
-        }
-
-        if (ptItem->hwActive) {
-            ptItem->hwActive--;
-        }
-
-        ptItem = ptItem->ptNext;
-    }
-
-    return NULL;
-}
-
-static
-ARM_NONNULL(1)
-void __line_cache_free_old(text_box_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    __text_box_scratch_mem_t **pptItem = &this.ptLineCache;
-
-    while (NULL != *pptItem) {
-    
-        if (0 == (*pptItem)->hwActive) {
-            __text_box_scratch_mem_t *ptOldItem = (*pptItem);
-
-            /* remove this item */
-            *pptItem = (*pptItem)->ptNext;
-
-            __scratch_memory_free(ptThis, ptOldItem);
-
-            return;
-        }
-
-        (*pptItem)->hwActive--;
-
-        /* move to next item */
-        pptItem = &((*pptItem)->ptNext);
-    }
-}
-
-static
-ARM_NONNULL(1)
-void __line_cache_invalid_all(text_box_t *ptThis)
-{
-
-    assert(NULL != ptThis);
-   
-    __text_box_scratch_mem_t *ptItem = this.ptLineCache;
-
-    while (NULL != ptItem) {
-        __text_box_scratch_mem_t *ptNextItem = ptItem->ptNext;
-
-        __scratch_memory_free(ptThis, ptItem);
-
-        ptItem = ptNextItem;
-    }
-
-    this.ptLineCache = NULL;
-
-}
-#else
 static void __line_cache_invalid_all(text_box_t *ptThis)
 {
     ARM_2D_UNUSED(ptThis);
 }
-#endif
 
 ARM_NONNULL(1,2)
 void text_box_init( text_box_t *ptThis,
@@ -490,7 +334,7 @@ int32_t text_box_set_start_line(text_box_t *ptThis, int32_t iStartLine)
 
         iOldStartLine = __text_box_set_start_line(ptThis, iStartLine);
         if (iOldStartLine != iStartLine) {
-            this.Request.lTargetPosition = text_box_get_start_line(ptThis) * this.iLineHeight;
+            this.Request.lTargetPositionInPixel = text_box_get_start_line(ptThis) * this.iLineHeight;
             this.Request.iIntraLineOffset = 0;
         }
     }
@@ -513,10 +357,10 @@ int64_t text_box_set_scrolling_position(text_box_t *ptThis, int64_t lPostion)
     int64_t lOldPosition = 0;
 
     arm_irq_safe {
-        lOldPosition = this.Request.lTargetPosition;
+        lOldPosition = this.Request.lTargetPositionInPixel;
 
         if (lOldPosition != lPostion) {
-            this.Request.lTargetPosition = lPostion;
+            this.Request.lTargetPositionInPixel = lPostion;
             this.Request.bPositionUpdateReq = true;
         }
     }
@@ -528,12 +372,12 @@ ARM_NONNULL(1)
 int64_t text_box_set_scrolling_position_offset(text_box_t *ptThis, int16_t iOffset)
 {
     assert(NULL != ptThis);
-    int64_t lPosition = this.Request.lTargetPosition;
+    int64_t lPosition = this.Request.lTargetPositionInPixel;
 
     if (iOffset < 0) {
         lPosition += iOffset;
     } else {
-        uint64_t dwSafeMargin = __INT64_MAX__ - this.Request.lTargetPosition;
+        uint64_t dwSafeMargin = __INT64_MAX__ - this.Request.lTargetPositionInPixel;
         if (iOffset > dwSafeMargin) {
             lPosition = __INT64_MAX__;
         } else {
@@ -743,7 +587,7 @@ void text_box_show( text_box_t *ptThis,
             if (this.Request.bPositionUpdateReq && this.iLineHeight > 0) {
                 this.Request.bPositionUpdateReq = false;
 
-                int64_t lPosition = this.Request.lTargetPosition;
+                int64_t lPosition = this.Request.lTargetPositionInPixel;
                 if (lPosition < 0) {
 
                     this.Request.nTargetStartLineReq = 0;
@@ -820,7 +664,7 @@ void text_box_show( text_box_t *ptThis,
             }
             #endif
 
-            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT], this.iLineWidth)) {
+            if (!__text_box_get_and_analyze_one_line(ptThis, &this.tCurrentLine, this.iLineWidth)) {
                 break;
             }
 
@@ -839,16 +683,16 @@ void text_box_show( text_box_t *ptThis,
             };
 
 
-            tLineRegion.tSize.iWidth = this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].iLineWidth;
+            tLineRegion.tSize.iWidth = this.tCurrentLine.iLineWidth;
 
             switch (this.tCFG.u2LineAlign) {
                 case TEXT_BOX_LINE_ALIGN_LEFT:
                     break;
                 case TEXT_BOX_LINE_ALIGN_RIGHT:
-                    tLineRegion.tLocation.iX += this.iLineWidth - this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].iLineWidth;
+                    tLineRegion.tLocation.iX += this.iLineWidth - this.tCurrentLine.iLineWidth;
                     break;
                 case TEXT_BOX_LINE_ALIGN_CENTRE:
-                    tLineRegion.tLocation.iX += (this.iLineWidth - this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].iLineWidth) >> 1;
+                    tLineRegion.tLocation.iX += (this.iLineWidth - this.tCurrentLine.iLineWidth) >> 1;
                     break;
                 case TEXT_BOX_LINE_ALIGN_JUSTIFIED:
                     tLineRegion.tSize.iWidth = this.iLineWidth;
@@ -856,7 +700,7 @@ void text_box_show( text_box_t *ptThis,
             }
 
             /* update line info */
-            this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].nLineNo = iLineNumber;
+            this.tCurrentLine.nLineNo = iLineNumber;
 
             bool bIgnoreDrawing = false;
             if (0 != tLineRegion.tSize.iWidth ) {
@@ -882,23 +726,23 @@ void text_box_show( text_box_t *ptThis,
 
             if (!bIgnoreDrawing) {
                 __text_box_draw_line(ptThis,
-                                     &this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT],
+                                     &this.tCurrentLine,
                                      &__text_box,
                                      &tLineRegion,
                                      this.tCFG.u2LineAlign);
             }
 
-            int32_t nNewLinePosition = this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].nStartPosition + this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].hwByteCount;
+            int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
 
-            if (this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].u11BrickCount > 0) {
+            if (this.tCurrentLine.u11BrickCount > 0) {
                 /* skip the `\n` in a paragraph */
-                //nNewLinePosition += !!this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].bEndNaturally;
+                //nNewLinePosition += !!this.tCurrentLine.bEndNaturally;
                 nNewLinePosition = __text_box_skip_tail_invisible_chars(ptThis, nNewLinePosition);
             }
 
             __text_box_set_current_position(ptThis, nNewLinePosition);
             
-            if (this.tLines[__TEXT_BOX_LINE_CACHE_CURRENT].bEndNaturally) {
+            if (this.tCurrentLine.bEndNaturally) {
                 /* end of a paragraph, insert spacing */
                 iLineVerticalOffset += this.tCFG.chSpaceBetweenParagraph;
             }
