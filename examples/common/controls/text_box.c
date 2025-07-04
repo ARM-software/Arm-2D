@@ -111,6 +111,13 @@ ARM_NONNULL(1)
 void __text_box_update(text_box_t *ptThis);
 
 /*============================ LOCAL VARIABLES ===============================*/
+
+static const char *c_chContextName[] = {
+    "__TEXT_BOX_LINE_CACHE_PREVIOUS",
+    "__TEXT_BOX_LINE_CACHE_PREVIOUS_START",
+    "__TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME",
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 const text_box_io_handler_t TEXT_BOX_IO_C_STRING_READER = {
     .fnGetChar  = &__c_string_io_read_char,
@@ -569,11 +576,79 @@ void __text_box_save_context(   __text_box_context_t *ptContext,
     assert(NULL != ptContext);
     assert(NULL != ptInfo);
 
-    ptContext->bValid = true;
-    ptContext->iLineVerticalOffset = iLineVerticalOffset;
-    ptContext->nPosition = nPosition;
-    ptContext->tLineInfo = *ptInfo;
+    if (nPosition != ptContext->nPosition || !ptContext->bValid) {
+        ptContext->bValid = true;
+        ptContext->iLineVerticalOffset = iLineVerticalOffset;
+        ptContext->nPosition = nPosition;
+        ptContext->tLineInfo = *ptInfo;
+    } else {
+        ARM_2D_LOG_INFO(
+        CONTROLS, 
+        4, 
+        "TextBox", 
+        "The context is the same, ignore."
+    );
+    }
 }
+
+static
+ARM_NONNULL(1,2)
+__text_box_context_t * 
+__text_box_is_context_fulfill_requirement(  text_box_t *ptThis,
+                                            arm_2d_region_t *ptPFBRegion,
+                                            __text_box_context_t *ptContext)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptContext);
+
+    do {
+        if (!ptContext->bValid) {
+            break;
+        }
+
+        int32_t nLineNumber = ptContext->tLineInfo.nLineNo;
+        int16_t iLineVerticalOffset = ptContext->iLineVerticalOffset;
+        int16_t iFontCharBoxHeight = arm_lcd_text_get_actual_char_box().iHeight;
+        //int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;
+
+        /* get line region */
+        int32_t iLineOffset = nLineNumber - this.Start.nLine;
+
+        int32_t iLineY = iLineOffset * iFontCharBoxHeight + iLineVerticalOffset - this.Request.iIntraLineOffset;
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            1, 
+            "TextBox", 
+            "Check Context [%s]...",
+            c_chContextName[ptContext - this.tContexts]
+        );
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            2, 
+            "TextBox", 
+            "Line box : y=%d",
+            iLineY
+        );
+
+        if ((ptPFBRegion->tLocation.iY < iLineY)) {
+            break;
+        }
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            2, 
+            "TextBox", 
+            "The current line fulfill the requirement of the pfb scan region!"
+        );
+
+        return ptContext;
+    } while(0);
+
+    return NULL;
+}
+
 
 ARM_NONNULL(1)
 void text_box_show( text_box_t *ptThis,
@@ -588,7 +663,7 @@ void text_box_show( text_box_t *ptThis,
     }
 
     assert(NULL!= ptThis);
-    bool bPerFrameContextSaved = true;
+
     bool bPreviousStartSaved = false;
 
     arm_2d_container(ptTile, __text_box, ptRegion) {
@@ -604,7 +679,7 @@ void text_box_show( text_box_t *ptThis,
         int16_t iFontCharHeight = arm_lcd_text_get_actual_char_size().iHeight;
 
         if (bIsNewFrame) {
-            bPerFrameContextSaved = false;
+            this.Request.bWaitForFrameStartContext = true;
             bool bRequestUpdate = this.Request.bUpdateReq;
 
             if (this.Request.bPositionUpdateReq && this.iLineHeight > 0) {
@@ -681,12 +756,62 @@ void text_box_show( text_box_t *ptThis,
         /* print all lines */
         int16_t iLineVerticalOffset = 0;
 
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            1, 
+            "TextBox", 
+            "Start...\r\n"
+            "---------------------------------------------"
+        );
+
+        ARM_2D_LOG_INFO(
+            CONTROLS, 
+            1, 
+            "TextBox", 
+            "PFB Scan Region: x=%d, y=%d, w=%d, h=%d",
+            tPFBScanRegion.tLocation.iX,
+            tPFBScanRegion.tLocation.iY,
+            tPFBScanRegion.tSize.iWidth,
+            tPFBScanRegion.tSize.iHeight
+        );
 
         /* check contexts */
         do {
+            __text_box_context_t *ptContext = NULL;
+            arm_foreach(this.tContexts) {
+                ptContext = __text_box_is_context_fulfill_requirement(ptThis, &tPFBScanRegion, _);
+                if (NULL != ptContext) {
+                    break;
+                }
+            }
 
+            if (NULL == ptContext) {
 
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    1, 
+                    "TextBox", 
+                    "Failed to find any context...search from the page start."
+                );
+                break;
+            }
 
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                1, 
+                "TextBox", 
+                "Resume Context [%s]",
+                c_chContextName[(ptContext - this.tContexts)]
+            );
+
+            /* resume context */
+            nLineNumber = ptContext->tLineInfo.nLineNo;
+            iLineVerticalOffset = ptContext->iLineVerticalOffset;
+            this.tCurrentLine = ptContext->tLineInfo;
+            __text_box_set_current_position(ptThis, ptContext->nPosition);
+
+            /* jump to the loop with resumed context */
+            goto label_context_entry_point;
         } while(0);
 
         do {
@@ -739,39 +864,110 @@ label_context_entry_point:
                 if (!arm_2d_region_intersect(&__text_box_canvas, &tLineRegion, NULL)) {
                     /* out of text box canvas */
                     break;
-                }
+                } 
 
                 arm_2d_region_t tExpandedLineRegion = tLineRegion;
                 tExpandedLineRegion.tLocation.iY -= iFontCharHeight / 2;
                 tExpandedLineRegion.tSize.iHeight = iFontCharHeight * 2;
 
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    1, 
+                    "TextBox", 
+                    "Check the line box : x=%d, y=%d, w=%d, h=%d",
+                    tLineRegion.tLocation.iX,
+                    tLineRegion.tLocation.iY,
+                    tLineRegion.tSize.iWidth,
+                    tLineRegion.tSize.iHeight
+                );
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    2, 
+                    "TextBox", 
+                    "Expanded box : x=%d, y=%d, w=%d, h=%d",
+                    tExpandedLineRegion.tLocation.iX,
+                    tExpandedLineRegion.tLocation.iY,
+                    tExpandedLineRegion.tSize.iWidth,
+                    tExpandedLineRegion.tSize.iHeight
+                );
+
+                if (arm_2d_region_intersect(&tPFBScanRegion, &tLineRegion, NULL)) {
+
+                    /* save previous context */
+                    do {
+                        ARM_2D_LOG_INFO(
+                            CONTROLS, 
+                            3, 
+                            "TextBox", 
+                            "Save context to slot [__TEXT_BOX_LINE_CACHE_PREVIOUS]"
+                        );
+                        
+                        int32_t nPosition = __text_box_get_current_position(ptThis);
+                        __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS],
+                                                iLineVerticalOffset,
+                                                nPosition,
+                                                &this.tCurrentLine);
+
+                    } while(0);
+
+                    if (!bPreviousStartSaved) {
+                        bPreviousStartSaved = true;
+
+                        ARM_2D_LOG_INFO(
+                            CONTROLS, 
+                            3, 
+                            "TextBox", 
+                            "Save context to slot [__TEXT_BOX_LINE_CACHE_PREVIOUS_START]"
+                        );
+
+                        /* save previous start context */
+                        __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS_START],
+                                                iLineVerticalOffset,
+                                                __text_box_get_current_position(ptThis),
+                                                &this.tCurrentLine);
+                    }
+
+                    if (this.Request.bWaitForFrameStartContext) {
+                        this.Request.bWaitForFrameStartContext = false;
+
+                        ARM_2D_LOG_INFO(
+                            CONTROLS, 
+                            3, 
+                            "TextBox", 
+                            "Encounter a new frame, Save context to slot [__TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME]"
+                        );
+
+                        /* save previous frame context */
+                        __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME],
+                                                iLineVerticalOffset,
+                                                __text_box_get_current_position(ptThis),
+                                                &this.tCurrentLine);
+                    }
+                }
+
                 if (!arm_2d_region_intersect(&tPFBScanRegion, &tExpandedLineRegion, NULL)) {
                     /* out of canvas */
                     bIgnoreDrawing = true;
 
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        3, 
+                        "TextBox", 
+                        "Out of interested region..."
+                    );
+
                     if (tLineRegion.tLocation.iY >= tPFBScanRegion.tLocation.iY + tPFBScanRegion.tSize.iHeight) {
                         /* the target line is below the PFB bottom line, no need to draw the following lines */
+                        ARM_2D_LOG_INFO(
+                            CONTROLS, 
+                            4, 
+                            "TextBox", 
+                            "Early End."
+                        );
                         break;
                     }
-                }
-
-                if (!bPreviousStartSaved) {
-                    bPreviousStartSaved = true;
-                    /* save previous start context */
-                    __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS_START],
-                                            iLineVerticalOffset,
-                                            __text_box_get_current_position(ptThis),
-                                            &this.tCurrentLine);
-                }
-
-                if (bIsNewFrame && !bPerFrameContextSaved) {
-                    bPerFrameContextSaved = true;
-                    /* save previous frame context */
-                    __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME],
-                                            iLineVerticalOffset,
-                                            __text_box_get_current_position(ptThis),
-                                            &this.tCurrentLine);
-                }
+                } 
             } else {
                 bIgnoreDrawing = true;
             }
@@ -782,6 +978,13 @@ label_context_entry_point:
                                      &__text_box,
                                      &tLineRegion,
                                      this.tCFG.u2LineAlign);
+            } else {
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    1, 
+                    "TextBox", 
+                    "Ignore this line..."
+                );
             }
 
             int32_t nNewLinePosition = this.tCurrentLine.nStartPosition + this.tCurrentLine.hwByteCount;
@@ -801,14 +1004,6 @@ label_context_entry_point:
 
             nLineNumber++;
         } while(1);
-
-        /* save previous context */
-        do {
-            __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS],
-                                    iLineVerticalOffset,
-                                    __text_box_get_current_position(ptThis),
-                                    &this.tCurrentLine);
-        } while(0);
     }
 
     ARM_2D_OP_WAIT_ASYNC();
