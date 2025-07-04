@@ -838,6 +838,8 @@ void text_box_show( text_box_t *ptThis,
             }
 
 label_context_entry_point:
+            /* please do NOT remove this line, it makes some compiler happy*/
+            (void)nLineNumber;            
 
             int32_t iLineOffset = nLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
