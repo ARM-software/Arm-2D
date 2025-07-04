@@ -184,7 +184,9 @@ ARM_PRIVATE(
     int16_t iLinesPerPage;
     int32_t nMaxLines;
 
+#if __ARM_2D_CFG_CONTROL_USE_CONTEXT__
     __text_box_context_t tContexts[__TEXT_BOX_LINE_CACHE_COUNT];
+#endif
     __text_box_line_info_t tCurrentLine;
 
     arm_2d_helper_dirty_region_item_t tDirtyRegionItem[1];

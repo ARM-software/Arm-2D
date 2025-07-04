@@ -212,7 +212,7 @@ extern "C" {
 // <i> The height of your screen for running benchmark
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    480
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    481
 #endif
 
 // <o>Number of iterations <1-2000>
@@ -247,6 +247,14 @@ extern "C" {
 #ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
 #   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__                    0
 #endif
+
+// <q> Enable Context in Text Box
+// <i> When your PFB is small (< 1/10 FB) and the text box visual area is big, you can enable the context feature and see whether the performance is improved or not.
+// <i> This feature is disabled by default to save memory footprint
+#ifndef __ARM_2D_CFG_CONTROL_USE_CONTEXT__
+#   define __ARM_2D_CFG_CONTROL_USE_CONTEXT__                           0
+#endif
+
 
 //</h>
 // </h>

@@ -185,7 +185,6 @@ extern "C" {
 
 // </h>
 
-
 // <h>Extra Components
 // =======================
 //
@@ -252,6 +251,13 @@ extern "C" {
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
 #   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__                    0
+#endif
+
+// <q> Enable Context in Text Box
+// <i> When your PFB is small (< 1/10 FB) and the text box visual area is big, you can enable the context feature and see whether the performance is improved or not.
+// <i> This feature is disabled by default to save memory footprint
+#ifndef __ARM_2D_CFG_CONTROL_USE_CONTEXT__
+#   define __ARM_2D_CFG_CONTROL_USE_CONTEXT__                           0
 #endif
 
 //</h>
