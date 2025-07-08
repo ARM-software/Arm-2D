@@ -259,7 +259,7 @@ static void __before_scene_ruler_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
+    arm_lcd_text_set_scale(0);
 }
 
 static
