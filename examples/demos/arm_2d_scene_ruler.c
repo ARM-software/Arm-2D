@@ -505,7 +505,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
             //.fnOnBGStart    = &__on_scene_ruler_background_start,
             //.fnOnBGComplete = &__on_scene_ruler_background_complete,
             .fnOnFrameStart = &__on_scene_ruler_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
             .fnOnFrameCPL   = &__on_scene_ruler_frame_complete,
             .fnDepose       = &__on_scene_ruler_depose,
 
