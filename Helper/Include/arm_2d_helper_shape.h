@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_shape.h"
  * Description:  the helper service header file for drawing simple shapes
  *
- * $Date:        04. Dec 2024
- * $Revision:    V.1.13.0
+ * $Date:        9. July 2025
+ * $Revision:    V.1.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -32,6 +32,8 @@
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
+
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
 
 #ifdef   __cplusplus
 extern "C" {
@@ -242,6 +244,8 @@ void draw_glass_bar(const arm_2d_tile_t *ptTarget,
 
 #ifdef   __cplusplus
 }
+#endif
+
 #endif
 
 #endif

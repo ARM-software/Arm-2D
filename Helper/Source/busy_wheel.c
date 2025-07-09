@@ -18,6 +18,9 @@
 
 /*============================ INCLUDES ======================================*/
 #include "busy_wheel.h"
+
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+
 #include <math.h>
 #include <assert.h>
 
@@ -174,4 +177,6 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic pop
+#endif
+
 #endif

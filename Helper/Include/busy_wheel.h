@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2024 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2025 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,6 +22,8 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d_helper.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -42,6 +44,8 @@ void busy_wheel2_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame);
 
 #ifdef   __cplusplus
 }
+#endif
+
 #endif
 
 #endif

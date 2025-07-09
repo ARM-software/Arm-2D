@@ -21,14 +21,16 @@
  * Title:        #include "arm_2d_helper_shape.c"
  * Description:  the helper service source code for drawing simple shapes
  *
- * $Date:        04. Dec 2024
- * $Revision:    V.1.13.0
+ * $Date:        9. July 2025
+ * $Revision:    V.1.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d_helper.h"
+
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
 #include <math.h>
 #include <time.h>
 #include <assert.h>
@@ -611,4 +613,6 @@ void draw_glass_bar(const arm_2d_tile_t *ptTarget,
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#endif
+
 #endif

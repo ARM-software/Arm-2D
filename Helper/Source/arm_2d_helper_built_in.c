@@ -54,7 +54,9 @@
 
 void arm_2d_helper_built_in_init(void)
 {
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
     busy_wheel_init();
+#endif
 }
 
 

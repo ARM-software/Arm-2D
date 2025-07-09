@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        20. Dec 2024
- * $Revision:    V.1.8.5
+ * $Date:        9. July 2025
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -411,11 +411,13 @@ arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_NONE;
 extern
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_USER;
 
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
 extern
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE;
 
 extern
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK;
+#endif
 
 extern
 arm_2d_scene_switch_mode_t ARM_2D_SCENE_SWITCH_MODE_SLIDE_LEFT;
