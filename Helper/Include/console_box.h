@@ -19,11 +19,12 @@
 #ifndef __CONSOLE_BOX_H__
 #define __CONSOLE_BOX_H__
 
-#if defined(RTE_Acceleration_Arm_2D_Extra_LCD_printf)
+
 /*============================ INCLUDES ======================================*/
 
 #include "arm_2d_helper.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_LCD_printf)
 #ifdef   __cplusplus
 extern "C" {
 #endif
