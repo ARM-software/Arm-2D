@@ -149,7 +149,7 @@ static void __on_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptScene);
 }
 
-
+#if !__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
@@ -174,6 +174,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 
     return arm_fsm_rt_cpl;
 }
+#endif
 
 #if __DISP%Instance%_CFG_NAVIGATION_LAYER_MODE__
 
@@ -733,11 +734,13 @@ static void __user_scene_player_init(void)
     } while(0);
 #endif
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_LCD_printf)
     arm_lcd_text_init((arm_2d_region_t []) {
                         { .tSize = {
                             .iWidth = __DISP%Instance%_CFG_SCEEN_WIDTH__,
                             .iHeight = __DISP%Instance%_CFG_SCEEN_HEIGHT__,
                         }}});
+#endif
 
     DISP%Instance%_ADAPTER.Benchmark.wMin = UINT32_MAX;
     DISP%Instance%_ADAPTER.Benchmark.hwIterations = __DISP%Instance%_CFG_ITERATION_CNT__;
@@ -915,26 +918,8 @@ void disp_adapter%Instance%_init(void)
 
     DISP%Instance%_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
 
-    if (!__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__) {
-    #if 0
-        /*! define dirty regions */
-        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-            /* a region for the busy wheel */
-            ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-                .tLocation = {
-                    .iX = ((__DISP%Instance%_CFG_SCEEN_WIDTH__ - 100) >> 1),
-                    .iY = ((__DISP%Instance%_CFG_SCEEN_HEIGHT__ - 100) >> 1),
-                },
-                .tSize = {
-                    .iWidth = 100,
-                    .iHeight = 100,
-                },
-            ),
-
-        END_IMPL_ARM_2D_REGION_LIST()
-    #endif
-    
+#if !__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__
+    do {
         static arm_2d_scene_t s_tScenes[] = {
             [0] = {
             
@@ -957,7 +942,8 @@ void disp_adapter%Instance%_init(void)
                                         &DISP%Instance%_ADAPTER,
                                         (arm_2d_scene_t *)s_tScenes,
                                         dimof(s_tScenes));
-    }
+    } while(0);
+#endif
 }
 
 arm_fsm_rt_t __disp_adapter%Instance%_task(void)
