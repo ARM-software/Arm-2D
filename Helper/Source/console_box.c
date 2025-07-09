@@ -21,6 +21,8 @@
 #define __CONSOLE_BOX_IMPLEMENT__   1
 #include "console_box.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_LCD_printf)
+
 #define __ARM_2D_HELPER_INHERIT__   1
 #include "arm_2d_helper.h"
 
@@ -702,4 +704,6 @@ void console_box_show(  console_box_t *ptThis,
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
+#endif
+
 #endif

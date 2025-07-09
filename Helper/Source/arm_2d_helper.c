@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        19. June 2025
- * $Revision:    V.2.4.0
+ * $Date:        9. July 2025
+ * $Revision:    V.2.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -654,24 +654,37 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
     arm_2d_region_t tDrawRegion = *ptRegion;
     
     tDrawRegion.tSize.iHeight = iBorderWidth;
-    
+
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
     /* draw the top horizontal line */
     arm_2d_fill_colour_with_opacity(ptTarget,
                                     &tDrawRegion,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
+#else
+    arm_2d_fill_colour( ptTarget,
+                        &tDrawRegion,
+                        tColour);
+#endif
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     
     tDrawRegion.tLocation.iY += ptRegion->tSize.iHeight - iBorderWidth;
-    
+
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
     /* draw the bottom horizontal line */
     arm_2d_fill_colour_with_opacity(ptTarget,
                                     &tDrawRegion,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
+#else
+    /* draw the bottom horizontal line */
+    arm_2d_fill_colour( ptTarget,
+                        &tDrawRegion,
+                        tColour);
+#endif
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
     
     tDrawRegion = *ptRegion;
     
@@ -680,21 +693,33 @@ void arm_2d_helper_draw_box( const arm_2d_tile_t *ptTarget,
     tDrawRegion.tLocation.iY += iBorderWidth;
     tDrawRegion.tSize.iHeight -= iBorderWidth * 2;
 
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
     arm_2d_fill_colour_with_opacity(ptTarget,
                                     &tDrawRegion,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
-    
-    arm_2d_op_wait_async(NULL);
+#else
+    arm_2d_fill_colour( ptTarget,
+                        &tDrawRegion,
+                        tColour);
+#endif
+
+    ARM_2D_OP_WAIT_ASYNC();
     
     /* draw right vertical line */
     tDrawRegion.tLocation.iX += ptRegion->tSize.iWidth - iBorderWidth;
+
+#if defined(RTE_Acceleration_Arm_2D_Alpha_Blending)
     arm_2d_fill_colour_with_opacity(ptTarget,
                                     &tDrawRegion,
                                     (__arm_2d_color_t){tColour},
                                     chOpacity);
-    
-    arm_2d_op_wait_async(NULL);
+#else
+    arm_2d_fill_colour( ptTarget,
+                        &tDrawRegion,
+                        tColour);
+#endif
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 ARM_NONNULL(1)
