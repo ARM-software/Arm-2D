@@ -134,7 +134,7 @@ extern "C" {
 
 // </h>
 
-// <h>Patches for improving performance
+// <h>Patches for improving performance or memory footprint
 // =======================
 // 
 // <c1> Do NOT treat alpha value 255 as completely opaque in mask related operations
@@ -160,6 +160,11 @@ extern "C" {
 // <c1> Remove the PFB support in IIR Blur Helium acceleration
 // <i> This option is used to remove the PFB support in IIR Blur Helium backend to gain a better performance.
 //#define __ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__ 
+// </c>
+
+// <c1> Disable Dirty Region Optimization Algorithm permanently in PFB helper service
+// <i> This option is used to remove dirty region optimization in PFB helper service. Warning: Some of the application behaviours would be affected, and the dirty region debug mode is no longer available. Disable the dirty region optimization can reduce memory footprint.
+//#define __ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__
 // </c>
 
 // <q> When opacity is 255, call the non-opacity version of API implicitily
