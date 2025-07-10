@@ -392,6 +392,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -400,7 +401,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.chColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -412,6 +415,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -420,7 +424,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.chColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -748,6 +754,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -756,7 +763,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.chColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -768,6 +777,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -776,7 +786,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.chColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -1104,6 +1116,8 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -1112,7 +1126,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.chColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -1124,6 +1140,8 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
         }
     #endif
     } else {
+
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -1132,7 +1150,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.chColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -1460,6 +1480,8 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+    
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -1468,7 +1490,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.hwColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -1480,6 +1504,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -1488,7 +1513,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.hwColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -1816,6 +1843,8 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_y_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -1824,7 +1853,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_y_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.hwColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -1836,6 +1867,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_y_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -1844,7 +1876,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_y_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.hwColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -2172,6 +2206,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -2180,7 +2215,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.hwColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -2192,6 +2229,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -2200,7 +2238,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.hwColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -2528,6 +2568,8 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+    
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -2536,7 +2578,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.wColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -2548,6 +2592,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -2556,7 +2601,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.wColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -2884,6 +2931,8 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_y_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -2892,7 +2941,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_y_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.wColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -2904,6 +2955,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_y_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_mask_y_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -2912,7 +2964,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_y_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.wColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -3240,6 +3294,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -3248,7 +3303,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.wColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -3260,6 +3317,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -3268,7 +3326,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.wColour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,

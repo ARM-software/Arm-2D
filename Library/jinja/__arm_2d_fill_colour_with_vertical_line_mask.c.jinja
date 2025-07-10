@@ -426,9 +426,11 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_vert
 
     assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         return __arm_2d_{{colour_name | lower}}_sw_repeat_colour_filling_with_vertical_line_mask(ptTask);
     }
+#endif
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     
@@ -467,9 +469,11 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_vertical_li
 
     assert(ARM_2D_COLOUR_SZ_{{colour_int_no_bits}} == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         return __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_vertical_line_mask(ptTask);
     }
+#endif
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     

@@ -1038,6 +1038,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTas
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chRatio) {
             __arm_2d_impl_ccca8888_to_gray8(
                                         ptTask->Param.tCopy.tSource.pBuffer,
@@ -1045,7 +1046,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTas
                                         ptTask->Param.tCopy.tTarget.pBuffer,
                                         ptTask->Param.tCopy.tTarget.iStride,
                                         &ptTask->Param.tCopy.tCopySize);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
@@ -1057,13 +1060,16 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTas
     } else 
 #endif
     {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chRatio) {
             __arm_2d_impl_c8bit_copy(   ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
                                         ptTask->Param.tCopy.tTarget.pBuffer,
                                         ptTask->Param.tCopy.tTarget.iStride,
                                         &ptTask->Param.tCopy.tCopySize);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_gray8_tile_copy_opacity( 
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
@@ -1087,6 +1093,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTa
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chRatio) {
             __arm_2d_impl_ccca8888_to_rgb565(
                                         ptTask->Param.tCopy.tSource.pBuffer,
@@ -1094,7 +1101,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTa
                                         ptTask->Param.tCopy.tTarget.pBuffer,
                                         ptTask->Param.tCopy.tTarget.iStride,
                                         &ptTask->Param.tCopy.tCopySize);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
@@ -1108,13 +1117,16 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTa
 #endif
 
     {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chRatio) {
             __arm_2d_impl_rgb16_copy(   ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
                                         ptTask->Param.tCopy.tTarget.pBuffer,
                                         ptTask->Param.tCopy.tTarget.iStride,
                                         &ptTask->Param.tCopy.tCopySize);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_rgb565_tile_copy_opacity(
                                     ptTask->Param.tCopy.tSource.pBuffer,
                                     ptTask->Param.tCopy.tSource.iStride,
@@ -1138,6 +1150,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptT
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chRatio) {
             __arm_2d_impl_ccca8888_to_cccn888(
                                         ptTask->Param.tCopy.tSource.pBuffer,
@@ -1145,7 +1158,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptT
                                         ptTask->Param.tCopy.tTarget.pBuffer,
                                         ptTask->Param.tCopy.tTarget.iStride,
                                         &ptTask->Param.tCopy.tCopySize);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
                                         ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
@@ -1158,13 +1173,16 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptT
 #endif
 
     {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chRatio) {
             __arm_2d_impl_rgb32_copy(   ptTask->Param.tCopy.tSource.pBuffer,
                                         ptTask->Param.tCopy.tSource.iStride,
                                         ptTask->Param.tCopy.tTarget.pBuffer,
                                         ptTask->Param.tCopy.tTarget.iStride,
                                         &ptTask->Param.tCopy.tCopySize);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_cccn888_tile_copy_opacity(   
                                                 ptTask->Param.tCopy.tSource.pBuffer,
                                                 ptTask->Param.tCopy.tSource.iStride,
@@ -1288,6 +1306,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_colour_keying_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_cl_key_t, ptTask->ptOP)
     assert(ARM_2D_COLOUR_GRAY8 == OP_CORE.ptOp->Info.Colour.chScheme);
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chRatio) {
         __arm_2d_impl_c8bit_cl_key_copy(
                                     ptTask->Param.tCopy.tSource.pBuffer,
@@ -1296,7 +1315,9 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_colour_keying_and_opacity(
                                     ptTask->Param.tCopy.tTarget.iStride,
                                     &ptTask->Param.tCopy.tCopySize,
                                     this.chColour);
-    } else {
+    } else 
+#endif
+    {
         __arm_2d_impl_gray8_tile_copy_colour_keying_opacity(
                                     ptTask->Param.tCopy.tSource.pBuffer,
                                     ptTask->Param.tCopy.tSource.iStride,
@@ -1316,6 +1337,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_colour_keying_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_cl_key_t, ptTask->ptOP)
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chRatio) {
         __arm_2d_impl_rgb16_cl_key_copy(
                                     ptTask->Param.tCopy.tSource.pBuffer,
@@ -1324,7 +1346,9 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_colour_keying_and_opacity(
                                     ptTask->Param.tCopy.tTarget.iStride,
                                     &ptTask->Param.tCopy.tCopySize,
                                     this.hwColour);
-    } else {
+    } else 
+#endif
+    {
         __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(
                                     ptTask->Param.tCopy.tSource.pBuffer,
                                     ptTask->Param.tCopy.tSource.iStride,
@@ -1344,6 +1368,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_colour_keying_and_opacity(
     ARM_2D_IMPL(arm_2d_op_alpha_cl_key_t, ptTask->ptOP)
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chRatio) {
         __arm_2d_impl_rgb32_cl_key_copy(
                                     ptTask->Param.tCopy.tSource.pBuffer,
@@ -1352,7 +1377,9 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_colour_keying_and_opacity(
                                     ptTask->Param.tCopy.tTarget.iStride,
                                     &ptTask->Param.tCopy.tCopySize,
                                     this.wColour);
-    } else {
+    } else 
+#endif
+    {
     __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity(
                                     ptTask->Param.tCopy.tSource.pBuffer,
                                     ptTask->Param.tCopy.tSource.iStride,

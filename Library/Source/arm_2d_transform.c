@@ -1172,10 +1172,13 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_with_colour_keying_and_opacity(__arm_2d
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset;
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         __arm_2d_impl_gray8_transform(  &(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
-    } else {
+    } else 
+#endif
+    {
     #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
         __arm_2d_impl_gray8_2xssaa_transform_with_opacity(  &(ptTask->Param.tCopyOrig),
                                             &this.tTransform,
@@ -1198,10 +1201,13 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_with_colour_keying_and_opacity(__arm_2
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset * 2;
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         __arm_2d_impl_rgb565_transform( &(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
-    } else {
+    } else 
+#endif
+    {
     #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
         __arm_2d_impl_rgb565_2xssaa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
@@ -1224,10 +1230,13 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_with_colour_keying_and_opacity(__arm_
     ARM_TYPE_CONVERT(ptTask->Param.tCopyOrig.tOrigin.pBuffer, intptr_t) -= 
           ptTask->Param.tCopyOrig.tOrigin.nOffset * 4;
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         __arm_2d_impl_cccn888_transform(&(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
-    } else {
+    } else 
+#endif
+    {
     #if __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 2
         __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(   &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
@@ -1410,11 +1419,14 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_only_with_opacity(__arm_2d_sub_task_t *
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     if (ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme == ARM_2D_COLOUR_CCCA8888) {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
             __arm_2d_impl_ccca8888_transform_to_gray8(  &(ptTask->Param.tCopyOrig),
                                                         &this.tTransform);
 
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8(  &(ptTask->Param.tCopyOrig),
                                                         &this.tTransform,
                                                         this.chOpacity);
@@ -1422,10 +1434,14 @@ arm_fsm_rt_t __arm_2d_gray8_sw_transform_only_with_opacity(__arm_2d_sub_task_t *
         }
     } else
 #endif
+
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         __arm_2d_impl_gray8_transform_only(  &(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
-    } else {
+    } else 
+#endif
+    {
         __arm_2d_impl_gray8_transform_only_opacity(  &(ptTask->Param.tCopyOrig),
                                             &this.tTransform,
                                             this.chOpacity);
@@ -1444,11 +1460,14 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_only_with_opacity(__arm_2d_sub_task_t 
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     if (ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme == ARM_2D_COLOUR_CCCA8888) {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
             __arm_2d_impl_ccca8888_transform_to_rgb565( &(ptTask->Param.tCopyOrig),
                                                         &this.tTransform);
 
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(  
                                                         &(ptTask->Param.tCopyOrig),
                                                         &this.tTransform,
@@ -1458,10 +1477,13 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_transform_only_with_opacity(__arm_2d_sub_task_t 
     } else
 #endif
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         __arm_2d_impl_rgb565_transform_only(    &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform);
-    } else {
+    } else 
+#endif
+    {
         __arm_2d_impl_rgb565_transform_only_opacity(   
                                                 &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
@@ -1481,11 +1503,15 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only_with_opacity(__arm_2d_sub_task_t
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     if (ptTask->Param.tCopyOrig.tOrigin.tColour.chScheme == ARM_2D_COLOUR_CCCA8888) {
+    
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
             __arm_2d_impl_ccca8888_transform_to_cccn888(&(ptTask->Param.tCopyOrig),
                                                         &this.tTransform);
 
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888(  
                                                         &(ptTask->Param.tCopyOrig),
                                                         &this.tTransform,
@@ -1495,10 +1521,13 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only_with_opacity(__arm_2d_sub_task_t
     } else
 #endif
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         __arm_2d_impl_cccn888_transform_only(&(ptTask->Param.tCopyOrig),
                                         &this.tTransform);
-    } else {
+    } else 
+#endif
+    {
         __arm_2d_impl_cccn888_transform_only_opacity(  &(ptTask->Param.tCopyOrig),
                                                 &this.tTransform,
                                                 this.chOpacity);
@@ -2112,6 +2141,7 @@ __arm_2d_gray8_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptTas
             ==  ptTask->Param.tCopyOrigMask.tOrigMask.tColour.chScheme);
 #endif
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         if (bIsMaskChannel8In32) {
@@ -2125,7 +2155,9 @@ __arm_2d_gray8_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptTas
                                                 &(ptTask->Param.tCopyOrigMask),
                                                 &this.tTransform);
         }
-    } else {
+    } else 
+#endif
+    {
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         if (bIsMaskChannel8In32) {
             __arm_2d_impl_gray8_transform_with_src_chn_mask_and_opacity(
@@ -2165,6 +2197,7 @@ __arm_2d_rgb565_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptTa
             ==  ptTask->Param.tCopyOrigMask.tOrigMask.tColour.chScheme);
 #endif
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         if (bIsMaskChannel8In32) {
@@ -2178,7 +2211,9 @@ __arm_2d_rgb565_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptTa
                                                 &(ptTask->Param.tCopyOrigMask),
                                                 &this.tTransform);
         }
-    } else {
+    } else 
+#endif
+    {
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         if (bIsMaskChannel8In32) {
             __arm_2d_impl_rgb565_transform_with_src_chn_mask_and_opacity(
@@ -2217,6 +2252,7 @@ __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptT
             ==  ptTask->Param.tCopyOrigMask.tOrigMask.tColour.chScheme);
 #endif
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         if (bIsMaskChannel8In32) {
@@ -2230,7 +2266,9 @@ __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptT
                                                 &(ptTask->Param.tCopyOrigMask),
                                                 &this.tTransform);
         }
-    } else {
+    } else 
+#endif
+    {
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         if (bIsMaskChannel8In32) {
             __arm_2d_impl_cccn888_transform_with_src_chn_mask_and_opacity(

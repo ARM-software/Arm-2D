@@ -229,6 +229,7 @@ arm_fsm_rt_t __arm_2d_sw_draw_point(__arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_drw_pt_t, ptTask->ptOP)
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpaicty) {
         switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
             case ARM_2D_COLOUR_SZ_8BIT:
@@ -243,7 +244,9 @@ arm_fsm_rt_t __arm_2d_sw_draw_point(__arm_2d_sub_task_t *ptTask)
             default:
                 return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
         }
-    } else {
+    } else
+#endif
+    {
         switch (OP_CORE.ptOp->Info.Colour.u3ColourSZ) {
             case ARM_2D_COLOUR_SZ_8BIT:
                 __ARM_2D_PIXEL_BLENDING_OPA_GRAY8(  

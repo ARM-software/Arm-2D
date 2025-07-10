@@ -524,16 +524,17 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_source_mask_and_opacity_only( __ar
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         return __arm_2d_gray8_sw_tile_copy_with_src_mask_only(ptTask);
     }
+#endif
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
-    
         if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
         
         #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1101,10 +1102,11 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_source_mask_and_opacity_only( __a
     if (ptTask->Param.tCopyMask.tSrcMask.bInvalid) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
-
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         return __arm_2d_rgb565_sw_tile_copy_with_src_mask_only(ptTask);
     }
+#endif
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
@@ -1680,9 +1682,11 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_source_mask_and_opacity_only( __
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         return __arm_2d_cccn888_sw_tile_copy_with_src_mask_only(ptTask);
     }
+#endif
 
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);

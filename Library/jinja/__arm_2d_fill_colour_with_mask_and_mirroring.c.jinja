@@ -423,6 +423,8 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_{{mirr
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_name | lower }}(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -431,7 +433,9 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_{{mirr
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.{{colour_int_prefix}}Colour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_{{colour_name | lower}}_colour_filling_channel_mask_{{mirror_name | lower }}_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
@@ -443,6 +447,7 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_{{mirr
         }
     #endif
     } else {
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | lower }}(
                             ptTask->Param.tCopy.tTarget.pBuffer,
@@ -451,7 +456,9 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_mask_{{mirr
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
                             &(ptTask->Param.tCopy.tCopySize),
                             this.{{colour_int_prefix}}Colour);
-        } else {
+        } else 
+    #endif
+        {
             __arm_2d_impl_{{colour_name | lower}}_colour_filling_mask_{{mirror_name | lower }}_opacity(
                             ptTask->Param.tCopy.tTarget.pBuffer,
                             ptTask->Param.tCopy.tTarget.iStride,
