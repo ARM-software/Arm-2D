@@ -416,7 +416,7 @@ extern
 void arm_lcd_puts(const char *str);
 
 extern 
-void arm_lcd_text_location(uint8_t chY, uint8_t chX);
+void arm_lcd_text_location(int16_t iRow, uint16_t iColumn);
 
 extern
 void arm_lcd_text_insert_line_space(int16_t iWidth);

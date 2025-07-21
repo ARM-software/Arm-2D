@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        16 June 2025
- * $Revision:    V.2.13.1
+ * $Date:        21 July 2025
+ * $Revision:    V.2.13.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -387,17 +387,17 @@ void arm_lcd_text_set_draw_region(arm_2d_region_t *ptRegion)
     __arm_lcd_update_char_draw_box();
 }
 
-void arm_lcd_text_location(uint8_t chY, uint8_t chX)
+void arm_lcd_text_location(int16_t iRow, uint16_t iColumn)
 {
     arm_2d_size_t tCharBoxSize = s_tLCDTextControl.Updated.tCharSize;
     tCharBoxSize.iWidth += s_tLCDTextControl.Updated.tSpacing.iWidth;
     tCharBoxSize.iHeight += s_tLCDTextControl.Updated.tSpacing.iHeight;
     
     s_tLCDTextControl.tDrawOffset.iX 
-        = tCharBoxSize.iWidth * chX % s_tLCDTextControl.tRegion.tSize.iWidth;
+        = tCharBoxSize.iWidth * iColumn % s_tLCDTextControl.tRegion.tSize.iWidth;
     s_tLCDTextControl.tDrawOffset.iY 
         = tCharBoxSize.iHeight * 
-        (   chY + tCharBoxSize.iWidth * chX 
+        (   iRow + tCharBoxSize.iWidth * iColumn 
         /   s_tLCDTextControl.tRegion.tSize.iWidth);
 
     s_tLCDTextControl.tDrawOffset.iY %= s_tLCDTextControl.tRegion.tSize.iHeight;
