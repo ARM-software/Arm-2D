@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        26. April 2025
- * $Revision:    V.1.8.1
+ * $Date:        21. July 2025
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1332,6 +1332,29 @@ extern "C" {
             arm_using(  __arm_2d_layout_t __layout_assistant__ = {              \
                             .tAlignTable                                        \
                                 = ARM_2D_LAYOUT_ALIGN_##__align                 \
+                        },                                                      \
+                        {                                                       \
+                            __layout_assistant__.tLayout.tLocation              \
+                                = (__region).tLocation;                         \
+                            __layout_assistant__.tArea = (__region);            \
+                                                                                \
+                            __layout_assistant__.tLayout.tLocation.iX -=        \
+                                __layout_assistant__.tArea.tSize.iWidth *       \
+                                __layout_assistant__.tAlignTable                \
+                                    .Horizontal.sWidth;                         \
+                            __layout_assistant__.tLayout.tLocation.iY -=        \
+                                __layout_assistant__.tArea.tSize.iHeight *      \
+                                __layout_assistant__.tAlignTable                \
+                                    .Vertical.sHeight;                          \
+                        },                                                      \
+                        {                                                       \
+                            ARM_2D_OP_WAIT_ASYNC();                             \
+                        }                                                       \
+                    )
+
+#define arm_2d_layout_with_align_mode(__region, __align_mode)                   \
+            arm_using(  __arm_2d_layout_t __layout_assistant__ = {              \
+                            .tAlignTable  = __align_mode,                       \
                         },                                                      \
                         {                                                       \
                             __layout_assistant__.tLayout.tLocation              \
