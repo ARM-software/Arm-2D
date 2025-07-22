@@ -1904,6 +1904,10 @@ extern "C" {
  *              code body that can use __item_region
  *          }
  *
+ * \note prototype 3:
+ *          __item_line_dock_vertical(__left, __right, __top, __bottom) {
+ *              code body that can use __item_region
+ *          }
  */
 #define __item_line_dock_vertical_open(...)                                     \
             ARM_CONNECT2(   ____item_line_dock_vertical,                        \
