@@ -134,6 +134,8 @@ typedef struct text_box_cfg_t {
     uint8_t bUseDirtyRegions    : 1;
 
     int8_t chSpaceBetweenParagraph;
+
+    arm_2d_margin_t tMargin;
     
 } text_box_cfg_t;
 

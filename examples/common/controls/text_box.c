@@ -672,6 +672,17 @@ void text_box_show( text_box_t *ptThis,
 
     arm_2d_container(ptTile, __text_box, ptRegion) {
 
+        arm_2d_dock(__text_box_canvas, 
+                    this.tCFG.tMargin.chLeft,
+                    this.tCFG.tMargin.chRight,
+                    this.tCFG.tMargin.chTop,
+                    this.tCFG.tMargin.chBottom) {
+            __text_box_canvas = __dock_region;
+        }
+
+        //arm_2d_helper_draw_box(&__text_box, NULL, 1, GLCD_COLOR_RED, 255);
+        //arm_2d_helper_draw_box(&__text_box, &__text_box_canvas, 1, GLCD_COLOR_BLUE, 255);
+
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__text_box);
         arm_lcd_text_set_font((const arm_2d_font_t *)this.tCFG.ptFont);
         arm_lcd_text_set_colour(tColour.tValue, GLCD_COLOR_BLACK);
@@ -709,7 +720,7 @@ void text_box_show( text_box_t *ptThis,
 
             if (this.iLineWidth <= 0 || this.Request.bUpdateReq) {
                 this.iLineWidth = __text_box_canvas.tSize.iWidth 
-                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compenstation.
+                                - (arm_lcd_text_get_actual_char_size().iWidth >> 2);    //!< some chars advance might smaller than the char width, so we need this compensation.
                 bRequestUpdate = true;
             }
 
@@ -844,7 +855,8 @@ label_context_entry_point:
             int32_t iLineOffset = nLineNumber - this.Start.nLine;
             arm_2d_region_t tLineRegion = {
                 .tLocation = {
-                    .iY = iLineOffset * iFontCharBoxHeight + iLineVerticalOffset - this.Request.iIntraLineOffset,
+                    .iX = __text_box_canvas.tLocation.iX,
+                    .iY = __text_box_canvas.tLocation.iY + iLineOffset * iFontCharBoxHeight + iLineVerticalOffset - this.Request.iIntraLineOffset,
                 },
                 .tSize = {
                     .iHeight = this.iLineHeight,
