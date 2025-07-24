@@ -229,7 +229,7 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
     return ptDescriptor;
 }
 
-ARM_SECTION("arm2d.asset.FONT.ARM_2D_FONT_Arial14_A4")
+ARM_SECTION("arm2d.asset.FONT.ARM_2D_FONT_LiberationSansRegular14_A4")
 const
 struct {
     implement(arm_2d_user_font_t);

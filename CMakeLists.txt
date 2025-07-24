@@ -192,7 +192,9 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arm_2d_asset_DigitsFont.c
             examples/common/asset/arm_2d_asset_alarm_clock_font32.c
             examples/common/asset/arm_2d_asset_alarm_clock_font64.c
-            examples/common/asset/arm_2d_asset_arial_ascii_font14.c
+            examples/common/asset/arm_2d_asset_liberalsans_regular_ascii_font14.c
+            examples/common/asset/arm_2d_asset_liberalsans_regular_ascii_font32.c
+            examples/common/asset/arm_2d_asset_liberalsans_regular_ascii_font64.c
             examples/common/asset/arm_2d_asset_ClockMarking.c
             examples/common/asset/arm_2d_asset_compass.c
             examples/common/asset/arm_2d_asset_Earth.c

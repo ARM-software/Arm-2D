@@ -97,10 +97,10 @@ const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-}   ARM_2D_FONT_Arial14_A1,
+}   ARM_2D_FONT_LiberationSansRegular14_A1,
     ARM_2D_FONT_Arial14_A2,
-    ARM_2D_FONT_Arial14_A4,
-    ARM_2D_FONT_Arial14_A8;
+    ARM_2D_FONT_LiberationSansRegular14_A4,
+    ARM_2D_FONT_LiberationSansRegular14_A8;
 
 extern 
 const arm_2d_a1_font_t ARM_2D_FONT_6x8;
@@ -164,7 +164,7 @@ static void letter_train_relocate(__letter_train_t *ptThis, arm_2d_size_t tScree
 
     if (this.u2Stage == STAGE_NEAR) {
 
-        arm_2d_size_t tCharSize = ARM_2D_FONT_Arial14_A1
+        arm_2d_size_t tCharSize = ARM_2D_FONT_LiberationSansRegular14_A1
                                         .use_as__arm_2d_user_font_t
                                             .use_as__arm_2d_font_t
                                                 .tCharSize;
@@ -371,8 +371,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
                         break;
                     
                     case STAGE_NEAR:
-                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_Arial14_A1);
-                        tCharSize = ARM_2D_FONT_Arial14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A1);
+                        tCharSize = ARM_2D_FONT_LiberationSansRegular14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
                         break;
                     default:
                         assert(false);      /* this should not happen */

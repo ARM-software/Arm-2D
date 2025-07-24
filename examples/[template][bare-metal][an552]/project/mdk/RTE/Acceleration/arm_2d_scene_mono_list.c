@@ -85,10 +85,10 @@ const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-}   ARM_2D_FONT_Arial14_A8,
-    ARM_2D_FONT_Arial14_A4,
+}   ARM_2D_FONT_LiberationSansRegular14_A8,
+    ARM_2D_FONT_LiberationSansRegular14_A4,
     ARM_2D_FONT_Arial14_A2,
-    ARM_2D_FONT_Arial14_A1;
+    ARM_2D_FONT_LiberationSansRegular14_A1;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/

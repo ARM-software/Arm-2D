@@ -96,10 +96,10 @@ const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-} ARM_2D_FONT_Arial14_A1,
+} ARM_2D_FONT_LiberationSansRegular14_A1,
   ARM_2D_FONT_Arial14_A2,
-  ARM_2D_FONT_Arial14_A4,
-  ARM_2D_FONT_Arial14_A8;
+  ARM_2D_FONT_LiberationSansRegular14_A4,
+  ARM_2D_FONT_LiberationSansRegular14_A8;
 
 extern
 const
@@ -736,7 +736,7 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
                                     sizeof(c_chLyrics));
 
         text_box_cfg_t tCFG = {
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A8,
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A8,
             .tStreamIO = {
                 .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
                 .pTarget    = (uintptr_t)&this.Lyrics.tStringReader,

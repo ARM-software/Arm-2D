@@ -553,7 +553,9 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_DigitsFont.c"         />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_alarm_clock_font32.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_alarm_clock_font64.c" />
-            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_arial_ascii_font14.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_liberalsans_regular_ascii_font14.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_liberalsans_regular_ascii_font32.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_liberalsans_regular_ascii_font64.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_ClockMarking.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_compass.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_Earth.c" />

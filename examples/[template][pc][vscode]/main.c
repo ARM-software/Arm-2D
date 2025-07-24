@@ -506,9 +506,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_music_player_loader,
+        //scene_music_player_loader,
         //scene_console_window_loader
-        //scene_balls_loader,
+        scene_balls_loader,
         //scene_iir_blur_loader,
         //scene_progress_status_loader,
         //scene_matrix_loader,

@@ -46,6 +46,7 @@
 #include "arm_2d_scene_iir_blur.h"
 #include "arm_2d_scene_balls.h"
 #include "arm_2d_scene_music_player.h"
+#include "arm_2d_scene_font.h"
 
 /* monochrome demos */
 #if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)

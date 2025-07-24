@@ -108,10 +108,10 @@ const
 struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
-}   ARM_2D_FONT_Arial14_A8,
-    ARM_2D_FONT_Arial14_A4,
+}   ARM_2D_FONT_LiberationSansRegular14_A8,
+    ARM_2D_FONT_LiberationSansRegular14_A4,
     ARM_2D_FONT_Arial14_A2,
-    ARM_2D_FONT_Arial14_A1;
+    ARM_2D_FONT_LiberationSansRegular14_A1;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -573,7 +573,7 @@ user_scene_fan_t *__arm_2d_scene_fan_init(   arm_2d_scene_player_t *ptDispAdapte
                     .iHeight = 80,
                     .iWidth = 0,            /* automatically set the width */
                 },
-                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_Arial14_A4,
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4,
                 /* draw list cover */
                 .fnOnDrawListCover = &__arm_2d_list_draw_cover,
 
