@@ -211,6 +211,11 @@ void scene_transform_loader(void)
     arm_2d_scene_transform_init(&DISP0_ADAPTER);
 }
 
+void scene_font_loader(void) 
+{
+    arm_2d_scene_font_init(&DISP0_ADAPTER);
+}
+
 void scene_filters_loader(void) 
 {
     arm_2d_scene_filters_init(&DISP0_ADAPTER);
@@ -506,9 +511,10 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        scene_font_loader,
         //scene_music_player_loader,
         //scene_console_window_loader
-        scene_balls_loader,
+        //scene_balls_loader,
         //scene_iir_blur_loader,
         //scene_progress_status_loader,
         //scene_matrix_loader,
