@@ -205,7 +205,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                     arm_lcd_printf_label(ARM_2D_ALIGN_LEFT, " A 64pixel Font Scaling 0.5f compared with a 32pixel Font");
                 }
 
-                __item_line_dock_vertical(100) {
+                __item_line_dock_vertical(60) {
 
                     arm_2d_helper_draw_box( ptTile,
                                             &__item_region,
@@ -213,7 +213,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                                             GLCD_COLOR_BLACK, 
                                             64);
                     
-                    arm_2d_dock_vertical(__item_region, 80, 20, 20) {
+                    arm_2d_dock_vertical(__item_region, 40, 20, 20) {
 
                         arm_2d_helper_draw_box( ptTile,
                                                 &__vertical_region,
@@ -236,7 +236,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
-                        #if 0
+                        #if 1
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
@@ -259,7 +259,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
-                        #if 0
+                        #if 1
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
@@ -317,7 +317,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
-                        #if 0
+                        #if 1
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
@@ -340,7 +340,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
-                        #if 0
+                        #if 1
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
