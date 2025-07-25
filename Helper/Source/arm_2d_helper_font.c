@@ -246,16 +246,16 @@ __arm_lcd_text_get_char_descriptor( const arm_2d_font_t *ptFont,
         ptDescriptor->iAdvance 
             = reinterpret_s16_q16( mul_n_q16 (  s_tLCDTextControl.q16Scale, 
                                                 ptDescriptor->iAdvance) 
-                                 + 0x8000);
+                                 + 0);
 
         ptDescriptor->iBearingX 
             = reinterpret_s16_q16( mul_n_q16 (  s_tLCDTextControl.q16Scale, 
                                                 ptDescriptor->iBearingX) 
-                                 + 0x8000);
+                                 + 0);
         ptDescriptor->iBearingY 
             = reinterpret_s16_q16( mul_n_q16 (  s_tLCDTextControl.q16Scale, 
                                                 ptDescriptor->iBearingY) 
-                                 + 0x8000);
+                                 + 0);
     }
 
     return ptDescriptor;
@@ -578,20 +578,20 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         tBBoxSize.iWidth =  
             reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
                                             tBBoxSize.iWidth) 
-                                + 0x8000);
+                                + 0);
         tBBoxSize.iHeight =  
             reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
                                             tBBoxSize.iHeight) 
-                                + 0x8000);
+                                + 0);
         
         tCharSize.iWidth =  
             reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
                                             tCharSize.iWidth) 
-                                + 0x8000);
+                                + 0);
         tCharSize.iHeight =  
             reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
                                             tCharSize.iHeight) 
-                                + 0x8000);
+                                + 0);
     }
 
     arm_2d_region_t tDrawRegion = {
@@ -1035,11 +1035,11 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
                     iFontCharHeight = reinterpret_s16_q16( 
                                         mul_n_q16(  s_tLCDTextControl.q16Scale, 
                                                     iFontCharHeight) 
-                                        + 0x8000);
+                                        + 0);
                     iCharTileHeight = reinterpret_s16_q16( 
                                         mul_n_q16(  s_tLCDTextControl.q16Scale, 
                                                     iCharTileHeight) 
-                                        + 0x8000);
+                                        + 0);
                 }
 
                 int16_t iCharNewHeight = (iFontCharHeight - tCharDescriptor.iBearingY) 
@@ -1147,11 +1147,11 @@ arm_2d_size_t __arm_lcd_get_string_box(const char *str, const arm_2d_font_t *ptF
                     iFontCharHeight = reinterpret_s16_q16( 
                                         mul_n_q16(  s_tLCDTextControl.q16Scale, 
                                                     iFontCharHeight) 
-                                        + 0x8000);
+                                        + 0);
                     iCharTileHeight = reinterpret_s16_q16( 
                                         mul_n_q16(  s_tLCDTextControl.q16Scale, 
                                                     iCharTileHeight) 
-                                        + 0x8000);
+                                        + 0);
                 }
 
                 int16_t iCharNewHeight = (iFontCharHeight - tCharDescriptor.iBearingY) 
