@@ -202,7 +202,7 @@ static void __text_box_context_invalid_all(text_box_t *ptThis)
     assert(NULL != ptThis);
     ARM_2D_UNUSED(ptThis);
 
-#if __ARM_2D_CFG_CONTROL_USE_CONTEXT__
+#if __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__
     arm_foreach(this.tContexts) {
         _->bValid = false;
     }
@@ -569,7 +569,7 @@ int16_t text_box_get_current_line_count(text_box_t *ptThis)
     return this.nMaxLines;
 }
 
-#if __ARM_2D_CFG_CONTROL_USE_CONTEXT__
+#if __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__
 static
 ARM_NONNULL(1,4)
 void __text_box_save_context(   __text_box_context_t *ptContext, 
@@ -790,7 +790,7 @@ void text_box_show( text_box_t *ptThis,
             tPFBScanRegion.tSize.iHeight
         );
 
-    #if __ARM_2D_CFG_CONTROL_USE_CONTEXT__
+    #if __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__
         /* check contexts */
         do {
             __text_box_context_t *ptContext = NULL;
@@ -912,7 +912,7 @@ label_context_entry_point:
                     tExpandedLineRegion.tSize.iHeight
                 );
 
-            #if __ARM_2D_CFG_CONTROL_USE_CONTEXT__
+            #if __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__
                 if (arm_2d_region_intersect(&tPFBScanRegion, &tLineRegion, NULL)) {
 
                     /* save previous context */
