@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        21 July 2025
- * $Revision:    V.2.13.2
+ * $Date:        25 July 2025
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -229,6 +229,39 @@ arm_2d_helper_get_char_descriptor(  const arm_2d_font_t *ptFont,
                                 pchCharCode));
 }
 
+static
+arm_2d_char_descriptor_t *
+__arm_lcd_text_get_char_descriptor( const arm_2d_font_t *ptFont, 
+                                    arm_2d_char_descriptor_t *ptDescriptor, 
+                                    uint8_t *pchCharCode)
+{
+    ptDescriptor = arm_2d_helper_get_char_descriptor(   ptFont, 
+                                                        ptDescriptor, 
+                                                        pchCharCode);
+
+    if (NULL == ptDescriptor) {
+        return NULL;
+    }
+    if (s_tLCDTextControl.q16Scale > 0) {
+        ptDescriptor->iAdvance 
+            = reinterpret_s16_q16( mul_n_q16 (  s_tLCDTextControl.q16Scale, 
+                                                ptDescriptor->iAdvance) 
+                                 + 0x8000);
+
+    #if 1
+        ptDescriptor->iBearingX 
+            = reinterpret_s16_q16( mul_n_q16 (  s_tLCDTextControl.q16Scale, 
+                                                ptDescriptor->iBearingX) 
+                                 + 0x8000);
+        ptDescriptor->iBearingY 
+            = reinterpret_s16_q16( mul_n_q16 (  s_tLCDTextControl.q16Scale, 
+                                                ptDescriptor->iBearingY) 
+                                 + 0x8000);
+    #endif
+    }
+
+    return ptDescriptor;
+}
 
 void arm_lcd_text_init(arm_2d_region_t *ptScreen)
 {
@@ -325,7 +358,6 @@ static void __arm_lcd_text_update_char_buffer(void)
         return ;
     }
 
-    
     size_t tBufferSize = ptFont->tCharSize.iHeight * ptFont->tCharSize.iWidth;
 
     if (NULL != (void *)(s_tLCDTextControl.tCharBuffer.pBuffer)) {
@@ -496,7 +528,7 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
         }
 
         arm_2d_char_descriptor_t tDescriptor;
-        ptDescriptor = arm_2d_helper_get_char_descriptor(   ptFont, 
+        ptDescriptor = __arm_lcd_text_get_char_descriptor(  ptFont, 
                                                             &tDescriptor,
                                                             pchChar);
         if (NULL == ptDescriptor){
@@ -504,13 +536,6 @@ int16_t __arm_lcd_get_char_advance(const arm_2d_font_t *ptFont, arm_2d_char_desc
         }
         iAdvance = ptDescriptor->iAdvance;
     } while(0);
-
-    if (s_tLCDTextControl.q16Scale > 0) {
-        iAdvance = reinterpret_s16_q16( mul_n_q16 ( s_tLCDTextControl.q16Scale, iAdvance) + 0x8000);
-        /* NOTE: No need to adjust bearings in the following way. */
-        //ptDescriptor->iBearingX = (int16_t)((float)ptDescriptor->iBearingX * s_tLCDTextControl.fScale);
-        //ptDescriptor->iBearingY = (int16_t)((float)ptDescriptor->iBearingY * s_tLCDTextControl.fScale);
-    }
 
     return iAdvance;
 }
@@ -534,7 +559,7 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
         chCodeLength = 1;
     }
 
-    if (NULL == arm_2d_helper_get_char_descriptor(  ptFont, 
+    if (NULL == __arm_lcd_text_get_char_descriptor( ptFont, 
                                                     &tCharDescriptor,
                                                     *ppchCharCode)){
         (*ppchCharCode) += chCodeLength;
@@ -547,6 +572,16 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
     (*ppchCharCode) += chCodeLength;
 
     arm_2d_size_t tBBoxSize = ptFont->tCharSize;
+    if (s_tLCDTextControl.q16Scale > 0) {
+        tBBoxSize.iWidth =  
+            reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
+                                            tBBoxSize.iWidth) 
+                                + 0x8000);
+        tBBoxSize.iHeight =  
+            reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
+                                            tBBoxSize.iHeight) 
+                                + 0x8000);
+    }
 
     arm_2d_region_t tDrawRegion = {
         .tLocation = {
@@ -589,10 +624,32 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
             if (s_tLCDTextControl.q16Scale > 0) {
                 ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, NULL);
 
+            #if 0 /* for debug purpose */
+                arm_2d_region_t tCharRegion = *this.Target.ptRegion;
+
+                arm_2d_helper_draw_box( s_tLCDTextControl.ptTargetFB, 
+                                        &tCharRegion,
+                                        1,
+                                        GLCD_COLOR_BLUE,
+                                        255);
+
+                arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
+                                                    &tCharRegion, //this.Target.ptRegion,
+                                                    &s_tLCDTextControl.tTextRegion);
+            #else
                 arm_2d_region_get_minimal_enclosure(&s_tLCDTextControl.tTextRegion,
                                                     this.Target.ptRegion,
                                                     &s_tLCDTextControl.tTextRegion);
+            #endif
             }
+
+        #if 0 /* for debug purpose */
+            arm_2d_helper_draw_box( s_tLCDTextControl.ptTargetFB, 
+                        &tDrawRegion,
+                        1,
+                        GLCD_COLOR_RED,
+                        255);
+        #endif
         } 
     }
 
@@ -954,9 +1011,9 @@ arm_2d_size_t __arm_lcd_get_string_line_box(const char *str, const arm_2d_font_t
             }
 
             arm_2d_char_descriptor_t tCharDescriptor, *ptDescriptor;
-            ptDescriptor = arm_2d_helper_get_char_descriptor(ptFont, 
-                                                             &tCharDescriptor,
-                                                             (uint8_t *)str);
+            ptDescriptor = __arm_lcd_text_get_char_descriptor(  ptFont, 
+                                                                &tCharDescriptor,
+                                                                (uint8_t *)str);
 
             if (NULL != ptDescriptor) {
                 int16_t iCharNewHeight = (ptFont->tCharSize.iHeight - tCharDescriptor.iBearingY) 
@@ -1050,9 +1107,9 @@ arm_2d_size_t __arm_lcd_get_string_box(const char *str, const arm_2d_font_t *ptF
             }
 
             arm_2d_char_descriptor_t tCharDescriptor, *ptDescriptor;
-            ptDescriptor = arm_2d_helper_get_char_descriptor(ptFont, 
-                                                             &tCharDescriptor,
-                                                             (uint8_t *)str);
+            ptDescriptor = __arm_lcd_text_get_char_descriptor(  ptFont, 
+                                                                &tCharDescriptor,
+                                                                (uint8_t *)str);
 
             if (NULL != ptDescriptor) {
                 int16_t iCharNewHeight = (ptFont->tCharSize.iHeight - tCharDescriptor.iBearingY) 

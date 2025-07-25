@@ -236,13 +236,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
+                        #if 0
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
                                     1, 
                                     GLCD_COLOR_RED,
                                     255);
-                            
+                        #endif
                         } while(arm_lcd_get_residual_text_length_in_buffer());
 
                         arm_lcd_text_insert_line_space(20);
@@ -258,13 +259,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
+                        #if 0
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
                                     1, 
                                     GLCD_COLOR_RED,
                                     255);
-                            
+                        #endif
                         } while(arm_lcd_get_residual_text_length_in_buffer());
 
                         arm_lcd_text_set_scale(0.0);
@@ -315,17 +317,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
+                        #if 0
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
                                     1, 
                                     GLCD_COLOR_RED,
                                     255);
-                            
+                        #endif
                         } while(arm_lcd_get_residual_text_length_in_buffer());
 
                         arm_lcd_text_insert_line_space(20);
-                        
+
                         /* draw scaling */
                         arm_lcd_text_set_scale(0);
                         arm_lcd_printf_to_buffer(
@@ -337,13 +340,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_font_handler)
                         do {
                             arm_lcd_printf_buffer(1);
 
+                        #if 0
                             arm_2d_helper_draw_box(
                                     ptTile, 
                                     arm_lcd_text_get_last_display_region(),
                                     1, 
                                     GLCD_COLOR_RED,
                                     255);
-                            
+                        #endif
                         } while(arm_lcd_get_residual_text_length_in_buffer());
 
                         arm_lcd_text_set_scale(0.0);
