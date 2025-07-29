@@ -111,8 +111,7 @@ typedef struct text_box_io_text_stream_reader_t {
 } text_box_io_text_stream_reader_t;
 
 enum {
-    __TEXT_BOX_LINE_CACHE_PREVIOUS = 0,
-    __TEXT_BOX_LINE_CACHE_PREVIOUS_START,
+    __TEXT_BOX_LINE_CACHE_PREVIOUS_START = 0,
     __TEXT_BOX_LINE_CACHE_PREVIOUS_FRAME,
     __TEXT_BOX_LINE_CACHE_COUNT,
 };

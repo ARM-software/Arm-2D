@@ -859,7 +859,7 @@ label_context_entry_point:
                     .iY = __text_box_canvas.tLocation.iY + iLineOffset * iFontCharBoxHeight + iLineVerticalOffset - this.Request.iIntraLineOffset,
                 },
                 .tSize = {
-                    .iHeight = this.iLineHeight,
+                    .iHeight = (iFontCharHeight * 3) >> 1,
                 },
             };
 
@@ -887,8 +887,7 @@ label_context_entry_point:
                 } 
 
                 arm_2d_region_t tExpandedLineRegion = tLineRegion;
-                tExpandedLineRegion.tLocation.iY -= iFontCharHeight / 2;
-                tExpandedLineRegion.tSize.iHeight = iFontCharHeight * 2;
+                tExpandedLineRegion.tSize.iHeight = ((iFontCharHeight * 3) >> 1);
 
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
@@ -914,23 +913,6 @@ label_context_entry_point:
 
             #if __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__
                 if (arm_2d_region_intersect(&tPFBScanRegion, &tLineRegion, NULL)) {
-
-                    /* save previous context */
-                    do {
-                        ARM_2D_LOG_INFO(
-                            CONTROLS, 
-                            3, 
-                            "TextBox", 
-                            "Save context to slot [__TEXT_BOX_LINE_CACHE_PREVIOUS]"
-                        );
-                        
-                        int32_t nPosition = __text_box_get_current_position(ptThis);
-                        __text_box_save_context(&this.tContexts[__TEXT_BOX_LINE_CACHE_PREVIOUS],
-                                                iLineVerticalOffset,
-                                                nPosition,
-                                                &this.tCurrentLine);
-
-                    } while(0);
 
                     if (!bPreviousStartSaved) {
                         bPreviousStartSaved = true;
