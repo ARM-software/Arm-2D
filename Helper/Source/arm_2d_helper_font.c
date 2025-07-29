@@ -469,8 +469,6 @@ arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont)
         
         s_tLCDTextControl.ptFont = ptFont;
 
-        /* reset draw pointer */
-        //arm_lcd_text_location(0,0);
         /* update scaling parameters */
         __arm_lcd_text_force_updated_scale(s_tLCDTextControl.q16Scale);
 
