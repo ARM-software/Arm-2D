@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        25 July 2025
- * $Revision:    V.3.0.0
+ * $Date:        29 July 2025
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -456,9 +456,11 @@ arm_2d_err_t arm_lcd_text_set_font(const arm_2d_font_t *ptFont)
     }
 
     do {
-        if (NULL == ptFont->tileFont.pchBuffer) {
+        if (    (NULL == ptFont->tileFont.pchBuffer)
+           &&   (!ptFont->tileFont.bVirtualResource)) {
             break;
         }
+
         if (    (0 == ptFont->tCharSize.iHeight) 
             ||  (0 == ptFont->tCharSize.iWidth)
             ||  (0 == ptFont->nCount)) {
