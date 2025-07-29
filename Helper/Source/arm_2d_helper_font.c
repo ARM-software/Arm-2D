@@ -568,30 +568,18 @@ int16_t lcd_draw_char(int16_t iX, int16_t iY, uint8_t **ppchCharCode, uint_fast8
                +    s_tLCDTextControl.Updated.tSpacing.iWidth);                                  
     }
 
-    //(*ppchCharCode) += tCharDescriptor.chCodeLength;
     (*ppchCharCode) += chCodeLength;
 
-    arm_2d_size_t tBBoxSize = ptFont->tCharSize;
+    arm_2d_size_t tBBoxSize = arm_lcd_text_get_actual_char_size();
     arm_2d_size_t tCharSize = tCharDescriptor.tileChar.tRegion.tSize;
 
     if (s_tLCDTextControl.q16Scale > 0) {
-        tBBoxSize.iWidth =  
-            reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
-                                            tBBoxSize.iWidth) 
-                                + 0);
-        tBBoxSize.iHeight =  
-            reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
-                                            tBBoxSize.iHeight) 
-                                + 0);
-        
         tCharSize.iWidth =  
             reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
-                                            tCharSize.iWidth) 
-                                + 0);
+                                            tCharSize.iWidth));
         tCharSize.iHeight =  
             reinterpret_s16_q16( mul_n_q16( s_tLCDTextControl.q16Scale, 
-                                            tCharSize.iHeight) 
-                                + 0);
+                                            tCharSize.iHeight));
     }
 
     arm_2d_region_t tDrawRegion = {
