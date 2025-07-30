@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_copy_with_mask_and_opacity.h
  * Description:  APIs for Tile-Copy-with-Source-Mask-and-Opacity operations
  *
- * $Date:        18. May 2024
- * $Revision:    V.1.0.1
+ * $Date:        30. July 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -57,13 +57,13 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_tile_copy_with_src_mask_and_opacity_only(                 \
+#define arm_2d_gray8_tile_copy_with_src_mask_and_opacity_only(                  \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
                                     __DES_ADDR,     /*   target tile address */ \
                                     __REGION,       /*   region address */      \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only(            \
+            arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only(             \
                                         NULL,                                   \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -85,13 +85,13 @@ extern "C" {
                                         (__REGION),                             \
                                         (__OPACITY))
 
-#define arm_2d_cccn888_tile_copy_with_src_mask_and_opacity_only(                 \
+#define arm_2d_cccn888_tile_copy_with_src_mask_and_opacity_only(                \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
                                     __DES_ADDR,     /*   target tile address */ \
                                     __REGION,       /*   region address */      \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(            \
+            arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(           \
                                         NULL,                                   \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -117,7 +117,7 @@ ARM_NONNULL(2,3,4)
  * \return arm_fsm_rt_t the operation result
  */
 arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only(
-                                        arm_2d_op_cp_msk_t *ptOP,
+                                        arm_2d_op_src_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,
@@ -138,7 +138,7 @@ ARM_NONNULL(2,3,4)
  * \return arm_fsm_rt_t the operation result
  */
 arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only(
-                                        arm_2d_op_cp_msk_t *ptOP,
+                                        arm_2d_op_src_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,
@@ -159,7 +159,7 @@ ARM_NONNULL(2,3,4)
  * \return arm_fsm_rt_t the operation result
  */
 arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(
-                                        arm_2d_op_cp_msk_t *ptOP,
+                                        arm_2d_op_src_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,

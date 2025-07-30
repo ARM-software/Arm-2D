@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_copy_with_source_mask_and_opacity.c
  * Description:  APIs for tile copy with source mask and opacity only
  *
- * $Date:        18. May 2024
- * $Revision:    V.1.0.1
+ * $Date:        30. July 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -72,7 +72,7 @@ extern "C" {
 #elif defined(__IS_COMPILER_GCC__)
 #   pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
-#   pragma diag_suppress 174,177,188,68,513,144
+#   pragma diag_suppress 174,177,188,68,513,144,1,64
 #endif
 
 /*============================ MACROS ========================================*/
@@ -451,7 +451,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
 
 ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only(
-                                        arm_2d_op_cp_msk_t *ptOP,
+                                        arm_2d_op_src_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,
@@ -535,6 +535,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_source_mask_and_opacity_only( __ar
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
+    
         if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
         
         #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1030,7 +1031,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
 
 ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only(
-                                        arm_2d_op_cp_msk_t *ptOP,
+                                        arm_2d_op_src_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,
@@ -1102,6 +1103,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_source_mask_and_opacity_only( __a
     if (ptTask->Param.tCopyMask.tSrcMask.bInvalid) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
+
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
         return __arm_2d_rgb565_sw_tile_copy_with_src_mask_only(ptTask);
@@ -1609,7 +1611,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
 
 ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only(
-                                        arm_2d_op_cp_msk_t *ptOP,
+                                        arm_2d_op_src_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,
@@ -1828,4 +1830,3 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_CCCN
 #endif
 
 #endif /* __ARM_2D_COMPILATION_UNIT */
-
