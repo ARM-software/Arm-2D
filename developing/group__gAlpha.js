@@ -246,7 +246,7 @@ var group__gAlpha =
     [ "arm_2dp_cccn888_fill_colour_with_vertical_alpha_gradient_and_opacity", "group__gAlpha.html#gaf1a7541e9306e86ea9d08ae0f5d7eb61", null ],
     [ "arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient", "group__gAlpha.html#ga0e41bf4b5bff055576647d3c0fdd75bf", null ],
     [ "arm_2dp_cccn888_fill_colour_with_horizontal_alpha_gradient_and_opacity", "group__gAlpha.html#ga5ffe7eb3b32a017c2b1917ed45e4ddbf", null ],
-    [ "arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gad183117190a6fc1d8a48666aba9fa296", null ],
-    [ "arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gadf5f158479a2eeee0f0f70367cf14179", null ],
-    [ "arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gadf2c6378b96a64b53b5a43f56e0b86a6", null ]
+    [ "arm_2dp_gray8_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#gad7a0d8c155ee025c0e8c013581b27138", null ],
+    [ "arm_2dp_rgb565_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#ga68c68af243f046adab98c827e841044c", null ],
+    [ "arm_2dp_cccn888_tile_copy_with_src_mask_and_opacity_only", "group__gAlpha.html#ga694f96305679916f37ea2b3fb4c65f98", null ]
 ];
