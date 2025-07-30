@@ -199,7 +199,7 @@ arm_fsm_rt_t __MFSMM_SW_FUNC(tile_fill_with_src_mask)( __arm_2d_sub_task_t *ptTa
                ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
 
         __MFSMM_IMPL_FUNC(src_msk_fill)(   
-                                ptTask->Param.tFillMask
+            ptTask->Param.tFillMask
                 .use_as____arm_2d_param_fill_t.tSource.pBuffer,
             ptTask->Param.tFillMask
                 .use_as____arm_2d_param_fill_t.tSource.iStride,

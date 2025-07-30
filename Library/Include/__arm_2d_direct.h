@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        24 April 2025
- * $Revision:    V.1.6.0
+ * $Date:        30 July 2025
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -80,7 +80,7 @@ extern "C" {
 /*============================ PROTOTYPES ====================================*/
 
 
-void __arm_2d_impl_c8bit_1x1_paving(const uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_1x1_paving(const uint8_t * __restrict pSource,
                     int16_t iSourceStride,
                     uint8_t * __restrict pTarget,
                     int16_t iTargetStride,
@@ -89,7 +89,7 @@ void __arm_2d_impl_c8bit_1x1_paving(const uint8_t * __restrict pSource,
                     const arm_2d_size_t *
                     __restrict ptDstCopySize);
 
-void __arm_2d_impl_c8bit_1x1_paving_x_mirror(const uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_1x1_paving_x_mirror(const uint8_t * __restrict pSource,
                          int16_t iSourceStride,
                          uint8_t * __restrict pTarget,
                          int16_t iTargetStride,
@@ -98,7 +98,7 @@ void __arm_2d_impl_c8bit_1x1_paving_x_mirror(const uint8_t * __restrict pSource,
                          const arm_2d_size_t *
                          __restrict ptDstCopySize);
 
-void __arm_2d_impl_c8bit_1x1_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_1x1_paving_xy_mirror(const uint8_t *
                           __restrict pSource,
                           int16_t iSourceStride,
                           uint8_t * __restrict pTarget,
@@ -108,7 +108,7 @@ void __arm_2d_impl_c8bit_1x1_paving_xy_mirror(const uint8_t *
                           const arm_2d_size_t *
                           __restrict ptDstCopySize);
 
-void __arm_2d_impl_c8bit_1x1_paving_y_mirror(const uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_1x1_paving_y_mirror(const uint8_t * __restrict pSource,
                          int16_t iSourceStride,
                          uint8_t * __restrict pTarget,
                          int16_t iTargetStride,
@@ -117,7 +117,7 @@ void __arm_2d_impl_c8bit_1x1_paving_y_mirror(const uint8_t * __restrict pSource,
                          const arm_2d_size_t *
                          __restrict ptDstCopySize);
 
-void __arm_2d_impl_c8bit_1x2_paving(const uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_1x2_paving(const uint8_t * __restrict pSourceBase,
                     int16_t iSourceStride,
                     const arm_2d_size_t *
                     __restrict ptSourceSize,
@@ -125,7 +125,7 @@ void __arm_2d_impl_c8bit_1x2_paving(const uint8_t * __restrict pSourceBase,
                     int16_t iTargetStride, uint32_t destWidth,
                     uint16_t tilePairRows);
 
-void __arm_2d_impl_c8bit_1x2_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_1x2_paving_x_mirror(const uint8_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          const arm_2d_size_t *
@@ -135,7 +135,7 @@ void __arm_2d_impl_c8bit_1x2_paving_x_mirror(const uint8_t *
                          uint32_t destWidth,
                          uint16_t tilePairRows);
 
-void __arm_2d_impl_c8bit_1x2_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_1x2_paving_xy_mirror(const uint8_t *
                           __restrict pSourceBase,
                           int16_t iSourceStride,
                           const arm_2d_size_t *
@@ -145,7 +145,7 @@ void __arm_2d_impl_c8bit_1x2_paving_xy_mirror(const uint8_t *
                           uint32_t destWidth,
                           uint16_t tilePairRows);
 
-void __arm_2d_impl_c8bit_1x2_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_1x2_paving_y_mirror(const uint8_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          const arm_2d_size_t *
@@ -155,7 +155,7 @@ void __arm_2d_impl_c8bit_1x2_paving_y_mirror(const uint8_t *
                          uint32_t destWidth,
                          uint16_t tilePairRows);
 
-void __arm_2d_impl_c8bit_2x1_paving(const uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_2x1_paving(const uint8_t * __restrict pSourceBase,
                     int16_t iSourceStride,
                     const arm_2d_size_t *
                     __restrict ptSourceSize,
@@ -163,7 +163,7 @@ void __arm_2d_impl_c8bit_2x1_paving(const uint8_t * __restrict pSourceBase,
                     int16_t iTargetStride,
                     uint16_t tilePairCols, uint16_t destHeight);
 
-void __arm_2d_impl_c8bit_2x1_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_2x1_paving_x_mirror(const uint8_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          const arm_2d_size_t *
@@ -173,7 +173,7 @@ void __arm_2d_impl_c8bit_2x1_paving_x_mirror(const uint8_t *
                          uint16_t tilePairCols,
                          uint16_t destHeight);
 
-void __arm_2d_impl_c8bit_2x1_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_2x1_paving_xy_mirror(const uint8_t *
                           __restrict pSourceBase,
                           int16_t iSourceStride,
                           const arm_2d_size_t *
@@ -183,7 +183,7 @@ void __arm_2d_impl_c8bit_2x1_paving_xy_mirror(const uint8_t *
                           uint16_t tilePairCols,
                           uint16_t destHeight);
 
-void __arm_2d_impl_c8bit_2x1_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_2x1_paving_y_mirror(const uint8_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          const arm_2d_size_t *
@@ -193,7 +193,7 @@ void __arm_2d_impl_c8bit_2x1_paving_y_mirror(const uint8_t *
                          uint16_t tilePairCols,
                          uint16_t destHeight);
 
-void __arm_2d_impl_c8bit_2x2_paving(const uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_2x2_paving(const uint8_t * __restrict pSourceBase,
                     int16_t iSourceStride,
                     const arm_2d_size_t *
                     __restrict ptSourceSize,
@@ -202,7 +202,7 @@ void __arm_2d_impl_c8bit_2x2_paving(const uint8_t * __restrict pSourceBase,
                     uint16_t tilePairRows,
                     uint16_t tilePairCols);
 
-void __arm_2d_impl_c8bit_2x2_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_2x2_paving_x_mirror(const uint8_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          const arm_2d_size_t *
@@ -212,7 +212,7 @@ void __arm_2d_impl_c8bit_2x2_paving_x_mirror(const uint8_t *
                          uint16_t tilePairRows,
                          uint16_t tilePairCols);
 
-void __arm_2d_impl_c8bit_2x2_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_2x2_paving_xy_mirror(const uint8_t *
                           __restrict pSourceBase,
                           int16_t iSourceStride,
                           const arm_2d_size_t *
@@ -222,7 +222,7 @@ void __arm_2d_impl_c8bit_2x2_paving_xy_mirror(const uint8_t *
                           uint16_t tilePairRows,
                           uint16_t tilePairCols);
 
-void __arm_2d_impl_c8bit_2x2_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_2x2_paving_y_mirror(const uint8_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          const arm_2d_size_t *
@@ -232,7 +232,7 @@ void __arm_2d_impl_c8bit_2x2_paving_y_mirror(const uint8_t *
                          uint16_t tilePairRows,
                          uint16_t tilePairCols);
 
-void __arm_2d_impl_c8bit_cl_key_1x1_paving(const uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_cl_key_1x1_paving(const uint8_t * __restrict pSource,
                        int16_t iSourceStride,
                        uint8_t * __restrict pTarget,
                        int16_t iTargetStride,
@@ -242,7 +242,7 @@ void __arm_2d_impl_c8bit_cl_key_1x1_paving(const uint8_t * __restrict pSource,
                        __restrict ptDstCopySize,
                        uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x1_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x1_paving_x_mirror(const uint8_t *
                             __restrict pSource,
                             int16_t iSourceStride,
                             uint8_t *
@@ -254,7 +254,7 @@ void __arm_2d_impl_c8bit_cl_key_1x1_paving_x_mirror(const uint8_t *
                             __restrict ptDstCopySize,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x1_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x1_paving_xy_mirror(const uint8_t *
                              __restrict pSource,
                              int16_t iSourceStride,
                              uint8_t *
@@ -266,7 +266,7 @@ void __arm_2d_impl_c8bit_cl_key_1x1_paving_xy_mirror(const uint8_t *
                              __restrict ptDstCopySize,
                              uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x1_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x1_paving_y_mirror(const uint8_t *
                             __restrict pSource,
                             int16_t iSourceStride,
                             uint8_t *
@@ -278,7 +278,7 @@ void __arm_2d_impl_c8bit_cl_key_1x1_paving_y_mirror(const uint8_t *
                             __restrict ptDstCopySize,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x2_paving(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x2_paving(const uint8_t *
                        __restrict pSourceBase,
                        int16_t iSourceStride,
                        const arm_2d_size_t *
@@ -289,7 +289,7 @@ void __arm_2d_impl_c8bit_cl_key_1x2_paving(const uint8_t *
                        uint16_t tilePairRows,
                        uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x2_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x2_paving_x_mirror(const uint8_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             const arm_2d_size_t *
@@ -301,7 +301,7 @@ void __arm_2d_impl_c8bit_cl_key_1x2_paving_x_mirror(const uint8_t *
                             uint16_t tilePairRows,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x2_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x2_paving_xy_mirror(const uint8_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              const arm_2d_size_t *
@@ -313,7 +313,7 @@ void __arm_2d_impl_c8bit_cl_key_1x2_paving_xy_mirror(const uint8_t *
                              uint16_t tilePairRows,
                              uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_1x2_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_1x2_paving_y_mirror(const uint8_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             const arm_2d_size_t *
@@ -325,7 +325,7 @@ void __arm_2d_impl_c8bit_cl_key_1x2_paving_y_mirror(const uint8_t *
                             uint16_t tilePairRows,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x1_paving(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x1_paving(const uint8_t *
                        __restrict pSourceBase,
                        int16_t iSourceStride,
                        const arm_2d_size_t *
@@ -335,7 +335,7 @@ void __arm_2d_impl_c8bit_cl_key_2x1_paving(const uint8_t *
                        uint16_t tilePairCols,
                        uint16_t destHeight, uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x1_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x1_paving_x_mirror(const uint8_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             const arm_2d_size_t *
@@ -347,7 +347,7 @@ void __arm_2d_impl_c8bit_cl_key_2x1_paving_x_mirror(const uint8_t *
                             uint16_t destHeight,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x1_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x1_paving_xy_mirror(const uint8_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              const arm_2d_size_t *
@@ -359,7 +359,7 @@ void __arm_2d_impl_c8bit_cl_key_2x1_paving_xy_mirror(const uint8_t *
                              uint16_t destHeight,
                              uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x1_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x1_paving_y_mirror(const uint8_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             const arm_2d_size_t *
@@ -371,7 +371,7 @@ void __arm_2d_impl_c8bit_cl_key_2x1_paving_y_mirror(const uint8_t *
                             uint16_t destHeight,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x2_paving(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x2_paving(const uint8_t *
                        __restrict pSourceBase,
                        int16_t iSourceStride,
                        const arm_2d_size_t *
@@ -382,7 +382,7 @@ void __arm_2d_impl_c8bit_cl_key_2x2_paving(const uint8_t *
                        uint16_t tilePairCols,
                        uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x2_paving_x_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x2_paving_x_mirror(const uint8_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             const arm_2d_size_t *
@@ -394,7 +394,7 @@ void __arm_2d_impl_c8bit_cl_key_2x2_paving_x_mirror(const uint8_t *
                             uint16_t tilePairCols,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x2_paving_xy_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x2_paving_xy_mirror(const uint8_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              const arm_2d_size_t *
@@ -406,7 +406,7 @@ void __arm_2d_impl_c8bit_cl_key_2x2_paving_xy_mirror(const uint8_t *
                              uint16_t tilePairCols,
                              uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_2x2_paving_y_mirror(const uint8_t *
+extern void __arm_2d_impl_c8bit_cl_key_2x2_paving_y_mirror(const uint8_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             const arm_2d_size_t *
@@ -418,14 +418,14 @@ void __arm_2d_impl_c8bit_cl_key_2x2_paving_y_mirror(const uint8_t *
                             uint16_t tilePairCols,
                             uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_copy(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_cl_key_copy(uint8_t * __restrict pSource,
                      int16_t iSourceStride,
                      uint8_t * __restrict pTarget,
                      int16_t iTargetStride,
                      arm_2d_size_t * __restrict ptCopySize,
                      uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_copy_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_cl_key_copy_mirror(uint8_t * __restrict pSource,
                         int16_t iSourceStride,
                         uint8_t * __restrict pTarget,
                         int16_t iTargetStride,
@@ -433,7 +433,7 @@ void __arm_2d_impl_c8bit_cl_key_copy_mirror(uint8_t * __restrict pSource,
                         __restrict ptCopySize,
                         uint32_t wMode, uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_copy_x_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_cl_key_copy_x_mirror(uint8_t * __restrict pSource,
                           int16_t iSourceStride,
                           uint8_t * __restrict pTarget,
                           int16_t iTargetStride,
@@ -441,7 +441,7 @@ void __arm_2d_impl_c8bit_cl_key_copy_x_mirror(uint8_t * __restrict pSource,
                           __restrict ptCopySize,
                           uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_copy_xy_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_cl_key_copy_xy_mirror(uint8_t * __restrict pSource,
                            int16_t iSourceStride,
                            uint8_t * __restrict pTarget,
                            int16_t iTargetStride,
@@ -449,7 +449,7 @@ void __arm_2d_impl_c8bit_cl_key_copy_xy_mirror(uint8_t * __restrict pSource,
                            __restrict ptCopySize,
                            uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_copy_y_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_cl_key_copy_y_mirror(uint8_t * __restrict pSource,
                           int16_t iSourceStride,
                           uint8_t * __restrict pTarget,
                           int16_t iTargetStride,
@@ -457,7 +457,7 @@ void __arm_2d_impl_c8bit_cl_key_copy_y_mirror(uint8_t * __restrict pSource,
                           __restrict ptCopySize,
                           uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_fill(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_cl_key_fill(uint8_t * __restrict pSourceBase,
                      int16_t iSourceStride,
                      arm_2d_size_t * __restrict ptSourceSize,
                      uint8_t * __restrict pTargetBase,
@@ -465,7 +465,7 @@ void __arm_2d_impl_c8bit_cl_key_fill(uint8_t * __restrict pSourceBase,
                      arm_2d_size_t * __restrict ptTargetSize,
                      uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_fill_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_cl_key_fill_mirror(uint8_t * __restrict pSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t *
                         __restrict ptSourceSize,
@@ -475,7 +475,7 @@ void __arm_2d_impl_c8bit_cl_key_fill_mirror(uint8_t * __restrict pSourceBase,
                         __restrict ptTargetSize,
                         uint32_t wMode, uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_fill_x_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_cl_key_fill_x_mirror(uint8_t * __restrict pSourceBase,
                           int16_t iSourceStride,
                           arm_2d_size_t *
                           __restrict ptSourceSize,
@@ -485,7 +485,7 @@ void __arm_2d_impl_c8bit_cl_key_fill_x_mirror(uint8_t * __restrict pSourceBase,
                           __restrict ptTargetSize,
                           uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_fill_xy_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_cl_key_fill_xy_mirror(uint8_t * __restrict pSourceBase,
                            int16_t iSourceStride,
                            arm_2d_size_t *
                            __restrict ptSourceSize,
@@ -495,7 +495,7 @@ void __arm_2d_impl_c8bit_cl_key_fill_xy_mirror(uint8_t * __restrict pSourceBase,
                            __restrict ptTargetSize,
                            uint8_t Colour);
 
-void __arm_2d_impl_c8bit_cl_key_fill_y_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_cl_key_fill_y_mirror(uint8_t * __restrict pSourceBase,
                           int16_t iSourceStride,
                           arm_2d_size_t *
                           __restrict ptSourceSize,
@@ -505,43 +505,43 @@ void __arm_2d_impl_c8bit_cl_key_fill_y_mirror(uint8_t * __restrict pSourceBase,
                           __restrict ptTargetSize,
                           uint8_t Colour);
 
-void __arm_2d_impl_c8bit_colour_filling(uint8_t * __restrict pTarget,
+extern void __arm_2d_impl_c8bit_colour_filling(uint8_t * __restrict pTarget,
                     int16_t iTargetStride,
                     arm_2d_size_t * __restrict ptCopySize,
                     uint8_t Colour);
 
-void __arm_2d_impl_c8bit_copy(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_copy(uint8_t * __restrict pSource,
                   int16_t iSourceStride,
                   uint8_t * __restrict pTarget,
                   int16_t iTargetStride,
                   arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_c8bit_copy_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_copy_mirror(uint8_t * __restrict pSource,
                      int16_t iSourceStride,
                      uint8_t * __restrict pTarget,
                      int16_t iTargetStride,
                      arm_2d_size_t * __restrict ptCopySize,
                      uint32_t wMode);
 
-void __arm_2d_impl_c8bit_copy_x_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_copy_x_mirror(uint8_t * __restrict pSource,
                        int16_t iSourceStride,
                        uint8_t * __restrict pTarget,
                        int16_t iTargetStride,
                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_c8bit_copy_xy_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_copy_xy_mirror(uint8_t * __restrict pSource,
                     int16_t iSourceStride,
                     uint8_t * __restrict pTarget,
                     int16_t iTargetStride,
                     arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_c8bit_copy_y_mirror(uint8_t * __restrict pSource,
+extern void __arm_2d_impl_c8bit_copy_y_mirror(uint8_t * __restrict pSource,
                        int16_t iSourceStride,
                        uint8_t * __restrict pTarget,
                        int16_t iTargetStride,
                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_c8bit_draw_pattern(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_c8bit_draw_pattern(uint8_t * __restrict pchSourceBase,
                       int32_t iOffset, int16_t iSourceStride,
                       uint8_t * __restrict pTargetBase,
                       int16_t iTargetStride,
@@ -549,7 +549,7 @@ void __arm_2d_impl_c8bit_draw_pattern(uint8_t * __restrict pchSourceBase,
                       uint8_t chMode, uint8_t ForeColour,
                       uint8_t BackColour);
 
-void __arm_2d_impl_c8bit_draw_pattern_bg_comp(uint8_t *
+extern void __arm_2d_impl_c8bit_draw_pattern_bg_comp(uint8_t *
                           __restrict pchSourceBase,
                           int32_t iOffset,
                           int16_t iSourceStride,
@@ -559,7 +559,7 @@ void __arm_2d_impl_c8bit_draw_pattern_bg_comp(uint8_t *
                           __restrict ptCopySize,
                           uint8_t BackColour);
 
-void __arm_2d_impl_c8bit_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_c8bit_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                         int32_t iOffset,
                         int16_t iSourceStride,
                         uint8_t * __restrict pTargetBase,
@@ -569,7 +569,7 @@ void __arm_2d_impl_c8bit_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                         uint8_t ForeColour,
                         uint8_t BackColour);
 
-void __arm_2d_impl_c8bit_draw_pattern_bg_only(uint8_t *
+extern void __arm_2d_impl_c8bit_draw_pattern_bg_only(uint8_t *
                           __restrict pchSourceBase,
                           int32_t iOffset,
                           int16_t iSourceStride,
@@ -579,7 +579,7 @@ void __arm_2d_impl_c8bit_draw_pattern_bg_only(uint8_t *
                           __restrict ptCopySize,
                           uint8_t BackColour);
 
-void __arm_2d_impl_c8bit_draw_pattern_fg_only(uint8_t *
+extern void __arm_2d_impl_c8bit_draw_pattern_fg_only(uint8_t *
                           __restrict pchSourceBase,
                           int32_t iOffset,
                           int16_t iSourceStride,
@@ -589,7 +589,7 @@ void __arm_2d_impl_c8bit_draw_pattern_fg_only(uint8_t *
                           __restrict ptCopySize,
                           uint8_t ForeColour);
 
-void __arm_2d_impl_c8bit_draw_pattern_no_bg_comp(uint8_t *
+extern void __arm_2d_impl_c8bit_draw_pattern_no_bg_comp(uint8_t *
                          __restrict pchSourceBase,
                          int32_t iOffset,
                          int16_t iSourceStride,
@@ -599,14 +599,14 @@ void __arm_2d_impl_c8bit_draw_pattern_no_bg_comp(uint8_t *
                          arm_2d_size_t *
                          __restrict ptCopySize);
 
-void __arm_2d_impl_c8bit_fill(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_fill(uint8_t * __restrict pSourceBase,
                   int16_t iSourceStride,
                   arm_2d_size_t * __restrict ptSourceSize,
                   uint8_t * __restrict pTargetBase,
                   int16_t iTargetStride,
                   arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_c8bit_fill_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_fill_mirror(uint8_t * __restrict pSourceBase,
                      int16_t iSourceStride,
                      arm_2d_size_t * __restrict ptSourceSize,
                      uint8_t * __restrict pTargetBase,
@@ -614,14 +614,14 @@ void __arm_2d_impl_c8bit_fill_mirror(uint8_t * __restrict pSourceBase,
                      arm_2d_size_t * __restrict ptTargetSize,
                      uint32_t wMode);
 
-void __arm_2d_impl_c8bit_fill_x_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_fill_x_mirror(uint8_t * __restrict pSourceBase,
                        int16_t iSourceStride,
                        arm_2d_size_t * __restrict ptSourceSize,
                        uint8_t * __restrict pTargetBase,
                        int16_t iTargetStride,
                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_c8bit_fill_xy_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_fill_xy_mirror(uint8_t * __restrict pSourceBase,
                     int16_t iSourceStride,
                     arm_2d_size_t * __restrict ptSourceSize,
                     uint8_t * __restrict pTargetBase,
@@ -629,14 +629,14 @@ void __arm_2d_impl_c8bit_fill_xy_mirror(uint8_t * __restrict pSourceBase,
                     arm_2d_size_t *
                     __restrict ptTargetSize);
 
-void __arm_2d_impl_c8bit_fill_y_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_c8bit_fill_y_mirror(uint8_t * __restrict pSourceBase,
                        int16_t iSourceStride,
                        arm_2d_size_t * __restrict ptSourceSize,
                        uint8_t * __restrict pTargetBase,
                        int16_t iTargetStride,
                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_copy(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_1h_des_msk_copy(uint32_t * __restrict pSourceBase,
                        int16_t iSourceStride,
                        uint32_t * __restrict pTargetBase,
                        int16_t iTargetStride,
@@ -648,7 +648,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_copy(uint32_t * __restrict pSourceBase,
                        arm_2d_size_t *
                        __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_copy_mirror(uint32_t *
                           __restrict pSourceBase,
                           int16_t iSourceStride,
                           uint32_t *
@@ -663,7 +663,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_copy_mirror(uint32_t *
                           __restrict ptCopySize,
                           uint32_t wMode);
 
-void __arm_2d_impl_cccn888_1h_des_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_copy_x_mirror(uint32_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             uint32_t *
@@ -677,7 +677,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_copy_x_mirror(uint32_t *
                             arm_2d_size_t *
                             __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_copy_xy_mirror(uint32_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              uint32_t *
@@ -693,7 +693,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_copy_xy_mirror(uint32_t *
                              arm_2d_size_t *
                              __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_copy_y_mirror(uint32_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             uint32_t *
@@ -707,7 +707,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_copy_y_mirror(uint32_t *
                             arm_2d_size_t *
                             __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_fill(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_1h_des_msk_fill(uint32_t * __restrict ptSourceBase,
                        int16_t iSourceStride,
                        arm_2d_size_t *
                        __restrict ptSourceSize,
@@ -721,7 +721,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_fill(uint32_t * __restrict ptSourceBase,
                        arm_2d_size_t *
                        __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_fill_mirror(uint32_t *
                           __restrict ptSourceBase,
                           int16_t iSourceStride,
                           arm_2d_size_t *
@@ -738,7 +738,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_fill_mirror(uint32_t *
                           __restrict ptTargetMaskSize,
                           uint32_t wMode);
 
-void __arm_2d_impl_cccn888_1h_des_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_fill_x_mirror(uint32_t *
                             __restrict ptSourceBase,
                             int16_t iSourceStride,
                             arm_2d_size_t *
@@ -755,7 +755,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_fill_x_mirror(uint32_t *
                             __restrict
                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_fill_xy_mirror(uint32_t *
                              __restrict ptSourceBase,
                              int16_t iSourceStride,
                              arm_2d_size_t *
@@ -773,7 +773,7 @@ void __arm_2d_impl_cccn888_1h_des_msk_fill_xy_mirror(uint32_t *
                              __restrict
                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_1h_des_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_1h_des_msk_fill_y_mirror(uint32_t *
                             __restrict ptSourceBase,
                             int16_t iSourceStride,
                             arm_2d_size_t *
@@ -790,21 +790,21 @@ void __arm_2d_impl_cccn888_1h_des_msk_fill_y_mirror(uint32_t *
                             __restrict
                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_tile_copy_opacity(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_tile_copy_opacity(uint32_t * __restrict pSourceBase,
                       int16_t iSourceStride,
                       uint32_t * __restrict pTargetBase,
                       int16_t iTargetStride,
                       arm_2d_size_t * __restrict ptCopySize,
                       uint_fast16_t chRatio);
 
-void __arm_2d_impl_cccn888_tile_copy_opacity(uint32_t * pwSourceBase,
+extern void __arm_2d_impl_cccn888_tile_copy_opacity(uint32_t * pwSourceBase,
                       int16_t iSourceStride,
                       uint32_t * pwTargetBase,
                       int16_t iTargetStride,
                       arm_2d_size_t * ptCopySize,
                       uint_fast16_t chRatio);
 
-void __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity(uint32_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             uint32_t *
@@ -815,7 +815,7 @@ void __arm_2d_impl_cccn888_tile_copy_colour_keying_opacity(uint32_t *
                             uint_fast16_t chRatio,
                             uint32_t Colour);
 
-void __arm_2d_impl_cccn888_colour_filling_channel_mask(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask(uint32_t *
                                __restrict pTarget,
                                int16_t iTargetStride,
                                uint32_t *
@@ -825,7 +825,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask(uint32_t *
                                __restrict ptCopySize,
                                uint32_t Colour);
 
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t *
                                    __restrict
                                    pTarget,
                                    int16_t
@@ -841,7 +841,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_opacity(uint32_t *
                                    uint32_t Colour,
                                    uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_a2_mask(uint32_t * __restrict pTarget,
+extern void __arm_2d_impl_cccn888_colour_filling_a2_mask(uint32_t * __restrict pTarget,
                            int16_t iTargetStride,
                            uint8_t * __restrict pchAlpha,
                            int16_t iAlphaStride,
@@ -850,7 +850,7 @@ void __arm_2d_impl_cccn888_colour_filling_a2_mask(uint32_t * __restrict pTarget,
                            __restrict ptCopySize,
                            uint32_t Colour);
 
-void __arm_2d_impl_cccn888_colour_filling_a4_mask(uint32_t * __restrict pTarget,
+extern void __arm_2d_impl_cccn888_colour_filling_a4_mask(uint32_t * __restrict pTarget,
                            int16_t iTargetStride,
                            uint8_t * __restrict pchAlpha,
                            int16_t iAlphaStride,
@@ -859,7 +859,7 @@ void __arm_2d_impl_cccn888_colour_filling_a4_mask(uint32_t * __restrict pTarget,
                            __restrict ptCopySize,
                            uint32_t Colour);
 
-void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __restrict pTarget,
+extern void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __restrict pTarget,
                            int16_t iTargetStride,
                            uint8_t * __restrict pchAlpha,
                            int16_t iAlphaStride,
@@ -867,7 +867,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask(uint32_t * __restrict pTarget,
                            __restrict ptCopySize,
                            uint32_t Colour);
 
-void __arm_2d_impl_cccn888_colour_filling_a1_mask_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_a1_mask_opacity(uint32_t *
                                __restrict pTarget,
                                int16_t iTargetStride,
                                uint8_t *
@@ -879,7 +879,7 @@ void __arm_2d_impl_cccn888_colour_filling_a1_mask_opacity(uint32_t *
                                uint32_t Colour,
                                uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity(uint32_t *
                                __restrict pTarget,
                                int16_t iTargetStride,
                                uint8_t *
@@ -891,7 +891,7 @@ void __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity(uint32_t *
                                uint32_t Colour,
                                uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity(uint32_t *
                                __restrict pTarget,
                                int16_t iTargetStride,
                                uint8_t *
@@ -903,7 +903,7 @@ void __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity(uint32_t *
                                uint32_t Colour,
                                uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t *
                                __restrict pTarget,
                                int16_t iTargetStride,
                                uint8_t *
@@ -914,7 +914,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_opacity(uint32_t *
                                uint32_t Colour,
                                uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_with_opacity(uint32_t *
+extern void __arm_2d_impl_cccn888_colour_filling_with_opacity(uint32_t *
                                __restrict pTargetBase,
                                int16_t iTargetStride,
                                arm_2d_size_t *
@@ -922,7 +922,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_opacity(uint32_t *
                                uint32_t Colour,
                                uint_fast16_t hwRatio);
 
-void __arm_2d_impl_cccn888_des_chn_msk_copy(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_des_chn_msk_copy(uint32_t * __restrict pSourceBase,
                         int16_t iSourceStride,
                         uint32_t * __restrict pTargetBase,
                         int16_t iTargetStride,
@@ -934,7 +934,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_copy(uint32_t * __restrict pSourceBase,
                         arm_2d_size_t *
                         __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_copy_mirror(uint32_t *
                            __restrict pSourceBase,
                            int16_t iSourceStride,
                            uint32_t *
@@ -949,7 +949,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_copy_mirror(uint32_t *
                            __restrict ptCopySize,
                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_des_chn_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_copy_x_mirror(uint32_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              uint32_t *
@@ -965,7 +965,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_copy_x_mirror(uint32_t *
                              arm_2d_size_t *
                              __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_copy_xy_mirror(uint32_t *
                               __restrict pSourceBase,
                               int16_t iSourceStride,
                               uint32_t *
@@ -981,7 +981,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_copy_xy_mirror(uint32_t *
                               arm_2d_size_t *
                               __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_copy_y_mirror(uint32_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              uint32_t *
@@ -997,7 +997,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_copy_y_mirror(uint32_t *
                              arm_2d_size_t *
                              __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_fill(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_des_chn_msk_fill(uint32_t * __restrict ptSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t *
                         __restrict ptSourceSize,
@@ -1011,7 +1011,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_fill(uint32_t * __restrict ptSourceBase,
                         arm_2d_size_t *
                         __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_fill_mirror(uint32_t *
                            __restrict ptSourceBase,
                            int16_t iSourceStride,
                            arm_2d_size_t *
@@ -1028,7 +1028,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_fill_mirror(uint32_t *
                            __restrict ptTargetMaskSize,
                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_des_chn_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_fill_x_mirror(uint32_t *
                              __restrict ptSourceBase,
                              int16_t iSourceStride,
                              arm_2d_size_t *
@@ -1046,7 +1046,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_fill_x_mirror(uint32_t *
                              __restrict
                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_fill_xy_mirror(uint32_t *
                               __restrict ptSourceBase,
                               int16_t iSourceStride,
                               arm_2d_size_t *
@@ -1064,7 +1064,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_fill_xy_mirror(uint32_t *
                               __restrict
                               ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_chn_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_chn_msk_fill_y_mirror(uint32_t *
                              __restrict ptSourceBase,
                              int16_t iSourceStride,
                              arm_2d_size_t *
@@ -1082,7 +1082,7 @@ void __arm_2d_impl_cccn888_des_chn_msk_fill_y_mirror(uint32_t *
                              __restrict
                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_msk_copy(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_des_msk_copy(uint32_t * __restrict pSourceBase,
                     int16_t iSourceStride,
                     uint32_t * __restrict pTargetBase,
                     int16_t iTargetStride,
@@ -1092,7 +1092,7 @@ void __arm_2d_impl_cccn888_des_msk_copy(uint32_t * __restrict pSourceBase,
                     __restrict ptTargetMaskSize,
                     arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_copy_mirror(uint32_t *
                            __restrict pSourceBase,
                            int16_t iSourceStride,
                            uint32_t *
@@ -1107,7 +1107,7 @@ void __arm_2d_impl_cccn888_des_msk_copy_mirror(uint32_t *
                            __restrict ptCopySize,
                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_des_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_copy_x_mirror(uint32_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          uint32_t *
@@ -1121,7 +1121,7 @@ void __arm_2d_impl_cccn888_des_msk_copy_x_mirror(uint32_t *
                          arm_2d_size_t *
                          __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_copy_xy_mirror(uint32_t *
                           __restrict pSourceBase,
                           int16_t iSourceStride,
                           uint32_t *
@@ -1135,7 +1135,7 @@ void __arm_2d_impl_cccn888_des_msk_copy_xy_mirror(uint32_t *
                           arm_2d_size_t *
                           __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_copy_y_mirror(uint32_t *
                          __restrict pSourceBase,
                          int16_t iSourceStride,
                          uint32_t *
@@ -1149,7 +1149,7 @@ void __arm_2d_impl_cccn888_des_msk_copy_y_mirror(uint32_t *
                          arm_2d_size_t *
                          __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_des_msk_fill(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_des_msk_fill(uint32_t * __restrict ptSourceBase,
                     int16_t iSourceStride,
                     arm_2d_size_t * __restrict ptSourceSize,
                     uint32_t * __restrict ptTargetBase,
@@ -1160,7 +1160,7 @@ void __arm_2d_impl_cccn888_des_msk_fill(uint32_t * __restrict ptSourceBase,
                     arm_2d_size_t *
                     __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_fill_mirror(uint32_t *
                            __restrict ptSourceBase,
                            int16_t iSourceStride,
                            arm_2d_size_t *
@@ -1177,7 +1177,7 @@ void __arm_2d_impl_cccn888_des_msk_fill_mirror(uint32_t *
                            __restrict ptTargetMaskSize,
                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_des_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_fill_x_mirror(uint32_t *
                          __restrict ptSourceBase,
                          int16_t iSourceStride,
                          arm_2d_size_t *
@@ -1193,7 +1193,7 @@ void __arm_2d_impl_cccn888_des_msk_fill_x_mirror(uint32_t *
                          arm_2d_size_t *
                          __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_fill_xy_mirror(uint32_t *
                           __restrict ptSourceBase,
                           int16_t iSourceStride,
                           arm_2d_size_t *
@@ -1209,7 +1209,7 @@ void __arm_2d_impl_cccn888_des_msk_fill_xy_mirror(uint32_t *
                           arm_2d_size_t *
                           __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_des_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_des_msk_fill_y_mirror(uint32_t *
                          __restrict ptSourceBase,
                          int16_t iSourceStride,
                          arm_2d_size_t *
@@ -1225,7 +1225,7 @@ void __arm_2d_impl_cccn888_des_msk_fill_y_mirror(uint32_t *
                          arm_2d_size_t *
                          __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_masks_copy(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_masks_copy(uint32_t * __restrict pSourceBase,
                       int16_t iSourceStride,
                       uint8_t * __restrict ptSourceMaskBase,
                       int16_t iSourceMaskStride,
@@ -1239,7 +1239,7 @@ void __arm_2d_impl_cccn888_masks_copy(uint32_t * __restrict pSourceBase,
                       __restrict ptTargetMaskSize,
                       arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_masks_copy_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_masks_copy_mirror(uint32_t * __restrict pSourceBase,
                          int16_t iSourceStride,
                          uint8_t *
                          __restrict ptSourceMaskBase,
@@ -1257,7 +1257,7 @@ void __arm_2d_impl_cccn888_masks_copy_mirror(uint32_t * __restrict pSourceBase,
                          __restrict ptCopySize,
                          uint32_t wMode);
 
-void __arm_2d_impl_cccn888_masks_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_masks_copy_x_mirror(uint32_t *
                            __restrict pSourceBase,
                            int16_t iSourceStride,
                            uint8_t *
@@ -1276,7 +1276,7 @@ void __arm_2d_impl_cccn888_masks_copy_x_mirror(uint32_t *
                            arm_2d_size_t *
                            __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_masks_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_masks_copy_xy_mirror(uint32_t *
                         __restrict pSourceBase,
                         int16_t iSourceStride,
                         uint8_t *
@@ -1295,7 +1295,7 @@ void __arm_2d_impl_cccn888_masks_copy_xy_mirror(uint32_t *
                         arm_2d_size_t *
                         __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_masks_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_masks_copy_y_mirror(uint32_t *
                            __restrict pSourceBase,
                            int16_t iSourceStride,
                            uint8_t *
@@ -1314,7 +1314,7 @@ void __arm_2d_impl_cccn888_masks_copy_y_mirror(uint32_t *
                            arm_2d_size_t *
                            __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_masks_fill(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_masks_fill(uint32_t * __restrict ptSourceBase,
                       int16_t iSourceStride,
                       arm_2d_size_t * __restrict ptSourceSize,
                       uint8_t * __restrict ptSourceMaskBase,
@@ -1329,7 +1329,7 @@ void __arm_2d_impl_cccn888_masks_fill(uint32_t * __restrict ptSourceBase,
                       arm_2d_size_t *
                       __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_masks_fill_mirror(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_masks_fill_mirror(uint32_t * __restrict ptSourceBase,
                          int16_t iSourceStride,
                          arm_2d_size_t *
                          __restrict ptSourceSize,
@@ -1349,7 +1349,7 @@ void __arm_2d_impl_cccn888_masks_fill_mirror(uint32_t * __restrict ptSourceBase,
                          __restrict ptTargetMaskSize,
                          uint32_t wMode);
 
-void __arm_2d_impl_cccn888_masks_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_masks_fill_x_mirror(uint32_t *
                            __restrict ptSourceBase,
                            int16_t iSourceStride,
                            arm_2d_size_t *
@@ -1370,7 +1370,7 @@ void __arm_2d_impl_cccn888_masks_fill_x_mirror(uint32_t *
                            arm_2d_size_t *
                            __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_masks_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_masks_fill_xy_mirror(uint32_t *
                         __restrict ptSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t *
@@ -1391,7 +1391,7 @@ void __arm_2d_impl_cccn888_masks_fill_xy_mirror(uint32_t *
                         arm_2d_size_t *
                         __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_masks_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_masks_fill_y_mirror(uint32_t *
                            __restrict ptSourceBase,
                            int16_t iSourceStride,
                            arm_2d_size_t *
@@ -1412,7 +1412,7 @@ void __arm_2d_impl_cccn888_masks_fill_y_mirror(uint32_t *
                            arm_2d_size_t *
                            __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy(uint32_t *
                                __restrict pSourceBase,
                                int16_t iSourceStride,
                                uint32_t *
@@ -1437,7 +1437,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy(uint32_t *
                                arm_2d_size_t *
                                __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_mirror(uint32_t *
                                   __restrict
                                   pSourceBase,
                                   int16_t
@@ -1468,7 +1468,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_mirror(uint32_t *
                                   ptCopySize,
                                   uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_x_mirror(uint32_t *
                                 __restrict
                                 pSourceBase,
                                 int16_t
@@ -1498,7 +1498,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_x_mirror(uint32_t *
                                 __restrict
                                 ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_xy_mirror(uint32_t *
                                  __restrict
                                  pSourceBase,
                                  int16_t
@@ -1528,7 +1528,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_xy_mirror(uint32_t *
                                  __restrict
                                  ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_y_mirror(uint32_t *
                                 __restrict
                                 pSourceBase,
                                 int16_t
@@ -1558,7 +1558,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_copy_y_mirror(uint32_t *
                                 __restrict
                                 ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill(uint32_t *
                                __restrict ptSourceBase,
                                int16_t iSourceStride,
                                arm_2d_size_t *
@@ -1585,7 +1585,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill(uint32_t *
                                __restrict
                                ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_mirror(uint32_t *
                                   __restrict
                                   ptSourceBase,
                                   int16_t
@@ -1619,7 +1619,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_mirror(uint32_t *
                                   ptTargetMaskSize,
                                   uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_x_mirror(uint32_t *
                                 __restrict
                                 ptSourceBase,
                                 int16_t
@@ -1652,7 +1652,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_x_mirror(uint32_t *
                                 __restrict
                                 ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_xy_mirror(uint32_t *
                                  __restrict
                                  ptSourceBase,
                                  int16_t
@@ -1685,7 +1685,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_xy_mirror(uint32_t *
                                  __restrict
                                  ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_y_mirror(uint32_t *
                                 __restrict
                                 ptSourceBase,
                                 int16_t
@@ -1718,7 +1718,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_1h_des_msk_fill_y_mirror(uint32_t *
                                 __restrict
                                 ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_copy(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_src_chn_msk_copy(uint32_t * __restrict pSourceBase,
                         int16_t iSourceStride,
                         uint32_t *
                         __restrict ptSourceMaskBase,
@@ -1730,7 +1730,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_copy(uint32_t * __restrict pSourceBase,
                         arm_2d_size_t *
                         __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_copy_mirror(uint32_t *
                            __restrict pSourceBase,
                            int16_t iSourceStride,
                            uint32_t *
@@ -1745,7 +1745,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_copy_mirror(uint32_t *
                            __restrict ptCopySize,
                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_copy_x_mirror(uint32_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              uint32_t *
@@ -1761,7 +1761,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_copy_x_mirror(uint32_t *
                              arm_2d_size_t *
                              __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_copy_xy_mirror(uint32_t *
                               __restrict pSourceBase,
                               int16_t iSourceStride,
                               uint32_t *
@@ -1777,7 +1777,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_copy_xy_mirror(uint32_t *
                               arm_2d_size_t *
                               __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_copy_y_mirror(uint32_t *
                              __restrict pSourceBase,
                              int16_t iSourceStride,
                              uint32_t *
@@ -1793,7 +1793,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_copy_y_mirror(uint32_t *
                              arm_2d_size_t *
                              __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy(uint32_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             uint32_t *
@@ -1818,7 +1818,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy(uint32_t *
                             arm_2d_size_t *
                             __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_mirror(uint32_t *
                                    __restrict
                                    pSourceBase,
                                    int16_t
@@ -1849,7 +1849,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_mirror(uint32_t *
                                    ptCopySize,
                                    uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_x_mirror(uint32_t *
                                  __restrict
                                  pSourceBase,
                                  int16_t
@@ -1879,7 +1879,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_x_mirror(uint32_t *
                                  __restrict
                                  ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_xy_mirror(uint32_t *
                                   __restrict
                                   pSourceBase,
                                   int16_t
@@ -1912,7 +1912,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_xy_mirror(uint32_t *
                                   __restrict
                                   ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_y_mirror(uint32_t *
                                  __restrict
                                  pSourceBase,
                                  int16_t
@@ -1942,7 +1942,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_copy_y_mirror(uint32_t *
                                  __restrict
                                  ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill(uint32_t *
                             __restrict ptSourceBase,
                             int16_t iSourceStride,
                             arm_2d_size_t *
@@ -1969,7 +1969,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill(uint32_t *
                             __restrict
                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_mirror(uint32_t *
                                    __restrict
                                    ptSourceBase,
                                    int16_t
@@ -2003,7 +2003,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_mirror(uint32_t *
                                    ptTargetMaskSize,
                                    uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_x_mirror(uint32_t *
                                  __restrict
                                  ptSourceBase,
                                  int16_t
@@ -2036,7 +2036,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_x_mirror(uint32_t *
                                  __restrict
                                  ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_xy_mirror(uint32_t *
                                   __restrict
                                   ptSourceBase,
                                   int16_t
@@ -2073,7 +2073,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_xy_mirror(uint32_t *
                                   __restrict
                                   ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_y_mirror(uint32_t *
                                  __restrict
                                  ptSourceBase,
                                  int16_t
@@ -2106,7 +2106,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_chn_msk_fill_y_mirror(uint32_t *
                                  __restrict
                                  ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy(uint32_t *
                             __restrict pSourceBase,
                             int16_t iSourceStride,
                             uint32_t *
@@ -2125,7 +2125,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy(uint32_t *
                             arm_2d_size_t *
                             __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_mirror(uint32_t *
                                __restrict
                                pSourceBase,
                                int16_t
@@ -2156,7 +2156,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_mirror(uint32_t *
                                ptCopySize,
                                uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_x_mirror(uint32_t *
                                  __restrict
                                  pSourceBase,
                                  int16_t
@@ -2186,7 +2186,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_x_mirror(uint32_t *
                                  __restrict
                                  ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_xy_mirror(uint32_t *
                                   __restrict
                                   pSourceBase,
                                   int16_t
@@ -2216,7 +2216,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_xy_mirror(uint32_t *
                                   __restrict
                                   ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_y_mirror(uint32_t *
                                  __restrict
                                  pSourceBase,
                                  int16_t
@@ -2246,7 +2246,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_copy_y_mirror(uint32_t *
                                  __restrict
                                  ptCopySize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill(uint32_t *
                             __restrict ptSourceBase,
                             int16_t iSourceStride,
                             arm_2d_size_t *
@@ -2268,7 +2268,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill(uint32_t *
                             __restrict
                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_mirror(uint32_t *
                                __restrict
                                ptSourceBase,
                                int16_t
@@ -2302,7 +2302,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_mirror(uint32_t *
                                ptTargetMaskSize,
                                uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_x_mirror(uint32_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -2335,7 +2335,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_x_mirror(uint32_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_xy_mirror(uint32_t *
                                                               __restrict
                                                               ptSourceBase,
                                                               int16_t
@@ -2368,7 +2368,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_xy_mirror(uint32_t *
                                                               __restrict
                                                               ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_y_mirror(uint32_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -2401,7 +2401,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_des_msk_fill_y_mirror(uint32_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_fill(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_src_chn_msk_fill(uint32_t * __restrict ptSourceBase,
                                             int16_t iSourceStride,
                                             arm_2d_size_t *
                                             __restrict ptSourceSize,
@@ -2415,7 +2415,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_fill(uint32_t * __restrict ptSourceBase,
                                             arm_2d_size_t *
                                             __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_fill_mirror(uint32_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -2432,7 +2432,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_fill_mirror(uint32_t *
                                                    __restrict ptTargetSize,
                                                    uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_chn_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_fill_x_mirror(uint32_t *
                                                      __restrict ptSourceBase,
                                                      int16_t iSourceStride,
                                                      arm_2d_size_t *
@@ -2450,7 +2450,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_fill_x_mirror(uint32_t *
                                                      arm_2d_size_t *
                                                      __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_fill_xy_mirror(uint32_t *
                                                       __restrict ptSourceBase,
                                                       int16_t iSourceStride,
                                                       arm_2d_size_t *
@@ -2468,7 +2468,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_fill_xy_mirror(uint32_t *
                                                       arm_2d_size_t *
                                                       __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_chn_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_chn_msk_fill_y_mirror(uint32_t *
                                                      __restrict ptSourceBase,
                                                      int16_t iSourceStride,
                                                      arm_2d_size_t *
@@ -2486,7 +2486,7 @@ void __arm_2d_impl_cccn888_src_chn_msk_fill_y_mirror(uint32_t *
                                                      arm_2d_size_t *
                                                      __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy(uint32_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint8_t *
@@ -2505,7 +2505,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy(uint32_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_mirror(uint32_t *
                                                           __restrict
                                                           pSourceBase,
                                                           int16_t iSourceStride,
@@ -2533,7 +2533,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_mirror(uint32_t *
                                                           __restrict ptCopySize,
                                                           uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_x_mirror(uint32_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -2563,7 +2563,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_x_mirror(uint32_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_xy_mirror(uint32_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -2593,7 +2593,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_xy_mirror(uint32_t *
                                                              __restrict
                                                              ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_y_mirror(uint32_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -2623,7 +2623,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_copy_y_mirror(uint32_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill(uint32_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -2644,7 +2644,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill(uint32_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_mirror(uint32_t *
                                                           __restrict
                                                           ptSourceBase,
                                                           int16_t iSourceStride,
@@ -2676,7 +2676,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_mirror(uint32_t *
                                                           ptTargetMaskSize,
                                                           uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_x_mirror(uint32_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -2709,7 +2709,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_x_mirror(uint32_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_xy_mirror(uint32_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -2742,7 +2742,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_xy_mirror(uint32_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_y_mirror(uint32_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -2775,7 +2775,7 @@ void __arm_2d_impl_cccn888_src_msk_1h_des_msk_fill_y_mirror(uint32_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_copy(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_cccn888_src_msk_copy(uint32_t * __restrict pSourceBase,
                                         int16_t iSourceStride,
                                         uint8_t * __restrict ptSourceMaskBase,
                                         int16_t iSourceMaskStride,
@@ -2785,7 +2785,7 @@ void __arm_2d_impl_cccn888_src_msk_copy(uint32_t * __restrict pSourceBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_copy_mirror(uint32_t *
                                                __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint8_t *
@@ -2800,7 +2800,7 @@ void __arm_2d_impl_cccn888_src_msk_copy_mirror(uint32_t *
                                                __restrict ptCopySize,
                                                uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_copy_x_mirror(uint32_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint8_t *
@@ -2814,7 +2814,7 @@ void __arm_2d_impl_cccn888_src_msk_copy_x_mirror(uint32_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_copy_xy_mirror(uint32_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint8_t *
@@ -2828,7 +2828,7 @@ void __arm_2d_impl_cccn888_src_msk_copy_xy_mirror(uint32_t *
                                                   arm_2d_size_t *
                                                   __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_copy_y_mirror(uint32_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint8_t *
@@ -2842,7 +2842,7 @@ void __arm_2d_impl_cccn888_src_msk_copy_y_mirror(uint32_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy(uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint8_t *
@@ -2861,7 +2861,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy(uint32_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_mirror(uint32_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -2892,7 +2892,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_mirror(uint32_t *
                                                            ptCopySize,
                                                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_x_mirror(uint32_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -2922,7 +2922,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_x_mirror(uint32_t *
                                                              __restrict
                                                              ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_xy_mirror(uint32_t *
                                                               __restrict
                                                               pSourceBase,
                                                               int16_t
@@ -2952,7 +2952,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_xy_mirror(uint32_t *
                                                               __restrict
                                                               ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_y_mirror(uint32_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -2982,7 +2982,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_copy_y_mirror(uint32_t *
                                                              __restrict
                                                              ptCopySize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill(uint32_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -3004,7 +3004,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill(uint32_t *
                                                     __restrict
                                                     ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_mirror(uint32_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -3038,7 +3038,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_mirror(uint32_t *
                                                            ptTargetMaskSize,
                                                            uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_x_mirror(uint32_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -3071,7 +3071,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_x_mirror(uint32_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_xy_mirror(uint32_t *
                                                               __restrict
                                                               ptSourceBase,
                                                               int16_t
@@ -3104,7 +3104,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_xy_mirror(uint32_t *
                                                               __restrict
                                                               ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_y_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_y_mirror(uint32_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -3137,7 +3137,7 @@ void __arm_2d_impl_cccn888_src_msk_des_chn_msk_fill_y_mirror(uint32_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_cccn888_src_msk_fill(uint32_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_cccn888_src_msk_fill(uint32_t * __restrict ptSourceBase,
                                         int16_t iSourceStride,
                                         arm_2d_size_t * __restrict ptSourceSize,
                                         uint8_t * __restrict ptSourceMaskBase,
@@ -3149,7 +3149,7 @@ void __arm_2d_impl_cccn888_src_msk_fill(uint32_t * __restrict ptSourceBase,
                                         arm_2d_size_t *
                                         __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_msk_fill_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_fill_mirror(uint32_t *
                                                __restrict ptSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -3166,7 +3166,7 @@ void __arm_2d_impl_cccn888_src_msk_fill_mirror(uint32_t *
                                                __restrict ptTargetSize,
                                                uint32_t wMode);
 
-void __arm_2d_impl_cccn888_src_msk_fill_x_mirror(uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_fill_x_mirror(uint32_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -3182,7 +3182,7 @@ void __arm_2d_impl_cccn888_src_msk_fill_x_mirror(uint32_t *
                                                  arm_2d_size_t *
                                                  __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_msk_fill_xy_mirror(  uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_fill_xy_mirror(  uint32_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -3198,7 +3198,7 @@ void __arm_2d_impl_cccn888_src_msk_fill_xy_mirror(  uint32_t *
                                                     arm_2d_size_t *
                                                     __restrict ptTargetSize);
 
-void __arm_2d_impl_cccn888_src_msk_fill_y_mirror(   uint32_t *
+extern void __arm_2d_impl_cccn888_src_msk_fill_y_mirror(   uint32_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -3214,71 +3214,71 @@ void __arm_2d_impl_cccn888_src_msk_fill_y_mirror(   uint32_t *
                                                     arm_2d_size_t *
                                                     __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_to_rgb565( uint8_t *__RESTRICT pchSourceBase,
+extern void __arm_2d_impl_gray8_to_rgb565( uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iSourceStride,
                                     uint16_t *__RESTRICT phwTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_cccn888_to_rgb565(uint32_t * __restrict pwSourceBase,
+extern void __arm_2d_impl_cccn888_to_rgb565(uint32_t * __restrict pwSourceBase,
                                      int16_t iSourceStride,
                                      uint16_t * __restrict phwTargetBase,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_ccca8888_to_rgb565(  uint32_t *__RESTRICT pwSourceBase,
+extern void __arm_2d_impl_ccca8888_to_rgb565(  uint32_t *__RESTRICT pwSourceBase,
                                         int16_t iSourceStride,
                                         uint16_t *__RESTRICT phwTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_to_gray8(  uint32_t *__RESTRICT pwSourceBase,
+extern void __arm_2d_impl_ccca8888_to_gray8(  uint32_t *__RESTRICT pwSourceBase,
                                         int16_t iSourceStride,
                                         uint8_t *__RESTRICT pchTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_to_cccn888( uint32_t *__RESTRICT pwSourceBase,
+extern void __arm_2d_impl_ccca8888_to_cccn888( uint32_t *__RESTRICT pwSourceBase,
                                         int16_t iSourceStride,
                                         uint32_t *__RESTRICT pwTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_cccn888_transform(__arm_2d_param_copy_orig_t * ptParam,
+extern void __arm_2d_impl_cccn888_transform(__arm_2d_param_copy_orig_t * ptParam,
                                      __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_cccn888_transform_only(__arm_2d_param_copy_orig_t * ptParam,
+extern void __arm_2d_impl_cccn888_transform_only(__arm_2d_param_copy_orig_t * ptParam,
                                           __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_cccn888_transform_with_opacity(
+extern void __arm_2d_impl_cccn888_transform_with_opacity(
                                            __arm_2d_param_copy_orig_t * ptParam,
                                            __arm_2d_transform_info_t * ptInfo,
                                            uint_fast16_t hwRatio);
 
-void __arm_2d_impl_cccn888_transform_only_opacity(
+extern void __arm_2d_impl_cccn888_transform_only_opacity(
                                            __arm_2d_param_copy_orig_t * ptParam,
                                            __arm_2d_transform_info_t * ptInfo,
                                            uint_fast16_t hwRatio);
 
-void __arm_2d_impl_cccn888_transform_with_src_mask(
+extern void __arm_2d_impl_cccn888_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_cccn888_transform_with_src_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_transform_with_src_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_cccn888_transform_with_src_chn_mask(
+extern void __arm_2d_impl_cccn888_transform_with_src_chn_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_cccn888_transform_with_src_chn_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_transform_with_src_chn_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_1h_des_msk_copy(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_1h_des_msk_copy(uint8_t * __restrict pSourceBase,
                                          int16_t iSourceStride,
                                          uint8_t * __restrict pTargetBase,
                                          int16_t iTargetStride,
@@ -3288,7 +3288,7 @@ void __arm_2d_impl_gray8_1h_des_msk_copy(uint8_t * __restrict pSourceBase,
                                          __restrict ptTargetMaskSize,
                                          arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_1h_des_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_copy_mirror(uint8_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint8_t *
@@ -3303,7 +3303,7 @@ void __arm_2d_impl_gray8_1h_des_msk_copy_mirror(uint8_t *
                                                 __restrict ptCopySize,
                                                 uint32_t wMode);
 
-void __arm_2d_impl_gray8_1h_des_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_copy_x_mirror(uint8_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint8_t *
@@ -3317,7 +3317,7 @@ void __arm_2d_impl_gray8_1h_des_msk_copy_x_mirror(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_1h_des_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_copy_xy_mirror(uint8_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint8_t *
@@ -3331,7 +3331,7 @@ void __arm_2d_impl_gray8_1h_des_msk_copy_xy_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_1h_des_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_copy_y_mirror(uint8_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint8_t *
@@ -3345,7 +3345,7 @@ void __arm_2d_impl_gray8_1h_des_msk_copy_y_mirror(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_1h_des_msk_fill(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_1h_des_msk_fill(uint8_t * __restrict ptSourceBase,
                                          int16_t iSourceStride,
                                          arm_2d_size_t *
                                          __restrict ptSourceSize,
@@ -3358,7 +3358,7 @@ void __arm_2d_impl_gray8_1h_des_msk_fill(uint8_t * __restrict ptSourceBase,
                                          arm_2d_size_t *
                                          __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_1h_des_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_fill_mirror(uint8_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -3375,7 +3375,7 @@ void __arm_2d_impl_gray8_1h_des_msk_fill_mirror(uint8_t *
                                                 __restrict ptTargetMaskSize,
                                                 uint32_t wMode);
 
-void __arm_2d_impl_gray8_1h_des_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_fill_x_mirror(uint8_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -3391,7 +3391,7 @@ void __arm_2d_impl_gray8_1h_des_msk_fill_x_mirror(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_1h_des_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_fill_xy_mirror(uint8_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -3407,7 +3407,7 @@ void __arm_2d_impl_gray8_1h_des_msk_fill_xy_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_1h_des_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_1h_des_msk_fill_y_mirror(uint8_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -3423,14 +3423,14 @@ void __arm_2d_impl_gray8_1h_des_msk_fill_y_mirror(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_tile_copy_opacity(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_tile_copy_opacity(uint8_t * __restrict pSourceBase,
                                         int16_t iSourceStride,
                                         uint8_t * __restrict pTargetBase,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_tile_copy_colour_keying_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_tile_copy_colour_keying_opacity(uint8_t *
                                                       __restrict pSourceBase,
                                                       int16_t iSourceStride,
                                                       uint8_t *
@@ -3441,7 +3441,7 @@ void __arm_2d_impl_gray8_tile_copy_colour_keying_opacity(uint8_t *
                                                       uint_fast16_t hwRatio,
                                                       uint8_t Colour);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask(uint8_t *
                                                      __restrict pTarget,
                                                      int16_t iTargetStride,
                                                      uint32_t *
@@ -3451,7 +3451,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask(uint8_t *
                                                      __restrict ptCopySize,
                                                      uint8_t Colour);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t *
                                                      __restrict pTarget,
                                                      int16_t
                                                      iTargetStride,
@@ -3465,7 +3465,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_opacity(uint8_t *
                                                      uint8_t Colour,
                                                      uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_a2_mask(uint8_t * __restrict pTarget,
+extern void __arm_2d_impl_gray8_colour_filling_a2_mask(uint8_t * __restrict pTarget,
                                                 int16_t iTargetStride,
                                                 uint8_t * __restrict pchAlpha,
                                                 int16_t iAlphaStride,
@@ -3474,7 +3474,7 @@ void __arm_2d_impl_gray8_colour_filling_a2_mask(uint8_t * __restrict pTarget,
                                                 __restrict ptCopySize,
                                                 uint8_t Colour);
 
-void __arm_2d_impl_gray8_colour_filling_a4_mask(uint8_t * __restrict pTarget,
+extern void __arm_2d_impl_gray8_colour_filling_a4_mask(uint8_t * __restrict pTarget,
                                                 int16_t iTargetStride,
                                                 uint8_t * __restrict pchAlpha,
                                                 int16_t iAlphaStride,
@@ -3483,7 +3483,7 @@ void __arm_2d_impl_gray8_colour_filling_a4_mask(uint8_t * __restrict pTarget,
                                                 __restrict ptCopySize,
                                                 uint8_t Colour);
 
-void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __restrict pTarget,
+extern void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __restrict pTarget,
                                              int16_t iTargetStride,
                                              uint8_t * __restrict pchAlpha,
                                              int16_t iAlphaStride,
@@ -3491,7 +3491,7 @@ void __arm_2d_impl_gray8_colour_filling_mask(uint8_t * __restrict pTarget,
                                              __restrict ptCopySize,
                                              uint8_t Colour);
 
-void __arm_2d_impl_gray8_colour_filling_a1_mask_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_a1_mask_opacity(uint8_t *
                                                         __restrict pTarget,
                                                         int16_t iTargetStride,
                                                         uint8_t *
@@ -3503,7 +3503,7 @@ void __arm_2d_impl_gray8_colour_filling_a1_mask_opacity(uint8_t *
                                                         uint8_t Colour,
                                                         uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_a2_mask_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_a2_mask_opacity(uint8_t *
                                                         __restrict pTarget,
                                                         int16_t iTargetStride,
                                                         uint8_t *
@@ -3515,7 +3515,7 @@ void __arm_2d_impl_gray8_colour_filling_a2_mask_opacity(uint8_t *
                                                         uint8_t Colour,
                                                         uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_a4_mask_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_a4_mask_opacity(uint8_t *
                                                         __restrict pTarget,
                                                         int16_t iTargetStride,
                                                         uint8_t *
@@ -3527,7 +3527,7 @@ void __arm_2d_impl_gray8_colour_filling_a4_mask_opacity(uint8_t *
                                                         uint8_t Colour,
                                                         uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t *
                                                      __restrict pTarget,
                                                      int16_t iTargetStride,
                                                      uint8_t *
@@ -3538,7 +3538,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_opacity(uint8_t *
                                                      uint8_t Colour,
                                                      uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_with_opacity(uint8_t *
+extern void __arm_2d_impl_gray8_colour_filling_with_opacity(uint8_t *
                                                      __restrict pTargetBase,
                                                      int16_t iTargetStride,
                                                      arm_2d_size_t *
@@ -3546,7 +3546,7 @@ void __arm_2d_impl_gray8_colour_filling_with_opacity(uint8_t *
                                                      uint8_t Colour,
                                                      uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_des_chn_msk_copy(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_des_chn_msk_copy(uint8_t * __restrict pSourceBase,
                                           int16_t iSourceStride,
                                           uint8_t * __restrict pTargetBase,
                                           int16_t iTargetStride,
@@ -3558,7 +3558,7 @@ void __arm_2d_impl_gray8_des_chn_msk_copy(uint8_t * __restrict pSourceBase,
                                           arm_2d_size_t *
                                           __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_chn_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_copy_mirror(uint8_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint8_t *
@@ -3573,7 +3573,7 @@ void __arm_2d_impl_gray8_des_chn_msk_copy_mirror(uint8_t *
                                                  __restrict ptCopySize,
                                                  uint32_t wMode);
 
-void __arm_2d_impl_gray8_des_chn_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_copy_x_mirror(uint8_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint8_t *
@@ -3587,7 +3587,7 @@ void __arm_2d_impl_gray8_des_chn_msk_copy_x_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_chn_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_copy_xy_mirror(uint8_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint8_t *
@@ -3601,7 +3601,7 @@ void __arm_2d_impl_gray8_des_chn_msk_copy_xy_mirror(uint8_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_chn_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_copy_y_mirror(uint8_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint8_t *
@@ -3615,7 +3615,7 @@ void __arm_2d_impl_gray8_des_chn_msk_copy_y_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_chn_msk_fill(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_des_chn_msk_fill(uint8_t * __restrict ptSourceBase,
                                           int16_t iSourceStride,
                                           arm_2d_size_t *
                                           __restrict ptSourceSize,
@@ -3629,7 +3629,7 @@ void __arm_2d_impl_gray8_des_chn_msk_fill(uint8_t * __restrict ptSourceBase,
                                           arm_2d_size_t *
                                           __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_chn_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_fill_mirror(uint8_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -3646,7 +3646,7 @@ void __arm_2d_impl_gray8_des_chn_msk_fill_mirror(uint8_t *
                                                  __restrict ptTargetMaskSize,
                                                  uint32_t wMode);
 
-void __arm_2d_impl_gray8_des_chn_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_fill_x_mirror(uint8_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -3662,7 +3662,7 @@ void __arm_2d_impl_gray8_des_chn_msk_fill_x_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_chn_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_fill_xy_mirror(uint8_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -3679,7 +3679,7 @@ void __arm_2d_impl_gray8_des_chn_msk_fill_xy_mirror(uint8_t *
                                                     __restrict
                                                     ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_chn_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_chn_msk_fill_y_mirror(uint8_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -3695,7 +3695,7 @@ void __arm_2d_impl_gray8_des_chn_msk_fill_y_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_msk_copy(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_des_msk_copy(uint8_t * __restrict pSourceBase,
                                       int16_t iSourceStride,
                                       uint8_t * __restrict pTargetBase,
                                       int16_t iTargetStride,
@@ -3705,7 +3705,7 @@ void __arm_2d_impl_gray8_des_msk_copy(uint8_t * __restrict pSourceBase,
                                       __restrict ptTargetMaskSize,
                                       arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_msk_copy_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_des_msk_copy_mirror(uint8_t * __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              uint8_t * __restrict pTargetBase,
                                              int16_t iTargetStride,
@@ -3718,7 +3718,7 @@ void __arm_2d_impl_gray8_des_msk_copy_mirror(uint8_t * __restrict pSourceBase,
                                              __restrict ptCopySize,
                                              uint32_t wMode);
 
-void __arm_2d_impl_gray8_des_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_des_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint8_t * __restrict pTargetBase,
                                                int16_t iTargetStride,
@@ -3730,7 +3730,7 @@ void __arm_2d_impl_gray8_des_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
                                                arm_2d_size_t *
                                                __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_msk_copy_xy_mirror(uint8_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint8_t *
@@ -3744,7 +3744,7 @@ void __arm_2d_impl_gray8_des_msk_copy_xy_mirror(uint8_t *
                                                 arm_2d_size_t *
                                                 __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_des_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint8_t * __restrict pTargetBase,
                                                int16_t iTargetStride,
@@ -3756,7 +3756,7 @@ void __arm_2d_impl_gray8_des_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
                                                arm_2d_size_t *
                                                __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_des_msk_fill(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_des_msk_fill(uint8_t * __restrict ptSourceBase,
                                       int16_t iSourceStride,
                                       arm_2d_size_t * __restrict ptSourceSize,
                                       uint8_t * __restrict ptTargetBase,
@@ -3767,7 +3767,7 @@ void __arm_2d_impl_gray8_des_msk_fill(uint8_t * __restrict ptSourceBase,
                                       arm_2d_size_t *
                                       __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_des_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
                                              int16_t iSourceStride,
                                              arm_2d_size_t *
                                              __restrict ptSourceSize,
@@ -3782,7 +3782,7 @@ void __arm_2d_impl_gray8_des_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
                                              __restrict ptTargetMaskSize,
                                              uint32_t wMode);
 
-void __arm_2d_impl_gray8_des_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_msk_fill_x_mirror(uint8_t *
                                                __restrict ptSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -3798,7 +3798,7 @@ void __arm_2d_impl_gray8_des_msk_fill_x_mirror(uint8_t *
                                                arm_2d_size_t *
                                                __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_msk_fill_xy_mirror(uint8_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -3814,7 +3814,7 @@ void __arm_2d_impl_gray8_des_msk_fill_xy_mirror(uint8_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_des_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_des_msk_fill_y_mirror(uint8_t *
                                                __restrict ptSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -3830,7 +3830,7 @@ void __arm_2d_impl_gray8_des_msk_fill_y_mirror(uint8_t *
                                                arm_2d_size_t *
                                                __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_masks_copy(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_masks_copy(uint8_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     uint8_t * __restrict ptSourceMaskBase,
                                     int16_t iSourceMaskStride,
@@ -3842,7 +3842,7 @@ void __arm_2d_impl_gray8_masks_copy(uint8_t * __restrict pSourceBase,
                                     arm_2d_size_t * __restrict ptTargetMaskSize,
                                     arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_masks_copy_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_masks_copy_mirror(uint8_t * __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            uint8_t *
                                            __restrict ptSourceMaskBase,
@@ -3860,7 +3860,7 @@ void __arm_2d_impl_gray8_masks_copy_mirror(uint8_t * __restrict pSourceBase,
                                            __restrict ptCopySize,
                                            uint32_t wMode);
 
-void __arm_2d_impl_gray8_masks_copy_x_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_masks_copy_x_mirror(uint8_t * __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              uint8_t *
                                              __restrict ptSourceMaskBase,
@@ -3877,7 +3877,7 @@ void __arm_2d_impl_gray8_masks_copy_x_mirror(uint8_t * __restrict pSourceBase,
                                              arm_2d_size_t *
                                              __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_masks_copy_xy_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_masks_copy_xy_mirror(uint8_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               uint8_t *
                                               __restrict ptSourceMaskBase,
@@ -3894,7 +3894,7 @@ void __arm_2d_impl_gray8_masks_copy_xy_mirror(uint8_t * __restrict pSourceBase,
                                               arm_2d_size_t *
                                               __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_masks_copy_y_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_masks_copy_y_mirror(uint8_t * __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              uint8_t *
                                              __restrict ptSourceMaskBase,
@@ -3911,7 +3911,7 @@ void __arm_2d_impl_gray8_masks_copy_y_mirror(uint8_t * __restrict pSourceBase,
                                              arm_2d_size_t *
                                              __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_masks_fill(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_masks_fill(uint8_t * __restrict ptSourceBase,
                                     int16_t iSourceStride,
                                     arm_2d_size_t * __restrict ptSourceSize,
                                     uint8_t * __restrict ptSourceMaskBase,
@@ -3925,7 +3925,7 @@ void __arm_2d_impl_gray8_masks_fill(uint8_t * __restrict ptSourceBase,
                                     arm_2d_size_t *
                                     __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_masks_fill_mirror(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_masks_fill_mirror(uint8_t * __restrict ptSourceBase,
                                            int16_t iSourceStride,
                                            arm_2d_size_t *
                                            __restrict ptSourceSize,
@@ -3945,7 +3945,7 @@ void __arm_2d_impl_gray8_masks_fill_mirror(uint8_t * __restrict ptSourceBase,
                                            __restrict ptTargetMaskSize,
                                            uint32_t wMode);
 
-void __arm_2d_impl_gray8_masks_fill_x_mirror(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_masks_fill_x_mirror(uint8_t * __restrict ptSourceBase,
                                              int16_t iSourceStride,
                                              arm_2d_size_t *
                                              __restrict ptSourceSize,
@@ -3964,7 +3964,7 @@ void __arm_2d_impl_gray8_masks_fill_x_mirror(uint8_t * __restrict ptSourceBase,
                                              arm_2d_size_t *
                                              __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_masks_fill_xy_mirror(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_masks_fill_xy_mirror(uint8_t * __restrict ptSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
                                               __restrict ptSourceSize,
@@ -3983,7 +3983,7 @@ void __arm_2d_impl_gray8_masks_fill_xy_mirror(uint8_t * __restrict ptSourceBase,
                                               arm_2d_size_t *
                                               __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_masks_fill_y_mirror(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_masks_fill_y_mirror(uint8_t * __restrict ptSourceBase,
                                              int16_t iSourceStride,
                                              arm_2d_size_t *
                                              __restrict ptSourceSize,
@@ -4002,7 +4002,7 @@ void __arm_2d_impl_gray8_masks_fill_y_mirror(uint8_t * __restrict ptSourceBase,
                                              arm_2d_size_t *
                                              __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy(uint8_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      uint32_t *
@@ -4025,7 +4025,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy(uint8_t *
                                                      arm_2d_size_t *
                                                      __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_mirror(uint8_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -4056,7 +4056,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_mirror(uint8_t *
                                                             ptCopySize,
                                                             uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_x_mirror(uint8_t *
                                                               __restrict
                                                               pSourceBase,
                                                               int16_t
@@ -4086,7 +4086,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_x_mirror(uint8_t *
                                                               __restrict
                                                               ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_xy_mirror(uint8_t *
                                                                __restrict
                                                                pSourceBase,
                                                                int16_t
@@ -4116,7 +4116,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_xy_mirror(uint8_t *
                                                                __restrict
                                                                ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_y_mirror(uint8_t *
                                                               __restrict
                                                               pSourceBase,
                                                               int16_t
@@ -4146,7 +4146,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_copy_y_mirror(uint8_t *
                                                               __restrict
                                                               ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill(uint8_t *
                                                      __restrict ptSourceBase,
                                                      int16_t iSourceStride,
                                                      arm_2d_size_t *
@@ -4171,7 +4171,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill(uint8_t *
                                                      __restrict
                                                      ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_mirror(uint8_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -4205,7 +4205,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_mirror(uint8_t *
                                                             ptTargetMaskSize,
                                                             uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_x_mirror(uint8_t *
                                                               __restrict
                                                               ptSourceBase,
                                                               int16_t
@@ -4238,7 +4238,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_x_mirror(uint8_t *
                                                               __restrict
                                                               ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_xy_mirror(uint8_t *
                                                                __restrict
                                                                ptSourceBase,
                                                                int16_t
@@ -4271,7 +4271,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_xy_mirror(uint8_t *
                                                                __restrict
                                                                ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_y_mirror(uint8_t *
                                                               __restrict
                                                               ptSourceBase,
                                                               int16_t
@@ -4304,7 +4304,7 @@ void __arm_2d_impl_gray8_src_chn_msk_1h_des_msk_fill_y_mirror(uint8_t *
                                                               __restrict
                                                               ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_copy(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_src_chn_msk_copy(uint8_t * __restrict pSourceBase,
                                           int16_t iSourceStride,
                                           uint32_t *
                                           __restrict ptSourceMaskBase,
@@ -4316,7 +4316,7 @@ void __arm_2d_impl_gray8_src_chn_msk_copy(uint8_t * __restrict pSourceBase,
                                           arm_2d_size_t *
                                           __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_copy_mirror(uint8_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint32_t *
@@ -4331,7 +4331,7 @@ void __arm_2d_impl_gray8_src_chn_msk_copy_mirror(uint8_t *
                                                  __restrict ptCopySize,
                                                  uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_copy_x_mirror(uint8_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint32_t *
@@ -4345,7 +4345,7 @@ void __arm_2d_impl_gray8_src_chn_msk_copy_x_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_copy_xy_mirror(uint8_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint32_t *
@@ -4359,7 +4359,7 @@ void __arm_2d_impl_gray8_src_chn_msk_copy_xy_mirror(uint8_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_copy_y_mirror(uint8_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint32_t *
@@ -4373,7 +4373,7 @@ void __arm_2d_impl_gray8_src_chn_msk_copy_y_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy(uint8_t *
                                                       __restrict pSourceBase,
                                                       int16_t iSourceStride,
                                                       uint32_t *
@@ -4396,7 +4396,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy(uint8_t *
                                                       arm_2d_size_t *
                                                       __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_mirror(uint8_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -4427,7 +4427,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_mirror(uint8_t *
                                                              ptCopySize,
                                                              uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_x_mirror(uint8_t *
                                                                __restrict
                                                                pSourceBase,
                                                                int16_t
@@ -4457,7 +4457,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_x_mirror(uint8_t *
                                                                __restrict
                                                                ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_xy_mirror(uint8_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -4487,7 +4487,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_y_mirror(uint8_t *
                                                                __restrict
                                                                pSourceBase,
                                                                int16_t
@@ -4517,7 +4517,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_copy_y_mirror(uint8_t *
                                                                __restrict
                                                                ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill(uint8_t *
                                                       __restrict ptSourceBase,
                                                       int16_t iSourceStride,
                                                       arm_2d_size_t *
@@ -4542,7 +4542,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill(uint8_t *
                                                       __restrict
                                                       ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_mirror(uint8_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -4576,7 +4576,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_mirror(uint8_t *
                                                              ptTargetMaskSize,
                                                              uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_x_mirror(uint8_t *
                                                                __restrict
                                                                ptSourceBase,
                                                                int16_t
@@ -4609,7 +4609,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_x_mirror(uint8_t *
                                                                __restrict
                                                                ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -4642,7 +4642,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_y_mirror(uint8_t *
                                                                __restrict
                                                                ptSourceBase,
                                                                int16_t
@@ -4675,7 +4675,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_chn_msk_fill_y_mirror(uint8_t *
                                                                __restrict
                                                                ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy(uint8_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint32_t *
@@ -4694,7 +4694,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_mirror(uint8_t *
                                                          __restrict pSourceBase,
                                                          int16_t iSourceStride,
                                                          uint32_t *
@@ -4720,7 +4720,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_mirror(uint8_t *
                                                          __restrict ptCopySize,
                                                          uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_x_mirror(uint8_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -4750,7 +4750,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_x_mirror(uint8_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_xy_mirror(uint8_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -4780,7 +4780,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_y_mirror(uint8_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -4810,7 +4810,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_copy_y_mirror(uint8_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill(uint8_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -4831,7 +4831,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_mirror(uint8_t *
                                                          __restrict
                                                          ptSourceBase,
                                                          int16_t iSourceStride,
@@ -4863,7 +4863,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_mirror(uint8_t *
                                                          ptTargetMaskSize,
                                                          uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_x_mirror(uint8_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -4896,7 +4896,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_x_mirror(uint8_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -4929,7 +4929,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_y_mirror(uint8_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -4962,7 +4962,7 @@ void __arm_2d_impl_gray8_src_chn_msk_des_msk_fill_y_mirror(uint8_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_fill(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_src_chn_msk_fill(uint8_t * __restrict ptSourceBase,
                                           int16_t iSourceStride,
                                           arm_2d_size_t *
                                           __restrict ptSourceSize,
@@ -4976,7 +4976,7 @@ void __arm_2d_impl_gray8_src_chn_msk_fill(uint8_t * __restrict ptSourceBase,
                                           arm_2d_size_t *
                                           __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_fill_mirror(uint8_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -4993,7 +4993,7 @@ void __arm_2d_impl_gray8_src_chn_msk_fill_mirror(uint8_t *
                                                  __restrict ptTargetSize,
                                                  uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_chn_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_fill_x_mirror(uint8_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -5009,7 +5009,7 @@ void __arm_2d_impl_gray8_src_chn_msk_fill_x_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_fill_xy_mirror(uint8_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -5025,7 +5025,7 @@ void __arm_2d_impl_gray8_src_chn_msk_fill_xy_mirror(uint8_t *
                                                     arm_2d_size_t *
                                                     __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_chn_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_chn_msk_fill_y_mirror(uint8_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -5041,7 +5041,7 @@ void __arm_2d_impl_gray8_src_chn_msk_fill_y_mirror(uint8_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy(uint8_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint8_t *
@@ -5060,7 +5060,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy(uint8_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_mirror(uint8_t *
                                                         __restrict pSourceBase,
                                                         int16_t iSourceStride,
                                                         uint8_t *
@@ -5086,7 +5086,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_mirror(uint8_t *
                                                         __restrict ptCopySize,
                                                         uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_x_mirror(uint8_t *
                                                           __restrict
                                                           pSourceBase,
                                                           int16_t iSourceStride,
@@ -5114,7 +5114,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_x_mirror(uint8_t *
                                                           __restrict
                                                           ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_xy_mirror(uint8_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -5144,7 +5144,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_xy_mirror(uint8_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_y_mirror(uint8_t *
                                                           __restrict
                                                           pSourceBase,
                                                           int16_t iSourceStride,
@@ -5172,7 +5172,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_copy_y_mirror(uint8_t *
                                                           __restrict
                                                           ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill(uint8_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -5193,7 +5193,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill(uint8_t *
                                                  arm_2d_size_t *
                                                  __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_mirror(uint8_t *
                                                         __restrict ptSourceBase,
                                                         int16_t iSourceStride,
                                                         arm_2d_size_t *
@@ -5221,7 +5221,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_mirror(uint8_t *
                                                         ptTargetMaskSize,
                                                         uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_x_mirror(uint8_t *
                                                           __restrict
                                                           ptSourceBase,
                                                           int16_t iSourceStride,
@@ -5252,7 +5252,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_x_mirror(uint8_t *
                                                           __restrict
                                                           ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_xy_mirror(uint8_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -5285,7 +5285,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_xy_mirror(uint8_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_y_mirror(uint8_t *
                                                           __restrict
                                                           ptSourceBase,
                                                           int16_t iSourceStride,
@@ -5316,7 +5316,7 @@ void __arm_2d_impl_gray8_src_msk_1h_des_msk_fill_y_mirror(uint8_t *
                                                           __restrict
                                                           ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_copy(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_src_msk_copy(uint8_t * __restrict pSourceBase,
                                       int16_t iSourceStride,
                                       uint8_t * __restrict ptSourceMaskBase,
                                       int16_t iSourceMaskStride,
@@ -5326,7 +5326,7 @@ void __arm_2d_impl_gray8_src_msk_copy(uint8_t * __restrict pSourceBase,
                                       int16_t iTargetStride,
                                       arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_copy_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_src_msk_copy_mirror(uint8_t * __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              uint8_t *
                                              __restrict ptSourceMaskBase,
@@ -5339,7 +5339,7 @@ void __arm_2d_impl_gray8_src_msk_copy_mirror(uint8_t * __restrict pSourceBase,
                                              __restrict ptCopySize,
                                              uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_src_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint8_t *
                                                __restrict ptSourceMaskBase,
@@ -5351,7 +5351,7 @@ void __arm_2d_impl_gray8_src_msk_copy_x_mirror(uint8_t * __restrict pSourceBase,
                                                arm_2d_size_t *
                                                __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_copy_xy_mirror(uint8_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint8_t *
@@ -5365,7 +5365,7 @@ void __arm_2d_impl_gray8_src_msk_copy_xy_mirror(uint8_t *
                                                 arm_2d_size_t *
                                                 __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
+extern void __arm_2d_impl_gray8_src_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint8_t *
                                                __restrict ptSourceMaskBase,
@@ -5377,7 +5377,7 @@ void __arm_2d_impl_gray8_src_msk_copy_y_mirror(uint8_t * __restrict pSourceBase,
                                                arm_2d_size_t *
                                                __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy(uint8_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint8_t *
@@ -5396,7 +5396,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_mirror(uint8_t *
                                                          __restrict pSourceBase,
                                                          int16_t iSourceStride,
                                                          uint8_t *
@@ -5422,7 +5422,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_mirror(uint8_t *
                                                          __restrict ptCopySize,
                                                          uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_x_mirror(uint8_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -5452,7 +5452,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_x_mirror(uint8_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_xy_mirror(uint8_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -5482,7 +5482,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_y_mirror(uint8_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -5512,7 +5512,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_copy_y_mirror(uint8_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill(uint8_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -5533,7 +5533,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill(uint8_t *
                                                   arm_2d_size_t *
                                                   __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_mirror(uint8_t *
                                                          __restrict
                                                          ptSourceBase,
                                                          int16_t iSourceStride,
@@ -5565,7 +5565,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_mirror(uint8_t *
                                                          ptTargetMaskSize,
                                                          uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_x_mirror(uint8_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -5598,7 +5598,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_x_mirror(uint8_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -5631,7 +5631,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_xy_mirror(uint8_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_y_mirror(uint8_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -5664,7 +5664,7 @@ void __arm_2d_impl_gray8_src_msk_des_chn_msk_fill_y_mirror(uint8_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_gray8_src_msk_fill(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_src_msk_fill(uint8_t * __restrict ptSourceBase,
                                       int16_t iSourceStride,
                                       arm_2d_size_t * __restrict ptSourceSize,
                                       uint8_t * __restrict ptSourceMaskBase,
@@ -5675,7 +5675,7 @@ void __arm_2d_impl_gray8_src_msk_fill(uint8_t * __restrict ptSourceBase,
                                       int16_t iTargetStride,
                                       arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_gray8_src_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
                                              int16_t iSourceStride,
                                              arm_2d_size_t *
                                              __restrict ptSourceSize,
@@ -5690,7 +5690,7 @@ void __arm_2d_impl_gray8_src_msk_fill_mirror(uint8_t * __restrict ptSourceBase,
                                              __restrict ptTargetSize,
                                              uint32_t wMode);
 
-void __arm_2d_impl_gray8_src_msk_fill_x_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_fill_x_mirror(uint8_t *
                                                __restrict ptSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -5706,7 +5706,7 @@ void __arm_2d_impl_gray8_src_msk_fill_x_mirror(uint8_t *
                                                arm_2d_size_t *
                                                __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_msk_fill_xy_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_fill_xy_mirror(uint8_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -5722,7 +5722,7 @@ void __arm_2d_impl_gray8_src_msk_fill_xy_mirror(uint8_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_src_msk_fill_y_mirror(uint8_t *
+extern void __arm_2d_impl_gray8_src_msk_fill_y_mirror(uint8_t *
                                                __restrict ptSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -5738,41 +5738,41 @@ void __arm_2d_impl_gray8_src_msk_fill_y_mirror(uint8_t *
                                                arm_2d_size_t *
                                                __restrict ptTargetSize);
 
-void __arm_2d_impl_gray8_transform( __arm_2d_param_copy_orig_t * ptParam,
+extern void __arm_2d_impl_gray8_transform( __arm_2d_param_copy_orig_t * ptParam,
                                     __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_gray8_transform_only(__arm_2d_param_copy_orig_t * ptParam,
+extern void __arm_2d_impl_gray8_transform_only(__arm_2d_param_copy_orig_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_gray8_transform_only_opacity(
+extern void __arm_2d_impl_gray8_transform_only_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_transform_with_opacity(
+extern void __arm_2d_impl_gray8_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_transform_with_src_mask(
+extern void __arm_2d_impl_gray8_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_gray8_transform_with_src_mask_and_opacity(
+extern void __arm_2d_impl_gray8_transform_with_src_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_transform_with_src_chn_mask(
+extern void __arm_2d_impl_gray8_transform_with_src_chn_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_gray8_transform_with_src_chn_mask_and_opacity(
+extern void __arm_2d_impl_gray8_transform_with_src_chn_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb16_1x1_paving(const uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_1x1_paving(const uint16_t * __restrict pSource,
                                     int16_t iSourceStride,
                                     uint16_t * __restrict pTarget,
                                     int16_t iTargetStride,
@@ -5781,7 +5781,7 @@ void __arm_2d_impl_rgb16_1x1_paving(const uint16_t * __restrict pSource,
                                     const arm_2d_size_t *
                                     __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb16_1x1_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_1x1_paving_x_mirror(const uint16_t *
                                              __restrict pSource,
                                              int16_t iSourceStride,
                                              uint16_t * __restrict pTarget,
@@ -5791,7 +5791,7 @@ void __arm_2d_impl_rgb16_1x1_paving_x_mirror(const uint16_t *
                                              const arm_2d_size_t *
                                              __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb16_1x1_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_1x1_paving_xy_mirror(const uint16_t *
                                               __restrict pSource,
                                               int16_t iSourceStride,
                                               uint16_t * __restrict pTarget,
@@ -5801,7 +5801,7 @@ void __arm_2d_impl_rgb16_1x1_paving_xy_mirror(const uint16_t *
                                               const arm_2d_size_t *
                                               __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb16_1x1_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_1x1_paving_y_mirror(const uint16_t *
                                              __restrict pSource,
                                              int16_t iSourceStride,
                                              uint16_t * __restrict pTarget,
@@ -5811,7 +5811,7 @@ void __arm_2d_impl_rgb16_1x1_paving_y_mirror(const uint16_t *
                                              const arm_2d_size_t *
                                              __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb16_1x2_paving(const uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_1x2_paving(const uint16_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     const arm_2d_size_t *
                                     __restrict ptSourceSize,
@@ -5819,7 +5819,7 @@ void __arm_2d_impl_rgb16_1x2_paving(const uint16_t * __restrict pSourceBase,
                                     int16_t iTargetStride, uint32_t destWidth,
                                     uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb16_1x2_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_1x2_paving_x_mirror(const uint16_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -5829,7 +5829,7 @@ void __arm_2d_impl_rgb16_1x2_paving_x_mirror(const uint16_t *
                                              uint32_t destWidth,
                                              uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb16_1x2_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_1x2_paving_xy_mirror(const uint16_t *
                                               __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               const arm_2d_size_t *
@@ -5839,7 +5839,7 @@ void __arm_2d_impl_rgb16_1x2_paving_xy_mirror(const uint16_t *
                                               uint32_t destWidth,
                                               uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb16_1x2_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_1x2_paving_y_mirror(const uint16_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -5849,7 +5849,7 @@ void __arm_2d_impl_rgb16_1x2_paving_y_mirror(const uint16_t *
                                              uint32_t destWidth,
                                              uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb16_2x1_paving(const uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_2x1_paving(const uint16_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     const arm_2d_size_t *
                                     __restrict ptSourceSize,
@@ -5857,7 +5857,7 @@ void __arm_2d_impl_rgb16_2x1_paving(const uint16_t * __restrict pSourceBase,
                                     int16_t iTargetStride,
                                     uint16_t tilePairCols, uint16_t destHeight);
 
-void __arm_2d_impl_rgb16_2x1_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_2x1_paving_x_mirror(const uint16_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -5867,7 +5867,7 @@ void __arm_2d_impl_rgb16_2x1_paving_x_mirror(const uint16_t *
                                              uint16_t tilePairCols,
                                              uint16_t destHeight);
 
-void __arm_2d_impl_rgb16_2x1_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_2x1_paving_xy_mirror(const uint16_t *
                                               __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               const arm_2d_size_t *
@@ -5877,7 +5877,7 @@ void __arm_2d_impl_rgb16_2x1_paving_xy_mirror(const uint16_t *
                                               uint16_t tilePairCols,
                                               uint16_t destHeight);
 
-void __arm_2d_impl_rgb16_2x1_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_2x1_paving_y_mirror(const uint16_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -5887,7 +5887,7 @@ void __arm_2d_impl_rgb16_2x1_paving_y_mirror(const uint16_t *
                                              uint16_t tilePairCols,
                                              uint16_t destHeight);
 
-void __arm_2d_impl_rgb16_2x2_paving(const uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_2x2_paving(const uint16_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     const arm_2d_size_t *
                                     __restrict ptSourceSize,
@@ -5896,7 +5896,7 @@ void __arm_2d_impl_rgb16_2x2_paving(const uint16_t * __restrict pSourceBase,
                                     uint16_t tilePairRows,
                                     uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb16_2x2_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_2x2_paving_x_mirror(const uint16_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -5906,7 +5906,7 @@ void __arm_2d_impl_rgb16_2x2_paving_x_mirror(const uint16_t *
                                              uint16_t tilePairRows,
                                              uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb16_2x2_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_2x2_paving_xy_mirror(const uint16_t *
                                               __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               const arm_2d_size_t *
@@ -5916,7 +5916,7 @@ void __arm_2d_impl_rgb16_2x2_paving_xy_mirror(const uint16_t *
                                               uint16_t tilePairRows,
                                               uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb16_2x2_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_2x2_paving_y_mirror(const uint16_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -5926,7 +5926,7 @@ void __arm_2d_impl_rgb16_2x2_paving_y_mirror(const uint16_t *
                                              uint16_t tilePairRows,
                                              uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb16_cl_key_1x1_paving(const uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_cl_key_1x1_paving(const uint16_t * __restrict pSource,
                                            int16_t iSourceStride,
                                            uint16_t * __restrict pTarget,
                                            int16_t iTargetStride,
@@ -5936,7 +5936,7 @@ void __arm_2d_impl_rgb16_cl_key_1x1_paving(const uint16_t * __restrict pSource,
                                            __restrict ptDstCopySize,
                                            uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x1_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x1_paving_x_mirror(const uint16_t *
                                                     __restrict pSource,
                                                     int16_t iSourceStride,
                                                     uint16_t *
@@ -5948,7 +5948,7 @@ void __arm_2d_impl_rgb16_cl_key_1x1_paving_x_mirror(const uint16_t *
                                                     __restrict ptDstCopySize,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x1_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x1_paving_xy_mirror(const uint16_t *
                                                      __restrict pSource,
                                                      int16_t iSourceStride,
                                                      uint16_t *
@@ -5960,7 +5960,7 @@ void __arm_2d_impl_rgb16_cl_key_1x1_paving_xy_mirror(const uint16_t *
                                                      __restrict ptDstCopySize,
                                                      uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x1_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x1_paving_y_mirror(const uint16_t *
                                                     __restrict pSource,
                                                     int16_t iSourceStride,
                                                     uint16_t *
@@ -5972,7 +5972,7 @@ void __arm_2d_impl_rgb16_cl_key_1x1_paving_y_mirror(const uint16_t *
                                                     __restrict ptDstCopySize,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x2_paving(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x2_paving(const uint16_t *
                                            __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            const arm_2d_size_t *
@@ -5983,7 +5983,7 @@ void __arm_2d_impl_rgb16_cl_key_1x2_paving(const uint16_t *
                                            uint16_t tilePairRows,
                                            uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x2_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x2_paving_x_mirror(const uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -5995,7 +5995,7 @@ void __arm_2d_impl_rgb16_cl_key_1x2_paving_x_mirror(const uint16_t *
                                                     uint16_t tilePairRows,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x2_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x2_paving_xy_mirror(const uint16_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      const arm_2d_size_t *
@@ -6007,7 +6007,7 @@ void __arm_2d_impl_rgb16_cl_key_1x2_paving_xy_mirror(const uint16_t *
                                                      uint16_t tilePairRows,
                                                      uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_1x2_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_1x2_paving_y_mirror(const uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6019,7 +6019,7 @@ void __arm_2d_impl_rgb16_cl_key_1x2_paving_y_mirror(const uint16_t *
                                                     uint16_t tilePairRows,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x1_paving(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x1_paving(const uint16_t *
                                            __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            const arm_2d_size_t *
@@ -6030,7 +6030,7 @@ void __arm_2d_impl_rgb16_cl_key_2x1_paving(const uint16_t *
                                            uint16_t destHeight,
                                            uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x1_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x1_paving_x_mirror(const uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6042,7 +6042,7 @@ void __arm_2d_impl_rgb16_cl_key_2x1_paving_x_mirror(const uint16_t *
                                                     uint16_t destHeight,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x1_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x1_paving_xy_mirror(const uint16_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      const arm_2d_size_t *
@@ -6054,7 +6054,7 @@ void __arm_2d_impl_rgb16_cl_key_2x1_paving_xy_mirror(const uint16_t *
                                                      uint16_t destHeight,
                                                      uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x1_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x1_paving_y_mirror(const uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6066,7 +6066,7 @@ void __arm_2d_impl_rgb16_cl_key_2x1_paving_y_mirror(const uint16_t *
                                                     uint16_t destHeight,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x2_paving(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x2_paving(const uint16_t *
                                            __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            const arm_2d_size_t *
@@ -6077,7 +6077,7 @@ void __arm_2d_impl_rgb16_cl_key_2x2_paving(const uint16_t *
                                            uint16_t tilePairCols,
                                            uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x2_paving_x_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x2_paving_x_mirror(const uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6089,7 +6089,7 @@ void __arm_2d_impl_rgb16_cl_key_2x2_paving_x_mirror(const uint16_t *
                                                     uint16_t tilePairCols,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x2_paving_xy_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x2_paving_xy_mirror(const uint16_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      const arm_2d_size_t *
@@ -6101,7 +6101,7 @@ void __arm_2d_impl_rgb16_cl_key_2x2_paving_xy_mirror(const uint16_t *
                                                      uint16_t tilePairCols,
                                                      uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_2x2_paving_y_mirror(const uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_2x2_paving_y_mirror(const uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6113,14 +6113,14 @@ void __arm_2d_impl_rgb16_cl_key_2x2_paving_y_mirror(const uint16_t *
                                                     uint16_t tilePairCols,
                                                     uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_copy(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_cl_key_copy(uint16_t * __restrict pSource,
                                      int16_t iSourceStride,
                                      uint16_t * __restrict pTarget,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize,
                                      uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_copy_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_cl_key_copy_mirror(uint16_t * __restrict pSource,
                                             int16_t iSourceStride,
                                             uint16_t * __restrict pTarget,
                                             int16_t iTargetStride,
@@ -6128,7 +6128,7 @@ void __arm_2d_impl_rgb16_cl_key_copy_mirror(uint16_t * __restrict pSource,
                                             __restrict ptCopySize,
                                             uint32_t wMode, uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_copy_x_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_cl_key_copy_x_mirror(uint16_t * __restrict pSource,
                                               int16_t iSourceStride,
                                               uint16_t * __restrict pTarget,
                                               int16_t iTargetStride,
@@ -6136,7 +6136,7 @@ void __arm_2d_impl_rgb16_cl_key_copy_x_mirror(uint16_t * __restrict pSource,
                                               __restrict ptCopySize,
                                               uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_copy_xy_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_cl_key_copy_xy_mirror(uint16_t * __restrict pSource,
                                                int16_t iSourceStride,
                                                uint16_t * __restrict pTarget,
                                                int16_t iTargetStride,
@@ -6144,7 +6144,7 @@ void __arm_2d_impl_rgb16_cl_key_copy_xy_mirror(uint16_t * __restrict pSource,
                                                __restrict ptCopySize,
                                                uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_copy_y_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_cl_key_copy_y_mirror(uint16_t * __restrict pSource,
                                               int16_t iSourceStride,
                                               uint16_t * __restrict pTarget,
                                               int16_t iTargetStride,
@@ -6152,7 +6152,7 @@ void __arm_2d_impl_rgb16_cl_key_copy_y_mirror(uint16_t * __restrict pSource,
                                               __restrict ptCopySize,
                                               uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_fill(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_cl_key_fill(uint16_t * __restrict pSourceBase,
                                      int16_t iSourceStride,
                                      arm_2d_size_t * __restrict ptSourceSize,
                                      uint16_t * __restrict pTargetBase,
@@ -6160,7 +6160,7 @@ void __arm_2d_impl_rgb16_cl_key_fill(uint16_t * __restrict pSourceBase,
                                      arm_2d_size_t * __restrict ptTargetSize,
                                      uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_fill_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_cl_key_fill_mirror(uint16_t * __restrict pSourceBase,
                                             int16_t iSourceStride,
                                             arm_2d_size_t *
                                             __restrict ptSourceSize,
@@ -6170,7 +6170,7 @@ void __arm_2d_impl_rgb16_cl_key_fill_mirror(uint16_t * __restrict pSourceBase,
                                             __restrict ptTargetSize,
                                             uint32_t wMode, uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_fill_x_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_cl_key_fill_x_mirror(uint16_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
                                               __restrict ptSourceSize,
@@ -6180,7 +6180,7 @@ void __arm_2d_impl_rgb16_cl_key_fill_x_mirror(uint16_t * __restrict pSourceBase,
                                               __restrict ptTargetSize,
                                               uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb16_cl_key_fill_xy_mirror(uint16_t *
                                                __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -6192,7 +6192,7 @@ void __arm_2d_impl_rgb16_cl_key_fill_xy_mirror(uint16_t *
                                                __restrict ptTargetSize,
                                                uint16_t Colour);
 
-void __arm_2d_impl_rgb16_cl_key_fill_y_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_cl_key_fill_y_mirror(uint16_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
                                               __restrict ptSourceSize,
@@ -6202,47 +6202,47 @@ void __arm_2d_impl_rgb16_cl_key_fill_y_mirror(uint16_t * __restrict pSourceBase,
                                               __restrict ptTargetSize,
                                               uint16_t Colour);
 
-void __arm_2d_impl_rgb16_colour_filling(uint16_t * __restrict pTarget,
+extern void __arm_2d_impl_rgb16_colour_filling(uint16_t * __restrict pTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize,
                                         uint16_t Colour);
 
-void __arm_2d_impl_rgb16_copy(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_copy(uint16_t * __restrict pSource,
                               int16_t iSourceStride,
                               uint16_t * __restrict pTarget,
                               int16_t iTargetStride,
                               arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb16_copy(uint16_t * phwSource, int16_t iSourceStride,
+extern void __arm_2d_impl_rgb16_copy(uint16_t * phwSource, int16_t iSourceStride,
                               uint16_t * phwTarget, int16_t iTargetStride,
                               arm_2d_size_t * ptCopySize);
 
-void __arm_2d_impl_rgb16_copy_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_copy_mirror(uint16_t * __restrict pSource,
                                      int16_t iSourceStride,
                                      uint16_t * __restrict pTarget,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize,
                                      uint32_t wMode);
 
-void __arm_2d_impl_rgb16_copy_x_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_copy_x_mirror(uint16_t * __restrict pSource,
                                        int16_t iSourceStride,
                                        uint16_t * __restrict pTarget,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb16_copy_xy_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_copy_xy_mirror(uint16_t * __restrict pSource,
                                         int16_t iSourceStride,
                                         uint16_t * __restrict pTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb16_copy_y_mirror(uint16_t * __restrict pSource,
+extern void __arm_2d_impl_rgb16_copy_y_mirror(uint16_t * __restrict pSource,
                                        int16_t iSourceStride,
                                        uint16_t * __restrict pTarget,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb16_draw_pattern(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_rgb16_draw_pattern(uint8_t * __restrict pchSourceBase,
                                       int32_t iOffset, int16_t iSourceStride,
                                       uint16_t * __restrict pTargetBase,
                                       int16_t iTargetStride,
@@ -6250,7 +6250,7 @@ void __arm_2d_impl_rgb16_draw_pattern(uint8_t * __restrict pchSourceBase,
                                       uint8_t chMode, uint16_t ForeColour,
                                       uint16_t BackColour);
 
-void __arm_2d_impl_rgb16_draw_pattern_bg_comp(uint8_t *
+extern void __arm_2d_impl_rgb16_draw_pattern_bg_comp(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6260,7 +6260,7 @@ void __arm_2d_impl_rgb16_draw_pattern_bg_comp(uint8_t *
                                               __restrict ptCopySize,
                                               uint16_t BackColour);
 
-void __arm_2d_impl_rgb16_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_rgb16_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                                             int32_t iOffset,
                                             int16_t iSourceStride,
                                             uint16_t * __restrict pTargetBase,
@@ -6270,7 +6270,7 @@ void __arm_2d_impl_rgb16_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                                             uint16_t ForeColour,
                                             uint16_t BackColour);
 
-void __arm_2d_impl_rgb16_draw_pattern_bg_only(uint8_t *
+extern void __arm_2d_impl_rgb16_draw_pattern_bg_only(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6280,7 +6280,7 @@ void __arm_2d_impl_rgb16_draw_pattern_bg_only(uint8_t *
                                               __restrict ptCopySize,
                                               uint16_t BackColour);
 
-void __arm_2d_impl_rgb16_draw_pattern_fg_only(uint8_t *
+extern void __arm_2d_impl_rgb16_draw_pattern_fg_only(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6290,7 +6290,7 @@ void __arm_2d_impl_rgb16_draw_pattern_fg_only(uint8_t *
                                               __restrict ptCopySize,
                                               uint16_t ForeColour);
 
-void __arm_2d_impl_rgb16_draw_pattern_no_bg_comp(uint8_t *
+extern void __arm_2d_impl_rgb16_draw_pattern_no_bg_comp(uint8_t *
                                                  __restrict pchSourceBase,
                                                  int32_t iOffset,
                                                  int16_t iSourceStride,
@@ -6300,14 +6300,14 @@ void __arm_2d_impl_rgb16_draw_pattern_no_bg_comp(uint8_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_rgb16_fill(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_fill(uint16_t * __restrict pSourceBase,
                               int16_t iSourceStride,
                               arm_2d_size_t * __restrict ptSourceSize,
                               uint16_t * __restrict pTargetBase,
                               int16_t iTargetStride,
                               arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb16_fill_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_fill_mirror(uint16_t * __restrict pSourceBase,
                                      int16_t iSourceStride,
                                      arm_2d_size_t * __restrict ptSourceSize,
                                      uint16_t * __restrict pTargetBase,
@@ -6315,14 +6315,14 @@ void __arm_2d_impl_rgb16_fill_mirror(uint16_t * __restrict pSourceBase,
                                      arm_2d_size_t * __restrict ptTargetSize,
                                      uint32_t wMode);
 
-void __arm_2d_impl_rgb16_fill_x_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_fill_x_mirror(uint16_t * __restrict pSourceBase,
                                        int16_t iSourceStride,
                                        arm_2d_size_t * __restrict ptSourceSize,
                                        uint16_t * __restrict pTargetBase,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb16_fill_xy_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_fill_xy_mirror(uint16_t * __restrict pSourceBase,
                                         int16_t iSourceStride,
                                         arm_2d_size_t * __restrict ptSourceSize,
                                         uint16_t * __restrict pTargetBase,
@@ -6330,14 +6330,14 @@ void __arm_2d_impl_rgb16_fill_xy_mirror(uint16_t * __restrict pSourceBase,
                                         arm_2d_size_t *
                                         __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb16_fill_y_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb16_fill_y_mirror(uint16_t * __restrict pSourceBase,
                                        int16_t iSourceStride,
                                        arm_2d_size_t * __restrict ptSourceSize,
                                        uint16_t * __restrict pTargetBase,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb32_1x1_paving(const uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_1x1_paving(const uint32_t * __restrict pSource,
                                     int16_t iSourceStride,
                                     uint32_t * __restrict pTarget,
                                     int16_t iTargetStride,
@@ -6346,7 +6346,7 @@ void __arm_2d_impl_rgb32_1x1_paving(const uint32_t * __restrict pSource,
                                     const arm_2d_size_t *
                                     __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb32_1x1_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_1x1_paving_x_mirror(const uint32_t *
                                              __restrict pSource,
                                              int16_t iSourceStride,
                                              uint32_t * __restrict pTarget,
@@ -6356,7 +6356,7 @@ void __arm_2d_impl_rgb32_1x1_paving_x_mirror(const uint32_t *
                                              const arm_2d_size_t *
                                              __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb32_1x1_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_1x1_paving_xy_mirror(const uint32_t *
                                               __restrict pSource,
                                               int16_t iSourceStride,
                                               uint32_t * __restrict pTarget,
@@ -6366,7 +6366,7 @@ void __arm_2d_impl_rgb32_1x1_paving_xy_mirror(const uint32_t *
                                               const arm_2d_size_t *
                                               __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb32_1x1_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_1x1_paving_y_mirror(const uint32_t *
                                              __restrict pSource,
                                              int16_t iSourceStride,
                                              uint32_t * __restrict pTarget,
@@ -6376,7 +6376,7 @@ void __arm_2d_impl_rgb32_1x1_paving_y_mirror(const uint32_t *
                                              const arm_2d_size_t *
                                              __restrict ptDstCopySize);
 
-void __arm_2d_impl_rgb32_1x2_paving(const uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_1x2_paving(const uint32_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     const arm_2d_size_t *
                                     __restrict ptSourceSize,
@@ -6384,7 +6384,7 @@ void __arm_2d_impl_rgb32_1x2_paving(const uint32_t * __restrict pSourceBase,
                                     int16_t iTargetStride, uint32_t destWidth,
                                     uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb32_1x2_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_1x2_paving_x_mirror(const uint32_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -6394,7 +6394,7 @@ void __arm_2d_impl_rgb32_1x2_paving_x_mirror(const uint32_t *
                                              uint32_t destWidth,
                                              uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb32_1x2_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_1x2_paving_xy_mirror(const uint32_t *
                                               __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               const arm_2d_size_t *
@@ -6404,7 +6404,7 @@ void __arm_2d_impl_rgb32_1x2_paving_xy_mirror(const uint32_t *
                                               uint32_t destWidth,
                                               uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb32_1x2_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_1x2_paving_y_mirror(const uint32_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -6414,7 +6414,7 @@ void __arm_2d_impl_rgb32_1x2_paving_y_mirror(const uint32_t *
                                              uint32_t destWidth,
                                              uint16_t tilePairRows);
 
-void __arm_2d_impl_rgb32_2x1_paving(const uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_2x1_paving(const uint32_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     const arm_2d_size_t *
                                     __restrict ptSourceSize,
@@ -6422,7 +6422,7 @@ void __arm_2d_impl_rgb32_2x1_paving(const uint32_t * __restrict pSourceBase,
                                     int16_t iTargetStride,
                                     uint16_t tilePairCols, uint16_t destHeight);
 
-void __arm_2d_impl_rgb32_2x1_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_2x1_paving_x_mirror(const uint32_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -6432,7 +6432,7 @@ void __arm_2d_impl_rgb32_2x1_paving_x_mirror(const uint32_t *
                                              uint16_t tilePairCols,
                                              uint16_t destHeight);
 
-void __arm_2d_impl_rgb32_2x1_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_2x1_paving_xy_mirror(const uint32_t *
                                               __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               const arm_2d_size_t *
@@ -6442,7 +6442,7 @@ void __arm_2d_impl_rgb32_2x1_paving_xy_mirror(const uint32_t *
                                               uint16_t tilePairCols,
                                               uint16_t destHeight);
 
-void __arm_2d_impl_rgb32_2x1_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_2x1_paving_y_mirror(const uint32_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -6452,7 +6452,7 @@ void __arm_2d_impl_rgb32_2x1_paving_y_mirror(const uint32_t *
                                              uint16_t tilePairCols,
                                              uint16_t destHeight);
 
-void __arm_2d_impl_rgb32_2x2_paving(const uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_2x2_paving(const uint32_t * __restrict pSourceBase,
                                     int16_t iSourceStride,
                                     const arm_2d_size_t *
                                     __restrict ptSourceSize,
@@ -6461,7 +6461,7 @@ void __arm_2d_impl_rgb32_2x2_paving(const uint32_t * __restrict pSourceBase,
                                     uint16_t tilePairRows,
                                     uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb32_2x2_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_2x2_paving_x_mirror(const uint32_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -6471,7 +6471,7 @@ void __arm_2d_impl_rgb32_2x2_paving_x_mirror(const uint32_t *
                                              uint16_t tilePairRows,
                                              uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb32_2x2_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_2x2_paving_xy_mirror(const uint32_t *
                                               __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               const arm_2d_size_t *
@@ -6481,7 +6481,7 @@ void __arm_2d_impl_rgb32_2x2_paving_xy_mirror(const uint32_t *
                                               uint16_t tilePairRows,
                                               uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb32_2x2_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_2x2_paving_y_mirror(const uint32_t *
                                              __restrict pSourceBase,
                                              int16_t iSourceStride,
                                              const arm_2d_size_t *
@@ -6491,7 +6491,7 @@ void __arm_2d_impl_rgb32_2x2_paving_y_mirror(const uint32_t *
                                              uint16_t tilePairRows,
                                              uint16_t tilePairCols);
 
-void __arm_2d_impl_rgb32_cl_key_1x1_paving(const uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_cl_key_1x1_paving(const uint32_t * __restrict pSource,
                                            int16_t iSourceStride,
                                            uint32_t * __restrict pTarget,
                                            int16_t iTargetStride,
@@ -6501,7 +6501,7 @@ void __arm_2d_impl_rgb32_cl_key_1x1_paving(const uint32_t * __restrict pSource,
                                            __restrict ptDstCopySize,
                                            uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x1_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x1_paving_x_mirror(const uint32_t *
                                                     __restrict pSource,
                                                     int16_t iSourceStride,
                                                     uint32_t *
@@ -6513,7 +6513,7 @@ void __arm_2d_impl_rgb32_cl_key_1x1_paving_x_mirror(const uint32_t *
                                                     __restrict ptDstCopySize,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x1_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x1_paving_xy_mirror(const uint32_t *
                                                      __restrict pSource,
                                                      int16_t iSourceStride,
                                                      uint32_t *
@@ -6525,7 +6525,7 @@ void __arm_2d_impl_rgb32_cl_key_1x1_paving_xy_mirror(const uint32_t *
                                                      __restrict ptDstCopySize,
                                                      uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x1_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x1_paving_y_mirror(const uint32_t *
                                                     __restrict pSource,
                                                     int16_t iSourceStride,
                                                     uint32_t *
@@ -6537,7 +6537,7 @@ void __arm_2d_impl_rgb32_cl_key_1x1_paving_y_mirror(const uint32_t *
                                                     __restrict ptDstCopySize,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x2_paving(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x2_paving(const uint32_t *
                                            __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            const arm_2d_size_t *
@@ -6548,7 +6548,7 @@ void __arm_2d_impl_rgb32_cl_key_1x2_paving(const uint32_t *
                                            uint16_t tilePairRows,
                                            uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x2_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x2_paving_x_mirror(const uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6560,7 +6560,7 @@ void __arm_2d_impl_rgb32_cl_key_1x2_paving_x_mirror(const uint32_t *
                                                     uint16_t tilePairRows,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x2_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x2_paving_xy_mirror(const uint32_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      const arm_2d_size_t *
@@ -6572,7 +6572,7 @@ void __arm_2d_impl_rgb32_cl_key_1x2_paving_xy_mirror(const uint32_t *
                                                      uint16_t tilePairRows,
                                                      uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_1x2_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_1x2_paving_y_mirror(const uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6584,7 +6584,7 @@ void __arm_2d_impl_rgb32_cl_key_1x2_paving_y_mirror(const uint32_t *
                                                     uint16_t tilePairRows,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x1_paving(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x1_paving(const uint32_t *
                                            __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            const arm_2d_size_t *
@@ -6595,7 +6595,7 @@ void __arm_2d_impl_rgb32_cl_key_2x1_paving(const uint32_t *
                                            uint16_t destHeight,
                                            uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x1_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x1_paving_x_mirror(const uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6607,7 +6607,7 @@ void __arm_2d_impl_rgb32_cl_key_2x1_paving_x_mirror(const uint32_t *
                                                     uint16_t destHeight,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x1_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x1_paving_xy_mirror(const uint32_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      const arm_2d_size_t *
@@ -6619,7 +6619,7 @@ void __arm_2d_impl_rgb32_cl_key_2x1_paving_xy_mirror(const uint32_t *
                                                      uint16_t destHeight,
                                                      uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x1_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x1_paving_y_mirror(const uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6631,7 +6631,7 @@ void __arm_2d_impl_rgb32_cl_key_2x1_paving_y_mirror(const uint32_t *
                                                     uint16_t destHeight,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x2_paving(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x2_paving(const uint32_t *
                                            __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            const arm_2d_size_t *
@@ -6642,7 +6642,7 @@ void __arm_2d_impl_rgb32_cl_key_2x2_paving(const uint32_t *
                                            uint16_t tilePairCols,
                                            uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x2_paving_x_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x2_paving_x_mirror(const uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6654,7 +6654,7 @@ void __arm_2d_impl_rgb32_cl_key_2x2_paving_x_mirror(const uint32_t *
                                                     uint16_t tilePairCols,
                                                     uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x2_paving_xy_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x2_paving_xy_mirror(const uint32_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      const arm_2d_size_t *
@@ -6666,7 +6666,7 @@ void __arm_2d_impl_rgb32_cl_key_2x2_paving_xy_mirror(const uint32_t *
                                                      uint16_t tilePairCols,
                                                      uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_2x2_paving_y_mirror(const uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_2x2_paving_y_mirror(const uint32_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     const arm_2d_size_t *
@@ -6679,14 +6679,14 @@ void __arm_2d_impl_rgb32_cl_key_2x2_paving_y_mirror(const uint32_t *
                                                     uint32_t Colour);
 
 
-void __arm_2d_impl_rgb32_cl_key_copy(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_cl_key_copy(uint32_t * __restrict pSource,
                                      int16_t iSourceStride,
                                      uint32_t * __restrict pTarget,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize,
                                      uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_copy_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_cl_key_copy_mirror(uint32_t * __restrict pSource,
                                             int16_t iSourceStride,
                                             uint32_t * __restrict pTarget,
                                             int16_t iTargetStride,
@@ -6694,7 +6694,7 @@ void __arm_2d_impl_rgb32_cl_key_copy_mirror(uint32_t * __restrict pSource,
                                             __restrict ptCopySize,
                                             uint32_t wMode, uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_copy_x_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_cl_key_copy_x_mirror(uint32_t * __restrict pSource,
                                               int16_t iSourceStride,
                                               uint32_t * __restrict pTarget,
                                               int16_t iTargetStride,
@@ -6702,7 +6702,7 @@ void __arm_2d_impl_rgb32_cl_key_copy_x_mirror(uint32_t * __restrict pSource,
                                               __restrict ptCopySize,
                                               uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_copy_xy_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_cl_key_copy_xy_mirror(uint32_t * __restrict pSource,
                                                int16_t iSourceStride,
                                                uint32_t * __restrict pTarget,
                                                int16_t iTargetStride,
@@ -6710,7 +6710,7 @@ void __arm_2d_impl_rgb32_cl_key_copy_xy_mirror(uint32_t * __restrict pSource,
                                                __restrict ptCopySize,
                                                uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_copy_y_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_cl_key_copy_y_mirror(uint32_t * __restrict pSource,
                                               int16_t iSourceStride,
                                               uint32_t * __restrict pTarget,
                                               int16_t iTargetStride,
@@ -6718,7 +6718,7 @@ void __arm_2d_impl_rgb32_cl_key_copy_y_mirror(uint32_t * __restrict pSource,
                                               __restrict ptCopySize,
                                               uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_fill(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_cl_key_fill(uint32_t * __restrict pSourceBase,
                                      int16_t iSourceStride,
                                      arm_2d_size_t * __restrict ptSourceSize,
                                      uint32_t * __restrict pTargetBase,
@@ -6726,7 +6726,7 @@ void __arm_2d_impl_rgb32_cl_key_fill(uint32_t * __restrict pSourceBase,
                                      arm_2d_size_t * __restrict ptTargetSize,
                                      uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_fill_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_cl_key_fill_mirror(uint32_t * __restrict pSourceBase,
                                             int16_t iSourceStride,
                                             arm_2d_size_t *
                                             __restrict ptSourceSize,
@@ -6736,7 +6736,7 @@ void __arm_2d_impl_rgb32_cl_key_fill_mirror(uint32_t * __restrict pSourceBase,
                                             __restrict ptTargetSize,
                                             uint32_t wMode, uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_fill_x_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_cl_key_fill_x_mirror(uint32_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
                                               __restrict ptSourceSize,
@@ -6746,7 +6746,7 @@ void __arm_2d_impl_rgb32_cl_key_fill_x_mirror(uint32_t * __restrict pSourceBase,
                                               __restrict ptTargetSize,
                                               uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_fill_xy_mirror(uint32_t *
+extern void __arm_2d_impl_rgb32_cl_key_fill_xy_mirror(uint32_t *
                                                __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -6758,7 +6758,7 @@ void __arm_2d_impl_rgb32_cl_key_fill_xy_mirror(uint32_t *
                                                __restrict ptTargetSize,
                                                uint32_t Colour);
 
-void __arm_2d_impl_rgb32_cl_key_fill_y_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_cl_key_fill_y_mirror(uint32_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
                                               __restrict ptSourceSize,
@@ -6768,47 +6768,47 @@ void __arm_2d_impl_rgb32_cl_key_fill_y_mirror(uint32_t * __restrict pSourceBase,
                                               __restrict ptTargetSize,
                                               uint32_t Colour);
 
-void __arm_2d_impl_rgb32_colour_filling(uint32_t * __restrict pTarget,
+extern void __arm_2d_impl_rgb32_colour_filling(uint32_t * __restrict pTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize,
                                         uint32_t Colour);
 
-void __arm_2d_impl_rgb32_copy(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_copy(uint32_t * __restrict pSource,
                               int16_t iSourceStride,
                               uint32_t * __restrict pTarget,
                               int16_t iTargetStride,
                               arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb32_copy(uint32_t * pwSource, int16_t iSourceStride,
+extern void __arm_2d_impl_rgb32_copy(uint32_t * pwSource, int16_t iSourceStride,
                               uint32_t * pwTarget, int16_t iTargetStride,
                               arm_2d_size_t * ptCopySize);
 
-void __arm_2d_impl_rgb32_copy_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_copy_mirror(uint32_t * __restrict pSource,
                                      int16_t iSourceStride,
                                      uint32_t * __restrict pTarget,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize,
                                      uint32_t wMode);
 
-void __arm_2d_impl_rgb32_copy_x_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_copy_x_mirror(uint32_t * __restrict pSource,
                                        int16_t iSourceStride,
                                        uint32_t * __restrict pTarget,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb32_copy_xy_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_copy_xy_mirror(uint32_t * __restrict pSource,
                                         int16_t iSourceStride,
                                         uint32_t * __restrict pTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb32_copy_y_mirror(uint32_t * __restrict pSource,
+extern void __arm_2d_impl_rgb32_copy_y_mirror(uint32_t * __restrict pSource,
                                        int16_t iSourceStride,
                                        uint32_t * __restrict pTarget,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb32_draw_pattern(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_rgb32_draw_pattern(uint8_t * __restrict pchSourceBase,
                                       int32_t iOffset, int16_t iSourceStride,
                                       uint32_t * __restrict pTargetBase,
                                       int16_t iTargetStride,
@@ -6816,7 +6816,7 @@ void __arm_2d_impl_rgb32_draw_pattern(uint8_t * __restrict pchSourceBase,
                                       uint8_t chMode, uint32_t ForeColour,
                                       uint32_t BackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6826,7 +6826,7 @@ void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
                                               __restrict ptCopySize,
                                               uint32_t BackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6836,7 +6836,7 @@ void __arm_2d_impl_rgb32_draw_pattern_bg_comp(uint8_t *
                                               __restrict ptCopySize,
                                               uint32_t hwBackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                                             int32_t iOffset,
                                             int16_t iSourceStride,
                                             uint32_t * __restrict pTargetBase,
@@ -6846,7 +6846,7 @@ void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                                             uint32_t ForeColour,
                                             uint32_t BackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
+extern void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                                             int32_t iOffset,
                                             int16_t iSourceStride,
                                             uint32_t * __restrict pTargetBase,
@@ -6856,7 +6856,7 @@ void __arm_2d_impl_rgb32_draw_pattern_bg_fg(uint8_t * __restrict pchSourceBase,
                                             uint32_t hwForeColour,
                                             uint32_t hwBackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6866,7 +6866,7 @@ void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
                                               __restrict ptCopySize,
                                               uint32_t BackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6876,7 +6876,7 @@ void __arm_2d_impl_rgb32_draw_pattern_bg_only(uint8_t *
                                               __restrict ptCopySize,
                                               uint32_t hwBackColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6886,7 +6886,7 @@ void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
                                               __restrict ptCopySize,
                                               uint32_t ForeColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
                                               __restrict pchSourceBase,
                                               int32_t iOffset,
                                               int16_t iSourceStride,
@@ -6896,7 +6896,7 @@ void __arm_2d_impl_rgb32_draw_pattern_fg_only(uint8_t *
                                               __restrict ptCopySize,
                                               uint32_t hwForeColour);
 
-void __arm_2d_impl_rgb32_draw_pattern_no_bg_comp(uint8_t *
+extern void __arm_2d_impl_rgb32_draw_pattern_no_bg_comp(uint8_t *
                                                  __restrict pchSourceBase,
                                                  int32_t iOffset,
                                                  int16_t iSourceStride,
@@ -6906,14 +6906,14 @@ void __arm_2d_impl_rgb32_draw_pattern_no_bg_comp(uint8_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_rgb32_fill(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_fill(uint32_t * __restrict pSourceBase,
                               int16_t iSourceStride,
                               arm_2d_size_t * __restrict ptSourceSize,
                               uint32_t * __restrict pTargetBase,
                               int16_t iTargetStride,
                               arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb32_fill_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_fill_mirror(uint32_t * __restrict pSourceBase,
                                      int16_t iSourceStride,
                                      arm_2d_size_t * __restrict ptSourceSize,
                                      uint32_t * __restrict pTargetBase,
@@ -6921,14 +6921,14 @@ void __arm_2d_impl_rgb32_fill_mirror(uint32_t * __restrict pSourceBase,
                                      arm_2d_size_t * __restrict ptTargetSize,
                                      uint32_t wMode);
 
-void __arm_2d_impl_rgb32_fill_x_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_fill_x_mirror(uint32_t * __restrict pSourceBase,
                                        int16_t iSourceStride,
                                        arm_2d_size_t * __restrict ptSourceSize,
                                        uint32_t * __restrict pTargetBase,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb32_fill_xy_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_fill_xy_mirror(uint32_t * __restrict pSourceBase,
                                         int16_t iSourceStride,
                                         arm_2d_size_t * __restrict ptSourceSize,
                                         uint32_t * __restrict pTargetBase,
@@ -6936,14 +6936,14 @@ void __arm_2d_impl_rgb32_fill_xy_mirror(uint32_t * __restrict pSourceBase,
                                         arm_2d_size_t *
                                         __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb32_fill_y_mirror(uint32_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb32_fill_y_mirror(uint32_t * __restrict pSourceBase,
                                        int16_t iSourceStride,
                                        arm_2d_size_t * __restrict ptSourceSize,
                                        uint32_t * __restrict pTargetBase,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_copy(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_1h_des_msk_copy(uint16_t * __restrict pSourceBase,
                                           int16_t iSourceStride,
                                           uint16_t * __restrict pTargetBase,
                                           int16_t iTargetStride,
@@ -6954,7 +6954,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_copy(uint16_t * __restrict pSourceBase,
                                           arm_2d_size_t *
                                           __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_copy_mirror(uint16_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint16_t *
@@ -6969,7 +6969,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_copy_mirror(uint16_t *
                                                  __restrict ptCopySize,
                                                  uint32_t wMode);
 
-void __arm_2d_impl_rgb565_1h_des_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_copy_x_mirror(uint16_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint16_t *
@@ -6983,7 +6983,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_copy_x_mirror(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_copy_xy_mirror(uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint16_t *
@@ -6997,7 +6997,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_copy_xy_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_copy_y_mirror(uint16_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint16_t *
@@ -7011,7 +7011,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_copy_y_mirror(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_fill(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_1h_des_msk_fill(uint16_t * __restrict ptSourceBase,
                                           int16_t iSourceStride,
                                           arm_2d_size_t *
                                           __restrict ptSourceSize,
@@ -7024,7 +7024,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_fill(uint16_t * __restrict ptSourceBase,
                                           arm_2d_size_t *
                                           __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_fill_mirror(uint16_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -7041,7 +7041,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_fill_mirror(uint16_t *
                                                  __restrict ptTargetMaskSize,
                                                  uint32_t wMode);
 
-void __arm_2d_impl_rgb565_1h_des_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_fill_x_mirror(uint16_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -7057,7 +7057,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_fill_x_mirror(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_fill_xy_mirror(uint16_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -7074,7 +7074,7 @@ void __arm_2d_impl_rgb565_1h_des_msk_fill_xy_mirror(uint16_t *
                                                     __restrict
                                                     ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_1h_des_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_1h_des_msk_fill_y_mirror(uint16_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -7090,21 +7090,21 @@ void __arm_2d_impl_rgb565_1h_des_msk_fill_y_mirror(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __restrict phwSourceBase,
+extern void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * __restrict phwSourceBase,
                                          int16_t iSourceStride,
                                          uint16_t * __restrict phwTargetBase,
                                          int16_t iTargetStride,
                                          arm_2d_size_t * __restrict ptCopySize,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * phwSourceBase,
+extern void __arm_2d_impl_rgb565_tile_copy_opacity(uint16_t * phwSourceBase,
                                          int16_t iSourceStride,
                                          uint16_t * phwTargetBase,
                                          int16_t iTargetStride,
                                          arm_2d_size_t * ptCopySize,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t *
                                                        __restrict pSourceBase,
                                                        int16_t iSourceStride,
                                                        uint16_t *
@@ -7115,7 +7115,7 @@ void __arm_2d_impl_rgb565_tile_copy_colour_keying_opacity(uint16_t *
                                                        uint_fast16_t hwRatio,
                                                        uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask(uint16_t *
                                                       __restrict pTarget,
                                                       int16_t iTargetStride,
                                                       uint32_t *
@@ -7125,7 +7125,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask(uint16_t *
                                                       __restrict ptCopySize,
                                                       uint16_t Colour);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t *
                                                       __restrict
                                                       pTarget,
                                                       int16_t
@@ -7141,7 +7141,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_a2_mask(uint16_t * __restrict pTarget,
+extern void __arm_2d_impl_rgb565_colour_filling_a2_mask(uint16_t * __restrict pTarget,
                                                  int16_t iTargetStride,
                                                  uint8_t * __restrict pchAlpha,
                                                  int16_t iAlphaStride,
@@ -7150,7 +7150,7 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask(uint16_t * __restrict pTarget,
                                                  __restrict ptCopySize,
                                                  uint16_t Colour);
 
-void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
+extern void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
                                                  int16_t iTargetStride,
                                                  uint8_t * __restrict pchAlpha,
                                                  int16_t iAlphaStride,
@@ -7159,7 +7159,7 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask(uint16_t * __restrict pTarget,
                                                  __restrict ptCopySize,
                                                  uint16_t Colour);
 
-void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __restrict pTarget,
+extern void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __restrict pTarget,
                                               int16_t iTargetStride,
                                               uint8_t * __restrict pchAlpha,
                                               int16_t iAlphaStride,
@@ -7167,7 +7167,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask(uint16_t * __restrict pTarget,
                                               __restrict ptCopySize,
                                               uint16_t Colour);
 
-void __arm_2d_impl_rgb565_colour_filling_a1_mask_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_a1_mask_opacity(uint16_t *
                                                       __restrict pTarget,
                                                       int16_t iTargetStride,
                                                       uint8_t *
@@ -7179,7 +7179,7 @@ void __arm_2d_impl_rgb565_colour_filling_a1_mask_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t *
                                                       __restrict pTarget,
                                                       int16_t iTargetStride,
                                                       uint8_t *
@@ -7191,7 +7191,7 @@ void __arm_2d_impl_rgb565_colour_filling_a2_mask_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_a4_mask_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_a4_mask_opacity(uint16_t *
                                                       __restrict pTarget,
                                                       int16_t iTargetStride,
                                                       uint8_t *
@@ -7203,7 +7203,7 @@ void __arm_2d_impl_rgb565_colour_filling_a4_mask_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t *
                                                       __restrict pTarget,
                                                       int16_t iTargetStride,
                                                       uint8_t *
@@ -7214,7 +7214,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
+extern void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
                                                       __restrict pTargetBase,
                                                       int16_t iTargetStride,
                                                       arm_2d_size_t *
@@ -7222,7 +7222,7 @@ void __arm_2d_impl_rgb565_colour_filling_with_opacity(uint16_t *
                                                       uint16_t Colour,
                                                       uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_des_chn_msk_copy(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_des_chn_msk_copy(uint16_t * __restrict pSourceBase,
                                            int16_t iSourceStride,
                                            uint16_t * __restrict pTargetBase,
                                            int16_t iTargetStride,
@@ -7234,7 +7234,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_copy(uint16_t * __restrict pSourceBase,
                                            arm_2d_size_t *
                                            __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_copy_mirror(uint16_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint16_t *
@@ -7249,7 +7249,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_copy_mirror(uint16_t *
                                                   __restrict ptCopySize,
                                                   uint32_t wMode);
 
-void __arm_2d_impl_rgb565_des_chn_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_copy_x_mirror(uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint16_t *
@@ -7263,7 +7263,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_copy_x_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_copy_xy_mirror(uint16_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      uint16_t *
@@ -7279,7 +7279,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_copy_xy_mirror(uint16_t *
                                                      arm_2d_size_t *
                                                      __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_copy_y_mirror(uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint16_t *
@@ -7293,7 +7293,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_copy_y_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_fill(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_des_chn_msk_fill(uint16_t * __restrict ptSourceBase,
                                            int16_t iSourceStride,
                                            arm_2d_size_t *
                                            __restrict ptSourceSize,
@@ -7307,7 +7307,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_fill(uint16_t * __restrict ptSourceBase,
                                            arm_2d_size_t *
                                            __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_fill_mirror(uint16_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -7324,7 +7324,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_fill_mirror(uint16_t *
                                                   __restrict ptTargetMaskSize,
                                                   uint32_t wMode);
 
-void __arm_2d_impl_rgb565_des_chn_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_fill_x_mirror(uint16_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -7341,7 +7341,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_fill_x_mirror(uint16_t *
                                                     __restrict
                                                     ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_fill_xy_mirror(uint16_t *
                                                      __restrict ptSourceBase,
                                                      int16_t iSourceStride,
                                                      arm_2d_size_t *
@@ -7359,7 +7359,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_fill_xy_mirror(uint16_t *
                                                      __restrict
                                                      ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_chn_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_chn_msk_fill_y_mirror(uint16_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -7376,7 +7376,7 @@ void __arm_2d_impl_rgb565_des_chn_msk_fill_y_mirror(uint16_t *
                                                     __restrict
                                                     ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __restrict pSourceBase,
                                        int16_t iSourceStride,
                                        uint16_t * __restrict pTargetBase,
                                        int16_t iTargetStride,
@@ -7386,7 +7386,7 @@ void __arm_2d_impl_rgb565_des_msk_copy(uint16_t * __restrict pSourceBase,
                                        __restrict ptTargetMaskSize,
                                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_msk_copy_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_des_msk_copy_mirror(uint16_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               uint16_t * __restrict pTargetBase,
                                               int16_t iTargetStride,
@@ -7399,7 +7399,7 @@ void __arm_2d_impl_rgb565_des_msk_copy_mirror(uint16_t * __restrict pSourceBase,
                                               __restrict ptCopySize,
                                               uint32_t wMode);
 
-void __arm_2d_impl_rgb565_des_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_copy_x_mirror(uint16_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint16_t *
@@ -7413,7 +7413,7 @@ void __arm_2d_impl_rgb565_des_msk_copy_x_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_copy_xy_mirror(uint16_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint16_t *
@@ -7427,7 +7427,7 @@ void __arm_2d_impl_rgb565_des_msk_copy_xy_mirror(uint16_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_copy_y_mirror(uint16_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint16_t *
@@ -7441,7 +7441,7 @@ void __arm_2d_impl_rgb565_des_msk_copy_y_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_des_msk_fill(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_des_msk_fill(uint16_t * __restrict ptSourceBase,
                                        int16_t iSourceStride,
                                        arm_2d_size_t * __restrict ptSourceSize,
                                        uint16_t * __restrict ptTargetBase,
@@ -7452,7 +7452,7 @@ void __arm_2d_impl_rgb565_des_msk_fill(uint16_t * __restrict ptSourceBase,
                                        arm_2d_size_t *
                                        __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_fill_mirror(uint16_t *
                                               __restrict ptSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
@@ -7469,7 +7469,7 @@ void __arm_2d_impl_rgb565_des_msk_fill_mirror(uint16_t *
                                               __restrict ptTargetMaskSize,
                                               uint32_t wMode);
 
-void __arm_2d_impl_rgb565_des_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_fill_x_mirror(uint16_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -7485,7 +7485,7 @@ void __arm_2d_impl_rgb565_des_msk_fill_x_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_fill_xy_mirror(uint16_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -7501,7 +7501,7 @@ void __arm_2d_impl_rgb565_des_msk_fill_xy_mirror(uint16_t *
                                                  arm_2d_size_t *
                                                  __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_des_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_des_msk_fill_y_mirror(uint16_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -7517,7 +7517,7 @@ void __arm_2d_impl_rgb565_des_msk_fill_y_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_masks_copy(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_masks_copy(uint16_t * __restrict pSourceBase,
                                      int16_t iSourceStride,
                                      uint8_t * __restrict ptSourceMaskBase,
                                      int16_t iSourceMaskStride,
@@ -7531,7 +7531,7 @@ void __arm_2d_impl_rgb565_masks_copy(uint16_t * __restrict pSourceBase,
                                      __restrict ptTargetMaskSize,
                                      arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_masks_copy_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_masks_copy_mirror(uint16_t * __restrict pSourceBase,
                                             int16_t iSourceStride,
                                             uint8_t *
                                             __restrict ptSourceMaskBase,
@@ -7549,7 +7549,7 @@ void __arm_2d_impl_rgb565_masks_copy_mirror(uint16_t * __restrict pSourceBase,
                                             __restrict ptCopySize,
                                             uint32_t wMode);
 
-void __arm_2d_impl_rgb565_masks_copy_x_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_masks_copy_x_mirror(uint16_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               uint8_t *
                                               __restrict ptSourceMaskBase,
@@ -7566,7 +7566,7 @@ void __arm_2d_impl_rgb565_masks_copy_x_mirror(uint16_t * __restrict pSourceBase,
                                               arm_2d_size_t *
                                               __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_masks_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_masks_copy_xy_mirror(uint16_t *
                                                __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint8_t *
@@ -7585,7 +7585,7 @@ void __arm_2d_impl_rgb565_masks_copy_xy_mirror(uint16_t *
                                                arm_2d_size_t *
                                                __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_masks_copy_y_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_masks_copy_y_mirror(uint16_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               uint8_t *
                                               __restrict ptSourceMaskBase,
@@ -7602,7 +7602,7 @@ void __arm_2d_impl_rgb565_masks_copy_y_mirror(uint16_t * __restrict pSourceBase,
                                               arm_2d_size_t *
                                               __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_masks_fill(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_masks_fill(uint16_t * __restrict ptSourceBase,
                                      int16_t iSourceStride,
                                      arm_2d_size_t * __restrict ptSourceSize,
                                      uint8_t * __restrict ptSourceMaskBase,
@@ -7617,7 +7617,7 @@ void __arm_2d_impl_rgb565_masks_fill(uint16_t * __restrict ptSourceBase,
                                      arm_2d_size_t *
                                      __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_masks_fill_mirror(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_masks_fill_mirror(uint16_t * __restrict ptSourceBase,
                                             int16_t iSourceStride,
                                             arm_2d_size_t *
                                             __restrict ptSourceSize,
@@ -7637,7 +7637,7 @@ void __arm_2d_impl_rgb565_masks_fill_mirror(uint16_t * __restrict ptSourceBase,
                                             __restrict ptTargetMaskSize,
                                             uint32_t wMode);
 
-void __arm_2d_impl_rgb565_masks_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_masks_fill_x_mirror(uint16_t *
                                               __restrict ptSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
@@ -7658,7 +7658,7 @@ void __arm_2d_impl_rgb565_masks_fill_x_mirror(uint16_t *
                                               arm_2d_size_t *
                                               __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_masks_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_masks_fill_xy_mirror(uint16_t *
                                                __restrict ptSourceBase,
                                                int16_t iSourceStride,
                                                arm_2d_size_t *
@@ -7679,7 +7679,7 @@ void __arm_2d_impl_rgb565_masks_fill_xy_mirror(uint16_t *
                                                arm_2d_size_t *
                                                __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_masks_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_masks_fill_y_mirror(uint16_t *
                                               __restrict ptSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
@@ -7700,7 +7700,7 @@ void __arm_2d_impl_rgb565_masks_fill_y_mirror(uint16_t *
                                               arm_2d_size_t *
                                               __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy(uint16_t *
                                                       __restrict pSourceBase,
                                                       int16_t iSourceStride,
                                                       uint32_t *
@@ -7723,7 +7723,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy(uint16_t *
                                                       arm_2d_size_t *
                                                       __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_mirror(uint16_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -7754,7 +7754,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_mirror(uint16_t *
                                                              ptCopySize,
                                                              uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_x_mirror(uint16_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -7784,7 +7784,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_x_mirror(uint16_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_xy_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -7814,7 +7814,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_xy_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_y_mirror(uint16_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -7844,7 +7844,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_copy_y_mirror(uint16_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill(uint16_t *
                                                       __restrict ptSourceBase,
                                                       int16_t iSourceStride,
                                                       arm_2d_size_t *
@@ -7869,7 +7869,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill(uint16_t *
                                                       __restrict
                                                       ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_mirror(uint16_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -7903,7 +7903,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_mirror(uint16_t *
                                                              ptTargetMaskSize,
                                                              uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_x_mirror(uint16_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -7936,7 +7936,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_x_mirror(uint16_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_xy_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -7969,7 +7969,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_xy_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_y_mirror(uint16_t *
                                                                __restrict
                                                                ptSourceBase,
                                                                int16_t
@@ -8002,7 +8002,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_1h_des_msk_fill_y_mirror(uint16_t *
                                                                __restrict
                                                                ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_copy(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_src_chn_msk_copy(uint16_t * __restrict pSourceBase,
                                                int16_t iSourceStride,
                                                uint32_t *
                                                __restrict ptSourceMaskBase,
@@ -8014,7 +8014,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_copy(uint16_t * __restrict pSourceBase,
                                                arm_2d_size_t *
                                                __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_copy_mirror(uint16_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint32_t *
@@ -8029,7 +8029,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_copy_mirror(uint16_t *
                                                   __restrict ptCopySize,
                                                   uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_copy_x_mirror(uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint32_t *
@@ -8043,7 +8043,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_copy_x_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_copy_xy_mirror(uint16_t *
                                                      __restrict pSourceBase,
                                                      int16_t iSourceStride,
                                                      uint32_t *
@@ -8059,7 +8059,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_copy_xy_mirror(uint16_t *
                                                      arm_2d_size_t *
                                                      __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_copy_y_mirror(uint16_t *
                                                     __restrict pSourceBase,
                                                     int16_t iSourceStride,
                                                     uint32_t *
@@ -8073,7 +8073,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_copy_y_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy(uint16_t *
                                                        __restrict pSourceBase,
                                                        int16_t iSourceStride,
                                                        uint32_t *
@@ -8098,7 +8098,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy(uint16_t *
                                                        arm_2d_size_t *
                                                        __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_mirror(uint16_t *
                                                               __restrict
                                                               pSourceBase,
                                                               int16_t
@@ -8129,7 +8129,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_mirror(uint16_t *
                                                               ptCopySize,
                                                               uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_x_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -8159,7 +8159,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_x_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_xy_mirror(uint16_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -8189,7 +8189,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_y_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -8219,7 +8219,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_copy_y_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill(uint16_t *
                                                        __restrict ptSourceBase,
                                                        int16_t iSourceStride,
                                                        arm_2d_size_t *
@@ -8246,7 +8246,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill(uint16_t *
                                                        __restrict
                                                        ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_mirror(uint16_t *
                                                               __restrict
                                                               ptSourceBase,
                                                               int16_t
@@ -8280,7 +8280,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_mirror(uint16_t *
                                                               ptTargetMaskSize,
                                                               uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_x_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -8313,7 +8313,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_x_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_xy_mirror(
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_xy_mirror(
                                                              uint16_t *
                                                              __restrict
                                                              ptSourceBase,
@@ -8347,7 +8347,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_xy_mirror(
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_y_mirror(uint16_t *
                                                                 __restrict
                                                                 ptSourceBase,
                                                                 int16_t
@@ -8380,7 +8380,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_chn_msk_fill_y_mirror(uint16_t *
                                                                 __restrict
                                                                 ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy(uint16_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint32_t *
@@ -8399,7 +8399,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_mirror(uint16_t *
                                                           __restrict
                                                           pSourceBase,
                                                           int16_t iSourceStride,
@@ -8427,7 +8427,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_mirror(uint16_t *
                                                           __restrict ptCopySize,
                                                           uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_x_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -8457,7 +8457,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_x_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_xy_mirror(uint16_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -8487,7 +8487,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_y_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -8517,7 +8517,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_copy_y_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill(uint16_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -8538,7 +8538,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_mirror(uint16_t *
                                                           __restrict
                                                           ptSourceBase,
                                                           int16_t iSourceStride,
@@ -8570,7 +8570,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_mirror(uint16_t *
                                                           ptTargetMaskSize,
                                                           uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_x_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -8603,7 +8603,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_x_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -8636,7 +8636,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_y_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -8669,7 +8669,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_des_msk_fill_y_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_fill(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_src_chn_msk_fill(uint16_t * __restrict ptSourceBase,
                                            int16_t iSourceStride,
                                            arm_2d_size_t *
                                            __restrict ptSourceSize,
@@ -8683,7 +8683,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_fill(uint16_t * __restrict ptSourceBase,
                                            arm_2d_size_t *
                                            __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_fill_mirror(uint16_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -8700,7 +8700,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_fill_mirror(uint16_t *
                                                   __restrict ptTargetSize,
                                                   uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_chn_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_fill_x_mirror(uint16_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -8716,7 +8716,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_fill_x_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_fill_xy_mirror(uint16_t *
                                                      __restrict ptSourceBase,
                                                      int16_t iSourceStride,
                                                      arm_2d_size_t *
@@ -8734,7 +8734,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_fill_xy_mirror(uint16_t *
                                                      arm_2d_size_t *
                                                      __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_chn_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_chn_msk_fill_y_mirror(uint16_t *
                                                     __restrict ptSourceBase,
                                                     int16_t iSourceStride,
                                                     arm_2d_size_t *
@@ -8750,7 +8750,7 @@ void __arm_2d_impl_rgb565_src_chn_msk_fill_y_mirror(uint16_t *
                                                     arm_2d_size_t *
                                                     __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t *
                                                   __restrict pSourceBase,
                                                   int16_t iSourceStride,
                                                   uint8_t *
@@ -8769,7 +8769,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy(uint16_t *
                                                   arm_2d_size_t *
                                                   __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_mirror(uint16_t *
                                                          __restrict pSourceBase,
                                                          int16_t iSourceStride,
                                                          uint8_t *
@@ -8795,7 +8795,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_mirror(uint16_t *
                                                          __restrict ptCopySize,
                                                          uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror(uint16_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -8825,7 +8825,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_x_mirror(uint16_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -8855,7 +8855,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_xy_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror(uint16_t *
                                                            __restrict
                                                            pSourceBase,
                                                            int16_t
@@ -8885,7 +8885,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_copy_y_mirror(uint16_t *
                                                            __restrict
                                                            ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill(uint16_t *
                                                   __restrict ptSourceBase,
                                                   int16_t iSourceStride,
                                                   arm_2d_size_t *
@@ -8906,7 +8906,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill(uint16_t *
                                                   arm_2d_size_t *
                                                   __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_mirror(uint16_t *
                                                          __restrict
                                                          ptSourceBase,
                                                          int16_t iSourceStride,
@@ -8938,7 +8938,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_mirror(uint16_t *
                                                          ptTargetMaskSize,
                                                          uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror(uint16_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -8971,7 +8971,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_x_mirror(uint16_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -9004,7 +9004,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_xy_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror(uint16_t *
                                                            __restrict
                                                            ptSourceBase,
                                                            int16_t
@@ -9037,7 +9037,7 @@ void __arm_2d_impl_rgb565_src_msk_1h_des_msk_fill_y_mirror(uint16_t *
                                                            __restrict
                                                            ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
                                        int16_t iSourceStride,
                                        uint8_t * __restrict ptSourceMaskBase,
                                        int16_t iSourceMaskStride,
@@ -9047,7 +9047,7 @@ void __arm_2d_impl_rgb565_src_msk_copy(uint16_t * __restrict pSourceBase,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_copy_mirror(uint16_t * __restrict pSourceBase,
+extern void __arm_2d_impl_rgb565_src_msk_copy_mirror(uint16_t * __restrict pSourceBase,
                                               int16_t iSourceStride,
                                               uint8_t *
                                               __restrict ptSourceMaskBase,
@@ -9060,7 +9060,7 @@ void __arm_2d_impl_rgb565_src_msk_copy_mirror(uint16_t * __restrict pSourceBase,
                                               __restrict ptCopySize,
                                               uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_copy_x_mirror(uint16_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint8_t *
@@ -9074,7 +9074,7 @@ void __arm_2d_impl_rgb565_src_msk_copy_x_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_copy_xy_mirror(uint16_t *
                                                  __restrict pSourceBase,
                                                  int16_t iSourceStride,
                                                  uint8_t *
@@ -9088,7 +9088,7 @@ void __arm_2d_impl_rgb565_src_msk_copy_xy_mirror(uint16_t *
                                                  arm_2d_size_t *
                                                  __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_copy_y_mirror(uint16_t *
                                                 __restrict pSourceBase,
                                                 int16_t iSourceStride,
                                                 uint8_t *
@@ -9102,7 +9102,7 @@ void __arm_2d_impl_rgb565_src_msk_copy_y_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy(uint16_t *
                                                    __restrict pSourceBase,
                                                    int16_t iSourceStride,
                                                    uint8_t *
@@ -9121,7 +9121,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_mirror(uint16_t *
                                                           __restrict
                                                           pSourceBase,
                                                           int16_t iSourceStride,
@@ -9149,7 +9149,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_mirror(uint16_t *
                                                           __restrict ptCopySize,
                                                           uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_x_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -9179,7 +9179,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_x_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_xy_mirror(uint16_t *
                                                              __restrict
                                                              pSourceBase,
                                                              int16_t
@@ -9209,7 +9209,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_y_mirror(uint16_t *
                                                             __restrict
                                                             pSourceBase,
                                                             int16_t
@@ -9239,7 +9239,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_copy_y_mirror(uint16_t *
                                                             __restrict
                                                             ptCopySize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill(uint16_t *
                                                    __restrict ptSourceBase,
                                                    int16_t iSourceStride,
                                                    arm_2d_size_t *
@@ -9260,7 +9260,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill(uint16_t *
                                                    arm_2d_size_t *
                                                    __restrict ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_mirror(uint16_t *
                                                           __restrict
                                                           ptSourceBase,
                                                           int16_t iSourceStride,
@@ -9292,7 +9292,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_mirror(uint16_t *
                                                           ptTargetMaskSize,
                                                           uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_x_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -9325,7 +9325,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_x_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptSourceBase,
                                                              int16_t
@@ -9358,7 +9358,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_xy_mirror(uint16_t *
                                                              __restrict
                                                              ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_y_mirror(uint16_t *
                                                             __restrict
                                                             ptSourceBase,
                                                             int16_t
@@ -9391,7 +9391,7 @@ void __arm_2d_impl_rgb565_src_msk_des_chn_msk_fill_y_mirror(uint16_t *
                                                             __restrict
                                                             ptTargetMaskSize);
 
-void __arm_2d_impl_rgb565_src_msk_fill(uint16_t * __restrict ptSourceBase,
+extern void __arm_2d_impl_rgb565_src_msk_fill(uint16_t * __restrict ptSourceBase,
                                        int16_t iSourceStride,
                                        arm_2d_size_t * __restrict ptSourceSize,
                                        uint8_t * __restrict ptSourceMaskBase,
@@ -9402,7 +9402,7 @@ void __arm_2d_impl_rgb565_src_msk_fill(uint16_t * __restrict ptSourceBase,
                                        int16_t iTargetStride,
                                        arm_2d_size_t * __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_msk_fill_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_fill_mirror(uint16_t *
                                               __restrict ptSourceBase,
                                               int16_t iSourceStride,
                                               arm_2d_size_t *
@@ -9419,7 +9419,7 @@ void __arm_2d_impl_rgb565_src_msk_fill_mirror(uint16_t *
                                               __restrict ptTargetSize,
                                               uint32_t wMode);
 
-void __arm_2d_impl_rgb565_src_msk_fill_x_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_fill_x_mirror(uint16_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -9435,7 +9435,7 @@ void __arm_2d_impl_rgb565_src_msk_fill_x_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_msk_fill_xy_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_fill_xy_mirror(uint16_t *
                                                  __restrict ptSourceBase,
                                                  int16_t iSourceStride,
                                                  arm_2d_size_t *
@@ -9451,7 +9451,7 @@ void __arm_2d_impl_rgb565_src_msk_fill_xy_mirror(uint16_t *
                                                  arm_2d_size_t *
                                                  __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_src_msk_fill_y_mirror(uint16_t *
+extern void __arm_2d_impl_rgb565_src_msk_fill_y_mirror(uint16_t *
                                                 __restrict ptSourceBase,
                                                 int16_t iSourceStride,
                                                 arm_2d_size_t *
@@ -9467,77 +9467,77 @@ void __arm_2d_impl_rgb565_src_msk_fill_y_mirror(uint16_t *
                                                 arm_2d_size_t *
                                                 __restrict ptTargetSize);
 
-void __arm_2d_impl_rgb565_to_gray8( uint16_t *__RESTRICT phwSourceBase,
+extern void __arm_2d_impl_rgb565_to_gray8( uint16_t *__RESTRICT phwSourceBase,
                                     int16_t iSourceStride,
                                     uint8_t *__RESTRICT pchTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_cccn888_to_gray8(uint32_t *__RESTRICT pwSource,
+extern void __arm_2d_impl_cccn888_to_gray8(uint32_t *__RESTRICT pwSource,
                                     int16_t iSourceStride,
                                     uint8_t *__RESTRICT pchwTarget,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_gray8_to_cccn888(uint8_t *__RESTRICT pchSourceBase,
+extern void __arm_2d_impl_gray8_to_cccn888(uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iSourceStride,
                                     uint32_t *__RESTRICT pwTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_rgb565_to_cccn888(uint16_t * __restrict phwSourceBase,
+extern void __arm_2d_impl_rgb565_to_cccn888(uint16_t * __restrict phwSourceBase,
                                      int16_t iSourceStride,
                                      uint32_t * __restrict pwTargetBase,
                                      int16_t iTargetStride,
                                      arm_2d_size_t * __restrict ptCopySize);
 
-void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
+extern void __arm_2d_impl_rgb565_transform(__arm_2d_param_copy_orig_t * ptParam,
                                     __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_rgb565_transform_only(__arm_2d_param_copy_orig_t * ptParam,
+extern void __arm_2d_impl_rgb565_transform_only(__arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_rgb565_transform_only_opacity(
+extern void __arm_2d_impl_rgb565_transform_only_opacity(
                                         __arm_2d_param_copy_orig_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_transform_with_opacity(
+extern void __arm_2d_impl_rgb565_transform_with_opacity(
                                         __arm_2d_param_copy_orig_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_transform_with_src_mask(
+extern void __arm_2d_impl_rgb565_transform_with_src_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_rgb565_transform_with_src_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_transform_with_src_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_transform_with_src_chn_mask(
+extern void __arm_2d_impl_rgb565_transform_with_src_chn_mask(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo);
 
-void __arm_2d_impl_rgb565_transform_with_src_chn_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_transform_with_src_chn_mask_and_opacity(
                                         __arm_2d_param_copy_orig_msk_t * ptParam,
                                         __arm_2d_transform_info_t * ptInfo,
                                         uint_fast16_t hwRatio);
-void __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(
+extern void __arm_2d_impl_gray8_colour_filling_mask_opacity_transform(
                                         __arm_2d_param_copy_orig_t *ptParam,
                                         __arm_2d_transform_info_t *ptInfo,
                                         uint_fast16_t hwRatio);
-void __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_opacity_transform(
                                         __arm_2d_param_copy_orig_t *ptParam,
                                         __arm_2d_transform_info_t *ptInfo,
                                         uint_fast16_t hwRatio);
-void __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(
+extern void __arm_2d_impl_cccn888_colour_filling_mask_opacity_transform(
                                         __arm_2d_param_copy_orig_t *ptParam,
                                         __arm_2d_transform_info_t *ptInfo,
                                         uint_fast16_t hwRatio);
 
-void __arm_2d_impl_gray8_filter_iir_blur(
+extern void __arm_2d_impl_gray8_filter_iir_blur(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -9545,7 +9545,7 @@ void __arm_2d_impl_gray8_filter_iir_blur(
                             uint8_t chBlurDegree,
                             arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
-void __arm_2d_impl_rgb565_filter_iir_blur(
+extern void __arm_2d_impl_rgb565_filter_iir_blur(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -9553,7 +9553,7 @@ void __arm_2d_impl_rgb565_filter_iir_blur(
                             uint8_t chBlurDegree,
                             arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
-void __arm_2d_impl_cccn888_filter_iir_blur(
+extern void __arm_2d_impl_cccn888_filter_iir_blur(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -9561,19 +9561,19 @@ void __arm_2d_impl_cccn888_filter_iir_blur(
                             uint8_t chBlurDegree,
                             arm_2d_filter_iir_blur_descriptor_t *ptThis);
 
-void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
+extern void __arm_2d_impl_gray8_reverse_colour(uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
+extern void __arm_2d_impl_rgb565_reverse_colour(   uint16_t *__RESTRICT phwTarget,
                                             int16_t iTargetStride,
                                             arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
+extern void __arm_2d_impl_cccn888_reverse_colour(  uint32_t *__RESTRICT pwTarget,
                                             int16_t iTargetStride,
                                             arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
                                     uint8_t *__RESTRICT pchTargetBase,
@@ -9581,7 +9581,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
                                     uint16_t *__RESTRICT phwTargetBase,
@@ -9589,7 +9589,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
                                     uint32_t *__RESTRICT pwTargetBase,
@@ -9597,86 +9597,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask_and_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-
-                                    uint8_t * __RESTRICT pchSourceMaskBase,
-                                    int16_t iSourceMaskStride,
-                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
-
-                                    uint8_t *__RESTRICT pchTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwOpacity);
-
-void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask_and_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-
-                                    uint8_t * __RESTRICT pchSourceMaskBase,
-                                    int16_t iSourceMaskStride,
-                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
-
-                                    uint16_t *__RESTRICT phwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwOpacity);
-
-void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask_and_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-
-                                    uint8_t * __RESTRICT pchSourceMaskBase,
-                                    int16_t iSourceMaskStride,
-                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
-
-                                    uint32_t *__RESTRICT pwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwOpacity);
-
-void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask_and_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-
-                                    uint32_t * __RESTRICT pwSourceMaskBase,
-                                    int16_t iSourceMaskStride,
-                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
-
-                                    uint8_t *__RESTRICT pchTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwOpacity);
-
-void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask_and_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-
-                                    uint32_t * __RESTRICT pwSourceMaskBase,
-                                    int16_t iSourceMaskStride,
-                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
-
-                                    uint16_t *__RESTRICT phwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwOpacity);
-
-void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask_and_opacity(
-                                    uint32_t *__RESTRICT pwSourceBase,
-                                    int16_t iSourceStride,
-
-                                    uint32_t * __RESTRICT pwSourceMaskBase,
-                                    int16_t iSourceMaskStride,
-                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
-
-                                    uint32_t *__RESTRICT pwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwOpacity);
-
-
-void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask_and_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -9686,9 +9607,88 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask(
 
                                     uint8_t *__RESTRICT pchTargetBase,
                                     int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint16_t *__RESTRICT phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask_and_opacity(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint32_t * __RESTRICT pwSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__RESTRICT pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptCopySize,
+                                    uint_fast16_t hwOpacity);
+
+
+extern void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask(
+                                    uint32_t *__RESTRICT pwSourceBase,
+                                    int16_t iSourceStride,
+
+                                    uint8_t * __RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t * __RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__RESTRICT pchTargetBase,
+                                    int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -9700,7 +9700,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -9712,7 +9712,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -9724,7 +9724,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -9736,7 +9736,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
+extern void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -9748,7 +9748,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize);
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9756,7 +9756,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask(
                                         arm_2d_size_t *__RESTRICT ptCopySize,
                                         uint8_t chColour);
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9764,7 +9764,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask(
                                         arm_2d_size_t *__RESTRICT ptCopySize,
                                         uint8_t chColour);
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9774,7 +9774,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask(
                                         uint8_t chColour);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9785,7 +9785,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask(
 
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9794,7 +9794,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9803,7 +9803,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9813,7 +9813,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9823,7 +9823,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9832,7 +9832,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask(
                                         uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9841,7 +9841,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask(
                                         uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9851,7 +9851,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask(
                                         uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9862,7 +9862,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask(
 
 
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9872,7 +9872,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9882,7 +9882,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9893,7 +9893,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_mask_and_opacit
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9904,7 +9904,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_horizontal_line_chn_mask_and_op
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9914,7 +9914,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9923,7 +9923,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint16_t hwColour,
                                         uint8_t chOpacity);
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9933,7 +9933,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_mask_and_opaci
                                         uint16_t hwColour,
                                         uint8_t chOpacity);
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9943,7 +9943,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_horizontal_line_chn_mask_and_o
                                         uint16_t hwColour,
                                         uint8_t chOpacity);
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9952,7 +9952,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t wColour,
                                         uint8_t chOpacity);
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -9961,7 +9961,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_line_chn_mask_and_opacity
                                         uint32_t wColour,
                                         uint8_t chOpacity);
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9971,7 +9971,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_mask_and_opac
                                         uint32_t wColour,
                                         uint8_t chOpacity);
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -9982,7 +9982,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_horizontal_line_chn_mask_and_
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -9991,7 +9991,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask(
                                         uint8_t chColour);
 
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_line_chn_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_line_chn_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -10000,7 +10000,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_line_chn_mask(
                                         uint8_t chColour);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_mask(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10010,7 +10010,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_mask(
                                         uint8_t chColour);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10021,7 +10021,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask(
 
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -10030,7 +10030,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_chn_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_chn_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -10039,7 +10039,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_chn_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_mask(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10049,7 +10049,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_mask(
                                         uint16_t hwColour);
 
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10060,7 +10060,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask(
 
 
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -10069,7 +10069,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_mask(
                                         uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_chn_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_chn_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -10078,7 +10078,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_chn_mask(
                                         uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_mask(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10088,7 +10088,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_mask(
                                         uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10099,7 +10099,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask(
 
 
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask_and_opacity(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -10109,7 +10109,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -10119,7 +10119,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_mask_and_opacity(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10130,7 +10130,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint8_t *__RESTRICT pchTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10142,7 +10142,7 @@ void __arm_2d_impl_gray8_repeat_fill_colour_with_vertical_line_chn_mask_and_opac
 
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -10152,7 +10152,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -10162,7 +10162,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10173,7 +10173,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_mask_and_opacity
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint16_t *__RESTRICT phwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10185,7 +10185,7 @@ void __arm_2d_impl_rgb565_repeat_fill_colour_with_vertical_line_chn_mask_and_opa
 
 
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint8_t *__RESTRICT pchLineMask,
@@ -10195,7 +10195,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         uint32_t *__RESTRICT pwLineMask,
@@ -10205,7 +10205,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10216,7 +10216,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_mask_and_opacit
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask_and_opacity(
                                         uint32_t *__RESTRICT pwTarget,
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptTargetSize,
@@ -10227,7 +10227,7 @@ void __arm_2d_impl_cccn888_repeat_fill_colour_with_vertical_line_chn_mask_and_op
                                         uint8_t chOpacity);
 
 
-void __arm_2d_impl_gray8_colour_filling_mask_x_mirror(
+extern void __arm_2d_impl_gray8_colour_filling_mask_x_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10235,7 +10235,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10243,7 +10243,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-void __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
+extern void __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10252,7 +10252,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10261,7 +10261,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
+extern void __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10269,7 +10269,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10277,7 +10277,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-void __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
+extern void __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10286,7 +10286,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10295,7 +10295,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
+extern void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10303,7 +10303,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10311,7 +10311,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint8_t chColour);
 
-void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
+extern void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10320,7 +10320,7 @@ void __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
+extern void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10329,7 +10329,7 @@ void __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity(
                             uint8_t chColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10337,7 +10337,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10345,7 +10345,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10354,7 +10354,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10363,7 +10363,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10371,7 +10371,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10379,7 +10379,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10388,7 +10388,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10397,7 +10397,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10405,7 +10405,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10413,7 +10413,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint16_t hwColour);
 
-void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
+extern void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10422,7 +10422,7 @@ void __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
+extern void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10431,7 +10431,7 @@ void __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity(
                             uint16_t hwColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
+extern void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10439,7 +10439,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
 
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10448,7 +10448,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
                             uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
+extern void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10457,7 +10457,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10466,41 +10466,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror(
-                            uint32_t *__RESTRICT pwTarget,
-                            int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
-                            arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint32_t wColour);
-
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror(
-                            uint32_t *__RESTRICT pwTarget,
-                            int16_t iTargetStride,
-                            uint32_t *__RESTRICT pwAlpha,
-                            int16_t iAlphaStride,
-                            arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint32_t wColour);
-
-void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity(
-                            uint32_t *__RESTRICT pwTarget,
-                            int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
-                            arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint32_t wColour,
-                            uint16_t hwOpacity);
-
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
-                            uint32_t *__RESTRICT pwTarget,
-                            int16_t iTargetStride,
-                            uint32_t *__RESTRICT pwAlpha,
-                            int16_t iAlphaStride,
-                            arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint32_t wColour,
-                            uint16_t hwOpacity);
-
-void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
+extern void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10508,8 +10474,42 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
                             arm_2d_size_t *__RESTRICT ptCopySize,
                             uint32_t wColour);
 
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint32_t *__RESTRICT pwAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour);
 
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
+extern void __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour,
+                            uint16_t hwOpacity);
+
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint32_t *__RESTRICT pwAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour,
+                            uint16_t hwOpacity);
+
+extern void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchAlpha,
+                            int16_t iAlphaStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour);
+
+
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10518,7 +10518,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
                             uint32_t wColour);
 
 
-void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
+extern void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -10528,7 +10528,7 @@ void __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity(
                             uint16_t hwOpacity);
 
 
-void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
+extern void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -10537,7 +10537,7 @@ void __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity(
                             uint32_t wColour,
                             uint16_t hwOpacity);
 
-void __arm_2d_impl_gray8_tile_copy_with_src_mask_and_opacity(
+extern void __arm_2d_impl_gray8_tile_copy_with_src_mask_and_opacity(
                                     uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iSourceStride,
 
@@ -10551,7 +10551,7 @@ void __arm_2d_impl_gray8_tile_copy_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_tile_copy_with_src_chn_mask_and_opacity(
+extern void __arm_2d_impl_gray8_tile_copy_with_src_chn_mask_and_opacity(
                                     uint8_t *__RESTRICT pchSourceBase,
                                     int16_t iSourceStride,
 
@@ -10565,7 +10565,7 @@ void __arm_2d_impl_gray8_tile_copy_with_src_chn_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity(
                                     uint16_t *__RESTRICT phwSourceBase,
                                     int16_t iSourceStride,
 
@@ -10579,7 +10579,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_rgb565_tile_copy_with_src_chn_mask_and_opacity(
+extern void __arm_2d_impl_rgb565_tile_copy_with_src_chn_mask_and_opacity(
                                     uint16_t *__RESTRICT phwSourceBase,
                                     int16_t iSourceStride,
 
@@ -10593,7 +10593,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_src_chn_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -10607,7 +10607,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacity(
+extern void __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacity(
                                     uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
 
@@ -10621,7 +10621,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient(
+extern void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10629,7 +10629,7 @@ void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient(
                             uint8_t chColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
+extern void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10637,7 +10637,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient(
+extern void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10645,7 +10645,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient(
                             uint32_t wColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
+extern void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10653,7 +10653,7 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient(
                             uint8_t chColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
+extern void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10661,7 +10661,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
+extern void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10669,7 +10669,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient(
                             uint32_t wColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10677,7 +10677,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient(
                             uint8_t chColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10685,7 +10685,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10693,7 +10693,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient(
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10701,7 +10701,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient(
                             uint8_t chColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10709,7 +10709,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             arm_2d_region_t *__RESTRICT ptValidRegionOnVirtualScreen,
@@ -10717,7 +10717,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient(
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10727,7 +10727,7 @@ void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10737,7 +10737,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10747,7 +10747,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_mask(
                             uint32_t wColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient_and_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient_and_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10757,7 +10757,7 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient_and_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10767,7 +10767,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10777,7 +10777,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient_and_mask(
                             uint32_t wColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient_and_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient_and_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10787,7 +10787,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient_and_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient_and_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient_and_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10797,7 +10797,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient_and_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient_and_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient_and_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10807,7 +10807,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient_and_mask(
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10817,7 +10817,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient_and_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient_and_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient_and_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10827,7 +10827,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient_and_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchMask,
@@ -10837,7 +10837,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_mask(
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10847,7 +10847,7 @@ void __arm_2d_impl_gray8_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10857,7 +10857,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10867,7 +10867,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_4pts_alpha_gradient_and_chn_mask(
                             uint32_t wColour,
                             arm_2d_alpha_samples_4pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10877,7 +10877,7 @@ void __arm_2d_impl_gray8_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10887,7 +10887,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10897,7 +10897,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_3pts_alpha_gradient_and_chn_mask(
                             uint32_t wColour,
                             arm_2d_alpha_samples_3pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10907,7 +10907,7 @@ void __arm_2d_impl_gray8_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
                             uint8_t chColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10917,7 +10917,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
                             uint16_t hwColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient_and_chn_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10927,7 +10927,7 @@ void __arm_2d_impl_cccn888_fill_colour_with_vertical_alpha_gradient_and_chn_mask
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient_and_chn_mask(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10937,7 +10937,7 @@ void __arm_2d_impl_gray8_fill_colour_with_horizontal_alpha_gradient_and_chn_mask
                             uint8_t chColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient_and_chn_mask(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10947,7 +10947,7 @@ void __arm_2d_impl_rgb565_fill_colour_with_horizontal_alpha_gradient_and_chn_mas
                             uint16_t hwColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_chn_mask(
+extern void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_chn_mask(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwMask,
@@ -10957,47 +10957,76 @@ void __arm_2d_impl_cccn888_fill_colour_with_horizontal_alpha_gradient_and_chn_ma
                             uint32_t wColour,
                             arm_2d_alpha_samples_2pts_t tSamplePoints);
 
-void __arm_2d_impl_gray8_2xssaa_transform_with_opacity(
+extern void __arm_2d_impl_gray8_2xssaa_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_rgb565_2xssaa_transform_with_opacity(
+extern void __arm_2d_impl_rgb565_2xssaa_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(
+extern void __arm_2d_impl_cccn888_2xssaa_transform_with_opacity(
                                          __arm_2d_param_copy_orig_t * ptParam,
                                          __arm_2d_transform_info_t * ptInfo,
                                          uint_fast16_t hwRatio);
 
-void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8(
+extern void __arm_2d_impl_ccca8888_transform_with_opacity_to_gray8(
     __arm_2d_param_copy_orig_t *ptThis,
     __arm_2d_transform_info_t *ptInfo,
     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_ccca8888_transform_to_gray8(
+extern void __arm_2d_impl_ccca8888_transform_to_gray8(
     __arm_2d_param_copy_orig_t *ptThis,
     __arm_2d_transform_info_t *ptInfo);
 
-void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
+extern void __arm_2d_impl_ccca8888_transform_with_opacity_to_rgb565(
     __arm_2d_param_copy_orig_t *ptThis,
     __arm_2d_transform_info_t *ptInfo,
     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_ccca8888_transform_to_rgb565(
+extern void __arm_2d_impl_ccca8888_transform_to_rgb565(
     __arm_2d_param_copy_orig_t *ptThis,
     __arm_2d_transform_info_t *ptInfo);
 
-void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888(
+extern void __arm_2d_impl_ccca8888_transform_with_opacity_to_cccn888(
     __arm_2d_param_copy_orig_t *ptThis,
     __arm_2d_transform_info_t *ptInfo,
     uint_fast16_t hwOpacity);
 
-void __arm_2d_impl_ccca8888_transform_to_cccn888(
+extern void __arm_2d_impl_ccca8888_transform_to_cccn888(
     __arm_2d_param_copy_orig_t *ptThis,
     __arm_2d_transform_info_t *ptInfo);
+
+
+extern void __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
+                        uint16_t * __RESTRICT phwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
+                        uint16_t * __RESTRICT phwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
