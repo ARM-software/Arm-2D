@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_mask_and_opacity.h
  * Description:  APIs for Tile-Fill-with-Source-Mask-and-Opacity operations
  *
- * $Date:        18. May 2024
- * $Revision:    V.1.0.1
+ * $Date:        30. July 2025
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -57,6 +57,20 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+#define arm_2d_gray8_tile_fill_with_src_mask_and_opacity_only(                  \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __REGION,       /*   region address */      \
+                                    __OPACITY)      /*   opacity */             \
+            arm_2dp_gray8_tile_fill_with_src_mask_and_opacity_only(             \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION),                             \
+                                        (__OPACITY))
+
 #define arm_2d_rgb565_tile_fill_with_src_mask_and_opacity_only(                 \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
@@ -71,11 +85,44 @@ extern "C" {
                                         (__REGION),                             \
                                         (__OPACITY))
 
+#define arm_2d_cccn888_tile_fill_with_src_mask_and_opacity_only(                \
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address */ \
+                                    __REGION,       /*   region address */      \
+                                    __OPACITY)      /*   opacity */             \
+            arm_2dp_cccn888_tile_fill_with_src_mask_and_opacity_only(           \
+                                        NULL,                                   \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION),                             \
+                                        (__OPACITY))
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-
+extern
+ARM_NONNULL(2,3,4)
+/*!
+ * \brief Fill the target tile with a given source tile, a source mask and a 
+ *        opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_src_mask_and_opacity_only(
+                                        arm_2d_op_src_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        uint8_t chOpacity);
 
 extern
 ARM_NONNULL(2,3,4)
@@ -98,6 +145,26 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_src_mask_and_opacity_only(
                                         const arm_2d_region_t *ptRegion,
                                         uint8_t chOpacity);
 
+extern
+ARM_NONNULL(2,3,4)
+/*!
+ * \brief Fill the target tile with a given source tile, a source mask and a 
+ *        opacity
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptSrcMask the mask on the source side
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region
+ * \param[in] chOpacity the opacity
+ * \return arm_fsm_rt_t the operation result
+ */
+arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_src_mask_and_opacity_only(
+                                        arm_2d_op_src_msk_opc_t *ptOP,
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptSrcMask,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        uint8_t chOpacity);
 
 /*! @} */
 
