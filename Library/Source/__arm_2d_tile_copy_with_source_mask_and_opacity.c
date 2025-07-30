@@ -1591,7 +1591,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mask(
 
             uint16_t hwTransparency = 256 - (*(uint8_t *)(pwSourceMaskLine++));
 
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(  pwSourceLine++, 
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(pwSourceLine++, 
                                                         pwTargetLine++,
                                                         hwTransparency);
         }

@@ -228,6 +228,152 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
     }
 }
 
+__WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+    
+        //! reset source
+        uint32_t *__RESTRICT pwSource = pwSourceBase;  
+        uint8_t *phwSourceMask = phwSourceMaskBase; 
+
+        int_fast16_t iSourceMaskY = 0;
+        hwOpacity += (hwOpacity == 255);
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+            uint16_t *__RESTRICT phwTarget = phwTargetBase;     
+            
+            /*---------------- Height Loop Begin----------------*/
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength = MIN(wLengthLeft, ptSourceSize->iWidth);
+                /*---------------- Width Loop Begin----------------*/
+
+                uint32_t *__RESTRICT pwSrc = pwSource;
+                uint8_t *__RESTRICT pchSrcMsk = phwSourceMask;
+
+                for (int_fast16_t x = 0; x < wLength; x++) {
+
+                    uint16_t hwTransparency = 256 - (hwOpacity * (*pchSrcMsk++) >> 8);
+                
+                    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(pwSrc++, phwTarget++, hwTransparency);
+                }
+
+                /*---------------- Width Loop End----------------*/
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+            
+            /*---------------- Height Loop End----------------*/
+            pwSource += iSourceStride;
+            phwTargetBase += iTargetStride;
+
+            iSourceMaskY++;
+            //! handle source mask 
+            if (    (iSourceMaskY >= ptSourceMaskSize->iHeight)
+               ||   (iSourceMaskY >= ptSourceSize->iHeight)) {
+                phwSourceMask = phwSourceMaskBase;
+                iSourceMaskY = 0;
+            } else {
+                phwSourceMask += iSourceMaskStride;
+            }
+        
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+    
+        //! reset source
+        uint32_t *__RESTRICT pwSource = pwSourceBase;  
+
+        uint32_t *pwSourceMask = pwSourceMaskBase; 
+    
+        int_fast16_t iSourceMaskY = 0;
+        hwOpacity += (hwOpacity == 255);
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+            uint16_t *__RESTRICT phwTarget = phwTargetBase;     
+            
+            /*---------------- Height Loop Begin----------------*/
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength = MIN(wLengthLeft, ptSourceSize->iWidth);
+                /*---------------- Width Loop Begin----------------*/
+
+                uint32_t *__RESTRICT pwSrc = pwSource;
+
+                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
+
+                for (int_fast16_t x = 0; x < wLength; x++) {
+
+                    uint16_t hwTransparency = 256 - (hwOpacity * (*(uint8_t *)(pwSrcMsk++)) >> 8);
+
+                    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(pwSrc++, phwTarget++, hwTransparency);
+                }
+
+                /*---------------- Width Loop End----------------*/
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+            
+            /*---------------- Height Loop End----------------*/
+            pwSource += iSourceStride;
+            phwTargetBase += iTargetStride;
+
+            iSourceMaskY++;
+            //! handle source mask 
+            if (    (iSourceMaskY >= ptSourceMaskSize->iHeight)
+               ||   (iSourceMaskY >= ptSourceSize->iHeight)) {
+                pwSourceMask = pwSourceMaskBase;
+                iSourceMaskY = 0;
+            } else {
+                pwSourceMask += iSourceMaskStride;
+            }
+        
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+
+
 ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_src_mask_and_opacity_only(
                                         arm_2d_op_src_msk_opc_t *ptOP,
@@ -243,7 +389,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_src_mask_and_opacity_only(
 
     ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptOP);
 
-#if 0 //__ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
     if (NULL == ptSourceRoot) {
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
@@ -307,7 +453,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_source_mask_and_opacity_only( __a
     }
 #endif
 
-#if 0 //__ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {

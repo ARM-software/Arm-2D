@@ -119,7 +119,7 @@ extern "C" {
                 __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
                 uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
-                hwOPA = hwOPA * ((__TRANS == 0))                                \
+                hwOPA = hwOPA * ((__TRANS) == 0)                                \
                       + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
                 uint16_t hwTRANS = 256 - hwOPA;                                 \
                                                                                 \
@@ -162,7 +162,7 @@ extern "C" {
                 __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
                 uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
-                hwOPA = hwOPA * ((__TRANS == 0))                                \
+                hwOPA = hwOPA * ((__TRANS) == 0)                                \
                       + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
                 uint16_t hwTRANS = 256 - hwOPA;                                 \
                                                                                 \
@@ -208,7 +208,7 @@ extern "C" {
                 __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &tSrcPix);              \
                 uint16_t hwOPA = tSrcPix.BGRA[3];                               \
                 hwOPA += (hwOPA == 255);                                        \
-                hwOPA = hwOPA * ((__TRANS == 0))                                \
+                hwOPA = hwOPA * ((__TRANS) == 0)                                \
                       + (hwOPA * (256 - (__TRANS)) >> 8) * ((__TRANS) != 0);    \
                 uint16_t hwTRANS = 256 - hwOPA;                                 \
                                                                                 \

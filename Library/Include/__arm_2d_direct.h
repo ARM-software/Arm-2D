@@ -11028,6 +11028,34 @@ extern void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity);
 
+extern void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_ARM_COMPILER_5__
