@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        21. July 2025
- * $Revision:    V.1.8.2
+ * $Date:        31. July 2025
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -147,6 +147,8 @@ extern "C" {
                 arm_2d_gray8_tile_fill_with_src_mask_and_y_mirror
 #   define arm_2d_tile_fill_with_src_mask_and_xy_mirror                         \
                 arm_2d_gray8_tile_fill_with_src_mask_and_xy_mirror
+#   define arm_2d_tile_fill_with_src_mask_and_opacity_only                      \
+                arm_2d_gray8_tile_fill_with_src_mask_and_opacity_only
 #   define arm_2d_tile_copy_with_des_mask_only                                  \
                 arm_2d_gray8_tile_copy_with_des_mask_only
 #   define arm_2d_tile_copy_with_des_mask_and_x_mirror                          \
@@ -386,6 +388,8 @@ extern "C" {
                 arm_2d_rgb565_tile_fill_with_src_mask_and_y_mirror
 #   define arm_2d_tile_fill_with_src_mask_and_xy_mirror                         \
                 arm_2d_rgb565_tile_fill_with_src_mask_and_xy_mirror
+#   define arm_2d_tile_fill_with_src_mask_and_opacity_only                      \
+                arm_2d_rgb565_tile_fill_with_src_mask_and_opacity_only
 #   define arm_2d_tile_copy_with_des_mask_only                                  \
                 arm_2d_rgb565_tile_copy_with_des_mask_only
 #   define arm_2d_tile_copy_with_des_mask_and_x_mirror                          \
@@ -624,6 +628,8 @@ extern "C" {
                 arm_2d_cccn888_tile_fill_with_src_mask_and_y_mirror
 #   define arm_2d_tile_fill_with_src_mask_and_xy_mirror                         \
                 arm_2d_cccn888_tile_fill_with_src_mask_and_xy_mirror
+#   define arm_2d_tile_fill_with_src_mask_and_opacity_only                      \
+                arm_2d_cccn888_tile_fill_with_src_mask_and_opacity_only
 #   define arm_2d_tile_copy_with_des_mask_only                                  \
                 arm_2d_cccn888_tile_copy_with_des_mask_only
 #   define arm_2d_tile_copy_with_des_mask_and_x_mirror                          \

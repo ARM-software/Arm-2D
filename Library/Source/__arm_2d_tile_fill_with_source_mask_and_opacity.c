@@ -98,7 +98,7 @@ void __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-
+    
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
@@ -456,7 +456,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_source_mask_and_opacity_only( __ar
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
-        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
         
         #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
             __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
@@ -508,7 +508,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_source_mask_and_opacity_only( __ar
     }
 #endif
 
-    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
     
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
@@ -536,7 +536,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_source_mask_and_opacity_only( __ar
     #endif
     } else {
         assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme);
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
 
         __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask
@@ -964,7 +964,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_source_mask_and_opacity_only( __a
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
-        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
         
         #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
             __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
@@ -1016,7 +1016,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_source_mask_and_opacity_only( __a
     }
 #endif
 
-    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
     
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
@@ -1044,7 +1044,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_source_mask_and_opacity_only( __a
     #endif
     } else {
         assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme);
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
 
         __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask
@@ -1472,7 +1472,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_source_mask_and_opacity_only( __
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
 
-        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+        if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
         
         #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
             __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
@@ -1524,7 +1524,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_source_mask_and_opacity_only( __
     }
 #endif
 
-    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme) {
+    if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
     
     #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
@@ -1552,7 +1552,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_source_mask_and_opacity_only( __
     #endif
     } else {
         assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme);
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
 
         __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask
