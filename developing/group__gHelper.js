@@ -367,6 +367,7 @@ var group__gHelper =
     [ "__arm_2d_helper_pfb_disable_drawing_canvas_colour", "group__gHelper.html#gacd06c01a12019f65c4c6d16ea7f19959", null ],
     [ "arm_2d_helper_ignore_low_level_flush", "group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5", null ],
     [ "arm_2d_helper_resume_low_level_flush", "group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d", null ],
+    [ "arm_2d_helper_full_frame_refresh_mode", "group__gHelper.html#gaf4cd850316388b42e58ce0882cf98192", null ],
     [ "arm_2d_helper_pfb_update_dependency", "group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef", null ],
     [ "__arm_2d_helper_pfb_report_rendering_complete", "group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84", null ],
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
