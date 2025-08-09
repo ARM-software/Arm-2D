@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        4. June 2025
- * $Revision:    V.2.1.0
+ * $Date:        9. August 2025
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -409,6 +409,17 @@ void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis)
     this.Adapter.bIgnoreLowLevelFlush = false;
 }
 
+ARM_NONNULL(1)
+bool arm_2d_helper_full_frame_refresh_mode(arm_2d_helper_pfb_t *ptThis, bool bEnabled)
+{
+    bool bOldStatus = false;
+    arm_irq_safe {
+        bOldStatus = this.Adapter.bFullFrameRefreshModeRequest;
+        this.Adapter.bFullFrameRefreshModeRequest = bEnabled;
+    }
+
+    return bOldStatus;
+}
 
 ARM_NONNULL(1)
 void arm_2d_helper_hide_navigation_layer(arm_2d_helper_pfb_t *ptThis)
@@ -1940,6 +1951,7 @@ label_iteration_begin_start:
             );
 
             if (    this.tCFG.FrameBuffer.bDebugDirtyRegions
+                ||  this.Adapter.bFullFrameRefreshModeEnabled   //! always refresh whole frame
                 ||  this.Adapter.bFailedToOptimizeDirtyRegion) {
                 /* In dirty region debug mode (or failed to optimize the dirty regions), 
                  * we have to refresh the whole screen instead of the dirty regions
@@ -1953,17 +1965,19 @@ label_iteration_begin_start:
                 this.Adapter.bFirstIteration = false;       
                 this.Adapter.ptDirtyRegion = NULL;          /* refresh the whole screen */
 
-                if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+                if (this.tCFG.FrameBuffer.bDebugDirtyRegions || this.Adapter.bFullFrameRefreshModeEnabled) {
                     /* in debug mode, if there is nothing to refresh, we should ignore this frame*/
                     if (NULL == this.Adapter.OptimizedDirtyRegions.ptWorkingList) {
                         
                         do {
-                            /* we need to use ONE whole frame flush to erase any existing dirty region 
-                             * indication to avoid confusion in debug mode before frame skipping.
-                             */
-                            if (!this.Adapter.bDirtyRegionDebugModeSkipFrame) {
-                                this.Adapter.bDirtyRegionDebugModeSkipFrame = true;
-                                break;
+                            if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+                                /* we need to use ONE whole frame flush to erase any existing dirty region 
+                                * indication to avoid confusion in debug mode before frame skipping.
+                                */
+                                if (!this.Adapter.bDirtyRegionDebugModeSkipFrame) {
+                                    this.Adapter.bDirtyRegionDebugModeSkipFrame = true;
+                                    break;
+                                }
                             }
 
                             ARM_2D_LOG_INFO(
@@ -2164,7 +2178,8 @@ label_iteration_begin_start:
                         goto label_iteration_begin_start;
                     }
 
-                    if (this.tCFG.FrameBuffer.bDebugDirtyRegions) {
+                    if (this.tCFG.FrameBuffer.bDebugDirtyRegions 
+                    ||  this.Adapter.bFullFrameRefreshModeEnabled) {
                         ARM_2D_LOG_INFO(
                             HELPER_PFB, 
                             1, 
@@ -2375,7 +2390,9 @@ label_start_iteration:
                                 false);
 
     do {
-        if (this.tCFG.FrameBuffer.bDebugDirtyRegions && this.Adapter.ptDirtyRegion == NULL) {
+        if (    (   this.tCFG.FrameBuffer.bDebugDirtyRegions 
+                ||  this.Adapter.bFullFrameRefreshModeEnabled) 
+           &&   this.Adapter.ptDirtyRegion == NULL) {
             /*
              * NOTE: In dirty region debug mode, even when there is no dirty region available,
              *       we should also flush the whole screen for a clear debugging view.
@@ -2786,6 +2803,10 @@ ARM_PT_BEGIN(this.Adapter.chPT)
         }
     }
 
+    arm_irq_safe {
+        this.Adapter.bFullFrameRefreshModeEnabled = this.Adapter.bFullFrameRefreshModeRequest;
+    }
+
 #if !defined(__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__)
     /* initialize the OptimizedDirtyRegions service */
     if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
@@ -3022,11 +3043,9 @@ ARM_PT_ENTRY();
         /* draw dirty regions */
         if (this.tCFG.FrameBuffer.bDebugDirtyRegions && !this.Adapter.bIsDryRun) {
 
-
         #if !defined(__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__)
             if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
 
-                
                 COLOUR_INT tColour = GLCD_COLOR_RED;
 
             #if 0

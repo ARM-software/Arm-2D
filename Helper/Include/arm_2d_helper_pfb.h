@@ -21,7 +21,7 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        16. June 2025
+ * $Date:        9. August 2025
  * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
@@ -816,28 +816,34 @@ ARM_PRIVATE(
         int16_t                     iDirtyRegionFreeCount;
 
         struct {
-            uint32_t                bIsDirtyRegionOptimizationEnabled       : 1;
+            uint32_t                bIsNewFrame                             : 1;
+            uint32_t                bIsDryRun                               : 1;
+            uint32_t                bFirstIteration                         : 1;
+            uint32_t                bIsRegionChanged                        : 1;
+            uint32_t                bNoAdditionalDirtyRegionList            : 1;
+            uint32_t                bPFBScanPolicyVerticalFirst             : 1;
+            uint32_t                                                        : 2;
+
+
             uint32_t                bEnableDirtyRegionOptimizationRequest   : 1;
             uint32_t                bDisableDirtyRegionOptimizationRequest  : 1;
+            uint32_t                bFullFrameRefreshModeRequest            : 1;
+            uint32_t                                                        : 5;
+
+            uint32_t                bIsDirtyRegionOptimizationEnabled       : 1;
             uint32_t                bEncounterDynamicDirtyRegion            : 1;
             uint32_t                bFailedToOptimizeDirtyRegion            : 1;
             uint32_t                bIsUsingOptimizedDirtyRegionList        : 1;
             uint32_t                bDirtyRegionDebugModeSkipFrame          : 1;
-            uint32_t                bIgnoreLowLevelSyncUp                   : 1;
+            uint32_t                                                        : 3;
 
-            uint32_t                bIsNewFrame                             : 1;
+            uint32_t                bIgnoreLowLevelSyncUp                   : 1;
             uint32_t                bIgnoreCanvasColour                     : 1;
             uint32_t                bIgnoreLowLevelFlush                    : 1;
             uint32_t                bHideNavigationLayer                    : 1;
-            uint32_t                bIsDryRun                               : 1;    //!< A flag to indicate whether the first iteration was a dry run
-            uint32_t                bNoAdditionalDirtyRegionList            : 1;
-            uint32_t                bFirstIteration                         : 1;
-            uint32_t                bIsRegionChanged                        : 1;
+            uint32_t                bFullFrameRefreshModeEnabled            : 1;
+            uint32_t                                                        : 3;
 
-            uint32_t                bPFBScanPolicyVerticalFirst             : 1;
-            uint32_t                                                        : 7;
-
-            uint32_t                                                        : 8;
         };
 
         arm_2d_colour_t             tCanvas;
@@ -1185,6 +1191,17 @@ void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+
+/*!
+ * \brief Enable or disable full-frame-refresh mode
+ * \param[in] ptThis an initialised PFB helper control block
+ * \param[in] bEnabled enable or disable this option
+ * \return boolean previous setting.
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_full_frame_refresh_mode( arm_2d_helper_pfb_t *ptThis, 
+                                            bool bEnabled);
 
 /*!
  * \brief update PFB dependency (event handlers)
