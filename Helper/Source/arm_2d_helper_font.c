@@ -265,6 +265,8 @@ void arm_lcd_text_init(arm_2d_region_t *ptScreen)
 {
     assert(NULL != ptScreen);
     s_tLCDTextControl.tScreen = *ptScreen;
+    
+    arm_lcd_text_set_scale(0);
 }
 
 void arm_lcd_text_reset_display_region_tracking(void)
