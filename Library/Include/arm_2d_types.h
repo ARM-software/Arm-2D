@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        24. March 2025
- * $Revision:    V.1.3.0
+ * $Date:        10. August 2025
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -157,6 +157,7 @@ typedef enum {
     arm_fsm_rt_wait_for_obj = 2,     //!< fsm wait for IPC object
     arm_fsm_rt_async        = 3,     //!< fsm work asynchronously, please check it later.
     arm_fsm_rt_wait_for_res = 4,     //!< wait for resource
+    __arm_fsm_rt_last,
 } arm_fsm_rt_t;
 
 /*!
@@ -180,6 +181,7 @@ typedef enum {
     ARM_2D_ERR_NONE                     = 0,    //!< no error
     ARM_2D_RT_FALSE                     = 0,    //!< false
     ARM_2D_RT_TRUE                      = 1,    //!< true
+    ARM_2D_RT_FRAME_SKIPPED             = __arm_fsm_rt_last,    //!< frame is skipped
 } arm_2d_err_t;
 
 /*!

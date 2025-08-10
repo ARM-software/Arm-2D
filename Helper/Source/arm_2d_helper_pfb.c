@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        9. August 2025
- * $Revision:    V.2.2.0
+ * $Date:        10. August 2025
+ * $Revision:    V.2.2.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3189,6 +3189,10 @@ ARM_PT_END()
         "PFB TASK", 
         "Drawing frame complete.\r\n\r\n"
     );
+
+    if (this.Adapter.bIgnoreLowLevelSyncUp || this.Adapter.bIgnoreLowLevelFlush) {
+        return (arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED;
+    }
 
     return arm_fsm_rt_cpl;
 }
