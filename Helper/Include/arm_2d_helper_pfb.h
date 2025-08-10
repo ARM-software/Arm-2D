@@ -822,6 +822,7 @@ ARM_PRIVATE(
             uint32_t                bIsRegionChanged                        : 1;
             uint32_t                bNoAdditionalDirtyRegionList            : 1;
             uint32_t                bPFBScanPolicyVerticalFirst             : 1;
+            uint32_t                bSyncWithLowLevel                       : 1;
             uint32_t                                                        : 2;
 
 

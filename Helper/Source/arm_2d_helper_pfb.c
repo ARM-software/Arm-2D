@@ -2825,22 +2825,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 
         /* reset it to true */
         this.Adapter.bIgnoreLowLevelSyncUp = true;
-        ARM_2D_LOG_INFO(
-            HELPER_PFB, 
-            0, 
-            "PFB TASK", 
-            "Sync with the low-level display driver...usually waiting for flushing previous frame..."
-        );
-
-ARM_PT_ENTRY();
-        if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
-            // wait until lcd is ready
-            if (!(*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
-                    this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget)) {
-                ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_async);
-            }
-        }
-
+        this.Adapter.bSyncWithLowLevel = true;
     } else {
         ARM_2D_LOG_INFO(
             HELPER_PFB, 
@@ -3091,7 +3076,27 @@ ARM_PT_ENTRY();
 
         this.Adapter.bIsNewFrame = false;
         __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
-                                            ARM_2D_PERFC_DRIVER); 
+                                            ARM_2D_PERFC_DRIVER);
+
+        if (this.Adapter.bSyncWithLowLevel && !this.Adapter.bIsDryRun) {
+            this.Adapter.bSyncWithLowLevel = false;
+            
+            ARM_2D_LOG_INFO(
+                HELPER_PFB, 
+                0, 
+                "PFB TASK", 
+                "Sync with the low-level display driver...usually waiting for flushing previous frame..."
+            );
+
+ARM_PT_ENTRY();
+            if (NULL != this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler){
+                // wait until lcd is ready
+                if (!(*this.tCFG.Dependency.evtOnLowLevelSyncUp.fnHandler)(
+                        this.tCFG.Dependency.evtOnLowLevelSyncUp.pTarget)) {
+                    ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_async);
+                }
+            }
+        }
     } while(__arm_2d_helper_pfb_drawing_iteration_end(ptThis));
     
 label_pfb_task_rt_cpl:    
