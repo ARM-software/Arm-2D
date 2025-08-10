@@ -151,7 +151,7 @@ void progress_bar_round_set_circle_mask(progress_bar_round_t *ptThis,
 }
 
 ARM_NONNULL(1, 2)
-void progress_bar_round_show(   progress_bar_round_t *ptThis,
+arm_2d_region_t progress_bar_round_show(   progress_bar_round_t *ptThis,
                                 const arm_2d_tile_t *ptTarget, 
                                 const arm_2d_region_t *ptRegion,
                                 COLOUR_INT tBackgroundColour,
@@ -159,6 +159,7 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
                                 int16_t iProgress,
                                 uint8_t chOpacity)
 {
+    arm_2d_region_t tDrawRegion = {0};
     if (-1 == (intptr_t)ptTarget) {
         ptTarget = arm_2d_get_default_frame_buffer();
     }
@@ -182,7 +183,7 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
 
     }
 
-    arm_2d_safe_canvas(ptTarget, __control_canvas, ptRegion) {
+    arm_2d_safe_canvas_open(ptTarget, __control_canvas, ptRegion) {
 
         arm_2d_size_t tBarSize = {
             .iWidth = __control_canvas.tSize.iWidth,
@@ -192,8 +193,8 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
             tBarSize.iWidth = tBarSize.iWidth * 3 >> 3; //!< 3/8 Width
         }
 
-        arm_2d_align_centre(__control_canvas, tBarSize) {
-
+        arm_2d_align_centre_open(__control_canvas, tBarSize) {
+            tDrawRegion = __centre_region;
             arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
         
                 int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth;
@@ -303,11 +304,13 @@ void progress_bar_round_show(   progress_bar_round_t *ptThis,
     }
 
     ARM_2D_OP_WAIT_ASYNC();
+    
+    return tDrawRegion;
 }
 
 
 ARM_NONNULL(1, 2)
-void progress_bar_round_show2(   progress_bar_round_t *ptThis,
+arm_2d_region_t progress_bar_round_show2(   progress_bar_round_t *ptThis,
                                 const arm_2d_tile_t *ptTarget, 
                                 const arm_2d_region_t *ptRegion,
                                 COLOUR_INT tBackgroundColour,
@@ -315,6 +318,8 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
                                 int16_t iProgress,
                                 uint8_t chOpacity)
 {
+    arm_2d_region_t tDrawRegion = {0};
+
     if (-1 == (intptr_t)ptTarget) {
         ptTarget = arm_2d_get_default_frame_buffer();
     }
@@ -338,7 +343,7 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
 
     }
 
-    arm_2d_safe_canvas(ptTarget, __control_canvas, ptRegion) {
+    arm_2d_safe_canvas_open(ptTarget, __control_canvas, ptRegion) {
 
         arm_2d_size_t tBarSize = {
             .iWidth = __control_canvas.tSize.iWidth,
@@ -348,8 +353,8 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
             tBarSize.iWidth = tBarSize.iWidth * 3 >> 3; //!< 3/8 Width
         }
 
-        arm_2d_align_centre(__control_canvas, tBarSize) {
-
+        arm_2d_align_centre_open(__control_canvas, tBarSize) {
+            tDrawRegion = __centre_region;
             arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
         
                 int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth - this.tCFG.ptCircleMask->tRegion.tSize.iWidth;
@@ -454,6 +459,8 @@ void progress_bar_round_show2(   progress_bar_round_t *ptThis,
     }
 
     ARM_2D_OP_WAIT_ASYNC();
+    
+    return tDrawRegion;
 }
 
 #if defined(__clang__)

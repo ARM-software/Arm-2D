@@ -406,13 +406,13 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                 0, 
                 0, 
                 iCicleWidthHalf, 
-                iCicleHeightHalf);
+                iCicleHeightHalf - 1);
 
         const arm_2d_tile_t tileCircleHorizontalLineLeftMask = 
             impl_child_tile(
                 *ptCircleMask, 
                 0, 
-                iCicleHeightHalf, 
+                iCicleHeightHalf - 1, 
                 iCicleWidthHalf, 
                 1);
 
@@ -420,14 +420,14 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
             impl_child_tile(
                 *ptCircleMask, 
                 iCicleWidthHalf, 
-                iCicleHeightHalf, 
+                iCicleHeightHalf - 1, 
                 iCicleWidthHalf, 
                 1);
 
         const arm_2d_tile_t tileCircleVerticalLineTopMask = 
             impl_child_tile(
                 *ptCircleMask, 
-                iCicleWidthHalf, 
+                iCicleWidthHalf - 1, 
                 0, 
                 1, 
                 iCicleHeightHalf);
@@ -435,7 +435,7 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
         const arm_2d_tile_t tileCircleVerticalLineBottomMask = 
             impl_child_tile(
                 *ptCircleMask, 
-                iCicleWidthHalf, 
+                iCicleWidthHalf - 1, 
                 iCicleHeightHalf, 
                 1, 
                 iCicleHeightHalf);
