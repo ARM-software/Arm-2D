@@ -476,7 +476,8 @@ var group__gKernel =
       [ "ARM_2D_ERR_UNKNOWN", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca3d3a4e2f06abe0d664cf0fe5ae12150d", null ],
       [ "ARM_2D_ERR_NONE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cac601feecce64fc72409b457f4f4b09c8", null ],
       [ "ARM_2D_RT_FALSE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca9cfd9a5b02b83013e62cc7a7d4cd10da", null ],
-      [ "ARM_2D_RT_TRUE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cab7e56d0f8ca1a29fb1f93b781d335716", null ]
+      [ "ARM_2D_RT_TRUE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cab7e56d0f8ca1a29fb1f93b781d335716", null ],
+      [ "ARM_2D_RT_FRAME_SKIPPED", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1caf2c830c9cbb2fe95aecbdf5538e5deb8", null ]
     ] ],
     [ "arm_2d_cmp_t", "group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59", [
       [ "ARM_2D_CMP_SMALLER", "group__gKernel.html#gga3249990f0553a40aa0e48e3568172e59afeef30963a857f2b0a15a8a7d1f01495", null ],

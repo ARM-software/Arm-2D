@@ -204,6 +204,7 @@ var NAVTREEINDEX4 =
 "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cac601feecce64fc72409b457f4f4b09c8":[12,0,290,13],
 "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cae144c2d3aeb76ce95e88342d87100909":[12,0,290,11],
 "group__gKernel.html#gga27a24a896295488772e6d847c790fd1caebd58c5ed643d61257a84fec9c76f6ca":[12,0,290,6],
+"group__gKernel.html#gga27a24a896295488772e6d847c790fd1caf2c830c9cbb2fe95aecbdf5538e5deb8":[12,0,290,16],
 "group__gKernel.html#gga3249990f0553a40aa0e48e3568172e59a27057bbe0b602ca5a6b43c58b3ef0e68":[12,0,291,2],
 "group__gKernel.html#gga3249990f0553a40aa0e48e3568172e59a5d3ce11b32268835bc89401fba037832":[12,0,291,1],
 "group__gKernel.html#gga3249990f0553a40aa0e48e3568172e59afeef30963a857f2b0a15a8a7d1f01495":[12,0,291,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed60____":[12,0,71],
 "group__gKernel.html#struct____arm__slist__node__t":[12,0,0],
 "group__gKernel.html#structarm__2d__alpha__samples__2pts__t_8____unnamed38____":[12,0,60],
-"group__gKernel.html#structarm__2d__alpha__samples__2pts__t_8____unnamed40____":[12,0,61],
-"group__gKernel.html#structarm__2d__alpha__samples__2pts__t_8____unnamed42____":[12,0,63]
+"group__gKernel.html#structarm__2d__alpha__samples__2pts__t_8____unnamed40____":[12,0,61]
 };
