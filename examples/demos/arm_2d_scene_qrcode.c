@@ -87,31 +87,6 @@ extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-
-/*! define dirty regions */
-IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-    /* a dirty region to be specified at runtime*/
-    ADD_REGION_TO_LIST(s_tDirtyRegions,
-        0  /* initialize at runtime later */
-    ),
-    
-    /* add the last region:
-        * it is the top left corner for text display 
-        */
-    ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-        .tLocation = {
-            .iX = 0,
-            .iY = 0,
-        },
-        .tSize = {
-            .iWidth = 0,
-            .iHeight = 8,
-        },
-    ),
-
-END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
-
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_qrcode_load(arm_2d_scene_t *ptScene)
@@ -243,24 +218,6 @@ user_scene_qrcode_t *__arm_2d_scene_qrcode_init(   arm_2d_scene_player_t *ptDisp
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
-
-    /* get the screen region */
-    arm_2d_region_t __top_canvas
-        = arm_2d_helper_pfb_get_display_area(
-            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(__top_canvas, c_tileCMSISLogoMask.tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
-
-    s_tDirtyRegions[dimof(s_tDirtyRegions)-1].tRegion.tSize.iWidth 
-                                                        = __top_canvas.tSize.iWidth;
-
     if (NULL == ptThis) {
         ptThis = (user_scene_qrcode_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_qrcode_t),
@@ -314,7 +271,8 @@ user_scene_qrcode_t *__arm_2d_scene_qrcode_init(   arm_2d_scene_player_t *ptDisp
             .hwInputSize = sizeof(c_chURL),
             .pchBuffer = (uint8_t *)this.QRCode.chBuffer,
             .hwQRCodeBufferSize = sizeof(this.QRCode.chBuffer),
-            .chSquarePixelSize = 4,
+            //.chSquarePixelSize = 3,
+            //.u2ECCLevel = qrcodegen_Ecc_HIGH,
         };
 
         arm_2d_err_t tResult = qrcode_box_init(&this.QRCode.tBox, &tCFG);
