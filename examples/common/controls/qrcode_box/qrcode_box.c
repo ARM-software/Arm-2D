@@ -26,7 +26,6 @@
 #include "qrcode_box.h"
 #include <assert.h>
 #include <string.h>
-#include "./qrcodegen.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -122,6 +121,10 @@ arm_2d_err_t qrcode_box_init(   qrcode_box_t *ptThis,
         }
     } while(0);
 
+    if (0 == this.tCFG.chSquarePixelSize) {
+        this.tCFG.chSquarePixelSize = 2;
+    }
+
     this.tCFG.bIsValid = true;
     return ARM_2D_ERR_NONE;
 
@@ -181,28 +184,103 @@ void qrcode_box_on_load( qrcode_box_t *ptThis)
         }
 
         if (!bResult) {
-            this.use_as__arm_2d_tile_t.pchBuffer = NULL;
+            this.tCFG.bIsValid = false;
             break;
         }
-        int16_t tQRCodePxSize = qrcodegen_getSize(this.tCFG.pchBuffer);
-        this.use_as__arm_2d_tile_t = (arm_2d_tile_t) {
-            .tRegion = {
-                .tSize = {
-                    .iWidth = tQRCodePxSize,
-                    .iHeight = tQRCodePxSize,
-                },
-            },
-            .tInfo = {
-                .bIsRoot = true,
-                .bHasEnforcedColour = true,
-                .tColourInfo = {
-                    .chScheme = ARM_2D_COLOUR_1BIT,
-                },
-            },
-            .pchBuffer = this.tCFG.pchBuffer + 1,
-        };
 
+        this.iQRCodePixelSize = qrcodegen_getSize(this.tCFG.pchBuffer) * this.tCFG.chSquarePixelSize;
     } while(0);
+}
+
+ARM_NONNULL(1)
+int16_t qrcode_box_get_size(qrcode_box_t *ptThis)
+{
+    assert(NULL != ptThis);
+    
+    return this.iQRCodePixelSize;
+}
+
+ARM_NONNULL(1)
+void qrcode_box_show(   qrcode_box_t *ptThis,
+                        const arm_2d_tile_t *ptTile, 
+                        const arm_2d_region_t *ptRegion, 
+                        COLOUR_INT tColour,
+                        uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+
+    if (!this.tCFG.bIsValid || 0 == chOpacity) {
+        return ;
+    }
+
+    if (-1 == (intptr_t)ptTile) {
+        ptTile = arm_2d_get_default_frame_buffer();
+    }
+
+    assert(NULL!= ptThis);
+
+    arm_2d_safe_canvas_open(ptTile, __qrcode_panel, ptRegion) {
+
+        arm_2d_align_centre_open(__qrcode_panel, 
+                                 this.iQRCodePixelSize, 
+                                 this.iQRCodePixelSize) {
+            int16_t iQRSize = qrcodegen_getSize(this.tCFG.pchBuffer);
+            arm_2d_region_t tBox = {
+                .tSize = {
+                    .iHeight = this.tCFG.chSquarePixelSize,
+                    .iWidth = this.tCFG.chSquarePixelSize,
+                },
+            };
+
+            arm_2d_container(ptTile, __qrcode_canvas, &__centre_region) {
+                /* example code: flash a 50x50 red box in the centre */
+
+                arm_2d_region_t tPFBScanRegion;
+                do {
+                    arm_2d_region_t tValidRegion;
+                    if (!__arm_2d_tile_get_virtual_screen_or_root(  
+                                                            &__qrcode_canvas,
+                                                            &tValidRegion, 
+                                                            &tPFBScanRegion.tLocation,
+                                                            NULL,
+                                                            false)) {
+                        return ;
+                    }
+
+                    tPFBScanRegion.tSize = tValidRegion.tSize;
+                } while(0);
+
+                for (int16_t iY = 0; iY < iQRSize; iY++ ) {
+                    tBox.tLocation.iY = iY * tBox.tSize.iHeight;
+
+                    if (iY >= tPFBScanRegion.tLocation.iY + tPFBScanRegion.tSize.iHeight) {
+                        /* we can end earlier */
+                        return ;
+                    }
+
+                    for (int16_t iX = 0; iX < iQRSize; iX++ ) {
+                        tBox.tLocation.iX = iX * tBox.tSize.iWidth;
+
+                        if (qrcodegen_getModule(this.tCFG.pchBuffer, iX, iY)) {
+                            arm_2d_fill_colour_with_opacity(&__qrcode_canvas, 
+                                                            &tBox, 
+                                                            (__arm_2d_color_t){tColour}, 
+                                                            chOpacity);    
+
+                        }
+                    }
+
+                }
+            }
+        }
+        
+
+
+            
+
+    }
+
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 #if defined(__clang__)

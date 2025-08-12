@@ -216,6 +216,11 @@ void scene_font_loader(void)
     arm_2d_scene_font_init(&DISP0_ADAPTER);
 }
 
+void scene_qrcode_loader(void) 
+{
+    arm_2d_scene_qrcode_init(&DISP0_ADAPTER);
+}
+
 void scene_filters_loader(void) 
 {
     arm_2d_scene_filters_init(&DISP0_ADAPTER);
@@ -342,7 +347,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -511,7 +516,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_font_loader,
+        scene_qrcode_loader,
+        //scene_font_loader,
         //scene_music_player_loader,
         //scene_console_window_loader
         //scene_balls_loader,

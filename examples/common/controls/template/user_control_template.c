@@ -133,6 +133,24 @@ void <control_name>_show( user_<control_name>_t *ptThis,
          *    - __control_canvas is the canvas
          */
 
+        arm_2d_region_t tPFBScanRegion;
+        do {
+            arm_2d_region_t tValidRegion;
+            if (!__arm_2d_tile_get_virtual_screen_or_root(  
+                                                    &__qrcode_canvas,
+                                                    &tValidRegion, 
+                                                    &tPFBScanRegion.tLocation,
+                                                    NULL,
+                                                    false)) {
+                return ;
+            }
+
+            tPFBScanRegion.tSize = tValidRegion.tSize;
+        } while(0);
+
+        /* tPFBScanRegion is the area where the PFB covers the target drawing region */
+
+
         /* example code: flash a 50x50 red box in the centre */
         arm_2d_align_centre(__control_canvas, 50, 50) {
 

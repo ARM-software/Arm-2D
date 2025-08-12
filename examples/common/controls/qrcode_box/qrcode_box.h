@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "./__common.h"
+#include "./qrcodegen.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -66,6 +67,10 @@ typedef struct qrcode_box_cfg_t {
 
     uint8_t *pchBuffer;             /*!< passing NULL means using heap to allocate memory */
     uint16_t hwQRCodeBufferSize;    /*!< at least qrcodegen_BUFFER_LEN_FOR_VERSION(version) * 2*/
+
+    uint8_t chSquarePixelSize;
+
+    
 } qrcode_box_cfg_t;
 
 /*!
@@ -74,10 +79,9 @@ typedef struct qrcode_box_cfg_t {
 typedef struct qrcode_box_t qrcode_box_t;
 
 struct qrcode_box_t {
-    implement(arm_2d_tile_t);
 ARM_PRIVATE(
     qrcode_box_cfg_t tCFG;
-
+    int16_t iQRCodePixelSize;
 )
     /* place your public member here */
     
@@ -88,8 +92,8 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1)
-arm_2d_err_t qrcode_box_init( qrcode_box_t *ptThis,
-                          qrcode_box_cfg_t *ptCFG);
+arm_2d_err_t qrcode_box_init(   qrcode_box_t *ptThis,
+                                qrcode_box_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
 void qrcode_box_depose( qrcode_box_t *ptThis);
@@ -98,6 +102,17 @@ extern
 ARM_NONNULL(1)
 void qrcode_box_on_load( qrcode_box_t *ptThis);
 
+extern
+ARM_NONNULL(1)
+int16_t qrcode_box_get_size(qrcode_box_t *ptThis);
+
+extern 
+ARM_NONNULL(1)
+void qrcode_box_show(   qrcode_box_t *ptThis,
+                        const arm_2d_tile_t *ptTile, 
+                        const arm_2d_region_t *ptRegion, 
+                        COLOUR_INT tColour,
+                        uint8_t chOpacity);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

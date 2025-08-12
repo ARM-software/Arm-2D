@@ -146,6 +146,8 @@ if (ARM2D_CONTROLS)
             examples/common/controls/cloudy_glass.c
             examples/common/controls/meter_pointer.c
             examples/common/controls/text_box.c
+            examples/common/controls/qrcode_box/qrcode_box.c
+            examples/common/controls/qrcode_box/qrcodegen.c
 
             examples/common/asset/arm_2d_asset_WhiteDotMiddle.c
             examples/common/asset/arm_2d_asset_WhiteDotBig.c

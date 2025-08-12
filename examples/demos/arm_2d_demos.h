@@ -48,6 +48,7 @@
 #include "arm_2d_scene_music_player.h"
 #include "arm_2d_scene_font.h"
 #include "arm_2d_scene_pave.h"
+#include "arm_2d_scene_qrcode.h"
 
 /* monochrome demos */
 #if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)
