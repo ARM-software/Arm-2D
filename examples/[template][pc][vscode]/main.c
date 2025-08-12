@@ -423,6 +423,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         10000,
         scene_knob_loader,
     },
+    {
+        5000,
+        scene_qrcode_loader,
+    },
 #if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
     {
         5000,
@@ -516,7 +520,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_qrcode_loader,
+        scene_console_window_loader,
+        //scene_qrcode_loader,
         //scene_font_loader,
         //scene_music_player_loader,
         //scene_console_window_loader
