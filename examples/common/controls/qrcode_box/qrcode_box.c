@@ -250,16 +250,30 @@ void qrcode_box_show(   qrcode_box_t *ptThis,
                     tPFBScanRegion.tSize = tValidRegion.tSize;
                 } while(0);
 
-                for (int16_t iY = 0; iY < iQRSize; iY++ ) {
+                int16_t iY = 0, iX = 0;
+                int16_t iPFBXLimit = tPFBScanRegion.tLocation.iX + tPFBScanRegion.tSize.iWidth;
+                int16_t iPFBYLimit = tPFBScanRegion.tLocation.iY + tPFBScanRegion.tSize.iHeight;
+
+                iY = tPFBScanRegion.tLocation.iY / tBox.tSize.iHeight;
+                iY = MAX(0, iY);
+                
+                for (; iY < iQRSize; iY++ ) {
                     tBox.tLocation.iY = iY * tBox.tSize.iHeight;
 
-                    if (iY >= tPFBScanRegion.tLocation.iY + tPFBScanRegion.tSize.iHeight) {
+                    if (tBox.tLocation.iY >= iPFBYLimit) {
                         /* we can end earlier */
                         return ;
                     }
 
-                    for (int16_t iX = 0; iX < iQRSize; iX++ ) {
+                    iX = tPFBScanRegion.tLocation.iX / tBox.tSize.iWidth;
+                    iX = MAX(0, iX);
+
+                    for (; iX < iQRSize; iX++ ) {
                         tBox.tLocation.iX = iX * tBox.tSize.iWidth;
+
+                        if (tBox.tLocation.iX >= iPFBXLimit) {
+                            break;
+                        }
 
                         if (qrcodegen_getModule(this.tCFG.pchBuffer, iX, iY)) {
                             arm_2d_fill_colour_with_opacity(&__qrcode_canvas, 
