@@ -44,6 +44,7 @@
 #include "./meter_pointer.h"
 #include "./text_tracking_list.h"
 #include "./text_box.h"
+#include "./qrcode_box/qrcode_box.h"
 
 #ifdef   __cplusplus
 extern "C" {

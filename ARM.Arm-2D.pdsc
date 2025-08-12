@@ -507,6 +507,8 @@
             <file category="sourceC"     name="examples/common/controls/cloudy_glass.c" />
             <file category="sourceC"     name="examples/common/controls/meter_pointer.c" />
             <file category="sourceC"     name="examples/common/controls/text_box.c" />
+            <file category="sourceC"     name="examples/common/controls/qrcode_box/qrcode_box.c" />
+            <file category="sourceC"     name="examples/common/controls/qrcode_box/qrcodegen.c" />
 
             <!-- assets -->
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_WhiteDotMiddle.c" />
