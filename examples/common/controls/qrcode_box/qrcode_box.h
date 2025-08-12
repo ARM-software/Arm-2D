@@ -51,7 +51,21 @@ extern "C" {
 
 
 typedef struct qrcode_box_cfg_t {
-    arm_2d_scene_t *ptScene;
+    union {
+        const char *pchString;
+        const uint8_t *pchBinary;
+    };
+    uint16_t hwInputSize;
+    
+    uint16_t u6Version              : 6;    /*!< 1 ~ 40, 0 means auto */
+    uint16_t u2ECCLevel             : 2;
+    uint16_t bIsString              : 1;    /*!< string or binary */
+    uint16_t                        : 5;
+    uint16_t bIsValid               : 1;    /*!< please ignore this flag */
+    uint16_t bScratchMemoryInHeap   : 1;    /*!< please ignore this flag */
+
+    uint8_t *pchBuffer;             /*!< passing NULL means using heap to allocate memory */
+    uint16_t hwQRCodeBufferSize;    /*!< at least qrcodegen_BUFFER_LEN_FOR_VERSION(version) * 2*/
 } qrcode_box_cfg_t;
 
 /*!
@@ -60,14 +74,10 @@ typedef struct qrcode_box_cfg_t {
 typedef struct qrcode_box_t qrcode_box_t;
 
 struct qrcode_box_t {
-
+    implement(arm_2d_tile_t);
 ARM_PRIVATE(
-
     qrcode_box_cfg_t tCFG;
 
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    uint8_t chOpacity;
 )
     /* place your public member here */
     
@@ -78,7 +88,7 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1)
-void qrcode_box_init( qrcode_box_t *ptThis,
+arm_2d_err_t qrcode_box_init( qrcode_box_t *ptThis,
                           qrcode_box_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
@@ -87,21 +97,6 @@ void qrcode_box_depose( qrcode_box_t *ptThis);
 extern
 ARM_NONNULL(1)
 void qrcode_box_on_load( qrcode_box_t *ptThis);
-
-extern
-ARM_NONNULL(1)
-void qrcode_box_on_frame_start( qrcode_box_t *ptThis);
-
-extern
-ARM_NONNULL(1)
-void qrcode_box_on_frame_complete( qrcode_box_t *ptThis);
-
-extern
-ARM_NONNULL(1)
-void qrcode_box_show( qrcode_box_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            bool bIsNewFrame);
 
 
 #if defined(__clang__)
