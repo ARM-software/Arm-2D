@@ -2819,7 +2819,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     }
 #endif
     
-
     /* wait until LCD finish rendering the previous frame */
     if (!this.Adapter.bIgnoreLowLevelSyncUp && !this.Adapter.bIgnoreLowLevelFlush) {
 
@@ -2833,6 +2832,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             "PFB TASK", 
             "Previous frame was skipped, no need to sync with the low-level display driver."
         );
+        this.Adapter.bSyncWithLowLevel = false;
     }
 
     __arm_2d_helper_perf_counter_start(&this.Statistics.lTimestamp,
