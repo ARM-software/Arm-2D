@@ -690,7 +690,7 @@ int app_2d_main_thread (void *argument)
             break;
         }
 
-        disp_adapter0_task();
+        disp_adapter0_task(3);
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
@@ -733,7 +733,6 @@ int app_2d_main_thread (void *argument)
                 default:
                     break;
             }
-            //
         }
     }
 
@@ -742,7 +741,7 @@ int app_2d_main_thread (void *argument)
 
 static bool __lcd_sync_handler(void *pTarget)
 {
-    return VT_sdl_flush(1);
+    return VT_sdl_vsync();
 }
 
 int main(int argc, char* argv[])

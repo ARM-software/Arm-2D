@@ -375,7 +375,7 @@ int32_t Disp0_DrawBitmap(int16_t x,int16_t y,int16_t width,int16_t height,const 
     return 0;
 }
 
-bool VT_sdl_flush(int32_t nMS)
+bool VT_sdl_vsync(void)
 {
     bool bResult = false;
     
@@ -387,12 +387,12 @@ bool VT_sdl_flush(int32_t nMS)
     }
 
     if (!bResult) {
-        nMS = MAX(1, nMS);
-        SDL_Delay(nMS);
+        SDL_Delay(1);
     }
 
     return bResult;
 }
+
 
 #if defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
 int64_t arm_2d_helper_get_system_timestamp(void)
