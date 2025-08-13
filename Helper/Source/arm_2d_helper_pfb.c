@@ -1854,6 +1854,7 @@ arm_2d_tile_t * __arm_2d_helper_pfb_drawing_iteration_begin(
                                     arm_2d_helper_pfb_t *ptThis,
                                     arm_2d_region_list_item_t *ptDirtyRegions)
 {
+
 label_iteration_begin_start:
 
     if (this.Adapter.bIsDryRun) {
@@ -2051,15 +2052,27 @@ label_iteration_begin_start:
             }
         } else {
 
-            ARM_2D_LOG_INFO(
-                HELPER_PFB, 
-                1, 
-                "Iteration Begin", 
-                "Start a frame in normal mode, get the first dirty region in ptDirtyRegions [%p] ",
-                ptDirtyRegions
-            );
+            if (this.Adapter.bFullFrameRefreshModeEnabled) {
+                this.Adapter.ptDirtyRegion = NULL;
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    1, 
+                    "Iteration Begin", 
+                    "Start a frame in full frame refresh mode. The Dirty Regions [%p] are ignored ",
+                    ptDirtyRegions
+                );
+            } else {
 
-            this.Adapter.ptDirtyRegion = ptDirtyRegions;
+                ARM_2D_LOG_INFO(
+                    HELPER_PFB, 
+                    1, 
+                    "Iteration Begin", 
+                    "Start a frame in normal mode, get the first dirty region in ptDirtyRegions [%p] ",
+                    ptDirtyRegions
+                );
+
+                this.Adapter.ptDirtyRegion = ptDirtyRegions;
+            }
         }
         
         if (NULL == this.Adapter.ptDirtyRegion) {
