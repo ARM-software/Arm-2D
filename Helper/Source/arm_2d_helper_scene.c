@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        9. July 2025
- * $Revision:    V.1.9.0
+ * $Date:        13. August 2025
+ * $Revision:    V.1.10.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -2492,7 +2492,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (tResult < 0) {
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
                 return tResult;
-            } else if (arm_fsm_rt_cpl != tResult) {
+            } else if ((arm_fsm_rt_cpl != tResult)
+                    && ((arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED != tResult)) {
                 return tResult;
             }
             
@@ -2527,7 +2528,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (tResult < 0) {
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
                 return tResult;
-            } else if (arm_fsm_rt_cpl != tResult) {
+            } else if ((arm_fsm_rt_cpl != tResult)
+                    && ((arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED != tResult)) {
                 return tResult;
             }
             this.Runtime.chState = POST_SCENE_CHECK;
@@ -2641,7 +2643,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (tResult < 0) {
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
                 return tResult;
-            } else if (arm_fsm_rt_cpl != tResult) {
+            } else if ((arm_fsm_rt_cpl != tResult)
+                    && ((arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED != tResult)) {
                 return tResult;
             }
 
