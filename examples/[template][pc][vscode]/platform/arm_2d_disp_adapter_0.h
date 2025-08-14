@@ -305,7 +305,7 @@ extern "C" {
         ({                                                                      \
         static bool ARM_2D_SAFE_NAME(s_bRefreshLCD) = false;                    \
         arm_fsm_rt_t ARM_2D_SAFE_NAME(ret) = arm_fsm_rt_on_going;               \
-        if (!__ARM_VA_NUM_ARGS(__VA_ARGS__)) {                                  \
+        if (((0,##__VA_ARGS__) <= 0)) {                                         \
             ARM_2D_SAFE_NAME(ret) = __disp_adapter0_task();                     \
         } else {                                                                \
             if (!ARM_2D_SAFE_NAME(s_bRefreshLCD)) {                             \
