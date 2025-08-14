@@ -103,17 +103,17 @@ There are three methods to get Arm-2D:
 
 ### 2.2 Deploy Using CMake
 
-It is easy to deploying arm-2d as a library using CMake, for details, please check the [CMakeLists.txt](../CMakeLists.txt). 
+It is easy to deploy arm-2d as a library using CMake; for details, please check the [CMakeLists.txt](../CMakeLists.txt). 
 
 ### 2.3 Deploy Using Makefile
 
-It is possible to deploy arm-2d using Makefile. We supposes you familiar with writing Makefile scripts and hence provide an [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
+It is possible to deploy arm-2d using a Makefile. We suppose you are familiar with writing Makefile scripts and hence provide a [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
 
 
 
 ## 3 Helper Services and Extras
 
-Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called partial frame buffer (PFB). This feature is vital for resource-constraint embedded platforms. Arm-2D provide a similar feature through a helper service called Display Adapter Service.
+Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called **Partial Frame Buffer (PFB)**. This feature is vital for resource-constrained embedded platforms. Arm-2D provide a similar feature through a helper service called the Display Adapter Service.
 
 ### 3.1 Preparation
 
@@ -127,7 +127,7 @@ int32_t Disp0_DrawBitmap(int16_t x,
                         const uint8_t *bitmap);
 ```
 
-Here as shown in **Figure 3-1**:
+Here, as shown in **Figure 3-1**:
 
 - `x`,`y` are the absolute coordinates in the target screen
 - `width` and` height` describe the size of the rectangular target area
@@ -135,7 +135,7 @@ Here as shown in **Figure 3-1**:
 
 
 
-**Figure 3-1 The Scheme of the Low Level Flushing Interface**
+**Figure 3-1 The Scheme of the Low-Level Flushing Interface**
 
 <img src="./pictures/Disp0_DrawBitmap.png" alt="Disp0_DrawBitmap" style="zoom:70%;" /> 
 
@@ -226,7 +226,7 @@ int main (void)
 
     while (1) {
         /* lock framerate */
-        while(arm_fsm_rt_cpl != disp_adapter0_task(LCD_TARGET_FPS)) __NOP();
+        disp_adapter0_task(LCD_TARGET_FPS);
     }
 }
 ```
@@ -254,8 +254,14 @@ void app_2d_main_thread (void *argument)
 
     while(1) {
         //! retrieve the number of system ticks
-        uint32_t wTick = osKernelGetTickCount();        
-        while(arm_fsm_rt_cpl != disp_adapter0_task());
+        uint32_t wTick = osKernelGetTickCount();
+      
+        do {
+        		arm_fsm_rt_t tResult = disp_adapter0_task();
+        		if (tResult == arm_fsm_rt_cpl || tResult == ARM_2D_RT_FRAME_SKIPPED) {
+            		break;
+            }
+        } while(1);
         
         //! lock frame rate
         osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));
@@ -264,6 +270,10 @@ void app_2d_main_thread (void *argument)
     //osThreadExit();
 }
 ```
+
+> [!NOTE]
+>
+> 1. The `disp_adapter0_task()` returns `arm_fsm_rt_cpl` when finishing drawing a frame and returns `ARM_2D_RT_FRAME_SKIPPED` when there is nothing to update. 
 
 
 
