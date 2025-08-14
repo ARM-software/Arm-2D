@@ -690,7 +690,7 @@ int app_2d_main_thread (void *argument)
             break;
         }
 
-        disp_adapter0_task(3);
+        disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
