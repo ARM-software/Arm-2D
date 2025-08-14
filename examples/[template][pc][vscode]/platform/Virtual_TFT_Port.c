@@ -232,7 +232,7 @@ static void monitor_sdl_init(void)
                                 SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, VT_WIDTH, VT_HEIGHT);
     SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
 
-    SDL_RenderSetLogicalSize(renderer, __DISP0_CFG_SCEEN_WIDTH__, __DISP0_CFG_SCEEN_HEIGHT__);
+    SDL_RenderSetLogicalSize(renderer, VT_WIDTH, VT_HEIGHT);
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 

@@ -708,8 +708,14 @@ static void __user_scene_player_init(void)
     
         arm_2d_helper_3fb_cfg_t tCFG = {
             .tScreenSize = {
+#if     __DISP0_CFG_ROTATE_SCREEN__ == 1\
+    ||  __DISP0_CFG_ROTATE_SCREEN__ == 3
+                __DISP0_CFG_SCEEN_HEIGHT__,
+                __DISP0_CFG_SCEEN_WIDTH__,
+#else
                 __DISP0_CFG_SCEEN_WIDTH__,
                 __DISP0_CFG_SCEEN_HEIGHT__,
+#endif
             },
             .chPixelBits = __DISP0_CFG_COLOUR_DEPTH__,
             .pnAddress = {
