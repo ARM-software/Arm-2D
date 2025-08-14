@@ -203,13 +203,13 @@ ConfigurationWizardForArm-2D</div></div>
     <p ><b>NOTE</b>: If you want to support <b>CCCA8888</b> (i.e. <b>RGBA8888</b>), please selet the <code>Enable support for accessing individual colour channels</code>.</p>
 <h2><a class="anchor" id="autotoc_md75"></a>
 2.2 Deploy Using CMake</h2>
-<p >It is easy to deploying arm-2d as a library using CMake, for details, please check the <a href="../CMakeLists.txt">CMakeLists.txt</a>.</p>
+<p >It is easy to deploy arm-2d as a library using CMake; for details, please check the <a href="../CMakeLists.txt">CMakeLists.txt</a>.</p>
 <h2><a class="anchor" id="autotoc_md76"></a>
 2.3 Deploy Using Makefile</h2>
-<p >It is possible to deploy arm-2d using Makefile. We supposes you familiar with writing Makefile scripts and hence provide an <a href="../examples/[template][pc][vscode]/Makefile">Makefile</a> used on PC as a good example.</p>
+<p >It is possible to deploy arm-2d using a Makefile. We suppose you are familiar with writing Makefile scripts and hence provide a <a href="../examples/[template][pc][vscode]/Makefile">Makefile</a> used on PC as a good example.</p>
 <h1><a class="anchor" id="autotoc_md77"></a>
 3 Helper Services and Extras</h1>
-<p >Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called partial frame buffer (PFB). This feature is vital for resource-constraint embedded platforms. Arm-2D provide a similar feature through a helper service called Display Adapter Service.</p>
+<p >Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called <b>Partial Frame Buffer (PFB)</b>. This feature is vital for resource-constrained embedded platforms. Arm-2D provide a similar feature through a helper service called the Display Adapter Service.</p>
 <h2><a class="anchor" id="autotoc_md78"></a>
 3.1 Preparation</h2>
 <p >Before we start, we have to prepare a low-level flushing function called Disp0_DrawBitmap(). Its prototype is shown below:</p>
@@ -218,13 +218,13 @@ ConfigurationWizardForArm-2D</div></div>
 <div class="line">                        int16_t width, </div>
 <div class="line">                        int16_t height, </div>
 <div class="line">                        <span class="keyword">const</span> uint8_t *bitmap);</div>
-</div><!-- fragment --><p >Here as shown in <b>Figure 3-1</b>:</p>
+</div><!-- fragment --><p >Here, as shown in <b>Figure 3-1</b>:</p>
 <ul>
 <li><code>x</code>,<code>y</code> are the absolute coordinates in the target screen</li>
 <li><code>width</code> and<code>height</code> describe the size of the rectangular target area</li>
 <li><code>bitmap</code> points to a framebuffer which holds all pixels in a rectangular area with the given <code>width</code> and <code>height</code>.</li>
 </ul>
-<p ><b>Figure 3-1 The Scheme of the Low Level Flushing Interface</b></p>
+<p ><b>Figure 3-1 The Scheme of the Low-Level Flushing Interface</b></p>
 <p ><img src="./pictures/Disp0_DrawBitmap.png" alt="Disp0_DrawBitmap" style="zoom:70%;" class="inline"/></p>
 <p >Suppose the display RAM of your LCD has been mapped into internal 4G memory space. An example of <code>Disp0_DrawBitmap()</code> might look like this:</p>
 <div class="fragment"><div class="line"><span class="comment">/**</span></div>
@@ -297,7 +297,7 @@ AddDisplayAdapter</div></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
 <div class="line">        <span class="comment">/* lock framerate */</span></div>
-<div class="line">        <span class="keywordflow">while</span>(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> != disp_adapter0_task(LCD_TARGET_FPS)) __NOP();</div>
+<div class="line">        disp_adapter0_task(LCD_TARGET_FPS);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Or the thread function if you want to run Arm-2d in an RTOS environment:</p>
@@ -321,8 +321,14 @@ AddDisplayAdapter</div></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">while</span>(1) {<span class="comment"></span></div>
 <div class="line"><span class="comment">        //! retrieve the number of system ticks</span></div>
-<div class="line"><span class="comment"></span>        uint32_t wTick = osKernelGetTickCount();        </div>
-<div class="line">        <span class="keywordflow">while</span>(<a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> != disp_adapter0_task());</div>
+<div class="line"><span class="comment"></span>        uint32_t wTick = osKernelGetTickCount();</div>
+<div class="line">      </div>
+<div class="line">        <span class="keywordflow">do</span> {</div>
+<div class="line">            <a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> tResult = disp_adapter0_task();</div>
+<div class="line">            <span class="keywordflow">if</span> (tResult == <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> || tResult == <a class="code hl_enumvalue" href="group__gKernel.html#gga27a24a896295488772e6d847c790fd1caf2c830c9cbb2fe95aecbdf5538e5deb8" title="frame is skipped">ARM_2D_RT_FRAME_SKIPPED</a>) {</div>
+<div class="line">                <span class="keywordflow">break</span>;</div>
+<div class="line">            }</div>
+<div class="line">        } <span class="keywordflow">while</span>(1);</div>
 <div class="line">        <span class="comment"></span></div>
 <div class="line"><span class="comment">        //! lock frame rate</span></div>
 <div class="line"><span class="comment"></span>        osDelayUntil(wTick + (1000 / LCD_TARGET_FPS));</div>
@@ -330,7 +336,13 @@ AddDisplayAdapter</div></div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">//osThreadExit();</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md80"></a>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >&zwj;[!NOTE]</p>
+<ol type="1">
+<li>The <code>disp_adapter0_task()</code> returns <code>arm_fsm_rt_cpl</code> when finishing drawing a frame and returns <code>ARM_2D_RT_FRAME_SKIPPED</code> when there is nothing to update. </li>
+</ol>
+</blockquote>
+<h2><a class="anchor" id="autotoc_md80"></a>
 3.3 Configure the Display Adapter Service</h2>
 <p >You should configure the Display Adapter service before using it. All the configurations of a Display Adapter service are stored in the corresponding header file, e.g. <code>arm_2d_disp_adapter_0.h</code>. In MDK, all configuration work can be done through the GUI wizard, as shown in <b>Figure 3-3</b>.</p>
 <p ><b>Figure 3-3 Configure the Display Adapter Using the Wizard</b></p>
