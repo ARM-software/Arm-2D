@@ -82,7 +82,6 @@ extern "C" {
 #ifndef __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
 #   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        1
 #endif
-// </h>
 
 // <c1> Return frame is SKIPPED when there is nothing to draw
 // <i> When a frame is skipped, return ARM_2D_RT_FRAME_SKIPPED to indicate this.
