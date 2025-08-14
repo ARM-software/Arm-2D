@@ -630,7 +630,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_user_default_background)
     ARM_2D_UNUSED(ptTile);
     ARM_2D_UNUSED(pTarget);
     
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
+
     return arm_fsm_rt_cpl;
 }
 
@@ -652,7 +653,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_default_background)
         break;
     }
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
+
     return arm_fsm_rt_cpl;
 }
 
@@ -1666,7 +1668,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
 
     } while(0);
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -1994,7 +1996,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_slide)
         
     } while(0);
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
@@ -2331,7 +2333,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_fly_in)
         
     } while(0);
 
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }
