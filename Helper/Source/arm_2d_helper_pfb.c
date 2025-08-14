@@ -3749,24 +3749,53 @@ void __arm_2d_rotate_270_c8bit(  uint8_t * __restrict pchOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    uint8_t * __restrict pchDesColumnStart = pchOutput + uColoumOffset;
+    assert(iOriginHeight <= iOutputWidth);
 
-    int_fast16_t iOriginY = iOriginHeight;
-    do {
-        uint8_t * __restrict pchSrcLine = pchOrigin;
+    int16_t iRotatedWidth = iOriginHeight;
+    int16_t iRotatedHeight = iOriginWidth;
+    
+    for (int16_t iY = 0; iY < iRotatedHeight; iY++) {
+        
+        int16_t iX = 0;
+        uint8_t *pchSource = &pchOrigin[iOriginWidth - iY - 1];
+        
+        switch(iRotatedWidth & 0x07) {
+            do {
+            case 0:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+            
+            case 7:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+            
+            case 6:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+                
+            case 5:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+                
+            case 4:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
 
-        /* select a column in target buffer */
-        uint8_t * __restrict pchDesColumn = pchDesColumnStart++;;
-
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *pchDesColumn = *pchSrcLine++;
-            pchDesColumn -= iOutputWidth;
-        } while(--iOriginX);
-
-        pchOrigin += iOriginWidth;
-    } while(--iOriginY);
+            case 3:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+                
+            case 2:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+                
+            case 1:
+                *pchOutput++ = *pchSource;
+                pchSource += iOriginWidth;
+                iX += 8;
+            } while(iX < iRotatedWidth);
+        }
+    }
 }
 
 __WEAK 
@@ -3778,47 +3807,6 @@ void __arm_2d_rotate_270_rgb16( uint16_t * __restrict phwOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-#if 0
-#if 0 /* We keep this prototype algorihtm for ease of understanding */
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    
-    for (int16_t iOriginY = 0; iOriginY < iOriginHeight; iOriginY++) {
-        uint16_t * __restrict phwSrcLine = phwOrigin;
-        
-        /* select a column in target buffer */
-        uint16_t * __restrict phwDesColumn = phwOutput + iOriginY + uColoumOffset;
-        
-        for (int16_t iOriginX = 0; iOriginX < iOriginWidth; iOriginX++) {
-            *phwDesColumn = *phwSrcLine++;
-            
-            phwDesColumn -= iOutputWidth;
-        }
-
-        phwOrigin += iOriginWidth;
-    }
-#else
-
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    uint16_t * __restrict phwDesColumnStart = phwOutput + uColoumOffset;
-
-    int_fast16_t iOriginY = iOriginHeight;
-    do {
-        uint16_t * __restrict phwSrcLine = phwOrigin;
-
-        /* select a column in target buffer */
-        uint16_t * __restrict phwDesColumn = phwDesColumnStart++;;
-
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *phwDesColumn = *phwSrcLine++;
-            phwDesColumn -= iOutputWidth;
-        } while(--iOriginX);
-
-        phwOrigin += iOriginWidth;
-    } while(--iOriginY);
-
-#endif
-#else
     int16_t iRotatedWidth = iOriginHeight;
     int16_t iRotatedHeight = iOriginWidth;
     
@@ -3863,10 +3851,7 @@ void __arm_2d_rotate_270_rgb16( uint16_t * __restrict phwOrigin,
                 iX += 8;
             } while(iX < iRotatedWidth);
         }
-    
     }
-
-#endif
 }
 
 __WEAK 
@@ -3878,24 +3863,52 @@ void __arm_2d_rotate_270_rgb32(  uint32_t * __restrict pwOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
-    uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
-    uint32_t * __restrict pwDesColumnStart = pwOutput + uColoumOffset;
 
-    int_fast16_t iOriginY = iOriginHeight;
-    do {
-        uint32_t * __restrict pwSrcLine = pwOrigin;
+    int16_t iRotatedWidth = iOriginHeight;
+    int16_t iRotatedHeight = iOriginWidth;
+    
+    for (int16_t iY = 0; iY < iRotatedHeight; iY++) {
+        
+        int16_t iX = 0;
+        uint32_t *pwSource = &pwOrigin[iOriginWidth - iY - 1];
+        
+        switch(iRotatedWidth & 0x07) {
+            do {
+            case 0:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;
+            
+            case 7:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;
+            
+            case 6:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;
+                
+            case 5:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;
+                
+            case 4:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;
 
-        /* select a column in target buffer */
-        uint32_t * __restrict pwDesColumn = pwDesColumnStart++;;
-
-        int_fast16_t iOriginX = iOriginWidth;
-        do {
-            *pwDesColumn = *pwSrcLine++;
-            pwDesColumn -= iOutputWidth;
-        } while(--iOriginX);
-
-        pwOrigin += iOriginWidth;
-    } while(--iOriginY);
+            case 3:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;
+                
+            case 2:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;;
+                
+            case 1:
+                *pwOutput++ = *pwSource;
+                pwSource += iOriginWidth;;
+                iX += 8;
+            } while(iX < iRotatedWidth);
+        }
+    }
 
 }
 
