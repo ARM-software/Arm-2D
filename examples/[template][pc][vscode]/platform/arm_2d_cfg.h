@@ -84,6 +84,11 @@ extern "C" {
 #endif
 // </h>
 
+// <c1> Return frame is SKIPPED when there is nothing to draw
+// <i> When a frame is skipped, return ARM_2D_RT_FRAME_SKIPPED to indicate this.
+//#define __ARM_2D_CFG_PFB_RETURN_SKIPPED__  
+// </c>
+
 // </h>
 
 

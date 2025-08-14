@@ -3208,9 +3208,11 @@ ARM_PT_END()
         "Drawing frame complete.\r\n\r\n"
     );
 
+#if defined(__ARM_2D_CFG_PFB_RETURN_SKIPPED__)
     if (this.Adapter.bIgnoreLowLevelSyncUp || this.Adapter.bIgnoreLowLevelFlush) {
         return (arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED;
     }
+#endif
 
     return arm_fsm_rt_cpl;
 }
