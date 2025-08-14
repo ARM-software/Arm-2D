@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_MUSIC_PLAYER_H__
-#define __ARM_2D_SCENE_MUSIC_PLAYER_H__
+#ifndef __ARM_2D_SCENE_KNOB_H__
+#define __ARM_2D_SCENE_KNOB_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -51,10 +51,10 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_MUSIC_PLAYER_IMPLEMENT__
+#ifdef __USER_SCENE_KNOB_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_MUSIC_PLAYER_INHERIT__
+#ifdef __USER_SCENE_KNOB_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -62,75 +62,42 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_music_player and add it to a user specified scene player
+ * \brief initalize scene_knob and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_music_player_t will be allocated from HEAP and freed on
+ *            user_scene_knob_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_music_player_t* the user_scene_music_player_t instance
+ * \return user_scene_knob_t* the user_scene_knob_t instance
  */
-#define arm_2d_scene_music_player_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_music_player_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_knob_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_knob_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
-
-enum {
-    DIRTY_REGION_ITEM_PLAY_TIME = 0,
-    __DIRTY_REGION_ITEM_COUNT,
-};
-
-typedef uint8_t __histogram_frame_t[64];
-
 /*!
- * \brief a user class for scene music_player
+ * \brief a user class for scene knob
  */
-typedef struct user_scene_music_player_t user_scene_music_player_t;
+typedef struct user_scene_knob_t user_scene_knob_t;
 
-struct user_scene_music_player_t {
+struct user_scene_knob_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[3];
+    int64_t lTimestamp[2];
+    bool bUserAllocated;
 
+    int16_t iTargetSetting;
+    int16_t iDisplayTargetSetting;
+    meter_pointer_t tPointer;
+    
     struct {
-        uint32_t nMusicTimeInMs;
-        int16_t iPlayProgress;
-
-        uint16_t u6Secends                      : 6;
-        uint16_t                                : 2;    
-        uint16_t u6Mins                         : 6;
-        uint16_t                                : 1;
-        uint16_t bUserAllocated                 : 1;
-
-        arm_2d_helper_dirty_region_item_t tDirtyRegionItems[__DIRTY_REGION_ITEM_COUNT];
+        progress_wheel_t            tWheel;
+        arm_2d_helper_pi_slider_t   tPISlider;
+        int16_t                     iActual;
     };
 
-    struct {
-        spin_zoom_widget_t tWidget;
-        int16_t iRadius;
-        int16_t iPivotOffset;
-        float fScaling;
-    } AlbumCover;
-
-    struct {
-        histogram_t tWidget;
-        histogram_bin_item_t tBins[64];
-
-        __histogram_frame_t *ptFrame;
-    } Histogram;
-
-    struct {
-        text_box_c_str_reader_t tStringReader;
-        text_box_t tTextBox;
-        uint8_t chOpacity;
-        arm_2d_size_t tSize;
-        int64_t lFullHeight;
-        int64_t lPosition;
-    } Lyrics;
-
-
+    arm_2d_op_fill_cl_msk_opa_trans_t tCoverRotateOP;
 
 )
     /* place your public member here */
@@ -142,9 +109,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_music_player_t *__arm_2d_scene_music_player_init(
-                                        arm_2d_scene_player_t *ptDispAdapter,
-                                        user_scene_music_player_t *ptScene);
+user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_knob_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -152,8 +118,8 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_MUSIC_PLAYER_IMPLEMENT__
-#undef __USER_SCENE_MUSIC_PLAYER_INHERIT__
+#undef __USER_SCENE_KNOB_IMPLEMENT__
+#undef __USER_SCENE_KNOB_INHERIT__
 
 #ifdef   __cplusplus
 }

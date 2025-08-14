@@ -137,59 +137,59 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 const static char c_chLyrics[] = {
     "Never Gonna Give You Up\n"
-    "Song by Rick Astley 1987\r\n"
-    "\r\n\r\n"
-    "We're no strangers to love\r\n"
-    "You know the rules and so do I\r\n"
-    "A full commitment's what I'm thinkin' of\r\n"
-    "You wouldn't get this from any other guy\r\n"
-    "I just wanna tell you how I'm feeling\r\n"
-    "Gotta make you understand\r\n"
-    "Never gonna give you up, never gonna let you down\r\n"
-    "Never gonna run around and desert you\r\n"
-    "Never gonna make you cry, never gonna say goodbye\r\n"
-    "Never gonna tell a lie and hurt you\r\n"
-    "We've known each other for so long\r\n"
-    "Your heart's been aching, but you're too shy to say it\r\n"
-    "Inside, we both know what's been going on\r\n"
-    "We know the game and we're gonna play it\r\n"
-    "And if you ask me how I'm feeling\r\n"
-    "Don't tell me you're too blind to see\r\n"
-    "Never gonna give you up, never gonna let you down\r\n"
-    "Never gonna run around and desert you\r\n"
-    "Never gonna make you cry, never gonna say goodbye\r\n"
-    "Never gonna tell a lie and hurt you\r\n"
-    "Never gonna give you up, never gonna let you down\r\n"
-    "Never gonna run around and desert you\r\n"
-    "Never gonna make you cry, never gonna say goodbye\r\n"
-    "Never gonna tell a lie and hurt you\r\n"
-    "\r\n"
-    "(Ooh, give you up)\r\n"
-    "(Ooh, give you up)\r\n"
-    "never gonna give, never gonna give, (give you up)\r\n"
-    "never gonna give, never gonna give, (give you up)\r\n"
-    "\r\n"
-    "We've known each other for so long\r\n"
-    "Your heart's been aching, but you're too shy to say it\r\n"
-    "Inside, we both know what's been going on\r\n"
-    "We know the game and we're gonna play it\r\n"
-    "I just wanna tell you how I'm feeling\r\n"
-    "Gotta make you understand\r\n"
-    "Never gonna give you up, never gonna let you down\r\n"
-    "Never gonna run around and desert you\r\n"
-    "Never gonna make you cry, never gonna say goodbye\r\n"
-    "Never gonna tell a lie and hurt you\r\n"
-    "Never gonna give you up, never gonna let you down\r\n"
-    "Never gonna run around and desert you\r\n"
-    "Never gonna make you cry, never gonna say goodbye\r\n"
-    "Never gonna tell a lie and hurt you\r\n"
-    "Never gonna give you up, never gonna let you down\r\n"
-    "Never gonna run around and desert you\r\n"
-    "Never gonna make you cry, never gonna say goodbye\r\n"
-    "Never gonna tell a lie and hurt you\r\n"
-    "\r\n"
-    "Songwriters: Peter Alan Waterman / Matthew James Aitken / Michael Stock\r\n"
-    "Never Gonna Give You Up lyrics(C) Sids Songs Ltd., Mike Stock Publishing Limited, Pw Ballads\r\n"
+    "Song by Rick Astley 1987\n"
+    "\n\n\n\n\n\n\n\n"
+    "We're no strangers to love\n\n"
+    "You know the rules and so do I\n\n"
+    "A full commitment's what I'm thinkin' of\n\n"
+    "You wouldn't get this from any other guy\n\n"
+    "I just wanna tell you how I'm feeling\n\n"
+    "Gotta make you understand\n\n"
+    "Never gonna give you up, never gonna let you down\n\n"
+    "Never gonna run around and desert you\n\n"
+    "Never gonna make you cry, never gonna say goodbye\n\n"
+    "Never gonna tell a lie and hurt you\n\n"
+    "We've known each other for so long\n\n"
+    "Your heart's been aching, but you're too shy to say it\n\n"
+    "Inside, we both know what's been going on\n\n"
+    "We know the game and we're gonna play it\n\n"
+    "And if you ask me how I'm feeling\n\n"
+    "Don't tell me you're too blind to see\n\n"
+    "Never gonna give you up, never gonna let you down\n\n"
+    "Never gonna run around and desert you\n\n"
+    "Never gonna make you cry, never gonna say goodbye\n\n"
+    "Never gonna tell a lie and hurt you\n\n"
+    "Never gonna give you up, never gonna let you down\n\n"
+    "Never gonna run around and desert you\n\n"
+    "Never gonna make you cry, never gonna say goodbye\n\n"
+    "Never gonna tell a lie and hurt you\n\n"
+    "\n\n\n\n"
+    "(Ooh, give you up)\n\n"
+    "(Ooh, give you up)\n\n"
+    "never gonna give, never gonna give, (give you up)\n\n"
+    "never gonna give, never gonna give, (give you up)\n\n"
+    "\n\n"
+    "We've known each other for so long\n\n"
+    "Your heart's been aching, but you're too shy to say it\n\n"
+    "Inside, we both know what's been going on\n\n"
+    "We know the game and we're gonna play it\n\n"
+    "I just wanna tell you how I'm feeling\n\n"
+    "Gotta make you understand\n\n"
+    "Never gonna give you up, never gonna let you down\n\n"
+    "Never gonna run around and desert you\n\n"
+    "Never gonna make you cry, never gonna say goodbye\n\n"
+    "Never gonna tell a lie and hurt you\n\n"
+    "Never gonna give you up, never gonna let you down\n\n"
+    "Never gonna run around and desert you\n\n"
+    "Never gonna make you cry, never gonna say goodbye\n\n"
+    "Never gonna tell a lie and hurt you\n\n"
+    "Never gonna give you up, never gonna let you down\n\n"
+    "Never gonna run around and desert you\n\n"
+    "Never gonna make you cry, never gonna say goodbye\n\n"
+    "Never gonna tell a lie and hurt you\n\n"
+    "\n\n"
+    "Songwriters: Peter Alan Waterman / Matthew James Aitken / Michael Stock\n"
+    "Never Gonna Give You Up lyrics(C) Sids Songs Ltd., Mike Stock Publishing Limited, Pw Ballads\n"
 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -205,8 +205,6 @@ static void __on_scene_music_player_load(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_load(&this.AlbumCover.tWidget);
     text_box_on_load(&this.Lyrics.tTextBox);
-
-    this.nMusicTimeInMs = (60 * 3 + 33) * 1000ul;
     
 }
 
@@ -298,46 +296,41 @@ static void __fill_histogram_frame(__histogram_frame_t *ptFrame)
 static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_music_player_t *ptThis = (user_scene_music_player_t *)ptScene;
-    ARM_2D_UNUSED(ptThis);
 
-    if (arm_2d_helper_is_time_out(8, &this.lTimestamp[0])) {
-        this.AlbumCover.iAngle += 2;
-        if (this.AlbumCover.iAngle >= 3600) {
-            this.AlbumCover.iAngle = 0;
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 3599, 30000, &nResult, &this.lTimestamp[0])) {
+            this.lTimestamp[0] = 0;
         }
 
         spin_zoom_widget_on_frame_start(&this.AlbumCover.tWidget, 
-                                        this.AlbumCover.iAngle, 
+                                        nResult, 
                                         this.AlbumCover.fScaling);
-    }
 
-    if (arm_2d_helper_is_time_out(80, &this.lTimestamp[1])) {
-        /* get the screen region */
-        arm_2d_region_t __top_canvas
-            = arm_2d_helper_pfb_get_display_area(
-                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
+    } while(0);
 
-        int32_t iCurrentLine = text_box_get_start_line(&this.Lyrics.tTextBox);
-        if (text_box_has_end_of_stream_been_reached(&this.Lyrics.tTextBox) 
-        &&  iCurrentLine == text_box_get_current_line_count(&this.Lyrics.tTextBox)) {
-            text_box_set_scrolling_position(&this.Lyrics.tTextBox, -__top_canvas.tSize.iHeight);
-        } else {
-            text_box_set_scrolling_position_offset(&this.Lyrics.tTextBox, 1);
-        }
-    }
+    if (arm_2d_helper_time_liner_slider_i64(-this.Lyrics.tSize.iHeight, 
+                                            this.Lyrics.lFullHeight, 
+                                            this.nMusicTimeInMs,
+                                            &this.Lyrics.lPosition,
+                                            &this.lTimestamp[1])) {
 
-    int32_t nResult;
-    if (arm_2d_helper_time_liner_slider(0,                      /* from */
-                                        1000,                   /* to   */
-                                        this.nMusicTimeInMs,    /* time */
-                                        &nResult, 
-                                        &this.lTimestamp[2])) {
-        this.lTimestamp[2] = 0;
+        this.lTimestamp[1] = 0;
+        text_box_set_scrolling_position(&this.Lyrics.tTextBox, -this.Lyrics.tSize.iHeight);
+        this.iPlayProgress = 1000;
     } else {
+        text_box_set_scrolling_position(&this.Lyrics.tTextBox,
+                                         this.Lyrics.lPosition);
 
         int32_t nElapsedMs = arm_2d_helper_convert_ticks_to_ms(
-                arm_2d_helper_get_system_timestamp() - this.lTimestamp[2]
+                arm_2d_helper_get_system_timestamp() - this.lTimestamp[1]
             );
+
+        if ((this.nMusicTimeInMs - nElapsedMs) > (255 << 3)) {
+            this.Lyrics.chOpacity = 255;
+        } else {
+            this.Lyrics.chOpacity = (this.nMusicTimeInMs - nElapsedMs) >> 3;
+        }
 
         int32_t iSecond = (nElapsedMs / 1000) % 60;
 
@@ -355,10 +348,11 @@ static void __on_scene_music_player_frame_start(arm_2d_scene_t *ptScene)
                 true
             );
         }
-    }
-    this.iPlayProgress = nResult;
 
-    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[3])) {
+        this.iPlayProgress = ((int64_t)nElapsedMs * 1000) / (int64_t)this.nMusicTimeInMs;
+    }
+
+    if (arm_2d_helper_is_time_out(33, &this.lTimestamp[2])) {
         static __histogram_frame_t s_tDemoFrame;
 
         __fill_histogram_frame(&s_tDemoFrame);
@@ -509,7 +503,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_music_player_handler)
                                 ptTile, 
                                 &__dock_region,
                                 (__arm_2d_color_t) {__RGB(0xB6, 0xC7, 0xE7)},
-                                255,
+                                this.Lyrics.chOpacity,
                                 bIsNewFrame);
 
             }
@@ -724,9 +718,20 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
         histogram_init(&this.Histogram.tWidget, &tCFG);
     } while(0);
 
+    
 
     /* initialize Lyrics Box */
     do {
+
+        /*
+         * NOTE: If you want to change music, please update:
+         *       1. this.nMusicTimeInMs  
+         *       2. this.Lyrics.tStringReader with the new lyrics
+         *       
+         *       Please do NOT modify other part unless you know 
+         *       what you are doing.
+         */
+        this.nMusicTimeInMs = (60 * 3 + 33) * 1000ul;
         text_box_c_str_reader_init( &this.Lyrics.tStringReader,
                                     c_chLyrics,
                                     sizeof(c_chLyrics));
@@ -749,12 +754,47 @@ user_scene_music_player_t *__arm_2d_scene_music_player_init(
             tCFG.ptFont = NULL;
         }
 
+        arm_lcd_text_set_char_spacing(1);
+        arm_lcd_text_set_line_spacing(4);
+
         text_box_init(&this.Lyrics.tTextBox, &tCFG);
 
+        do {
+            arm_2d_size_t tLyricsBoxSize = {
+                .iWidth = __top_canvas.tSize.iWidth - this.AlbumCover.iRadius,
+                .iHeight = __top_canvas.tSize.iHeight - histogram_get_size(&this.Histogram.tWidget).iHeight - 20,
+            };
+
+            if (__top_canvas.tSize.iWidth <= 240) {
+                tLyricsBoxSize.iWidth = __top_canvas.tSize.iWidth - 10;
+            }
+
+            if (__top_canvas.tSize.iHeight < 128) {
+                tLyricsBoxSize.iHeight = __top_canvas.tSize.iHeight - 20;
+            }
+
+            arm_2d_align_top_left(__top_canvas, tLyricsBoxSize) {
+                arm_2d_dock_with_margin(__top_left_region, 10, 10, 20, 10) {
+
+                    this.Lyrics.tSize = __dock_region.tSize;
+                }
+            }
+        } while(0);
+
+        this.Lyrics.lFullHeight = text_box_get_line_count(  &this.Lyrics.tTextBox, 
+                                                            this.Lyrics.tSize.iWidth);
+        if (this.Lyrics.lFullHeight > 0) {
+            this.Lyrics.lFullHeight *= (int64_t)text_box_get_line_height(&this.Lyrics.tTextBox);
+            this.Lyrics.lFullHeight -= (this.Lyrics.tSize.iHeight >> 1);
+        }
+
         /* set initial location */
-        text_box_set_scrolling_position(&this.Lyrics.tTextBox, -__top_canvas.tSize.iHeight);
-        
+        text_box_set_scrolling_position(&this.Lyrics.tTextBox, -this.Lyrics.tSize.iHeight);
+        this.Lyrics.chOpacity = 0;
+
     } while(0);
+
+    
 
 
     /* ------------   initialize members of user_scene_music_player_t end   ---------------*/

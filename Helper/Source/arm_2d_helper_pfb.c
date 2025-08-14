@@ -3770,7 +3770,7 @@ void __arm_2d_rotate_270_c8bit(  uint8_t * __restrict pchOrigin,
 }
 
 __WEAK 
-void __arm_2d_rotate_270_rgb16(  uint16_t * __restrict phwOrigin,
+void __arm_2d_rotate_270_rgb16( uint16_t * __restrict phwOrigin,
                                 uint16_t * __restrict phwOutput,
                                 int_fast16_t iOriginWidth,
                                 int_fast16_t iOriginHeight,
@@ -3778,6 +3778,7 @@ void __arm_2d_rotate_270_rgb16(  uint16_t * __restrict phwOrigin,
 {
     assert(iOriginHeight <= iOutputWidth);
 
+#if 0
 #if 0 /* We keep this prototype algorihtm for ease of understanding */
     uintptr_t uColoumOffset =  iOutputWidth * (iOriginWidth - 1);
     
@@ -3815,6 +3816,55 @@ void __arm_2d_rotate_270_rgb16(  uint16_t * __restrict phwOrigin,
 
         phwOrigin += iOriginWidth;
     } while(--iOriginY);
+
+#endif
+#else
+    int16_t iRotatedWidth = iOriginHeight;
+    int16_t iRotatedHeight = iOriginWidth;
+    
+    for (int16_t iY = 0; iY < iRotatedHeight; iY++) {
+        
+        int16_t iX = 0;
+        uint16_t *phwSource = &phwOrigin[iOriginWidth - iY - 1];
+        
+        switch(iRotatedWidth & 0x07) {
+            do {
+            case 0:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+            
+            case 7:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+            
+            case 6:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+                
+            case 5:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+                
+            case 4:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+
+            case 3:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+                
+            case 2:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+                
+            case 1:
+                *phwOutput++ = *phwSource;
+                phwSource += iOriginWidth;
+                iX += 8;
+            } while(iX < iRotatedWidth);
+        }
+    
+    }
 
 #endif
 }

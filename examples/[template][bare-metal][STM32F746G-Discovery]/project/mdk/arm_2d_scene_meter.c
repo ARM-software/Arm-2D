@@ -158,18 +158,20 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
     arm_tjpgd_loader_depose(&this.tJPGBackground);
 #endif
 
-    ptScene->ptPlayer = NULL;
-    
+    meter_pointer_depose(&this.tMeterPointer);
+
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
 
-    meter_pointer_depose(&this.tMeterPointer);
+    ptScene->ptPlayer = NULL;
 
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
+
+
 }
 
 /*----------------------------------------------------------------------------*
@@ -337,7 +339,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
+    #if ARM_2D_SCENE_METER_USE_JPG
+        arm_lcd_puts("Scene meter with TJpgDec");
+    #else
         arm_lcd_puts("Scene meter");
+    #endif
 
     /*-----------------------draw the foreground end  -----------------------*/
     }

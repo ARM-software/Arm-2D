@@ -259,7 +259,7 @@ static void __before_scene_ruler_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
+    arm_lcd_text_set_scale(0);
 }
 
 static
@@ -360,6 +360,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_scale(0);
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
@@ -505,7 +506,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
             //.fnOnBGStart    = &__on_scene_ruler_background_start,
             //.fnOnBGComplete = &__on_scene_ruler_background_complete,
             .fnOnFrameStart = &__on_scene_ruler_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
             .fnOnFrameCPL   = &__on_scene_ruler_frame_complete,
             .fnDepose       = &__on_scene_ruler_depose,
 
