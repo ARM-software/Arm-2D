@@ -427,8 +427,8 @@ Macros</h2></td></tr>
 <tr class="memitem:ga9d3fb659afb30b0e32ac6e7843a2c7ba"><td class="memItemLeft" align="right" valign="top"><a id="ga9d3fb659afb30b0e32ac6e7843a2c7ba" name="ga9d3fb659afb30b0e32ac6e7843a2c7ba"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>ARM_2D_3FB_INVALID_IDX</b>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:ga9d3fb659afb30b0e32ac6e7843a2c7ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac285ae3b770d16787cee4c1eb3b715a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac285ae3b770d16787cee4c1eb3b715a0">ARM_CONTROL_ENUMERATE</a>(__ROOT,  __ITEM_NAME,  __POLICY)</td></tr>
-<tr class="separator:gac285ae3b770d16787cee4c1eb3b715a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3ccc3803de933170c2d641e242c5375"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaf3ccc3803de933170c2d641e242c5375">ARM_CONTROL_ENUMERATE</a>(__START,  __ITEM_NAME,  __POLICY)</td></tr>
+<tr class="separator:gaf3ccc3803de933170c2d641e242c5375"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1fad4e7b9c1abcfd3a884cb29770be37"><td class="memItemLeft" align="right" valign="top"><a id="ga1fad4e7b9c1abcfd3a884cb29770be37" name="ga1fad4e7b9c1abcfd3a884cb29770be37"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>arm_control_enumerate</b>&#160;&#160;&#160;ARM_CONTROL_ENUMERATE</td></tr>
 <tr class="separator:ga1fad4e7b9c1abcfd3a884cb29770be37"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -6623,8 +6623,8 @@ chPTState</td>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="gac285ae3b770d16787cee4c1eb3b715a0" name="gac285ae3b770d16787cee4c1eb3b715a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac285ae3b770d16787cee4c1eb3b715a0">&#9670;&#160;</a></span>ARM_CONTROL_ENUMERATE</h2>
+<a id="gaf3ccc3803de933170c2d641e242c5375" name="gaf3ccc3803de933170c2d641e242c5375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3ccc3803de933170c2d641e242c5375">&#9670;&#160;</a></span>ARM_CONTROL_ENUMERATE</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -6633,7 +6633,7 @@ chPTState</td>
           <td class="memname">#define ARM_CONTROL_ENUMERATE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">__ROOT, </td>
+          <td class="paramname">__START, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -6661,7 +6661,7 @@ chPTState</td>
 <div class="line">            arm_2d_helper_control_enum_init(                                    \</div>
 <div class="line">                        &amp;<a class="code hl_define" href="group__gKernel.html#gac4cb8417578b68dafd15932572d0aa23" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">ARM_2D_SAFE_NAME</a>(tEnum),                               \</div>
 <div class="line">                        &amp;(ARM_2D_CONTROL_ENUMERATION_POLICY_##__POLICY),        \</div>
-<div class="line">                        (<span class="keyword">const</span> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *)(__ROOT));               \</div>
+<div class="line">                        (<span class="keyword">const</span> <a class="code hl_struct" href="group__gHelper.html#structarm__2d__control__node__t">arm_2d_control_node_t</a> *)(__START));              \</div>
 <div class="line">            ARM_2D_SAFE_NAME(ptPointer)++;                                      \</div>
 <div class="line">        }) == NULL);                                                            \</div>
 <div class="line">        ({                                                                      \</div>
