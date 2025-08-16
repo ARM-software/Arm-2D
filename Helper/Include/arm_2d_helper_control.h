@@ -57,7 +57,7 @@ extern "C" {
 /*!
  * \brief a helper macro to enumerate nodes in the target element tree with a 
  *        given traversal policy
- * \param[in] __ROOT the root node of the target element tree
+ * \param[in] __START the start node of a traversal
  * \param __ITEM_NAME the pointer variable name represents the current node
  * \param[in] a traversal policy. Please ignore the prefix 
  *            ARM_2D_CONTROL_ENUMERATION_POLICY_xxxxx
@@ -70,7 +70,7 @@ extern "C" {
  *               ...
  *           }   
  */
-#define ARM_CONTROL_ENUMERATE(__ROOT, __ITEM_NAME, __POLICY )                   \
+#define ARM_CONTROL_ENUMERATE(__START, __ITEM_NAME, __POLICY )                  \
     for (                                                                       \
         arm_2d_control_enumerator_t ARM_2D_SAFE_NAME(tEnum),                    \
         *ARM_2D_SAFE_NAME(ptPointer) = NULL;                                    \
@@ -78,7 +78,7 @@ extern "C" {
             arm_2d_helper_control_enum_init(                                    \
                         &ARM_2D_SAFE_NAME(tEnum),                               \
                         &(ARM_2D_CONTROL_ENUMERATION_POLICY_##__POLICY),        \
-                        (const arm_2d_control_node_t *)(__ROOT));               \
+                        (const arm_2d_control_node_t *)(__START));              \
             ARM_2D_SAFE_NAME(ptPointer)++;                                      \
         }) == NULL);                                                            \
         ({                                                                      \
