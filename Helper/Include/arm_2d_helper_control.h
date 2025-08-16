@@ -115,14 +115,17 @@ typedef struct arm_2d_control_enumerator_t arm_2d_control_enumerator_t;
 
 typedef struct arm_2d_control_enumeration_policy_t {
     arm_2d_err_t            (*fnInit)           (arm_2d_control_enumerator_t *ptThis, 
-                                                 const arm_2d_control_node_t *ptRoot);
+                                                 const arm_2d_control_node_t *ptStart);
     arm_2d_err_t            (*fnDepose)         (arm_2d_control_enumerator_t *ptThis);
     arm_2d_control_node_t * (*fnGetNextNode)    (arm_2d_control_enumerator_t *ptThis);
 } arm_2d_control_enumeration_policy_t;
 
 struct arm_2d_control_enumerator_t {
     const arm_2d_control_enumeration_policy_t *ptPolicy;
-    arm_2d_control_node_t *ptRoot;
+    union {
+        arm_2d_control_node_t *ptRoot;
+        arm_2d_control_node_t *ptStart;
+    };
     arm_2d_control_node_t *ptCurrent;
     union {
         uint32_t                : 32;

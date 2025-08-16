@@ -446,13 +446,13 @@ ARM_PT_END()
 
 static arm_2d_err_t __arm_2d_enum_policy_bottom_up_init(
                                             arm_2d_control_enumerator_t *ptThis, 
-                                            const arm_2d_control_node_t *ptRoot)
+                                            const arm_2d_control_node_t *ptNode)
 {
     assert(NULL != ptThis);
-    assert(NULL != ptRoot);
+    assert(NULL != ptNode);
 
     this.ptCurrent = NULL;
-    this.ptRoot = (arm_2d_control_node_t *)ptRoot;
+    this.ptStart = (arm_2d_control_node_t *)ptNode;
     this.BottomUp.bFirstNode = true;
     this.ptCurrent = this.ptRoot;
 
@@ -481,8 +481,8 @@ static arm_2d_control_node_t *__arm_2d_enum_policy_bottom_up_get_next_node(
     }
 
     /* handle the first node */
-    if (this.Preorder.bFirstNode) {
-        this.Preorder.bFirstNode = false;
+    if (this.BottomUp.bFirstNode) {
+        this.BottomUp.bFirstNode = false;
         return ptNode;
     }
 
