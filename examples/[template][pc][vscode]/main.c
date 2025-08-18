@@ -133,6 +133,11 @@ void scene_atom_loader(void)
     arm_2d_scene_atom_init(&DISP0_ADAPTER);
 }
 
+void scene_pave_loader(void) 
+{
+    arm_2d_scene_pave_init(&DISP0_ADAPTER);
+}
+
 void scene_balls_loader(void) 
 {
     arm_2d_scene_balls_init(&DISP0_ADAPTER);
@@ -347,7 +352,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -520,7 +525,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_qrcode_loader,
+        scene_pave_loader,
+        //scene_qrcode_loader,
         //scene_font_loader,
         //scene_music_player_loader,
         //scene_console_window_loader

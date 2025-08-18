@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        30 July 2025
- * $Revision:    V.1.9.0
+ * $Date:        18 August 2025
+ * $Revision:    V.1.10.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1507,7 +1507,7 @@ __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB565, 
                 __arm_2d_rgb565_sw_tile_copy_with_opacity_only);
 __WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB888, 
+def_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_CCCN888, 
                 __arm_2d_cccn888_sw_tile_copy_with_opacity_only);
 
 __WEAK
@@ -1891,7 +1891,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_ONLY_RGB888 = {
         .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_OPACITY_ONLY,
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_CCCN888),
             .ptFillLike = NULL,
         },
     },
@@ -3666,6 +3666,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_tile_fill_with_source_mask_and_opacity.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_tile_fill_with_opacity.c"
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_alpha_gradient.c"

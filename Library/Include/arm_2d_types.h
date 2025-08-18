@@ -1116,6 +1116,26 @@ typedef struct arm_2d_op_src_t {
 } arm_2d_op_src_t;
 
 /*!
+ * \brief the base class for operations with a target tile and a source tile
+ * \note arm_2d_op_src_opc_t inherits from arm_2d_op_src_t
+ */
+typedef struct arm_2d_op_src_opc_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< source tile
+    }Source;
+    uint32_t wMode;
+
+    uint8_t chOpacity;                                  //!< opacity
+} arm_2d_op_src_opc_t;
+
+/*!
  * \brief the base class for operations with a target tile, a source tile and masks
  * \note arm_2d_op_src_msk_t inherits from arm_2d_op_src_t
  */

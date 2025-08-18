@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        31. July 2025
- * $Revision:    V.1.8.3
+ * $Date:        18. August 2025
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -173,6 +173,8 @@ extern "C" {
                 arm_2d_c8bit_tile_fill_with_xy_mirror
 #   define arm_2d_tile_fill_only                                                \
                 arm_2d_c8bit_tile_fill_only
+#   define arm_2d_tile_fill_with_opacity_only                                   \
+                arm_2d_gray8_tile_fill_with_opacity_only
 #   define arm_2d_tile_copy_with_x_mirror                                       \
                 arm_2d_c8bit_tile_copy_with_x_mirror
 #   define arm_2d_tile_copy_with_y_mirror                                       \
@@ -412,6 +414,8 @@ extern "C" {
                 arm_2d_rgb16_tile_fill_with_xy_mirror
 #   define arm_2d_tile_fill_only                                                \
                 arm_2d_rgb16_tile_fill_only
+#   define arm_2d_tile_fill_with_opacity_only                                   \
+                arm_2d_rgb565_tile_fill_with_opacity_only
 #   define arm_2d_tile_copy_with_x_mirror                                       \
                 arm_2d_rgb16_tile_copy_with_x_mirror
 #   define arm_2d_tile_copy_with_y_mirror                                       \
@@ -650,6 +654,8 @@ extern "C" {
                 arm_2d_rgb32_tile_fill_with_xy_mirror
 #   define arm_2d_tile_fill_only                                                \
                 arm_2d_rgb32_tile_fill_only
+#   define arm_2d_tile_fill_with_opacity_only                                   \
+                arm_2d_cccn888_tile_fill_with_opacity_only
 #   define arm_2d_tile_copy_with_x_mirror                                       \
                 arm_2d_rgb32_tile_copy_with_x_mirror
 #   define arm_2d_tile_copy_with_y_mirror                                       \
