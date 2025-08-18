@@ -111,15 +111,23 @@ extern "C" {
             arm_2d_rgb888_tile_copy_with_masks
 
 
-#define arm_2dp_gray8_alpha_blending    arm_2dp_gray8_tile_copy_with_opacity
-#define arm_2dp_rgb565_alpha_blending   arm_2dp_rgb565_tile_copy_with_opacity
-#define arm_2dp_cccn888_alpha_blending  arm_2dp_cccn888_tile_copy_with_opacity
-#define arm_2dp_rgb888_alpha_blending   arm_2dp_cccn888_tile_copy_with_opacity
-#define arm_2d_gray8_alpha_blending     arm_2d_gray8_tile_copy_with_opacity
-#define arm_2d_rgb565_alpha_blending    arm_2d_rgb565_tile_copy_with_opacity
-#define arm_2d_cccn888_alpha_blending   arm_2d_cccn888_tile_copy_with_opacity
-#define arm_2d_rgb888_alpha_blending    arm_2d_cccn888_tile_copy_with_opacity
+#define arm_2dp_gray8_alpha_blending    arm_2dp_gray8_tile_copy_with_opacity_only
+#define arm_2dp_rgb565_alpha_blending   arm_2dp_rgb565_tile_copy_with_opacity_only
+#define arm_2dp_cccn888_alpha_blending  arm_2dp_cccn888_tile_copy_with_opacity_only
+#define arm_2dp_rgb888_alpha_blending   arm_2dp_cccn888_tile_copy_with_opacity_only
+#define arm_2d_gray8_alpha_blending     arm_2d_gray8_tile_copy_with_opacity_only
+#define arm_2d_rgb565_alpha_blending    arm_2d_rgb565_tile_copy_with_opacity_only
+#define arm_2d_cccn888_alpha_blending   arm_2d_cccn888_tile_copy_with_opacity_only
+#define arm_2d_rgb888_alpha_blending    arm_2d_cccn888_tile_copy_with_opacity_only
 
+#define arm_2d_gray8_tile_copy_with_opacity     arm_2d_gray8_tile_copy_with_opacity_only
+#define arm_2d_rgb565_tile_copy_with_opacity    arm_2d_rgb565_tile_copy_with_opacity_only
+#define arm_2d_rgb888_tile_copy_with_opacity    arm_2d_rgb888_tile_copy_with_opacity_only
+#define arm_2d_cccn888_tile_copy_with_opacity   arm_2d_cccn888_tile_copy_with_opacity_only
+
+#define arm_2dp_gray8_tile_copy_with_opacity    arm_2dp_gray8_tile_copy_with_opacity_only
+#define arm_2dp_rgb565_tile_copy_with_opacity   arm_2dp_rgb565_tile_copy_with_opacity_only
+#define arm_2dp_cccn888_tile_copy_with_opacity  arm_2dp_cccn888_tile_copy_with_opacity_only
 
 #define arm_2dp_gray8_alpha_blending_with_colour_keying                         \
             arm_2dp_gray8_tile_copy_with_colour_keying_and_opacity
@@ -143,45 +151,45 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_tile_copy_with_opacity(                                    \
+#define arm_2d_gray8_tile_copy_with_opacity_only(                               \
                                         __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
-            arm_2dp_gray8_tile_copy_with_opacity(  NULL,                        \
+            arm_2dp_gray8_tile_copy_with_opacity_only(  NULL,                   \
                                             (__SRC_ADDR),                       \
                                             (__DES_ADDR),                       \
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
 
-#define arm_2d_rgb565_tile_copy_with_opacity(                                   \
+#define arm_2d_rgb565_tile_copy_with_opacity_only(                              \
                                         __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
-            arm_2dp_rgb565_tile_copy_with_opacity(  NULL,                       \
+            arm_2dp_rgb565_tile_copy_with_opacity_only(  NULL,                  \
                                             (__SRC_ADDR),                       \
                                             (__DES_ADDR),                       \
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
                                             
-#define arm_2d_rgb888_tile_copy_with_opacity(                                   \
+#define arm_2d_rgb888_tile_copy_with_opacity_only(                              \
                                         __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
-            arm_2dp_cccn888_tile_copy_with_opacity(  NULL,                      \
+            arm_2dp_cccn888_tile_copy_with_opacity_only(  NULL,                 \
                                             (__SRC_ADDR),                       \
                                             (__DES_ADDR),                       \
                                             (__REGION_ADDR),                    \
                                             (__ALPHA))
 
-#define arm_2d_cccn888_tile_copy_with_opacity(                                  \
+#define arm_2d_cccn888_tile_copy_with_opacity_only(                             \
                                         __SRC_ADDR,   /* source tile address */ \
                                         __DES_ADDR,   /* target tile address */ \
                                         __REGION_ADDR,/* region address */      \
                                         __ALPHA)      /* alpha */               \
-            arm_2dp_cccn888_tile_copy_with_opacity(  NULL,                      \
+            arm_2dp_cccn888_tile_copy_with_opacity_only(  NULL,                 \
                                             (__SRC_ADDR),                       \
                                             (__DES_ADDR),                       \
                                             (__REGION_ADDR),                    \
@@ -2091,7 +2099,7 @@ typedef arm_2d_op_src_msk_t arm_2d_op_cp_msk_t;
  */
 extern 
 ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_opacity(  arm_2d_op_alpha_t *ptOP,
+arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_opacity_only(  arm_2d_op_alpha_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
@@ -2108,7 +2116,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_opacity(  arm_2d_op_alpha_t *ptOP,
  */
 extern 
 ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_opacity( arm_2d_op_alpha_t *ptOP,
+arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_opacity_only( arm_2d_op_alpha_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
@@ -2125,7 +2133,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_opacity( arm_2d_op_alpha_t *ptOP,
  */
 extern 
 ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_opacity( arm_2d_op_alpha_t *ptOP,
+arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_opacity_only( arm_2d_op_alpha_t *ptOP,
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,

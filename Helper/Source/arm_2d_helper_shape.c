@@ -282,7 +282,7 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
                                 iBoxWidth - iCircleWidth * 2, 
                                 iCircleHeight);
 
-            arm_2d_tile_copy_with_opacity(&c_tileSourceTopBar,
+            arm_2d_tile_copy_with_opacity_only(&c_tileSourceTopBar,
                                 &__box,
                                 &__top_centre_region,
                                 chOpacity);
@@ -303,7 +303,7 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
                                     iBoxWidth, 
                                     iBoxHeight - iCircleHeight * 2);
 
-            arm_2d_tile_copy_with_opacity(&c_tileSourceCentreBar,
+            arm_2d_tile_copy_with_opacity_only(&c_tileSourceCentreBar,
                                 &__box,
                                 &__centre_region,
                                 chOpacity);
@@ -371,7 +371,7 @@ void __draw_round_corner_image( const arm_2d_tile_t *ptSource,
                                 iBoxWidth - iCircleWidth * 2, 
                                 iCircleHeight);
 
-            arm_2d_tile_copy_with_opacity(&c_tileSourceBottomBar,
+            arm_2d_tile_copy_with_opacity_only(&c_tileSourceBottomBar,
                                 &__box,
                                 &__bottom_centre_region,
                                 chOpacity);

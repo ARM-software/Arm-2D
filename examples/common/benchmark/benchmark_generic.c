@@ -776,7 +776,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                                         bIsNewFrame,
                                         ptLayer->chOpacity);
             } else if (255 != ptLayer->chOpacity) {
-                arm_2d_tile_copy_with_opacity(  ptLayer->ptTile,
+                arm_2d_tile_copy_with_opacity_only(  ptLayer->ptTile,
                                                 ptTile,
                                                 &tRegion,
                                                 ptLayer->chOpacity);

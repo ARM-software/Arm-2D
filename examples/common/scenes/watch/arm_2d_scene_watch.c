@@ -294,7 +294,7 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
 
 
     #if 0 /* use simple background picture */
-        arm_2d_tile_copy_with_opacity(  &c_tileWatchPanel,
+        arm_2d_tile_copy_with_opacity_only(  &c_tileWatchPanel,
                                         &__panel,
                                         &__panel_canvas,
                                         64);

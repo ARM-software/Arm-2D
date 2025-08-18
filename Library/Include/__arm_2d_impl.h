@@ -345,6 +345,8 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_X_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_XY_MIRROR,
+
+    __ARM_2D_OP_IDX_FILL_ONLY_WITH_OPACITY,
     
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING,
     __ARM_2D_OP_IDX_COPY_ONLY_WITH_COLOUR_KEYING,
@@ -358,7 +360,7 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR,
 
 
-    __ARM_2D_OP_IDX_COPY_WITH_OPACITY,
+    __ARM_2D_OP_IDX_COPY_WITH_OPACITY_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_OPACITY,
 
     __ARM_2D_OP_IDX_COPY_WITH_MASKS,
@@ -1723,14 +1725,22 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_alpha_gradient_and
                                                 __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_opacity_only(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_opacity_only(__arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity(__arm_2d_sub_task_t *ptTask);
- 
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_opacity_only(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_opacity_only(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_opacity_only(__arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_opacity_only(__arm_2d_sub_task_t *ptTask);
 
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_colour_keying_and_opacity(

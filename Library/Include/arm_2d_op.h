@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        29. Nov 2024
- * $Revision:    V.1.7.0
+ * $Date:        18. August 2025
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -468,13 +468,13 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_VERTICAL_ALPHA_GRADIENT_AND_
  *----------------------------------------------------------------------------*/
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_ONLY_GRAY8;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_ONLY_RGB565;
     
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_RGB888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_OPACITY_ONLY_RGB888;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_AND_OPACITY_GRAY8;
@@ -601,6 +601,15 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_ONLY_RGB565;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_ONLY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_OPACITY_ONLY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_OPACITY_ONLY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_OPACITY_ONLY_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY8;

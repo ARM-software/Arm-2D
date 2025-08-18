@@ -343,7 +343,7 @@ def_low_lv_io(__ARM_2D_IO_FILL_ONLY_RGB32, __arm_2d_rgb32_sw_tile_fill_only);
 
 Here `__arm_2d_<colour>_sw_<operation name>` are the default software implementations for corresponding **Low-Level-IO**. The keyword `__WEAK` indicates that the target IOs can be overridden with user-defined ones. For example, if you want to accelerate **copy-with-opacity** for RGB565 using your own hardware accelerator, please do the following steps:
 
-1. In one of your C source file, override the target **Low-Level-IO** `__ARM_2D_IO_COPY_WITH_OPACITY_RGB565`
+1. In one of your C source file, override the target **Low-Level-IO** `__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB565`
 
    ```c
    //! PLEASE add following three lines in your hardware adapter source code
@@ -354,14 +354,14 @@ Here `__arm_2d_<colour>_sw_<operation name>` are the default software implementa
    ...
    
    __OVERRIDE_WEAK
-   def_low_lv_io(  __ARM_2D_IO_COPY_WITH_OPACITY_RGB565,           /* target Low-Level-IO */
-                   __arm_2d_rgb565_sw_tile_copy_with_opacity,      /* SW: the default implementation */
-                   __arm_2d_rgb565_my_hw_tile_copy_with_opacity);  /* HW: the hardware adapter (driver) */
+   def_low_lv_io(  __ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB565,                /* target Low-Level-IO */
+                   __arm_2d_rgb565_sw_tile_copy_with_opacity_only,      /* SW: the default implementation */
+                   __arm_2d_rgb565_my_hw_tile_copy_with_opacity_only);  /* HW: the hardware adapter (driver) */
    ```
 
-2. Copy the function body of `__arm_2d_rgb565_sw_tile_copy_with_opacity()` to your source file, rename it as `__arm_2d_rgb565_my_hw_tile_copy_with_opacity()` and use it as a template of the ***hardware adaptor***. 
+2. Copy the function body of `__arm_2d_rgb565_sw_tile_copy_with_opacity_only()` to your source file, rename it as `__arm_2d_rgb565_my_hw_tile_copy_with_opacity_only()` and use it as a template of the ***hardware adaptor***. 
 
-3. Update `__arm_2d_rgb565_my_hw_tile_copy_with_opacity` for the hardware accelerator. 
+3. Update `__arm_2d_rgb565_my_hw_tile_copy_with_opacity_only` for the hardware accelerator. 
 
 4. Based on the arguments passed to the function and the capability of your 2D accelerator, please:
 

@@ -219,7 +219,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                         #endif
                         
                     #elif __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-                        arm_2d_tile_copy_with_opacity(  &c_tileCMSISLogoCCCA8888,
+                        arm_2d_tile_copy_with_opacity_only(  &c_tileCMSISLogoCCCA8888,
                                                         ptTile,
                                                         &__centre_region,
                                                         128);

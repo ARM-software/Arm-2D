@@ -741,7 +741,7 @@ In the current version of the Arm-2D library, all examples are written in Asynch
 | ***arm_2dp_gray8_alpha_blending***                           | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***GRAY8*** as their colour format. | **Deprecated** |
 | ***arm_2dp_gray8_tile_copy_with_opacity***                   | See above                                                    |                |
 | ***arm_2dp_rgb565_alpha_blending***                          | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***RGB565*** as their colour format. | **Deprecated** |
-| ***arm_2dp_rgb565_tile_copy_with_opacity***                  | See above                                                    |                |
+| ***arm_2dp_rgb565_tile_copy_with_opacity_only***             | See above                                                    |                |
 | ***arm_2dp_cccn888_alpha_blending***                         | Blend a source tile to a target tile with a given transparency ratio. Both tiles should use ***CCCN888*** as their colour format. | **Deprecated** |
 | ***arm_2dp_cccn888_tile_copy_with_opacity***                 | See above                                                    |                |
 | ***arm_2dp_gray8_alpha_blending_with_colour_keying***        | Blend a source tile to a target tile with a given transparency ratio and the Colour-Keying scheme. Both tiles should use ***GRAY8*** as their colour format. | **Deprecated** |

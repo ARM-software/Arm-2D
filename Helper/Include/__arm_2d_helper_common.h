@@ -76,6 +76,8 @@ extern "C" {
 #define arm_2d_alpha_blending_with_colour_keying                                \
             arm_2d_tile_copy_with_colour_keying_and_opacity
 
+#define arm_2d_tile_copy_with_opacity   arm_2d_tile_copy_with_opacity_only
+
 /*! @} */
 
 
@@ -109,8 +111,6 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask_and_opacity
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_gray8_tile_copy_with_colour_keying_and_opacity
-#   define arm_2d_tile_copy_with_opacity                                        \
-                arm_2d_gray8_tile_copy_with_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
                 arm_2d_gray8_tile_copy_with_masks
 #   define arm_2d_tile_copy_with_masks_only                                     \
@@ -207,8 +207,8 @@ extern "C" {
                 arm_2d_c8bit_tile_fill_with_colour_keying_and_xy_mirror
 #   define arm_2d_fill_colour_with_opacity                                      \
                 arm_2d_gray8_fill_colour_with_opacity
-#   define arm_2d_tile_copy_with_opacity                                        \
-                arm_2d_gray8_tile_copy_with_opacity
+#   define arm_2d_tile_copy_with_opacity_only                                   \
+                arm_2d_gray8_tile_copy_with_opacity_only
 #   define arm_2d_tile_copy_with_des_mask                                       \
                 arm_2d_gray8_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
@@ -350,8 +350,6 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask_and_opacity
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_rgb565_tile_copy_with_colour_keying_and_opacity
-#   define arm_2d_tile_copy_with_opacity                                        \
-                arm_2d_rgb565_tile_copy_with_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
                 arm_2d_rgb565_tile_copy_with_masks
 #   define arm_2d_tile_copy_with_masks_only                                     \
@@ -448,8 +446,8 @@ extern "C" {
                 arm_2d_rgb16_tile_fill_with_colour_keying_and_xy_mirror
 #   define arm_2d_fill_colour_with_opacity                                      \
                 arm_2d_rgb565_fill_colour_with_opacity
-#   define arm_2d_tile_copy_with_opacity                                        \
-                arm_2d_rgb565_tile_copy_with_opacity
+#   define arm_2d_tile_copy_with_opacity_only                                   \
+                arm_2d_rgb565_tile_copy_with_opacity_only
 #   define arm_2d_tile_copy_with_des_mask                                       \
                 arm_2d_rgb565_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
@@ -590,8 +588,6 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask_and_opacity
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_cccn888_tile_copy_with_colour_keying_and_opacity
-#   define arm_2d_tile_copy_with_opacity                                        \
-                arm_2d_cccn888_tile_copy_with_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
                 arm_2d_cccn888_tile_copy_with_masks
 #   define arm_2d_tile_copy_with_masks_only                                     \
@@ -688,8 +684,8 @@ extern "C" {
                 arm_2d_rgb32_tile_fill_with_colour_keying_and_xy_mirror
 #   define arm_2d_fill_colour_with_opacity                                      \
                 arm_2d_cccn888_fill_colour_with_opacity
-#   define arm_2d_tile_copy_with_opacity                                        \
-                arm_2d_cccn888_tile_copy_with_opacity
+#   define arm_2d_tile_copy_with_opacity_only                                   \
+                arm_2d_cccn888_tile_copy_with_opacity_only
 #   define arm_2d_tile_copy_with_des_mask                                       \
                 arm_2d_cccn888_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
