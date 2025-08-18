@@ -186,6 +186,55 @@ arm_fsm_rt_t __MFM_SW_FUNC(tile_fill)( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(__API_MFM_OP_TYPE, ptTask->ptOP);
     assert(__API_MFM_COLOUR_SZ == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__                         \
+&&  defined(RTE_Acceleration_Arm_2D_Alpha_Blending)                             
+
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+        if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MFM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
+
+            if (ARM_2D_COLOUR_SZ_8BIT == __API_MFM_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
+                                ptTask->Param.tFill.tSource.pBuffer,
+                                ptTask->Param.tFill.tSource.iStride,
+                                &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                ptTask->Param.tFill.tTarget.pBuffer,
+                                ptTask->Param.tFill.tTarget.iStride,
+                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
+                                255);
+            }
+
+            if (ARM_2D_COLOUR_SZ_16BIT == __API_MFM_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
+                                ptTask->Param.tFill.tSource.pBuffer,
+                                ptTask->Param.tFill.tSource.iStride,
+                                &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                ptTask->Param.tFill.tTarget.pBuffer,
+                                ptTask->Param.tFill.tTarget.iStride,
+                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
+                                255);
+            }
+
+            if (ARM_2D_COLOUR_SZ_32BIT == __API_MFM_COLOUR_SZ) {
+                __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
+                                ptTask->Param.tFill.tSource.pBuffer,
+                                ptTask->Param.tFill.tSource.iStride,
+                                &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                ptTask->Param.tFill.tTarget.pBuffer,
+                                ptTask->Param.tFill.tTarget.iStride,
+                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
+                                255);
+            }
+
+            return arm_fsm_rt_cpl;
+        } else {
+            return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+        }
+    }
+    
+#endif
+
     __MFM_IMPL_FUNC(fill)    (  ptTask->Param.tFill.tSource.pBuffer,
                                 ptTask->Param.tFill.tSource.iStride,
                                 &ptTask->Param.tFill.tSource.tValidRegion.tSize,

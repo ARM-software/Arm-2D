@@ -208,7 +208,10 @@ arm_fsm_rt_t __MCM_SW_FUNC(tile_copy)( __arm_2d_sub_task_t *ptTask)
     ARM_2D_IMPL(__API_MCM_OP_TYPE, ptTask->ptOP);
     assert(__API_MCM_COLOUR_SZ == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
-#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ && defined(RTE_Acceleration_Arm_2D_Alpha_Blending) && __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__                         \
+&&  defined(RTE_Acceleration_Arm_2D_Alpha_Blending)                             \
+&& __API_MCM_SUPPORT_CCCA8888_IMPLICIT_CONVERSION                               
+
     arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
     assert(NULL != ptSourceRoot);
     if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {

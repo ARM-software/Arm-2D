@@ -352,7 +352,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 0
+#if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -431,6 +431,10 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         5000,
         scene_qrcode_loader,
+    },
+    {
+        5000,
+        scene_pave_loader,
     },
 #if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
     {
