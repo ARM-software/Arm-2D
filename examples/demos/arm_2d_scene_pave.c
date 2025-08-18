@@ -242,7 +242,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         &c_tileCMSISLogoMask,
                         &__panel,
                         &tPavePlane,
-                        255);
+                        128);
                 }
             }
 
