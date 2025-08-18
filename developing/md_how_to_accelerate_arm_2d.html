@@ -141,126 +141,254 @@ $(document).ready(function(){initNavTree('md_how_to_accelerate_arm_2d.html','');
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_GRAY8</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_GRAY8(__SRC_ADDR, __DES_ADDR, __TRANS)       \</span></div>
-<div class="line"><span class="preprocessor">            do {                                                                \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t hwOPA = 256 - (__TRANS);                               \</span></div>
-<div class="line"><span class="preprocessor">                const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \</span></div>
-<div class="line"><span class="preprocessor">                uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwOPA) = 256 - (__TRANS);                     \</span></div>
+<div class="line"><span class="preprocessor">        const uint8_t *ARM_2D_SAFE_NAME(pchSrc) = (uint8_t *)(__SRC_ADDR);      \</span></div>
+<div class="line"><span class="preprocessor">        uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                *pchDes = ((uint16_t)( ((uint16_t)(*pchSrc) * hwOPA)            \</span></div>
-<div class="line"><span class="preprocessor">                                     + ((uint16_t)(*pchDes) * (__TRANS))        \</span></div>
-<div class="line"><span class="preprocessor">                                     ) &gt;&gt; 8);                                   \</span></div>
-<div class="line"><span class="preprocessor">            } while(0)</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(pchDes)                                               \</span></div>
+<div class="line"><span class="preprocessor">            = ((uint16_t)(  (   (uint16_t)(*ARM_2D_SAFE_NAME(pchSrc))           \</span></div>
+<div class="line"><span class="preprocessor">                            *   ARM_2D_SAFE_NAME(hwOPA))                        \</span></div>
+<div class="line"><span class="preprocessor">                         +  ((uint16_t)(*ARM_2D_SAFE_NAME(pchDes)) * (__TRANS)) \</span></div>
+<div class="line"><span class="preprocessor">                         ) &gt;&gt; 8);                                               \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8</span></div>
+<div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(   __SRC_ADDR,             \</span></div>
+<div class="line"><span class="preprocessor">                                                        __DES_ADDR,             \</span></div>
+<div class="line"><span class="preprocessor">                                                        __TRANS)                \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &amp;ARM_2D_SAFE_NAME(tSrcPix));    \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \</span></div>
+<div class="line"><span class="preprocessor">        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \</span></div>
+<div class="line"><span class="preprocessor">        ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)    \</span></div>
+<div class="line"><span class="preprocessor">                +   (   (ARM_2D_SAFE_NAME(hwOPA) * (256 - (__TRANS)) &gt;&gt; 8)      \</span></div>
+<div class="line"><span class="preprocessor">                    *   ((__TRANS) != 0));                                      \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        uint8_t *ARM_2D_SAFE_NAME(pchTargetPixel) = (__DES_ADDR);               \</span></div>
+<div class="line"><span class="preprocessor">        uint8_t ARM_2D_SAFE_NAME(chSrcPixel)                                    \</span></div>
+<div class="line"><span class="preprocessor">            = __arm_2d_gray8_pack(&amp;ARM_2D_SAFE_NAME(tSrcPix));                  \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(pchTargetPixel) =                                     \</span></div>
+<div class="line"><span class="preprocessor">            ((uint16_t) (   (   (uint16_t)ARM_2D_SAFE_NAME(chSrcPixel)          \</span></div>
+<div class="line"><span class="preprocessor">                            *   ARM_2D_SAFE_NAME(hwOPA))                        \</span></div>
+<div class="line"><span class="preprocessor">                        +   (   (uint16_t)(*ARM_2D_SAFE_NAME(pchTargetPixel))   \</span></div>
+<div class="line"><span class="preprocessor">                            *   (ARM_2D_SAFE_NAME(hwTRANS)))                    \</span></div>
+<div class="line"><span class="preprocessor">                        ) &gt;&gt; 8);                                                \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_RGB565</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_RGB565(__SRC_ADDR, __DES_ADDR, __TRANS)      \</span></div>
-<div class="line"><span class="preprocessor">            do {                                                                \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t hwOPA = 256 - (__TRANS);                               \</span></div>
-<div class="line"><span class="preprocessor">                __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t *phwTargetPixel = (__DES_ADDR);                        \</span></div>
-<div class="line"><span class="preprocessor">                __arm_2d_rgb565_unpack(*(__SRC_ADDR), &amp;tSrcPix);                \</span></div>
-<div class="line"><span class="preprocessor">                __arm_2d_rgb565_unpack(*phwTargetPixel, &amp;tTargetPix);           \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwOPA) = 256 - (__TRANS);                     \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack(*(__SRC_ADDR), &amp;ARM_2D_SAFE_NAME(tSrcPix));      \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack(*ARM_2D_SAFE_NAME(phwTargetPixel),               \</span></div>
+<div class="line"><span class="preprocessor">                                &amp;ARM_2D_SAFE_NAME(tTargetPix));                 \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                for (int i = 0; i &lt; 3; i++) {                                   \</span></div>
-<div class="line"><span class="preprocessor">                    uint16_t        hwTemp =                                    \</span></div>
-<div class="line"><span class="preprocessor">                        (uint16_t) (tSrcPix.BGRA[i] * hwOPA) +                  \</span></div>
-<div class="line"><span class="preprocessor">                        (tTargetPix.BGRA[i] * (__TRANS));                       \</span></div>
-<div class="line"><span class="preprocessor">                    tTargetPix.BGRA[i] = (uint16_t) (hwTemp &gt;&gt; 8);              \</span></div>
-<div class="line"><span class="preprocessor">                }                                                               \</span></div>
+<div class="line"><span class="preprocessor">        for (int    ARM_2D_SAFE_NAME(i) = 0;                                    \</span></div>
+<div class="line"><span class="preprocessor">                    ARM_2D_SAFE_NAME(i) &lt; 3;                                    \</span></div>
+<div class="line"><span class="preprocessor">                    ARM_2D_SAFE_NAME(i)++) {                                    \</span></div>
+<div class="line"><span class="preprocessor">            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \</span></div>
+<div class="line"><span class="preprocessor">                (uint16_t)( ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)] \</span></div>
+<div class="line"><span class="preprocessor">                          * ARM_2D_SAFE_NAME(hwOPA))                            \</span></div>
+<div class="line"><span class="preprocessor">                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \</span></div>
+<div class="line"><span class="preprocessor">                    *   (__TRANS));                                             \</span></div>
+<div class="line"><span class="preprocessor">            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]              \</span></div>
+<div class="line"><span class="preprocessor">                = (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) &gt;&gt; 8);                   \</span></div>
+<div class="line"><span class="preprocessor">        }                                                                       \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                </span><span class="comment">/* pack merged stream */</span><span class="preprocessor">                                        \</span></div>
-<div class="line"><span class="preprocessor">                *phwTargetPixel = __arm_2d_rgb565_pack(&amp;tTargetPix);            \</span></div>
-<div class="line"><span class="preprocessor">            } while(0)</span></div>
+<div class="line"><span class="preprocessor">        </span><span class="comment">/* pack merged stream */</span><span class="preprocessor">                                                \</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \</span></div>
+<div class="line"><span class="preprocessor">            = __arm_2d_rgb565_pack(&amp;ARM_2D_SAFE_NAME(tTargetPix));              \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565</span></div>
+<div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(  __SRC_ADDR,             \</span></div>
+<div class="line"><span class="preprocessor">                                                        __DES_ADDR,             \</span></div>
+<div class="line"><span class="preprocessor">                                                        __TRANS)                \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &amp;ARM_2D_SAFE_NAME(tSrcPix));    \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \</span></div>
+<div class="line"><span class="preprocessor">        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \</span></div>
+<div class="line"><span class="preprocessor">        ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)    \</span></div>
+<div class="line"><span class="preprocessor">                +   (   (   ARM_2D_SAFE_NAME(hwOPA)                             \</span></div>
+<div class="line"><span class="preprocessor">                        *   (256 - (__TRANS)) &gt;&gt; 8)                             \</span></div>
+<div class="line"><span class="preprocessor">                    *   ((__TRANS) != 0));                                      \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack(*ARM_2D_SAFE_NAME(phwTargetPixel),               \</span></div>
+<div class="line"><span class="preprocessor">                                &amp;ARM_2D_SAFE_NAME(tTargetPix));                 \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(i) &lt; 3;                                        \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(i)++) {                                        \</span></div>
+<div class="line"><span class="preprocessor">            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \</span></div>
+<div class="line"><span class="preprocessor">                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \</span></div>
+<div class="line"><span class="preprocessor">                    *   ARM_2D_SAFE_NAME(hwOPA))                                \</span></div>
+<div class="line"><span class="preprocessor">                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \</span></div>
+<div class="line"><span class="preprocessor">                    *   (ARM_2D_SAFE_NAME(hwTRANS)));                           \</span></div>
+<div class="line"><span class="preprocessor">            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)] =            \</span></div>
+<div class="line"><span class="preprocessor">                (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) &gt;&gt; 8);                     \</span></div>
+<div class="line"><span class="preprocessor">        }                                                                       \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        </span><span class="comment">/* pack merged stream */</span><span class="preprocessor">                                                \</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \</span></div>
+<div class="line"><span class="preprocessor">            = __arm_2d_rgb565_pack(&amp;ARM_2D_SAFE_NAME(tTargetPix));              \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_CCCN888</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_CCCN888(__SRC_ADDR, __DES_ADDR, __TRANS)     \</span></div>
-<div class="line"><span class="preprocessor">            do {                                                                \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t hwOPA = 256 - (__TRANS);                               \</span></div>
-<div class="line"><span class="preprocessor">                </span><span class="comment">/* do not change alpha */</span><span class="preprocessor">                                       \</span></div>
-<div class="line"><span class="preprocessor">                uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;        \</span></div>
-<div class="line"><span class="preprocessor">                const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \</span></div>
-<div class="line"><span class="preprocessor">                uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwOPA) = 256 - (__TRANS);                     \</span></div>
+<div class="line"><span class="preprocessor">        </span><span class="comment">/* do not change alpha */</span><span class="preprocessor">                                               \</span></div>
+<div class="line"><span class="preprocessor">        uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;                \</span></div>
+<div class="line"><span class="preprocessor">        const uint8_t *ARM_2D_SAFE_NAME(pchSrc) = (uint8_t *)(__SRC_ADDR);      \</span></div>
+<div class="line"><span class="preprocessor">        uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                do {                                                            \</span></div>
-<div class="line"><span class="preprocessor">                    *pchDes = ( ((uint_fast16_t)(*pchSrc++) * hwOPA)            \</span></div>
-<div class="line"><span class="preprocessor">                              + ((uint_fast16_t)(*pchDes) * (__TRANS))          \</span></div>
-<div class="line"><span class="preprocessor">                              ) &gt;&gt; 8;                                           \</span></div>
-<div class="line"><span class="preprocessor">                     pchDes++;                                                  \</span></div>
-<div class="line"><span class="preprocessor">                } while(--ARM_2D_SAFE_NAME(n));                                 \</span></div>
-<div class="line"><span class="preprocessor">            } while(0)</span></div>
+<div class="line"><span class="preprocessor">        do {                                                                    \</span></div>
+<div class="line"><span class="preprocessor">            *ARM_2D_SAFE_NAME(pchDes) =                                         \</span></div>
+<div class="line"><span class="preprocessor">                (   (   (uint_fast16_t)(*ARM_2D_SAFE_NAME(pchSrc)++)            \</span></div>
+<div class="line"><span class="preprocessor">                    *   ARM_2D_SAFE_NAME(hwOPA))                                \</span></div>
+<div class="line"><span class="preprocessor">                +   ((uint_fast16_t)(*ARM_2D_SAFE_NAME(pchDes)) * (__TRANS))    \</span></div>
+<div class="line"><span class="preprocessor">                ) &gt;&gt; 8;                                                         \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(pchDes)++;                                     \</span></div>
+<div class="line"><span class="preprocessor">        } while(--ARM_2D_SAFE_NAME(n));                                         \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line">            </div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888</span></div>
+<div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888( __SRC_ADDR,             \</span></div>
+<div class="line"><span class="preprocessor">                                                        __DES_ADDR,             \</span></div>
+<div class="line"><span class="preprocessor">                                                        __TRANS)                \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &amp;ARM_2D_SAFE_NAME(tSrcPix));    \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \</span></div>
+<div class="line"><span class="preprocessor">        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \</span></div>
+<div class="line"><span class="preprocessor">        ARM_2D_SAFE_NAME(hwOPA) =                                               \</span></div>
+<div class="line"><span class="preprocessor">                    ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)                  \</span></div>
+<div class="line"><span class="preprocessor">                +   (   (ARM_2D_SAFE_NAME(hwOPA) * (256 - (__TRANS)) &gt;&gt; 8)      \</span></div>
+<div class="line"><span class="preprocessor">                    *   ((__TRANS) != 0));                                      \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        uint32_t *ARM_2D_SAFE_NAME(pwTargetPixel) = (__DES_ADDR);               \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_ccca8888_unpack(   *ARM_2D_SAFE_NAME(pwTargetPixel),           \</span></div>
+<div class="line"><span class="preprocessor">                                    &amp;ARM_2D_SAFE_NAME(tTargetPix));             \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(i) &lt; 3;                                        \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(i)++) {                                        \</span></div>
+<div class="line"><span class="preprocessor">            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \</span></div>
+<div class="line"><span class="preprocessor">                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \</span></div>
+<div class="line"><span class="preprocessor">                    *   ARM_2D_SAFE_NAME(hwOPA))                                \</span></div>
+<div class="line"><span class="preprocessor">                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \</span></div>
+<div class="line"><span class="preprocessor">                    *   ARM_2D_SAFE_NAME(hwTRANS));                             \</span></div>
+<div class="line"><span class="preprocessor">            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]              \</span></div>
+<div class="line"><span class="preprocessor">                = (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) &gt;&gt; 8);                   \</span></div>
+<div class="line"><span class="preprocessor">        }                                                                       \</span></div>
+<div class="line"><span class="preprocessor">                                                                                \</span></div>
+<div class="line"><span class="preprocessor">        </span><span class="comment">/* pack merged stream */</span><span class="preprocessor">                                                \</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(pwTargetPixel)                                        \</span></div>
+<div class="line"><span class="preprocessor">            = __arm_2d_ccca888_pack(&amp;ARM_2D_SAFE_NAME(tTargetPix));             \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_OPA_GRAY8</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_OPA_GRAY8(__SRC_ADDR, __DES_ADDR, __OPA)     \</span></div>
-<div class="line"><span class="preprocessor">            do {                                                                \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t hwTrans = 256 - (__OPA);                               \</span></div>
-<div class="line"><span class="preprocessor">                const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \</span></div>
-<div class="line"><span class="preprocessor">                uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwTrans) = 256 - (__OPA);                     \</span></div>
+<div class="line"><span class="preprocessor">        const uint8_t *ARM_2D_SAFE_NAME(pchSrc) = (uint8_t *)(__SRC_ADDR);      \</span></div>
+<div class="line"><span class="preprocessor">        uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                *pchDes = ((uint16_t)( ((uint16_t)(*pchSrc++) * (__OPA))        \</span></div>
-<div class="line"><span class="preprocessor">                                     + ((uint16_t)(*pchDes) * hwTrans)          \</span></div>
-<div class="line"><span class="preprocessor">                                     ) &gt;&gt; 8);                                   \</span></div>
-<div class="line"><span class="preprocessor">            } while(0)</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(pchDes) =                                             \</span></div>
+<div class="line"><span class="preprocessor">            ((uint16_t) (   ((uint16_t)(*ARM_2D_SAFE_NAME(pchSrc)++) * (__OPA)) \</span></div>
+<div class="line"><span class="preprocessor">                        +   (   (uint16_t)(*ARM_2D_SAFE_NAME(pchDes))           \</span></div>
+<div class="line"><span class="preprocessor">                            *   ARM_2D_SAFE_NAME(hwTrans))                      \</span></div>
+<div class="line"><span class="preprocessor">                        ) &gt;&gt; 8);                                                \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_OPA_RGB565</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_OPA_RGB565(__SRC_ADDR, __DES_ADDR, __OPA)    \</span></div>
-<div class="line"><span class="preprocessor">            do {                                                                \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t hwTrans = 256 - (__OPA);                               \</span></div>
-<div class="line"><span class="preprocessor">                __arm_2d_color_fast_rgb_t tSrcPix, tTargetPix;                  \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t *phwTargetPixel = (__DES_ADDR);                        \</span></div>
-<div class="line"><span class="preprocessor">                __arm_2d_rgb565_unpack(*(__SRC_ADDR), &amp;tSrcPix);                \</span></div>
-<div class="line"><span class="preprocessor">                __arm_2d_rgb565_unpack(*phwTargetPixel, &amp;tTargetPix);           \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwTrans) = 256 - (__OPA);                     \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack(*(__SRC_ADDR), &amp;ARM_2D_SAFE_NAME(tSrcPix));      \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack( *ARM_2D_SAFE_NAME(phwTargetPixel),              \</span></div>
+<div class="line"><span class="preprocessor">                                &amp;ARM_2D_SAFE_NAME(tTargetPix));                 \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                for (int i = 0; i &lt; 3; i++) {                                   \</span></div>
-<div class="line"><span class="preprocessor">                    uint16_t        hwTemp =                                    \</span></div>
-<div class="line"><span class="preprocessor">                        (uint16_t) (tSrcPix.BGRA[i] * (__OPA)) +                \</span></div>
-<div class="line"><span class="preprocessor">                        (tTargetPix.BGRA[i] * hwTrans);                         \</span></div>
-<div class="line"><span class="preprocessor">                    tTargetPix.BGRA[i] = (uint16_t) (hwTemp &gt;&gt; 8);              \</span></div>
-<div class="line"><span class="preprocessor">                }                                                               \</span></div>
+<div class="line"><span class="preprocessor">        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(i) &lt; 3;                                        \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(i)++) {                                        \</span></div>
+<div class="line"><span class="preprocessor">            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \</span></div>
+<div class="line"><span class="preprocessor">                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \</span></div>
+<div class="line"><span class="preprocessor">                    *   (__OPA))                                                \</span></div>
+<div class="line"><span class="preprocessor">                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \</span></div>
+<div class="line"><span class="preprocessor">                    *   ARM_2D_SAFE_NAME(hwTrans));                             \</span></div>
+<div class="line"><span class="preprocessor">            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]              \</span></div>
+<div class="line"><span class="preprocessor">                = (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) &gt;&gt; 8);                   \</span></div>
+<div class="line"><span class="preprocessor">        }                                                                       \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                </span><span class="comment">/* pack merged stream */</span><span class="preprocessor">                                        \</span></div>
-<div class="line"><span class="preprocessor">                *phwTargetPixel = __arm_2d_rgb565_pack(&amp;tTargetPix);            \</span></div>
-<div class="line"><span class="preprocessor">            } while(0)</span></div>
+<div class="line"><span class="preprocessor">        </span><span class="comment">/* pack merged stream */</span><span class="preprocessor">                                                \</span></div>
+<div class="line"><span class="preprocessor">        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \</span></div>
+<div class="line"><span class="preprocessor">            = __arm_2d_rgb565_pack(&amp;ARM_2D_SAFE_NAME(tTargetPix));              \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_BLENDING_OPA_CCCN888</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_BLENDING_OPA_CCCN888(__SRC_ADDR, __DES_ADDR, __OPA)   \</span></div>
-<div class="line"><span class="preprocessor">            do {                                                                \</span></div>
-<div class="line"><span class="preprocessor">                uint16_t hwTrans = 256 - (__OPA);                               \</span></div>
-<div class="line"><span class="preprocessor">                </span><span class="comment">/* do not change alpha */</span><span class="preprocessor">                                       \</span></div>
-<div class="line"><span class="preprocessor">                uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;        \</span></div>
-<div class="line"><span class="preprocessor">                const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \</span></div>
-<div class="line"><span class="preprocessor">                uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \</span></div>
+<div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
+<div class="line"><span class="preprocessor">        uint16_t ARM_2D_SAFE_NAME(hwTrans) = 256 - (__OPA);                     \</span></div>
+<div class="line"><span class="preprocessor">        </span><span class="comment">/* do not change alpha */</span><span class="preprocessor">                                               \</span></div>
+<div class="line"><span class="preprocessor">        uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;                \</span></div>
+<div class="line"><span class="preprocessor">        const uint8_t *ARM_2D_SAFE_NAME(pchSrc) = (uint8_t *)(__SRC_ADDR);      \</span></div>
+<div class="line"><span class="preprocessor">        uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                do {                                                            \</span></div>
-<div class="line"><span class="preprocessor">                    *pchDes = ( ((uint_fast16_t)(*pchSrc++) * (__OPA))          \</span></div>
-<div class="line"><span class="preprocessor">                              + ((uint_fast16_t)(*pchDes) * hwTrans)            \</span></div>
-<div class="line"><span class="preprocessor">                              ) &gt;&gt; 8;                                           \</span></div>
-<div class="line"><span class="preprocessor">                     pchDes++;                                                  \</span></div>
-<div class="line"><span class="preprocessor">                } while(--ARM_2D_SAFE_NAME(n));                                 \</span></div>
-<div class="line"><span class="preprocessor">            } while(0)</span></div>
+<div class="line"><span class="preprocessor">        do {                                                                    \</span></div>
+<div class="line"><span class="preprocessor">            *ARM_2D_SAFE_NAME(pchDes) =                                         \</span></div>
+<div class="line"><span class="preprocessor">                (   ((uint_fast16_t)(*ARM_2D_SAFE_NAME(pchSrc)++) * (__OPA))    \</span></div>
+<div class="line"><span class="preprocessor">                +   (   (uint_fast16_t)(*ARM_2D_SAFE_NAME(pchDes))              \</span></div>
+<div class="line"><span class="preprocessor">                    *   ARM_2D_SAFE_NAME(hwTrans))                              \</span></div>
+<div class="line"><span class="preprocessor">                ) &gt;&gt; 8;                                                         \</span></div>
+<div class="line"><span class="preprocessor">                ARM_2D_SAFE_NAME(pchDes)++;                                     \</span></div>
+<div class="line"><span class="preprocessor">        } while(--ARM_2D_SAFE_NAME(n));                                         \</span></div>
+<div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_AVERAGE_RGB565</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_AVERAGE_RGB565(__PIXEL_IN, __ALPHA)                   \</span></div>
 <div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
-<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t tTempColour;                                  \</span></div>
-<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack((__PIXEL_IN), &amp;tTempColour);                     \</span></div>
-<div class="line"><span class="preprocessor">        tPixel.R += tTempColour.R * (__ALPHA);                                  \</span></div>
-<div class="line"><span class="preprocessor">        tPixel.G += tTempColour.G * (__ALPHA);                                  \</span></div>
-<div class="line"><span class="preprocessor">        tPixel.B += tTempColour.B * (__ALPHA);                                  \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTempColour);                \</span></div>
+<div class="line"><span class="preprocessor">        __arm_2d_rgb565_unpack((__PIXEL_IN), &amp;ARM_2D_SAFE_NAME(tTempColour));   \</span></div>
+<div class="line"><span class="preprocessor">        tPixel.R += ARM_2D_SAFE_NAME(tTempColour).R * (__ALPHA);                \</span></div>
+<div class="line"><span class="preprocessor">        tPixel.G += ARM_2D_SAFE_NAME(tTempColour).G * (__ALPHA);                \</span></div>
+<div class="line"><span class="preprocessor">        tPixel.B += ARM_2D_SAFE_NAME(tTempColour).B * (__ALPHA);                \</span></div>
 <div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#ifndef __ARM_2D_PIXEL_AVERAGE_CCCN888</span></div>
 <div class="line"><span class="preprocessor">#   define __ARM_2D_PIXEL_AVERAGE_CCCN888(__PIXEL_IN, __ALPHA)                  \</span></div>
 <div class="line"><span class="preprocessor">    do {                                                                        \</span></div>
-<div class="line"><span class="preprocessor">        arm_2d_color_rgb888_t tTempColour = {.tValue = (__PIXEL_IN)};           \</span></div>
-<div class="line"><span class="preprocessor">        tPixel.R += tTempColour.u8R * (__ALPHA);                                \</span></div>
-<div class="line"><span class="preprocessor">        tPixel.G += tTempColour.u8G * (__ALPHA);                                \</span></div>
-<div class="line"><span class="preprocessor">        tPixel.B += tTempColour.u8B * (__ALPHA);                                \</span></div>
+<div class="line"><span class="preprocessor">        arm_2d_color_rgb888_t ARM_2D_SAFE_NAME(tTempColour)                     \</span></div>
+<div class="line"><span class="preprocessor">                                                = {.tValue = (__PIXEL_IN)};     \</span></div>
+<div class="line"><span class="preprocessor">        tPixel.R += ARM_2D_SAFE_NAME(tTempColour).u8R * (__ALPHA);              \</span></div>
+<div class="line"><span class="preprocessor">        tPixel.G += ARM_2D_SAFE_NAME(tTempColour).u8G * (__ALPHA);              \</span></div>
+<div class="line"><span class="preprocessor">        tPixel.B += ARM_2D_SAFE_NAME(tTempColour).u8B * (__ALPHA);              \</span></div>
 <div class="line"><span class="preprocessor">    } while(0)</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
