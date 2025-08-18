@@ -22,7 +22,7 @@
  * Description:  APIs for tile fill with opacity only
  *
  * $Date:        18. August 2025
- * $Revision:    V.1.0.0
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -94,14 +94,14 @@ void __arm_2d_impl_gray8_tile_fill_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    
+    hwOpacity += (hwOpacity == 255);
+    uint16_t hwTransparency = 256 - hwOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
         uint8_t *__RESTRICT pchSource = pchSourceBase;  
-
-        hwOpacity += (hwOpacity == 255);
-        uint16_t hwTransparency = 256 - hwOpacity;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint8_t *__RESTRICT pchTarget = pchTargetBase;     
@@ -147,15 +147,16 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    
+    hwOpacity += (hwOpacity == 255);
+    uint16_t hwTransparency = 256 - hwOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
 
         int_fast16_t iSourceMaskY = 0;
-        hwOpacity += (hwOpacity == 255);
-        uint16_t hwTransparency = 256 - hwOpacity;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint8_t *__RESTRICT pchTarget = pchTargetBase;     
@@ -318,14 +319,14 @@ void __arm_2d_impl_rgb565_tile_fill_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    
+    hwOpacity += (hwOpacity == 255);
+    uint16_t hwTransparency = 256 - hwOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
         uint16_t *__RESTRICT phwSource = phwSourceBase;  
-
-        hwOpacity += (hwOpacity == 255);
-        uint16_t hwTransparency = 256 - hwOpacity;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint16_t *__RESTRICT phwTarget = phwTargetBase;     
@@ -371,15 +372,16 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    
+    hwOpacity += (hwOpacity == 255);
+    uint16_t hwTransparency = 256 - hwOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
 
         int_fast16_t iSourceMaskY = 0;
-        hwOpacity += (hwOpacity == 255);
-        uint16_t hwTransparency = 256 - hwOpacity;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint16_t *__RESTRICT phwTarget = phwTargetBase;     
@@ -542,14 +544,14 @@ void __arm_2d_impl_cccn888_tile_fill_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    
+    hwOpacity += (hwOpacity == 255);
+    uint16_t hwTransparency = 256 - hwOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
-
-        hwOpacity += (hwOpacity == 255);
-        uint16_t hwTransparency = 256 - hwOpacity;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint32_t *__RESTRICT pwTarget = pwTargetBase;     
@@ -595,15 +597,16 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    
+    hwOpacity += (hwOpacity == 255);
+    uint16_t hwTransparency = 256 - hwOpacity;
+    hwTransparency -= (hwTransparency == 1);
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
 
         int_fast16_t iSourceMaskY = 0;
-        hwOpacity += (hwOpacity == 255);
-        uint16_t hwTransparency = 256 - hwOpacity;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint32_t *__RESTRICT pwTarget = pwTargetBase;     
