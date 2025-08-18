@@ -240,13 +240,8 @@ arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_opacity_only(
 
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptTask->ptOP);
+    ARM_2D_IMPL(arm_2d_op_src_opc_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
-
-
-    if (ptTask->Param.tFillMask.tSrcMask.bInvalid) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    }
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
@@ -469,13 +464,8 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_opacity_only(
 
 arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptTask->ptOP);
+    ARM_2D_IMPL(arm_2d_op_src_opc_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
-
-
-    if (ptTask->Param.tFillMask.tSrcMask.bInvalid) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    }
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
@@ -698,13 +688,8 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_opacity_only(
 
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
-    ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptTask->ptOP);
+    ARM_2D_IMPL(arm_2d_op_src_opc_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
-
-
-    if (ptTask->Param.tFillMask.tSrcMask.bInvalid) {
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-    }
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {

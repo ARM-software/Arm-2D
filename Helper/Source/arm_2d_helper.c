@@ -1199,7 +1199,7 @@ void __arm_2d_layout_wrap_horizontal(   int16_t iTempX,
     if (ptLayout->tAlignTable.Horizontal.sAdvance > 0) {
         /* left to right */
         if (!(    iTempX                                              
-            >=  (   ptLayout->tArea.tLocation.iX
+            >  (   ptLayout->tArea.tLocation.iX
                 +   ptLayout->tArea.tSize.iWidth))) {
             return ;
         }
@@ -1233,7 +1233,7 @@ void __arm_2d_layout_wrap_vertical( int16_t iTempY,
     if (ptLayout->tAlignTable.Vertical.sAdvance > 0) {
         /* top down */
         if (!(    iTempY                                              
-            >=  (   ptLayout->tArea.tLocation.iY
+            >  (   ptLayout->tArea.tLocation.iY
                 +   ptLayout->tArea.tSize.iHeight))) {
             return ;
         }
