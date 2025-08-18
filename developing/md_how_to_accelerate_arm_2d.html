@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('md_how_to_accelerate_arm_2d.html','');
 <div class="line"><span class="preprocessor">                const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \</span></div>
 <div class="line"><span class="preprocessor">                uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \</span></div>
 <div class="line"><span class="preprocessor">                                                                                \</span></div>
-<div class="line"><span class="preprocessor">                *pchDes = ((uint16_t)( ((uint16_t)(*pchSrc++) * hwOPA)          \</span></div>
+<div class="line"><span class="preprocessor">                *pchDes = ((uint16_t)( ((uint16_t)(*pchSrc) * hwOPA)            \</span></div>
 <div class="line"><span class="preprocessor">                                     + ((uint16_t)(*pchDes) * (__TRANS))        \</span></div>
 <div class="line"><span class="preprocessor">                                     ) &gt;&gt; 8);                                   \</span></div>
 <div class="line"><span class="preprocessor">            } while(0)</span></div>
