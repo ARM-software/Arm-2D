@@ -409,7 +409,7 @@ Feature Agnostic</h3>
 <div class="line">...</div>
 </div><!-- fragment --><p >Here <code>__arm_2d_&lt;colour&gt;_sw_&lt;operation name&gt;</code> are the default software implementations for corresponding <b>Low-Level-IO</b>. The keyword <code>__WEAK</code> indicates that the target IOs can be overridden with user-defined ones. For example, if you want to accelerate <b>copy-with-opacity</b> for RGB565 using your own hardware accelerator, please do the following steps:</p>
 <ol type="1">
-<li><p class="startli">In one of your C source file, override the target <b>Low-Level-IO</b> <code>__ARM_2D_IO_COPY_WITH_OPACITY_RGB565</code></p>
+<li><p class="startli">In one of your C source file, override the target <b>Low-Level-IO</b> <code>__ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB565</code></p>
 <div class="fragment"><div class="line"><span class="comment">//! PLEASE add following three lines in your hardware adapter source code</span></div>
 <div class="line"><span class="preprocessor">#define __ARM_2D_IMPL__</span></div>
 <div class="line"><span class="preprocessor">#include &quot;arm_2d.h&quot;</span></div>
@@ -418,12 +418,12 @@ Feature Agnostic</h3>
 <div class="line">...</div>
 <div class="line"> </div>
 <div class="line">__OVERRIDE_WEAK</div>
-<div class="line">def_low_lv_io(  __ARM_2D_IO_COPY_WITH_OPACITY_RGB565,           <span class="comment">/* target Low-Level-IO */</span></div>
-<div class="line">                __arm_2d_rgb565_sw_tile_copy_with_opacity,      <span class="comment">/* SW: the default implementation */</span></div>
-<div class="line">                __arm_2d_rgb565_my_hw_tile_copy_with_opacity);  <span class="comment">/* HW: the hardware adapter (driver) */</span></div>
+<div class="line">def_low_lv_io(  __ARM_2D_IO_COPY_WITH_OPACITY_ONLY_RGB565,                <span class="comment">/* target Low-Level-IO */</span></div>
+<div class="line">                __arm_2d_rgb565_sw_tile_copy_with_opacity_only,      <span class="comment">/* SW: the default implementation */</span></div>
+<div class="line">                __arm_2d_rgb565_my_hw_tile_copy_with_opacity_only);  <span class="comment">/* HW: the hardware adapter (driver) */</span></div>
 </div><!-- fragment --></li>
-<li>Copy the function body of <code>__arm_2d_rgb565_sw_tile_copy_with_opacity()</code> to your source file, rename it as <code>__arm_2d_rgb565_my_hw_tile_copy_with_opacity()</code> and use it as a template of the <em><b>hardware adaptor</b></em>.</li>
-<li>Update <code>__arm_2d_rgb565_my_hw_tile_copy_with_opacity</code> for the hardware accelerator.</li>
+<li>Copy the function body of <code>__arm_2d_rgb565_sw_tile_copy_with_opacity_only()</code> to your source file, rename it as <code>__arm_2d_rgb565_my_hw_tile_copy_with_opacity_only()</code> and use it as a template of the <em><b>hardware adaptor</b></em>.</li>
+<li>Update <code>__arm_2d_rgb565_my_hw_tile_copy_with_opacity_only</code> for the hardware accelerator.</li>
 <li>Based on the arguments passed to the function and the capability of your 2D accelerator, please:<ul>
 <li>return <code>ARM_2D_ERR_NOT_SUPPORT</code> if the hardware isn't capable to do what is requested.</li>
 <li>return <code>arm_fsm_rt_cpl</code> if the task is done immediately and no need to wait.</li>
