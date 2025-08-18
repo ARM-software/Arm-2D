@@ -70,8 +70,8 @@
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_tileAlbumCover         c_tileAlbumCoverCCCA8888
+#   define c_tileCMSISLogo          c_tileCMSISLogoCCCN888
+#   define c_tileAlbumCover         c_tileAlbumCoverCCCN888
 
 #else
 #   error Unsupported colour depth!

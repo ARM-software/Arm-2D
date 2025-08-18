@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_source_mask_and_opacity.c
  * Description:  APIs for tile fill with source mask and opacity only
  *
- * $Date:        30. July 2025
- * $Revision:    V.1.0.0
+ * $Date:        18. August 2025
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -436,7 +436,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_src_mask_and_opacity_only(
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_source_mask_and_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptTask->ptOP);
-    assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
     //! this should not happen
     assert(NULL != this.Mask.ptSourceSide);
@@ -1452,7 +1452,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_src_mask_and_opacity_only(
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_source_mask_and_opacity_only( __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_src_msk_opc_t, ptTask->ptOP);
-    assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
+    assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
     //! this should not happen
     assert(NULL != this.Mask.ptSourceSide);
