@@ -227,12 +227,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                 arm_2d_container(ptTile, __panel, &__item_region) {
                 
                     arm_2d_region_t tPavePlane = {
-                    #if 0
                         .tLocation = {
                             .iX = -this.tOffset.iX - __item_region.tLocation.iX,
                             .iY = -this.tOffset.iY - __item_region.tLocation.iY,
                         },
-                    #endif
                         .tSize = {
                             .iWidth = tLogoSize.iWidth + __top_canvas.tSize.iWidth,
                             .iHeight = tLogoSize.iHeight + __top_canvas.tSize.iHeight,
@@ -244,7 +242,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         &c_tileCMSISLogoMask,
                         &__panel,
                         &tPavePlane,
-                        128);
+                        255);
                 }
             }
 
@@ -261,12 +259,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                             .iHeight = tLogoSize.iHeight + __top_canvas.tSize.iHeight,
                         },
                     };
-                #if 0
+
                     arm_2d_tile_fill_only(
                         &c_tileCMSISLogo,
                         &__panel,
                         &tPavePlane);
-                #endif
+
                 }
             }
 
@@ -274,25 +272,22 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                 arm_2d_container(ptTile, __panel, &__item_region) {
                 
                     arm_2d_region_t tPavePlane = {
-                    #if 0
+
                         .tLocation = {
                             .iX = -this.tOffset.iX - __item_region.tLocation.iX,
                             .iY = -this.tOffset.iY - __item_region.tLocation.iY,
                         },
-                    #endif
                         .tSize = {
                             .iWidth = tLogoSize.iWidth + __top_canvas.tSize.iWidth,
                             .iHeight = tLogoSize.iHeight + __top_canvas.tSize.iHeight,
                         },
                     };
 
-                #if 0
                     arm_2d_tile_fill_with_opacity_only(
                         &c_tileCMSISLogo,
                         &__panel,
                         &tPavePlane,
                         128);
-                #endif
                 }
             }
 
@@ -311,13 +306,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         },
                     };
                 
-                #if 0
                     arm_2d_tile_fill_with_src_mask_only(
                         &c_tileCMSISLogo,
                         &c_tileCMSISLogoMask,
                         &__panel,
                         &tPavePlane);
-                #endif
                 }
             }
 

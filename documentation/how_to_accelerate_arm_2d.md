@@ -41,7 +41,7 @@ Arm-2D uses some Arm-2D specific Intrinsics in the default low-level C implement
                 const uint8_t *pchSrc = (uint8_t *)(__SRC_ADDR);                \
                 uint8_t *pchDes = (uint8_t *)(__DES_ADDR);                      \
                                                                                 \
-                *pchDes = ((uint16_t)( ((uint16_t)(*pchSrc++) * hwOPA)          \
+                *pchDes = ((uint16_t)( ((uint16_t)(*pchSrc) * hwOPA)            \
                                      + ((uint16_t)(*pchDes) * (__TRANS))        \
                                      ) >> 8);                                   \
             } while(0)

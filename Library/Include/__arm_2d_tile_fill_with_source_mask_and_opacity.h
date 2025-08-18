@@ -22,7 +22,7 @@
  * Description:  APIs for Tile-Fill-with-Source-Mask-and-Opacity operations
  *
  * $Date:        18. August 2025
- * $Revision:    V.1.0.1
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
