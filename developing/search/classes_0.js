@@ -1,14 +1,14 @@
 var searchData=
 [
   ['_5f_5farm_5f2d_5fcolor_5ffast_5frgb_5ft_0',['__arm_2d_color_fast_rgb_t',['../group__gConversion.html#union____arm__2d__color__fast__rgb__t',1,'']]],
-  ['_5f_5farm_5f2d_5fcolor_5ffast_5frgb_5ft_2e_5f_5funnamed146_5f_5f_1',['__arm_2d_color_fast_rgb_t.__unnamed146__',['../group__gConversion.html#struct____arm__2d__color__fast__rgb__t_8____unnamed146____',1,'']]],
+  ['_5f_5farm_5f2d_5fcolor_5ffast_5frgb_5ft_2e_5f_5funnamed148_5f_5f_1',['__arm_2d_color_fast_rgb_t.__unnamed148__',['../group__gConversion.html#struct____arm__2d__color__fast__rgb__t_8____unnamed148____',1,'']]],
   ['_5f_5farm_5f2d_5ffifo_5freader_5fpointer_2',['__arm_2d_fifo_reader_pointer',['../group__gHelper.html#struct____arm__2d__fifo__reader__pointer',1,'']]],
   ['_5f_5farm_5f2d_5fhelper_5fscene_5fswitch_5ft_3',['__arm_2d_helper_scene_switch_t',['../group__gHelper.html#union____arm__2d__helper__scene__switch__t',1,'']]],
   ['_5f_5farm_5f2d_5fhelper_5fscene_5fswitch_5ft_2efeature_4',['__arm_2d_helper_scene_switch_t.Feature',['../group__gHelper.html#struct____arm__2d__helper__scene__switch__t_8Feature',1,'']]],
   ['_5f_5farm_5f2d_5fiir_5fblur_5facc_5fcccn888_5ft_5',['__arm_2d_iir_blur_acc_cccn888_t',['../group__gFilter.html#struct____arm__2d__iir__blur__acc__cccn888__t',1,'']]],
   ['_5f_5farm_5f2d_5fiir_5fblur_5facc_5fgray8_5ft_6',['__arm_2d_iir_blur_acc_gray8_t',['../group__gFilter.html#struct____arm__2d__iir__blur__acc__gray8__t',1,'']]],
   ['_5f_5farm_5f2d_5flist_5fcore_5fcfg_5ft_7',['__arm_2d_list_core_cfg_t',['../group__gHelper.html#struct____arm__2d__list__core__cfg__t',1,'']]],
-  ['_5f_5farm_5f2d_5flist_5fcore_5fcfg_5ft_2e_5f_5funnamed210_5f_5f_8',['__arm_2d_list_core_cfg_t.__unnamed210__',['../group__gHelper.html#union____arm__2d__list__core__cfg__t_8____unnamed210____',1,'']]],
+  ['_5f_5farm_5f2d_5flist_5fcore_5fcfg_5ft_2e_5f_5funnamed212_5f_5f_8',['__arm_2d_list_core_cfg_t.__unnamed212__',['../group__gHelper.html#union____arm__2d__list__core__cfg__t_8____unnamed212____',1,'']]],
   ['_5f_5farm_5f2d_5flist_5fcore_5ft_9',['__arm_2d_list_core_t',['../group__gHelper.html#struct____arm__2d__list__core__t',1,'']]],
   ['_5f_5farm_5f2d_5flist_5fwork_5farea_5ft_10',['__arm_2d_list_work_area_t',['../group__gHelper.html#struct____arm__2d__list__work__area__t',1,'']]],
   ['_5f_5farm_5f2d_5fmem_5finfo_5ft_11',['__arm_2d_mem_info_t',['../group__gKernel.html#union____arm__2d__mem__info__t',1,'']]],
@@ -28,8 +28,8 @@ var searchData=
   ['_5f_5farm_5f2d_5fop_5finfo_5ft_2einfo_2eparam_25',['__arm_2d_op_info_t.Info.Param',['../group__gKernel.html#union____arm__2d__op__info__t_8Info_8Param',1,'']]],
   ['_5f_5farm_5f2d_5fop_5finfo_5ft_2einfo_2eparam_2e_5f_5funnamed60_5f_5f_26',['__arm_2d_op_info_t.Info.Param.__unnamed60__',['../group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed60____',1,'']]],
   ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_27',['__arm_2d_transform_info_t',['../group__gTransform.html#struct____arm__2d__transform__info__t',1,'']]],
-  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2e_5f_5funnamed98_5f_5f_28',['__arm_2d_transform_info_t.__unnamed98__',['../group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed98____',1,'']]],
-  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2e_5f_5funnamed98_5f_5f_2etarget_29',['__arm_2d_transform_info_t.__unnamed98__.Target',['../group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed98_____8Target',1,'']]],
+  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2e_5f_5funnamed100_5f_5f_28',['__arm_2d_transform_info_t.__unnamed100__',['../group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100____',1,'']]],
+  ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2e_5f_5funnamed100_5f_5f_2etarget_29',['__arm_2d_transform_info_t.__unnamed100__.Target',['../group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100_____8Target',1,'']]],
   ['_5f_5farm_5f2d_5ftransform_5finfo_5ft_2emask_30',['__arm_2d_transform_info_t.Mask',['../group__gTransform.html#union____arm__2d__transform__info__t_8Mask',1,'']]],
   ['_5f_5farm_5fslist_5fnode_5ft_31',['__arm_slist_node_t',['../group__gKernel.html#struct____arm__slist__node__t',1,'']]]
 ];
