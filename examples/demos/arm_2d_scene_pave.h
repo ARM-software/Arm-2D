@@ -87,6 +87,7 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
 
     arm_2d_location_t tOffset;
+    uint8_t chOpacity;
     bool bUserAllocated;
 
 )

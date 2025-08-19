@@ -181,6 +181,11 @@ static void __on_scene_pave_frame_start(arm_2d_scene_t *ptScene)
         this.tOffset.iY = 0;
     }
 
+    int32_t tResult;
+    arm_2d_helper_time_cos_slider(0, 255, 10000, 0, &tResult, &this.lTimestamp[0]);
+
+    this.chOpacity = tResult;
+
 }
 
 static void __on_scene_pave_frame_complete(arm_2d_scene_t *ptScene)
@@ -242,7 +247,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         &c_tileCMSISLogoMask,
                         &__panel,
                         &tPavePlane,
-                        128);
+                        this.chOpacity);
                 }
             }
 
@@ -287,7 +292,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         &c_tileCMSISLogo,
                         &__panel,
                         &tPavePlane,
-                        128);
+                        this.chOpacity);
                 }
             }
 
