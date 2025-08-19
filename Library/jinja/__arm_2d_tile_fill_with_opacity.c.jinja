@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_opacity.c
  * Description:  APIs for tile fill with opacity only
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.1.0
+ * $Date:        19. August 2025
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -83,10 +83,10 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
-    ('gray8', 'uint8_t', 'ch', '8BIT' ),
-    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
-    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits, colour_generic in [
+    ('gray8', 'uint8_t', 'ch', '8BIT', 'c8bit' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT', 'rgb16' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT', 'rgb32' ),
     ] 
 %}
 
@@ -199,7 +199,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name | lower}}_with_opacity(
 }
 
 
-ARM_NONNULL(2,3,4)
+ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_tile_fill_with_opacity_only(
                                         arm_2d_op_src_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -253,7 +253,7 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_tile_fill_with_opacity_only( __
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
-        return __arm_2d_{{colour_name | lower}}_sw_tile_fill_with_src_mask_only(ptTask);
+        return __arm_2d_{{colour_generic | lower}}_sw_tile_fill(ptTask);
     }
 #endif
 

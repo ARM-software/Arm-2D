@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_opacity.h
  * Description:  APIs for Tile-Fill-with-Opacity-only operations
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.1.0
+ * $Date:        19. August 2025
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -64,12 +64,12 @@ extern "C" {
     ] 
 %}
 
-#define arm_2d_{{colour_name | lower }}_tile_fill_with_opacity_only(                 \
+#define arm_2d_{{colour_name | lower }}_tile_fill_with_opacity_only(                               \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __DES_ADDR,     /*   target tile address */ \
                                     __REGION,       /*   region address */      \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_{{colour_name | lower }}_tile_fill_with_opacity_only(            \
+            arm_2dp_{{colour_name | lower }}_tile_fill_with_opacity_only(                          \
                                         NULL,                                   \
                                         (__SRC_ADDR),                           \
                                         (__DES_ADDR),                           \
@@ -89,7 +89,7 @@ extern "C" {
 %}
 
 extern
-ARM_NONNULL(2,3,4)
+ARM_NONNULL(2,3)
 /*!
  * \brief Fill the target tile with a given source tile and an opacity
  *

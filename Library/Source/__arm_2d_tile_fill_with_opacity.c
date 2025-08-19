@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_opacity.c
  * Description:  APIs for tile fill with opacity only
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.1.0
+ * $Date:        19. August 2025
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -192,7 +192,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
 }
 
 
-ARM_NONNULL(2,3,4)
+ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_opacity_only(
                                         arm_2d_op_src_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -246,7 +246,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_t 
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
-        return __arm_2d_gray8_sw_tile_fill_with_src_mask_only(ptTask);
+        return __arm_2d_c8bit_sw_tile_fill(ptTask);
     }
 #endif
 
@@ -417,7 +417,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
 }
 
 
-ARM_NONNULL(2,3,4)
+ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_opacity_only(
                                         arm_2d_op_src_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -471,7 +471,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_t
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
-        return __arm_2d_rgb565_sw_tile_fill_with_src_mask_only(ptTask);
+        return __arm_2d_rgb16_sw_tile_fill(ptTask);
     }
 #endif
 
@@ -642,7 +642,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
 }
 
 
-ARM_NONNULL(2,3,4)
+ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_opacity_only(
                                         arm_2d_op_src_opc_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -696,7 +696,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_
 
 #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
     if (255 == this.chOpacity) {
-        return __arm_2d_cccn888_sw_tile_fill_with_src_mask_only(ptTask);
+        return __arm_2d_rgb32_sw_tile_fill(ptTask);
     }
 #endif
 
