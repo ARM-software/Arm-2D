@@ -241,6 +241,7 @@ arm_2d_control_node_t *arm_2d_helper_control_find_node_with_location(
 
 
 ARM_NONNULL(1,2)
+__WEAK
 arm_2d_err_t arm_2d_helper_control_enum_init(
                             arm_2d_control_enumerator_t *ptThis,
                             const arm_2d_control_enumeration_policy_t *ptPolicy,
@@ -264,6 +265,7 @@ arm_2d_err_t arm_2d_helper_control_enum_init(
 }
 
 ARM_NONNULL(1)
+__WEAK
 arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
                                             arm_2d_control_enumerator_t *ptThis)
 {
@@ -277,6 +279,7 @@ arm_2d_control_node_t *arm_2d_helper_control_enum_get_next_node(
 }
 
 ARM_NONNULL(1)
+__WEAK
 arm_2d_err_t arm_2d_helper_control_enum_depose(
                                             arm_2d_control_enumerator_t *ptThis)
 {
