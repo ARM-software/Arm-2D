@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_source_mask_and_opacity.c
  * Description:  APIs for tile fill with source mask and opacity only
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.1.0
+ * $Date:        20. August 2025
+ * $Revision:    V.0.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -300,6 +300,7 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
                                                 hwOpacity);
 }
 
+
 __OVERRIDE_WEAK
 void __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
                         uint32_t * __RESTRICT pwSourceBase,
@@ -329,6 +330,7 @@ void __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
 
                                             hwOpacity);
 }
+
 
 __OVERRIDE_WEAK
 void __arm_2d_impl_cccn888_tile_fill_with_src_chn_mask_and_opacity(
