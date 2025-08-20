@@ -148,6 +148,8 @@
 #   define src_msk_fill_xy_mirror      src_chn_msk_fill_xy_mirror
 #   define src_msk_fill_mirror         src_chn_msk_fill_mirror
 
+#   define src_msk_fill_opa            src_chn_msk_fill_opa
+
 #   define src_msk_copy                src_chn_msk_copy
 #   define src_msk_copy_x_mirror       src_chn_msk_copy_x_mirror
 #   define src_msk_copy_y_mirror       src_chn_msk_copy_y_mirror
@@ -1117,8 +1119,7 @@ void __CAFWM_FUNC(src_msk_fill_opa)(
                                                             __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk);
                     #endif
 
-                    vecSrcMsk *= hwOpacity;
-                    vecSrcMsk >>= 8;
+                    vecSrcMsk = (vecSrcMsk * hwOpacity >> 8);
 
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecSrcMsk);
 
@@ -1127,7 +1128,6 @@ void __CAFWM_FUNC(src_msk_fill_opa)(
                         ARM_CONNECT2(vcmpeqq_n_u, __API_CAFWM_PIXEL_BIT_NUM)(vecHwOpacity, 1));
             #endif
 
-                        
                     vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
@@ -2553,6 +2553,8 @@ void __CAFWM_FUNC(src_msk_copy_xy_mirror)(
 #undef src_msk_fill_y_mirror
 #undef src_msk_fill_xy_mirror
 #undef src_msk_fill_mirror
+
+#undef src_msk_fill_opa
 
 #undef src_msk_copy
 #undef src_msk_copy_x_mirror

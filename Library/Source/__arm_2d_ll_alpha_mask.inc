@@ -105,7 +105,9 @@
 #   define src_msk_fill_x_mirror       src_chn_msk_fill_x_mirror
 #   define src_msk_fill_y_mirror       src_chn_msk_fill_y_mirror
 #   define src_msk_fill_xy_mirror      src_chn_msk_fill_xy_mirror
-#   define src_msk_fill_mirror         src_chn_msk_fill_mirror                
+#   define src_msk_fill_mirror         src_chn_msk_fill_mirror
+
+#   define src_msk_fill_opa             src_chn_msk_fill_opa
 
 #   define src_msk_copy                src_chn_msk_copy
 #   define src_msk_copy_x_mirror       src_chn_msk_copy_x_mirror
