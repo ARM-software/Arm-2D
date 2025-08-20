@@ -1043,6 +1043,147 @@ void __CAFWM_FUNC(src_msk_fill)(
 }
 
 
+__OVERRIDE_WEAK
+void __CAFWM_FUNC(src_msk_fill_opa)(
+                        __API_CAFWM_INT_TYPE * __RESTRICT ptSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                    #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+                        uint32_t * __RESTRICT ptSourceMaskBase,
+                    #else
+                        uint8_t * __RESTRICT ptSourceMaskBase,
+                    #endif
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+
+                        __API_CAFWM_INT_TYPE *__RESTRICT ptTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint16_t hwOpacity)
+{
+    __API_CAFWM_PIXEL_VECTYP      v256 = ARM_CONNECT2(vdupq_n_u, __API_CAFWM_PIXEL_BIT_NUM)(256);
+
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        //! reset source
+        __API_CAFWM_INT_TYPE *__RESTRICT ptSource = ptSourceBase;
+    #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+        uint32_t *ptSourceMask = ptSourceMaskBase;
+    #else
+        uint8_t *ptSourceMask = ptSourceMaskBase;
+    #endif
+
+    #if __API_CAFWM_CFG_SUPPORT_SRC_MSK_WRAPING
+        int_fast16_t iSourceMaskY = 0;
+    #endif
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            __API_CAFWM_INT_TYPE *__RESTRICT ptTarget = ptTargetBase;
+
+            /*---------------- Height Loop Begin----------------*/
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength = MIN(wLengthLeft, ptSourceSize->iWidth);
+                /*---------------- Width Loop Begin----------------*/
+
+                __API_CAFWM_INT_TYPE       *__RESTRICT ptSrc = ptSource;
+                __API_CAFWM_INT_TYPE       *__RESTRICT ptTargetCur = ptTarget;
+
+            #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+                uint32_t        curIncStride4Idx = 0;
+                __API_CAFWM_PIXEL_VECTYP      vIncStride4Offs =
+                    ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
+            #endif
+
+            #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+                uint32_t       *__RESTRICT ptSrcMsk = ptSourceMask;
+            #else
+                uint8_t        *__RESTRICT ptSrcMsk = ptSourceMask;
+            #endif
+                int32_t         blkCnt = wLength;
+
+                do {
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+                    #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+                    __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
+                                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    #else
+                    __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u,
+                                                            __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    #endif
+
+                    vecSrcMsk *= hwOpacity;
+                    vecSrcMsk >>= 8;
+
+                    __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecSrcMsk);
+
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                    vecHwOpacity = vpselq(ARM_CONNECT2(vdupq_n_u, __API_CAFWM_PIXEL_BIT_NUM)(0),vecHwOpacity,
+                        ARM_CONNECT2(vcmpeqq_n_u, __API_CAFWM_PIXEL_BIT_NUM)(vecHwOpacity, 1));
+            #endif
+
+                        
+                    vecTarget = __API_CAFWM_PIXEL_BLENDING(
+                                                    vecTarget, vecSource, vecHwOpacity);
+                    /* tail predication */
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
+                                            ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+
+                    #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+                    vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
+                    #endif
+
+                    #if !__API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
+                    ptSrcMsk += __API_CAFWM_VEC_INCR;
+                    #endif
+
+
+                    ptTargetCur += __API_CAFWM_VEC_INCR;
+                    ptSrc += __API_CAFWM_VEC_INCR;
+
+                    blkCnt -= __API_CAFWM_VEC_INCR;
+                }
+                while (blkCnt > 0);
+
+                ptTarget += wLength;
+
+                /*---------------- Width Loop End----------------*/
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            /*---------------- Height Loop End----------------*/
+            ptSource += iSourceStride;
+            ptTargetBase += iTargetStride;
+
+        #if __API_CAFWM_CFG_SUPPORT_SRC_MSK_WRAPING
+            iSourceMaskY++;
+            //! handle source mask
+            if (    (iSourceMaskY >= ptSourceMaskSize->iHeight)
+               ||   (iSourceMaskY >= ptSourceSize->iHeight)) {
+                ptSourceMask = ptSourceMaskBase;
+                iSourceMaskY = 0;
+            } else {
+                ptSourceMask += iSourceMaskStride;
+            }
+        #else
+            ptSourceMask += iSourceMaskStride;
+        #endif
+
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+
 
 
 __OVERRIDE_WEAK
