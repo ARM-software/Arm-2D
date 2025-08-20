@@ -80,9 +80,374 @@ extern "C" {
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+
+extern
+void __arm_2d_impl_gray8_src_msk_fill_opa(
+    uint8_t *__restrict ptSourceBase,
+    int16_t iSourceStride,
+    arm_2d_size_t *__restrict ptSourceSize,
+
+    uint8_t *__restrict ptSourceMaskBase,
+
+    int16_t iSourceMaskStride,
+    arm_2d_size_t *__restrict ptSourceMaskSize,
+
+    uint8_t *__restrict ptTargetBase,
+    int16_t iTargetStride,
+    arm_2d_size_t *__restrict ptTargetSize,
+    uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_gray8_src_chn_msk_fill_opa(
+    uint8_t *__restrict ptSourceBase,
+    int16_t iSourceStride,
+    arm_2d_size_t *__restrict ptSourceSize,
+
+    uint32_t *__restrict ptSourceMaskBase,
+
+    int16_t iSourceMaskStride,
+    arm_2d_size_t *__restrict ptSourceMaskSize,
+
+    uint8_t *__restrict ptTargetBase,
+    int16_t iTargetStride,
+    arm_2d_size_t *__restrict ptTargetSize,
+    uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_rgb565_src_msk_fill_opa(
+    uint16_t *__restrict ptSourceBase,
+    int16_t iSourceStride,
+    arm_2d_size_t *__restrict ptSourceSize,
+
+    uint8_t *__restrict ptSourceMaskBase,
+
+    int16_t iSourceMaskStride,
+    arm_2d_size_t *__restrict ptSourceMaskSize,
+
+    uint16_t *__restrict ptTargetBase,
+    int16_t iTargetStride,
+    arm_2d_size_t *__restrict ptTargetSize,
+    uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_rgb565_src_chn_msk_fill_opa(
+    uint16_t *__restrict ptSourceBase,
+    int16_t iSourceStride,
+    arm_2d_size_t *__restrict ptSourceSize,
+
+    uint32_t *__restrict ptSourceMaskBase,
+
+    int16_t iSourceMaskStride,
+    arm_2d_size_t *__restrict ptSourceMaskSize,
+
+    uint16_t *__restrict ptTargetBase,
+    int16_t iTargetStride,
+    arm_2d_size_t *__restrict ptTargetSize,
+    uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_cccn888_src_msk_fill_opa(
+    uint32_t *__restrict ptSourceBase,
+    int16_t iSourceStride,
+    arm_2d_size_t *__restrict ptSourceSize,
+
+    uint8_t *__restrict ptSourceMaskBase,
+
+    int16_t iSourceMaskStride,
+    arm_2d_size_t *__restrict ptSourceMaskSize,
+
+    uint32_t *__restrict ptTargetBase,
+    int16_t iTargetStride,
+    arm_2d_size_t *__restrict ptTargetSize,
+    uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_cccn888_src_chn_msk_fill_opa(
+    uint32_t *__restrict ptSourceBase,
+    int16_t iSourceStride,
+    arm_2d_size_t *__restrict ptSourceSize,
+
+    uint32_t *__restrict ptSourceMaskBase,
+
+    int16_t iSourceMaskStride,
+    arm_2d_size_t *__restrict ptSourceMaskSize,
+
+    uint32_t *__restrict ptTargetBase,
+    int16_t iTargetStride,
+    arm_2d_size_t *__restrict ptTargetSize,
+    uint16_t hwOpacity);
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+__OVERRIDE_WEAK
+void __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
+                        uint8_t * __RESTRICT pchSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_gray8_src_msk_fill_opa(   pchSourceBase, 
+                                            iSourceStride,
+                                            ptSourceSize,
+
+                                            phwSourceMaskBase, 
+                                            iSourceMaskStride,
+                                            ptSourceMaskSize,
+
+                                            pchTargetBase,
+                                            iTargetStride,
+                                            ptTargetSize,
+
+                                            hwOpacity);
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_gray8_tile_fill_with_src_chn_mask_and_opacity(
+                        uint8_t * __RESTRICT pchSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_gray8_src_chn_msk_fill_opa(   pchSourceBase, 
+                                                iSourceStride,
+                                                ptSourceSize,
+
+                                                pwSourceMaskBase, 
+                                                iSourceMaskStride,
+                                                ptSourceMaskSize,
+
+                                                pchTargetBase,
+                                                iTargetStride,
+                                                ptTargetSize,
+
+                                                hwOpacity);
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
+                        uint16_t * __RESTRICT phwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_rgb565_src_msk_fill_opa(  phwSourceBase, 
+                                            iSourceStride,
+                                            ptSourceSize,
+
+                                            phwSourceMaskBase, 
+                                            iSourceMaskStride,
+                                            ptSourceMaskSize,
+
+                                            phwTargetBase,
+                                            iTargetStride,
+                                            ptTargetSize,
+
+                                            hwOpacity);
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
+                        uint16_t * __RESTRICT phwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_rgb565_src_chn_msk_fill_opa(  phwSourceBase, 
+                                                iSourceStride,
+                                                ptSourceSize,
+
+                                                pwSourceMaskBase, 
+                                                iSourceMaskStride,
+                                                ptSourceMaskSize,
+
+                                                phwTargetBase,
+                                                iTargetStride,
+                                                ptTargetSize,
+
+                                                hwOpacity);
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_cccn888_src_msk_fill_opa(  pwSourceBase, 
+                                            iSourceStride,
+                                            ptSourceSize,
+
+                                            phwSourceMaskBase, 
+                                            iSourceMaskStride,
+                                            ptSourceMaskSize,
+
+                                            pwTargetBase,
+                                            iTargetStride,
+                                            ptTargetSize,
+
+                                            hwOpacity);
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_cccn888_tile_fill_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_cccn888_src_chn_msk_fill_opa( pwSourceBase, 
+                                                iSourceStride,
+                                                ptSourceSize,
+
+                                                pwSourceMaskBase, 
+                                                iSourceMaskStride,
+                                                ptSourceMaskSize,
+
+                                                pwTargetBase,
+                                                iTargetStride,
+                                                ptTargetSize,
+
+                                                hwOpacity);
+}
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+
+
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
+
+extern void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity);
 
 
 
