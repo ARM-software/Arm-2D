@@ -390,88 +390,84 @@ extern void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opac
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity);
 
-
+                        
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
-    uint32_t *__restrict ptSourceBase,
-    int16_t iSourceStride,
-    arm_2d_size_t *__restrict ptSourceSize,
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
 
-    uint8_t *__restrict ptSourceMaskBase,
+                                    uint8_t *__RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceMaskSize,
 
-    int16_t iSourceMaskStride,
-    arm_2d_size_t *__restrict ptSourceMaskSize,
-
-    uint16_t *__restrict ptTargetBase,
-    int16_t iTargetStride,
-    arm_2d_size_t *__restrict ptTargetSize,
-    uint16_t hwOpacity)
+                                    uint16_t *__restrict phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize,
+                                    uint_fast16_t hwOpacity)
 {
-  uint16x8_t v256 = vdupq_n_u16(256);
-  uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+    __NOP();
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
-  for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;)
-  {
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
 
-    uint32_t *__restrict pwSource = ptSourceBase;
+        uint8_t *pchSourceMask = pchSourceMaskBase;
 
-    uint8_t *ptSourceMask = ptSourceMaskBase;
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
 
-    for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++)
-    {
+            uint16_t *__RESTRICT phwTarget = phwTargetBase;
 
-      uint16_t *__restrict ptTarget = ptTargetBase;
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
 
-      uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
 
-      do
-      {
-        uint_fast32_t wLength = ((wLengthLeft) < (ptSourceSize->iWidth) ? (wLengthLeft) : (ptSourceSize->iWidth));
+                uint32_t  *__RESTRICT pwSrc = pwSource;
+                uint16_t *__RESTRICT phwTargetCur = phwTarget;
 
-        uint8_t  *__RESTRICT pSource = (uint8_t *) pwSource;
-        uint16_t *__restrict ptTargetCur = ptTarget;
+                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
-        uint8_t *__restrict ptSrcMsk = ptSourceMask;
+                int32_t blkCnt = wLength;
 
-        int32_t blkCnt = wLength;
+                do {
+                    mve_pred16_t    tailPred = vctp16q(blkCnt);
+                    uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-        do {
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
-            uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+                    __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+                    uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
+                    vSrcMask = vSrcMask * (uint16_t)hwOpacity >> 8;
 
-            uint16x8_t vSrcMask = vldrbq_z_u16(ptSrcMsk, tailPred);
+                    vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
 
-            vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+                    vst1q_p(phwTargetCur,
+                        __arm_2d_unpack_and_blend_rg565(phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
+                        tailPred);
 
-            vst1q_p(ptTargetCur,
-                __arm_2d_unpack_and_blend_rg565(ptTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
-                tailPred);
+                    pchSrcMsk += 8;
+                    pwSrc += 8;
+                    phwTargetCur += 8;
+                    blkCnt -= 8;
+                } while (blkCnt > 0);
 
-            ptSrcMsk += 8;
-            pSource += 32;
-            ptTargetCur += 8;
-            blkCnt -= 8;
-        } while (blkCnt > 0);
+                phwTarget += wLength;
 
-        ptTarget += wLength;
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
 
-        wLengthLeft -= wLength;
-      } while (wLengthLeft);
+            pwSource += iSourceStride;
+            phwTargetBase += iTargetStride;
 
-      pwSource += iSourceStride;
-      ptTargetBase += iTargetStride;
+            pchSourceMask += iSourceMaskStride;
 
-      ptSourceMask += iSourceMaskStride;
-
-      iTargetY++;
-      if (iTargetY >= ptTargetSize->iHeight)
-      {
-        break;
-      }
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
     }
-  }
 }
 
 extern void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
