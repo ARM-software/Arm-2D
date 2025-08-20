@@ -21,8 +21,8 @@
  * Title:        __arm_2d_alpha_mask_helium.inc
  * Description:  c code template for copy and fill like operations
  *
- * $Date:        12. July 2022
- * $Revision:    v1.0.1
+ * $Date:        20. August 2025
+ * $Revision:    v1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -47,6 +47,7 @@
 #define __API_CAFWM_PIXEL_VECLOAD        vld1q
 #define __API_CAFWM_PIXEL_VECLOAD_P      vld1q_z
 #define __API_CAFWM_PIXEL_GATHVECLOAD    vldrhq_gather_shifted_offset
+#define __API_CAFWM_PIXEL_GATHVECLOAD_P  vldrhq_gather_shifted_offset_z
 #define __API_CAFWM_PIXEL_PVECSTORE      vst1q_p
 #define __API_CAFWM_PIXEL_BLENDING       __arm_2d_rgb565_blending_opacity_single_vec
 
@@ -56,6 +57,7 @@
 #define __API_CAFWM_PIXEL_VECLOAD        vldrbq_u16
 #define __API_CAFWM_PIXEL_VECLOAD_P      vldrbq_z_u16
 #define __API_CAFWM_PIXEL_GATHVECLOAD    vldrbq_gather_offset_u16
+#define __API_CAFWM_PIXEL_GATHVECLOAD_P  vldrbq_gather_offset_z_u16
 #define __API_CAFWM_PIXEL_PVECSTORE      vstrbq_p_u16
 #define __API_CAFWM_PIXEL_BLENDING       __arm_2d_gray8_blending_opacity_single_vec
 
@@ -66,6 +68,7 @@
 #define __API_CAFWM_PIXEL_VECLOAD        vld1q
 #define __API_CAFWM_PIXEL_VECLOAD_P      vld1q_z
 #define __API_CAFWM_PIXEL_GATHVECLOAD    vldrwq_gather_shifted_offset
+#define __API_CAFWM_PIXEL_GATHVECLOAD_P  vldrwq_gather_shifted_offset_z
 #define __API_CAFWM_PIXEL_PVECSTORE      vst1q_p
 #define __API_CAFWM_PIXEL_BLENDING       __arm_2d_cccn888_blending_opacity_single_vec
 #else
@@ -73,6 +76,7 @@
 #define __API_CAFWM_PIXEL_VECLOAD        vldrbq_u16
 #define __API_CAFWM_PIXEL_VECLOAD_P      vldrbq_z_u16
 #define __API_CAFWM_PIXEL_GATHVECLOAD    vldrbq_gather_offset_u16
+#define __API_CAFWM_PIXEL_GATHVECLOAD_P  vldrbq_gather_offset_z_u16
 #define __API_CAFWM_PIXEL_PVECSTORE      vstrbq_p_u16
 #define __API_CAFWM_PIXEL_BLENDING       __arm_2d_gray8_blending_opacity_single_vec
 #endif
@@ -432,16 +436,18 @@ void __CAFWM_FUNC(des_msk_fill)(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
 
                     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
                     #else
-                    __API_CAFWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u,
-                                                            __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_CAFWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u,
+                                                            __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tailPred);
                     #endif
 
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
@@ -454,8 +460,7 @@ void __CAFWM_FUNC(des_msk_fill)(
                     vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                                            ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
                     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -569,16 +574,18 @@ void __CAFWM_FUNC(des_msk_fill_x_mirror)(
                             ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride1Idx, 1);
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
                     __API_CAFWM_PIXEL_VECTYP      vecSource =
-                        __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                        __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
             #else
                     __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                                ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                                ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tailPred);
             #endif
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
 
@@ -588,12 +595,10 @@ void __CAFWM_FUNC(des_msk_fill_x_mirror)(
             #endif
 
                     vecTarget =
-                        __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource,
-                                                                    vecHwOpacity);
+                        __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource, vecHwOpacity);
 
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                                        ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
                     vDecrStride1Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride1Idx, 1);
 
@@ -707,15 +712,17 @@ void __CAFWM_FUNC(des_msk_fill_y_mirror)(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
 
                     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
                     #else
-                    __API_CAFWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    __API_CAFWM_PIXEL_VECTYP      vecTargetMask = ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tailPred);
                     #endif
 
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
@@ -728,7 +735,7 @@ void __CAFWM_FUNC(des_msk_fill_y_mirror)(
                     vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
                     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -842,16 +849,18 @@ void __CAFWM_FUNC(des_msk_fill_xy_mirror)(
 
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
                     __API_CAFWM_PIXEL_VECTYP      vecSource =
-                        __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                        __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
             #else
                     __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                            ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                            ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tailPred);
             #endif
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
 
@@ -861,11 +870,10 @@ void __CAFWM_FUNC(des_msk_fill_xy_mirror)(
             #endif
 
                     vecTarget =
-                        __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource,
-                                                                    vecHwOpacity);
+                        __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource, vecHwOpacity);
 
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
                     vDecrStride1Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride1Idx, 1);
 
@@ -1259,17 +1267,19 @@ void __CAFWM_FUNC(src_msk_fill_x_mirror)(
 
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+                    
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
                     __API_CAFWM_PIXEL_VECTYP      vecSource =
-                        __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                        __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                        ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)
-                                        ((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                        ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)
+                                        ((uint8_t *)ptSrcMsk, vDecrStride4Offs, tailPred);
             #else
                     __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                        ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)
-                                        (ptSrcMsk, vDecrStride1Offs);
+                        ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)
+                                        (ptSrcMsk, vDecrStride1Offs, tailPred);
             #endif
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecSrcMsk);
 
@@ -1283,8 +1293,7 @@ void __CAFWM_FUNC(src_msk_fill_x_mirror)(
                                                                     vecHwOpacity);
 
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                                        ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -1399,13 +1408,15 @@ void __CAFWM_FUNC(src_msk_fill_y_mirror)(
                 int32_t         blkCnt = wLength;
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+                    __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
                     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                                    (uint8_t const *)ptSrcMsk, vIncStride4Offs, tailPred);
                     #else
-                    __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, tailPred);
                     #endif
 
 
@@ -1419,7 +1430,7 @@ void __CAFWM_FUNC(src_msk_fill_y_mirror)(
                     vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                                     vecTarget, vecSource, vecHwOpacity);
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
                     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -1540,16 +1551,18 @@ void __CAFWM_FUNC(src_msk_fill_xy_mirror)(
 
 
                 do {
-                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+                    mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+                    __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
                     __API_CAFWM_PIXEL_VECTYP      vecSource =
-                        __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                        __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs, tailPred);
 
             #else
                     __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                            ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs);
+                            ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs, tailPred);
             #endif
                     __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecSrcMsk);
 
@@ -1559,11 +1572,10 @@ void __CAFWM_FUNC(src_msk_fill_xy_mirror)(
             #endif
 
                     vecTarget =
-                        __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource,
-                                                                    vecHwOpacity);
+                        __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource, vecHwOpacity);
 
                     /* tail predication */
-                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+                    __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
                     vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -1671,16 +1683,18 @@ void __CAFWM_FUNC(des_msk_copy)(
         int32_t         blkCnt = iWidth;
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                        ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                        ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
             #else
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                        ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                        ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tailPred);
             #endif
 
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
@@ -1693,8 +1707,7 @@ void __CAFWM_FUNC(des_msk_copy)(
             vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                             vecTarget, vecSource, vecHwOpacity);
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                        ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -1783,16 +1796,18 @@ void __CAFWM_FUNC(des_msk_copy_x_mirror)(
 
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
             __API_CAFWM_PIXEL_VECTYP      vecSource =
-                __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
     #else
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tailPred);
     #endif
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
 
@@ -1806,7 +1821,7 @@ void __CAFWM_FUNC(des_msk_copy_x_mirror)(
                                                             vecHwOpacity);
 
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             vDecrStride1Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride1Idx, 1);
 
@@ -1892,16 +1907,18 @@ void __CAFWM_FUNC(des_msk_copy_y_mirror)(
         int32_t         blkCnt = iWidth;
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
             #else
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                    ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur);
+                    ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptTargetMaskCur, tailPred);
             #endif
 
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
@@ -1914,8 +1931,7 @@ void __CAFWM_FUNC(des_msk_copy_y_mirror)(
             vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                             vecTarget, vecSource, vecHwOpacity);
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                    ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -2007,16 +2023,18 @@ void __CAFWM_FUNC(des_msk_copy_xy_mirror)(
 
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
             __API_CAFWM_PIXEL_VECTYP      vecSource =
-                __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                    (uint8_t const *)ptTargetMaskCur, vIncStride4Offs, tailPred);
     #else
             __API_CAFWM_PIXEL_VECTYP      vecTargetMask =
-                ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur);
+                ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptTargetMaskCur, tailPred);
     #endif
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecTargetMask);
 
@@ -2030,7 +2048,7 @@ void __CAFWM_FUNC(des_msk_copy_xy_mirror)(
                                                             vecHwOpacity);
 
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             vDecrStride1Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride1Idx, 1);
 
@@ -2116,13 +2134,17 @@ void __CAFWM_FUNC(src_msk_copy)(
         int32_t         blkCnt = iWidth;
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+            __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = 
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs, tailPred);
             #else
-            __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk);
+            __API_CAFWM_PIXEL_VECTYP      vecSrcMsk = 
+                ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, tailPred);
             #endif
 
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecSrcMsk);
@@ -2135,7 +2157,7 @@ void __CAFWM_FUNC(src_msk_copy)(
             vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                             vecTarget, vecSource, vecHwOpacity);
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -2231,15 +2253,17 @@ void __CAFWM_FUNC(src_msk_copy_x_mirror)(
 
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
             __API_CAFWM_PIXEL_VECTYP      vecSource =
-                __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs, tailPred);
     #else
             __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs, tailPred);
     #endif
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity =  vsubq(v256, vecSrcMsk);
 
@@ -2253,7 +2277,7 @@ void __CAFWM_FUNC(src_msk_copy_x_mirror)(
                                                             vecHwOpacity);
 
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -2346,15 +2370,17 @@ void __CAFWM_FUNC(src_msk_copy_y_mirror)(
         int32_t         blkCnt = iWidth;
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
-            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD(ptSrc);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
+            __API_CAFWM_PIXEL_VECTYP      vecSource = __API_CAFWM_PIXEL_VECLOAD_P(ptSrc, tailPred);
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                    ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(
-                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs);
+                    ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(
+                                            (uint8_t const *)ptSrcMsk, vIncStride4Offs, tailPred);
             #else
             __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                    ARM_CONNECT2(vldrbq_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk);
+                    ARM_CONNECT2(vldrbq_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, tailPred);
             #endif
 
 
@@ -2368,8 +2394,7 @@ void __CAFWM_FUNC(src_msk_copy_y_mirror)(
             vecTarget = __API_CAFWM_PIXEL_BLENDING(
                                             vecTarget, vecSource, vecHwOpacity);
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget,
-                    ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
             #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             vIncStride4Offs = ARM_CONNECT2(vidupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curIncStride4Idx, 4);
@@ -2470,15 +2495,17 @@ void __CAFWM_FUNC(src_msk_copy_xy_mirror)(
 
 
         do {
-            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD(ptTargetCur);
+            mve_pred16_t    tailPred = ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt);
+
+            __API_CAFWM_PIXEL_VECTYP      vecTarget = __API_CAFWM_PIXEL_VECLOAD_P(ptTargetCur, tailPred);
             __API_CAFWM_PIXEL_VECTYP      vecSource =
-                __API_CAFWM_PIXEL_GATHVECLOAD(ptSrc, vDecrStride1Offs);
+                __API_CAFWM_PIXEL_GATHVECLOAD_P(ptSrc, vDecrStride1Offs, tailPred);
     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)((uint8_t *)ptSrcMsk, vDecrStride4Offs, tailPred);
     #else
             __API_CAFWM_PIXEL_VECTYP      vecSrcMsk =
-                ARM_CONNECT2(vldrbq_gather_offset_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs);
+                ARM_CONNECT2(vldrbq_gather_offset_z_u, __API_CAFWM_PIXEL_BIT_NUM)(ptSrcMsk, vDecrStride1Offs, tailPred);
     #endif
             __API_CAFWM_PIXEL_VECTYP      vecHwOpacity = vsubq(v256, vecSrcMsk);
 
@@ -2488,11 +2515,10 @@ void __CAFWM_FUNC(src_msk_copy_xy_mirror)(
             #endif
 
             vecTarget =
-                __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource,
-                                                            vecHwOpacity);
+                __API_CAFWM_PIXEL_BLENDING(vecTarget, vecSource, vecHwOpacity);
 
             /* tail predication */
-            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, ARM_CONNECT3(vctp, __API_CAFWM_PIXEL_BIT_NUM, q)(blkCnt));
+            __API_CAFWM_PIXEL_PVECSTORE(ptTargetCur, vecTarget, tailPred);
 
     #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
             vDecrStride4Offs = ARM_CONNECT2(vddupq_wb_u, __API_CAFWM_PIXEL_BIT_NUM)(&curDecrStride4Idx, 4);
@@ -2581,6 +2607,7 @@ void __CAFWM_FUNC(src_msk_copy_xy_mirror)(
 #undef __API_CAFWM_PIXEL_VECLOAD
 #undef __API_CAFWM_PIXEL_VECLOAD_P
 #undef __API_CAFWM_PIXEL_GATHVECLOAD
+#undef __API_CAFWM_PIXEL_GATHVECLOAD_P
 #undef __API_CAFWM_PIXEL_PVECSTORE
 #undef ____CAFWM_TYPE
 #undef ___CAFWM_TYPE
