@@ -188,7 +188,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
 
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
 
             vSrcOpa = vpselq(vdupq_n_u16(256),vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
@@ -306,7 +306,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask_and_o
 
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_u16(pchSourceMaskLine);
 
@@ -446,7 +446,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask_
 
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pwSourceMaskLine, vStride4Offs);
 
@@ -592,7 +592,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask)(
 
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_u16(pchSourceMaskLine);
 
@@ -726,7 +726,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask)(
 
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pwSourceMaskLine, vStride4Offs);
 
@@ -857,12 +857,10 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_opacity)(
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
-
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             vSrcOpa = vpselq(vdupq_n_u16(256),vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
             vSrcOpa=  vmulq_n_u16(vSrcOpa, hwRatio)  >> 8;
-
 
             vst1q_p(phwTarget,
                 __arm_2d_unpack_and_blend_rg565(phwTarget, vSrcOpa,vSrcR, vSrcG, vSrcB),
@@ -919,7 +917,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask_and
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_u16(pchSourceMaskLine);
 
@@ -989,7 +987,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pwSourceMaskLine, vStride4Offs);
 
@@ -1053,7 +1051,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_mask)(
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_u16(pchSourceMaskLine);
 
@@ -1119,7 +1117,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_src_chn_mask
             mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+            __arm_2d_ccca8888_unpack_z_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB, tailPred);
 
             uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pwSourceMaskLine, vStride4Offs);
 

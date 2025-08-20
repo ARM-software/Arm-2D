@@ -21,8 +21,8 @@
  * Title:        arm-2d_utils_helium.h
  * Description:  Provides helium utility routines
  *
- * $Date:        16. Aug 2023
- * $Revision:    V 1.0.0
+ * $Date:        20. August 2025
+ * $Revision:    V 1.1.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -139,6 +139,19 @@ void __arm_2d_ccca8888_unpack_u16(const uint8_t * pSource, uint16x8_t * opa,
                                       uint16x8_t * R, uint16x8_t * G, uint16x8_t * B)
 {
     uint8x16x2_t    vdeintr2 = vld2q_u8(pSource);
+
+    *opa = vmovltq(vdeintr2.val[1]);
+    *G = vmovlbq(vdeintr2.val[1]);
+    *R = vmovltq(vdeintr2.val[0]);
+    *B = vmovlbq(vdeintr2.val[0]);
+}
+
+__STATIC_FORCEINLINE
+void __arm_2d_ccca8888_unpack_z_u16(const uint8_t * pSource, uint16x8_t * opa,
+                                      uint16x8_t * R, uint16x8_t * G, uint16x8_t * B,
+                                      mve_pred16_t    tailPred)
+{
+    uint8x16x2_t    vdeintr2 = vld2q_z_u8(pSource, tailPred);
 
     *opa = vmovltq(vdeintr2.val[1]);
     *G = vmovlbq(vdeintr2.val[1]);
