@@ -1011,7 +1011,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
                     vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
 
                     vstrbq_p_u16(pwTargetCur,
-                        __arm_2d_unpack_and_blend_cccn888(pwTargetCur, vSrcOpa, vSrc),
+                        __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
                         tailPred);
 
                     pwSrcMsk += 2;
@@ -1165,7 +1165,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask(
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
 
                     vstrbq_p_u16(pwTargetCur,
-                        __arm_2d_unpack_and_blend_cccn888(pwTargetCur, vSrcOpa, vSrc),
+                        __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
                         tailPred);
 
                     pwSrcMsk += 2;
