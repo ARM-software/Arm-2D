@@ -1010,7 +1010,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
                     uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
                     vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
 
-                    vstrbq_p_u16(pwTargetCur,
+                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
                         __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
                         tailPred);
 
@@ -1164,7 +1164,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask(
                     uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
 
-                    vstrbq_p_u16(pwTargetCur,
+                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
                         __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
                         tailPred);
 

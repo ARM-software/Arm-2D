@@ -461,7 +461,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_chn_mask{{has_
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
                 {%- endif %}
 
-                    vstrbq_p_u16(pwTargetCur,
+                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
                         __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
                         tailPred);
 
