@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_tile_fill_with_source_mask_and_opacity.c
- * Description:  APIs for tile fill with source mask and opacity only
+ * Title:        __arm_2d_tile_fill_with_source_mask_and_opacity_helium.c
+ * Description:  Helium implementation for tile fill with source mask and opacity only
  *
- * $Date:        20. August 2025
- * $Revision:    V.0.5.0
+ * $Date:        21. August 2025
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -186,7 +186,7 @@ void __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
                         int16_t iSourceStride,
                         arm_2d_size_t *__RESTRICT ptSourceSize,
                         
-                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        uint8_t * __RESTRICT pchSourceMaskBase,
                         int16_t iSourceMaskStride,
                         arm_2d_size_t *__RESTRICT ptSourceMaskSize,
                         
@@ -195,11 +195,11 @@ void __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    __arm_2d_impl_gray8_src_msk_fill_opa(   pchSourceBase, 
+    __arm_2d_impl_gray8_src_msk_fill_opa(  pchSourceBase, 
                                             iSourceStride,
                                             ptSourceSize,
 
-                                            phwSourceMaskBase, 
+                                            pchSourceMaskBase, 
                                             iSourceMaskStride,
                                             ptSourceMaskSize,
 
@@ -225,7 +225,7 @@ void __arm_2d_impl_gray8_tile_fill_with_src_chn_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    __arm_2d_impl_gray8_src_chn_msk_fill_opa(   pchSourceBase, 
+    __arm_2d_impl_gray8_src_chn_msk_fill_opa(  pchSourceBase, 
                                                 iSourceStride,
                                                 ptSourceSize,
 
@@ -240,13 +240,126 @@ void __arm_2d_impl_gray8_tile_fill_with_src_chn_mask_and_opacity(
                                                 hwOpacity);
 }
 
+                        
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    uint8_t *__RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+
+                                    uint8_t *__restrict pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize,
+                                    uint_fast16_t hwOpacity)
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        uint8_t *pchSourceMask = pchSourceMaskBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint8_t *__RESTRICT pchTarget = pchTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                uint32_t  *__RESTRICT pwSrc = pwSource;
+                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
+
+                int32_t blkCnt = wLength;
+
+                pchTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pchTargetBase += iTargetStride;
+
+            pchSourceMask += iSourceMaskStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        uint32_t *pwSourceMask = pwSourceMaskBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint8_t *__RESTRICT pchTarget = pchTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                uint32_t  *__RESTRICT pwSrc = pwSource;
+                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
+
+                int32_t blkCnt = wLength;
+
+                pchTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pchTargetBase += iTargetStride;
+
+            pwSourceMask += iSourceMaskStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
 __OVERRIDE_WEAK
 void __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
                         uint16_t * __RESTRICT phwSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t *__RESTRICT ptSourceSize,
                         
-                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        uint8_t * __RESTRICT pchSourceMaskBase,
                         int16_t iSourceMaskStride,
                         arm_2d_size_t *__RESTRICT ptSourceMaskSize,
                         
@@ -259,7 +372,7 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
                                             iSourceStride,
                                             ptSourceSize,
 
-                                            phwSourceMaskBase, 
+                                            pchSourceMaskBase, 
                                             iSourceMaskStride,
                                             ptSourceMaskSize,
 
@@ -300,96 +413,6 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
                                                 hwOpacity);
 }
 
-
-__OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
-                        uint32_t * __RESTRICT pwSourceBase,
-                        int16_t iSourceStride,
-                        arm_2d_size_t *__RESTRICT ptSourceSize,
-                        
-                        uint8_t * __RESTRICT phwSourceMaskBase,
-                        int16_t iSourceMaskStride,
-                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
-                        
-                        uint32_t *__RESTRICT pwTargetBase,
-                        int16_t iTargetStride,
-                        arm_2d_size_t *__RESTRICT ptTargetSize,
-                        uint_fast16_t hwOpacity)
-{
-    __arm_2d_impl_cccn888_src_msk_fill_opa(  pwSourceBase, 
-                                            iSourceStride,
-                                            ptSourceSize,
-
-                                            phwSourceMaskBase, 
-                                            iSourceMaskStride,
-                                            ptSourceMaskSize,
-
-                                            pwTargetBase,
-                                            iTargetStride,
-                                            ptTargetSize,
-
-                                            hwOpacity);
-}
-
-
-__OVERRIDE_WEAK
-void __arm_2d_impl_cccn888_tile_fill_with_src_chn_mask_and_opacity(
-                        uint32_t * __RESTRICT pwSourceBase,
-                        int16_t iSourceStride,
-                        arm_2d_size_t *__RESTRICT ptSourceSize,
-                        
-                        uint32_t * __RESTRICT pwSourceMaskBase,
-                        int16_t iSourceMaskStride,
-                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
-                        
-                        uint32_t *__RESTRICT pwTargetBase,
-                        int16_t iTargetStride,
-                        arm_2d_size_t *__RESTRICT ptTargetSize,
-                        uint_fast16_t hwOpacity)
-{
-    __arm_2d_impl_cccn888_src_chn_msk_fill_opa( pwSourceBase, 
-                                                iSourceStride,
-                                                ptSourceSize,
-
-                                                pwSourceMaskBase, 
-                                                iSourceMaskStride,
-                                                ptSourceMaskSize,
-
-                                                pwTargetBase,
-                                                iTargetStride,
-                                                ptTargetSize,
-
-                                                hwOpacity);
-}
-
-extern void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
-                        uint32_t * __RESTRICT pwSourceBase,
-                        int16_t iSourceStride,
-                        arm_2d_size_t *__RESTRICT ptSourceSize,
-                        
-                        uint8_t * __RESTRICT phwSourceMaskBase,
-                        int16_t iSourceMaskStride,
-                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
-                        
-                        uint8_t *__RESTRICT pchTargetBase,
-                        int16_t iTargetStride,
-                        arm_2d_size_t *__RESTRICT ptTargetSize,
-                        uint_fast16_t hwOpacity);
-
-extern void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
-                        uint32_t * __RESTRICT pwSourceBase,
-                        int16_t iSourceStride,
-                        arm_2d_size_t *__RESTRICT ptSourceSize,
-                        
-                        uint32_t * __RESTRICT pwSourceMaskBase,
-                        int16_t iSourceMaskStride,
-                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
-                        
-                        uint8_t *__RESTRICT pchTargetBase,
-                        int16_t iTargetStride,
-                        arm_2d_size_t *__RESTRICT ptTargetSize,
-                        uint_fast16_t hwOpacity);
-
                         
 __OVERRIDE_WEAK
 void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
@@ -424,12 +447,10 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
                                       : ptSourceSize->iWidth;
 
                 uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint16_t *__RESTRICT phwTargetCur = phwTarget;
-
                 uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
                 int32_t blkCnt = wLength;
-
+                uint16_t *__RESTRICT phwTargetCur = phwTarget;
                 do {
                     mve_pred16_t    tailPred = vctp16q(blkCnt);
                     uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
@@ -504,12 +525,10 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
                                       : ptSourceSize->iWidth;
 
                 uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint16_t *__RESTRICT phwTargetCur = phwTarget;
-
                 uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
 
                 int32_t blkCnt = wLength;
-
+                uint16_t *__RESTRICT phwTargetCur = phwTarget;
                 do {
                     mve_pred16_t    tailPred = vctp16q(blkCnt);
                     uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
@@ -549,22 +568,38 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
     }
 }
 
-
-extern void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask_and_opacity(
+__OVERRIDE_WEAK
+void __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
                         uint32_t * __RESTRICT pwSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t *__RESTRICT ptSourceSize,
                         
-                        uint8_t * __RESTRICT phwSourceMaskBase,
+                        uint8_t * __RESTRICT pchSourceMaskBase,
                         int16_t iSourceMaskStride,
                         arm_2d_size_t *__RESTRICT ptSourceMaskSize,
                         
                         uint32_t *__RESTRICT pwTargetBase,
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize,
-                        uint_fast16_t hwOpacity);
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_cccn888_src_msk_fill_opa(  pwSourceBase, 
+                                            iSourceStride,
+                                            ptSourceSize,
 
-extern void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
+                                            pchSourceMaskBase, 
+                                            iSourceMaskStride,
+                                            ptSourceMaskSize,
+
+                                            pwTargetBase,
+                                            iTargetStride,
+                                            ptTargetSize,
+
+                                            hwOpacity);
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_cccn888_tile_fill_with_src_chn_mask_and_opacity(
                         uint32_t * __RESTRICT pwSourceBase,
                         int16_t iSourceStride,
                         arm_2d_size_t *__RESTRICT ptSourceSize,
@@ -576,8 +611,135 @@ extern void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_op
                         uint32_t *__RESTRICT pwTargetBase,
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize,
-                        uint_fast16_t hwOpacity);
+                        uint_fast16_t hwOpacity)
+{
+    __arm_2d_impl_cccn888_src_chn_msk_fill_opa(  pwSourceBase, 
+                                                iSourceStride,
+                                                ptSourceSize,
 
+                                                pwSourceMaskBase, 
+                                                iSourceMaskStride,
+                                                ptSourceMaskSize,
+
+                                                pwTargetBase,
+                                                iTargetStride,
+                                                ptTargetSize,
+
+                                                hwOpacity);
+}
+
+                        
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask_and_opacity(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    uint8_t *__RESTRICT pchSourceMaskBase,
+                                    int16_t iSourceMaskStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+
+                                    uint32_t *__restrict pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize,
+                                    uint_fast16_t hwOpacity)
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        uint8_t *pchSourceMask = pchSourceMaskBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint32_t *__RESTRICT pwTarget = pwTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                uint32_t  *__RESTRICT pwSrc = pwSource;
+                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
+
+                int32_t blkCnt = wLength;
+
+                pwTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pwTargetBase += iTargetStride;
+
+            pchSourceMask += iSourceMaskStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t * __RESTRICT pwSourceMaskBase,
+                        int16_t iSourceMaskStride,
+                        arm_2d_size_t *__RESTRICT ptSourceMaskSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize,
+                        uint_fast16_t hwOpacity)
+{
+    uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        uint32_t *pwSourceMask = pwSourceMaskBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint32_t *__RESTRICT pwTarget = pwTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                uint32_t  *__RESTRICT pwSrc = pwSource;
+                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
+
+                int32_t blkCnt = wLength;
+
+                pwTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pwTargetBase += iTargetStride;
+
+            pwSourceMask += iSourceMaskStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
 
 
 #ifdef   __cplusplus
