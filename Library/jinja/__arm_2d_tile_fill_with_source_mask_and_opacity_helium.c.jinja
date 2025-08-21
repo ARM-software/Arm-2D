@@ -272,6 +272,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_mask{{has_opac
                                 {%- endif -%}
                                 )
 {
+{%- if colour_name == 'cccn888' %}
+    /* offset to replicate 2 masks accross the 4 channels */
+    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
+{%- endif %}
+
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -305,10 +310,10 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_mask{{has_opac
 
                     uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
                 {%- if has_opacity == '_and_opacity' %}
-                    vSrcMask = vSrcMask * (uint16_t)hwOpacity >> 8;
-                {%- endif %}
-
+                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+                {%- else %}
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+                {%- endif %}
 
                     vst1q_p(phwTargetCur,
                         __arm_2d_unpack_and_blend_rg565(phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
@@ -320,6 +325,31 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_mask{{has_opac
                     blkCnt -= 8;
                 } while (blkCnt > 0);
             {%- elif colour_name == 'cccn888' %}
+                uint32_t *__RESTRICT pwTargetCur = pwTarget;
+                do {
+                    mve_pred16_t    tailPred = vctp64q(blkCnt);
+
+                    uint16x8_t vSrc, vSrcOpa;
+
+                    __arm_2d_ccca8888_get_and_dup_opa(pwSrc, &vSrcOpa, &vSrc);
+
+                    uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
+
+                {%- if has_opacity == '_and_opacity' %}
+                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+                {%- else %}
+                    vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+                {%- endif %}
+
+                    vstrbq_p_u16(pwTargetCur,
+                        __arm_2d_unpack_and_blend_cccn888(pwTargetCur, vSrcOpa, vSrc),
+                        tailPred);
+
+                    pwSrcMsk += 2;
+                    pwSrc += 2;
+                    pwTargetCur += 2;
+                    blkCnt -= 2;
+                } while (blkCnt > 0);
             {%- endif %}
 
                 p{{colour_int_prefix}}Target += wLength;
@@ -359,7 +389,13 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_chn_mask{{has_
                     {%- endif -%}
                     )
 {
+{%- if colour_name == 'gray8' %}
+{%- elif colour_name == 'rgb565' %}
     uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+{%- elif colour_name == 'cccn888' %}
+    /* offset to replicate 2 masks accros the 4 channels */
+    uint16x8_t offsetMsk = {0, 0, 0, 0, 4, 4, 4, 4};
+{%- endif %}
 
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
@@ -394,10 +430,10 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_chn_mask{{has_
 
                     uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
                 {%- if has_opacity == '_and_opacity' %}
-                    vSrcMask = vSrcMask * (uint16_t)hwOpacity >> 8;
-                {%- endif %}
-
+                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+                {%- else %}
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+                {%- endif %}
 
                     vst1q_p(phwTargetCur,
                         __arm_2d_unpack_and_blend_rg565(phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
@@ -409,6 +445,31 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_chn_mask{{has_
                     blkCnt -= 8;
                 } while (blkCnt > 0);
             {%- elif colour_name == 'cccn888' %}
+                uint32_t *__RESTRICT pwTargetCur = pwTarget;
+                do {
+                    mve_pred16_t    tailPred = vctp64q(blkCnt);
+
+                    uint16x8_t vSrc, vSrcOpa;
+
+                    __arm_2d_ccca8888_get_and_dup_opa(pwSrc, &vSrcOpa, &vSrc);
+
+                    uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
+
+                {%- if has_opacity == '_and_opacity' %}
+                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+                {%- else %}
+                    vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+                {%- endif %}
+
+                    vstrbq_p_u16(pwTargetCur,
+                        __arm_2d_unpack_and_blend_cccn888(pwTargetCur, vSrcOpa, vSrc),
+                        tailPred);
+
+                    pwSrcMsk += 2;
+                    pwSrc += 2;
+                    pwTargetCur += 2;
+                    blkCnt -= 2;
+                } while (blkCnt > 0);
             {%- endif %}
 
                 p{{colour_int_prefix}}Target += wLength;

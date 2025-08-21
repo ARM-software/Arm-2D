@@ -1230,7 +1230,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask_an
         int32_t         blkCnt = iWidth;
 
         do {
-
             mve_pred16_t    tailPred = vctp64q(blkCnt);
 
             uint16x8_t vSrc, vSrcOpa;
@@ -1250,11 +1249,10 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask_an
             pwSource += 8;
             pwTarget += 8;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
-
 
         /* source mask rolling */
         if (++iSourceMaskY >= iSourceMaskHeight) {
