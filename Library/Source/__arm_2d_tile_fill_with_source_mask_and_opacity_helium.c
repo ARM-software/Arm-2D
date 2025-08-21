@@ -645,8 +645,8 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
                     uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
                     vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
 
-                    vst1q_p((const uint8_t *)phwTargetCur,
-                        __arm_2d_unpack_and_blend_rg565((const uint8_t *)phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
+                    vst1q_p(phwTargetCur,
+                        __arm_2d_unpack_and_blend_rg565(phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
                         tailPred);
 
                     pwSrcMsk += 8;
@@ -794,8 +794,8 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask(
                     uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
 
-                    vst1q_p((const uint8_t *)phwTargetCur,
-                        __arm_2d_unpack_and_blend_rg565((const uint8_t *)phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
+                    vst1q_p(phwTargetCur,
+                        __arm_2d_unpack_and_blend_rg565(phwTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
                         tailPred);
 
                     pwSrcMsk += 8;
