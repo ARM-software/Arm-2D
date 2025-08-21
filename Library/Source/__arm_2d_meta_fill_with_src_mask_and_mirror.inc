@@ -166,60 +166,208 @@ arm_fsm_rt_t __MFSMM_SW_FUNC(tile_fill_with_src_mask)( __arm_2d_sub_task_t *ptTa
         return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
     }
 
-    if (    ARM_2D_CHANNEL_8in32 
-       ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
-       
-    #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-        __MFSMM_IMPL_FUNC(src_chn_msk_fill)(   
-                                ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tSource.pBuffer,
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tSource.iStride,
-            &ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+    if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+        if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MFSMM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
 
-            ptTask->Param.tFillMask.tSrcMask.pBuffer,
-            ptTask->Param.tFillMask.tSrcMask.iStride,
-            &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+            if (    ARM_2D_CHANNEL_8in32 
+               ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
+            #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+                if (ARM_2D_COLOUR_SZ_8BIT == __API_MFSMM_COLOUR_SZ) {
+                    __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask(
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
 
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tTarget.iStride,
-            &ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                        ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                        ptTask->Param.tFillMask.tSrcMask.iStride,
+                        &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
 
-    #else
-        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
-    #endif
-    
-    } else {
-        assert(     ARM_2D_COLOUR_8BIT
-               ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                }
 
-        __MFSMM_IMPL_FUNC(src_msk_fill)(   
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tSource.pBuffer,
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tSource.iStride,
-            &ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+                if (ARM_2D_COLOUR_SZ_16BIT == __API_MFSMM_COLOUR_SZ) {
+                    __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask(
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
 
-            ptTask->Param.tFillMask.tSrcMask.pBuffer,
-            ptTask->Param.tFillMask.tSrcMask.iStride,
-            &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+                        ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                        ptTask->Param.tFillMask.tSrcMask.iStride,
+                        &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
 
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
-            ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tTarget.iStride,
-            &ptTask->Param.tFillMask
-                .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                }
+
+                if (ARM_2D_COLOUR_SZ_32BIT == __API_MFSMM_COLOUR_SZ) {
+                    __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask(
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                        ptTask->Param.tFillMask.tSrcMask.iStride,
+                        &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                }                
+
+            #else
+                return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+            #endif
+
+            } else {
+                if (ARM_2D_COLOUR_SZ_8BIT == __API_MFSMM_COLOUR_SZ) {
+                    __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask(
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                        ptTask->Param.tFillMask.tSrcMask.iStride,
+                        &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                }
+
+                if (ARM_2D_COLOUR_SZ_16BIT == __API_MFSMM_COLOUR_SZ) {
+                    __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask(
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                        ptTask->Param.tFillMask.tSrcMask.iStride,
+                        &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                }
+
+                if (ARM_2D_COLOUR_SZ_32BIT == __API_MFSMM_COLOUR_SZ) {
+                    __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask(
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                        ptTask->Param.tFillMask.tSrcMask.iStride,
+                        &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                        ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                        &ptTask->Param.tFillMask
+                            .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+                }
+            }
+            return arm_fsm_rt_cpl;
+        } else {
+            return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+        }
+    } else 
+#endif
+    {
+        if (    ARM_2D_CHANNEL_8in32 
+        ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme) {
+        
+        #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
+
+            __MFSMM_IMPL_FUNC(src_chn_msk_fill)(   
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tSource.iStride,
+                &ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+
+                ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                ptTask->Param.tFillMask.tSrcMask.iStride,
+                &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                &ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+
+        #else
+            return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+        #endif
+        
+        } else {
+            assert(     ARM_2D_COLOUR_8BIT
+                ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+
+            __MFSMM_IMPL_FUNC(src_msk_fill)(   
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tSource.pBuffer,
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tSource.iStride,
+                &ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tSource.tValidRegion.tSize,
+
+                ptTask->Param.tFillMask.tSrcMask.pBuffer,
+                ptTask->Param.tFillMask.tSrcMask.iStride,
+                &ptTask->Param.tFillMask.tSrcMask.tValidRegion.tSize,
+
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tTarget.pBuffer,
+                ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tTarget.iStride,
+                &ptTask->Param.tFillMask
+                    .use_as____arm_2d_param_fill_t.tTarget.tValidRegion.tSize);
+
+        }
 
     }
-
-    
     return arm_fsm_rt_cpl;
 }
 
