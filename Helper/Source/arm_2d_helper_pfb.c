@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        13. August 2025
- * $Revision:    V.2.2.2
+ * $Date:        22. August 2025
+ * $Revision:    V.2.2.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -393,8 +393,6 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
     return arm_2d_get_absolute_location(ptTile, tLocation, true);
 }
 
-
-
 ARM_NONNULL(1)
 void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
 {
@@ -688,33 +686,11 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
 {
 
     if (this.Adapter.bIsUsingOptimizedDirtyRegionList) {
-        
 
         if (NULL == this.Adapter.ptDirtyRegion->ptInternalNext) {
             /* finished or empty */
             this.Adapter.bIsUsingOptimizedDirtyRegionList = false;
-        #if 0
-            this.Adapter.ptDirtyRegion = this.Adapter.OptimizedDirtyRegions.ptOriginalList;
 
-            ARM_2D_LOG_INFO(
-                HELPER_PFB, 
-                2, 
-                "Get Next Dirty Region", 
-                "Reach the end of the optimized working list, use the original dirty region list [%p]",
-                this.Adapter.ptDirtyRegion
-            );
-
-            if (NULL == this.Adapter.ptDirtyRegion) {
-                // no dirty region is available
-                this.Adapter.bFirstIteration = true;
-                
-                return false;
-            } else {
-                this.Adapter.bIsRegionChanged = true;
-            }
-
-            return true;
-        #else
             this.Adapter.ptDirtyRegion = NULL;
             // no dirty region is available
             this.Adapter.bFirstIteration = true;
@@ -728,7 +704,7 @@ static bool __arm_2d_helper_pfb_get_next_dirty_region(arm_2d_helper_pfb_t *ptThi
             );
 
             return false;
-        #endif
+
         } else {
             this.Adapter.ptDirtyRegion
                 = this.Adapter.ptDirtyRegion->ptInternalNext;
@@ -2823,7 +2799,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 #if !defined(__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__)
     /* initialize the OptimizedDirtyRegions service */
     if (this.Adapter.bIsDirtyRegionOptimizationEnabled) {
-        this.Adapter.OptimizedDirtyRegions.ptOriginalList = ptDirtyRegions;
         this.Adapter.bIsUsingOptimizedDirtyRegionList = false;              /* this must be false here */
         this.Adapter.bFailedToOptimizeDirtyRegion = false;
 

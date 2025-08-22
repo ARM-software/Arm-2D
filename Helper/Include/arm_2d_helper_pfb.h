@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        13. August 2025
- * $Revision:    V.2.2.2
+ * $Date:        22. August 2025
+ * $Revision:    V.2.2.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -801,7 +801,6 @@ ARM_PRIVATE(
 
         struct {
             arm_2d_region_list_item_t  *ptWorkingList;
-            arm_2d_region_list_item_t  *ptOriginalList;
             arm_2d_region_list_item_t  *ptCandidateList;
             arm_2d_region_list_item_t  *ptFreeList;
             arm_2d_region_list_item_t  tWorkingItem;
