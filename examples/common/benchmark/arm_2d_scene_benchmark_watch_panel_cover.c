@@ -142,7 +142,7 @@ static void __on_scene_benchmark_watch_panel_cover_frame_complete(arm_2d_scene_t
 
     if (0 == this.chFrameCount) {
         /* disable low level flush */
-        arm_2d_helper_ignore_low_level_flush(
+        arm_2d_helper_pfb_ignore_low_level_flush(
                                 &(ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
 
         /* disable scene switching effect */

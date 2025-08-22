@@ -258,7 +258,7 @@ static void __on_scene_benchmark_generic_frame_complete(arm_2d_scene_t *ptScene)
             } while(0);
 
             /* resume low level flush */
-            arm_2d_helper_resume_low_level_flush(ptHelper);
+            arm_2d_helper_pfb_resume_low_level_flush(ptHelper);
 
 #if __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
 #   if defined(__MICROLIB)

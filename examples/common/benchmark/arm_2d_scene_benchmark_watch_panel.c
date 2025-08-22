@@ -257,7 +257,7 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
             } while(0);
 
             /* resume low level flush */
-            arm_2d_helper_resume_low_level_flush(ptHelper);
+            arm_2d_helper_pfb_resume_low_level_flush(ptHelper);
 #if __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
 #   if defined(__MICROLIB)
             __semihost(0x18, (const void *)0x20026);
