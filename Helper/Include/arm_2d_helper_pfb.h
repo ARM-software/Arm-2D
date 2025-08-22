@@ -58,13 +58,24 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+
+
+/*============================ MACROS ========================================*/
+
+/*!
+ * \addtogroup Deprecated
+ * @{
+ */
+
+#define arm_2d_helper_ignore_low_level_flush    arm_2d_helper_pfb_ignore_low_level_flush
+#define arm_2d_helper_resume_low_level_flush    arm_2d_helper_pfb_resume_low_level_flush
+
+/*! @} */
+
 /*!
  * \addtogroup gHelper 8 Helper Services
  * @{
  */
-
-/*============================ MACROS ========================================*/
-
 #define ARM_2D_FPS_MODE_RENDER_ONLY     0
 #define ARM_2D_FPS_MODE_REAL            1
 
@@ -758,6 +769,8 @@ typedef struct arm_2d_helper_pfb_cfg_t {
         arm_2d_region_list_item_t *ptRegions;                   //!< dirty region list item for internal pool
         uint8_t                   chCount;                      //!< number of dirty region list items
     } DirtyRegion;
+
+    arm_2d_size_t   tAntiNoiseScanSize;                         //!< the region size of anti-noise-scanning mode
     
     arm_2d_helper_pfb_dependency_t Dependency;                  //!< user registered dependency
 
@@ -828,7 +841,8 @@ ARM_PRIVATE(
             uint32_t                bEnableDirtyRegionOptimizationRequest   : 1;
             uint32_t                bDisableDirtyRegionOptimizationRequest  : 1;
             uint32_t                bFullFrameRefreshModeRequest            : 1;
-            uint32_t                                                        : 5;
+            uint32_t                bAntiNoiseScanRequest                   : 1;
+            uint32_t                                                        : 4;
 
             uint32_t                bIsDirtyRegionOptimizationEnabled       : 1;
             uint32_t                bEncounterDynamicDirtyRegion            : 1;
@@ -842,9 +856,12 @@ ARM_PRIVATE(
             uint32_t                bIgnoreLowLevelFlush                    : 1;
             uint32_t                bHideNavigationLayer                    : 1;
             uint32_t                bFullFrameRefreshModeEnabled            : 1;
+            uint32_t                bAntiNoiseScanEnabled                   : 1;
             uint32_t                                                        : 3;
 
         };
+
+        arm_2d_region_list_item_t   tAntiNoiseScanItem;
 
         arm_2d_colour_t             tCanvas;
 
@@ -1182,7 +1199,8 @@ void __arm_2d_helper_pfb_disable_drawing_canvas_colour(arm_2d_helper_pfb_t *ptTh
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+void arm_2d_helper_pfb_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+
 
 /*!
  * \brief resume the low level PFB flushing
@@ -1190,7 +1208,7 @@ void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis);
  */
 extern
 ARM_NONNULL(1)
-void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
+void arm_2d_helper_pfb_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 
 /*!
  * \brief Enable or disable full-frame-refresh mode
@@ -1200,8 +1218,21 @@ void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
  */
 extern
 ARM_NONNULL(1)
-bool arm_2d_helper_full_frame_refresh_mode( arm_2d_helper_pfb_t *ptThis, 
+bool arm_2d_helper_pfb_full_frame_refresh_mode( arm_2d_helper_pfb_t *ptThis, 
                                             bool bEnabled);
+
+/*!
+ * \brief Enable or disable anti-noise-scanning mode
+ *
+ * \note when enabled, the PFB will clean(update) the screen with a small region across
+ *       frames. The region size is configurable in arm_2d_helper_pfb_cfg_t.
+ * \param[in] ptThis an initialised PFB helper control block
+ * \param[in] bEnabled enable or disable this option
+ * \return boolean previous setting.
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_pfb_anti_noise_scan_mode(arm_2d_helper_pfb_t *ptThis, bool bEnabled);
 
 /*!
  * \brief update PFB dependency (event handlers)

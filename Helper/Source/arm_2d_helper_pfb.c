@@ -394,26 +394,38 @@ arm_2d_location_t arm_2d_helper_pfb_get_absolute_location(
 }
 
 ARM_NONNULL(1)
-void arm_2d_helper_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
+void arm_2d_helper_pfb_ignore_low_level_flush(arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
     this.Adapter.bIgnoreLowLevelFlush = true;
 }
 
 ARM_NONNULL(1)
-void arm_2d_helper_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis)
+void arm_2d_helper_pfb_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis)
 {
     assert(NULL != ptThis);
     this.Adapter.bIgnoreLowLevelFlush = false;
 }
 
 ARM_NONNULL(1)
-bool arm_2d_helper_full_frame_refresh_mode(arm_2d_helper_pfb_t *ptThis, bool bEnabled)
+bool arm_2d_helper_pfb_full_frame_refresh_mode(arm_2d_helper_pfb_t *ptThis, bool bEnabled)
 {
     bool bOldStatus = false;
     arm_irq_safe {
         bOldStatus = this.Adapter.bFullFrameRefreshModeRequest;
         this.Adapter.bFullFrameRefreshModeRequest = bEnabled;
+    }
+
+    return bOldStatus;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_helper_pfb_anti_noise_scan_mode(arm_2d_helper_pfb_t *ptThis, bool bEnabled)
+{
+    bool bOldStatus = false;
+    arm_irq_safe {
+        bOldStatus = this.Adapter.bAntiNoiseScanRequest;
+        this.Adapter.bAntiNoiseScanRequest = bEnabled;
     }
 
     return bOldStatus;
@@ -2039,6 +2051,8 @@ label_iteration_begin_start:
                 );
             } else {
 
+                /* NOTE: the true entry of a frame */
+
                 ARM_2D_LOG_INFO(
                     HELPER_PFB, 
                     1, 
@@ -2048,6 +2062,12 @@ label_iteration_begin_start:
                 );
 
                 this.Adapter.ptDirtyRegion = ptDirtyRegions;
+
+                /* insert item once */
+                if (this.Adapter.bAntiNoiseScanEnabled && NULL != ptDirtyRegions) {
+                    this.Adapter.tAntiNoiseScanItem.ptNext = this.Adapter.ptDirtyRegion;
+                    this.Adapter.ptDirtyRegion = &this.Adapter.tAntiNoiseScanItem;
+                }
             }
         }
         
@@ -2793,8 +2813,59 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     }
 
     arm_irq_safe {
-        this.Adapter.bFullFrameRefreshModeEnabled = this.Adapter.bFullFrameRefreshModeRequest;
+        this.Adapter.bFullFrameRefreshModeEnabled 
+            = this.Adapter.bFullFrameRefreshModeRequest;
+        
     }
+
+    /* anti-noise-scanning mode */
+    do {
+        bool bAntiNoiseScanStatusChanged = false;
+        arm_irq_safe {
+            if (    this.Adapter.bAntiNoiseScanRequest 
+               !=   this.Adapter.bAntiNoiseScanEnabled) {
+                this.Adapter.bAntiNoiseScanEnabled 
+                    = this.Adapter.bAntiNoiseScanRequest;
+                bAntiNoiseScanStatusChanged = true;
+            }
+        }
+
+        if (bAntiNoiseScanStatusChanged) {
+            if (this.Adapter.bAntiNoiseScanEnabled) {
+                /* initialize scan region (and reset the location) */
+                memset( &this.Adapter.tAntiNoiseScanItem, 
+                        0, 
+                        sizeof(this.Adapter.tAntiNoiseScanItem));
+                
+                /* NOTE: memset will set bIgnore to false, we keep the following comment
+                 *      this.Adapter.tAntiNoiseScanItem.bIgnore = false;
+                 */
+                
+                this.Adapter.tAntiNoiseScanItem.tRegion.tSize = this.tCFG.tAntiNoiseScanSize;
+                this.Adapter.tAntiNoiseScanItem.tRegion.tLocation = this.tCFG.tDisplayArea.tLocation;
+            } else {
+                this.Adapter.tAntiNoiseScanItem.bIgnore = true;
+            }
+        } else if (this.Adapter.bAntiNoiseScanEnabled) {
+            arm_2d_region_t *ptScanRegion = &this.Adapter.tAntiNoiseScanItem.tRegion;
+            arm_2d_location_t tScreenLimit = {
+                .iX = (this.tCFG.tDisplayArea.tLocation.iX + this.tCFG.tDisplayArea.tSize.iWidth) - 1,
+                .iY = (this.tCFG.tDisplayArea.tLocation.iY + this.tCFG.tDisplayArea.tSize.iHeight) - 1,
+            };
+
+            /* update x */
+            ptScanRegion->tLocation.iX += ptScanRegion->tSize.iWidth;
+            if (ptScanRegion->tLocation.iX > tScreenLimit.iX) {
+                ptScanRegion->tLocation.iX = this.tCFG.tDisplayArea.tLocation.iX;
+
+                /* update y */
+                ptScanRegion->tLocation.iY += ptScanRegion->tSize.iHeight;
+                if (ptScanRegion->tLocation.iY > tScreenLimit.iY) {
+                    ptScanRegion->tLocation.iY = this.tCFG.tDisplayArea.tLocation.iY;
+                }
+            }
+        }
+    } while(0);
 
 #if !defined(__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__)
     /* initialize the OptimizedDirtyRegions service */

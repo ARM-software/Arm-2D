@@ -195,7 +195,7 @@ extern "C" {
 // <q> Enable Dirty Region Debug Mode
 // <i> Draw dirty regions on the screen for debug.
 #ifndef __DISP0_CFG_DEBUG_DIRTY_REGIONS__
-#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       0
+#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       1
 #endif
 
 // <q> Enable Dirty Region Optimization Service
@@ -252,6 +252,18 @@ extern "C" {
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
 #   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
+#endif
+
+// <o>The Anti-Noise-Scanning block Width
+// <i> The width of the anti-noise-scanning block size
+#ifndef __DISP0_CFG_PFB_ANS_WIDTH__
+#   define __DISP0_CFG_PFB_ANS_WIDTH__                              8
+#endif
+
+// <o>The Anti-Noise-Scanning block Height
+// <i> The height of the anti-noise-scanning block size
+#ifndef __DISP0_CFG_PFB_ANS_HEIGHT__
+#   define __DISP0_CFG_PFB_ANS_HEIGHT__                             8
 #endif
 
 // </h>

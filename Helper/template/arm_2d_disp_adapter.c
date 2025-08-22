@@ -693,6 +693,11 @@ static void __user_scene_player_init(void)
         .DirtyRegion.ptRegions = s_tDirtyRegionList,
         .DirtyRegion.chCount = dimof(s_tDirtyRegionList),
 #endif
+        .tAntiNoiseScanSize = {
+            .iWidth = __DISP%Instance%_CFG_PFB_ANS_WIDTH__,
+            .iHeight = __DISP%Instance%_CFG_PFB_ANS_HEIGHT__,
+        },
+
     ) < 0) {
         //! error detected
         assert(false);
