@@ -106,6 +106,7 @@ var group__gHelper =
     [ "arm_2d_helper_pfb_cfg_t", "group__gHelper.html#structarm__2d__helper__pfb__cfg__t", [
       [ "tDisplayArea", "group__gHelper.html#adc4ca6df76cda6514cff8a4cec3918ca", null ],
       [ "FrameBuffer", "group__gHelper.html#af38c4ce9b91ac08d811c054fe8ddadd1", null ],
+      [ "tAntiNoiseScanSize", "group__gHelper.html#a88c8cce0e119070e6391de1e3f801d0f", null ],
       [ "Dependency", "group__gHelper.html#a65ec336911098eaed7b2ac60038dda6e", null ]
     ] ],
     [ "arm_2d_helper_pfb_t", "group__gHelper.html#structarm__2d__helper__pfb__t", [
@@ -366,9 +367,10 @@ var group__gHelper =
     [ "arm_2d_helper_show_navigation_layer", "group__gHelper.html#gae7a2c6d89191cfa51b06b24e06a89e2e", null ],
     [ "__arm_2d_helper_pfb_enable_drawing_canvas_colour", "group__gHelper.html#ga7aacbb555e295f1e12fdd85213d4db3c", null ],
     [ "__arm_2d_helper_pfb_disable_drawing_canvas_colour", "group__gHelper.html#gacd06c01a12019f65c4c6d16ea7f19959", null ],
-    [ "arm_2d_helper_ignore_low_level_flush", "group__gHelper.html#gae4017b79661fe52c6115894ebcb094a5", null ],
-    [ "arm_2d_helper_resume_low_level_flush", "group__gHelper.html#gaeaaf0ab9b565da461334ed9fc641cc8d", null ],
-    [ "arm_2d_helper_full_frame_refresh_mode", "group__gHelper.html#gaf4cd850316388b42e58ce0882cf98192", null ],
+    [ "arm_2d_helper_pfb_ignore_low_level_flush", "group__gHelper.html#gaf99a3a3c078e1d6d668d03c663de2f64", null ],
+    [ "arm_2d_helper_pfb_resume_low_level_flush", "group__gHelper.html#gae37941925e8c12646df66e87ad564c78", null ],
+    [ "arm_2d_helper_pfb_full_frame_refresh_mode", "group__gHelper.html#ga832254d08745f18f28dbc767b5e200aa", null ],
+    [ "arm_2d_helper_pfb_anti_noise_scan_mode", "group__gHelper.html#ga60e1e2d1191aeb5307152574d3ee6fb9", null ],
     [ "arm_2d_helper_pfb_update_dependency", "group__gHelper.html#ga7f397129da5a5d78a7dd6325ab3405ef", null ],
     [ "__arm_2d_helper_pfb_report_rendering_complete", "group__gHelper.html#ga3f0e4fb8101686169c244a22c2e85f84", null ],
     [ "__arm_2d_helper_pfb_new", "group__gHelper.html#gaa7855ac916c44e531c4c8a9c5ec0e69e", null ],
