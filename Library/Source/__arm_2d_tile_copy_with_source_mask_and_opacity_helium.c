@@ -308,7 +308,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask_and_o
 
             __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
 
-            uint16x8_t vSrcMask = vldrbq_u16(pchSourceMaskLine);
+            uint16x8_t vSrcMask = vldrbq_z_u16(pchSourceMaskLine, tailPred);
 
             vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
 
