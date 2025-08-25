@@ -266,7 +266,7 @@ uint16x8_t __arm_2d_scale_alpha_mask(uint16x8_t opa, uint16x8_t vSrcMask)
 }
 
 __STATIC_INLINE 
-void __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(
+void __arm_2d_helium_ccca8888_blend_to_gray8(
     uint32_t *__RESTRICT pwSrc,
     uint8_t *__RESTRICT pchTarget,
     int_fast16_t iBlockCount,
@@ -282,7 +282,35 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(
         __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
 
         vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pwSrc += 8;
+        pchTarget += 8;
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchTarget,
+    int_fast16_t iBlockCount,
+    uint16_t hwOpacity
+)
+{
+    const uint16x8_t v256 = vdupq_n_u16(256);
+    do {
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
         vSrcOpa=  vmulq_n_u16(vSrcOpa, hwOpacity) >> 8;
+        vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
 
         vstrbq_p_u16(pchTarget,
             __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
