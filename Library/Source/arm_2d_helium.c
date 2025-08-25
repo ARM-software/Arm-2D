@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        20. August 2025
- * $Revision:    V.1.3.0
+ * $Date:        25. August 2025
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -185,6 +185,204 @@ __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_blend_n_cccn888(uint16x8_t        vTrg, uint16x8_t vChColour, uint16_t opa)
 {
     return (vmulq(vTrg, opa) + vmulq(vChColour,(256 - opa))) >> 8;
+}
+
+__STATIC_FORCEINLINE
+void __arm_2d_ccca8888_get_and_dup_opa(const uint8_t * pSource, uint16x8_t * opa,
+                                           uint16x8_t * src)
+{
+    /* offset to replicate the opacity accross the 4 channels */
+    uint16x8_t      offset = { 3, 3, 3, 3, 7, 7, 7, 7 };
+
+    *src = vldrbq_u16(pSource);
+
+    /*
+       replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
+       and leaves target 0 unchanged
+       vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
+     */
+    *opa = vldrbq_gather_offset_z_u16(pSource, offset, 0x3f3f);
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_unpack_and_blend_gray8(const uint8_t * pchTarget, uint16x8_t opa,
+                                               uint16x8_t R, uint16x8_t G, uint16x8_t B)
+{
+    uint16x8_t      vtrgt = vldrbq_u16(pchTarget);
+    uint16x8_t      vTrans = 256 - opa;
+
+    uint16x8_t      vAvg = R + G + B;
+    vAvg = vAvg / 3;
+
+    return (vmulq(vAvg, opa) + vmulq(vtrgt, vTrans)) >> 8;
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_unpack_and_blend_rg565(const uint16_t * phwTarget, uint16x8_t opa,
+                                               uint16x8_t vRsrc, uint16x8_t vGsrc, uint16x8_t vBsrc)
+{
+    uint16x8_t      vtrgt = vld1q(phwTarget);
+    uint16x8_t      vTrans = 256 - opa;
+    uint16x8_t      vRtgt, vGtgt, vBtgt;
+
+    __arm_2d_rgb565_unpack_single_vec(vtrgt, &vRtgt, &vGtgt, &vBtgt);
+
+
+    vRtgt = (vmulq(vRsrc, opa) + vmulq(vRtgt, vTrans)) >> 8;
+    vGtgt = (vmulq(vGsrc, opa) + vmulq(vGtgt, vTrans)) >> 8;
+    vBtgt = (vmulq(vBsrc, opa) + vmulq(vBtgt, vTrans)) >> 8;
+
+    return __arm_2d_rgb565_pack_single_vec(vRtgt, vGtgt, vBtgt);
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_unpack_and_blend_cccn888(const uint8_t * pwTarget, uint16x8_t opa,
+                                                 uint16x8_t vSrc)
+{
+    uint16x8_t      vTrg = vldrbq_u16(pwTarget);
+    uint16x8_t      vTrans = 256 - opa;
+
+    return (vTrg * vTrans + vSrc * opa) >> 8;
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_mask_opa(uint16x8_t opa, uint16x8_t vSrcMask,
+                                             uint_fast16_t hwOpacity)
+{
+    opa = vpselq(vdupq_n_u16(256), opa, vcmpeqq_n_u16(opa, 255));
+    opa = vmulq(opa, (vmulq(vSrcMask, hwOpacity) >> 8)) >> 8;
+    return opa;
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_mask(uint16x8_t opa, uint16x8_t vSrcMask)
+{
+    opa = vpselq(vdupq_n_u16(256), opa, vcmpeqq_n_u16(opa, 255));
+    opa = vmulq(opa, vSrcMask) >> 8;
+    return opa;
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    int_fast16_t iBlockCount,
+    uint16_t hwOpacity
+)
+{
+    do {
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pchSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    int_fast16_t iBlockCount
+)
+{
+    do {
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pchSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    int_fast16_t iBlockCount,
+    uint16_t hwOpacity
+)
+{
+    const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+    do {
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pwSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    int_fast16_t iBlockCount
+)
+{
+    const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+    do {
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pwSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
 }
 
 #define __ARM_2D_COMPILATION_UNIT
