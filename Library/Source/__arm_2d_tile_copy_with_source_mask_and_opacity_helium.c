@@ -91,15 +91,17 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
                                     uint8_t *__RESTRICT pchTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
+                                    uint_fast16_t hwOpacity)
 {
     hwRatio += (hwRatio == 255);
 
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+    int16_t iWidth = ptCopySize->iWidth;
+    int16_t iHeight = ptCopySize->iHeight;
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        const uint8_t   *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
-        uint8_t         *__RESTRICT pchTarget = pchTargetBase;
 #ifdef USE_MVE_INTRINSICS
+
+    #if 0
         int32_t         blkCnt = ptCopySize->iWidth;
 
         do {
@@ -121,9 +123,17 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
             blkCnt -= 8;
         }
         while (blkCnt > 0);
+    #else
+        __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(   pwSourceBase, 
+                                                                pchTargetBase, 
+                                                                iWidth, 
+                                                                hwOpacity);
+    #endif
 #else
+        const uint8_t   *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
+        uint8_t         *__RESTRICT pchTarget = pchTargetBase;
         register unsigned loopCnt  __asm("lr");
-        loopCnt = ptCopySize->iWidth;
+        loopCnt = iWidth;
 
     __asm volatile(
             ".p2align 2                                           \n"
