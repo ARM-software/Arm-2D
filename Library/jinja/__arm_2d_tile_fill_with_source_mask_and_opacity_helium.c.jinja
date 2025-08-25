@@ -180,6 +180,128 @@ void __arm_2d_impl_cccn888_src_chn_msk_fill_opa(
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    uint16_t hwBlockCount,
+    uint16_t hwOpacity
+)
+{
+    do {
+        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pchSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        hwBlockCount -= 8;
+    } while (hwBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    uint16_t hwBlockCount,
+    uint16_t hwOpacity
+)
+{
+    do {
+        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pchSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        hwBlockCount -= 8;
+    } while (hwBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    uint16_t hwBlockCount,
+    uint16_t hwOpacity
+)
+{
+    const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+    do {
+        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pwSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        hwBlockCount -= 8;
+    } while (hwBlockCount > 0);
+}
+
+__STATIC_INLINE 
+void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwSrcMsk,
+    uint8_t *__RESTRICT pchTarget,
+    uint16_t hwBlockCount,
+    uint16_t hwOpacity
+)
+{
+    const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+    do {
+        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+
+        uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
+
+        __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pwSrcMsk, vStride4Offs, tailPred);
+        vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+
+        vstrbq_p_u16(pchTarget,
+            __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
+            tailPred);
+
+        pwSrcMsk += 8;
+        pwSrc += 8;
+        pchTarget += 8;
+        hwBlockCount -= 8;
+    } while (hwBlockCount > 0);
+}
+
 {%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
     ('gray8', 'uint8_t', 'ch', '8BIT' ),
     ('rgb565', 'uint16_t', 'hw', '16BIT' ),
@@ -300,6 +422,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_mask{{has_opac
                 int32_t blkCnt = wLength;
 
             {%- if colour_name == 'gray8' %}
+            #if 0
                 uint8_t *__RESTRICT pchTargetCur = pchTarget;
                 do {
                     mve_pred16_t    tailPred = vctp16q(blkCnt);
@@ -324,6 +447,13 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_src_mask{{has_opac
                     pchTargetCur += 8;
                     blkCnt -= 8;
                 } while (blkCnt > 0);
+            #else
+            {%- if has_opacity == '_and_opacity' %}
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(pwSource, pchSourceMask, pchTarget, wLength, hwOpacity);
+            {%- else %}
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(pwSource, pchSourceMask, pchTarget, wLength);
+            {%- endif %}
+            #endif
             {%- elif colour_name == 'rgb565' %}
                 uint16_t *__RESTRICT phwTargetCur = phwTarget;
                 do {
