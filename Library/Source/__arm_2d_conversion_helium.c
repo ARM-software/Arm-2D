@@ -352,55 +352,31 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_cccn888)( uint32_t *__RESTRICT pwS
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize)
 {
-    /* offset to replicate the opacity accross the 4 channels */
-    uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
+    int_fast16_t iWidth = ptCopySize->iWidth;
+    int_fast16_t iHeight = ptCopySize->iHeight;
 #ifdef USE_MVE_INTRINSICS
 
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
+        __arm_2d_helium_ccca8888_blend_to_cccn888(  pwSourceBase,
+                                                    pwTargetBase,
+                                                    iWidth);
 
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-        int32_t         blkCnt = ptCopySize->iWidth;
-
-        do {
-
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            uint16x8_t vSrc = vldrbq_u16(pwSource);
-            uint16x8_t vTrg = vldrbq_u16(pwTarget);
-
-            /*
-              replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
-              and leaves target 0 unchanged
-              vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
-              */
-            uint16x8_t vSrcOpa = vldrbq_gather_offset_z_u16(pwSource,  offset, 0x3f3f);
-
-            uint16x8_t      vTrans = 256 - vSrcOpa;
-
-            vTrg = (vTrg *vTrans + vSrc*vSrcOpa) >> 8;
-
-            vstrbq_p_u16(pwTarget, vTrg, tailPred);
-
-            pwSource += 8;
-            pwTarget += 8;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
     }
 #else
+    /* offset to replicate the opacity accross the 4 channels */
+    uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
 
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
         const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
         uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
 
 
         register unsigned loopCnt  __asm("lr");
-        loopCnt = ptCopySize->iWidth;
+        loopCnt = iWidth;
 
       __asm volatile(
             ".p2align 2                                         \n"
