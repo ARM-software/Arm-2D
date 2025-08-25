@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with source mask and opacity only
  *
  * $Date:        25. August 2025
- * $Revision:    V.0.9.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -272,12 +272,12 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(pwSource, pchSourceMask, pchTarget, wLength, hwOpacity);
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
+                    pwSource, 
+                    pchSourceMask, 
+                    pchTarget, 
+                    wLength, 
+                    hwOpacity);
 
                 pchTarget += wLength;
 
@@ -330,12 +330,12 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(pwSource, pwSourceMask, pchTarget, wLength, hwOpacity);
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(
+                    pwSource, 
+                    pwSourceMask, 
+                    pchTarget, 
+                    wLength, 
+                    hwOpacity);
 
                 pchTarget += wLength;
 
@@ -386,12 +386,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(pwSource, pchSourceMask, pchTarget, wLength);
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(
+                    pwSource, 
+                    pchSourceMask, 
+                    pchTarget, 
+                    wLength);
 
                 pchTarget += wLength;
 
@@ -443,12 +442,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(pwSource, pwSourceMask, pchTarget, wLength);
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
+                    pwSource, 
+                    pwSourceMask, 
+                    pchTarget, 
+                    wLength);
 
                 pchTarget += wLength;
 
@@ -560,12 +558,12 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_mask_and_opacity(pwSource, pchSourceMask, phwTarget, wLength, hwOpacity);
+                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_mask_and_opacity(
+                    pwSource, 
+                    pchSourceMask, 
+                    phwTarget, 
+                    wLength, 
+                    hwOpacity);
 
                 phwTarget += wLength;
 
@@ -618,12 +616,12 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_chn_mask_and_opacity(pwSource, pwSourceMask, phwTarget, wLength, hwOpacity);
+                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_chn_mask_and_opacity(
+                    pwSource, 
+                    pwSourceMask, 
+                    phwTarget, 
+                    wLength, 
+                    hwOpacity);
 
                 phwTarget += wLength;
 
@@ -674,12 +672,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_mask(pwSource, pchSourceMask, phwTarget, wLength);
+                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_mask(
+                    pwSource, 
+                    pchSourceMask, 
+                    phwTarget, 
+                    wLength);
 
                 phwTarget += wLength;
 
@@ -731,12 +728,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
-
-                int32_t blkCnt = wLength;
-                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_chn_mask(pwSource, pwSourceMask, phwTarget, wLength);
+                __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_chn_mask(
+                    pwSource, 
+                    pwSourceMask, 
+                    phwTarget, 
+                    wLength);
 
                 phwTarget += wLength;
 
@@ -850,31 +846,12 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask_and_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
-
-                int32_t blkCnt = wLength;
-                uint32_t *__RESTRICT pwTargetCur = pwTarget;
-                do {
-                    mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-                    uint16x8_t vSrc, vSrcOpa;
-
-                    __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
-
-                    uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
-                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
-
-                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
-                        __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
-                        tailPred);
-
-                    pchSrcMsk += 2;
-                    pwSrc += 2;
-                    pwTargetCur += 2;
-                    blkCnt -= 2;
-                } while (blkCnt > 0);
+                __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask_and_opacity(
+                    pwSource, 
+                    pchSourceMask, 
+                    pwTarget, 
+                    wLength, 
+                    hwOpacity);
 
                 pwTarget += wLength;
 
@@ -928,31 +905,12 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
-
-                int32_t blkCnt = wLength;
-                uint32_t *__RESTRICT pwTargetCur = pwTarget;
-                do {
-                    mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-                    uint16x8_t vSrc, vSrcOpa;
-
-                    __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
-
-                    uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
-                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
-
-                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
-                        __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
-                        tailPred);
-
-                    pwSrcMsk += 2;
-                    pwSrc += 2;
-                    pwTargetCur += 2;
-                    blkCnt -= 2;
-                } while (blkCnt > 0);
+                __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask_and_opacity(
+                    pwSource, 
+                    pwSourceMask, 
+                    pwTarget, 
+                    wLength, 
+                    hwOpacity);
 
                 pwTarget += wLength;
 
@@ -1005,31 +963,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
-
-                int32_t blkCnt = wLength;
-                uint32_t *__RESTRICT pwTargetCur = pwTarget;
-                do {
-                    mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-                    uint16x8_t vSrc, vSrcOpa;
-
-                    __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
-
-                    uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
-                    vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
-
-                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
-                        __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
-                        tailPred);
-
-                    pchSrcMsk += 2;
-                    pwSrc += 2;
-                    pwTargetCur += 2;
-                    blkCnt -= 2;
-                } while (blkCnt > 0);
+                __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask(
+                    pwSource, 
+                    pchSourceMask, 
+                    pwTarget, 
+                    wLength);
 
                 pwTarget += wLength;
 
@@ -1082,31 +1020,11 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
-                uint32_t  *__RESTRICT pwSrc = pwSource;
-                uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
-
-                int32_t blkCnt = wLength;
-                uint32_t *__RESTRICT pwTargetCur = pwTarget;
-                do {
-                    mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-                    uint16x8_t vSrc, vSrcOpa;
-
-                    __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
-
-                    uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
-                    vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
-
-                    vstrbq_p_u16((const uint8_t *)pwTargetCur,
-                        __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTargetCur, vSrcOpa, vSrc),
-                        tailPred);
-
-                    pwSrcMsk += 2;
-                    pwSrc += 2;
-                    pwTargetCur += 2;
-                    blkCnt -= 2;
-                } while (blkCnt > 0);
+                __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask(
+                    pwSource, 
+                    pwSourceMask, 
+                    pwTarget, 
+                    wLength);
 
                 pwTarget += wLength;
 

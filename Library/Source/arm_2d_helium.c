@@ -445,6 +445,193 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
 }
 
 /*---------------------------------------------------------------------------*
+ * CCCA8888 pixel blend to CCCN888                                           *
+ *---------------------------------------------------------------------------*/
+__STATIC_FORCEINLINE 
+void __arm_2d_helium_ccca8888_blend_to_cccn888(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwTarget,
+    int_fast16_t iBlockCount
+)
+{
+    const uint16x8_t v256 = vdupq_n_u16(256);
+    do {
+        mve_pred16_t    tailPred = vctp64q(iBlockCount);
+
+        uint16x8_t vSrc, vSrcOpa;
+
+        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+
+        vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
+
+        vstrbq_p_u16((const uint8_t *)pwTarget,
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            tailPred);
+
+        pwSrc += 2;
+        pwTarget += 2;
+        iBlockCount -= 2;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_FORCEINLINE 
+void __arm_2d_helium_ccca8888_blend_to_cccn888_with_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwTarget,
+    int_fast16_t iBlockCount,
+    uint16_t hwOpacity
+)
+{
+    const uint16x8_t v256 = vdupq_n_u16(256);
+    do {
+        mve_pred16_t    tailPred = vctp64q(iBlockCount);
+
+        uint16x8_t vSrc, vSrcOpa;
+
+        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+
+        vSrcOpa=  vmulq_n_u16(vSrcOpa, hwOpacity) >> 8;
+        vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
+
+        vstrbq_p_u16((const uint8_t *)pwTarget,
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            tailPred);
+
+        pwSrc += 2;
+        pwTarget += 2;
+        iBlockCount -= 2;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_FORCEINLINE 
+void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask_and_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchSrcMsk,
+    uint32_t *__RESTRICT pwTarget,
+    int_fast16_t iBlockCount,
+    uint16_t hwOpacity
+)
+{
+    /* offset to replicate 2 masks accross the 4 channels */
+    const uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
+    do {
+        mve_pred16_t    tailPred = vctp64q(iBlockCount);
+
+        uint16x8_t vSrc, vSrcOpa;
+
+        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
+        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+
+        vstrbq_p_u16((const uint8_t *)pwTarget,
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            tailPred);
+
+        pchSrcMsk += 2;
+        pwSrc += 2;
+        pwTarget += 2;
+        iBlockCount -= 2;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_FORCEINLINE 
+void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask(
+    uint32_t *__RESTRICT pwSrc,
+    uint8_t *__RESTRICT pchSrcMsk,
+    uint32_t *__RESTRICT pwTarget,
+    int_fast16_t iBlockCount
+)
+{
+    /* offset to replicate 2 masks accross the 4 channels */
+    const uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
+    do {
+        mve_pred16_t    tailPred = vctp64q(iBlockCount);
+
+        uint16x8_t vSrc, vSrcOpa;
+
+        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
+        vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+
+        vstrbq_p_u16((const uint8_t *)pwTarget,
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            tailPred);
+
+        pchSrcMsk += 2;
+        pwSrc += 2;
+        pwTarget += 2;
+        iBlockCount -= 2;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_FORCEINLINE 
+void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask_and_opacity(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwSrcMsk,
+    uint32_t *__RESTRICT pwTarget,
+    int_fast16_t iBlockCount,
+    uint16_t hwOpacity
+)
+{
+    /* offset to replicate 2 masks accros the 4 channels */
+    const uint16x8_t offsetMsk = {0, 0, 0, 0, 4, 4, 4, 4};
+
+    do {
+        mve_pred16_t    tailPred = vctp64q(iBlockCount);
+
+        uint16x8_t vSrc, vSrcOpa;
+
+        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
+        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+
+        vstrbq_p_u16((const uint8_t *)pwTarget,
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            tailPred);
+
+        pwSrcMsk += 2;
+        pwSrc += 2;
+        pwTarget += 2;
+        iBlockCount -= 2;
+    } while (iBlockCount > 0);
+}
+
+__STATIC_FORCEINLINE 
+void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask(
+    uint32_t *__RESTRICT pwSrc,
+    uint32_t *__RESTRICT pwSrcMsk,
+    uint32_t *__RESTRICT pwTarget,
+    int_fast16_t iBlockCount
+)
+{
+    /* offset to replicate 2 masks accros the 4 channels */
+    const uint16x8_t offsetMsk = {0, 0, 0, 0, 4, 4, 4, 4};
+
+    do {
+        mve_pred16_t    tailPred = vctp64q(iBlockCount);
+
+        uint16x8_t vSrc, vSrcOpa;
+
+        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+
+        uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
+        vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
+
+        vstrbq_p_u16((const uint8_t *)pwTarget,
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            tailPred);
+
+        pwSrcMsk += 2;
+        pwSrc += 2;
+        pwTarget += 2;
+        iBlockCount -= 2;
+    } while (iBlockCount > 0);
+}
+
+/*---------------------------------------------------------------------------*
  * CCCA8888 pixel blend to RGB565                                            *
  *---------------------------------------------------------------------------*/
 __STATIC_FORCEINLINE 
