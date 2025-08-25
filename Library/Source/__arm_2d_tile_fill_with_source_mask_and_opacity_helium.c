@@ -362,7 +362,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
 
                     __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
 
-                    uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16(pwSourceMaskLine, vStride4Offs, tailPred);
+                    uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pchSrcMsk, vStride4Offs, tailPred);
                     vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
 
                     vstrbq_p_u16(pchTargetCur,
@@ -513,7 +513,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask(
 
                     __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
 
-                    uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16(pwSourceMaskLine, vStride4Offs, tailPred);
+                    uint16x8_t vSrcMask = vldrbq_gather_offset_z_u16((const uint8_t *)pchSrcMsk, vStride4Offs, tailPred);
                     vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
 
                     vstrbq_p_u16(pchTargetCur,
