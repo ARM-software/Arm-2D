@@ -597,7 +597,7 @@ void __arm_2d_helium_ccca8888_blend_to_rgb565_with_src_chn_mask(
 )
 {
     const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
-    const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
+
     do {
         mve_pred16_t    tailPred = vctp16q(iBlockCount);
         uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
