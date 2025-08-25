@@ -891,36 +891,19 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_opacity)(
                                     uint32_t *__RESTRICT pwTargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
+                                    uint_fast16_t hwOpacity)
 {
-    hwRatio += (hwRatio == 255);
+    hwOpacity += (hwOpacity == 255);
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
+    for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-        int32_t         blkCnt = ptCopySize->iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            uint16x8_t vSrc, vSrcOpa;
-
-            __arm_2d_ccca8888_get_and_dup_opa(pwSource, &vSrcOpa, &vSrc);
-
-            vSrcOpa = vpselq(vdupq_n_u16(256),vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
-            vSrcOpa=  vmulq_n_u16(vSrcOpa, hwRatio)  >> 8;
-
-
-            vstrbq_p_u16(pwTarget,
-                __arm_2d_unpack_and_blend_cccn888(pwTarget, vSrcOpa, vSrc),
-                tailPred);
-
-            pwSource += 8;
-            pwTarget += 8;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        __arm_2d_helium_ccca8888_blend_to_cccn888_with_opacity( pwSourceBase,
+                                                                pwTargetBase,
+                                                                iWidth,
+                                                                hwOpacity);
+                                                                
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
     }
@@ -953,38 +936,14 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask_an
     /* preprocess the opacity */
     hwOpacity += (hwOpacity == 255);
 
-    /* offset to replicate 2 masks accross the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
-
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-        uint8_t        *__RESTRICT pchSourceMaskLine = pchSourceMask;
-        int32_t         blkCnt = iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            uint16x8_t vSrc, vSrcOpa;
-
-            __arm_2d_ccca8888_get_and_dup_opa(pwSource, &vSrcOpa, &vSrc);
-
-
-            uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pchSourceMaskLine,  offsetMsk);
-            vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
-
-
-            vstrbq_p_u16(pwTarget,
-                __arm_2d_unpack_and_blend_cccn888(pwTarget, vSrcOpa, vSrc),
-                tailPred);
-
-            pchSourceMaskLine += 2;
-            pwSource += 8;
-            pwTarget += 8;
-            blkCnt -= 2;
-        } while (blkCnt > 0);
+        __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask_and_opacity( 
+                                                                pwSourceBase,
+                                                                pchSourceMask,
+                                                                pwTargetBase,
+                                                                iWidth,
+                                                                hwOpacity);
 
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
@@ -1030,34 +989,13 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mas
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-        uint8_t       *__RESTRICT pwSourceMaskLine = ( uint8_t *__RESTRICT)pwSourceMask;
-        int32_t         blkCnt = iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            uint16x8_t vSrc, vSrcOpa;
-
-            __arm_2d_ccca8888_get_and_dup_opa(pwSource, &vSrcOpa, &vSrc);
-
-
-            uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pwSourceMaskLine,  offsetMsk);
-
-            vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
-
-            vstrbq_p_u16(pwTarget,
-                __arm_2d_unpack_and_blend_cccn888(pwTarget, vSrcOpa, vSrc),
-                tailPred);
-
-            pwSourceMaskLine += 2*4;
-            pwSource += 8;
-            pwTarget += 8;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask_and_opacity( 
+                                                                pwSourceBase,
+                                                                pwSourceMask,
+                                                                pwTargetBase,
+                                                                iWidth,
+                                                                hwOpacity);
+                                                                
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
 
@@ -1100,34 +1038,11 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_mask)(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
+        __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask(pwSourceBase,
+                                                                pchSourceMask,
+                                                                pwTargetBase,
+                                                                iWidth);
 
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-        uint8_t        *__RESTRICT pchSourceMaskLine = pchSourceMask;
-        int32_t         blkCnt = iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            uint16x8_t vSrc, vSrcOpa;
-
-            __arm_2d_ccca8888_get_and_dup_opa(pwSource, &vSrcOpa, &vSrc);
-
-
-            uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pchSourceMaskLine,  offsetMsk);
-
-            vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
-
-            vstrbq_p_u16(pwTarget,
-                __arm_2d_unpack_and_blend_cccn888(pwTarget, vSrcOpa, vSrc),
-                tailPred);
-
-            pchSourceMaskLine += 2;
-            pwSource += 8;
-            pwTarget += 8;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
 
@@ -1168,37 +1083,14 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_src_chn_mas
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
+        __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask(
+                                                                pwSourceBase,
+                                                                pwSourceMask,
+                                                                pwTargetBase,
+                                                                iWidth);
 
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-        uint8_t       *__RESTRICT pwSourceMaskLine = ( uint8_t *__RESTRICT)pwSourceMask;
-        int32_t         blkCnt = iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            uint16x8_t vSrc, vSrcOpa;
-
-            __arm_2d_ccca8888_get_and_dup_opa(pwSource, &vSrcOpa, &vSrc);
-
-
-            uint16x8_t vSrcMask = vldrbq_gather_offset_u16(pwSourceMaskLine,  offsetMsk);
-
-            vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
-
-            vstrbq_p_u16(pwTarget,
-                __arm_2d_unpack_and_blend_cccn888(pwTarget, vSrcOpa, vSrc),
-                tailPred);
-
-            pwSourceMaskLine += 2*4;
-            pwSource += 8;
-            pwTarget += 8;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
-
 
         /* source mask rolling */
         if (++iSourceMaskY >= iSourceMaskHeight) {
