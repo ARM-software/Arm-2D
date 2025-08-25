@@ -93,7 +93,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity)
 {
-    hwRatio += (hwRatio == 255);
+    hwOpacity += (hwOpacity == 255);
 
     int16_t iWidth = ptCopySize->iWidth;
     int16_t iHeight = ptCopySize->iHeight;
@@ -183,7 +183,7 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
             ".unreq oneThird                                       \n"
         : [pchTarget] "+l" (pchTarget),
           [pSource] "+r" (pSource), [loopCnt] "+r"(loopCnt)
-        : [one_third] "r" (DIV3), [hwRatio] "r" (hwRatio),
+        : [one_third] "r" (DIV3), [hwOpacity] "r" (hwOpacity),
           [cst255] "r" (255), [cst256] "r" (256)
         : "q0", "q1", "q2", "q3",
           "q4", "q5", "q6", "q7",
