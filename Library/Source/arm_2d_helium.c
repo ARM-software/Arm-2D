@@ -205,6 +205,23 @@ void __arm_2d_ccca8888_get_and_dup_opa(const uint8_t * pSource, uint16x8_t * opa
 }
 
 __STATIC_FORCEINLINE
+void __arm_2d_ccca8888_get_and_dup_opa_pred(const uint8_t * pSource, uint16x8_t * opa,
+                                            uint16x8_t * src, mve_pred16_t tailPred)
+{
+    /* offset to replicate the opacity accross the 4 channels */
+    uint16x8_t      offset = { 3, 3, 3, 3, 7, 7, 7, 7 };
+
+    *src = vldrbq_u16(pSource);
+
+    /*
+       replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
+       and leaves target 0 unchanged
+       vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
+     */
+    *opa = vldrbq_gather_offset_z_u16(pSource, offset, 0x3f3f & tailPred);
+}
+
+__STATIC_FORCEINLINE
 uint16x8_t __arm_2d_unpack_and_blend_gray8(const uint8_t * pchTarget, uint16x8_t opa,
                                                uint16x8_t R, uint16x8_t G, uint16x8_t B)
 {
@@ -460,7 +477,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888(
 
         uint16x8_t vSrc, vSrcOpa;
 
-        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
 
         vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
 
@@ -488,7 +505,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888_with_opacity(
 
         uint16x8_t vSrc, vSrcOpa;
 
-        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
 
         vSrcOpa=  vmulq_n_u16(vSrcOpa, hwOpacity) >> 8;
         vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
@@ -519,7 +536,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask_and_opacity(
 
         uint16x8_t vSrc, vSrcOpa;
 
-        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
 
         uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
         vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
@@ -550,7 +567,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_mask(
 
         uint16x8_t vSrc, vSrcOpa;
 
-        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
 
         uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
         vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
@@ -583,7 +600,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask_and_opacity(
 
         uint16x8_t vSrc, vSrcOpa;
 
-        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
 
         uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
         vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
@@ -615,7 +632,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888_with_src_chn_mask(
 
         uint16x8_t vSrc, vSrcOpa;
 
-        __arm_2d_ccca8888_get_and_dup_opa((const uint8_t *)pwSrc, &vSrcOpa, &vSrc);
+        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
 
         uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pwSrcMsk,  offsetMsk);
         vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
