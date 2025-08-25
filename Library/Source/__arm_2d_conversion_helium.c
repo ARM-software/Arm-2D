@@ -177,42 +177,12 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_rgb565)(uint32_t *__RESTRICT pwSou
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize)
 {
+    int16_t iWidth = ptCopySize->iWidth;
 #ifdef USE_MVE_INTRINSICS
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
 
-        const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
-        uint16_t       *__RESTRICT phwTarget = phwTargetBase;
-        int32_t         blkCnt = ptCopySize->iWidth;
+        __arm_2d_helium_ccca8888_blend_to_rgb565(pwSourceBase, phwTargetBase, iWidth);
 
-        do {
-            uint16x8_t      R, G, B;
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
-
-            uint8x16x2_t    vdeintr2 = vld2q_u8(pSource);
-
-            uint16x8_t      vSrcOpa = vmovltq(vdeintr2.val[1]);
-            uint16x8_t      vSrcG = vmovlbq(vdeintr2.val[1]);
-            uint16x8_t      vSrcR = vmovltq(vdeintr2.val[0]);
-            uint16x8_t      vSrcB = vmovlbq(vdeintr2.val[0]);
-
-            uint16x8_t      vtrgt = vld1q(phwTarget);
-
-            __arm_2d_rgb565_unpack_single_vec(vtrgt, &R, &G, &B);
-
-            uint16x8_t      vTrans = 256 - vSrcOpa;
-
-            vSrcR = (vmulq(vSrcR, vSrcOpa) + vmulq(R, vTrans)) >> 8;
-            vSrcG = (vmulq(vSrcG, vSrcOpa) + vmulq(G, vTrans)) >> 8;
-            vSrcB = (vmulq(vSrcB, vSrcOpa) + vmulq(B, vTrans)) >> 8;
-
-            vst1q_p(phwTarget,
-                __arm_2d_rgb565_pack_single_vec(vSrcR, vSrcG, vSrcB), tailPred);
-
-            pSource += 32;
-            phwTarget += 8;
-            blkCnt -= 8;
-        }
-        while (blkCnt > 0);
         pwSourceBase += iSourceStride;
         phwTargetBase += iTargetStride;
     }
@@ -228,7 +198,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_rgb565)(uint32_t *__RESTRICT pwSou
         uint16_t       *__RESTRICT phwTarget = phwTargetBase;
 
         register unsigned loopCnt  __asm("lr");
-        loopCnt = ptCopySize->iWidth;
+        loopCnt = iWidth;
 
     __asm volatile(
         ".p2align 2                                         \n"
