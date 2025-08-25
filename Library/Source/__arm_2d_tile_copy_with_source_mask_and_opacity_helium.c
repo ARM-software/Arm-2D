@@ -100,35 +100,10 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
 #ifdef USE_MVE_INTRINSICS
-
-    #if 0
-        int32_t         blkCnt = ptCopySize->iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
-
-            uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
-
-            __arm_2d_ccca8888_unpack_u16(pSource, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
-
-            vSrcOpa = vpselq(vdupq_n_u16(256),vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
-            vSrcOpa=  vmulq_n_u16(vSrcOpa, hwRatio)  >> 8;
-
-            vstrbq_p_u16(pchTarget,
-                __arm_2d_unpack_and_blend_gray8(pchTarget, vSrcOpa, vSrcR, vSrcG, vSrcB),
-                tailPred);
-
-            pSource += 32;
-            pchTarget += 8;
-            blkCnt -= 8;
-        }
-        while (blkCnt > 0);
-    #else
         __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(   pwSourceBase, 
                                                                 pchTargetBase, 
                                                                 iWidth, 
                                                                 hwOpacity);
-    #endif
 #else
         const uint8_t   *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
         uint8_t         *__RESTRICT pchTarget = pchTargetBase;
@@ -154,10 +129,10 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
             "  vmovt           q5, q1                             \n"
 
             "  vmovlt.u8       q6, q3                             \n"
-            "  vmul.i16        q0, q5, %[hwRatio]                 \n"
+            "  vmul.i16        q0, q5, %[hwOpacity]               \n"
             "  vmovlb.u8       q3, q3                             \n"
             "  vldrb.u16       q5, [%[pchTarget]]                 \n"
-            /* vSrcOpa=  vmulq_n_u16(vSrcOpa, hwRatio)  >> 8; */
+            /* vSrcOpa=  vmulq_n_u16(vSrcOpa, hwOpacity)  >> 8; */
             "  vshr.u16        q7, q0, #0x8                       \n"
             "  vmovlb.u8       q4, q4                             \n"
             /* average for gray8 pack : (R + G + B) / 3*/
