@@ -78,9 +78,6 @@ extern "C" {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-
-
-
 __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_to_rgb565)(uint32_t *__RESTRICT pwSourceBase,
                                     int16_t iSourceStride,
