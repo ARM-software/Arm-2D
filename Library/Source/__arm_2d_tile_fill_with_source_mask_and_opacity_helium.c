@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with source mask and opacity only
  *
  * $Date:        25. August 2025
- * $Revision:    V.0.7.0
+ * $Revision:    V.0.8.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -185,12 +185,12 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
     uint32_t *__RESTRICT pwSrc,
     uint8_t *__RESTRICT pchSrcMsk,
     uint8_t *__RESTRICT pchTarget,
-    uint16_t hwBlockCount,
+    int_fast16_t iBlockCount,
     uint16_t hwOpacity
 )
 {
     do {
-        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
 
         uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
@@ -206,8 +206,8 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
         pchSrcMsk += 8;
         pwSrc += 8;
         pchTarget += 8;
-        hwBlockCount -= 8;
-    } while (hwBlockCount > 0);
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
 }
 
 __STATIC_INLINE 
@@ -215,12 +215,11 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(
     uint32_t *__RESTRICT pwSrc,
     uint8_t *__RESTRICT pchSrcMsk,
     uint8_t *__RESTRICT pchTarget,
-    uint16_t hwBlockCount,
-    uint16_t hwOpacity
+    int_fast16_t iBlockCount,
 )
 {
     do {
-        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
 
         uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
@@ -236,8 +235,8 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(
         pchSrcMsk += 8;
         pwSrc += 8;
         pchTarget += 8;
-        hwBlockCount -= 8;
-    } while (hwBlockCount > 0);
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
 }
 
 __STATIC_INLINE 
@@ -245,13 +244,13 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(
     uint32_t *__RESTRICT pwSrc,
     uint32_t *__RESTRICT pwSrcMsk,
     uint8_t *__RESTRICT pchTarget,
-    uint16_t hwBlockCount,
+    int_fast16_t iBlockCount,
     uint16_t hwOpacity
 )
 {
     const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
     do {
-        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
 
         uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
@@ -267,8 +266,8 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(
         pwSrcMsk += 8;
         pwSrc += 8;
         pchTarget += 8;
-        hwBlockCount -= 8;
-    } while (hwBlockCount > 0);
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
 }
 
 __STATIC_INLINE 
@@ -276,13 +275,12 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
     uint32_t *__RESTRICT pwSrc,
     uint32_t *__RESTRICT pwSrcMsk,
     uint8_t *__RESTRICT pchTarget,
-    uint16_t hwBlockCount,
-    uint16_t hwOpacity
+    int_fast16_t iBlockCount,
 )
 {
     const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
     do {
-        mve_pred16_t    tailPred = vctp16q(hwBlockCount);
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
 
         uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
 
@@ -298,8 +296,8 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
         pwSrcMsk += 8;
         pwSrc += 8;
         pchTarget += 8;
-        hwBlockCount -= 8;
-    } while (hwBlockCount > 0);
+        iBlockCount -= 8;
+    } while (iBlockCount > 0);
 }
 
 __OVERRIDE_WEAK
