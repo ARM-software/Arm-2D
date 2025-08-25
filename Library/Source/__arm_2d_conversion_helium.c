@@ -21,8 +21,8 @@
  * Title:        __arm-2d_conversion_helium.c
  * Description:  APIs for colour format conversion with Helium acceleration
  *
- * $Date:        08. Aug 2022
- * $Revision:    V.0.2.0
+ * $Date:        25. August 2025
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -306,40 +306,13 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_gray8) (   uint32_t *__RESTRICT pw
                                         int16_t iTargetStride,
                                         arm_2d_size_t *__RESTRICT ptCopySize)
 {
+    int16_t iWidth = ptCopySize->iWidth;
 #ifdef USE_MVE_INTRINSICS
+    
     for (int_fast16_t y = 0; y < ptCopySize->iHeight; y++) {
 
-        const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSourceBase;
-        uint8_t *__RESTRICT pchTarget = pchTargetBase;
-        int32_t         blkCnt = ptCopySize->iWidth;
+        __arm_2d_helium_ccca8888_blend_to_gray8(pwSourceBase, pchTargetBase, iWidth);
 
-        do {
-
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
-
-            uint8x16x2_t    vdeintr2 = vld2q_u8(pSource);
-
-            uint16x8_t      vSrcOpa = vmovltq(vdeintr2.val[1]);
-            uint16x8_t      vSrcG = vmovlbq(vdeintr2.val[1]);
-            uint16x8_t      vSrcR = vmovltq(vdeintr2.val[0]);
-            uint16x8_t      vSrcB = vmovlbq(vdeintr2.val[0]);
-
-            uint16x8_t      vtrgt = vldrbq_u16(pchTarget);
-            uint16x8_t      vTrans = 256 - vSrcOpa;
-
-            uint16x8_t vAvg = vSrcG + vSrcR + vSrcB;
-
-            vAvg = vAvg / 3;
-
-            vAvg = (vmulq(vAvg, vSrcOpa) + vmulq(vtrgt, vTrans)) >> 8;
-
-            vstrbq_p_u16(pchTarget, vAvg, tailPred);
-
-            pSource += 32;
-            pchTarget += 8;
-            blkCnt -= 8;
-        }
-        while (blkCnt > 0);
         pwSourceBase += iSourceStride;
         pchTargetBase += iTargetStride;
     }
@@ -352,7 +325,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_gray8) (   uint32_t *__RESTRICT pw
         uint8_t *__RESTRICT pchTarget = pchTargetBase;
 
         register unsigned loopCnt  __asm("lr");
-        loopCnt = ptCopySize->iWidth;
+        loopCnt = iWidth;
 
     __asm volatile(
         ".p2align 2                                         \n"

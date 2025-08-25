@@ -269,8 +269,7 @@ __STATIC_INLINE
 void __arm_2d_helium_ccca8888_blend_to_gray8(
     uint32_t *__RESTRICT pwSrc,
     uint8_t *__RESTRICT pchTarget,
-    int_fast16_t iBlockCount,
-    uint16_t hwOpacity
+    int_fast16_t iBlockCount
 )
 {
     const uint16x8_t v256 = vdupq_n_u16(256);
