@@ -465,8 +465,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
 #ifdef USE_MVE_INTRINSICS
-        __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and(
-                                                                pwSourceBase,
+        __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(  pwSourceBase,
                                                                 pchSourceMask,
                                                                 pchTargetBase,
                                                                 iWidth);
