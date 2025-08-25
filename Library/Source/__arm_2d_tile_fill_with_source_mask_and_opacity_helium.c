@@ -215,7 +215,7 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(
     uint32_t *__RESTRICT pwSrc,
     uint8_t *__RESTRICT pchSrcMsk,
     uint8_t *__RESTRICT pchTarget,
-    int_fast16_t iBlockCount,
+    int_fast16_t iBlockCount
 )
 {
     do {
@@ -275,7 +275,7 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(
     uint32_t *__RESTRICT pwSrc,
     uint32_t *__RESTRICT pwSrcMsk,
     uint8_t *__RESTRICT pchTarget,
-    int_fast16_t iBlockCount,
+    int_fast16_t iBlockCount
 )
 {
     const uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
@@ -397,30 +397,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
                 uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
                 int32_t blkCnt = wLength;
-            #if 0
-                uint8_t *__RESTRICT pchTargetCur = pchTarget;
-                do {
-                    mve_pred16_t    tailPred = vctp16q(blkCnt);
-
-                    uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
-
-                    __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
-
-                    uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
-                    vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
-
-                    vstrbq_p_u16(pchTargetCur,
-                        __arm_2d_unpack_and_blend_gray8(pchTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
-                        tailPred);
-
-                    pchSrcMsk += 8;
-                    pwSrc += 8;
-                    pchTargetCur += 8;
-                    blkCnt -= 8;
-                } while (blkCnt > 0);
-            #else
                 __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(pwSource, pchSourceMask, pchTarget, wLength, hwOpacity);
-            #endif
 
                 pchTarget += wLength;
 
@@ -478,6 +455,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
                 uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
 
                 int32_t blkCnt = wLength;
+            #if 0
                 uint8_t *__RESTRICT pchTargetCur = pchTarget;
                 do {
                     mve_pred16_t    tailPred = vctp16q(blkCnt);
@@ -498,6 +476,9 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
                     pchTargetCur += 8;
                     blkCnt -= 8;
                 } while (blkCnt > 0);
+            #else
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask_and_opacity(pwSource, pwSourceMask, pchTarget, wLength, hwOpacity);
+            #endif
 
                 pchTarget += wLength;
 
@@ -553,30 +534,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask(
                 uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
                 int32_t blkCnt = wLength;
-            #if 0
-                uint8_t *__RESTRICT pchTargetCur = pchTarget;
-                do {
-                    mve_pred16_t    tailPred = vctp16q(blkCnt);
-
-                    uint16x8_t      vSrcOpa, vSrcG, vSrcR, vSrcB;
-
-                    __arm_2d_ccca8888_unpack_u16((const uint8_t *)pwSrc, &vSrcOpa, &vSrcR, &vSrcG, &vSrcB);
-
-                    uint16x8_t vSrcMask = vldrbq_z_u16(pchSrcMsk, tailPred);
-                    vSrcOpa = __arm_2d_scale_alpha_mask(vSrcOpa, vSrcMask);
-
-                    vstrbq_p_u16(pchTargetCur,
-                        __arm_2d_unpack_and_blend_gray8(pchTargetCur, vSrcOpa, vSrcR, vSrcG, vSrcB),
-                        tailPred);
-
-                    pchSrcMsk += 8;
-                    pwSrc += 8;
-                    pchTargetCur += 8;
-                    blkCnt -= 8;
-                } while (blkCnt > 0);
-            #else
                 __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask(pwSource, pchSourceMask, pchTarget, wLength);
-            #endif
 
                 pchTarget += wLength;
 
@@ -633,6 +591,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask(
                 uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
 
                 int32_t blkCnt = wLength;
+            #if 0
                 uint8_t *__RESTRICT pchTargetCur = pchTarget;
                 do {
                     mve_pred16_t    tailPred = vctp16q(blkCnt);
@@ -653,6 +612,9 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask(
                     pchTargetCur += 8;
                     blkCnt -= 8;
                 } while (blkCnt > 0);
+            #else
+                __arm_2d_helium_ccca8888_blend_to_gray8_with_src_chn_mask(pwSource, pwSourceMask, pchTarget, wLength);
+            #endif
 
                 pchTarget += wLength;
 
