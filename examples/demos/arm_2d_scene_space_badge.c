@@ -452,9 +452,13 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     do {
         crt_screen_cfg_t tCFG = {
             .ptScene = &this.use_as__arm_2d_scene_t,
-            .ptilePhoto = &c_tileDoge,
+            .ptilePhoto = &c_tileDogeGRAY8,
             .tScreenColour.tColour = GLCD_COLOR_GREEN,
-            .bShowWhiteNoise = true,
+            .tScanBarColour.tColour = GLCD_COLOR_WHITE,
+            .chWhiteNoiseRatio = 32,
+            .chNoiseLasts = 32,
+            .bStrongNoise = true,
+            .bShowScanningEffect = true,
         };
 
         crt_screen_init(&this.tCRTScreen, &tCFG);

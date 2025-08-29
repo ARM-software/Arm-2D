@@ -53,15 +53,25 @@ extern "C" {
 typedef struct crt_screen_cfg_t {
     arm_2d_scene_t *ptScene;
 
-    arm_2d_tile_t *ptilePhoto;
+    const arm_2d_tile_t *ptilePhoto;
     float fXRatio;                                                              /* Zero means auto fit */
     float fYRatio;                                                              /* Zero means same as the X ratio */
 
     COLOUR_TYPE_T tScreenColour;
-    uint8_t bShowWhiteNoise         : 1;
-    uint8_t                         : 5;
+    COLOUR_TYPE_T tScanBarColour;
+    uint8_t bShowScanningEffect     : 1;
+    uint8_t bStrongNoise            : 1;
+    uint8_t                         : 4;
     uint8_t __bAutoFit              : 1;                                        /* please ignore this internal flag */
     uint8_t __bShowAsGrayScale      : 1;                                        /* please ignore this internal flag */
+    uint8_t chWhiteNoiseRatio;
+    uint8_t chNoiseLasts;
+
+    struct {
+        uint8_t chBarHeight;
+        uint8_t chOpacity;
+        uint16_t hwPeriodInMs;
+    }ScanBar[2];
 
 } crt_screen_cfg_t;
 
@@ -78,6 +88,13 @@ ARM_PRIVATE(
 
     arm_2d_tile_t tWhiteNoise;
     arm_2d_size_t tTargetRegionSize;
+    
+    struct {
+        int64_t lTimestamp;
+        int16_t iYOffset;
+        arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+    } ScanBar[2];
+    uint8_t chWhiteNoiseVisibleFrameCounter;
 
     union {
         arm_2d_op_fill_cl_msk_opa_trans_t   tFillColourTransform;
