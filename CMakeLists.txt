@@ -205,6 +205,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arm_2d_asset_radial_line_pattern.c
             examples/common/asset/arm_2d_asset_wedge_pattern.c
             examples/common/asset/arm_2d_asset_GlassBall40.c
+            examples/common/asset/arm_2d_asset_doge.c
 
             examples/common/asset/arm_2d_asset_icon_automobile.c
             examples/common/asset/arm_2d_asset_icon_compute.c 

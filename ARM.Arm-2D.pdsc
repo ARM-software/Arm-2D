@@ -568,6 +568,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_compass.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_Earth.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_GlassBall40.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge.c" />
             <!--
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_radial_line_cover.c" />
