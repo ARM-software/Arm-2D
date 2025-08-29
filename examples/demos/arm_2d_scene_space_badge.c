@@ -61,20 +61,20 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
-#   define c_tileWhiteNoiseBar      c_tileWhiteNoiseGRAY8
 #   define c_tileSpaceFleet         c_tileSpaceFleetGRAY8
+#   define c_tileDoge               c_tileDogeGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
-#   define c_tileWhiteNoiseBar      c_tileWhiteNoiseRGB565
 #   define c_tileSpaceFleet         c_tileSpaceFleetRGB565
+#   define c_tileDoge               c_tileDogeRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_tileWhiteNoiseBar      c_tileWhiteNoiseCCCN888
 #   define c_tileSpaceFleet         c_tileSpaceFleetCCCA8888
+#   define c_tileDoge               c_tileDogeCCCN888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -90,17 +90,15 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-extern const arm_2d_tile_t c_tileWhiteNoiseBar;
-extern const arm_2d_tile_t c_tileWhiteNoiseGRAY8;
+
 extern const arm_2d_tile_t c_tileSpaceFleetMask;
 extern const arm_2d_tile_t c_tileSpaceFleet;
+extern const arm_2d_tile_t c_tileDoge;
+extern const arm_2d_tile_t c_tileDogeGRAY8;
 
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
-static arm_2d_tile_t c_tileWhiteNoise = 
-    impl_child_tile(c_tileWhiteNoiseBar, 0, 0, 32, 16);
-
 static arm_2d_size_t s_tPhotoSize = { 10 * 7, 10 * 9 };
 
 /*============================ IMPLEMENTATION ================================*/
@@ -123,6 +121,8 @@ static void __on_scene_space_badge_load(arm_2d_scene_t *ptScene)
 
         }
     } while(0);
+
+    crt_screen_on_load(&this.tCRTScreen);
 }
 
 static void __after_scene_space_badge_switching(arm_2d_scene_t *ptScene)
@@ -144,6 +144,8 @@ static void __on_scene_space_badge_depose(arm_2d_scene_t *ptScene)
             ARM_2D_OP_DEPOSE(*ptLineOP);
         }
     } while(0);
+
+    crt_screen_depose(&this.tCRTScreen);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -180,21 +182,7 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
     user_scene_space_badge_t *ptThis = (user_scene_space_badge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    do {
-        /* update random generator */
-        srand(arm_2d_helper_get_system_timestamp());
-
-        int16_t iWidth = (rand() % 64) + 16;
-        int16_t iHeight = (rand() % 8) + 8;
-        int16_t iX = rand() % (c_tileWhiteNoiseBar.tRegion.tSize.iWidth - iWidth);
-        int16_t iY = rand() % (c_tileWhiteNoiseBar.tRegion.tSize.iHeight - iHeight);
-
-        c_tileWhiteNoise.tRegion.tLocation.iX = iX;
-        c_tileWhiteNoise.tRegion.tLocation.iY = iY;
-        c_tileWhiteNoise.tRegion.tSize.iWidth = iWidth;
-        c_tileWhiteNoise.tRegion.tSize.iHeight = iHeight;
-
-    } while(0);
+    crt_screen_on_frame_start(&this.tCRTScreen);
 
     if (this.iStartOffset == 0) {
         this.iStartOffset = 100;
@@ -228,6 +216,7 @@ static void __on_scene_space_badge_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_space_badge_t *ptThis = (user_scene_space_badge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    crt_screen_on_frame_complete(&this.tCRTScreen);
 #if 0
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
@@ -373,14 +362,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
             __item_line_dock_horizontal(s_tPhotoSize.iWidth + 8, 32, 32, 0, 0) {
 
                 arm_2d_align_centre(__item_region, s_tPhotoSize) {
-                    arm_2d_tile_fill_with_src_mask_and_opacity_only (   &c_tileWhiteNoise,
-                                                                        &c_tileWhiteNoiseGRAY8,
-                                                                        ptTile, 
-                                                                        &__centre_region,
-                                                                        255 - 64 );
-                    
-                    ARM_2D_OP_WAIT_ASYNC();
 
+                    crt_screen_show(&this.tCRTScreen, ptTile, &__centre_region, 255 - 64, bIsNewFrame);
                     
                 }
 
@@ -463,6 +446,18 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
         arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
             ARM_2D_OP_INIT(*ptLineOP);
         }
+    } while(0);
+
+    /* CRT Screen */
+    do {
+        crt_screen_cfg_t tCFG = {
+            .ptScene = &this.use_as__arm_2d_scene_t,
+            .ptilePhoto = &c_tileDoge,
+            .tScreenColour.tColour = GLCD_COLOR_GREEN,
+            .bShowWhiteNoise = true,
+        };
+
+        crt_screen_init(&this.tCRTScreen, &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_space_badge_t end   ---------------*/

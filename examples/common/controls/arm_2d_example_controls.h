@@ -45,6 +45,7 @@
 #include "./text_tracking_list.h"
 #include "./text_box.h"
 #include "./qrcode_box/qrcode_box.h"
+#include "./crt_screen.h"
 
 #ifdef   __cplusplus
 extern "C" {
