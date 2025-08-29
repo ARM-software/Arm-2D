@@ -212,12 +212,15 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
 
     crt_screen_on_frame_start(&this.tCRTScreen);
 
-    if (this.iStartOffset == 0) {
-        this.iStartOffset = 100;
-    }
-    this.iStartOffset -= 4;
 
-    do {
+
+    if (arm_2d_helper_is_time_out(30, &this.lTimestamp[0])) {
+
+        if (this.iStartOffset <= 0) {
+            this.iStartOffset = 100;
+        }
+        this.iStartOffset -= 8;
+
         arm_2d_size_t tBattleZone = c_tileSpaceFleet.tRegion.tSize;
 
         srand(arm_2d_helper_get_system_timestamp());
@@ -230,13 +233,13 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
                 ptHalo->iRadius = rand() & 0x07;
                 ptHalo->chOpacity = 255;
 
-            } else if (ptHalo->chOpacity > 6) {
-                ptHalo->chOpacity -= 6;
+            } else if (ptHalo->chOpacity > 16) {
+                ptHalo->chOpacity -= 16;
             } else {
                 ptHalo->chOpacity = 0;
             }
         }
-    } while(0);
+    }
 }
 
 static void __on_scene_space_badge_frame_complete(arm_2d_scene_t *ptScene)
@@ -391,7 +394,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
 
                 arm_2d_align_centre(__item_region, s_tPhotoSize) {
 
-                    crt_screen_show(&this.tCRTScreen, ptTile, &__centre_region, 255 - 64, bIsNewFrame);
+                    crt_screen_show(&this.tCRTScreen, ptTile, &__centre_region, 128 + 64, bIsNewFrame);
                     
                 }
 
@@ -528,7 +531,8 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     do {
         crt_screen_cfg_t tCFG = {
             .ptScene = &this.use_as__arm_2d_scene_t,
-            .ptilePhoto = &c_tileDogeGRAY8,
+            //.ptilePhoto = &c_tileDogeGRAY8,
+            .ptilePhoto = &c_tileDoge,
             .tScreenColour.tColour = GLCD_COLOR_GREEN,
             .tScanBarColour.tColour = GLCD_COLOR_WHITE,
             .chWhiteNoiseRatio = 32,
