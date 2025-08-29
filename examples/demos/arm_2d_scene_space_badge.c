@@ -96,6 +96,34 @@ extern const arm_2d_tile_t c_tileSpaceFleet;
 extern const arm_2d_tile_t c_tileDoge;
 extern const arm_2d_tile_t c_tileDogeGRAY8;
 
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_LiberationSansRegular32_A4;
+
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_LiberationSansRegular32_A2;
+
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_LiberationSansRegular14_A2;
+
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_LiberationSansRegular14_A4;
+
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -359,7 +387,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
 
         arm_2d_layout(__top_canvas, RIGHT_TO_LEFT) {
 
-            __item_line_dock_horizontal(s_tPhotoSize.iWidth + 8, 32, 32, 0, 0) {
+            __item_line_dock_horizontal(s_tPhotoSize.iWidth + 8, 16, 32, 0, 0) {
 
                 arm_2d_align_centre(__item_region, s_tPhotoSize) {
 
@@ -373,10 +401,58 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
 
             }
 
+            __item_line_dock_horizontal() {
+                arm_2d_dock_vertical(__item_region, s_tPhotoSize.iHeight + 14, 32, 0) {
+
+                    arm_2d_layout(__vertical_region) {
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+
+                        arm_lcd_text_set_scale(0.7f);
+                        arm_2d_size_t tNameStringSize = 
+                            arm_lcd_printf_to_buffer(
+                                (const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular32_A2, "Kabosu Doge");
+
+                        __item_line_dock_vertical(tNameStringSize.iHeight) {
+
+                            arm_lcd_text_set_draw_region(&__item_region);
+                            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                            arm_lcd_text_location(0,0);
+                            arm_lcd_text_set_opacity(255);
+                            arm_lcd_printf_buffer(0);
+                        }
+
+                        __item_line_dock_vertical(0, 0, 20, 0) {
+                             arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A2);
+                            arm_lcd_text_set_scale(1.0f);
+                            arm_lcd_text_set_draw_region(&__item_region);
+                            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                            arm_lcd_text_location(0,0);
+
+                            arm_lcd_puts("Commander of\r\nthe Woofer Fleet");
+
+
+                        }
+                    }
+
+                #if 0
+                    draw_round_corner_border(   ptTile, 
+                                                &__vertical_region, 
+                                                GLCD_COLOR_YELLOW, 
+                                                (arm_2d_border_opacity_t)
+                                                    {64, 64, 64, 64},
+                                                (arm_2d_corner_opacity_t)
+                                                    {64, 64, 64, 64});
+                #endif
+
+                }
+
+                
+            }
+
         }
 
         /* draw text at the top-left corner */
-
+        arm_lcd_text_set_scale(0.0f);
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);
