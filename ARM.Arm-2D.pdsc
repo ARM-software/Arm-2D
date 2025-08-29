@@ -270,6 +270,7 @@
             <file category="other"       name="ReleaseNote.md" />
 
             <!-- example of user defined opcode  -->
+            <file category="header"      name="examples/common/opcodes/__arm_2d_example_opcodes_common.h" />
             <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_line.c" attr="config" version="1.2.1" />
             <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_line.h" attr="config" version="1.2.1" />
             <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_circle.c" attr="config" version="1.0.0" />
@@ -488,7 +489,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.7.3" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.7.4" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -569,6 +570,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_Earth.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_GlassBall40.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_white_noise.c" />
             <!--
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_radial_line_cover.c" />
@@ -845,6 +847,19 @@
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_User_Defined_OPCODE
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cversion="0.5.0" condition="Arm-2D-Demos">
+          <description>An example of showing a badge with a space battle theme. </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_space_badge.c" attr="config" version="0.5.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_space_badge.h" attr="config" version="0.5.0" />
+            
+            <file category="sourceC"     name="examples/demos/space_fleet.c" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Space_Badge
           </RTE_Components_h>
         </component>
 

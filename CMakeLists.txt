@@ -206,6 +206,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arm_2d_asset_wedge_pattern.c
             examples/common/asset/arm_2d_asset_GlassBall40.c
             examples/common/asset/arm_2d_asset_doge.c
+            examples/common/asset/arm_2d_asset_white_noise.c
 
             examples/common/asset/arm_2d_asset_icon_automobile.c
             examples/common/asset/arm_2d_asset_icon_compute.c 
@@ -219,7 +220,6 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arm_2d_asset_icon_smartmeter.c 
             examples/common/asset/arm_2d_asset_icon_visual_sensor.c 
             examples/common/asset/arm_2d_asset_icon_wearables.c
-            
 
           )
     target_compile_options(ARM2D PUBLIC
@@ -250,7 +250,5 @@ if (ARM2D_BENCHMARK_WATCHPANEL)
           -DRTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel
           )
 endif()
-
-
 
 target_include_directories(ARM2D PUBLIC Library/Include/)
