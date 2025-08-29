@@ -137,7 +137,7 @@ void <control_name>_show( user_<control_name>_t *ptThis,
         do {
             arm_2d_region_t tValidRegion;
             if (!__arm_2d_tile_get_virtual_screen_or_root(  
-                                                    &__qrcode_canvas,
+                                                    &__control,
                                                     &tValidRegion, 
                                                     &tPFBScanRegion.tLocation,
                                                     NULL,

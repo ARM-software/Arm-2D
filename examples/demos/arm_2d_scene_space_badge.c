@@ -330,7 +330,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
         }
 
         /* draw space fleet */
-        arm_2d_dock_top(__top_canvas, __top_canvas.tSize.iHeight >> 1) {
+        arm_2d_dock_top_open(__top_canvas, __top_canvas.tSize.iHeight >> 1) {
             arm_2d_align_bottom_centre_open(__top_region, c_tileSpaceFleetMask.tRegion.tSize) {
 
                 arm_2d_tile_copy_with_src_mask_and_opacity_only(    &c_tileSpaceFleet,
