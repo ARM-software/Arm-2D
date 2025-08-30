@@ -267,6 +267,14 @@ void crt_screen_show(   crt_screen_t *ptThis,
     ARM_2D_OP_WAIT_ASYNC();
 }
 
+ARM_NONNULL(1)
+bool crt_screen_is_showing_noise( crt_screen_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.chWhiteNoiseVisibleFrameCounter > 0;
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

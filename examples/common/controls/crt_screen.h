@@ -128,6 +128,9 @@ void crt_screen_show(   crt_screen_t *ptThis,
                         uint8_t chOpacity,
                         bool bIsNewFrame);
 
+extern
+ARM_NONNULL(1)
+bool crt_screen_is_showing_noise( crt_screen_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

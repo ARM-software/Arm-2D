@@ -153,11 +153,11 @@ arm_2d_size_t image_box_get_target_region_size(image_box_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void image_box_show( image_box_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            uint8_t chOpacity,
-                            bool bIsNewFrame)
+void image_box_show(image_box_t *ptThis,
+                    const arm_2d_tile_t *ptTile, 
+                    const arm_2d_region_t *ptRegion, 
+                    uint8_t chOpacity,
+                    bool bIsNewFrame)
 {
     assert(NULL!= ptThis);
 
