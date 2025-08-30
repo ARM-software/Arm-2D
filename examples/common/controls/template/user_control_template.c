@@ -74,7 +74,10 @@ void <control_name>_init( user_<control_name>_t *ptThis,
 {
     assert(NULL!= ptThis);
     memset(ptThis, 0, sizeof(user_<control_name>_t));
-    this.tCFG = *ptCFG;
+
+    if (NULL != ptCFG) {
+        this.tCFG = *ptCFG;
+    }
 
 
 }
@@ -113,11 +116,10 @@ void <control_name>_show( user_<control_name>_t *ptThis,
                             const arm_2d_region_t *ptRegion, 
                             bool bIsNewFrame)
 {
+    assert(NULL!= ptThis);
     if (-1 == (intptr_t)ptTile) {
         ptTile = arm_2d_get_default_frame_buffer();
     }
-
-    assert(NULL!= ptThis);
 
     if (bIsNewFrame) {
         int32_t iResult;

@@ -16,8 +16,6 @@
  * limitations under the License.
  */
 
-
-
 #ifndef __ARM_2D_EXAMPLE_CONTROLS_H__
 #define __ARM_2D_EXAMPLE_CONTROLS_H__
 
@@ -46,6 +44,7 @@
 #include "./text_box.h"
 #include "./qrcode_box/qrcode_box.h"
 #include "./crt_screen.h"
+#include "./image_box.h"
 
 #ifdef   __cplusplus
 extern "C" {

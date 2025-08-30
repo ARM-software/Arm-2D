@@ -1672,8 +1672,6 @@ const arm_2d_tile_t c_tileDogeSmallCCCN888 = {
 };
 
 
-
-
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)

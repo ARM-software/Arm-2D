@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include "./__common.h"
+#include "./image_box.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -53,17 +54,12 @@ extern "C" {
 typedef struct crt_screen_cfg_t {
     arm_2d_scene_t *ptScene;
 
-    const arm_2d_tile_t *ptilePhoto;
-    float fXRatio;                                                              /* Zero means auto fit */
-    float fYRatio;                                                              /* Zero means same as the X ratio */
+    image_box_cfg_t *ptImageBoxCFG;
 
-    COLOUR_TYPE_T tScreenColour;
     COLOUR_TYPE_T tScanBarColour;
     uint8_t bShowScanningEffect     : 1;
     uint8_t bStrongNoise            : 1;
-    uint8_t                         : 4;
-    uint8_t __bAutoFit              : 1;                                        /* please ignore this internal flag */
-    uint8_t __bShowAsGrayScale      : 1;                                        /* please ignore this internal flag */
+    uint8_t                         : 6;
     uint8_t chWhiteNoiseRatio;
     uint8_t chNoiseLasts;
 
@@ -82,13 +78,13 @@ typedef struct crt_screen_t crt_screen_t;
 
 struct crt_screen_t {
 
+    implement(image_box_t);
+
 ARM_PRIVATE(
 
-    crt_screen_cfg_t tCFG;
-
+    crt_screen_cfg_t tCRTCFG;
     arm_2d_tile_t tWhiteNoise;
-    arm_2d_size_t tTargetRegionSize;
-    
+
     struct {
         int64_t lTimestamp;
         int16_t iYOffset;
@@ -96,11 +92,6 @@ ARM_PRIVATE(
     } ScanBar[2];
     uint8_t chWhiteNoiseVisibleFrameCounter;
 
-    union {
-        arm_2d_op_fill_cl_msk_opa_trans_t   tFillColourTransform;
-        //arm_2d_op_trans_msk_opa_t           tTileTransform;
-        arm_2d_op_trans_opa_t               tTile;
-    } OPCODE;
 )
     /* place your public member here */
     
@@ -110,9 +101,9 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1)
-void crt_screen_init( crt_screen_t *ptThis,
-                          crt_screen_cfg_t *ptCFG);
+ARM_NONNULL(1,2)
+void crt_screen_init(   crt_screen_t *ptThis,
+                        crt_screen_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
 void crt_screen_depose( crt_screen_t *ptThis);

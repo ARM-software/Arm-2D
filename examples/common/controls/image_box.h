@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __<CONTROL_NAME>_H__
-#define __<CONTROL_NAME>_H__
+#ifndef __IMAGE_BOX_H__
+#define __IMAGE_BOX_H__
 
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
@@ -37,11 +37,11 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __<CONTROL_NAME>_IMPLEMENT__
-#   undef   __<CONTROL_NAME>_IMPLEMENT__
+#ifdef __IMAGE_BOX_IMPLEMENT__
+#   undef   __IMAGE_BOX_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
-#elif defined(__<CONTROL_NAME>_INHERIT__)
-#   undef   __<CONTROL_NAME>_INHERIT__
+#elif defined(__IMAGE_BOX_INHERIT__)
+#   undef   __IMAGE_BOX_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -49,25 +49,44 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+enum {
+    IMG_BOX_MODE_AUTO_CLIP,
+    IMG_BOX_MODE_STRETCH,
+    IMG_BOX_MODE_MANUAL,
+};
 
-typedef struct user_<control_name>_cfg_t {
-    arm_2d_scene_t *ptScene;
-} user_<control_name>_cfg_t;
+typedef struct image_box_cfg_t {
+
+    const arm_2d_tile_t *ptilePhoto;
+    const arm_2d_tile_t *ptilePhotoMask;
+    float fXRatio;
+    float fYRatio;
+
+    COLOUR_TYPE_T tScreenColour;
+    uint8_t u2Mode              : 2;
+    uint8_t                     : 5;
+    uint8_t __bShowGrayScale    : 1;                                            /* please ignore this flag */
+
+} image_box_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct user_<control_name>_t user_<control_name>_t;
+typedef struct image_box_t image_box_t;
 
-struct user_<control_name>_t {
+struct image_box_t {
 
 ARM_PRIVATE(
 
-    user_<control_name>_cfg_t tCFG;
+    image_box_cfg_t tCFG;
+    arm_2d_size_t tTargetRegionSize;
 
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    uint8_t chOpacity;
+    union {
+        arm_2d_op_fill_cl_msk_opa_trans_t   tFillColourTransform;
+        arm_2d_op_trans_msk_opa_t           tTileTransSrcMaskOpa;
+        arm_2d_op_trans_opa_t               tTileTransOpa;
+    } OPCODE;
+
 )
     /* place your public member here */
     
@@ -77,31 +96,36 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1, 2)
-void <control_name>_init( user_<control_name>_t *ptThis,
-                          user_<control_name>_cfg_t *ptCFG);
+ARM_NONNULL(1)
+void image_box_init( image_box_t *ptThis,
+                     image_box_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
-void <control_name>_depose( user_<control_name>_t *ptThis);
+void image_box_depose( image_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_load( user_<control_name>_t *ptThis);
+void image_box_on_load( image_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_frame_start( user_<control_name>_t *ptThis);
+void image_box_on_frame_start( image_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_frame_complete( user_<control_name>_t *ptThis);
+void image_box_on_frame_complete( image_box_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_show( user_<control_name>_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            bool bIsNewFrame);
+arm_2d_size_t image_box_get_target_region_size(image_box_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void image_box_show(image_box_t *ptThis,
+                    const arm_2d_tile_t *ptTile, 
+                    const arm_2d_region_t *ptRegion, 
+                    uint8_t chOpacity,
+                    bool bIsNewFrame);
 
 
 #if defined(__clang__)

@@ -555,11 +555,15 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
 
     /* CRT Screen */
     do {
-        crt_screen_cfg_t tCFG = {
+        crt_screen_cfg_t tCRTScreenCFG = {
             .ptScene = &this.use_as__arm_2d_scene_t,
-            //.ptilePhoto = &c_tileDogeSmallGRAY8,
-            .ptilePhoto = &c_tileDogeSmall,
-            .tScreenColour.tColour = GLCD_COLOR_GREEN,
+
+            .ptImageBoxCFG = (image_box_cfg_t []) {{
+                //.ptilePhoto = &c_tileDogeSmallGRAY8,
+                .ptilePhoto = &c_tileDogeSmall,
+                .tScreenColour.tColour = GLCD_COLOR_GREEN,
+            }},
+
             .tScanBarColour.tColour = GLCD_COLOR_WHITE,
             .chWhiteNoiseRatio = 32,
             .chNoiseLasts = 32,
@@ -567,7 +571,7 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
             .bShowScanningEffect = true,
         };
 
-        crt_screen_init(&this.tCRTScreen, &tCFG);
+        crt_screen_init(&this.tCRTScreen, &tCRTScreenCFG);
     } while(0);
 
 #if SPACE_BADGE_SHOW_NEBULA

@@ -79,72 +79,42 @@ void crt_screen_init(   crt_screen_t *ptThis,
                         crt_screen_cfg_t *ptCFG)
 {
     assert(NULL!= ptThis);
+
     memset(ptThis, 0, sizeof(crt_screen_t));
-    this.tCFG = *ptCFG;
+    this.tCRTCFG = *ptCFG;
 
     this.tWhiteNoise = (arm_2d_tile_t)
         impl_child_tile(c_tileWhiteNoiseBar, 0, 0, 32, 16);
     
-    if (0 == this.tCFG.chNoiseLasts) {
-        this.tCFG.chNoiseLasts = 8;
+    if (0 == this.tCRTCFG.chNoiseLasts) {
+        this.tCRTCFG.chNoiseLasts = 8;
     }
 
-    do {
-        this.tCFG.__bShowAsGrayScale = false;
-        this.tCFG.__bAutoFit = false;
-
-        if (NULL == this.tCFG.ptilePhoto) {
-            break;
-        }
-        const arm_2d_tile_t *ptRootTile 
-            = arm_2d_tile_get_root(this.tCFG.ptilePhoto, NULL, NULL);
-        if (NULL == ptRootTile) {
-            this.tCFG.ptilePhoto = NULL;
-            break;
-        }
-
-        if (    ptRootTile->bHasEnforcedColour 
-            &&  ptRootTile->tColourInfo.chScheme == ARM_2D_COLOUR_GRAY8) {
-            this.tCFG.__bShowAsGrayScale = true;
-        }
-
-        if (this.tCFG.fXRatio == 0 && this.tCFG.fYRatio == 0) {
-            /* auto fit */
-            this.tCFG.__bAutoFit = true;
-        } else if (this.tCFG.fXRatio == 0) {
-            this.tCFG.fXRatio = this.tCFG.fYRatio;
-        } else if (this.tCFG.fYRatio == 0) {
-            this.tCFG.fYRatio = this.tCFG.fXRatio;
-        }
-    } while(0);
-
-    if (this.tCFG.bShowScanningEffect) {
+    if (this.tCRTCFG.bShowScanningEffect) {
         /* validate scan bar 0 parameters */
-        if (0 == this.tCFG.ScanBar[0].chOpacity) {
-            this.tCFG.ScanBar[0].chOpacity = 64;
+        if (0 == this.tCRTCFG.ScanBar[0].chOpacity) {
+            this.tCRTCFG.ScanBar[0].chOpacity = 64;
         }
-        if (0 == this.tCFG.ScanBar[0].chBarHeight) {
-            this.tCFG.ScanBar[0].chBarHeight = 32;
+        if (0 == this.tCRTCFG.ScanBar[0].chBarHeight) {
+            this.tCRTCFG.ScanBar[0].chBarHeight = 32;
         }
-        if (0 == this.tCFG.ScanBar[0].hwPeriodInMs) {
-            this.tCFG.ScanBar[0].hwPeriodInMs = 2000;
+        if (0 == this.tCRTCFG.ScanBar[0].hwPeriodInMs) {
+            this.tCRTCFG.ScanBar[0].hwPeriodInMs = 2000;
         }
 
         /* validate scan bar 1 parameters */
-        if (0 == this.tCFG.ScanBar[1].chOpacity) {
-            this.tCFG.ScanBar[1].chOpacity = 128;
+        if (0 == this.tCRTCFG.ScanBar[1].chOpacity) {
+            this.tCRTCFG.ScanBar[1].chOpacity = 128;
         }
-        if (0 == this.tCFG.ScanBar[1].chBarHeight) {
-            this.tCFG.ScanBar[1].chBarHeight = 4;
+        if (0 == this.tCRTCFG.ScanBar[1].chBarHeight) {
+            this.tCRTCFG.ScanBar[1].chBarHeight = 4;
         }
-        if (0 == this.tCFG.ScanBar[1].hwPeriodInMs) {
-            this.tCFG.ScanBar[1].hwPeriodInMs = 333;
+        if (0 == this.tCRTCFG.ScanBar[1].hwPeriodInMs) {
+            this.tCRTCFG.ScanBar[1].hwPeriodInMs = 333;
         }
     }
 
-    /* initialize op */
-    ARM_2D_OP_INIT(this.OPCODE);
-
+    image_box_init(&this.use_as__image_box_t, ptCFG->ptImageBoxCFG);
 }
 
 ARM_NONNULL(1)
@@ -152,15 +122,14 @@ void crt_screen_depose( crt_screen_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    /* depose op */
-    ARM_2D_OP_DEPOSE(this.OPCODE);
+    image_box_depose(&this.use_as__image_box_t);
 }
 
 ARM_NONNULL(1)
 void crt_screen_on_load( crt_screen_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+    image_box_on_load(&this.use_as__image_box_t);
 }
 
 ARM_NONNULL(1)
@@ -168,7 +137,9 @@ void crt_screen_on_frame_start( crt_screen_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    if (this.tCFG.chWhiteNoiseRatio > 0) {
+    image_box_on_frame_start(&this.use_as__image_box_t);
+
+    if (this.tCRTCFG.chWhiteNoiseRatio > 0) {
         /* update random generator */
         srand(arm_2d_helper_get_system_timestamp());
 
@@ -183,8 +154,8 @@ void crt_screen_on_frame_start( crt_screen_t *ptThis)
         this.tWhiteNoise.tRegion.tSize.iHeight = iHeight;
 
         if (0 == this.chWhiteNoiseVisibleFrameCounter) {
-            if (((rand() & 0xFFF) < this.tCFG.chWhiteNoiseRatio)) {
-                this.chWhiteNoiseVisibleFrameCounter = (rand() % this.tCFG.chNoiseLasts) + 1;
+            if (((rand() & 0xFFF) < this.tCRTCFG.chWhiteNoiseRatio)) {
+                this.chWhiteNoiseVisibleFrameCounter = (rand() % this.tCRTCFG.chNoiseLasts) + 1;
             }
         } else {
             this.chWhiteNoiseVisibleFrameCounter--;
@@ -192,18 +163,18 @@ void crt_screen_on_frame_start( crt_screen_t *ptThis)
     }
 
     do {
-        int16_t iHeight = this.tTargetRegionSize.iHeight;
+        int16_t iHeight = image_box_get_target_region_size(&this.use_as__image_box_t).iHeight;
         if (0 == iHeight) {
             break;
         }
 
-        if (this.tCFG.bShowScanningEffect) {
+        if (this.tCRTCFG.bShowScanningEffect) {
             
             int32_t iResult = 0;
             if (arm_2d_helper_time_liner_slider(
-                    -this.tCFG.ScanBar[0].chBarHeight, 
+                    -this.tCRTCFG.ScanBar[0].chBarHeight, 
                     iHeight,
-                    this.tCFG.ScanBar[0].hwPeriodInMs,
+                    this.tCRTCFG.ScanBar[0].hwPeriodInMs,
                     &iResult,
                     &this.ScanBar[0].lTimestamp)) {
                 /* reset */
@@ -212,9 +183,9 @@ void crt_screen_on_frame_start( crt_screen_t *ptThis)
             this.ScanBar[0].iYOffset = iResult;
 
             if (arm_2d_helper_time_liner_slider(
-                    -this.tCFG.ScanBar[1].chBarHeight, 
+                    -this.tCRTCFG.ScanBar[1].chBarHeight, 
                     iHeight,
-                    this.tCFG.ScanBar[1].hwPeriodInMs,
+                    this.tCRTCFG.ScanBar[1].hwPeriodInMs,
                     &iResult,
                     &this.ScanBar[1].lTimestamp)) {
                 /* reset */
@@ -230,15 +201,16 @@ ARM_NONNULL(1)
 void crt_screen_on_frame_complete( crt_screen_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
+    image_box_on_frame_complete(&this.use_as__image_box_t);
 }
 
 ARM_NONNULL(1)
-void crt_screen_show( crt_screen_t *ptThis,
-                            const arm_2d_tile_t *ptTile, 
-                            const arm_2d_region_t *ptRegion, 
-                            uint8_t chOpacity,
-                            bool bIsNewFrame)
+void crt_screen_show(   crt_screen_t *ptThis,
+                        const arm_2d_tile_t *ptTile, 
+                        const arm_2d_region_t *ptRegion, 
+                        uint8_t chOpacity,
+                        bool bIsNewFrame)
 {
     assert(NULL!= ptThis);
 
@@ -248,74 +220,18 @@ void crt_screen_show( crt_screen_t *ptThis,
 
     arm_2d_container(ptTile, __crt_screen, ptRegion) {
 
-        if (bIsNewFrame) {
-            bool bRegionChanged = false;
-            if (    (__crt_screen_canvas.tSize.iHeight != this.tTargetRegionSize.iHeight)
-               ||   (__crt_screen_canvas.tSize.iWidth != this.tTargetRegionSize.iWidth)) {
-                /* no need to re-calculate */
-                bRegionChanged = true;
-                this.tTargetRegionSize = __crt_screen_canvas.tSize;
+        do {
+            if (this.chWhiteNoiseVisibleFrameCounter > 0 && this.tCRTCFG.bStrongNoise) {
+                break;
             }
-            
+            image_box_show( &this.use_as__image_box_t,
+                            &__crt_screen,
+                            &__crt_screen_canvas,
+                            chOpacity,
+                            bIsNewFrame);
 
-            if (bRegionChanged && this.tCFG.__bAutoFit && NULL != this.tCFG.ptilePhoto) {
-
-                float fXRatio = (float)__crt_screen_canvas.tSize.iWidth
-                              / this.tCFG.ptilePhoto->tRegion.tSize.iWidth;
-                float fYRatio = (float)__crt_screen_canvas.tSize.iHeight
-                              / this.tCFG.ptilePhoto->tRegion.tSize.iHeight;
-                
-                this.tCFG.fXRatio = MAX(fXRatio, fYRatio);
-                this.tCFG.fYRatio = this.tCFG.fXRatio;
-            }
-        }
+        } while(0);
         
-        
-        /* draw photo */
-        if (NULL != this.tCFG.ptilePhoto) {
-
-            do {
-                if (this.chWhiteNoiseVisibleFrameCounter > 0 && this.tCFG.bStrongNoise) {
-                    break;
-                }
-
-                arm_2d_point_float_t tCentre = {
-                    .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
-                    .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
-                };
-
-                if (this.tCFG.__bShowAsGrayScale) {
-
-                    /* draw pointer */
-                    arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
-                                        &this.OPCODE.tFillColourTransform,
-                                        this.tCFG.ptilePhoto,
-                                        &__crt_screen,
-                                        &__crt_screen_canvas,
-                                        tCentre,
-                                        0.0f,
-                                        this.tCFG.fXRatio,
-                                        this.tCFG.fYRatio,
-                                        this.tCFG.tScreenColour.tColour,
-                                        chOpacity);
-
-                } else {
-                    arm_2dp_tile_transform_xy_only_with_opacity(
-                                        &this.OPCODE.tTile,
-                                        this.tCFG.ptilePhoto,
-                                        &__crt_screen,
-                                        &__crt_screen_canvas,
-                                        tCentre,
-                                        0.0f,
-                                        this.tCFG.fXRatio,
-                                        this.tCFG.fYRatio,
-                                        chOpacity);
-
-                }
-            } while(0);
-
-        }
-
         if (this.chWhiteNoiseVisibleFrameCounter > 0) {
             arm_2d_tile_fill_with_src_mask_and_opacity_only (   &this.tWhiteNoise,
                                                                 &c_tileWhiteNoiseGRAY8,
@@ -324,23 +240,23 @@ void crt_screen_show( crt_screen_t *ptThis,
                                                                 chOpacity);
         }
 
-        if (this.tCFG.bShowScanningEffect) {
+        if (this.tCRTCFG.bShowScanningEffect) {
         
             for (int_fast8_t n = 0; n < dimof(this.ScanBar); n++) {
 
                 arm_2d_region_t tScanBar = {
                     .tSize = {
-                        .iHeight = this.tCFG.ScanBar[n].chBarHeight,
-                        .iWidth = this.tTargetRegionSize.iWidth,
+                        .iHeight = this.tCRTCFG.ScanBar[n].chBarHeight,
+                        .iWidth = image_box_get_target_region_size(&this.use_as__image_box_t).iWidth,
                     },
                     .tLocation.iY = this.ScanBar[n].iYOffset,
                 };
 
-                uint8_t chScanBarOpacity = arm_2d_helper_alpha_mix(chOpacity, this.tCFG.ScanBar[n].chOpacity);
+                uint8_t chScanBarOpacity = arm_2d_helper_alpha_mix(chOpacity, this.tCRTCFG.ScanBar[n].chOpacity);
 
                 arm_2d_fill_colour_with_opacity(&__crt_screen, 
                                                 &tScanBar, 
-                                                (__arm_2d_color_t){this.tCFG.tScanBarColour.tColour},
+                                                (__arm_2d_color_t){this.tCRTCFG.tScanBarColour.tColour},
                                                 chScanBarOpacity);
 
             }
