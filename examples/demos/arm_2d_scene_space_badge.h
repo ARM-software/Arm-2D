@@ -66,6 +66,10 @@ extern "C" {
 #   define SPACE_BADGE_SHOW_NEBULA          1
 #endif
 
+#ifndef SPACE_BADGE_NEBULA_FLYING_SPEED
+#   define SPACE_BADGE_NEBULA_FLYING_SPEED  2.0f
+#endif
+
 #ifndef SPACE_BADGE_90TH_BATTLE_STYLE
 #   define SPACE_BADGE_90TH_BATTLE_STYLE    0
 #endif

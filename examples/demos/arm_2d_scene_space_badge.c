@@ -568,7 +568,7 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     do {
         int16_t iRadius = MIN(__top_canvas.tSize.iHeight, __top_canvas.tSize.iWidth) >> 1;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 1.5f,
+            .fSpeed = SPACE_BADGE_NEBULA_FLYING_SPEED,
             .iRadius = iRadius,
             .iVisibleRingWidth = 80,
             .hwParticleCount = dimof(this.tParticles),
