@@ -489,7 +489,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.9.1" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.10.0" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -518,6 +518,7 @@
             <file category="sourceC"     name="examples/common/controls/qrcode_box/qrcodegen.c" />
             <file category="sourceC"     name="examples/common/controls/crt_screen.c" />
             <file category="sourceC"     name="examples/common/controls/image_box.c" />
+            <file category="sourceC"     name="examples/common/controls/foldable_panel.c" />
 
             <!-- assets -->
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_WhiteDotMiddle.c" />

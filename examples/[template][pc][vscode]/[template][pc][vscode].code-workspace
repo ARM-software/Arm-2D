@@ -78,7 +78,8 @@
 			"__simple_list.h": "c",
 			"arm_2d_scene_rickrolling.h": "c",
 			"__arm_2d_expanded_helium.log": "c",
-			"*.jinja": "c"
+			"*.jinja": "c",
+			"crt_screen.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

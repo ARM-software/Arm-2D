@@ -150,6 +150,7 @@ if (ARM2D_CONTROLS)
             examples/common/controls/qrcode_box/qrcodegen.c
             examples/common/controls/crt_screen.c
             examples/common/controls/image_box.c
+            examples/common/controls/foldable_panel.c
 
             examples/common/asset/arm_2d_asset_WhiteDotMiddle.c
             examples/common/asset/arm_2d_asset_WhiteDotBig.c

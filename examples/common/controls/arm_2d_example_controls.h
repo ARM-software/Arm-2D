@@ -45,6 +45,7 @@
 #include "./qrcode_box/qrcode_box.h"
 #include "./crt_screen.h"
 #include "./image_box.h"
+#include "./foldable_panel.h"
 
 #ifdef   __cplusplus
 extern "C" {
