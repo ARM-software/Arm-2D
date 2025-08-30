@@ -136,6 +136,7 @@ static void __on_scene_space_badge_load(arm_2d_scene_t *ptScene)
     user_scene_space_badge_t *ptThis = (user_scene_space_badge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if !SPACE_BADGE_90TH_BATTLE_STYLE
     do {
         arm_2d_size_t tBattleZone = c_tileSpaceFleet.tRegion.tSize;
 
@@ -149,6 +150,7 @@ static void __on_scene_space_badge_load(arm_2d_scene_t *ptScene)
 
         }
     } while(0);
+#endif
 
     crt_screen_on_load(&this.tCRTScreen);
 }
@@ -174,6 +176,10 @@ static void __on_scene_space_badge_depose(arm_2d_scene_t *ptScene)
     } while(0);
 
     crt_screen_depose(&this.tCRTScreen);
+
+#if SPACE_BADGE_SHOW_NEBULA
+    dynamic_nebula_depose(&this.tNebula);
+#endif
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -212,8 +218,6 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
 
     crt_screen_on_frame_start(&this.tCRTScreen);
 
-
-
     if (arm_2d_helper_is_time_out(30, &this.lTimestamp[0])) {
 
         if (this.iStartOffset <= 0) {
@@ -233,8 +237,8 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
                 ptHalo->iRadius = rand() & 0x07;
                 ptHalo->chOpacity = 255;
 
-            } else if (ptHalo->chOpacity > 16) {
-                ptHalo->chOpacity -= 16;
+            } else if (ptHalo->chOpacity > SPACE_BADGE_EXPLOSION_SPEED) {
+                ptHalo->chOpacity -= SPACE_BADGE_EXPLOSION_SPEED;
             } else {
                 ptHalo->chOpacity = 0;
             }
@@ -404,6 +408,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
 
             }
 
+        #if SPACE_BADGE_SHOW_NEBULA
+            /* show nebula */
+            dynamic_nebula_show(&this.tNebula, 
+                                ptTile, 
+                                &__top_canvas, 
+                                GLCD_COLOR_WHITE, 
+                                255,
+                                bIsNewFrame);
+        #endif
+
             __item_line_dock_horizontal() {
                 arm_2d_dock_vertical(__item_region, s_tPhotoSize.iHeight + 14, 32, 0) {
 
@@ -477,6 +491,12 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
 
+    /* get the screen region */
+    arm_2d_region_t __top_canvas
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
+    ARM_2D_UNUSED(__top_canvas);
+
     if (NULL == ptThis) {
         ptThis = (user_scene_space_badge_t *)
                     __arm_2d_allocate_scratch_memory(   sizeof(user_scene_space_badge_t),
@@ -543,6 +563,22 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
 
         crt_screen_init(&this.tCRTScreen, &tCFG);
     } while(0);
+
+#if SPACE_BADGE_SHOW_NEBULA
+    do {
+        int16_t iRadius = MIN(__top_canvas.tSize.iHeight, __top_canvas.tSize.iWidth) >> 1;
+        dynamic_nebula_cfg_t tCFG = {
+            .fSpeed = 1.5f,
+            .iRadius = iRadius,
+            .iVisibleRingWidth = 80,
+            .hwParticleCount = dimof(this.tParticles),
+            .ptParticles = this.tParticles,
+            .bMovingOutward = true,
+            .u8FadeOutEdgeWidth = 16,
+        };
+        dynamic_nebula_init(& this.tNebula, &tCFG);
+    } while(0);
+#endif
 
     /* ------------   initialize members of user_scene_space_badge_t end   ---------------*/
 

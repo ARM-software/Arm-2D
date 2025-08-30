@@ -62,6 +62,18 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef SPACE_BADGE_SHOW_NEBULA
+#   define SPACE_BADGE_SHOW_NEBULA          1
+#endif
+
+#ifndef SPACE_BADGE_90TH_BATTLE_STYLE
+#   define SPACE_BADGE_90TH_BATTLE_STYLE    0
+#endif
+
+#ifndef SPACE_BADGE_EXPLOSION_SPEED
+#   define SPACE_BADGE_EXPLOSION_SPEED      8
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -102,6 +114,11 @@ ARM_PRIVATE(
 
     arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
     __space_badge_explosion_halo_t tHalos[16];
+
+#if SPACE_BADGE_SHOW_NEBULA
+    dynamic_nebula_t    tNebula;
+    dynamic_nebula_particle_t tParticles[8];
+#endif
 )
     /* place your public member here */
     
