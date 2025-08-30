@@ -489,7 +489,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.8.1" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.8.2" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -571,6 +571,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_Earth.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_GlassBall40.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge_small.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_white_noise.c" />
             <!--
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c" />
@@ -851,11 +852,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cversion="0.8.3" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cversion="0.8.4" condition="Arm-2D-Demos">
           <description>An example of showing a badge with a space battle theme. </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_space_badge.c" attr="config" version="0.8.3" />
-            <file category="header"      name="examples/demos/arm_2d_scene_space_badge.h" attr="config" version="0.8.3" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_space_badge.c" attr="config" version="0.8.4" />
+            <file category="header"      name="examples/demos/arm_2d_scene_space_badge.h" attr="config" version="0.8.4" />
             
             <file category="sourceC"     name="examples/demos/space_fleet.c" attr="config" version="1.0.0" />
           </files>

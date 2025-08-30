@@ -62,18 +62,21 @@
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
 #   define c_tileSpaceFleet         c_tileSpaceFleetGRAY8
+#   define c_tileDogeSmall          c_tileDogeSmallGRAY8
 #   define c_tileDoge               c_tileDogeGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
 #   define c_tileSpaceFleet         c_tileSpaceFleetRGB565
+#   define c_tileDogeSmall          c_tileDogeSmallRGB565
 #   define c_tileDoge               c_tileDogeRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
 #   define c_tileSpaceFleet         c_tileSpaceFleetCCCA8888
+#   define c_tileDogeSmall          c_tileDogeSmallCCCN888
 #   define c_tileDoge               c_tileDogeCCCN888
 #else
 #   error Unsupported colour depth!
@@ -93,6 +96,9 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileSpaceFleetMask;
 extern const arm_2d_tile_t c_tileSpaceFleet;
+extern const arm_2d_tile_t c_tileDogeSmall;
+extern const arm_2d_tile_t c_tileDogeSmallGRAY8;
+
 extern const arm_2d_tile_t c_tileDoge;
 extern const arm_2d_tile_t c_tileDogeGRAY8;
 
@@ -551,8 +557,8 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     do {
         crt_screen_cfg_t tCFG = {
             .ptScene = &this.use_as__arm_2d_scene_t,
-            //.ptilePhoto = &c_tileDogeGRAY8,
-            .ptilePhoto = &c_tileDoge,
+            //.ptilePhoto = &c_tileDogeSmallGRAY8,
+            .ptilePhoto = &c_tileDogeSmall,
             .tScreenColour.tColour = GLCD_COLOR_GREEN,
             .tScanBarColour.tColour = GLCD_COLOR_WHITE,
             .chWhiteNoiseRatio = 32,
