@@ -546,8 +546,9 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
     }
     
     arm_foreach(demo_gears_t, s_tGears, ptItem) {
-        arm_2d_op_wait_async(&ptItem->tOP.use_as__arm_2d_op_core_t);
+        ARM_2D_OP_WAIT_ASYNC(&ptItem->tOP);
     }
-    arm_2d_op_wait_async(&s_tStarOP.use_as__arm_2d_op_core_t);
+
+    ARM_2D_OP_WAIT_ASYNC(&s_tStarOP);
 
 }
