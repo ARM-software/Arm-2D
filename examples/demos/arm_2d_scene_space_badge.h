@@ -123,6 +123,8 @@ ARM_PRIVATE(
     dynamic_nebula_t    tNebula;
     dynamic_nebula_particle_t tParticles[8];
 #endif
+
+    foldable_panel_t tPanels[2];
 )
     /* place your public member here */
     

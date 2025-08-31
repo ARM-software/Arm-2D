@@ -68,17 +68,29 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-ARM_NONNULL(1,2)
+ARM_NONNULL(1)
 void foldable_panel_init( foldable_panel_t *ptThis,
                           foldable_panel_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
-    assert(NULL != ptCFG);
 
     memset(ptThis, 0, sizeof(foldable_panel_t));
-    this.tCFG = *ptCFG;
+    if (NULL != ptCFG) {
+        this.tCFG = *ptCFG;
+    } else {
+        this.tCFG.bShowScanLines = true;
+        this.tCFG.tLineColour.tColour = GLCD_COLOR_WHITE;
+    }
 
+    if (0 == this.tCFG.u12HorizontalFoldingTimeInMS) {
+        this.tCFG.u12HorizontalFoldingTimeInMS = 1000;
+    }
+    if (0 == this.tCFG.u12VerticalFoldingTimeInMS) {
+        this.tCFG.u12VerticalFoldingTimeInMS = 250;
+    }
 
+    //this.tInnerPanelSize.iHeight = 0;
+    //this.tInnerPanelSize.iWidth = 0;
 }
 
 ARM_NONNULL(1)
@@ -102,16 +114,102 @@ void foldable_panel_on_frame_start( foldable_panel_t *ptThis)
     
 }
 
-static arm_fsm_rt_t __unfolding(foldable_panel_t *ptThis)
+static arm_fsm_rt_t __folding(foldable_panel_t *ptThis)
 {
-    this.tInnerPanelSize = this.tOuterPanelSize;
+    int32_t iResult;
+
+ARM_PT_BEGIN(this.chPT)
+
+    /* reset time stamp */
+    this.lTimestamp[0] = 0;
+ARM_PT_ENTRY();
+    
+    if (!arm_2d_helper_time_half_cos_slider( 
+            0, 
+            this.tOuterPanelSize.iHeight,
+            this.tCFG.u12VerticalFoldingTimeInMS,
+            &iResult,
+            &this.lTimestamp[0])) {
+        this.tInnerPanelSize.iHeight = iResult;
+        this.bInnerPanelSizeChanged = true;
+        ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);
+    }
+
+    this.tInnerPanelSize.iHeight = this.tOuterPanelSize.iHeight;
+    this.bInnerPanelSizeChanged = true;
+    
+    if (!this.tCFG.bShowScanLines) {
+
+        ARM_PT_RETURN(arm_fsm_rt_cpl);
+    }
+
+    /* reset time stamp */
+    this.lTimestamp[0] = 0;
+ARM_PT_ENTRY();
+    int32_t iResult;
+    if (!arm_2d_helper_time_half_cos_slider( 
+            0, 
+            this.tOuterPanelSize.iWidth,
+            this.tCFG.u12HorizontalFoldingTimeInMS,
+            &iResult,
+            &this.lTimestamp[0])) {
+        this.tInnerPanelSize.iWidth = iResult;
+        this.bInnerPanelSizeChanged = true;
+        ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);
+    }
+
+    this.tInnerPanelSize.iWidth = this.tOuterPanelSize.iWidth;
+    this.bInnerPanelSizeChanged = true;
+ARM_PT_END()
+
     return arm_fsm_rt_cpl;
 }
 
-static arm_fsm_rt_t __folding(foldable_panel_t *ptThis)
+static arm_fsm_rt_t __unfolding(foldable_panel_t *ptThis)
 {
-    this.tInnerPanelSize.iHeight = 0;
-    this.tInnerPanelSize.iWidth = 0;
+    int32_t iResult;
+ARM_PT_BEGIN(this.chPT)
+
+    if (this.tCFG.bShowScanLines) {
+        /* reset time stamp */
+        this.lTimestamp[0] = 0;
+
+ARM_PT_ENTRY();
+        if (!arm_2d_helper_time_half_cos_slider( 
+                0, 
+                this.tOuterPanelSize.iWidth,
+                this.tCFG.u12HorizontalFoldingTimeInMS,
+                &iResult,
+                &this.lTimestamp[0])) {
+            this.tInnerPanelSize.iWidth = iResult;
+            this.bInnerPanelSizeChanged = true;
+            ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);
+        }
+    }
+
+    this.tInnerPanelSize.iWidth = this.tOuterPanelSize.iWidth;
+    this.bInnerPanelSizeChanged = true;
+
+    /* reset time stamp */
+    this.lTimestamp[0] = 0;
+ARM_PT_ENTRY();
+    int32_t iResult;
+    if (!arm_2d_helper_time_half_cos_slider( 
+            0,
+            this.tOuterPanelSize.iHeight,
+            this.tCFG.u12VerticalFoldingTimeInMS,
+            &iResult,
+            &this.lTimestamp[0])) {
+        this.tInnerPanelSize.iHeight = iResult;
+        this.bInnerPanelSizeChanged = true;
+        ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);
+    }
+
+    this.tInnerPanelSize.iHeight = this.tOuterPanelSize.iHeight;
+    this.bInnerPanelSizeChanged = true;
+
+ARM_PT_END()
+
     return arm_fsm_rt_cpl;
 }
 
@@ -229,6 +327,8 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
             this.bOutPanelSizeChanged = bSizeChanged;
 
             if (bSizeChanged || this.bInnerPanelSizeChanged) {
+
+                this.bInnerPanelSizeChanged = false;
                 arm_2d_align_centre_open(__outer_panel_canvas, this.tInnerPanelSize) {
 
                     arm_2d_container(ptTile, __inner_panel, &__centre_region) {
@@ -237,13 +337,13 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
 
                         arm_2d_region_t tUserRegion = {
                             .tLocation = {
-                                .iX = -__centre_region.tLocation.iX,
-                                .iY = -__centre_region.tLocation.iY,
+                                .iX = __outer_panel_canvas.tLocation.iX - __centre_region.tLocation.iX,
+                                .iY = __outer_panel_canvas.tLocation.iY - __centre_region.tLocation.iY,
                             },
                             .tSize = this.tOuterPanelSize,
                         };
 
-                        arm_2d_container(&__inner_panel, __user_panel, &tUserRegion) {
+                        arm_2d_container(&this.tInnerPanel, __user_panel, &tUserRegion) {
                             /* save user panel */
                             this.tUserPanel = __user_panel;
                         }
@@ -264,7 +364,7 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
                                         &__centre_region,
                                         1, 
                                         this.tCFG.tLineColour.tColour,
-                                        128);
+                                        255);
             }
         }
     }

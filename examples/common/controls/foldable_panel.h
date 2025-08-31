@@ -59,7 +59,10 @@ typedef enum {
 typedef struct foldable_panel_cfg_t {
     arm_2d_scene_t *ptScene;
 
-    bool bShowScanLines;
+    uint32_t bShowScanLines                 : 1;
+    uint32_t                                : 7;
+    uint32_t u12VerticalFoldingTimeInMS     : 12;
+    uint32_t u12HorizontalFoldingTimeInMS   : 12;
     COLOUR_TYPE_T tLineColour;
 } foldable_panel_cfg_t;
 
@@ -98,7 +101,7 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1, 2)
+ARM_NONNULL(1)
 void foldable_panel_init( foldable_panel_t *ptThis,
                           foldable_panel_cfg_t *ptCFG);
 extern

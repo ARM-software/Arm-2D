@@ -87,6 +87,11 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+enum {
+    PANEL_CRT_SCREEN,
+    PANEL_NAME_TITLE,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
@@ -159,6 +164,11 @@ static void __on_scene_space_badge_load(arm_2d_scene_t *ptScene)
 #endif
 
     crt_screen_on_load(&this.tCRTScreen);
+
+    arm_foreach (this.tPanels) {
+        foldable_panel_on_load(_);
+        foldable_panel_unfold(_);
+    }
 }
 
 static void __after_scene_space_badge_switching(arm_2d_scene_t *ptScene)
@@ -187,6 +197,9 @@ static void __on_scene_space_badge_depose(arm_2d_scene_t *ptScene)
     dynamic_nebula_depose(&this.tNebula);
 #endif
 
+    arm_foreach (this.tPanels) {
+        foldable_panel_depose(_);
+    }
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -224,6 +237,10 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
 
     crt_screen_on_frame_start(&this.tCRTScreen);
 
+    arm_foreach (this.tPanels) {
+        foldable_panel_on_frame_start(_);
+    }
+
     if (arm_2d_helper_is_time_out(30, &this.lTimestamp[0])) {
 
         if (this.iStartOffset <= 0) {
@@ -258,6 +275,11 @@ static void __on_scene_space_badge_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     crt_screen_on_frame_complete(&this.tCRTScreen);
+
+    arm_foreach (this.tPanels) {
+        foldable_panel_on_frame_complete(_);
+    }
+
 #if 0
     /* switch to next scene after 3s */
     if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
@@ -402,14 +424,25 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
 
             __item_line_dock_horizontal(s_tPhotoSize.iWidth + 8, 16, 32, 0, 0) {
 
-                arm_2d_align_centre(__item_region, s_tPhotoSize) {
-
-                    crt_screen_show(&this.tCRTScreen, ptTile, &__centre_region, 128 + 64, bIsNewFrame);
-                    
-                }
-
                 arm_2d_align_centre(__item_region, s_tPhotoSize.iWidth + 8, s_tPhotoSize.iHeight + 8) {
-                    arm_2d_helper_draw_box(ptTile, &__centre_region, 1, GLCD_COLOR_GREEN, 64);
+                    arm_2d_tile_t *ptPanel = 
+                        foldable_panel_show(&this.tPanels[PANEL_CRT_SCREEN],
+                                            ptTile, 
+                                            &__centre_region,
+                                            bIsNewFrame);
+
+                    assert(NULL != ptPanel);
+
+                    arm_2d_canvas(ptPanel, __crt_panel_canvas) {
+
+                        arm_2d_align_centre(__crt_panel_canvas, s_tPhotoSize) {
+
+                            crt_screen_show(&this.tCRTScreen, ptPanel, &__centre_region, 128 + 64, bIsNewFrame);
+                            
+                        }
+                        
+                        arm_2d_helper_draw_box(ptPanel, &__centre_region, 1, GLCD_COLOR_GREEN, 64);
+                    }
                 }
 
             }
@@ -427,45 +460,46 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
             __item_line_dock_horizontal() {
                 arm_2d_dock_vertical(__item_region, s_tPhotoSize.iHeight + 14, 32, 0) {
 
-                    arm_2d_layout(__vertical_region) {
-                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    arm_2d_tile_t *ptPanel = 
+                        foldable_panel_show(&this.tPanels[PANEL_NAME_TITLE],
+                                            ptTile, 
+                                            &__vertical_region,
+                                            bIsNewFrame);
 
-                        arm_lcd_text_set_scale(0.7f);
-                        arm_2d_size_t tNameStringSize = 
-                            arm_lcd_printf_to_buffer(
-                                (const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular32_A2, "Kabosu Doge");
+                    assert(NULL != ptPanel);
 
-                        __item_line_dock_vertical(tNameStringSize.iHeight) {
+                    arm_2d_canvas(ptPanel, __name_title_panel) {
 
-                            arm_lcd_text_set_draw_region(&__item_region);
-                            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-                            arm_lcd_text_location(0,0);
-                            arm_lcd_text_set_opacity(255);
-                            arm_lcd_printf_buffer(0);
-                        }
+                        arm_2d_layout(__name_title_panel) {
+                            arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptPanel);
 
-                        __item_line_dock_vertical(0, 0, 20, 0) {
-                             arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A2);
-                            arm_lcd_text_set_scale(1.0f);
-                            arm_lcd_text_set_draw_region(&__item_region);
-                            arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-                            arm_lcd_text_location(0,0);
+                            arm_lcd_text_set_scale(0.7f);
+                            arm_2d_size_t tNameStringSize = 
+                                arm_lcd_printf_to_buffer(
+                                    (const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular32_A2, "Kabosu Doge");
 
-                            arm_lcd_puts("Commander of\r\nthe Woofer Fleet");
+                            __item_line_dock_vertical(tNameStringSize.iHeight) {
 
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                                arm_lcd_text_location(0,0);
+                                arm_lcd_text_set_opacity(255);
+                                arm_lcd_printf_buffer(0);
+                            }
 
+                            __item_line_dock_vertical(0, 0, 20, 0) {
+                                arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A2);
+                                arm_lcd_text_set_scale(1.0f);
+                                arm_lcd_text_set_draw_region(&__item_region);
+                                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                                arm_lcd_text_location(0,0);
+
+                                arm_lcd_puts("Commander of\r\nthe Woofer Fleet");
+                            }
                         }
                     }
 
-                #if 0
-                    draw_round_corner_border(   ptTile, 
-                                                &__vertical_region, 
-                                                GLCD_COLOR_YELLOW, 
-                                                (arm_2d_border_opacity_t)
-                                                    {64, 64, 64, 64},
-                                                (arm_2d_corner_opacity_t)
-                                                    {64, 64, 64, 64});
-                #endif
+
 
                 }
 
@@ -589,6 +623,11 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
         dynamic_nebula_init(& this.tNebula, &tCFG);
     } while(0);
 #endif
+
+    /* init foldable panels */
+    arm_foreach (this.tPanels) {
+        foldable_panel_init(_, NULL);
+    }
 
     /* ------------   initialize members of user_scene_space_badge_t end   ---------------*/
 
