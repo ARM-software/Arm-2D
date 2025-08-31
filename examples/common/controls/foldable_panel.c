@@ -125,8 +125,8 @@ ARM_PT_BEGIN(this.chPT)
 ARM_PT_ENTRY();
     
     if (!arm_2d_helper_time_half_cos_slider( 
-            0, 
             this.tOuterPanelSize.iHeight,
+            0, 
             this.tCFG.u12VerticalFoldingTimeInMS,
             &iResult,
             &this.lTimestamp[0])) {
@@ -135,11 +135,10 @@ ARM_PT_ENTRY();
         ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);
     }
 
-    this.tInnerPanelSize.iHeight = this.tOuterPanelSize.iHeight;
+    this.tInnerPanelSize.iHeight = 0;
     this.bInnerPanelSizeChanged = true;
     
     if (!this.tCFG.bShowScanLines) {
-
         ARM_PT_RETURN(arm_fsm_rt_cpl);
     }
 
@@ -148,8 +147,8 @@ ARM_PT_ENTRY();
 ARM_PT_ENTRY();
     int32_t iResult;
     if (!arm_2d_helper_time_half_cos_slider( 
-            0, 
             this.tOuterPanelSize.iWidth,
+            0, 
             this.tCFG.u12HorizontalFoldingTimeInMS,
             &iResult,
             &this.lTimestamp[0])) {
@@ -158,7 +157,7 @@ ARM_PT_ENTRY();
         ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);
     }
 
-    this.tInnerPanelSize.iWidth = this.tOuterPanelSize.iWidth;
+    this.tInnerPanelSize.iWidth = 0;
     this.bInnerPanelSizeChanged = true;
 ARM_PT_END()
 
@@ -326,45 +325,53 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
 
             this.bOutPanelSizeChanged = bSizeChanged;
 
-            if (bSizeChanged || this.bInnerPanelSizeChanged) {
+            //if (bSizeChanged || this.bInnerPanelSizeChanged) {
 
                 this.bInnerPanelSizeChanged = false;
                 arm_2d_align_centre_open(__outer_panel_canvas, this.tInnerPanelSize) {
 
-                    arm_2d_container(ptTile, __inner_panel, &__centre_region) {
-                        /* save inner panel */
-                        this.tInnerPanel = __inner_panel;
+                    if (__centre_region.tSize.iHeight == 0 || __centre_region.tSize.iWidth == 0) {
+                        /* special case */
+                        this.tUserPanel.tRegion.tSize = this.tInnerPanelSize;
+                    } else {
+                        arm_2d_container(ptTile, __inner_panel, &__centre_region) {
+                            /* save inner panel */
+                            this.tInnerPanel = __inner_panel;
 
-                        arm_2d_region_t tUserRegion = {
-                            .tLocation = {
-                                .iX = __outer_panel_canvas.tLocation.iX - __centre_region.tLocation.iX,
-                                .iY = __outer_panel_canvas.tLocation.iY - __centre_region.tLocation.iY,
-                            },
-                            .tSize = this.tOuterPanelSize,
-                        };
+                            arm_2d_region_t tUserRegion = {
+                                .tLocation = {
+                                    .iX = __outer_panel_canvas.tLocation.iX - __centre_region.tLocation.iX,
+                                    .iY = __outer_panel_canvas.tLocation.iY - __centre_region.tLocation.iY,
+                                },
+                                .tSize = this.tOuterPanelSize,
+                            };
 
-                        arm_2d_container(&this.tInnerPanel, __user_panel, &tUserRegion) {
-                            /* save user panel */
-                            this.tUserPanel = __user_panel;
+                            arm_2d_container(&this.tInnerPanel, __user_panel, &tUserRegion) {
+                                /* save user panel */
+                                this.tUserPanel = __user_panel;
+                            }
                         }
                     }
                 }
-            }
+            //}
         }
     }
 
     if (this.tCFG.bShowScanLines) {
         arm_2d_container(ptTile, __outer_panel, ptRegion) {
             arm_2d_size_t tBoarderSize = this.tInnerPanelSize;
-            tBoarderSize.iWidth += 2;
-            tBoarderSize.iHeight += 2;
 
-            arm_2d_align_centre(__outer_panel_canvas, tBoarderSize) {
-                arm_2d_helper_draw_box( &__outer_panel, 
-                                        &__centre_region,
-                                        1, 
-                                        this.tCFG.tLineColour.tColour,
-                                        255);
+            if (this.tInnerPanelSize.iHeight != 0 || this.tInnerPanelSize.iWidth != 0) {
+                tBoarderSize.iWidth += 2;
+                tBoarderSize.iHeight += 2;
+
+                arm_2d_align_centre(__outer_panel_canvas, tBoarderSize) {
+                    arm_2d_helper_draw_box( &__outer_panel, 
+                                            &__centre_region,
+                                            1, 
+                                            this.tCFG.tLineColour.tColour,
+                                            255);
+                }
             }
         }
     }

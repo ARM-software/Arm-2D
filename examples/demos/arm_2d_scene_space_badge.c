@@ -167,7 +167,7 @@ static void __on_scene_space_badge_load(arm_2d_scene_t *ptScene)
 
     arm_foreach (this.tPanels) {
         foldable_panel_on_load(_);
-        foldable_panel_unfold(_);
+        
     }
 }
 
@@ -230,6 +230,31 @@ static void __on_scene_space_badge_background_complete(arm_2d_scene_t *ptScene)
 }
 #endif
 
+static arm_fsm_rt_t __scene_space_badge_actions(arm_2d_scene_t *ptScene)
+{
+    user_scene_space_badge_t *ptThis = (user_scene_space_badge_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+ARM_PT_BEGIN(this.chPT)
+
+    ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
+    foldable_panel_unfold(&this.tPanels[PANEL_CRT_SCREEN]);
+    ARM_PT_DELAY_MS(200, &this.lTimestamp[1]);
+    foldable_panel_unfold(&this.tPanels[PANEL_NAME_TITLE]);
+    ARM_PT_DELAY_MS(5000, &this.lTimestamp[1]);
+    foldable_panel_fold(&this.tPanels[PANEL_NAME_TITLE]);
+    ARM_PT_DELAY_MS(200, &this.lTimestamp[1]);
+    foldable_panel_fold(&this.tPanels[PANEL_CRT_SCREEN]);
+    
+    while(1) {
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    }
+
+ARM_PT_END();
+
+    return arm_fsm_rt_cpl;
+}
+
 static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_space_badge_t *ptThis = (user_scene_space_badge_t *)ptScene;
@@ -267,6 +292,8 @@ static void __on_scene_space_badge_frame_start(arm_2d_scene_t *ptScene)
             }
         }
     }
+
+    __scene_space_badge_actions(ptScene);
 }
 
 static void __on_scene_space_badge_frame_complete(arm_2d_scene_t *ptScene)

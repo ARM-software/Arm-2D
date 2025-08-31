@@ -1014,6 +1014,7 @@ Author: Adam Dunkels
                 if (ARM_2D_SAFE_NAME(lElapsedMs) < (__MS)) {                    \
                     ARM_PT_GOTO_PREV_ENTRY(arm_fsm_rt_on_going);                \
                 }                                                               \
+                *ARM_2D_SAFE_NAME(plTimestamp) = 0;                             \
             } while(0)
 
 

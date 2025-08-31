@@ -110,8 +110,10 @@ struct user_scene_space_badge_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
+
     bool bUserAllocated;
+    uint8_t chPT;
     int16_t iStartOffset;
 
     crt_screen_t tCRTScreen;
@@ -120,8 +122,8 @@ ARM_PRIVATE(
     __space_badge_explosion_halo_t tHalos[16];
 
 #if SPACE_BADGE_SHOW_NEBULA
-    dynamic_nebula_t    tNebula;
-    dynamic_nebula_particle_t tParticles[8];
+    dynamic_nebula_t            tNebula;
+    dynamic_nebula_particle_t   tParticles[8];
 #endif
 
     foldable_panel_t tPanels[2];
