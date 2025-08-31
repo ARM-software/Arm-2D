@@ -83,7 +83,7 @@ void foldable_panel_init( foldable_panel_t *ptThis,
     }
 
     if (0 == this.tCFG.u12HorizontalFoldingTimeInMS) {
-        this.tCFG.u12HorizontalFoldingTimeInMS = 1000;
+        this.tCFG.u12HorizontalFoldingTimeInMS = 500;
     }
     if (0 == this.tCFG.u12VerticalFoldingTimeInMS) {
         this.tCFG.u12VerticalFoldingTimeInMS = 250;
@@ -362,15 +362,27 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
             arm_2d_size_t tBoarderSize = this.tInnerPanelSize;
 
             if (this.tInnerPanelSize.iHeight != 0 || this.tInnerPanelSize.iWidth != 0) {
-                tBoarderSize.iWidth += 2;
-                tBoarderSize.iHeight += 2;
 
-                arm_2d_align_centre(__outer_panel_canvas, tBoarderSize) {
-                    arm_2d_helper_draw_box( &__outer_panel, 
+                if (0 == this.tInnerPanelSize.iHeight) {
+                    tBoarderSize.iWidth += 2;
+                    tBoarderSize.iHeight = 1;
+
+                    arm_2d_align_centre(__outer_panel_canvas, tBoarderSize) {
+                        arm_2d_fill_colour( &__outer_panel, 
                                             &__centre_region,
-                                            1, 
-                                            this.tCFG.tLineColour.tColour,
-                                            255);
+                                            this.tCFG.tLineColour.tColour);
+                    }
+                } else {
+                    tBoarderSize.iWidth += 2;
+                    tBoarderSize.iHeight += 2;
+
+                    arm_2d_align_centre(__outer_panel_canvas, tBoarderSize) {
+                        arm_2d_helper_draw_box( &__outer_panel, 
+                                                &__centre_region,
+                                                1, 
+                                                this.tCFG.tLineColour.tColour,
+                                                255);
+                    }
                 }
             }
         }
