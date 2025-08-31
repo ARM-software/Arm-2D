@@ -60,6 +60,7 @@ typedef struct foldable_panel_cfg_t {
     arm_2d_scene_t *ptScene;
 
     uint32_t bShowScanLines                 : 1;
+    uint32_t bAlignTimeline                 : 1;
     uint32_t                                : 7;
     uint32_t u12VerticalFoldingTimeInMS     : 12;
     uint32_t u12HorizontalFoldingTimeInMS   : 12;
@@ -78,11 +79,13 @@ ARM_PRIVATE(
     foldable_panel_cfg_t tCFG;
 
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     arm_2d_tile_t tInnerPanel;
     arm_2d_tile_t tUserPanel;
     arm_2d_size_t tOuterPanelSize;
     arm_2d_size_t tInnerPanelSize;
+
+    arm_2d_region_t tDrawRegion;
 
     uint8_t bInnerPanelSizeChanged  : 1;
     uint8_t bOutPanelSizeChanged    : 1;
@@ -92,6 +95,7 @@ ARM_PRIVATE(
     uint8_t bFoldRequest            : 1;
 
     uint8_t chPT;
+
 )
     /* place your public member here */
     
@@ -138,6 +142,10 @@ void foldable_panel_unfold(foldable_panel_t *ptThis);
 extern
 ARM_NONNULL(1)
 void foldable_panel_fold(foldable_panel_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+arm_2d_region_t * foldable_panel_get_draw_region(foldable_panel_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

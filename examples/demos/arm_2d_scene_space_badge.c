@@ -90,6 +90,7 @@
 enum {
     PANEL_CRT_SCREEN,
     PANEL_NAME_TITLE,
+    PANEL_QRCODE,
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -164,6 +165,7 @@ static void __on_scene_space_badge_load(arm_2d_scene_t *ptScene)
 #endif
 
     crt_screen_on_load(&this.tCRTScreen);
+    qrcode_box_on_load(&this.QRCode.tBox);
 
     arm_foreach (this.tPanels) {
         foldable_panel_on_load(_);
@@ -190,6 +192,8 @@ static void __on_scene_space_badge_depose(arm_2d_scene_t *ptScene)
             ARM_2D_OP_DEPOSE(*ptLineOP);
         }
     } while(0);
+
+    qrcode_box_depose(&this.QRCode.tBox);
 
     crt_screen_depose(&this.tCRTScreen);
 
@@ -237,18 +241,27 @@ static arm_fsm_rt_t __scene_space_badge_actions(arm_2d_scene_t *ptScene)
 
 ARM_PT_BEGIN(this.chPT)
 
+    /* wait for 1s at the begining */
     ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
+
     foldable_panel_unfold(&this.tPanels[PANEL_CRT_SCREEN]);
     ARM_PT_DELAY_MS(200, &this.lTimestamp[1]);
     foldable_panel_unfold(&this.tPanels[PANEL_NAME_TITLE]);
-    ARM_PT_DELAY_MS(5000, &this.lTimestamp[1]);
+
+    /* wait for 10s let people see the badge */
+    ARM_PT_DELAY_MS(10000, &this.lTimestamp[1]);
+
     foldable_panel_fold(&this.tPanels[PANEL_NAME_TITLE]);
-    ARM_PT_DELAY_MS(200, &this.lTimestamp[1]);
     foldable_panel_fold(&this.tPanels[PANEL_CRT_SCREEN]);
-    
-    while(1) {
-        ARM_PT_YIELD(arm_fsm_rt_on_going);
-    }
+
+    /* wait for 1s before next round */
+    ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
+    foldable_panel_unfold(&this.tPanels[PANEL_QRCODE]);
+
+    /* wait for 5s let people see the badge */
+    ARM_PT_DELAY_MS(5000, &this.lTimestamp[1]);
+
+    foldable_panel_fold(&this.tPanels[PANEL_QRCODE]);
 
 ARM_PT_END();
 
@@ -468,7 +481,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
                             
                         }
                         
-                        arm_2d_helper_draw_box(ptPanel, &__centre_region, 1, GLCD_COLOR_GREEN, 64);
+                        arm_2d_helper_draw_box(ptPanel, &__crt_panel_canvas, 1, GLCD_COLOR_GREEN, 64);
                     }
                 }
 
@@ -525,14 +538,43 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
                             }
                         }
                     }
-
-
-
                 }
+            }
+        }
 
-                
+
+        int16_t iQRCodePixelSize = qrcode_box_get_size(&this.QRCode.tBox);
+
+        arm_2d_align_centre(__top_canvas, iQRCodePixelSize + 14, iQRCodePixelSize + 14) {
+
+            arm_2d_tile_t *ptPanel = 
+                        foldable_panel_show(&this.tPanels[PANEL_QRCODE],
+                                            ptTile, 
+                                            &__centre_region,
+                                            bIsNewFrame);
+            
+            arm_2d_canvas(ptPanel, __qrcode_panel) {
+                qrcode_box_show(&this.QRCode.tBox, 
+                                ptPanel,
+                                NULL,
+                                GLCD_COLOR_WHITE, 
+                                128);
             }
 
+
+        }
+
+        if (foldable_panel_status(&this.tPanels[PANEL_QRCODE]) != FOLDABLE_PANEL_STATUS_FOLDED) {
+            arm_2d_dock_with_margin(*foldable_panel_get_draw_region(&this.tPanels[PANEL_QRCODE]), 
+                                    -4, -4, -4, -4) {
+                draw_round_corner_border(   ptTile, 
+                                            &__dock_region, 
+                                            GLCD_COLOR_ORANGE, 
+                                            (arm_2d_border_opacity_t)
+                                                {0, 0, 0, 0},
+                                            (arm_2d_corner_opacity_t)
+                                                {128, 128, 128, 128});
+            }
         }
 
         /* draw text at the top-left corner */
@@ -651,11 +693,45 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     } while(0);
 #endif
 
-    /* init foldable panels */
-    arm_foreach (this.tPanels) {
-        foldable_panel_init(_, NULL);
-    }
+    /* init normal foldable panels */
+    do {
+        foldable_panel_cfg_t tCFG = {
+            .bShowScanLines = true,
+            .ptScene = &this.use_as__arm_2d_scene_t,
+            .tLineColour.tColour = GLCD_COLOR_WHITE,
+        };
+        foldable_panel_init(&this.tPanels[PANEL_CRT_SCREEN], &tCFG);
+        foldable_panel_init(&this.tPanels[PANEL_NAME_TITLE], &tCFG);
+    } while(0);
 
+    /* init QRCode foldable panels */
+    do {
+        foldable_panel_cfg_t tCFG = {
+            .ptScene = &this.use_as__arm_2d_scene_t,
+            .bAlignTimeline = true,
+            .u12HorizontalFoldingTimeInMS = 500,
+            .u12VerticalFoldingTimeInMS = 500,
+        };
+        foldable_panel_init(&this.tPanels[PANEL_QRCODE], &tCFG);
+    } while(0);
+
+    /* initialize QRcode box */
+    do {
+        static const char c_chURL[] = {"https://github.com/ARM-software/Arm-2D"};
+        qrcode_box_cfg_t tCFG = {
+            .bIsString = true,
+            .pchString = c_chURL,
+            .hwInputSize = sizeof(c_chURL),
+            .pchBuffer = (uint8_t *)this.QRCode.chBuffer,
+            .hwQRCodeBufferSize = sizeof(this.QRCode.chBuffer),
+            //.chSquarePixelSize = 3,
+            .u2ECCLevel = qrcodegen_Ecc_HIGH,
+        };
+
+        arm_2d_err_t tResult = qrcode_box_init(&this.QRCode.tBox, &tCFG);
+        assert(tResult == ARM_2D_ERR_NONE);
+
+    } while(0);
     /* ------------   initialize members of user_scene_space_badge_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
