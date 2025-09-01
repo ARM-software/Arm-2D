@@ -398,6 +398,7 @@ void foldable_panel_on_frame_complete( foldable_panel_t *ptThis)
     switch(this.u8Status) {
         default:
         case FOLDABLE_PANEL_STATUS_FOLDED:
+            (void)ptThis;   /* make some compiler happy */
             bool bUnfoldRequest = false;
 
             arm_irq_safe {
