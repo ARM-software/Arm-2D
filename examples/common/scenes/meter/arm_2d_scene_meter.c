@@ -138,7 +138,11 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
     meter_pointer_on_load(&this.tMeterPointer);
 
 #if ARM_2D_SCENE_METER_USE_JPG
+#   if ARM_2D_SCENE_METER_USE_ZJPGD
+    arm_zjpgd_loader_on_load(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
+#   endif
 #endif
 }
 
@@ -155,7 +159,11 @@ static void __on_scene_meter_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_METER_USE_JPG
+#   if ARM_2D_SCENE_METER_USE_ZJPGD
+    arm_zjpgd_loader_depose(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_depose(&this.tJPGBackground);
+#   endif
 #endif
 
     meter_pointer_depose(&this.tMeterPointer);
@@ -199,7 +207,11 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_METER_USE_JPG
+#   if ARM_2D_SCENE_METER_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_start(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_on_frame_start(&this.tJPGBackground);
+#   endif
 #endif
 
     /*-----------------------    IMPORTANT MESSAGE    -----------------------*
@@ -239,7 +251,11 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
     meter_pointer_on_frame_complete(&this.tMeterPointer);
 
 #if ARM_2D_SCENE_METER_USE_JPG
+#   if ARM_2D_SCENE_METER_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_complete(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
+#   endif
 #endif
 
 #if 0
@@ -340,7 +356,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
     #if ARM_2D_SCENE_METER_USE_JPG
+    #   if ARM_2D_SCENE_METER_USE_ZJPGD
+        arm_lcd_puts("Scene meter with ZJPGD");
+    #   else
         arm_lcd_puts("Scene meter with TJpgDec");
+    #   endif
     #else
         arm_lcd_puts("Scene meter");
     #endif
@@ -470,6 +490,83 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 
     /* initialize TJpgDec loader */
 #if ARM_2D_SCENE_METER_USE_JPG
+#   if ARM_2D_SCENE_METER_USE_ZJPGD
+    do {
+    #if ARM_2D_DEMO_ZJPGD_USE_FILE
+        arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+    #else
+        extern
+        const uint8_t c_chMeterPanel80jpg[12517];
+        extern
+        const uint8_t c_chBackground2jpg[64228];
+
+        arm_zjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
+    #endif
+        arm_zjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_ZJPGD_MODE_PARTIAL_DECODED,
+        #if ARM_2D_DEMO_ZJPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_zjpgd_loader_init(&this.tJPGBackground, &tCFG);
+
+        /* add reference point */
+    #define REFERENCE_POINT_NUMBER      5
+        arm_2d_location_t tReferencePoint;
+
+        arm_2d_align_centre(tScreen, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tBackgroundLocation = __centre_region.tLocation;
+
+            arm_2d_align_centre(tScreen, 240, 240) {
+
+                tReferencePoint = __centre_region.tLocation;
+
+                int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
+                for (int n = 1; n < REFERENCE_POINT_NUMBER; n++) {
+
+                    tReferencePoint.iY = __centre_region.tLocation.iY + n * nDelta;
+
+                    arm_zjpgd_loader_add_reference_point( &this.tJPGBackground, 
+                                                          tBackgroundLocation,
+                                                          tReferencePoint);
+                        
+                        
+                }
+            }
+
+        /* add reference point for navigation layer */
+        #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+    
+            arm_2d_align_bottom_centre(tScreen, 100, 24) {
+                tReferencePoint = __bottom_centre_region.tLocation;
+                tReferencePoint.iY -= 16;
+            }
+
+        #else
+            tReferencePoint.iX = 0;
+            tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+        #endif
+
+        #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+            arm_zjpgd_loader_add_reference_point( &this.tJPGBackground, 
+                                                  tBackgroundLocation,
+                                                  tReferencePoint);
+        #endif
+        }
+
+    } while(0);
+#   else
     do {
     #if ARM_2D_DEMO_TJPGD_USE_FILE
         arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
@@ -545,6 +642,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
         }
 
     } while(0);
+#   endif
 #endif
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 

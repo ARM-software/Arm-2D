@@ -69,7 +69,7 @@ extern "C" {
 #endif
 
 #ifndef ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
-#   define ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD     1
+#   define ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD     0
 #endif
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
