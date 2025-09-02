@@ -116,9 +116,13 @@ if (ARM2D_TJPGD_LOADER)
             examples/common/opcodes/arm_2d_user_opcode_draw_line.c
             examples/common/loader/tjpgd_loader/tjpgd_loader.c
             examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c
+            examples/common/loader/zjpgd_loader/zjpgd_loader.c
+            examples/common/loader/zjpgd_loader/zjpgd/zjpgd.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
+            -DRTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader
+            -DRTE_Acceleration_Arm_2D_Extra_JPEG_Loader
             -DRTE_Acceleration_Arm_2D_Extra_Loader
             )
 endif()

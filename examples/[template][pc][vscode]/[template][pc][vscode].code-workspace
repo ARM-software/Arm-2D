@@ -79,7 +79,9 @@
 			"arm_2d_scene_rickrolling.h": "c",
 			"__arm_2d_expanded_helium.log": "c",
 			"*.jinja": "c",
-			"crt_screen.h": "c"
+			"crt_screen.h": "c",
+			"zjpgd.h": "c",
+			"arm_2d_example_loaders.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

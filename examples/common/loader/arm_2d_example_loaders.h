@@ -22,6 +22,7 @@
 /*============================ INCLUDES ======================================*/
 
 #include "./tjpgd_loader/tjpgd_loader.h"
+#include "./zjpgd_loader/zjpgd_loader.h"
 
 
 #ifdef   __cplusplus

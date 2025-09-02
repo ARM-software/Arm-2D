@@ -26,7 +26,11 @@
 
 #define RTE_Acceleration_Arm_2D_Extra_Loader
 
+#define RTE_Acceleration_Arm_2D_Extra_JPEG_Loader
+
 #define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
+
+#define RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader
 
 #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter0
 
