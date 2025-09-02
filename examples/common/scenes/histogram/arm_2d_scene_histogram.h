@@ -68,7 +68,11 @@ extern "C" {
 #   define ARM_2D_SCENE_HISTOGRAM_USE_JPG       0
 #endif
 
-#if !defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
+#ifndef ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+#   define ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD     1
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
 #   undef  ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   define ARM_2D_SCENE_HISTOGRAM_USE_JPG       0
 #endif
@@ -116,11 +120,19 @@ ARM_PRIVATE(
     } WindowFIFO; 
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+    arm_zjpgd_loader_t tJPGBackground;
+    union {
+        arm_zjpgd_io_file_loader_t tFile;
+        arm_zjpgd_io_binary_loader_t tBinary;
+    } LoaderIO;
+#   else
     arm_tjpgd_loader_t tJPGBackground;
     union {
         arm_tjpgd_io_file_loader_t tFile;
         arm_tjpgd_io_binary_loader_t tBinary;
     } LoaderIO;
+#   endif
 #endif
 
 )

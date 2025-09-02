@@ -107,7 +107,12 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+
+#if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+    arm_zjpgd_loader_on_load(&this.tJPGBackground);
+#else
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
+#endif
 #else
     this.bIsDirtyRegionOptimizationEnabled = !!
         arm_2d_helper_pfb_disable_dirty_region_optimization(
@@ -129,7 +134,11 @@ static void __on_scene_histogram_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+    arm_zjpgd_loader_depose(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_depose(&this.tJPGBackground);
+#   endif
 #endif
 
     histogram_depose(&this.tHistogram);
@@ -171,7 +180,11 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_start(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_on_frame_start(&this.tJPGBackground);
+#   endif
 #endif
 
     do {
@@ -190,7 +203,11 @@ static void __on_scene_histogram_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_complete(&this.tJPGBackground);
+#   else
     arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
+#endif
 #endif
 
 #if 0
@@ -287,7 +304,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
     #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+    #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+        arm_lcd_puts("Histogram with ZJPGD");
+    #   else
         arm_lcd_puts("Histogram with TJpgDec");
+    #   endif
     #else
         arm_lcd_puts("Histogram");
     #endif
@@ -422,6 +443,59 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
 
     /* initialize TJpgDec loader */
 #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
+    do {
+    #if ARM_2D_DEMO_ZJPGD_USE_FILE
+        arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+    #else
+        extern const uint8_t c_chHeliumJPG[23656];
+        extern const uint8_t c_chHelium75JPG[10685];
+        extern const uint8_t c_chHelium30JPG[5411];
+
+        arm_zjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chHelium75JPG, sizeof(c_chHelium75JPG));
+    #endif
+        arm_zjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_ZJPGD_MODE_PARTIAL_DECODED,
+        #if ARM_2D_DEMO_ZJPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_zjpgd_loader_init(&this.tJPGBackground, &tCFG);
+
+        arm_2d_align_centre(tScreen, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tReferencePoint;
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+                arm_2d_align_bottom_centre(tScreen, 100, 24) {
+                    tReferencePoint = __bottom_centre_region.tLocation;
+                    tReferencePoint.iY -= 16;
+                }
+
+            #else
+                tReferencePoint.iX = 0;
+                tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+            #endif
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+                arm_zjpgd_loader_add_reference_point( &this.tJPGBackground, 
+                                                        __centre_region.tLocation,
+                                                        tReferencePoint);
+            #endif
+        }
+        
+    } while(0);
+#   else
     do {
     #if ARM_2D_DEMO_TJPGD_USE_FILE
         arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
@@ -473,6 +547,7 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         }
         
     } while(0);
+#   endif
 #endif
 
     /* ------------   initialize members of user_scene_histogram_t end   ---------------*/
