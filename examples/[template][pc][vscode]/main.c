@@ -539,7 +539,7 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         .fnLoader = 
         //scene_histogram_loader,
-        //scene_space_badge_loader,
+        scene_space_badge_loader,
         //scene_pave_loader,
         //scene_qrcode_loader,
         //scene_font_loader,
@@ -561,7 +561,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_mono_tracking_list_loader
         //scene_mono_list_loader,
         //scene_gas_gauge_loader,
-        scene_meter_loader,
+        //scene_meter_loader,
         //scene_compass_loader,
         //scene_basics_loader,
         //scene_fitness_loader,
