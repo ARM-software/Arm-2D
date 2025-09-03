@@ -474,7 +474,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="3.0.0" condition="Arm-2D-Loaders">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="3.1.0" condition="Arm-2D-Loaders">
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />

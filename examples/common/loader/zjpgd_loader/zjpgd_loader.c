@@ -180,16 +180,31 @@ arm_2d_err_t arm_zjpgd_loader_init( arm_zjpgd_loader_t *ptThis,
 
     this.vres.Load = &__arm_zjpgd_vres_asset_loader;
     this.vres.Depose = &__arm_zjpgd_vres_buffer_deposer;
-    this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR;
 
     this.vres.tTile.tInfo.bIsRoot = true;
     this.vres.tTile.tInfo.bVirtualResource = true;
-    this.vres.tTile.tInfo.bHasEnforcedColour = true;
 
-    if (0 == this.vres.tTile.tColourInfo.chScheme) {
-        /* invalid colour scheme, use default one */
+    this.Decoder.u3ZJDOutputColourFormat = ZJD_FORMAT;
+    if (this.vres.tTile.tInfo.bHasEnforcedColour &&  0 != this.vres.tTile.tColourInfo.chScheme) {
+        /* use user specified colour format */
+        switch (this.vres.tTile.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_GRAY8:
+                this.Decoder.u3ZJDOutputColourFormat = ZJD_GRAYSCALE;
+                break;
+            case ARM_2D_COLOUR_RGB565:
+                this.Decoder.u3ZJDOutputColourFormat = ZJD_RGB565;
+                break;
+            case ARM_2D_COLOUR_BGRA8888:
+                this.Decoder.u3ZJDOutputColourFormat = ZJD_BGRA8888;
+                break;
+        }
+    } else {
         this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR;
+        this.vres.tTile.tInfo.bHasEnforcedColour = true;
+        
     }
+
+    
 
     do {
         size_t nPixelSize = sizeof(COLOUR_INT);
@@ -479,7 +494,7 @@ bool __arm_zjpgd_decode_prepare(arm_zjpgd_loader_t *ptThis)
 
         zjd_cfg_t tCFG = {
             .arg = ptThis,
-            .outfmt = ZJD_FORMAT,
+            .outfmt = this.Decoder.u3ZJDOutputColourFormat,
             .buf = this.Decoder.pWorkMemory,
             .buflen = __WORKING_MEMORY_SIZE__,
             .ifunc = __arm_zjpgd_loader_in_func,
@@ -1224,10 +1239,6 @@ zjd_res_t  __arm_2d_zjpgd_decode (
 	uint16_t rst, rsc;
     zjd_t *jd = &this.Decoder.tZDEC;
     zjd_res_t rc = ZJD_OK;
-
-
-    //bool bIsNewLine = false;
-    this.Decoder.bIsNewLine = false;
 
     this.Decoder.tDrawRegion = (arm_2d_region_t){
         .tSize = {

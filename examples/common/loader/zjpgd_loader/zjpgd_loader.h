@@ -159,8 +159,6 @@ struct arm_zjpgd_loader_t {
 
 ARM_PRIVATE(
     arm_zjpgd_loader_cfg_t tCFG;
-
-    arm_2d_color_info_t tColourInfo;
     
     struct {
         uint8_t *pchBuffer;
@@ -171,18 +169,13 @@ ARM_PRIVATE(
     struct {
         zjd_t tZDEC;
         void *pWorkMemory;
-        //size_t nPosition;
+
         arm_2d_region_t tBlockRegion;
         arm_2d_region_t tDrawRegion;
 
-        uint8_t bContextInitialized : 1;
-        uint8_t bIsNewLine          : 1;
-
-        //struct {
-        //    size_t nPostion;
-        //    uintptr_t pBuffer;
-        //    size_t tSize;
-        //} PreviousRead;
+        uint8_t u3ZJDOutputColourFormat : 3;
+        uint8_t bContextInitialized     : 1;
+        uint8_t                         : 4;
     } Decoder;
 
     arm_zjpgd_context_t tContext[5];
