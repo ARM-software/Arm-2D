@@ -279,6 +279,7 @@ extern "C" {
 #define MATRIX_LETTER_TRAIN_USE_BLUR            1
 #define ARM_2D_SCENE_METER_USE_JPG              1
 #define ARM_2D_SCENE_HISTOGRAM_USE_JPG          1
+#define VT_SCALING_RATIO                        1
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

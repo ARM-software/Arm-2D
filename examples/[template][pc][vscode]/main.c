@@ -357,7 +357,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 0
+#if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -512,6 +512,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         28000,
         scene_user_defined_opcode_loader,
     },
+    {
+        20000,
+        scene_space_badge_loader,
+    },
 #endif
     {
         10000,
@@ -534,8 +538,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        //scene_meter_loader,
-        scene_space_badge_loader,
+        //scene_histogram_loader,
+        //scene_space_badge_loader,
         //scene_pave_loader,
         //scene_qrcode_loader,
         //scene_font_loader,
@@ -557,7 +561,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_mono_tracking_list_loader
         //scene_mono_list_loader,
         //scene_gas_gauge_loader,
-        //scene_meter_loader,
+        scene_meter_loader,
         //scene_compass_loader,
         //scene_basics_loader,
         //scene_fitness_loader,
