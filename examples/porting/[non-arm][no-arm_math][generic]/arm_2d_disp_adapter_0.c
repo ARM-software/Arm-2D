@@ -483,11 +483,21 @@ IMPL_PFB_ON_LOW_LV_RENDERING(__disp_adapter0_pfb_render_handler)
 #   endif
 #endif
 
+__WEAK 
+void __disp_adapter0_user_on_frame_complete(void *ptTarget, bool bIsFrameSkipped)
+{
+    ARM_2D_PARAM(ptTarget);
+
+}
+
 static bool __on_each_frame_complete(void *ptTarget)
 {
     ARM_2D_PARAM(ptTarget);
     
     int64_t lTimeStamp = arm_2d_helper_get_system_timestamp();
+    bool bIsFrameSkipped 
+            = arm_2d_helper_is_frame_skipped(
+                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
     
 #if __DISP0_CFG_FPS_CACULATION_MODE__ == ARM_2D_FPS_MODE_REAL
     static int64_t s_lLastTimeStamp = 0;
@@ -565,7 +575,15 @@ static bool __on_each_frame_complete(void *ptTarget)
             }
         }
     }
+
+#if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
+    if (!bIsFrameSkipped) {
+        arm_2d_helper_3fb_flush_frame(&s_tDirectModeHelper);
+    }
+#endif
     
+    __disp_adapter0_user_on_frame_complete(ptTarget, bIsFrameSkipped);
+
     return true;
 }
 
@@ -673,6 +691,11 @@ static void __user_scene_player_init(void)
         .DirtyRegion.ptRegions = s_tDirtyRegionList,
         .DirtyRegion.chCount = dimof(s_tDirtyRegionList),
 #endif
+        .tAntiNoiseScanSize = {
+            .iWidth = __DISP0_CFG_PFB_ANS_WIDTH__,
+            .iHeight = __DISP0_CFG_PFB_ANS_HEIGHT__,
+        },
+
     ) < 0) {
         //! error detected
         assert(false);
@@ -690,8 +713,14 @@ static void __user_scene_player_init(void)
     
         arm_2d_helper_3fb_cfg_t tCFG = {
             .tScreenSize = {
+#if     __DISP0_CFG_ROTATE_SCREEN__ == 1\
+    ||  __DISP0_CFG_ROTATE_SCREEN__ == 3
+                __DISP0_CFG_SCEEN_HEIGHT__,
+                __DISP0_CFG_SCEEN_WIDTH__,
+#else
                 __DISP0_CFG_SCEEN_WIDTH__,
                 __DISP0_CFG_SCEEN_HEIGHT__,
+#endif
             },
             .chPixelBits = __DISP0_CFG_COLOUR_DEPTH__,
             .pnAddress = {
