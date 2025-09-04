@@ -73,6 +73,7 @@ extern "C" {
 #endif
 
 /*============================ MACROS ========================================*/
+#define DIV3  (uint32_t)((131072.0f/3.0f) + 0.5f)
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -350,6 +351,7 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
     uint16_t hwOpacity
 )
 {
+#ifdef USE_MVE_INTRINSICS
     do {
         mve_pred16_t    tailPred = vctp16q(iBlockCount);
 
@@ -369,6 +371,78 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
         pchTarget += 8;
         iBlockCount -= 8;
     } while (iBlockCount > 0);
+#else
+        //const uint8_t  *__RESTRICT pSource = (const uint8_t *) pwSrc;
+
+        register unsigned loopCnt  __asm("lr");
+        loopCnt = iBlockCount;
+
+
+    __asm volatile(
+            ".p2align 2                                           \n"
+
+            "oneThird            .req q2                          \n"
+
+            "  vld20.8         {q3,q4}, [%[pwSrc]]                \n"
+            "  vdup.16         oneThird, %[one_third]             \n"
+            "  vld21.8         {q3,q4}, [%[pwSrc]]!               \n"
+            "  vdup.16         q1, %[cst256]                      \n"
+
+
+            "   wlstp.16        lr, %[loopCnt], 1f                \n"
+            "2:                                                   \n"
+
+            "  vmovlt.u8       q5, q4                             \n"
+            /* vpselq(vdupq_n_u16(256),vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255)); */
+            "  vpt.i16         eq, q5, %[cst255]                  \n"
+            "  vmovt           q5, q1                             \n"
+
+            "  vldrb.u16       q7, [%[pchSrcMsk]], #8     \n"
+
+            "  vmovlt.u8       q6, q3                             \n"
+            /* __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity); */
+            "  vmul.i16        q7, q7, %[hwRatio]                 \n"
+
+
+            "  vmovlb.u8       q3, q3                             \n"
+            "  vshr.u16        q7, q7, #0x8                       \n"
+            "  vmul.i16        q7, q5, q7                         \n"
+
+            "  vldrb.u16       q5, [%[pchTarget]]                 \n"
+
+            "  vshr.u16        q7, q7, #0x8                       \n"
+            "  vmovlb.u8       q4, q4                             \n"
+            /* average for gray8 pack : (R + G + B) / 3*/
+            "  vadd.i16        q4, q6, q4                         \n"
+            "  vadd.i16        q3, q4, q3                         \n"
+            "  vmulh.u16       q4, q3, oneThird                   \n"
+
+            /* blend */
+            /* (vmulq(vAvg, opa) + vmulq(vtrgt, vTrans)) >> 8; */
+            "  vsub.i16        q3, q1, q7                         \n"
+            "  vmul.i16        q0, q3, q5                         \n"
+            "  vshr.u16        q3, q4, #0x1                       \n"
+            "  vmul.i16        q7, q3, q7                         \n"
+            /* pipeline */
+            "  vld20.8         {q3,q4}, [%[pwSrc]]                \n"
+            "  vadd.i16        q7, q0, q7                         \n"
+            "  vld21.8         {q3,q4}, [%[pwSrc]]!               \n"
+            "  vshr.u16        q7, q7, #0x8                       \n"
+            "  vstrb.u16       q7, [%[pchTarget]] , #8            \n"
+            "  letp            lr, 2b                             \n"
+            "1:                                                   \n"
+
+            ".unreq oneThird                                       \n"
+
+        : [pchTarget] "+l" (pchTarget),
+          [pwSrc] "+r" (pwSrc), [pchSrcMsk] "+l" (pchSrcMsk),
+          [loopCnt] "+r"(loopCnt)
+        : [one_third] "r" (DIV3), [hwRatio] "r" (hwOpacity),
+          [cst255] "r" (255), [cst256] "r" (256)
+        : "q0", "q1", "q2", "q3",
+          "q4", "q5", "q6", "q7",
+          "memory" );
+#endif
 }
 
 __STATIC_FORCEINLINE 
