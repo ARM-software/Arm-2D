@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_source_mask_and_opacity_helium.c
  * Description:  Helium implementation for tile fill with source mask and opacity only
  *
- * $Date:        25. August 2025
- * $Revision:    V.1.0.0
+ * $Date:        04. September 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -255,7 +255,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptTargetSize,
                                     uint_fast16_t hwOpacity)
 {
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -312,8 +311,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -369,7 +366,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptTargetSize)
 {
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -424,8 +420,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask(
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize)
 {
-    uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -541,7 +535,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptTargetSize,
                                     uint_fast16_t hwOpacity)
 {
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -598,8 +591,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -655,7 +646,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptTargetSize)
 {
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -710,8 +700,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask(
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize)
 {
-    uint16x8_t vStride4Offs = vidupq_n_u16(0, 4);
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -827,9 +815,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask_and_opacity(
                                     arm_2d_size_t *__RESTRICT ptTargetSize,
                                     uint_fast16_t hwOpacity)
 {
-    /* offset to replicate 2 masks accross the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -886,9 +871,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-    /* offset to replicate 2 masks accros the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 4, 4, 4, 4};
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -944,9 +926,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask(
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptTargetSize)
 {
-    /* offset to replicate 2 masks accross the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -1001,9 +980,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask(
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize)
 {
-    /* offset to replicate 2 masks accros the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 4, 4, 4, 4};
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;

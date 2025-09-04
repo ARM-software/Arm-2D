@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with opacity only
  *
  * $Date:        04. September 2025
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -102,7 +102,46 @@ void __arm_2d_impl_{{colour_name}}_tile_fill_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
+{%- if colour_name == 'cccn888' %}
+    /* offset to replicate 2 masks accross the 4 channels */
+    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
+{%- endif %}
 
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Source = p{{colour_int_prefix}}SourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target = p{{colour_int_prefix}}TargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_{{colour_name}}_blend_with_opacity(
+                    p{{colour_int_prefix}}Source, 
+                    p{{colour_int_prefix}}Target, 
+                    wLength, 
+                    hwOpacity);
+
+                p{{colour_int_prefix}}Target += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            p{{colour_int_prefix}}Source += iSourceStride;
+            p{{colour_int_prefix}}TargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
 }
 
                         
@@ -118,11 +157,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_opacity(
                                     uint_fast16_t hwOpacity
                                 )
 {
-{%- if colour_name == 'cccn888' %}
-    /* offset to replicate 2 masks accross the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
-{%- endif %}
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -137,7 +171,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
 
                 __arm_2d_helium_ccca8888_blend_to_{{colour_name}}_with_opacity(
                     pwSource, 

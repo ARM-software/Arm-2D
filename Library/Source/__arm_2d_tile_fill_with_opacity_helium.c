@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with opacity only
  *
  * $Date:        04. September 2025
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.6.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -95,6 +95,41 @@ void __arm_2d_impl_gray8_tile_fill_with_opacity(
                         uint_fast16_t hwOpacity)
 {
 
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint8_t *__RESTRICT pchSource = pchSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint8_t *__RESTRICT pchTarget = pchTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_gray8_blend_with_opacity(
+                    pchSource, 
+                    pchTarget, 
+                    wLength, 
+                    hwOpacity);
+
+                pchTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pchSource += iSourceStride;
+            pchTargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
 }
 
                         
@@ -110,7 +145,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
                                     uint_fast16_t hwOpacity
                                 )
 {
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -125,7 +159,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
 
                 __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(
                     pwSource, 
@@ -161,6 +194,41 @@ void __arm_2d_impl_rgb565_tile_fill_with_opacity(
                         uint_fast16_t hwOpacity)
 {
 
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint16_t *__RESTRICT phwSource = phwSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint16_t *__RESTRICT phwTarget = phwTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_rgb565_blend_with_opacity(
+                    phwSource, 
+                    phwTarget, 
+                    wLength, 
+                    hwOpacity);
+
+                phwTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            phwSource += iSourceStride;
+            phwTargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
 }
 
                         
@@ -176,7 +244,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
                                     uint_fast16_t hwOpacity
                                 )
 {
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
@@ -191,7 +258,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
                 uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
-
 
                 __arm_2d_helium_ccca8888_blend_to_rgb565_with_opacity(
                     pwSource, 
@@ -226,22 +292,6 @@ void __arm_2d_impl_cccn888_tile_fill_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-
-}
-
-                        
-__OVERRIDE_WEAK
-void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
-                                    uint32_t *__restrict pwSourceBase,
-                                    int16_t iSourceStride,
-                                    arm_2d_size_t *__RESTRICT ptSourceSize,
-
-                                    uint32_t *__restrict pwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptTargetSize,
-                                    uint_fast16_t hwOpacity
-                                )
-{
     /* offset to replicate 2 masks accross the 4 channels */
     uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
 
@@ -260,6 +310,55 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
                                       ? wLengthLeft
                                       : ptSourceSize->iWidth;
 
+                __arm_2d_helium_cccn888_blend_with_opacity(
+                    pwSource, 
+                    pwTarget, 
+                    wLength, 
+                    hwOpacity);
+
+                pwTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pwTargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+                        
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    uint32_t *__restrict pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize,
+                                    uint_fast16_t hwOpacity
+                                )
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint32_t *__RESTRICT pwTarget = pwTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
 
                 __arm_2d_helium_ccca8888_blend_to_cccn888_with_opacity(
                     pwSource, 
