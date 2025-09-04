@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        18 August 2025
- * $Revision:    V.1.10.0
+ * $Date:        04 September 2025
+ * $Revision:    V.1.10.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2705,6 +2705,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_ONLY_GRAY8 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_SOURCE_MASK_ONLY,
         
@@ -2726,6 +2729,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_ONLY_RGB565 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_SOURCE_MASK_ONLY,
         
@@ -2747,6 +2753,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_ONLY_CCCN888 = {
             .bHasTarget     = true,
             .bHasSrcMask    = true,
             .bHasDesMask    = false,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_WITH_SOURCE_MASK_ONLY,
         
