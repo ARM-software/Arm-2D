@@ -115,8 +115,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
 
-        uint8_t *pchSourceMask = pchSourceMaskBase;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
 
             uint8_t *__RESTRICT pchTarget = pchTargetBase;
@@ -131,7 +129,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
 
                 __arm_2d_helium_ccca8888_blend_to_gray8_with_opacity(
                     pwSource, 
-                    pchSourceMask, 
                     pchTarget, 
                     wLength, 
                     hwOpacity);
@@ -143,8 +140,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
 
             pwSource += iSourceStride;
             pchTargetBase += iTargetStride;
-
-            pchSourceMask += iSourceMaskStride;
 
             iTargetY++;
             if (iTargetY >= ptTargetSize->iHeight) {
@@ -186,8 +181,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
 
-        uint8_t *pchSourceMask = pchSourceMaskBase;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
 
             uint16_t *__RESTRICT phwTarget = phwTargetBase;
@@ -202,7 +195,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
 
                 __arm_2d_helium_ccca8888_blend_to_rgb565_with_opacity(
                     pwSource, 
-                    pchSourceMask, 
                     phwTarget, 
                     wLength, 
                     hwOpacity);
@@ -214,8 +206,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
 
             pwSource += iSourceStride;
             phwTargetBase += iTargetStride;
-
-            pchSourceMask += iSourceMaskStride;
 
             iTargetY++;
             if (iTargetY >= ptTargetSize->iHeight) {
@@ -259,8 +249,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
 
-        uint8_t *pchSourceMask = pchSourceMaskBase;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
 
             uint32_t *__RESTRICT pwTarget = pwTargetBase;
@@ -275,7 +263,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
 
                 __arm_2d_helium_ccca8888_blend_to_cccn888_with_opacity(
                     pwSource, 
-                    pchSourceMask, 
                     pwTarget, 
                     wLength, 
                     hwOpacity);
@@ -287,8 +274,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
 
             pwSource += iSourceStride;
             pwTargetBase += iTargetStride;
-
-            pchSourceMask += iSourceMaskStride;
 
             iTargetY++;
             if (iTargetY >= ptTargetSize->iHeight) {

@@ -127,8 +127,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_opacity(
 
         uint32_t *__RESTRICT pwSource = pwSourceBase;
 
-        uint8_t *pchSourceMask = pchSourceMaskBase;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
 
             {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target = p{{colour_int_prefix}}TargetBase;
@@ -143,7 +141,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_opacity(
 
                 __arm_2d_helium_ccca8888_blend_to_{{colour_name}}_with_opacity(
                     pwSource, 
-                    pchSourceMask, 
                     p{{colour_int_prefix}}Target, 
                     wLength, 
                     hwOpacity);
@@ -155,8 +152,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_opacity(
 
             pwSource += iSourceStride;
             p{{colour_int_prefix}}TargetBase += iTargetStride;
-
-            pchSourceMask += iSourceMaskStride;
 
             iTargetY++;
             if (iTargetY >= ptTargetSize->iHeight) {
