@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        21 August 2025
- * $Revision:    V.1.9.0
+ * $Date:        04 September 2025
+ * $Revision:    V.1.10.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -11269,6 +11269,16 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
                         uint_fast16_t hwOpacity);
 
 extern
+void __arm_2d_impl_ccca8888_tile_fill_to_gray8(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize);
+
+extern
 void __arm_2d_impl_rgb565_tile_fill_with_opacity(
                         uint16_t * __RESTRICT phwSourceBase,
                         int16_t iSourceStride,
@@ -11291,6 +11301,16 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
                         uint_fast16_t hwOpacity);
 
 extern
+void __arm_2d_impl_ccca8888_tile_fill_to_rgb565(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize);
+
+extern
 void __arm_2d_impl_cccn888_tile_fill_with_opacity(
                         uint32_t * __RESTRICT pwSourceBase,
                         int16_t iSourceStride,
@@ -11310,6 +11330,16 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity);
+
+extern
+void __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

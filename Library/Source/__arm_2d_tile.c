@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        12. May 2025
- * $Revision:    V.1.5.1
+ * $Date:        04. September 2025
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1283,15 +1283,29 @@ arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill( __arm_2d_sub_task_t *ptTask)
 
     
     } else {
-        __arm_2d_impl_c8bit_fill(   
-                                ptTask->Param.tFill.tSource.pBuffer,
-                                ptTask->Param.tFill.tSource.iStride,
-                                &ptTask->Param.tFill.tSource.tValidRegion.tSize,
-                                ptTask->Param.tFill.tTarget.pBuffer,
-                                ptTask->Param.tFill.tTarget.iStride,
-                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            __arm_2d_impl_ccca8888_tile_fill_to_gray8(
+                                    ptTask->Param.tFill.tSource.pBuffer,
+                                    ptTask->Param.tFill.tSource.iStride,
+                                    &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                    ptTask->Param.tFill.tTarget.pBuffer,
+                                    ptTask->Param.tFill.tTarget.iStride,
+                                    &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+        } else 
+#endif
+        {
+            __arm_2d_impl_c8bit_fill(   
+                                    ptTask->Param.tFill.tSource.pBuffer,
+                                    ptTask->Param.tFill.tSource.iStride,
+                                    &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                    ptTask->Param.tFill.tTarget.pBuffer,
+                                    ptTask->Param.tFill.tTarget.iStride,
+                                    &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+        }
     }
-        
     return arm_fsm_rt_cpl;
 }
 
@@ -1315,13 +1329,28 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill( __arm_2d_sub_task_t *ptTask)
 
     
     } else {
-        __arm_2d_impl_rgb16_fill(   
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            __arm_2d_impl_ccca8888_tile_fill_to_rgb565(
+                                    ptTask->Param.tFill.tSource.pBuffer,
+                                    ptTask->Param.tFill.tSource.iStride,
+                                    &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                    ptTask->Param.tFill.tTarget.pBuffer,
+                                    ptTask->Param.tFill.tTarget.iStride,
+                                    &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+        } else 
+#endif
+        {
+            __arm_2d_impl_rgb16_fill(   
                                 ptTask->Param.tFill.tSource.pBuffer,
                                 ptTask->Param.tFill.tSource.iStride,
                                 &ptTask->Param.tFill.tSource.tValidRegion.tSize,
                                 ptTask->Param.tFill.tTarget.pBuffer,
                                 ptTask->Param.tFill.tTarget.iStride,
                                 &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+        }
     }
         
     return arm_fsm_rt_cpl;
@@ -1347,13 +1376,28 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill( __arm_2d_sub_task_t *ptTask)
                                 wMode);
     
     } else {
-        __arm_2d_impl_rgb32_fill(   
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(this.Source.ptTile, NULL, NULL);
+    assert(NULL != ptSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
+                                    ptTask->Param.tFill.tSource.pBuffer,
+                                    ptTask->Param.tFill.tSource.iStride,
+                                    &ptTask->Param.tFill.tSource.tValidRegion.tSize,
+                                    ptTask->Param.tFill.tTarget.pBuffer,
+                                    ptTask->Param.tFill.tTarget.iStride,
+                                    &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+        } else 
+#endif
+        {
+            __arm_2d_impl_rgb32_fill(   
                                 ptTask->Param.tFill.tSource.pBuffer,
                                 ptTask->Param.tFill.tSource.iStride,
                                 &ptTask->Param.tFill.tSource.tValidRegion.tSize,
                                 ptTask->Param.tFill.tTarget.pBuffer,
                                 ptTask->Param.tFill.tTarget.iStride,
                                 &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
+        }
     }
         
     return arm_fsm_rt_cpl;

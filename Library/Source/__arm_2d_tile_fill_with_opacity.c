@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_opacity.c
  * Description:  APIs for tile fill with opacity only
  *
- * $Date:        19. August 2025
- * $Revision:    V.1.2.0
+ * $Date:        04. September 2025
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -190,6 +190,57 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
         }
     }
 }
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_gray8(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint8_t *__RESTRICT pchTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize)
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+    
+        //! reset source
+        uint32_t *__RESTRICT pwSource = pwSourceBase;  
+
+        int_fast16_t iSourceMaskY = 0;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+            uint8_t *__RESTRICT pchTarget = pchTargetBase;     
+            
+            /*---------------- Height Loop Begin----------------*/
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength = MIN(wLengthLeft, ptSourceSize->iWidth);
+                /*---------------- Width Loop Begin----------------*/
+
+                uint32_t *__RESTRICT pwSrc = pwSource;
+
+                for (int_fast16_t x = 0; x < wLength; x++) {
+                
+                    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(pwSrc++, pchTarget++, 0);
+                }
+
+                /*---------------- Width Loop End----------------*/
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+            
+            /*---------------- Height Loop End----------------*/
+            pwSource += iSourceStride;
+            pchTargetBase += iTargetStride;
+        
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
 
 
 ARM_NONNULL(2,3)
@@ -416,6 +467,57 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
     }
 }
 
+__WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_rgb565(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint16_t *__RESTRICT phwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize)
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+    
+        //! reset source
+        uint32_t *__RESTRICT pwSource = pwSourceBase;  
+
+        int_fast16_t iSourceMaskY = 0;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+            uint16_t *__RESTRICT phwTarget = phwTargetBase;     
+            
+            /*---------------- Height Loop Begin----------------*/
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength = MIN(wLengthLeft, ptSourceSize->iWidth);
+                /*---------------- Width Loop Begin----------------*/
+
+                uint32_t *__RESTRICT pwSrc = pwSource;
+
+                for (int_fast16_t x = 0; x < wLength; x++) {
+                
+                    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(pwSrc++, phwTarget++, 0);
+                }
+
+                /*---------------- Width Loop End----------------*/
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+            
+            /*---------------- Height Loop End----------------*/
+            pwSource += iSourceStride;
+            phwTargetBase += iTargetStride;
+        
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+
 
 ARM_NONNULL(2,3)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_opacity_only(
@@ -640,6 +742,57 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
         }
     }
 }
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
+                        uint32_t * __RESTRICT pwSourceBase,
+                        int16_t iSourceStride,
+                        arm_2d_size_t *__RESTRICT ptSourceSize,
+                        
+                        uint32_t *__RESTRICT pwTargetBase,
+                        int16_t iTargetStride,
+                        arm_2d_size_t *__RESTRICT ptTargetSize)
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+    
+        //! reset source
+        uint32_t *__RESTRICT pwSource = pwSourceBase;  
+
+        int_fast16_t iSourceMaskY = 0;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+            uint32_t *__RESTRICT pwTarget = pwTargetBase;     
+            
+            /*---------------- Height Loop Begin----------------*/
+            uint_fast32_t   wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t   wLength = MIN(wLengthLeft, ptSourceSize->iWidth);
+                /*---------------- Width Loop Begin----------------*/
+
+                uint32_t *__RESTRICT pwSrc = pwSource;
+
+                for (int_fast16_t x = 0; x < wLength; x++) {
+                
+                    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(pwSrc++, pwTarget++, 0);
+                }
+
+                /*---------------- Width Loop End----------------*/
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+            
+            /*---------------- Height Loop End----------------*/
+            pwSource += iSourceStride;
+            pwTargetBase += iTargetStride;
+        
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
 
 
 ARM_NONNULL(2,3)

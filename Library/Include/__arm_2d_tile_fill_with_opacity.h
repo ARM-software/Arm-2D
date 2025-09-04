@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_opacity.h
  * Description:  APIs for Tile-Fill-with-Opacity-only operations
  *
- * $Date:        19. August 2025
- * $Revision:    V.1.2.0
+ * $Date:        04. September 2025
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
