@@ -232,7 +232,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_cccn888)( uint32_t *__RESTRICT pwS
     }
 #else
     /* offset to replicate the opacity accross the 4 channels */
-    uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
+    const uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
