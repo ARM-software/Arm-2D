@@ -1415,45 +1415,15 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity)(
 
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    uint16x8_t      offset = { 0, 0, 0, 0, 1, 1, 1, 1 };
-
-    /* preprocess the opacity */
-    hwOpacity += (hwOpacity == 255);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
-        uint32_t *__RESTRICT pwTargetLine = pwTargetBase;
-
-        uint8_t *__RESTRICT pchSourceMaskLine = pchSourceMask;
-
-        int32_t         blkCnt = iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            /*
-               replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
-               and leaves target 0 unchanged
-               vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
-             */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchSourceMaskLine, offset, 0x3f3f & tailPred);
-            vHwAlpha=  256 - (vmulq(vHwAlpha, hwOpacity) >> 8);
-
-
-            uint16x8_t      vSrc = vldrbq_z_u16((uint8_t*)pwSourceLine, tailPred);
-            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
-
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vSrc, vHwAlpha),
-                tailPred);
-
-            pchSourceMaskLine += 2;
-            pwTargetLine += 2;
-            pwSourceLine += 2;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        __arm_2d_helium_cccn888_blend_with_src_mask_and_opacity(
+                pwSourceBase,
+                pchSourceMask,
+                pwTargetBase,
+                iWidth,
+                hwOpacity);
 
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
@@ -1491,45 +1461,15 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacit
 
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    uint16x8_t      offset = { 0, 0, 0, 0, 4, 4, 4, 4 };
-
-    /* preprocess the opacity */
-    hwOpacity += (hwOpacity == 255);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint32_t *__RESTRICT pwSourceLine = pwSourceBase;
-        uint32_t *__RESTRICT pwTargetLine = pwTargetBase;
-
-        uint32_t *__RESTRICT pwSourceMaskLine = pwSourceMask;
-
-        int32_t         blkCnt = iWidth;
-
-        do {
-            mve_pred16_t    tailPred = vctp64q(blkCnt);
-
-            /*
-               replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
-               and leaves target 0 unchanged
-               vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
-             */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16((uint8_t*)pwSourceMaskLine, offset, 0x3f3f & tailPred);
-            vHwAlpha=  256 - (vmulq(vHwAlpha, hwOpacity) >> 8);
-
-
-            uint16x8_t      vSrc = vldrbq_z_u16((uint8_t*)pwSourceLine, tailPred);
-            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
-
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vSrc, vHwAlpha),
-                tailPred);
-
-            pwSourceMaskLine += 2;
-            pwTargetLine += 2;
-            pwSourceLine += 2;
-            blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        __arm_2d_helium_cccn888_blend_with_src_chn_mask_and_opacity(
+                pwSourceBase,
+                pwSourceMask,
+                pwTargetBase,
+                iWidth,
+                hwOpacity);
 
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
