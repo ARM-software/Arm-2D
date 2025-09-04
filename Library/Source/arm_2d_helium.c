@@ -1018,6 +1018,7 @@ void __arm_2d_helium_ccca8888_blend_to_rgb565(
     int_fast16_t iBlockCount
 )
 {
+#ifdef USE_MVE_INTRINSICS
     const uint16x8_t v256 = vdupq_n_u16(256);
     do {
         mve_pred16_t    tailPred = vctp16q(iBlockCount);
@@ -1035,6 +1036,76 @@ void __arm_2d_helium_ccca8888_blend_to_rgb565(
         phwTarget += 8;
         iBlockCount -= 8;
     } while (iBlockCount > 0);
+#else
+    uint16x8_t      scratch[2];
+    vst1q((uint16_t*)&scratch[1], vdupq_n_u16(0xf800));
+    vst1q((uint16_t*)&scratch[0], vdupq_n_u16(0x7e0));
+
+
+    register unsigned loopCnt  __asm("lr");
+    loopCnt = iBlockCount;
+
+    __asm volatile(
+        ".p2align 2                                         \n"
+
+        // pipelining
+        "   vldrh.u16       q4, [%[phwTarget]]              \n"
+        "   vmov.i16        q0, #0xf8                       \n"
+        "   vld20.8         {q5,q6}, [%[pwSrc]]             \n"
+        "   wlstp.16        lr, %[loopCnt], 1f              \n"
+        "   vld21.8         {q5,q6}, [%[pwSrc]]!            \n"
+
+
+        "2:                                                 \n"
+        "   vrev16.8        q7, q6                          \n"
+        "   vmullb.u8       q3, q5, q7                      \n"
+        // Opacity
+        "   vmovlt.u8       q2, q6                          \n"
+        "   vmov.i16        q1, #0x100                      \n"
+        // Transparency
+        "   vsub.i16        q2, q1, q2                      \n"
+        // vmullt combines vmovlt + vmul
+        "   vmullt.u8       q1, q5, q6                      \n"
+        "   vshr.u16        q5, q4, #0x3                    \n"
+        "   vmullb.u8       q7, q6, q7                      \n"
+        "   vshr.u16        q6, q4, #0x8                    \n"
+        "   vmul.i16        q4, q4,  %[eight]               \n"
+        "   vand q6,        q6, q0                          \n"
+        "   vmul.i16        q6, q2, q6                      \n"
+        "   vand            q4, q4, q0                      \n"
+        "   vmul.i16        q4, q2, q4                      \n"
+        "   vadd.i16        q6, q6, q1                      \n"
+        "   vmov.i16        q1, #0xfc                       \n"
+        "   vand            q5, q5, q1                      \n"
+        "   vmul.i16        q2, q2, q5                      \n"
+        "   vadd.i16        q1, q4, q3                      \n"
+        // vector of 0xf800
+        "   vldrw.u32       q4, [%[scratch], #16]           \n"
+        "   vand            q3, q6, q4                      \n"
+        "   vld20.8         {q5,q6}, [%[pwSrc]]             \n"
+        "   vshr.u16        q1, q1, #0xb                    \n"
+        "   vldrh.u16       q4, [%[phwTarget], #16]         \n"
+        "   vadd.i16        q2, q2, q7                      \n"
+        "   vqdmulh.s16     q2, q2, %[inv2pow5]             \n"
+        "   vorr            q1, q3, q1                      \n"
+        // vector of 0x7e0
+        "   vldrw.u32       q7, [%[scratch]]                \n"
+        "   vand            q2, q2, q7                      \n"
+        "   vld21.8         {q5,q6}, [%[pwSrc]]!            \n"
+        "   vorr            q1, q1, q2                      \n"
+        "   vstrh.u16       q1, [%[phwTarget]] , #16        \n"
+        "   letp            lr, 2b                          \n"
+        "1:                                                 \n"
+
+        : [phwTarget] "+r" (phwTarget),
+          [pwSrc] "+r" (pwSrc), [loopCnt] "+r"(loopCnt)
+        : [scratch] "r" (scratch), [eight] "r" (8),
+          [inv2pow5] "r" ( 1 << (15 - 5)) //  /* 1/(2^5) in Q.15 */
+        : "q0", "q1", "q2", "q3",
+          "q4", "q5", "q6", "q7",
+          "memory" );
+
+#endif
 }
 
 __STATIC_FORCEINLINE 
