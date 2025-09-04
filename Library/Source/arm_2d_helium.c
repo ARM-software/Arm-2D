@@ -881,6 +881,7 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888(
     int_fast16_t iBlockCount
 )
 {
+#if 1 //USE_MVE_INTRINSICS  // todo: check error
     const uint16x8_t v256 = vdupq_n_u16(256);
     do {
         mve_pred16_t    tailPred = vctp64q(iBlockCount);
@@ -899,6 +900,49 @@ void __arm_2d_helium_ccca8888_blend_to_cccn888(
         pwTarget += 2;
         iBlockCount -= 2;
     } while (iBlockCount > 0);
+#else
+    /* offset to replicate the opacity accross the 4 channels */
+    const uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
+
+    register unsigned loopCnt  __asm("lr");
+    loopCnt = iBlockCount;
+
+      __asm volatile(
+            ".p2align 2                                         \n"
+
+            "   vmsr            p0, %[repl_pred_msk]            \n"
+
+            "   vpst                                            \n"
+            "   vldrbt.u16      q5, [%[pwSrc], %q[offset]]      \n"
+            "   vmov.i16        q0, #0x100                      \n"
+            "   vldrb.u16       q4, [%[pwSrc]], #8              \n"
+
+            // 2 x 32-bit pixel / loop
+            "   wlstp.64        lr, %[loopCnt], 1f              \n"
+
+            "2:                                                 \n"
+            "   vmul.i16        q4, q5, q4                      \n"
+            "   vldrb.u16       q2, [%[pwTarget]]               \n"
+            // transparency
+            "   vsub.i16        q3, q0, q5                      \n"
+            "   vmul.i16        q3, q3, q2                      \n"
+            // Opacity
+            "   vpst                                            \n"
+            "   vldrbt.u16      q5, [%[pwSrc], %q[offset]]      \n"
+            "   vadd.i16        q3, q3, q4                      \n"
+            "   vldrb.u16       q4, [%[pwSrc]], #8              \n"
+            "   vshr.u16        q3, q3, #0x8                    \n"
+
+            "   vstrb.16        q3, [%[pwTarget]], #8           \n"
+            "   letp            lr, 2b                          \n"
+            "1:                                                 \n"
+            : [pwTarget] "+r" (pwTarget),
+              [pwSrc] "+r" (pwSrc), [loopCnt] "+r"(loopCnt)
+            : [repl_pred_msk] "r" (0x3f3f), [offset] "t" (offset)
+            : "q0", "q1", "q2", "q3",
+              "q4", "q5",
+              "memory" );
+#endif
 }
 
 __STATIC_FORCEINLINE 
