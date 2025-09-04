@@ -26,7 +26,7 @@
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
- && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
+&&  defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_loaders.h"
@@ -61,8 +61,12 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 
-#ifndef ARM_2D_DEMO_TJPGD_USE_FILE
-#   define ARM_2D_DEMO_TJPGD_USE_FILE  0
+#ifndef ARM_2D_DEMO_JPGD_USE_FILE
+#   define ARM_2D_DEMO_JPGD_USE_FILE  0
+#endif
+
+#ifndef ARM_2D_DEMO_USE_ZJPGD
+#   define ARM_2D_DEMO_USE_ZJPGD       1
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -94,12 +98,19 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
     bool bUserAllocated;
 
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_t tAnimation;
+    union {
+        arm_zjpgd_io_file_loader_t tFile;
+        arm_zjpgd_io_binary_loader_t tBinary;
+    } LoaderIO;
+#else
     arm_tjpgd_loader_t tAnimation;
     union {
         arm_tjpgd_io_file_loader_t tFile;
         arm_tjpgd_io_binary_loader_t tBinary;
     } LoaderIO;
-
+#endif
     arm_2d_helper_film_t tFilm;
 
 )

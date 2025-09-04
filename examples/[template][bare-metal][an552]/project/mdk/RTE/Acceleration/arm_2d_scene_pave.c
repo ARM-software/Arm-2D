@@ -81,6 +81,7 @@
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
+extern const arm_2d_tile_t c_tileCMSISLogoCCCA8888;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
@@ -241,13 +242,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                             .iHeight = tLogoSize.iHeight + __top_canvas.tSize.iHeight,
                         },
                     };
-                
+                #if 0
                     arm_2d_tile_fill_with_src_mask_and_opacity_only(
                         &c_tileCMSISLogo,
                         &c_tileCMSISLogoMask,
                         &__panel,
                         &tPavePlane,
                         this.chOpacity);
+                #endif
                 }
             }
 
@@ -265,11 +267,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         },
                     };
 
+                #if 0
                     arm_2d_tile_fill_only(
-                        &c_tileCMSISLogo,
+                        &c_tileCMSISLogoCCCA8888,
                         &__panel,
                         &tPavePlane);
-
+                #endif
                 }
             }
 
@@ -288,11 +291,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         },
                     };
 
+                #if 1
                     arm_2d_tile_fill_with_opacity_only(
-                        &c_tileCMSISLogo,
+                        &c_tileCMSISLogoCCCA8888,
                         &__panel,
-                        &tPavePlane,
-                        this.chOpacity);
+                        &tPavePlane, 255);
+                        //this.chOpacity);
+                #endif
                 }
             }
 
@@ -311,11 +316,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_pave_handler)
                         },
                     };
                 
+                #if 0
                     arm_2d_tile_fill_with_src_mask_only(
                         &c_tileCMSISLogo,
                         &c_tileCMSISLogoMask,
                         &__panel,
                         &tPavePlane);
+                #endif
                 }
             }
 
