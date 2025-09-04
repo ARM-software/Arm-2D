@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with opacity only
  *
  * $Date:        04. September 2025
- * $Revision:    V.0.6.0
+ * $Revision:    V.0.7.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -183,6 +183,53 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
 }
 
 __OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_gray8(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    uint8_t *__restrict pchTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize
+                                )
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint8_t *__RESTRICT pchTarget = pchTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_ccca8888_blend_to_gray8(
+                    pwSource, 
+                    pchTarget, 
+                    wLength);
+
+                pchTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pchTargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+__OVERRIDE_WEAK
 void __arm_2d_impl_rgb565_tile_fill_with_opacity(
                         uint16_t * __RESTRICT phwSourceBase,
                         int16_t iSourceStride,
@@ -264,6 +311,53 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
                     phwTarget, 
                     wLength, 
                     hwOpacity);
+
+                phwTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            phwTargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_rgb565(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    uint16_t *__restrict phwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize
+                                )
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint16_t *__RESTRICT phwTarget = phwTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_ccca8888_blend_to_rgb565(
+                    pwSource, 
+                    phwTarget, 
+                    wLength);
 
                 phwTarget += wLength;
 
@@ -365,6 +459,53 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
                     pwTarget, 
                     wLength, 
                     hwOpacity);
+
+                pwTarget += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            pwTargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    uint32_t *__restrict pwTargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize
+                                )
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            uint32_t *__RESTRICT pwTarget = pwTargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_ccca8888_blend_to_cccn888(
+                    pwSource, 
+                    pwTarget, 
+                    wLength);
 
                 pwTarget += wLength;
 

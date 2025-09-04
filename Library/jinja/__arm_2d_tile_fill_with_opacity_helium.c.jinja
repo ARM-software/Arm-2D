@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with opacity only
  *
  * $Date:        04. September 2025
- * $Revision:    V.0.6.0
+ * $Revision:    V.0.7.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -193,6 +193,54 @@ void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}_with_opacity(
         }
     }
 }
+
+__OVERRIDE_WEAK
+void __arm_2d_impl_ccca8888_tile_fill_to_{{colour_name}}(
+                                    uint32_t *__restrict pwSourceBase,
+                                    int16_t iSourceStride,
+                                    arm_2d_size_t *__RESTRICT ptSourceSize,
+
+                                    {{colour_int}} *__restrict p{{colour_int_prefix}}TargetBase,
+                                    int16_t iTargetStride,
+                                    arm_2d_size_t *__RESTRICT ptTargetSize
+                                )
+{
+    for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
+
+        uint32_t *__RESTRICT pwSource = pwSourceBase;
+
+        for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
+
+            {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target = p{{colour_int_prefix}}TargetBase;
+
+            uint_fast32_t wLengthLeft = ptTargetSize->iWidth;
+
+            do {
+                uint_fast32_t wLength = wLengthLeft < ptSourceSize->iWidth
+                                      ? wLengthLeft
+                                      : ptSourceSize->iWidth;
+
+                __arm_2d_helium_ccca8888_blend_to_{{colour_name}}(
+                    pwSource, 
+                    p{{colour_int_prefix}}Target, 
+                    wLength);
+
+                p{{colour_int_prefix}}Target += wLength;
+
+                wLengthLeft -= wLength;
+            } while (wLengthLeft);
+
+            pwSource += iSourceStride;
+            p{{colour_int_prefix}}TargetBase += iTargetStride;
+
+            iTargetY++;
+            if (iTargetY >= ptTargetSize->iHeight) {
+                break;
+            }
+        }
+    }
+}
+
 
 {%- endfor %}
 
