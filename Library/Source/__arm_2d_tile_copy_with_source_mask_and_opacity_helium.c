@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_copy_with_mask_and_opacity_helium.c
  * Description:  APIs tile copy with mask and opacity
  *
- * $Date:        25. August 2025
- * $Revision:    V.1.0.0
+ * $Date:        04. September 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
