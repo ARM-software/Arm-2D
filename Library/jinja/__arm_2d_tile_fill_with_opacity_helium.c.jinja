@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with opacity only
  *
  * $Date:        04. September 2025
- * $Revision:    V.0.7.0
+ * $Revision:    V.0.8.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -102,11 +102,6 @@ void __arm_2d_impl_{{colour_name}}_tile_fill_with_opacity(
                         arm_2d_size_t *__RESTRICT ptTargetSize,
                         uint_fast16_t hwOpacity)
 {
-{%- if colour_name == 'cccn888' %}
-    /* offset to replicate 2 masks accross the 4 channels */
-    uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
-{%- endif %}
-
     for (int_fast16_t iTargetY = 0; iTargetY < ptTargetSize->iHeight;) {
 
         {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Source = p{{colour_int_prefix}}SourceBase;

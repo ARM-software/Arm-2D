@@ -1200,6 +1200,28 @@ void __arm_2d_helium_rgb565_blend_with_src_mask_and_opacity(
     uint16_t hwOpacity
 )
 {
+    const uint16x8_t v256 = vdupq_n_u16(256);
+    do {
+        mve_pred16_t    tailPred = vctp16q(iBlockCount);
+
+        uint16x8_t      vSrc = vldrhq_z_u16(phwSrc, tailPred);
+        uint16x8_t      vHwAlpha = vldrbq_z_u16(pchSrcMsk, tailPred);
+
+        vHwAlpha = vpselq(v256, vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
+        vHwAlpha=  v256 - (vmulq(vHwAlpha, hwOpacity) >> 8);
+
+        uint16x8_t  vtrgt = vldrhq_z_u16(phwTarget, tailPred);
+
+        vstrhq_p_u16(   phwTarget,
+                        __arm_2d_vblend_rgb565(vtrgt, vSrc, vHwAlpha),
+                        tailPred);
+
+        pchSrcMsk += 8;
+        phwTarget += 8;
+        phwSrc += 8;
+        blkCnt -= 8;
+    } while (iBlockCount > 0);
+
 #if 0
     do {
         mve_pred16_t    tailPred = vctp16q(iBlockCount);
