@@ -22,7 +22,7 @@
  * Description:  Helium implementation for tile fill with opacity only
  *
  * $Date:        04. September 2025
- * $Revision:    V.0.8.0
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
