@@ -22,7 +22,7 @@
  * Description:  Basic Tile operations
  *
  * $Date:        04. September 2025
- * $Revision:    V.1.6.0
+ * $Revision:    V.1.6.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2311,6 +2311,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_C8BIT = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_ONLY,
         
@@ -2329,6 +2332,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_RGB16 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_ONLY,
         
@@ -2347,6 +2353,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_ONLY_RGB32 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .bAllowEnforcedColour = true,
+#endif
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_ONLY,
         
