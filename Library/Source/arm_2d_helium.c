@@ -995,27 +995,23 @@ void __arm_2d_helium_cccn888_blend_with_opacity(
     uint16_t hwOpacity
 )
 {
-#if 0
     const uint16x8_t v256 = vdupq_n_u16(256);
+    uint16x8_t vHwAlpha = vdupq_n_u16(hwOpacity);
+    vHwAlpha = v256 - vpselq(v256, vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
+
     do {
         mve_pred16_t    tailPred = vctp64q(iBlockCount);
-
-        uint16x8_t vSrc, vSrcOpa;
-
-        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
-
-        vSrcOpa=  vmulq_n_u16(vSrcOpa, hwOpacity) >> 8;
-        vSrcOpa = vpselq(v256, vSrcOpa, vcmpeqq_n_u16(vSrcOpa, 255));
+        uint16x8_t      vSrc = vldrbq_z_u16((uint8_t*)pwSrc, tailPred);
 
         vstrbq_p_u16((const uint8_t *)pwTarget,
-            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vHwAlpha, vSrc),
             tailPred);
 
+        pchSrcMsk += 2;
         pwSrc += 2;
         pwTarget += 2;
         iBlockCount -= 2;
     } while (iBlockCount > 0);
-#endif
 }
 
 __STATIC_FORCEINLINE 
@@ -1027,21 +1023,27 @@ void __arm_2d_helium_cccn888_blend_with_src_mask_and_opacity(
     uint16_t hwOpacity
 )
 {
-#if 0
+
     /* offset to replicate 2 masks accross the 4 channels */
-    const uint16x8_t offsetMsk = {0, 0, 0, 0, 1, 1, 1, 1};
+    const uint16x8_t  offset = { 0, 0, 0, 0, 4, 4, 4, 4 };
+    const uint16x8_t v256 = vdupq_n_u16(256);
     do {
         mve_pred16_t    tailPred = vctp64q(iBlockCount);
 
-        uint16x8_t vSrc, vSrcOpa;
+        uint16x8_t      vSrc = vldrbq_z_u16((uint8_t*)pwSrc, tailPred);
 
-        __arm_2d_ccca8888_get_and_dup_opa_pred((const uint8_t *)pwSrc, &vSrcOpa, &vSrc, tailPred);
+        /*
+            replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
+            and leaves target 0 unchanged
+            vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
+            */
+        uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16((uint8_t*)pchSrcMsk, offset, 0x3f3f & tailPred);
 
-        uint16x8_t vSrcMask = vldrbq_gather_offset_u16((const uint8_t *)pchSrcMsk,  offsetMsk);
-        vSrcOpa = __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity);
+        vHwAlpha = vpselq(v256, vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
+        vHwAlpha=  v256 - (vmulq(vHwAlpha, hwOpacity) >> 8);
 
         vstrbq_p_u16((const uint8_t *)pwTarget,
-            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vSrcOpa, vSrc),
+            __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vHwAlpha, vSrc),
             tailPred);
 
         pchSrcMsk += 2;
@@ -1049,7 +1051,7 @@ void __arm_2d_helium_cccn888_blend_with_src_mask_and_opacity(
         pwTarget += 2;
         iBlockCount -= 2;
     } while (iBlockCount > 0);
-#endif
+
 }
 
 __STATIC_FORCEINLINE 

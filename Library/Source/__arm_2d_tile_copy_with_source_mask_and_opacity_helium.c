@@ -1437,12 +1437,12 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_with_src_mask_and_opacity)(
                and leaves target 0 unchanged
                vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchSourceMaskLine, offset, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchSourceMaskLine, offset, 0x3f3f & tailPred);
             vHwAlpha=  256 - (vmulq(vHwAlpha, hwOpacity) >> 8);
 
 
-            uint16x8_t      vSrc = vldrbq_u16((uint8_t*)pwSourceLine);
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vSrc = vldrbq_z_u16((uint8_t*)pwSourceLine, tailPred);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
             vstrbq_p_u16((uint8_t*)pwTargetLine,
                 __arm_2d_blend_cccn888(vTrg, vSrc, vHwAlpha),
@@ -1513,12 +1513,12 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_tile_copy_with_src_chn_mask_and_opacit
                and leaves target 0 unchanged
                vSrcOpa = | opa0 | opa0 | opa0 |  0  | opa1 | opa1 | opa1 |  0  |
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16((uint8_t*)pwSourceMaskLine, offset, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16((uint8_t*)pwSourceMaskLine, offset, 0x3f3f & tailPred);
             vHwAlpha=  256 - (vmulq(vHwAlpha, hwOpacity) >> 8);
 
 
-            uint16x8_t      vSrc = vldrbq_u16((uint8_t*)pwSourceLine);
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vSrc = vldrbq_z_u16((uint8_t*)pwSourceLine, tailPred);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
             vstrbq_p_u16((uint8_t*)pwTargetLine,
                 __arm_2d_blend_cccn888(vTrg, vSrc, vHwAlpha),
