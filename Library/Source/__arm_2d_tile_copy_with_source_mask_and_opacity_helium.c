@@ -93,10 +93,9 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_opacity)(
                                     arm_2d_size_t *__RESTRICT ptCopySize,
                                     uint_fast16_t hwOpacity)
 {
-    hwOpacity += (hwOpacity == 255);
-
     int16_t iWidth = ptCopySize->iWidth;
     int16_t iHeight = ptCopySize->iHeight;
+
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
 #ifdef USE_MVE_INTRINSICS
@@ -191,9 +190,6 @@ void __MVE_WRAPPER(__arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_mask_and_o
 
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-
-    /* preprocess the opacity */
-    hwOpacity += (hwOpacity == 255);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -314,9 +310,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_src_chn_mask_
 
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-
-    /* preprocess the opacity */
-    hwOpacity += (hwOpacity == 255);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
