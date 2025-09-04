@@ -293,6 +293,7 @@ void __arm_2d_helium_ccca8888_blend_to_gray8(
     int_fast16_t iBlockCount
 )
 {
+#ifdef USE_MVE_INTRINSICS
     const uint16x8_t v256 = vdupq_n_u16(256);
     do {
         mve_pred16_t    tailPred = vctp16q(iBlockCount);
@@ -311,6 +312,55 @@ void __arm_2d_helium_ccca8888_blend_to_gray8(
         pchTarget += 8;
         iBlockCount -= 8;
     } while (iBlockCount > 0);
+#else
+
+        register unsigned loopCnt  __asm("lr");
+        loopCnt = iBlockCount;
+
+    __asm volatile(
+        ".p2align 2                                         \n"
+
+        // pipelining
+        "   vld20.8         {q2,q3}, [%[pwSrc]]             \n"
+        "   vdup.16         q1, %[one_third]                \n"
+        "   vld21.8         {q2,q3}, [%[pwSrc]]!            \n"
+        "   vmov.i16        q0, #0x100                      \n"
+        "   wlstp.16        lr, %[loopCnt], 1f              \n"
+
+        "2:                                                 \n"
+        // Opacity
+        "   vmovlt.u8       q4, q3                          \n"
+        "   vmovlb.u8       q3, q3                          \n"
+        "   vmovlt.u8       q5, q2                          \n"
+        "   vmovlb.u8       q2, q2                          \n"
+        // averaging
+        "   vadd.i16        q6, q3, q5                      \n"
+        "   vadd.i16        q6, q6, q2                      \n"
+        "   vmulh.u16       q6, q6, q1                      \n"
+        // Transparency
+        "   vsub.i16        q7, q0, q4                      \n"
+        "   vld20.8         {q2,q3}, [%[pwSrc]]             \n"
+        "   vshr.u16        q6, q6, #0x1                    \n"
+        "   vmul.i16        q6, q6, q4                      \n"
+        "   vldrb.u16       q4, [%[pchTarget]]              \n"
+        "   vmul.i16        q7, q7, q4                      \n"
+        "   vld21.8         {q2,q3}, [%[pwSrc]]!            \n"
+        "   vadd.i16        q6, q6, q7                      \n"
+        // 8-bit right shift
+        "   vqdmulh.s16     q6, q6, %[inv2pow8]             \n"
+        "   vstrb.u16       q6, [%[pchTarget]] , #8         \n"
+        "   letp            lr, 2b                          \n"
+        "1:                                                 \n"
+
+        : [pchTarget] "+r" (pchTarget),
+          [pwSrc] "+r" (pwSrc), [loopCnt] "+r"(loopCnt)
+        : [one_third] "r" (0xaaab),
+          [inv2pow8] "r" ( 1 << (15 - 8)) //  /* 1/(2^8) in Q.15 */
+        : "q0", "q1", "q2", "q3",
+          "q4", "q5", "q6", "q7",
+          "memory" );
+
+#endif
 }
 
 __STATIC_FORCEINLINE 
