@@ -401,7 +401,7 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
 
             "  vmovlt.u8       q6, q3                             \n"
             /* __arm_2d_scale_alpha_mask_opa(vSrcOpa, vSrcMask, hwOpacity); */
-            "  vmul.i16        q7, q7, %[hwRatio]                 \n"
+            "  vmul.i16        q7, q7, %[hwOpacity]               \n"
 
 
             "  vmovlb.u8       q3, q3                             \n"
@@ -437,7 +437,7 @@ void __arm_2d_helium_ccca8888_blend_to_gray8_with_src_mask_and_opacity(
         : [pchTarget] "+l" (pchTarget),
           [pwSrc] "+r" (pwSrc), [pchSrcMsk] "+l" (pchSrcMsk),
           [loopCnt] "+r"(loopCnt)
-        : [one_third] "r" (DIV3), [hwRatio] "r" (hwOpacity),
+        : [one_third] "r" (DIV3), [hwOpacity] "r" (hwOpacity),
           [cst255] "r" (255), [cst256] "r" (256)
         : "q0", "q1", "q2", "q3",
           "q4", "q5", "q6", "q7",
