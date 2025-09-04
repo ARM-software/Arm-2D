@@ -1007,7 +1007,6 @@ void __arm_2d_helium_cccn888_blend_with_opacity(
             __arm_2d_unpack_and_blend_cccn888((const uint8_t *)pwTarget, vHwAlpha, vSrc),
             tailPred);
 
-        pchSrcMsk += 2;
         pwSrc += 2;
         pwTarget += 2;
         iBlockCount -= 2;
