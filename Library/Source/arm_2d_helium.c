@@ -1219,7 +1219,7 @@ void __arm_2d_helium_rgb565_blend_with_src_mask_and_opacity(
         pchSrcMsk += 8;
         phwTarget += 8;
         phwSrc += 8;
-        blkCnt -= 8;
+        iBlockCount -= 8;
     } while (iBlockCount > 0);
 
 #if 0
