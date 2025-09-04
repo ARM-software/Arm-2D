@@ -195,36 +195,33 @@ arm_fsm_rt_t __MFM_SW_FUNC(tile_fill)( __arm_2d_sub_task_t *ptTask)
         if (ARM_CONNECT(ARM_2D_CP_MODE_, __API_MFM_MIRROR_TYPE_UPPERCASE) == ARM_2D_CP_MODE_COPY) {
 
             if (ARM_2D_COLOUR_SZ_8BIT == __API_MFM_COLOUR_SZ) {
-                __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
+                __arm_2d_impl_ccca8888_tile_fill_to_gray8(
                                 ptTask->Param.tFill.tSource.pBuffer,
                                 ptTask->Param.tFill.tSource.iStride,
                                 &ptTask->Param.tFill.tSource.tValidRegion.tSize,
                                 ptTask->Param.tFill.tTarget.pBuffer,
                                 ptTask->Param.tFill.tTarget.iStride,
-                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
-                                255);
+                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
             }
 
             if (ARM_2D_COLOUR_SZ_16BIT == __API_MFM_COLOUR_SZ) {
-                __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
+                __arm_2d_impl_ccca8888_tile_fill_to_rgb565(
                                 ptTask->Param.tFill.tSource.pBuffer,
                                 ptTask->Param.tFill.tSource.iStride,
                                 &ptTask->Param.tFill.tSource.tValidRegion.tSize,
                                 ptTask->Param.tFill.tTarget.pBuffer,
                                 ptTask->Param.tFill.tTarget.iStride,
-                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
-                                255);
+                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
             }
 
             if (ARM_2D_COLOUR_SZ_32BIT == __API_MFM_COLOUR_SZ) {
-                __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
+                __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
                                 ptTask->Param.tFill.tSource.pBuffer,
                                 ptTask->Param.tFill.tSource.iStride,
                                 &ptTask->Param.tFill.tSource.tValidRegion.tSize,
                                 ptTask->Param.tFill.tTarget.pBuffer,
                                 ptTask->Param.tFill.tTarget.iStride,
-                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
-                                255);
+                                &ptTask->Param.tFill.tTarget.tValidRegion.tSize);
             }
 
             return arm_fsm_rt_cpl;
