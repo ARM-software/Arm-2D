@@ -107,14 +107,14 @@ In general, anyone from opensource community can find something interesting from
 
 ## Features
 
-### In this version (v1.2.3)
+### In this version (v1.2.4)
 
 Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many **Deep Embedded Display systems** soon after it debuted in 2020.  Now you can find its [precence](https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&origin=HASH_TAG_FROM_FEED) from the [tiniest Cortex-M0](https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg) to the [Raspberry Pi 5 powerhouse](https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg).  The supported features include but not limited to:
 
 - **Alpha-Blending** / **Masks**
 
   - With or without Colour-Keying
-  - Filling-Colour with a mask and an optional opacity
+  - Filling-Colour with optional mask and opacity
     - For drawing anti-alias icons/texts in a specified colour
     - Supports A1, A2, A4 and A8 masks
     - Supports horizontal and vertical line masks
@@ -122,7 +122,7 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
       - Supports Mask
       - Supports an optional Opacity
 
-- **Image Copy (Blit)**
+- **Image Copy (Blit) ** 
 
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
@@ -136,9 +136,10 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
   - Generic **C8BIT (8bit colour)**, **RGB16** and **RGB32**
   - Converting colour formats among **GRAY8**, **RGB565** and **RGB888**
     - Implicit colour conversion for **ARGB8888** (**ccca8888**)
-  - Ready for **monochrome LCD** (the 1bit colour) and **E-ink displays** (the 2bits and 4bits colour formats)
+  - Ready for **monochrome LCD** (the 1bit colour) and **E-ink devices** (the 1bit, 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside the Display Adapter, e.g. `Disp0_DrawBitmap`
     - Provides a dedicated colour solution in the display adapter service for monochrome display devices.
+    - **[new]** Provides a smart **Full-Frame-Refresh** mode for e-ink devices to flush the whole frame for any updates on the screen.
 
 - **Display Adapter Service for connecting LCD**
 
@@ -174,9 +175,10 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
   - Supports Anti-Alias.
     - You can enable it by defining the macro  `__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__` to `1` at **compile-time**.
   - Supports source masks
-  - **[new]** Supports specifying different scaling ratios for X and Y axes, respectively
-  - **[new]** Supports using floating point numbers (i.e. `float`) to specify the pivot coordinate.
-
+  - Supports specifying different scaling ratios for X and Y axes, respectively
+  - Supports using floating point numbers (i.e. `float`) to specify the pivot coordinate.
+  - **[new]** Supports using negative scaling ratios for x/y mirroring
+  
 - **Filters**
 
   - Generic Anti-alias and Fast IIR-Blur
@@ -193,17 +195,16 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
 
     - Timeout: `arm_2d_helper_is_time_out`
     - Time-based functions:
-      - Liner: `arm_2d_helper_time_liner_slider`
+      - Liner: `arm_2d_helper_time_liner_slider` and **[new]** `arm_2d_helper_timer_liner_slider_i64`
       - Cosine: `arm_2d_helper_time_cos_slider`
       - S-curve: `arm_2d_helper_time_half_cos_slider`
 
   - **Virtual Resource**
-
     - Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.
     - Supports background-image-loading mode that requests **NO** extra PFB block. 
-    - **[new]** A JPEG loader derived from TJpgDec
+    - JPEG loaders derived from [TJpgDec](https://elm-chan.org/fsw/tjpgd/) and **[new]** [ZJpgD](https://github.com/JiapengLi/zjpgd)
       - Supports and Optimized for PFB and Dirty Regions
-
+    
   - **Layout Assistant**
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
     
@@ -218,7 +219,7 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     - Users can specify alignment in `arm_2d_layout()` macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.
     
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
-
+  
   - **Templates**
     - Provides templates for user controls and scenes.
     - Scene templates for Meter, Watch and Fitness trackers
@@ -228,16 +229,16 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     - A `img2c.py` for generating arm-2d resources from user-specified images
     - A `ttf2c.py` for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font
     - A `jinja2c.py` for code generation.
-
+  
   - **Demos**
     - Demos for various scenarios
     - A dedicated demo for Helium-ACI acceleration. 
     - A set of demos for monochrome devices
-
+  
   - **Project Templates**
     - A project template for Windows, Linux and MacOS platform
     - A project template for Raspberry Pi Pico
-
+  
 - **CMSIS-Pack is available.**
 
 - **Ready and Welcome 3rd party adoption**
@@ -249,7 +250,7 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
 
 - Perspective Transform
 - Supports DMAC-350
-- SVE2 Acceleration
+- SVE2 or NEON Acceleration
 
 ![](./documentation/pictures/FuturePlans.png)
 
@@ -432,4 +433,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-16 May 2025
+05 September 2025
