@@ -41,7 +41,7 @@
 * Reduce the memory footprint
   * Removes unnecessary dependencies between the Helper services and the example controls.
   * Adds a macro switch `__ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__` allowing the linker to remove unused functions further.
-  * Adds a macro swith `__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__` for removing the Dirty Region Optimization service throughtly while keeping the APIs for compatiblity. 
+  * Adds a macro switch `__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__` for removing the Dirty Region Optimisation service thoroughly while keeping the APIs for compatibility. 
 * Enhance the Layout Assistant service
   * Add a new keyword: `arm_2d_layout_with_align_mode()` allowing users to update the layout alignment at runtime. 
 
