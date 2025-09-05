@@ -52,7 +52,7 @@
   * Font
   * Pave
   * QRCode
-  * Space Badger
+  * Space Badge
 * Adds new example controls:
   * The QRCode Box (`qrcode_box_t`): generate QRcode at runtime.
   * The Image Box (`image_box_t`): loads images and adjusts the size of the image to fit the size of the given target area.
