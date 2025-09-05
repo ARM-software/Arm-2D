@@ -2,6 +2,91 @@
 
 
 
+## Release v1.2.4 (September 2025)
+
+### Core and Library
+
+* Adds new APIs: **tile-fill-with-source-mask-and-opacity** with the Helium acceleration and the implicit CCCA8888 conversions.
+* Adds new APIs: **tile-fill-with-opacit**y with Helium acceleration and the implicity CCCA8888 conversions. 
+* Improves the support for CCCA8888
+* Renames **tile-copy--with-opacity** to **tile-copy-with-opacity-only. T**he old APIs are still available and marked deprecated. 
+* Allows using negative scaling ratios in transform operations. Negative ratios lead to X and/or Y mirroring in transformation. 
+* Slightly improves the performance of the tile-copy-with-colour-keying operations.
+* Enhances the code quality
+  * Fixes potential tail-prediction related issues in the Helium implementation.
+  * Improves the inline assembly compatibility for different compilers. 
+  * Fixes a potential shadow-variables issue in the blending intrinsics (macros).
+* Other minor fixes
+
+
+
+### Helper Services
+
+* Enhances the PFB and the Display Adapter services.
+  * Prevents PFB from overflowing when dealing with 4K or 8L display system.
+  * Improves the 3FB mode 
+  * Updates the Display Adapter Template
+  * Improves the support for e-ink devices
+    * Introduces a smart Full-Frame-Refresh mode for e-ink devices.
+    * Introduces a macro option allowing the `disp_adapterN_task()` to return `ARM_2D_RT_FRAME_SKIPPED` when a frame is skipped. 
+    * Improves the Low-Level-Sync-Up scheme to allow drawing the next frame while e-ink devices is flushing (>300ms).
+  * Adds an anti-noise-scanning mode as a countermeasure for the electromagnetic interference
+* Enhances the Font service.
+  * Introduces a new API to calculate the drawing boxes for multi-line strings.
+  * Update the default fonts.
+  * Fixes the support for kerning in the font scaling mode.
+  * Improves the support for Virtual Resources.
+* Adds a new time related helper function: `arm_2d_helper_time_liner_slider_i64()`.
+* Allows GUI developers to check user-defined attributes for target node candidates when calling `arm_2d_helper_control_find_node_with_location()`
+* Reduce the memory footprint
+  * Removes unnecessary dependencies between the Helper services and the example controls.
+  * Adds a macro switch `__ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__` allowing the linker to remove unused functions further.
+  * Adds a macro swith `__ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__` for removing the Dirty Region Optimization service throughtly while keeping the APIs for compatiblity. 
+* Enhance the Layout Assistant service
+  * Add a new keyword: `arm_2d_layout_with_align_mode()` allowing users to update the layout alignment at runtime. 
+
+### Examples and Templates
+
+* Updates example projects.
+  * Fixes RW initialisation issues caused by applying the (implicit) ABSOLUTE attribute in RAM-related execution regions.
+* Adds new demos: 
+  * Music Player
+  * Font
+  * Pave
+  * QRCode
+* Adds new example controls:
+  * The QRCode Box (`qrcode_box_t`): generate QRcode at runtime.
+  * The Image Box (`image_box_t`): loads images and adjusts the size of the image to fit the size of the given target area.
+  * The CRT Screen Simulation (`crt_screen_t`): inherits from the Image Box and shows white noise and the CRT scanning effect.
+  * The Foldable Panel (`foldable_panel_t`): provides a container (`arm_2d_tile_t *`) as the target panel for further drawing, and allows folding and unfolding it with user-specified configurations. 
+
+* Improves the performance of the demo: balls
+* Enhances example controls.
+  * Reduces memory footprints
+  * Improves the performance of the historgram.
+  * Fixes and improves the text box
+    * Fixes a divided-by-zero issue.
+    * Fixes the clipping issues found in the alignment calculation.
+    * Fixes the tail-seperator-treated-as-return issue.
+    * Adds a new API to get line height.
+    * Adds a new API to get the text line number.
+    * Adds new APIs to set and get the font scaling ratio. 
+    * Adds the centre alignment mode.
+    * Allows pix level scrolling.
+    * Adds line caches and a context scheme
+    * Introduces the inner margin.
+    * Improves performance
+* Update Loaders
+  * Adds a new JPEG decoder: [**zjpgd**](https://github.com/JiapengLi/zjpgd). It has better ROI support and runs faster than TJpgDec for multiple small ROI blocks.
+    * The scene template, including meter and histogram, and the demo rickrolling, were updated for zjpgd. 
+    * It allows users to specify the output colour format at runtime.
+  * Fixes the cross-platform compilation issue found in the source code of the tjpgd library. 
+* Adds the missing libm in makefile of the PC template.
+* Adds prefix `arm_2d_asset_` to all assets. 
+* Updates documents
+
+
+
 ## Release v1.2.3 (16th May 2025)
 
 ### Core and Library
