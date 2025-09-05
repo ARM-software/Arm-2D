@@ -18,8 +18,6 @@
   * Fixes a potential shadow-variables issue in the blending intrinsics (macros).
 * Other minor fixes
 
-
-
 ### Helper Services
 
 * Enhances the PFB and the Display Adapter services.
@@ -54,6 +52,7 @@
   * Font
   * Pave
   * QRCode
+  * Space Badger
 * Adds new example controls:
   * The QRCode Box (`qrcode_box_t`): generate QRcode at runtime.
   * The Image Box (`image_box_t`): loads images and adjusts the size of the image to fit the size of the given target area.
@@ -84,6 +83,8 @@
 * Adds the missing libm in makefile of the PC template.
 * Adds prefix `arm_2d_asset_` to all assets. 
 * Updates documents
+
+
 
 
 
