@@ -553,7 +553,7 @@ void __arm_zjpgd_decode_fully(arm_zjpgd_loader_t *ptThis,
     /* allocate memory */
     do {
     
-        uint8_t chAlign = 0;
+        //uint8_t chAlign = 0;
         if (3 == this.u3PixelByteSize) {
             chAlign = 1;
         } else {
@@ -679,7 +679,7 @@ void arm_zjpgd_loader_on_load( arm_zjpgd_loader_t *ptThis)
 
     /* allocate memory */
     do {
-        uint8_t chAlign = 0;
+        //uint8_t chAlign = 0;
         if (3 == this.u3PixelByteSize) {
             chAlign = 1;
         } else {

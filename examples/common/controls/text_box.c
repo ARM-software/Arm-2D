@@ -40,6 +40,8 @@
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-braces"
 #   pragma clang diagnostic ignored "-Wunused-const-variable"
+#   pragma clang diagnostic ignored "-Wunused-label"
+#   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #endif
@@ -669,6 +671,7 @@ void text_box_show( text_box_t *ptThis,
     assert(NULL!= ptThis);
 
     bool bPreviousStartSaved = false;
+    ARM_2D_UNUSED(bPreviousStartSaved);
 
     arm_2d_container(ptTile, __text_box, ptRegion) {
 
