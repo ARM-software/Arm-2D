@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_opacity.c
  * Description:  APIs for tile fill with opacity only
  *
- * $Date:        04. September 2025
- * $Revision:    V.1.3.0
+ * $Date:        08. September 2025
+ * $Revision:    V.1.3.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -156,8 +156,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_opacity(
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
 
-        //int_fast16_t iSourceMaskY = 0;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint8_t *__RESTRICT pchTarget = pchTargetBase;     
             
@@ -205,8 +203,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8(
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
-
-        //int_fast16_t iSourceMaskY = 0;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint8_t *__RESTRICT pchTarget = pchTargetBase;     
@@ -432,8 +428,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_opacity(
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
 
-        //int_fast16_t iSourceMaskY = 0;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint16_t *__RESTRICT phwTarget = phwTargetBase;     
             
@@ -481,8 +475,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565(
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
-
-        //int_fast16_t iSourceMaskY = 0;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint16_t *__RESTRICT phwTarget = phwTargetBase;     
@@ -708,8 +700,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_opacity(
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
 
-        //int_fast16_t iSourceMaskY = 0;
-
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint32_t *__RESTRICT pwTarget = pwTargetBase;     
             
@@ -757,8 +747,6 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
     
         //! reset source
         uint32_t *__RESTRICT pwSource = pwSourceBase;  
-
-        //int_fast16_t iSourceMaskY = 0;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint32_t *__RESTRICT pwTarget = pwTargetBase;     
