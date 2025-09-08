@@ -83,6 +83,12 @@ extern "C" {
 #ifndef __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
 #   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        1
 #endif
+
+// <c1> Return frame is SKIPPED when there is nothing to draw
+// <i> When a frame is skipped, return ARM_2D_RT_FRAME_SKIPPED to indicate this.
+#define __ARM_2D_CFG_PFB_RETURN_SKIPPED__  
+// </c>
+
 // </h>
 
 // <h>Log and Debug
@@ -134,12 +140,12 @@ extern "C" {
 
 // </h>
 
-// <h>Patches for improving performance
+// <h>Patches for improving performance or memory footprint
 // =======================
 // 
 // <c1> Do NOT treat alpha value 255 as completely opaque in mask related operations
 // <i> When define this macro, alpha value 0xFF will not be treated as opaque in mask related operations and you can barely see the background. Defining this macro improves performance.
-//#define __ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__  
+#define __ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__  
 // </c>
 
 // <c1> Ignore calibrartion for small angles in transform operations
@@ -161,6 +167,18 @@ extern "C" {
 // <i> This option is used to remove the PFB support in IIR Blur Helium backend to gain a better performance.
 //#define __ARM_2D_CFG_UNSAFE_NO_PFB_SUPPORT_IN_IIR_BLUR_HELIUM__ 
 // </c>
+
+// <c1> Disable Dirty Region Optimization Algorithm permanently in PFB helper service
+// <i> This option is used to remove dirty region optimization in PFB helper service. Warning: Some of the application behaviours would be affected, and the dirty region debug mode is no longer available. Disable the dirty region optimization can reduce memory footprint.
+#define __ARM_2D_CFG_PFB_DISABLE_DIRTY_REGION_OPTIMIZATION__
+// </c>
+
+// <q> When opacity is 255, call the non-opacity version of API implicitily
+// <i> This option is used to improve the performance and reduce the application complexity in API selection. Disable this feature allows linker to remove unused APIs further.
+// <i> This option is enabled by default
+#ifndef __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
+#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         0
+#endif
 
 // <q> Optimize the scaler version of transform operations for pointer-like resources
 // <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
@@ -185,7 +203,6 @@ extern "C" {
 
 // </h>
 
-
 // <h>Extra Components
 // =======================
 //
@@ -202,7 +219,7 @@ extern "C" {
 // <o> The size of the LCD printf text buffer <16-65535>
 // <i> The text buffer size for the lcd printf service. It determins how many character you can use in one printf string.
 #ifndef __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__
-#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          64
+#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          256
 #endif
 
 // <h>Benchmark
@@ -231,7 +248,7 @@ extern "C" {
 // <i> Enable this mode to reduce the benchmark memory footprint (removing background picture etc.)
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_TINY_MODE__
-#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__                           1
+#   define __ARM_2D_CFG_BENCHMARK_TINY_MODE__                           0
 #endif
 
 // <q> Enable Stopwatch mode in the Benchmark:Watch-panel
@@ -252,6 +269,13 @@ extern "C" {
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__
 #   define __ARM_2D_CFG_BENCHMARK_EXIT_WHEN_FINISH__                    0
+#endif
+
+// <q> Enable Context in Text Box
+// <i> When your PFB is small (< 1/10 FB) and the text box visual area is big, you can enable the context feature and see whether the performance is improved or not.
+// <i> This feature is disabled by default to save memory footprint
+#ifndef __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__
+#   define __ARM_2D_CFG_CONTROL_TEXT_BOX_USE_CONTEXT__                  0
 #endif
 
 //</h>
