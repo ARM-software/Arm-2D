@@ -192,6 +192,16 @@ void scene_atom_loader(void)
     arm_2d_scene_atom_init(&DISP0_ADAPTER);
 }
 
+void scene_pave_loader(void) 
+{
+    arm_2d_scene_pave_init(&DISP0_ADAPTER);
+}
+
+void scene_space_badge_loader(void) 
+{
+    arm_2d_scene_space_badge_init(&DISP0_ADAPTER);
+}
+
 void scene_matrix_loader(void) 
 {
     arm_2d_scene_matrix_init(&DISP0_ADAPTER);
@@ -383,7 +393,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 0
+#if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -414,6 +424,10 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         3000,
         scene_basics_loader,
+    },
+    {
+        8000,
+        scene_pave_loader,
     },
     {
         10000,
@@ -459,7 +473,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         20000,
         scene_music_player_loader,
     },
-#if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
+#if defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
     {
         5000,
         scene_tjpgd_loader,
@@ -469,7 +483,6 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_rickrolling_loader,
     },
 #endif
-
     {
         10000,
         scene_alarm_clock_loader,
@@ -522,6 +535,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         50000,
         scene_filters_loader,
     },
+//    {
+//        15000,
+//        scene_space_badge_loader,
+//    },
 //    {
 //        10000,
 //        scene_audiomark_loader,

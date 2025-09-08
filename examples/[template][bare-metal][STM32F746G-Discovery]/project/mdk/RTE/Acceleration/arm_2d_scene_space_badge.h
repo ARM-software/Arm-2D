@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_RICKROLLING_H__
-#define __ARM_2D_SCENE_RICKROLLING_H__
+#ifndef __ARM_2D_SCENE_SPACE_BADGE_H__
+#define __ARM_2D_SCENE_SPACE_BADGE_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -25,11 +25,13 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
-&&  defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper.h"
-#include "arm_2d_example_loaders.h"
+#include "arm_2d_example_controls.h"
+
+#include "arm_2d_user_opcode_draw_line.h"
+#include "arm_2d_user_opcode_draw_circle.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -52,66 +54,84 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_RICKROLLING_IMPLEMENT__
+#ifdef __USER_SCENE_SPACE_BADGE_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_RICKROLLING_INHERIT__
+#ifdef __USER_SCENE_SPACE_BADGE_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
-
-#ifndef ARM_2D_DEMO_JPGD_USE_FILE
-#   define ARM_2D_DEMO_JPGD_USE_FILE  0
+#ifndef SPACE_BADGE_SHOW_NEBULA
+#   define SPACE_BADGE_SHOW_NEBULA          1
 #endif
 
-#ifndef ARM_2D_DEMO_USE_ZJPGD
-#   define ARM_2D_DEMO_USE_ZJPGD       1
+#ifndef SPACE_BADGE_NEBULA_FLYING_SPEED
+#   define SPACE_BADGE_NEBULA_FLYING_SPEED  2.0f
+#endif
+
+#ifndef SPACE_BADGE_90TH_BATTLE_STYLE
+#   define SPACE_BADGE_90TH_BATTLE_STYLE    0
+#endif
+
+#ifndef SPACE_BADGE_EXPLOSION_SPEED
+#   define SPACE_BADGE_EXPLOSION_SPEED      8
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_rickrolling and add it to a user specified scene player
+ * \brief initalize scene_space_badge and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_rickrolling_t will be allocated from HEAP and freed on
+ *            user_scene_space_badge_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_rickrolling_t* the user_scene_rickrolling_t instance
+ * \return user_scene_space_badge_t* the user_scene_space_badge_t instance
  */
-#define arm_2d_scene_rickrolling_init(__DISP_ADAPTER_PTR, ...)                  \
-            __arm_2d_scene_rickrolling_init((__DISP_ADAPTER_PTR),               \
-                                            (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_space_badge_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_space_badge_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
-/*!
- * \brief a user class for scene rickrolling
- */
-typedef struct user_scene_rickrolling_t user_scene_rickrolling_t;
 
-struct user_scene_rickrolling_t {
+typedef struct __space_badge_explosion_halo_t {
+    arm_2d_location_t tPivot;
+    int16_t iRadius;
+    uint8_t chOpacity;
+} __space_badge_explosion_halo_t;
+
+/*!
+ * \brief a user class for scene space_badge
+ */
+typedef struct user_scene_space_badge_t user_scene_space_badge_t;
+
+struct user_scene_space_badge_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    bool bUserAllocated;
+    int64_t lTimestamp[2];
 
-#if ARM_2D_DEMO_USE_ZJPGD
-    arm_zjpgd_loader_t tAnimation;
-    union {
-        arm_zjpgd_io_file_loader_t tFile;
-        arm_zjpgd_io_binary_loader_t tBinary;
-    } LoaderIO;
-#else
-    arm_tjpgd_loader_t tAnimation;
-    union {
-        arm_tjpgd_io_file_loader_t tFile;
-        arm_tjpgd_io_binary_loader_t tBinary;
-    } LoaderIO;
+    bool bUserAllocated;
+    uint8_t chPT;
+    int16_t iStartOffset;
+
+    crt_screen_t tCRTScreen;
+
+    arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
+    __space_badge_explosion_halo_t tHalos[16];
+
+#if SPACE_BADGE_SHOW_NEBULA
+    dynamic_nebula_t            tNebula;
+    dynamic_nebula_particle_t   tParticles[8];
 #endif
-    arm_2d_helper_film_t tFilm;
+
+    foldable_panel_t tPanels[3];
+
+    struct {
+        qrcode_box_t tBox;
+        uint16_t chBuffer[qrcodegen_BUFFER_LEN_MAX];
+    } QRCode;
 
 )
     /* place your public member here */
@@ -123,9 +143,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(
-                                        arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_rickrolling_t *ptScene);
+user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_space_badge_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -133,8 +152,8 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_RICKROLLING_IMPLEMENT__
-#undef __USER_SCENE_RICKROLLING_INHERIT__
+#undef __USER_SCENE_SPACE_BADGE_IMPLEMENT__
+#undef __USER_SCENE_SPACE_BADGE_INHERIT__
 
 #ifdef   __cplusplus
 }

@@ -1287,18 +1287,18 @@ void __arm_tjpgd_save_context_to(   arm_tjpgd_loader_t *ptThis,
 
 static
 JRESULT jd_decomp_rect (
-	JDEC* jd,								/* Initialized decompression object */
-	int (*outfunc)(JDEC*, void*, JRECT*),	/* RGB output function */
-	uint8_t scale,							/* Output de-scaling factor (0 to 3) */
+    JDEC* jd,                               /* Initialized decompression object */
+    int (*outfunc)(JDEC*, void*, JRECT*),   /* RGB output function */
+    uint8_t scale,                          /* Output de-scaling factor (0 to 3) */
     arm_2d_region_t *ptRegion,              /* Target Region inside the image */
     bool bUseContex                         /* whether use context */
 )
 {
     arm_tjpgd_loader_t *ptThis = (arm_tjpgd_loader_t *)jd->device;
 
-	int16_t x, y, mx, my;
-	uint16_t rst, rsc;
-	JRESULT rc;
+    int16_t x = 0, y = 0, mx = 0, my = 0;
+    uint16_t rst, rsc;
+    JRESULT rc;
 
     bool bIsNewLine = false;
 
@@ -1379,12 +1379,12 @@ JRESULT jd_decomp_rect (
         );
     }
 
-	if (scale > (JD_USE_SCALE ? 3 : 0)) {
+    if (scale > (JD_USE_SCALE ? 3 : 0)) {
         return JDR_PAR;
     }
-	jd->scale = scale;
+    jd->scale = scale;
 
-	mx = jd->msx * 8; my = jd->msy * 8;			/* Size of the MCU (pixel) */
+    mx = jd->msx * 8; my = jd->msy * 8;             /* Size of the MCU (pixel) */
 
     this.Decoder.tBlockRegion = (arm_2d_region_t){
         .tSize = {
@@ -1679,14 +1679,14 @@ label_context_entry:
                 return rc;
             }
 
-			rc = mcu_output(jd, outfunc, x, y);	/* Output the MCU (YCbCr to RGB, scaling and output) */
-			if (rc != JDR_OK) return rc;
+            rc = mcu_output(jd, outfunc, x, y);	/* Output the MCU (YCbCr to RGB, scaling and output) */
+            if (rc != JDR_OK) return rc;
 
-		}
+        }
 
         bIsNewLine = true;
         
-	}
+    }
 
 label_normal_exit:
     if (bUseContex) {

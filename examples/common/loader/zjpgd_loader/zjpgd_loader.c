@@ -804,34 +804,6 @@ void arm_zjpgd_loader_on_frame_complete( arm_zjpgd_loader_t *ptThis)
 
 }
 
-static 
-void __arm_zjpgd_vres_asset_2dcopy( uintptr_t pObj,
-                                    arm_2d_vres_t *ptVRES,
-                                    arm_2d_region_t *ptRegion,
-                                    uintptr_t pSrc,
-                                    uintptr_t pDes,
-                                    int16_t iTargetStride,
-                                    int16_t iSourceStride,
-                                    int16_t iPixelSize)
-{
-    assert(NULL != ptRegion);
-    assert(NULL != ptVRES);
-
-    int16_t iSourceWidth = ptRegion->tSize.iWidth;
-    int16_t iSourceHeight = ptRegion->tSize.iHeight;
-
-    /* calculate offset */
-    pSrc += (ptRegion->tLocation.iY * iSourceStride + ptRegion->tLocation.iX) * iPixelSize;
-    
-    for (int_fast16_t y = 0; y < iSourceHeight; y++) {
-
-        memcpy((void *)pDes, (const void *)pSrc, iPixelSize * iSourceWidth);
-
-        pDes += iTargetStride * iPixelSize;
-        pSrc += iSourceStride * iPixelSize;
-    }
-}
-
 
 /*!
  *  \brief a method to load a specific part of an image
@@ -1235,8 +1207,8 @@ zjd_res_t  __arm_2d_zjpgd_decode (
     bool bUseContex                         /* whether use context */
 )
 {
-    int16_t x, y, mx, my;
-    //uint16_t rst, rsc;
+    int16_t mx, my;
+
     zjd_t *jd = &this.Decoder.tZDEC;
     zjd_res_t rc = ZJD_OK;
 

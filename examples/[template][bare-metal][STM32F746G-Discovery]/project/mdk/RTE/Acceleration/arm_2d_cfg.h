@@ -86,7 +86,7 @@ extern "C" {
 
 // <c1> Return frame is SKIPPED when there is nothing to draw
 // <i> When a frame is skipped, return ARM_2D_RT_FRAME_SKIPPED to indicate this.
-#define __ARM_2D_CFG_PFB_RETURN_SKIPPED__  
+//#define __ARM_2D_CFG_PFB_RETURN_SKIPPED__  
 // </c>
 
 // </h>
@@ -219,7 +219,7 @@ extern "C" {
 // <o> The size of the LCD printf text buffer <16-65535>
 // <i> The text buffer size for the lcd printf service. It determins how many character you can use in one printf string.
 #ifndef __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__
-#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          64
+#   define __LCD_PRINTF_CFG_TEXT_BUFFER_SIZE__                          256
 #endif
 
 // <h>Benchmark
@@ -235,7 +235,7 @@ extern "C" {
 // <i> The height of your screen for running benchmark
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    276
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    272
 #endif
 
 // <o>Number of iterations <1-2000>
