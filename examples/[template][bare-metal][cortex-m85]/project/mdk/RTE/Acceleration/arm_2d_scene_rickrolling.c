@@ -22,7 +22,7 @@
 #include "arm_2d_scene_rickrolling.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
- && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
+&&  defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
 
 #include <stdlib.h>
 #include <string.h>
@@ -94,7 +94,11 @@ static void __on_scene_rickrolling_load(arm_2d_scene_t *ptScene)
     user_scene_rickrolling_t *ptThis = (user_scene_rickrolling_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_on_load(&this.tAnimation);
+#else
     arm_tjpgd_loader_on_load(&this.tAnimation);
+#endif
 }
 
 static void __after_scene_rickrolling_switching(arm_2d_scene_t *ptScene)
@@ -109,14 +113,16 @@ static void __on_scene_rickrolling_depose(arm_2d_scene_t *ptScene)
     user_scene_rickrolling_t *ptThis = (user_scene_rickrolling_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_depose(&this.tAnimation);
+#else
     arm_tjpgd_loader_depose(&this.tAnimation);
+#endif
 
-    ptScene->ptPlayer = NULL;
-    
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -150,8 +156,11 @@ static void __on_scene_rickrolling_frame_start(arm_2d_scene_t *ptScene)
 
         arm_2d_helper_film_next_frame(&this.tFilm);
     }
-
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_start(&this.tAnimation);
+#else
     arm_tjpgd_loader_on_frame_start(&this.tAnimation);
+#endif
 }
 
 static void __on_scene_rickrolling_frame_complete(arm_2d_scene_t *ptScene)
@@ -159,7 +168,11 @@ static void __on_scene_rickrolling_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_rickrolling_t *ptThis = (user_scene_rickrolling_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_complete(&this.tAnimation);
+#else
     arm_tjpgd_loader_on_frame_complete(&this.tAnimation);
+#endif
 }
 
 static void __before_scene_rickrolling_switching_out(arm_2d_scene_t *ptScene)
@@ -271,6 +284,39 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
     };
 
     /* ------------   initialize members of user_scene_rickrolling_t begin ---------------*/
+#if ARM_2D_DEMO_USE_ZJPGD
+    /* initialize Zjpgdec loader */
+    do {
+    #if ARM_2D_DEMO_JPGD_USE_FILE
+        arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "Rickrolling75.jpg");
+    #else
+        extern const uint8_t c_chRickRolling75[104704];
+
+        arm_zjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chRickRolling75, sizeof(c_chRickRolling75));
+    #endif
+
+        arm_zjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_ZJPGD_MODE_PARTIAL_DECODED,
+        
+        #if ARM_2D_DEMO_JPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+
+        };
+
+        arm_zjpgd_loader_init(&this.tAnimation, &tCFG);
+    } while(0);
+#else
     /* initialize TJpgDec loader */
     do {
     #if ARM_2D_DEMO_TJPGD_USE_FILE
@@ -302,6 +348,7 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
 
         arm_tjpgd_loader_init(&this.tAnimation, &tCFG);
     } while(0);
+#endif
 
     this.tFilm = (arm_2d_helper_film_t)impl_film(this.tAnimation, 100, 108, 1, 62, 16);
 

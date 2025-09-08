@@ -46,8 +46,8 @@
  *----------------------------------------------------------------------------*/
 #define __STACK_SIZE    0x00001000
 
-#define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE - __HEAP_SIZE)
-//#define __RAM1_RW_SIZE 	(__RAM1_SIZE - __STACK_SIZE)
+#define __RAM1_RW_SIZE  (__RAM1_SIZE - __STACK_SIZE - __HEAP_SIZE)
+//#define __RAM1_RW_SIZE    (__RAM1_SIZE - __STACK_SIZE)
 
 LR_ROM __ROM_BASE __ROM_SIZE  {                                                 ; load region size_region
     ER_ROM +0 {                                                                 ; load address = execution address

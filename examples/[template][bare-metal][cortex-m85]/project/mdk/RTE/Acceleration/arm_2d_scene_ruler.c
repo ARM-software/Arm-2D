@@ -146,12 +146,6 @@ static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     arm_foreach(__ruler_meter_marking_t, this.tMarkings, ptMarking) {
         ARM_2D_OP_DEPOSE(ptMarking->tOP);
     }
@@ -160,7 +154,12 @@ static void __on_scene_ruler_depose(arm_2d_scene_t *ptScene)
                             &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
                             this.tNumberDirtyRegion,
                             dimof(this.tNumberDirtyRegion));
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -223,7 +222,7 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
-    for (uint32_t n = 0; n < dimof(this.tMarkings); n++) {
+    for (int32_t n = 0; n < dimof(this.tMarkings); n++) {
 
         /* update helper with new values*/
         arm_2d_helper_dirty_region_transform_update_value(  
@@ -260,7 +259,7 @@ static void __before_scene_ruler_switching_out(arm_2d_scene_t *ptScene)
 {
     user_scene_ruler_t *ptThis = (user_scene_ruler_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
-
+    arm_lcd_text_set_scale(0);
 }
 
 static
@@ -332,7 +331,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                         &__ruler,
                         &__top_region,
                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                        (arm_2d_alpha_samples_2pts_t) {{128, 0,},});
+                        (arm_2d_alpha_samples_2pts_t) {128, 0,});
                 }
 
                 arm_2d_dock_bottom(__ruler_canvas, 60) {
@@ -340,7 +339,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                         &__ruler,
                         &__bottom_region,
                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                        (arm_2d_alpha_samples_2pts_t) {{0, 128,},});
+                        (arm_2d_alpha_samples_2pts_t) {0, 128,});
                 }
             }
         }
@@ -361,6 +360,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_scale(0);
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
@@ -506,7 +506,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
             //.fnOnBGStart    = &__on_scene_ruler_background_start,
             //.fnOnBGComplete = &__on_scene_ruler_background_complete,
             .fnOnFrameStart = &__on_scene_ruler_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_ruler_switching_out,
             .fnOnFrameCPL   = &__on_scene_ruler_frame_complete,
             .fnDepose       = &__on_scene_ruler_depose,
 
