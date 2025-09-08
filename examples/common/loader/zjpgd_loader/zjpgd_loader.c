@@ -1235,8 +1235,8 @@ zjd_res_t  __arm_2d_zjpgd_decode (
     bool bUseContex                         /* whether use context */
 )
 {
-	int16_t x, y, mx, my;
-	uint16_t rst, rsc;
+    int16_t x, y, mx, my;
+    //uint16_t rst, rsc;
     zjd_t *jd = &this.Decoder.tZDEC;
     zjd_res_t rc = ZJD_OK;
 
@@ -1317,7 +1317,7 @@ zjd_res_t  __arm_2d_zjpgd_decode (
         );
     }
 
-	mx = jd->msx * 8; my = jd->msy * 8;			/* Size of the MCU (pixel) */
+    mx = jd->msx * 8; my = jd->msy * 8;                                         /* Size of the MCU (pixel) */
 
     this.Decoder.tBlockRegion = (arm_2d_region_t){
         .tSize = {

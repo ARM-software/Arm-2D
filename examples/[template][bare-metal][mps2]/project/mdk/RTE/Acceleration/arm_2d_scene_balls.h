@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_TEXT_READER_H__
-#define __ARM_2D_SCENE_TEXT_READER_H__
+#ifndef __ARM_2D_SCENE_BALLS_H__
+#define __ARM_2D_SCENE_BALLS_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -51,47 +51,54 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_TEXT_READER_IMPLEMENT__
+#ifdef __USER_SCENE_BALLS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_TEXT_READER_INHERIT__
+#ifdef __USER_SCENE_BALLS_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef DEMO_BALL_COUNT
+#   define DEMO_BALL_COUNT              8
+#endif
+
+#ifndef DEMO_BALL_SHOW_BACKGROUND
+#   define DEMO_BALL_SHOW_BACKGROUND    0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_text_reader and add it to a user specified scene player
+ * \brief initalize scene_balls and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_text_reader_t will be allocated from HEAP and freed on
+ *            user_scene_balls_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_text_reader_t* the user_scene_text_reader_t instance
+ * \return user_scene_balls_t* the user_scene_balls_t instance
  */
-#define arm_2d_scene_text_reader_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_text_reader_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_balls_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_balls_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene text_reader
+ * \brief a user class for scene balls
  */
-typedef struct user_scene_text_reader_t user_scene_text_reader_t;
+typedef struct user_scene_balls_t user_scene_balls_t;
 
-struct user_scene_text_reader_t {
+struct user_scene_balls_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
-
     bool bUserAllocated;
-    bool bDownScrolling;
-    int16_t iLineNumber;
+    bool bDirtyRegionOptimizationStatus;
+    bool bSuspendPhysics;
 
-    text_box_c_str_reader_t tStringReader;
-    text_box_t tTextPanel;
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[DEMO_BALL_COUNT];
+
 )
     /* place your public member here */
     
@@ -102,8 +109,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_text_reader_t *ptScene);
+user_scene_balls_t *__arm_2d_scene_balls_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_balls_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -111,8 +118,8 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_TEXT_READER_IMPLEMENT__
-#undef __USER_SCENE_TEXT_READER_INHERIT__
+#undef __USER_SCENE_BALLS_IMPLEMENT__
+#undef __USER_SCENE_BALLS_INHERIT__
 
 #ifdef   __cplusplus
 }

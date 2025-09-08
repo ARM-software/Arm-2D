@@ -111,20 +111,19 @@ static void __on_scene_panel_depose(arm_2d_scene_t *ptScene)
     user_scene_panel_t *ptThis = (user_scene_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    /* reset timestamp */
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     progress_wheel_depose(&this.tWheel);
 
     /* depose all number lists */
     arm_foreach(number_list_t,this.tNumberList, ptItem) {
         number_list_depose(ptItem);
     }
+    
+    /* reset timestamp */
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

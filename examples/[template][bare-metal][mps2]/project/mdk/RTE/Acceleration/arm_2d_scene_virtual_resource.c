@@ -118,8 +118,8 @@ extern const COLOUR_INT c_bmpHelium[];
 extern const arm_2d_tile_t c_tileHelium;
 extern const arm_2d_tile_t c_tileDigitsFontA4Mask;
 
-extern const uint8_t c_bmpUTF8Arial14A4Font[];
-extern const __ttf_char_descriptor_t c_tUTF8Arial14LookUpTableA4[95];
+extern const uint8_t c_bmpUTF8LiberationSansRegular14A4Font[];
+extern const __ttf_char_descriptor_t c_tUTF8LiberationSansRegular14LookUpTableA4[95];
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -152,7 +152,7 @@ static arm_2d_vres_t s_vresA4Font =
         ARM_2D_COLOUR_MASK_A4, 
         16,        /* width */
         1064,        /* height */ 
-        .pTarget = (uintptr_t)c_bmpUTF8Arial14A4Font,
+        .pTarget = (uintptr_t)c_bmpUTF8LiberationSansRegular14A4Font,
     );
 
 /*============================ IMPLEMENTATION ================================*/
@@ -210,12 +210,12 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__utf8_a4_font_get_char_descriptor)
         
     if (pchCharCode[0] > 0x20 && pchCharCode[0] <= 0x7e) {
         ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA4[ 
-                pchCharCode[0] - c_tUTF8Arial14LookUpTableA4[0].chUTF8[0]];
+            &c_tUTF8LiberationSansRegular14LookUpTableA4[ 
+                pchCharCode[0] - c_tUTF8LiberationSansRegular14LookUpTableA4[0].chUTF8[0]];
     } else {
         /* use the white space as the default char */
         ptUTF8Char = (__ttf_char_descriptor_t *)
-            &c_tUTF8Arial14LookUpTableA4[dimof(c_tUTF8Arial14LookUpTableA4)-1];
+            &c_tUTF8LiberationSansRegular14LookUpTableA4[dimof(c_tUTF8LiberationSansRegular14LookUpTableA4)-1];
     }
 
     ptDescriptor->chCodeLength = ptUTF8Char->chCodeLength;
@@ -280,12 +280,12 @@ static void __on_scene_virtual_resource_depose(arm_2d_scene_t *ptScene)
     user_scene_virtual_resource_t *ptThis = (user_scene_virtual_resource_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

@@ -192,6 +192,11 @@ void scene_atom_loader(void)
     arm_2d_scene_atom_init(&DISP0_ADAPTER);
 }
 
+void scene_balls_loader(void) 
+{
+    arm_2d_scene_balls_init(&DISP0_ADAPTER);
+}
+
 void scene_matrix_loader(void) 
 {
     arm_2d_scene_matrix_init(&DISP0_ADAPTER);
