@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_ccca8888_trans.inc
  * Description:  c code template for ccca8888 tile transform operations
  *
- * $Date:        7. April 2025
- * $Revision:    V.1.0.0
+ * $Date:        8. September 2025
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -115,7 +115,7 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
     uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
     uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
 
-    uint16_t hwAlpha0 = ((256 - hwAlphaX) * (256 - hwAlphaY)) >> 8;
+    uint16_t hwAlpha0 = (uint32_t)((256 - (uint32_t)hwAlphaX) * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
     uint16_t hwAlpha3 = 256 - hwAlpha0 - hwAlpha1 - hwAlpha2;
@@ -130,23 +130,18 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
     uint8_t chPixelAlpha2 = *(uint8_t *)pwAlphaSample;
 
     uint32_t wTotalAlpha = 0;
-    uint16_t hwTempAlpha;
 
-    hwTempAlpha = (chPixelAlpha0 == 255) * (hwAlpha0 << 8) 
+    wTotalAlpha += (chPixelAlpha0 == 255) * ((uint32_t)hwAlpha0 << 8) 
                     + (!(chPixelAlpha0 == 255) * chPixelAlpha0 * hwAlpha0);
-    wTotalAlpha += hwTempAlpha;
     
-    hwTempAlpha = (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
+    wTotalAlpha += (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
                     + (!(chPixelAlpha1 == 255) * chPixelAlpha1 * hwAlpha1);
-    wTotalAlpha += hwTempAlpha;
 
-    hwTempAlpha = (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
+    wTotalAlpha += (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
                     + (!(chPixelAlpha2 == 255) * chPixelAlpha2 * hwAlpha2);
-    wTotalAlpha += hwTempAlpha;
 
-    hwTempAlpha = (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
+    wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                     + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
-    wTotalAlpha += hwTempAlpha;
 
     if (0 == wTotalAlpha) {
         return ;
@@ -191,18 +186,18 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
 
     uint32_t uPixelResult = pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
-    uint16_t hwPixelAlpha = ((uint8_t *)&uPixelResult)[3];
+    uint32_t wPixelAlpha = ((uint8_t *)&uPixelResult)[3];
 
 #if __API_CCCA8888_TRANS_CFG_SUPPORT_OPACITY
-    hwPixelAlpha = hwPixelAlpha * hwOpacity >> 8;
+    wPixelAlpha = wPixelAlpha * hwOpacity >> 8;
     assert(hwOpacity != 255);
 #endif
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-    hwPixelAlpha += (hwPixelAlpha == 255);
+    wPixelAlpha += (wPixelAlpha == 255);
 #endif
 
-    __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, 256 - hwPixelAlpha);
+    __API_CCCA8888_TRANS_PIXEL_BLENDING( &uPixelResult, pTarget, 256 - wPixelAlpha);
 
 #endif
 }
