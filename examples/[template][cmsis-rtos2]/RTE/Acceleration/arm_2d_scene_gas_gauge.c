@@ -101,13 +101,13 @@ static void __on_scene_gas_gauge_depose(arm_2d_scene_t *ptScene)
     user_scene_gas_gauge_t *ptThis = (user_scene_gas_gauge_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+
 
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -204,7 +204,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
 
             arm_2d_layout(__centre_region, DEFAULT, true) {
 
-                __item_line_horizontal(64, 130) {
+                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+
+                __item_line_dock_horizontal(64) {
                     battery_gasgauge_nixie_tube_show(   &this.tBatteryNixieTube, 
                                                         ptTile, 
                                                         &__item_region, 
@@ -212,25 +215,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
                                                         this.tStatus,
                                                         bIsNewFrame);
                     
-                    arm_2d_op_wait_async(NULL);
+                    ARM_2D_OP_WAIT_ASYNC();
 
-                    
-                    arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
-                    
-                    arm_2d_align_bottom_centre(__item_region, tTextSize) {
+                    arm_lcd_text_set_draw_region(&__item_region);
+                    arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_BLACK);
 
-                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-                        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-                        arm_lcd_text_set_draw_region(&__bottom_centre_region);
-                        arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_BLACK);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_printf("%02d", this.hwGasgauge / 10);
+                    arm_lcd_printf_label(ARM_2D_ALIGN_BOTTOM_CENTRE, "%02d", this.hwGasgauge / 10);
                         
-                        arm_2d_op_wait_async(NULL);
-                    }
                 }
                 
-                __item_line_horizontal(64, 130) {
+                __item_line_dock_horizontal(64) {
                     battery_gasgauge_liquid_show(   &this.tBatteryLiquid, 
                                                     ptTile, 
                                                     &__item_region, 
@@ -238,23 +232,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
                                                     this.tStatus,
                                                     bIsNewFrame);
                     
-                    arm_2d_op_wait_async(NULL);
-                    
-                    arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_A4_DIGITS_ONLY);
-                    
-                    arm_2d_align_bottom_centre(__item_region, tTextSize) {
+                    ARM_2D_OP_WAIT_ASYNC();
 
-                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-                        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
-                        arm_lcd_text_set_draw_region(&__bottom_centre_region);
-                        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
-                        arm_lcd_text_location(0,0);
-                        arm_lcd_text_set_opacity(128);
-                        arm_lcd_printf("%02d", this.hwGasgauge / 10);
-                        arm_lcd_text_set_opacity(255);
+                    arm_lcd_text_set_draw_region(&__item_region);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
 
-                        arm_2d_op_wait_async(NULL);
-                    }
+                    arm_lcd_text_set_opacity(128);
+                    arm_lcd_printf_label(ARM_2D_ALIGN_BOTTOM_CENTRE, "%02d", this.hwGasgauge / 10);
+                    arm_lcd_text_set_opacity(255);
                 }
             }
         }
@@ -270,7 +255,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_gas_gauge_handler)
     arm_lcd_puts("Scene Battery Gas Gauge");
 
     /*-----------------------draw the foreground end  -----------------------*/
-    arm_2d_op_wait_async(NULL);
+    ARM_2D_OP_WAIT_ASYNC();
 
     return arm_fsm_rt_cpl;
 }

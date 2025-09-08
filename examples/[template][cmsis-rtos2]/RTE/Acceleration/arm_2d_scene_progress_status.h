@@ -26,6 +26,7 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper_scene.h"
+#include "arm_2d_example_controls.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -57,6 +58,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
+#   define PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION     1
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -84,8 +89,13 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[3];
     
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[4];
+
+    progress_bar_round_t tProgressBarRound;
+    progress_bar_round_t tProgressBarRound2;
+
     bool bUserAllocated;
-    uint16_t hwProgress;
+    int16_t iProgress[2];
 )
     /* place your public member here */
     

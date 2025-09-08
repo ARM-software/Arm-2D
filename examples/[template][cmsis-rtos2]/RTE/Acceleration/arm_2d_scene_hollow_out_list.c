@@ -162,7 +162,6 @@ static void __after_scene_hollow_out_list_switch(arm_2d_scene_t *ptScene)
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    //arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
 }
 
 static void __on_scene_hollow_out_list_depose(arm_2d_scene_t *ptScene)
@@ -170,12 +169,12 @@ static void __on_scene_hollow_out_list_depose(arm_2d_scene_t *ptScene)
     user_scene_hollow_out_list_t *ptThis = (user_scene_hollow_out_list_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
+
     
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }

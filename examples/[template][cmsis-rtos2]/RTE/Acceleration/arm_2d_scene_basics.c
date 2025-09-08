@@ -102,13 +102,11 @@ static void __on_scene_basics_depose(arm_2d_scene_t *ptScene)
     user_scene_basics_t *ptThis = (user_scene_basics_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -264,22 +262,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                 }
 
                 __item_line_dock_vertical(32, 0, 0, 2, 2) {
-                    
-                    draw_round_corner_box(  ptTile, 
-                                            &__item_region, 
-                                            GLCD_COLOR_WHITE, 
-                                            128);
-                    
-                    ARM_2D_OP_WAIT_ASYNC();
 
-                    arm_2d_dock_vertical(__item_region, 
-                                        ARM_2D_FONT_A8_DIGITS_ONLY
-                                            .use_as__arm_2d_user_font_t
-                                                .use_as__arm_2d_font_t
-                                                    .tCharSize.iHeight) {
+                    arm_2d_dock_with_margin(__item_region, 4) {
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                     
-                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_draw_region(&__dock_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
                         arm_lcd_text_location(0,0);
 
@@ -300,22 +287,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
 
             #if __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
                 __item_line_dock_vertical(32, 0, 0, 2, 2) {
-                    
-                    draw_round_corner_box(  ptTile, 
-                                            &__item_region, 
-                                            GLCD_COLOR_WHITE, 
-                                            128);
-                    
-                    ARM_2D_OP_WAIT_ASYNC();
 
-                    arm_2d_dock_vertical(__item_region, 
-                                        ARM_2D_FONT_A4_DIGITS_ONLY
-                                            .use_as__arm_2d_user_font_t
-                                                .use_as__arm_2d_font_t
-                                                    .tCharSize.iHeight) {
+                    arm_2d_dock_with_margin(__item_region, 4) {
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                     
-                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_draw_region(&__dock_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
                         arm_lcd_text_location(0,0);
 
@@ -336,22 +312,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_basics_handler)
                 }
             
                 __item_line_dock_vertical(32, 0, 0, 2, 2) {
-                    
-                    draw_round_corner_box(  ptTile, 
-                                            &__item_region, 
-                                            GLCD_COLOR_WHITE, 
-                                            128);
-                    
-                    ARM_2D_OP_WAIT_ASYNC();
 
-                    arm_2d_dock_vertical(__item_region, 
-                                        ARM_2D_FONT_A2_DIGITS_ONLY
-                                            .use_as__arm_2d_user_font_t
-                                                .use_as__arm_2d_font_t
-                                                    .tCharSize.iHeight) {
+                    arm_2d_dock_with_margin(__item_region, 4) {
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                     
-                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_draw_region(&__dock_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
                         arm_lcd_text_location(0,0);
 

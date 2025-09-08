@@ -190,12 +190,6 @@ static void __on_scene_transform_depose(arm_2d_scene_t *ptScene)
     user_scene_transform_t *ptThis = (user_scene_transform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    ptScene->ptPlayer = NULL;
-    
-    arm_foreach(int64_t,this.lTimestamp, ptItem) {
-        *ptItem = 0;
-    }
-
     ARM_2D_OP_DEPOSE(this.tObjects[TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY].tOP.tFillColorMaskOpa);
     ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_ONLY_AND_OPACITY].tOP.tTransOpa);
     ARM_2D_OP_DEPOSE(this.tObjects[TRANSFORM_TYPE_TILE_WITH_COLOUR_KEYING_AND_OPACITY].tOP.tTransOpa);
@@ -204,7 +198,12 @@ static void __on_scene_transform_depose(arm_2d_scene_t *ptScene)
     arm_foreach(__transform_obj_t, this.tObjects, ptObjects) {
         arm_2d_helper_dirty_region_transform_depose(&ptObjects->tHelper);
     }
+    
+    arm_foreach(int64_t,this.lTimestamp, ptItem) {
+        *ptItem = 0;
+    }
 
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -335,6 +334,8 @@ void __draw_transform_object_handler( void *pObj,
         .fY = tLocation.iY,
     };
 
+    float fAngle = ptTransObj->tHelper.fAngle;
+
     switch(ptTransObj->emType) {
 
         case TRANSFROM_TYPE_FILL_COLOUR_WITH_MASK_AND_OPACITY: {
@@ -350,7 +351,7 @@ void __draw_transform_object_handler( void *pObj,
                                                 ptTile,
                                                 NULL,
                                                 tCentre,
-                                                ptTransObj->tHelper.fAngle,
+                                                fAngle,
                                                 fScale,
                                                 fScale,
                                                 GLCD_COLOR_NIXIE_TUBE,
@@ -376,15 +377,15 @@ void __draw_transform_object_handler( void *pObj,
 
                 arm_2dp_tile_transform_xy_with_src_mask_and_opacity(
                         &ptTransObj->tOP.tTransMaskOpa,
-                        &c_tileCMSISLogo,                                           //!< source tile
-                        &c_tileCMSISLogoMask,                                       //!< source mask
-                        ptTile,                                                     //!< target tile
-                        NULL,                                                       //!< target region
-                        tCentre,                                                    //!< pivot on source
-                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale x
-                        fScale,                                                     //!< scale y
-                        chOpacity,                                                  //!< opacity
+                        &c_tileCMSISLogo,                                       //!< source tile
+                        &c_tileCMSISLogoMask,                                   //!< source mask
+                        ptTile,                                                 //!< target tile
+                        NULL,                                                   //!< target region
+                        tCentre,                                                //!< pivot on source
+                        fAngle,                                                 //!< rotation angle 
+                        fScale,                                                 //!< scale x
+                        fScale,                                                 //!< scale y
+                        chOpacity,                                              //!< opacity
                         &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
@@ -404,15 +405,15 @@ void __draw_transform_object_handler( void *pObj,
 
                 arm_2dp_tile_transform_xy_with_opacity(
                         &ptTransObj->tOP.tTransOpa,
-                        &c_tileEarth,                                          //!< source tile
-                        ptTile,                                                     //!< target tile
-                        NULL,                                                       //!< target region
-                        tCentre,                                                    //!< pivot on source
-                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale x
-                        fScale,                                                     //!< scale y
+                        &c_tileEarth,                                           //!< source tile
+                        ptTile,                                                 //!< target tile
+                        NULL,                                                   //!< target region
+                        tCentre,                                                //!< pivot on source
+                        fAngle,                                                 //!< rotation angle 
+                        fScale,                                                 //!< scale x
+                        fScale,                                                 //!< scale y
                         GLCD_COLOR_WHITE,
-                        chOpacity,                                                  //!< opacity
+                        chOpacity,                                              //!< opacity
                         &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
@@ -432,14 +433,14 @@ void __draw_transform_object_handler( void *pObj,
 
                 arm_2dp_tile_transform_xy_only_with_opacity(
                         &ptTransObj->tOP.tTransOpa,
-                        &c_tileEarth,                                          //!< source tile
-                        ptTile,                                                     //!< target tile
-                        NULL,                                                       //!< target region
-                        tCentre,                                                    //!< pivot on source
-                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale x
-                        fScale,                                                     //!< scale y
-                        chOpacity,                                                  //!< opacity
+                        &c_tileEarth,                                           //!< source tile
+                        ptTile,                                                 //!< target tile
+                        NULL,                                                   //!< target region
+                        tCentre,                                                //!< pivot on source
+                        fAngle,                                                 //!< rotation angle 
+                        fScale,                                                 //!< scale x
+                        fScale,                                                 //!< scale y
+                        chOpacity,                                              //!< opacity
                         &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
@@ -459,14 +460,14 @@ void __draw_transform_object_handler( void *pObj,
 
                 arm_2dp_tile_transform_xy_only_with_opacity(
                         &ptTransObj->tOP.tTransOpa,
-                        &c_tileCMSISLogoCCCA8888,                                   //!< source tile
-                        ptTile,                                                     //!< target tile
-                        NULL,                                                       //!< target region
-                        tCentre,                                                    //!< pivot on source
-                        ptTransObj->tHelper.fAngle,                                 //!< rotation angle 
-                        fScale,                                                     //!< scale x
-                        fScale,                                                     //!< scale y
-                        chOpacity,                                                  //!< opacity
+                        &c_tileCMSISLogoCCCA8888,                               //!< source tile
+                        ptTile,                                                 //!< target tile
+                        NULL,                                                   //!< target region
+                        tCentre,                                                //!< pivot on source
+                        fAngle,                                                 //!< rotation angle 
+                        fScale,                                                 //!< scale x
+                        fScale,                                                 //!< scale y
+                        chOpacity,                                              //!< opacity
                         &tPivot);
 
                 arm_2d_helper_dirty_region_transform_update(
