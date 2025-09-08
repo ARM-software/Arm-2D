@@ -1,4 +1,4 @@
-#! armclang --target=arm-arm-none-eabi -march=armv8.1-m.main -E -xc -I./RTE/_AN547-AN552
+#! armclang --target=arm-arm-none-eabi -march=armv8.1-m.main -E -xc -I./RTE/_AN542 -I./RTE/Device/SSE-300-MPS3
 
 ;/*
 ; * Copyright (c) 2018-2021 Arm Limited. All rights reserved.
@@ -56,19 +56,6 @@ LR_CODE S_CODE_START {
      */
     ScatterAssert(ImageLimit(CODE_WATERMARK) <= S_CODE_START + S_CODE_SIZE)
 
-}
-
-
-LR_CODE2 S_CODE2_START S_CODE2_SIZE{
-
-#if !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
-    ER_ASSET +0 {
-        .ANY (+RO-DATA)
-        .ANY (arm2d.asset.*)
-        .ANY (arm2d.tile.*)
-    }
-#endif
-
     ARM_LIB_STACK S_DATA_START ALIGN 32 FILL 0xDEADBEEF STACK_SIZE {   ; Reserve empty region for stack
     }
 
@@ -101,28 +88,6 @@ LR_CODE2 S_CODE2_START S_CODE2_SIZE{
      * size of the SRAM available.
      */
     ScatterAssert(ImageLimit(SRAM_WATERMARK) <= S_DATA_START + S_DATA_SIZE)
-
-#if !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
-
-    ER_DATA2 +0 {
-        .ANY (+ZI +RW)
-    }
-
-    RW_IRAM2_UNINIT +0 UNINIT {
-        .ANY (.uninitialized_data*)
-        .ANY (.bss.noinit)
-    }
-
-    /* This empty, zero long execution region is here to mark the limit address
-     * of the last execution region that is allocated in SRAM.
-     */
-    SRAM2_WATERMARK +0 EMPTY 0x0 {
-    }
-    /* Make sure that the sections allocated in the SRAM does not exceed the
-     * size of the SRAM available.
-     */
-    ScatterAssert(ImageLimit(SRAM2_WATERMARK) <= S_DATA2_START + S_DATA2_SIZE)
-#endif
 
 }
 
