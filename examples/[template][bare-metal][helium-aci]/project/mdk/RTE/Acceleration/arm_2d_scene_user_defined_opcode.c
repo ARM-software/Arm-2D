@@ -376,7 +376,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
             nOffset += nCellLength;
         }
 
-        arm_2d_dock_bottom(__top_canvas, (tScreenSize.iHeight >> 1)) {
+        arm_2d_dock_bottom(__top_canvas, (tScreenSize.iHeight >> 1) + 4) {
 
             arm_2d_dock_top(__bottom_region, 100) {
                 arm_2d_fill_colour_with_vertical_alpha_gradient(
@@ -384,6 +384,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
                             &__top_region, 
                             (__arm_2d_color_t){GLCD_COLOR_BLACK}, 
                             (arm_2d_alpha_samples_2pts_t){255, 0});
+                ARM_2D_OP_WAIT_ASYNC();
             }
         }
 
@@ -484,7 +485,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
                                         &tParam,
                                         (arm_2d_color_rgb565_t){this.tExplosion.tColour},
                                         255);
-
+                        ARM_2D_OP_WAIT_ASYNC();
                     }
 
                 }

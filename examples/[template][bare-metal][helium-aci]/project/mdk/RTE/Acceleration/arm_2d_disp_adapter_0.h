@@ -102,7 +102,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          240
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          24
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -231,7 +231,7 @@ extern "C" {
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     0
 #endif
 
 // <o>Maximum number of Virtual Resources used per API
@@ -252,6 +252,18 @@ extern "C" {
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
 #   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
+#endif
+
+// <o>The Anti-Noise-Scanning block Width
+// <i> The width of the anti-noise-scanning block size
+#ifndef __DISP0_CFG_PFB_ANS_WIDTH__
+#   define __DISP0_CFG_PFB_ANS_WIDTH__                              8
+#endif
+
+// <o>The Anti-Noise-Scanning block Height
+// <i> The height of the anti-noise-scanning block size
+#ifndef __DISP0_CFG_PFB_ANS_HEIGHT__
+#   define __DISP0_CFG_PFB_ANS_HEIGHT__                             8
 #endif
 
 // </h>
@@ -305,7 +317,7 @@ extern "C" {
         ({                                                                      \
         static bool ARM_2D_SAFE_NAME(s_bRefreshLCD) = false;                    \
         arm_fsm_rt_t ARM_2D_SAFE_NAME(ret) = arm_fsm_rt_on_going;               \
-        if (!__ARM_VA_NUM_ARGS(__VA_ARGS__)) {                                  \
+        if (((0,##__VA_ARGS__) <= 0)) {                                         \
             ARM_2D_SAFE_NAME(ret) = __disp_adapter0_task();                     \
         } else {                                                                \
             if (!ARM_2D_SAFE_NAME(s_bRefreshLCD)) {                             \
