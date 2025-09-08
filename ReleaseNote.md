@@ -7,15 +7,16 @@
 ### Core and Library
 
 * Adds new APIs: **tile-fill-with-source-mask-and-opacity** with the Helium acceleration and the implicit CCCA8888 conversions.
-* Adds new APIs: **tile-fill-with-opacit**y with Helium acceleration and the implicity CCCA8888 conversions. 
+* Adds new APIs: **tile-fill-with-opacit**y with Helium acceleration and the implicit CCCA8888 conversions. 
 * Improves the support for CCCA8888
 * Renames **tile-copy--with-opacity** to **tile-copy-with-opacity-only.** The old APIs are still available and marked deprecated. 
 * Allows using negative scaling ratios in transform operations. Negative ratios lead to X and/or Y mirroring in transformation. 
 * Slightly improves the performance of the tile-copy-with-colour-keying operations.
 * Enhances the code quality
-  * Fixes potential tail-prediction related issues in the Helium implementation.
+  * Fixes potential tail-prediction-related issues in the Helium implementation.
   * Improves the inline assembly compatibility for different compilers. 
   * Fixes a potential shadow-variables issue in the blending intrinsics (macros).
+* Fixes potential alpha-overflow issues found in transform operations. 
 * Other minor fixes
 
 ### Helper Services
