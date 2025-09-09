@@ -139,6 +139,12 @@ extern "C" {
 #   define __DISP0_CFG_PFB_HEAP_SIZE__                             1
 #endif
 
+// <q>Disable Dynamic PFB optimization
+// <i> Selecting this option will disable the dynamic PFB optimisation. Please do NOT select this unless you are sure about the consequences. 
+#ifndef __DISP0_CFG_DISABLE_DYNAMIC_PFB__
+#   define __DISP0_CFG_DISABLE_DYNAMIC_PFB__                       1
+#endif
+
 // </h>
 
 // <h>Navigation Layer
