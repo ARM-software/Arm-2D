@@ -717,7 +717,6 @@ ARM_PT_BEGIN(s_chPT)
             }
         }
 
-
         ARM_PT_YIELD(arm_fsm_rt_on_going);
     }
 
