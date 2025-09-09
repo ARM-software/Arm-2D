@@ -967,6 +967,36 @@ arm_fsm_rt_t __disp_adapter%Instance%_task(void)
     return arm_2d_scene_player_task(&DISP%Instance%_ADAPTER);
 }
 
+void disp_adapter%Instance%_nano_prepare(void)
+{
+    ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(
+        &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
+        NULL);
+}
+
+static __disp_adapter%Instance%_draw_t s_tDraw = {0};
+
+__disp_adapter%Instance%_draw_t * __disp_adapter%Instance%_nano_draw(
+                            arm_2d_region_list_item_t *ptDirtyRegions)
+{
+    do {
+        arm_fsm_rt_t tResult = arm_2d_helper_pfb_task(
+                                &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                                ptDirtyRegions);
+        
+        if (tResult == arm_fsm_rt_cpl || tResult == ARM_2D_RT_FRAME_SKIPPED) {
+            return NULL;
+        } else if (ARM_2D_RT_PFB_USER_DRAW == tResult) {
+            s_tDraw.bIsNewFrame = arm_2d_helper_pfb_get_current_framebuffer(
+                        &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                        (const arm_2d_tile_t **)&s_tDraw.ptTile
+                    );
+
+            return &s_tDraw;
+        }
+    } while(1);   
+}
+
 
 /*----------------------------------------------------------------------------*
  * Virtual Resource Helper                                                    *

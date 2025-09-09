@@ -2763,13 +2763,25 @@ arm_2d_err_t arm_2d_helper_pfb_update_dependency(
     return ARM_2D_ERR_NONE;
 }
 
+ARM_NONNULL(1)
+bool arm_2d_helper_pfb_get_current_framebuffer( arm_2d_helper_pfb_t *ptThis,
+                                                const arm_2d_tile_t **pptTile)
+{
+    assert(NULL != ptThis);
+    
+    if (NULL != pptTile) {
+        *pptTile = this.Adapter.ptFrameBuffer;
+    }
 
+    return this.Adapter.bIsNewFrame;
+}
 
+ARM_NONNULL(1)
 arm_fsm_rt_t arm_2d_helper_pfb_task(arm_2d_helper_pfb_t *ptThis, 
                                     arm_2d_region_list_item_t *ptDirtyRegions) 
 {   
     assert(NULL != ptThis);
-    assert(NULL != this.tCFG.Dependency.evtOnDrawing.fnHandler);
+    //assert(NULL != this.tCFG.Dependency.evtOnDrawing.fnHandler);
     arm_fsm_rt_t tResult;
 
 ARM_PT_BEGIN(this.Adapter.chPT)

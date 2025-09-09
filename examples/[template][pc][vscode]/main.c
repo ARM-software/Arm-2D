@@ -357,7 +357,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -539,7 +539,7 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         .fnLoader = 
         //scene_histogram_loader,
-        scene_space_badge_loader,
+        //scene_space_badge_loader,
         //scene_pave_loader,
         //scene_qrcode_loader,
         //scene_font_loader,
@@ -547,7 +547,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_console_window_loader
         //scene_balls_loader,
         //scene_iir_blur_loader,
-        //scene_progress_status_loader,
+        scene_progress_status_loader,
         //scene_matrix_loader,
         //scene_tjpgd_loader,
         //scene_rickrolling_loader,
@@ -705,6 +705,26 @@ int app_2d_main_thread (void *argument)
 
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
+
+
+    DISP_ADAPTER0_NANO_DRAW() {
+
+        extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+        arm_2d_canvas(ptTile, __top_canvas) {
+
+            arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_GREEN);
+
+            arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
+                arm_2d_fill_colour_with_a4_mask_and_opacity(   
+                                                    ptTile, 
+                                                    &__centre_region, 
+                                                    &c_tileCMSISLogoA4Mask, 
+                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                    128);
+            }
+        }
+    }
 
     while(1) {
         if (VT_is_request_quit()) {

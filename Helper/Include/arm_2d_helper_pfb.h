@@ -1074,6 +1074,19 @@ extern
 ARM_NONNULL(1)
 arm_2d_size_t arm_2d_helper_pfb_get_pfb_size(arm_2d_helper_pfb_t *ptThis);
 
+/*!
+ * \brief get the current frame buffer 
+ * \param[in] ptThis the pfb helper control block
+ * \param[in] pptTile a pointer of the pointer for the current frame buffer
+ *            (const arm_2d_tile_t *)
+ * \retval true it is a new frame
+ * \retval false it is not a new frame
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_helper_pfb_get_current_framebuffer( arm_2d_helper_pfb_t *ptThis,
+                                                const arm_2d_tile_t **pptTile);
+
 extern
 /*!
  * \brief test whether specified region is being drawing
