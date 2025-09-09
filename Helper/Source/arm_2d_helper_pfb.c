@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        22. August 2025
- * $Revision:    V.2.2.3
+ * $Date:        9. September 2025
+ * $Revision:    V.2.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3004,11 +3004,16 @@ ARM_PT_BEGIN(this.Adapter.chPT)
 
         }
 
-        /* draw all the gui elements on target frame buffer */
-        tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
-                                        this.tCFG.Dependency.evtOnDrawing.pTarget,
-                                        this.Adapter.ptFrameBuffer,
-                                        this.Adapter.bIsNewFrame);
+        if (NULL == this.tCFG.Dependency.evtOnDrawing.fnHandler) {
+            ARM_PT_YIELD((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW);
+            tResult = arm_fsm_rt_cpl;
+        } else {
+            /* draw all the gui elements on target frame buffer */
+            tResult = this.tCFG.Dependency.evtOnDrawing.fnHandler(
+                                            this.tCFG.Dependency.evtOnDrawing.pTarget,
+                                            this.Adapter.ptFrameBuffer,
+                                            this.Adapter.bIsNewFrame);
+        }
 
         // just in case some one forgot to do this...
         ARM_2D_OP_WAIT_ASYNC();

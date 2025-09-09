@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        10. August 2025
- * $Revision:    V.1.3.1
+ * $Date:        09. September 2025
+ * $Revision:    V.1.3.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -182,6 +182,7 @@ typedef enum {
     ARM_2D_RT_FALSE                     = 0,    //!< false
     ARM_2D_RT_TRUE                      = 1,    //!< true
     ARM_2D_RT_FRAME_SKIPPED             = __arm_fsm_rt_last,    //!< frame is skipped
+    ARM_2D_RT_PFB_USER_DRAW,
 } arm_2d_err_t;
 
 /*!
