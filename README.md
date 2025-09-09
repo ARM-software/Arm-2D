@@ -154,12 +154,12 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     > 1. As long as the size is smaller than 32767 * 32767. 
     >
     > 2. As long as the total pixel numebr is smaller than 16M pixels.
-    
+
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
     - Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.
     - Provides dirty region helper services for ease of use.
-    
+
   - Supports swapping high and low bytes for RGB16 pixels
 
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
@@ -168,6 +168,8 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     - Single Buffer/Double-Buffers
     - Provides a helper service for Direct Mode (i.e. 3FB Mode)
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
+
+  - **[new]** Adds an nano-drawing mode as an alternative option of the Scene Player. 
 
 - **Transform** (i.e. rotation and scaling)
   - With/Without Colour-keying

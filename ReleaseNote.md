@@ -31,6 +31,7 @@
     * Improves the Low-Level-Sync-Up scheme to allow drawing the next frame while e-ink devices is flushing (>300ms).
   * Adds an anti-noise-scanning mode as a countermeasure for the electromagnetic interference
   * Adds an macro option to the display adapter configuration header file for disabling the Dynamic PFB optimization.
+  * Adds an experimental nano-drawing mode by introducing a macro `DISP_ADAPTERn_NANO_DRAW()`.
 * Enhances the Font service.
   * Introduces a new API to calculate the drawing boxes for multi-line strings.
   * Update the default fonts.
