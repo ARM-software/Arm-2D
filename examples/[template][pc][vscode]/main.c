@@ -673,6 +673,11 @@ void run_os_command(const char *pchCommandLine) {
 
 void disp_adapter_nano_draw_example_blocking_version(void)
 {
+    /* on frame start */
+    do {
+
+    } while(0);
+
     DISP_ADAPTER0_NANO_DRAW() {
 
         extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
@@ -691,6 +696,11 @@ void disp_adapter_nano_draw_example_blocking_version(void)
             }
         }
     }
+
+    /* on frame complete */
+    do {
+
+    } while(0);
 }
 
 arm_fsm_rt_t disp_adapter_nano_draw_example_non_blocking_version(void)
@@ -698,6 +708,11 @@ arm_fsm_rt_t disp_adapter_nano_draw_example_non_blocking_version(void)
     static uint8_t s_chPT = 0;
 
 ARM_PT_BEGIN(s_chPT)
+
+    /* on frame start */
+    do {
+
+    } while(0);
 
     DISP_ADAPTER0_NANO_DRAW() {
 
@@ -719,6 +734,12 @@ ARM_PT_BEGIN(s_chPT)
 
         ARM_PT_YIELD(arm_fsm_rt_on_going);
     }
+
+    /* on frame complete */
+    do {
+
+    } while(0);
+
 
 ARM_PT_END()
 
