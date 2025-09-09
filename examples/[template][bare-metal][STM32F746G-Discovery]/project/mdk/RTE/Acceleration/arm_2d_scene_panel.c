@@ -214,10 +214,8 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
                         arm_2d_region_t *ptRegion,
                         const char *pchString,
                         COLOUR_INT tColour,
-                        uint8_t chOpacity,
-                        bool bIsNewFrame)
+                        uint8_t chOpacity)
 {
-
     arm_2d_container(ptTile, __button, ptRegion) {
     
         draw_round_corner_box(&__button, NULL, GLCD_COLOR_WHITE, chOpacity);
@@ -246,7 +244,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
     arm_2d_canvas(ptTile, __canvas) {
         arm_2d_align_centre(__canvas, 240, 128) {
 
-            arm_2d_layout(__centre_region, DEFAULT, true) {
+            arm_2d_layout(__centre_region) {
 
                 __item_line_horizontal(60,80) {
                     progress_wheel_show(&this.tWheel,
@@ -292,36 +290,36 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
                      *     [0]
                      */
                 
-                    arm_2d_layout(__item_region, DEFAULT, true) {
+                    arm_2d_layout(__item_region) {
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "1", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "2", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "3", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "4", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "5", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "5", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "6", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "6", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "7", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "7", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "8", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "8", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,2,2,2,2) {
-                            draw_buttom(ptTile, &__item_region, "9", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "9", GLCD_COLOR_WHITE, 128);
                         }
                         __item_horizontal(28,28,34,34,2,2) {
-                            draw_buttom(ptTile, &__item_region, "0", GLCD_COLOR_WHITE, 128, bIsNewFrame);
+                            draw_buttom(ptTile, &__item_region, "0", GLCD_COLOR_WHITE, 128);
                         }
                     }
                 }
@@ -425,12 +423,12 @@ user_scene_panel_t *__arm_2d_scene_panel_init(   arm_2d_scene_player_t *ptDispAd
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
     /* get the screen region */
-    arm_2d_region_t tScreen
+    arm_2d_region_t __top_canvas__
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
     
 
-    arm_2d_align_top_right( tScreen, 
+    arm_2d_align_top_right( __top_canvas__, 
                             c_tileWhiteDotMask.tRegion.tSize.iWidth + 10,
                             c_tileWhiteDotMask.tRegion.tSize.iHeight) {
         s_tDirtyRegions[0].tRegion = __top_right_region;

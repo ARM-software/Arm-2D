@@ -39,6 +39,7 @@
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wsign-conversion"
+#   pragma clang diagnostic ignored "-Wsign-compare"
 #   pragma clang diagnostic ignored "-Wpadded"
 #   pragma clang diagnostic ignored "-Wcast-qual"
 #   pragma clang diagnostic ignored "-Wcast-align"
@@ -143,7 +144,7 @@ static void __on_scene_audiomark_depose(arm_2d_scene_t *ptScene)
     user_scene_audiomark_t *ptThis = (user_scene_audiomark_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    for (uint_fast8_t n = 0; n < dimof(this.Processor); n ++) {
+    for (int_fast8_t n = 0; n < dimof(this.Processor); n ++) {
         progress_wheel_depose(&this.Processor[n].tWheel);
         this.Processor[n].lTimestamp = 0;
     }
@@ -185,7 +186,7 @@ static void __on_scene_audiomark_frame_start(arm_2d_scene_t *ptScene)
     user_scene_audiomark_t *ptThis = (user_scene_audiomark_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    for (uint_fast8_t n = 0; n < dimof(this.Processor); n++) {
+    for (int_fast8_t n = 0; n < dimof(this.Processor); n++) {
         
         int32_t nResult;
         if (arm_2d_helper_time_liner_slider(0, 
@@ -243,7 +244,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_audiomark_handler)
 
         arm_2d_align_centre(__top_canvas, 415, 415) {
             
-            for (uint_fast8_t n = 0; n < dimof(this.Processor); n++) {
+            for (int_fast8_t n = 0; n < dimof(this.Processor); n++) {
 
                 progress_wheel_show(&this.Processor[n].tWheel,
                     ptTile, 
