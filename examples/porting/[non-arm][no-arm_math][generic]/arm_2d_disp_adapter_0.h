@@ -145,7 +145,6 @@ extern "C" {
 #   define __DISP0_CFG_DISABLE_DYNAMIC_PFB__                       0
 #endif
 
-
 // </h>
 
 // <h>Navigation Layer
@@ -341,7 +340,25 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
+#define DISP_ADAPTER0_NANO_DRAW(...)                                            \
+                                                                                \
+    arm_using(const arm_2d_tile_t *ptTile = NULL, disp_adapter0_nano_prepare()) \
+        arm_using(bool bIsNewFrame = true)                                      \
+            for (__disp_adapter0_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
+                (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
+                        = __disp_adapter0_nano_draw((NULL,##__VA_ARGS__));      \
+                    if (NULL != ARM_2D_SAFE_NAME(ptUserDraw)) {                 \
+                        ptTile = ARM_2D_SAFE_NAME(ptUserDraw)->ptTile;          \
+                        bIsNewFrame = ARM_2D_SAFE_NAME(ptUserDraw)->bIsNewFrame;\
+                    };                                                          \
+                    (NULL != ARM_2D_SAFE_NAME(ptUserDraw));                     \
+                    }));)
 /*============================ TYPES =========================================*/
+typedef struct {
+    arm_2d_tile_t *ptTile;
+    bool bIsNewFrame;
+} __disp_adapter0_draw_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
@@ -355,6 +372,12 @@ void disp_adapter0_init(void);
 extern
 arm_fsm_rt_t __disp_adapter0_task(void);
 
+extern
+void disp_adapter0_nano_prepare(void);
+
+extern
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(
+                                arm_2d_region_list_item_t *ptDirtyRegions);
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!
