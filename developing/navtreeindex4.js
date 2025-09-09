@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"group__gKernel.html#ga25908e166b33d5f00cf5824a4a32f30f":[12,0,275],
 "group__gKernel.html#ga27a24a896295488772e6d847c790fd1c":[12,0,293],
 "group__gKernel.html#ga295397fe5671506e3687a730d4dfdb8a":[12,0,108],
 "group__gKernel.html#ga2979dec2f537a0d6a78b665eced2b3c0":[12,0,222],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "group__gKernel.html#struct____arm__2d__mem__t":[12,0,24],
 "group__gKernel.html#struct____arm__2d__op__info__t_8Info":[12,0,70],
 "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed68____":[12,0,78],
-"group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed70____":[12,0,79],
-"group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed72____":[12,0,80]
+"group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed70____":[12,0,79]
 };

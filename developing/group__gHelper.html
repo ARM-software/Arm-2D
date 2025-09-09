@@ -802,6 +802,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__size__t">arm_2d_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">arm_2d_helper_pfb_get_pfb_size</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga012c85746e62c16a38f5253fd9d0dca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the inital PFB size  <a href="group__gHelper.html#ga012c85746e62c16a38f5253fd9d0dca6">More...</a><br /></td></tr>
 <tr class="separator:ga012c85746e62c16a38f5253fd9d0dca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54d68ea1ac95553b9052df08c74ac1dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga54d68ea1ac95553b9052df08c74ac1dd">arm_2d_helper_pfb_get_current_framebuffer</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **pptTile)</td></tr>
+<tr class="memdesc:ga54d68ea1ac95553b9052df08c74ac1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current frame buffer  <a href="group__gHelper.html#ga54d68ea1ac95553b9052df08c74ac1dd">More...</a><br /></td></tr>
+<tr class="separator:ga54d68ea1ac95553b9052df08c74ac1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga133523ec2682ddb18cccb6324f4cad8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">arm_2d_helper_pfb_is_region_being_drawing</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **ppVirtualScreen)</td></tr>
 <tr class="memdesc:ga133523ec2682ddb18cccb6324f4cad8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">test whether specified region is being drawing  <a href="group__gHelper.html#ga133523ec2682ddb18cccb6324f4cad8d">More...</a><br /></td></tr>
 <tr class="separator:ga133523ec2682ddb18cccb6324f4cad8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -9243,6 +9246,50 @@ false the list isn't scrolling. </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__size__t" title="a type for the size of an rectangular area">arm_2d_size_t</a> the PFB size </dd></dl>
+
+</div>
+</div>
+<a id="ga54d68ea1ac95553b9052df08c74ac1dd" name="ga54d68ea1ac95553b9052df08c74ac1dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54d68ea1ac95553b9052df08c74ac1dd">&#9670;&#160;</a></span>arm_2d_helper_pfb_get_current_framebuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arm_2d_helper_pfb_get_current_framebuffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__pfb__t">arm_2d_helper_pfb_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **&#160;</td>
+          <td class="paramname"><em>pptTile</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the current frame buffer </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the pfb helper control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pptTile</td><td>a pointer of the pointer for the current frame buffer (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t" title="a type for tile">arm_2d_tile_t</a> *) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>it is a new frame </td></tr>
+    <tr><td class="paramname">false</td><td>it is not a new frame </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
