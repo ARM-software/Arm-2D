@@ -340,13 +340,15 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
-#define DISP_ADAPTER0_NANO_DRAW(...)                                            \
+#define DISP_ADAPTER0_NANO_DRAW()                                               \
                                                                                 \
-    arm_using(const arm_2d_tile_t *ptTile = NULL, disp_adapter0_nano_prepare()) \
+    arm_using(  const arm_2d_tile_t *ptTile = NULL,                             \
+                disp_adapter0_nano_prepare(),                                   \
+                (void)0)                                                        \
         arm_using(bool bIsNewFrame = true)                                      \
             for (__disp_adapter0_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
                 (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
-                        = __disp_adapter0_nano_draw((NULL,##__VA_ARGS__));      \
+                        = __disp_adapter0_nano_draw();                          \
                     if (NULL != ARM_2D_SAFE_NAME(ptUserDraw)) {                 \
                         ptTile = ARM_2D_SAFE_NAME(ptUserDraw)->ptTile;          \
                         bIsNewFrame = ARM_2D_SAFE_NAME(ptUserDraw)->bIsNewFrame;\
@@ -376,8 +378,10 @@ extern
 void disp_adapter0_nano_prepare(void);
 
 extern
-__disp_adapter0_draw_t * __disp_adapter0_nano_draw(
-                                arm_2d_region_list_item_t *ptDirtyRegions);
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);
+
+extern
+arm_2d_scene_t *disp_adapter0_get_default_scene(void);
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!

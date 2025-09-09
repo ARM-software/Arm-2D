@@ -157,7 +157,7 @@ extern "C" {
 // <i> Configure the default navigation layer of this display adapter. 
 // <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
-#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                      0
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                      1
 #endif
 
 // <o>Number of iterations <0-2000>
@@ -201,43 +201,43 @@ extern "C" {
 // <q> Enable Dirty Region Debug Mode
 // <i> Draw dirty regions on the screen for debug.
 #ifndef __DISP0_CFG_DEBUG_DIRTY_REGIONS__
-#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       0
+#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                        0
 #endif
 
 // <q> Enable Dirty Region Optimization Service
 // <i> Optimize dirty regions to avoid fresh overlapped areas
 #ifndef __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
-#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                    1
+#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                     1
 #endif
 
 // <o> Dirty Region Pool Size <4-255>
 // <i> The number of dirty region items available for the dirty region optimization service
 #ifndef __DISP0_CFG_DIRTY_REGION_POOL_SIZE__
-#   define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__                    8
+#   define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__                     8
 #endif
 
 // <q> Swap the high and low bytes
 // <i> Swap the high and low bytes of the 16bit-pixels
 #ifndef __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
-#   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
+#   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__              0
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
 #ifndef __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
-#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                     0
+#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                      0
 #endif
 
 // <q>Enable the helper service for 3FB (LCD Direct Mode)
 // <i> You can select this option when your LCD controller supports direct mode
 #ifndef __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
-#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                 0
+#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                  0
 #endif
 
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                      0
 #endif
 
 // <o>Maximum number of Virtual Resources used per API
@@ -250,14 +250,14 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                    2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
 // <i> Use malloc and free in the virtual resource helper service. When disabled, a static buffer in the size of current display adapter PFB will be used. 
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
+#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__       0
 #endif
 
 // <o>The Anti-Noise-Scanning block Width
@@ -340,13 +340,15 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
-#define DISP_ADAPTER0_NANO_DRAW(...)                                            \
+#define DISP_ADAPTER0_NANO_DRAW()                                               \
                                                                                 \
-    arm_using(const arm_2d_tile_t *ptTile = NULL, disp_adapter0_nano_prepare()) \
+    arm_using(  const arm_2d_tile_t *ptTile = NULL,                             \
+                disp_adapter0_nano_prepare(),                                   \
+                (void)0)                                                        \
         arm_using(bool bIsNewFrame = true)                                      \
             for (__disp_adapter0_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
                 (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
-                        = __disp_adapter0_nano_draw((NULL,##__VA_ARGS__));      \
+                        = __disp_adapter0_nano_draw();                          \
                     if (NULL != ARM_2D_SAFE_NAME(ptUserDraw)) {                 \
                         ptTile = ARM_2D_SAFE_NAME(ptUserDraw)->ptTile;          \
                         bIsNewFrame = ARM_2D_SAFE_NAME(ptUserDraw)->bIsNewFrame;\
@@ -376,8 +378,10 @@ extern
 void disp_adapter0_nano_prepare(void);
 
 extern
-__disp_adapter0_draw_t * __disp_adapter0_nano_draw(
-                                arm_2d_region_list_item_t *ptDirtyRegions);
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);
+
+extern
+arm_2d_scene_t *disp_adapter0_get_default_scene(void);
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!

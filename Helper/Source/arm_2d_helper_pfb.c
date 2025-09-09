@@ -22,7 +22,7 @@
  * Description:  the pfb helper service source code
  *
  * $Date:        9. September 2025
- * $Revision:    V.2.3.0
+ * $Revision:    V.2.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -2989,18 +2989,6 @@ ARM_PT_BEGIN(this.Adapter.chPT)
             "Get a PFB"
         );
 
-    ARM_PT_ENTRY()
-        
-        ARM_2D_LOG_INFO(
-            HELPER_PFB, 
-            0, 
-            "PFB TASK", 
-            "Call on-drawing-event-handler [%p]( user-obj: %p), IsNewFrame[%s]",
-            this.tCFG.Dependency.evtOnDrawing.fnHandler,
-            this.tCFG.Dependency.evtOnDrawing.pTarget,
-            this.Adapter.bIsNewFrame ? "true" : "false"
-        );
-
         __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
                                             ARM_2D_PERFC_RENDER);
         
@@ -3015,6 +3003,24 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                                             this.Adapter.tCanvas);
 
         }
+
+        this.Statistics.nTotalCycle += 
+            __arm_2d_helper_perf_counter_stop(  &this.Statistics.lTimestamp,
+                                                ARM_2D_PERFC_RENDER); 
+
+    ARM_PT_ENTRY()
+
+        __arm_2d_helper_perf_counter_start( &this.Statistics.lTimestamp,
+                                            ARM_2D_PERFC_RENDER);
+        ARM_2D_LOG_INFO(
+            HELPER_PFB, 
+            0, 
+            "PFB TASK", 
+            "Call on-drawing-event-handler [%p]( user-obj: %p), IsNewFrame[%s]",
+            this.tCFG.Dependency.evtOnDrawing.fnHandler,
+            this.tCFG.Dependency.evtOnDrawing.pTarget,
+            this.Adapter.bIsNewFrame ? "true" : "false"
+        );
 
         if (NULL == this.tCFG.Dependency.evtOnDrawing.fnHandler) {
             ARM_PT_YIELD((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW);
@@ -3049,6 +3055,8 @@ ARM_PT_BEGIN(this.Adapter.chPT)
     ARM_PT_GOTO_PREV_ENTRY(tResult)
         } else if (arm_fsm_rt_wait_for_obj == tResult) {
     ARM_PT_GOTO_PREV_ENTRY(tResult)
+        } else if ((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW == tResult) {
+    ARM_PT_GOTO_PREV_ENTRY((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW)
         } else { 
     ARM_PT_YIELD(arm_fsm_rt_on_going)
         }

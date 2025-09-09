@@ -910,6 +910,27 @@ bool disp_adapter0_putchar(uint8_t chChar)
  * Display Adapter Entry                                                      *
  *----------------------------------------------------------------------------*/
 
+static arm_2d_scene_t s_tDefaultScene = {
+#if __DISP0_CFG_COLOR_SOLUTION__ == 1
+    /* the canvas colour */
+    .tCanvas = {GLCD_COLOR_BLACK},
+#else
+    /* the canvas colour */
+    .tCanvas = {GLCD_COLOR_WHITE}, 
+#endif
+
+    .fnScene        = &__pfb_draw_handler,
+    //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+    .fnOnFrameStart = &__on_frame_start,
+    .fnOnFrameCPL   = &__on_frame_complete,
+    .fnDepose       = NULL,
+};
+
+arm_2d_scene_t *disp_adapter0_get_default_scene(void)
+{
+    return &s_tDefaultScene;
+}
+
 void disp_adapter0_init(void)
 {
     __user_scene_player_init();
@@ -927,49 +948,14 @@ void disp_adapter0_init(void)
 
     DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
 
-    if (!__DISP0_CFG_DISABLE_DEFAULT_SCENE__) {
-    #if 0
-        /*! define dirty regions */
-        IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
-
-            /* a region for the busy wheel */
-            ADD_LAST_REGION_TO_LIST(s_tDirtyRegions,
-                .tLocation = {
-                    .iX = ((__DISP0_CFG_SCEEN_WIDTH__ - 100) >> 1),
-                    .iY = ((__DISP0_CFG_SCEEN_HEIGHT__ - 100) >> 1),
-                },
-                .tSize = {
-                    .iWidth = 100,
-                    .iHeight = 100,
-                },
-            ),
-
-        END_IMPL_ARM_2D_REGION_LIST()
-    #endif
-    
-        static arm_2d_scene_t s_tScenes[] = {
-            [0] = {
-            
-            #if __DISP0_CFG_COLOR_SOLUTION__ == 1
-                /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_BLACK},
-            #else
-                /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_WHITE}, 
-            #endif
-        
-                .fnScene        = &__pfb_draw_handler,
-                //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-                .fnOnFrameStart = &__on_frame_start,
-                .fnOnFrameCPL   = &__on_frame_complete,
-                .fnDepose       = NULL,
-            },
-        };
+#if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
+    do {
         arm_2d_scene_player_append_scenes( 
                                         &DISP0_ADAPTER,
-                                        (arm_2d_scene_t *)s_tScenes,
-                                        dimof(s_tScenes));
-    }
+                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        1);
+    } while(0);
+#endif
 }
 
 arm_fsm_rt_t __disp_adapter0_task(void)
@@ -979,26 +965,26 @@ arm_fsm_rt_t __disp_adapter0_task(void)
 
 void disp_adapter0_nano_prepare(void)
 {
-    ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(
-        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
-        NULL);
+    arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
+    s_tDefaultScene.fnBackground = NULL;
+    s_tDefaultScene.fnScene = NULL;
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER, ARM_2D_SCENE_SWITCH_MODE_NONE);
+
+    arm_2d_scene_player_append_scenes(  &DISP0_ADAPTER,
+                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        1);
 }
 
-
-
-__disp_adapter0_draw_t * __disp_adapter0_nano_draw(
-                            arm_2d_region_list_item_t *ptDirtyRegions)
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void)
 {
     static __disp_adapter0_draw_t s_tDraw = {0};
 
     do {
-        arm_fsm_rt_t tResult = arm_2d_helper_pfb_task(
-                                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
-                                ptDirtyRegions);
+        arm_fsm_rt_t tResult = __disp_adapter0_task();
         
-        if (tResult == arm_fsm_rt_cpl || tResult == ARM_2D_RT_FRAME_SKIPPED) {
+        if (tResult == arm_fsm_rt_cpl || tResult == (arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED) {
             return NULL;
-        } else if (ARM_2D_RT_PFB_USER_DRAW == tResult) {
+        } else if ((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW == tResult) {
             s_tDraw.bIsNewFrame = arm_2d_helper_pfb_get_current_framebuffer(
                         &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
                         (const arm_2d_tile_t **)&s_tDraw.ptTile

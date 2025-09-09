@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.c"
  * Description:  Public header file for the scene service
  *
- * $Date:        13. August 2025
- * $Revision:    V.1.10.0
+ * $Date:        09. September 2025
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -268,7 +268,10 @@ void arm_2d_scene_player_flush_fifo(arm_2d_scene_player_t *ptThis)
     arm_irq_safe {
         this.SceneFIFO.ptHead = NULL;
         this.SceneFIFO.ptTail = NULL;
+        this.Runtime.bNextSceneReq = false;
     }
+
+    
 }
 
 ARM_NONNULL(1)
@@ -2360,13 +2363,24 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_handler)
     ARM_2D_PARAM(bIsNewFrame);
 
     arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    arm_fsm_rt_t tResult = arm_fsm_rt_cpl;
+
+ARM_PT_BEGIN(this.Runtime.chPT)
 
     arm_2d_scene_t *ptScene = this.SceneFIFO.ptHead;
-
-    arm_fsm_rt_t tResult = ptScene->fnScene(ptScene, ptTile, bIsNewFrame);
+    
+    if (NULL != ptScene->fnScene) {
+        tResult = ptScene->fnScene(ptScene, ptTile, bIsNewFrame);
+    } else {
+ARM_PT_YIELD((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW);
+        tResult = arm_fsm_rt_cpl;
+        ptScene = this.SceneFIFO.ptHead;
+    }
 
     arm_2d_helper_dirty_region_update_dirty_regions(&ptScene->tDirtyRegionHelper, 
                                                     ptTile);
+
+ARM_PT_END()
 
     return tResult;
 }
@@ -2464,7 +2478,7 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 /* if the dirty region list is available, draw fnScene directly 
                  * as background 
                  */
-                if (NULL != ptScene->ptDirtyRegion && NULL != ptScene->fnScene) {
+                if (NULL != ptScene->ptDirtyRegion /*&& NULL != ptScene->fnScene*/) {
                     ARM_2D_INVOKE_RT_VOID(ptScene->fnOnBGStart, ptScene);
             
                     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
@@ -2494,6 +2508,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (tResult < 0) {
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
                 return tResult;
+            } else if ((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW == tResult) {
+                return tResult;
             } else if ((arm_fsm_rt_cpl != tResult)
                     && ((arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED != tResult)) {
                 return tResult;
@@ -2511,10 +2527,12 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             // fall-through
             
         case DRAW_SCENE_PREPARE:
+        #if 0
             if (NULL == ptScene->fnScene) {
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
                 return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
             }
+        #endif
 
             ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &this.use_as__arm_2d_helper_pfb_t,
@@ -2529,6 +2547,8 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 ptScene->ptDirtyRegion);
             if (tResult < 0) {
                 ARM_2D_USER_SCENE_PLAYER_TASK_RESET();
+                return tResult;
+            } else if ((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW == tResult) {
                 return tResult;
             } else if ((arm_fsm_rt_cpl != tResult)
                     && ((arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED != tResult)) {
