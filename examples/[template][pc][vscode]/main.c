@@ -684,8 +684,6 @@ void disp_adapter_nano_draw_example_blocking_version(void)
 
         arm_2d_canvas(ptTile, __top_canvas) {
 
-            arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_GREEN);
-
             arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
                 arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                     ptTile, 
@@ -720,8 +718,6 @@ ARM_PT_BEGIN(s_chPT)
 
         arm_2d_canvas(ptTile, __top_canvas) {
 
-            arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLUE);
-
             arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
                 arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                     ptTile, 
@@ -740,7 +736,6 @@ ARM_PT_BEGIN(s_chPT)
 
     } while(0);
 
-
 ARM_PT_END()
 
     return arm_fsm_rt_cpl;
@@ -752,10 +747,20 @@ ARM_PT_END()
 
 int app_2d_main_thread (void *argument)
 {
+    /* example code for nano-drawing in blocking mode */
+    do {
+        arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
+        ptScene->tCanvas.wColour = GLCD_COLOR_GREEN;
 
-    disp_adapter_nano_draw_example_blocking_version();
+        disp_adapter_nano_draw_example_blocking_version();
+    } while(0);
 
-    while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
+    /* example code for nano-drawing in non-blocking mode  */
+    do {
+        arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
+        ptScene->tCanvas.wColour = GLCD_COLOR_BLUE;
+        while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
+    } while(0);
 
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();
@@ -793,7 +798,7 @@ int app_2d_main_thread (void *argument)
         }
 
         /* if you ONLY use the NANO-Drawing mode, please remove the disp_adapter0_task() */
-        disp_adapter0_task();
+        //disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
 

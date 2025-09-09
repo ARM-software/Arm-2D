@@ -2459,7 +2459,9 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
             if (ptScene->bUseDirtyRegionHelper) {
                 arm_2d_helper_dirty_region_on_frame_start(&ptScene->tDirtyRegionHelper);
             }
-
+            __arm_2d_helper_pfb_enable_drawing_canvas_colour(
+                                                &this.use_as__arm_2d_helper_pfb_t,
+                                                ptScene->tCanvas);
             if (!this.Runtime.bUpdateBG) {
                 this.Runtime.chState = DRAW_SCENE_PREPARE;
                 break;
@@ -2467,10 +2469,6 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
                 this.Runtime.bUpdateBG = false;
                 this.Runtime.chState = DRAW_BACKGROUND_PREPARE;
             }
-            __arm_2d_helper_pfb_enable_drawing_canvas_colour(
-                                            &this.use_as__arm_2d_helper_pfb_t,
-                                            ptScene->tCanvas);
-
             // fall-through
         
         case DRAW_BACKGROUND_PREPARE:
