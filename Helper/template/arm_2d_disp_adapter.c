@@ -985,7 +985,7 @@ __disp_adapter%Instance%_draw_t * __disp_adapter%Instance%_nano_draw(
                                 ptDirtyRegions);
         
         if (tResult == arm_fsm_rt_cpl || tResult == ARM_2D_RT_FRAME_SKIPPED) {
-            return NULL;
+            break;
         } else if (ARM_2D_RT_PFB_USER_DRAW == tResult) {
             s_tDraw.bIsNewFrame = arm_2d_helper_pfb_get_current_framebuffer(
                         &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
@@ -994,7 +994,9 @@ __disp_adapter%Instance%_draw_t * __disp_adapter%Instance%_nano_draw(
 
             return &s_tDraw;
         }
-    } while(1);   
+    } while(1); 
+    
+    return NULL;
 }
 
 
