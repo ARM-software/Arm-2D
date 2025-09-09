@@ -984,11 +984,13 @@ void disp_adapter0_nano_prepare(void)
         NULL);
 }
 
-static __disp_adapter0_draw_t s_tDraw = {0};
+
 
 __disp_adapter0_draw_t * __disp_adapter0_nano_draw(
                             arm_2d_region_list_item_t *ptDirtyRegions)
 {
+    static __disp_adapter0_draw_t s_tDraw = {0};
+
     do {
         arm_fsm_rt_t tResult = arm_2d_helper_pfb_task(
                                 &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
