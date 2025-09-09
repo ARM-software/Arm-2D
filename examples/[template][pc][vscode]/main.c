@@ -731,6 +731,11 @@ ARM_PT_END()
 
 int app_2d_main_thread (void *argument)
 {
+
+    disp_adapter_nano_draw_example_blocking_version();
+
+    while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
+
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();
 #else
@@ -761,17 +766,13 @@ int app_2d_main_thread (void *argument)
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
 
-    disp_adapter_nano_draw_example_blocking_version();
-
-    while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
-
     while(1) {
         if (VT_is_request_quit()) {
             break;
         }
 
         /* if you ONLY use the NANO-Drawing mode, please remove the disp_adapter0_task() */
-        //disp_adapter0_task();
+        disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
