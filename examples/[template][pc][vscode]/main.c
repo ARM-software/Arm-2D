@@ -670,6 +670,62 @@ void run_os_command(const char *pchCommandLine) {
     pclose(ptPipe);
 }
 
+
+void disp_adapter_nano_draw_example_blocking_version(void)
+{
+    DISP_ADAPTER0_NANO_DRAW() {
+
+        extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+        arm_2d_canvas(ptTile, __top_canvas) {
+
+            arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_GREEN);
+
+            arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
+                arm_2d_fill_colour_with_a4_mask_and_opacity(   
+                                                    ptTile, 
+                                                    &__centre_region, 
+                                                    &c_tileCMSISLogoA4Mask, 
+                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                    128);
+            }
+        }
+    }
+}
+
+arm_fsm_rt_t disp_adapter_nano_draw_example_non_blocking_version(void)
+{
+    static uint8_t s_chPT = 0;
+
+ARM_PT_BEGIN(s_chPT)
+
+    DISP_ADAPTER0_NANO_DRAW() {
+
+        extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+        arm_2d_canvas(ptTile, __top_canvas) {
+
+            arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_BLUE);
+
+            arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
+                arm_2d_fill_colour_with_a4_mask_and_opacity(   
+                                                    ptTile, 
+                                                    &__centre_region, 
+                                                    &c_tileCMSISLogoA4Mask, 
+                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                                                    128);
+            }
+        }
+
+
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    }
+
+ARM_PT_END()
+
+    return arm_fsm_rt_cpl;
+}
+
 /*----------------------------------------------------------------------------
   Main function
  *----------------------------------------------------------------------------*/
@@ -706,32 +762,17 @@ int app_2d_main_thread (void *argument)
     arm_2d_scene_player_switch_to_next_scene(&DISP0_ADAPTER);
 #endif
 
+    disp_adapter_nano_draw_example_blocking_version();
 
-    DISP_ADAPTER0_NANO_DRAW() {
-
-        extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-
-        arm_2d_canvas(ptTile, __top_canvas) {
-
-            arm_2d_fill_colour(ptTile, &__top_canvas, GLCD_COLOR_GREEN);
-
-            arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
-                arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                    ptTile, 
-                                                    &__centre_region, 
-                                                    &c_tileCMSISLogoA4Mask, 
-                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                    128);
-            }
-        }
-    }
+    while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
 
     while(1) {
         if (VT_is_request_quit()) {
             break;
         }
 
-        disp_adapter0_task();
+        /* if you ONLY use the NANO-Drawing mode, please remove the disp_adapter0_task() */
+        //disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
