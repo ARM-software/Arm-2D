@@ -30,6 +30,7 @@
     * Introduces a macro option allowing the `disp_adapterN_task()` to return `ARM_2D_RT_FRAME_SKIPPED` when a frame is skipped. 
     * Improves the Low-Level-Sync-Up scheme to allow drawing the next frame while e-ink devices is flushing (>300ms).
   * Adds an anti-noise-scanning mode as a countermeasure for the electromagnetic interference
+  * Adds an macro option to the display adapter configuration header file for disabling the Dynamic PFB optimization.
 * Enhances the Font service.
   * Introduces a new API to calculate the drawing boxes for multi-line strings.
   * Update the default fonts.
