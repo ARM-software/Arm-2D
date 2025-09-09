@@ -342,9 +342,7 @@ extern "C" {
 
 #define DISP_ADAPTER0_NANO_DRAW()                                               \
                                                                                 \
-    arm_using(  const arm_2d_tile_t *ptTile = NULL,                             \
-                disp_adapter0_nano_prepare(),                                   \
-                (void)0)                                                        \
+    arm_using(const arm_2d_tile_t *ptTile = NULL)                               \
         arm_using(bool bIsNewFrame = true)                                      \
             for (__disp_adapter0_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
                 (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
@@ -375,7 +373,7 @@ extern
 arm_fsm_rt_t __disp_adapter0_task(void);
 
 extern
-void disp_adapter0_nano_prepare(void);
+arm_2d_scene_t *disp_adapter0_nano_prepare(void);
 
 extern
 __disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);

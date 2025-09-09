@@ -375,7 +375,7 @@ extern
 arm_fsm_rt_t __disp_adapter0_task(void);
 
 extern
-void disp_adapter0_nano_prepare(void);
+arm_2d_scene_t *disp_adapter0_nano_prepare(void);
 
 extern
 __disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);

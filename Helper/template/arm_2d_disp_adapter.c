@@ -969,7 +969,7 @@ arm_fsm_rt_t __disp_adapter%Instance%_task(void)
     return arm_2d_scene_player_task(&DISP%Instance%_ADAPTER);
 }
 
-void disp_adapter%Instance%_nano_prepare(void)
+arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
 {
     arm_2d_scene_player_flush_fifo(&DISP%Instance%_ADAPTER);
     s_tDefaultScene.fnBackground = NULL;
@@ -980,6 +980,7 @@ void disp_adapter%Instance%_nano_prepare(void)
     arm_2d_scene_player_append_scenes(  &DISP%Instance%_ADAPTER,
                                         (arm_2d_scene_t *)&s_tDefaultScene,
                                         1);
+    return &s_tDefaultScene;
 }
 
 __disp_adapter%Instance%_draw_t * __disp_adapter%Instance%_nano_draw(void)

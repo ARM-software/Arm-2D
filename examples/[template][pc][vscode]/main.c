@@ -749,17 +749,31 @@ int app_2d_main_thread (void *argument)
 {
     /* example code for nano-drawing in blocking mode */
     do {
-        arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
+        arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
+
+        /* change canvas colour */
         ptScene->tCanvas.wColour = GLCD_COLOR_GREEN;
 
         disp_adapter_nano_draw_example_blocking_version();
+
+        /* delay 1s to make the frame visible, 
+         * NOTE: You don't have to keep this delay in your application
+         */
+        SDL_Delay(1000);
     } while(0);
 
     /* example code for nano-drawing in non-blocking mode  */
     do {
-        arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
+        arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
+
+        /* change canvas colour */
         ptScene->tCanvas.wColour = GLCD_COLOR_BLUE;
         while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
+
+        /* delay 1s to make the frame visible, 
+         * NOTE: You don't have to keep this delay in your application
+         */
+        SDL_Delay(1000);
     } while(0);
 
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
@@ -798,7 +812,7 @@ int app_2d_main_thread (void *argument)
         }
 
         /* if you ONLY use the NANO-Drawing mode, please remove the disp_adapter0_task() */
-        //disp_adapter0_task();
+        disp_adapter0_task();
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
