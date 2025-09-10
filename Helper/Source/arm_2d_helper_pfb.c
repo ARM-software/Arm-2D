@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        9. September 2025
- * $Revision:    V.2.4.0
+ * $Date:        10. September 2025
+ * $Revision:    V.2.4.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -5027,9 +5027,11 @@ void arm_2d_helper_dirty_region_transform_depose(arm_2d_helper_dirty_region_tran
 {
     assert(NULL != ptThis);
 
-    arm_2d_helper_dirty_region_remove_items(this.ptHelper,
-                                            &this.tItem, 
-                                            1);
+    if (NULL != this.ptHelper) {
+        arm_2d_helper_dirty_region_remove_items(this.ptHelper,
+                                                &this.tItem, 
+                                                1);
+    }
 }
 
 ARM_NONNULL(1)
