@@ -584,9 +584,13 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
+    assert(NULL != ptCFG->ptFont);
     assert(ptCFG->hwCount > 0);
 
     this.tSimpleListCFG = *ptCFG;
+    if (NULL == ptCFG->ptFont) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
 
     int16_t iItemHeight = ptCFG->chPreviousPadding + ptCFG->chNextPadding;
     arm_2d_size_t tItemSize = ptCFG->tItemSize;
