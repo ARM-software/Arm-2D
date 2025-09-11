@@ -150,7 +150,7 @@ static void __on_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptScene);
 }
 
-#if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
@@ -175,7 +175,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 
     return arm_fsm_rt_cpl;
 }
-#endif
 
 #if __DISP0_CFG_NAVIGATION_LAYER_MODE__
 
