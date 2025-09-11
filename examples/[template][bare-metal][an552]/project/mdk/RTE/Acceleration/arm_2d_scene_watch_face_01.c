@@ -292,13 +292,15 @@ void __draw_watch_panel(const arm_2d_tile_t *ptTile,
                         const arm_2d_region_t *ptRegion, 
                         user_scene_watch_face_01_t *ptThis)
 {
+    ARM_2D_UNUSED(ptThis);
+
     arm_2d_container(ptTile, __panel, ptRegion) {
 
         arm_2d_align_centre_open(__panel_canvas, 200, 200) {
             arm_2d_size_t tDigitsSize = arm_lcd_get_string_line_box("00", &ARM_2D_FONT_ALARM_CLOCK_32_A4);
 
             arm_lcd_text_set_opacity(32);
-            for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
+            for (uint_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
                 arm_2d_region_t tDigitsRegion = {
                     .tLocation = __centre_region.tLocation, //s_tDigitsTable[n].tLocation,
                     .tSize = tDigitsSize,
@@ -504,7 +506,7 @@ user_scene_watch_face_01_t *__arm_2d_scene_watch_face_01_init(   arm_2d_scene_pl
         #define __PI        (3.1415926f)
         #define __RADIUS    (100.0f)
 
-        for (int_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
+        for (uint_fast8_t n = 0; n < dimof(s_tDigitsTable); n++) {
             s_tDigitsTable[n].chNumber = n;
 
             s_tDigitsTable[n].tLocation.iY = (int16_t)(arm_sin_f32(ARM_2D_ANGLE(n*30.0f - 90.0f)) * __RADIUS) + __RADIUS;
