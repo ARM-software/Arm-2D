@@ -1,6 +1,7 @@
 //--- list of versions ---
 const versions = {
-    "developing": "1.2.4-dev352",
+    "developing": "1.2.4-dev353",
+    "main": "1.2.4-dev352",
     "latest": "1.2.3",
     "v1.2.2": "1.2.2",
     "v1.2.1": "1.2.1",
