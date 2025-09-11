@@ -227,6 +227,16 @@ void scene_gas_gauge_loader(void)
     arm_2d_scene_gas_gauge_init(&DISP0_ADAPTER);
 }
 
+void scene_space_badge_loader(void) 
+{
+    arm_2d_scene_space_badge_init(&DISP0_ADAPTER);
+}
+
+void scene_music_player_loader(void) 
+{
+    arm_2d_scene_music_player_init(&DISP0_ADAPTER);
+}
+
 void scene_listview_loader(void) 
 {
     arm_2d_scene_listview_init(&DISP0_ADAPTER);
@@ -412,6 +422,14 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         20000,
         scene_matrix_loader,
+    },
+    {
+        20000,
+        scene_space_badge_loader,
+    },
+    {
+        30000,
+        scene_music_player_loader,
     },
     {
         13000,
