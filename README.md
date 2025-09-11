@@ -87,7 +87,7 @@ In general, anyone from opensource community can find something interesting from
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (v1.2.2)](#in-this-version-v122)
+  - [In this version (v1.2.4)](#in-this-version-v124)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -435,4 +435,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-05 September 2025
+12 September 2025
