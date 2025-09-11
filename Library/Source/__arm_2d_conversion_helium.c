@@ -21,8 +21,8 @@
  * Title:        __arm-2d_conversion_helium.c
  * Description:  APIs for colour format conversion with Helium acceleration
  *
- * $Date:        04. September 2025
- * $Revision:    V.1.1.0
+ * $Date:        11. September 2025
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
