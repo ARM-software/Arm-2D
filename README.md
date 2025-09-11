@@ -149,11 +149,10 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     - Flexible in PFB size and shape (it could be a line or a rectangular with any size)  **(See note 2)**
     - Supports PFB alignment for both width and height.
 
-    > [!NOTE]
-    >
-    > 1. As long as the size is smaller than 32767 * 32767. 
-    >
-    > 2. As long as the total pixel numebr is smaller than 16M pixels.
+> [!NOTE]
+>
+> 1. As long as the size is smaller than 32767 * 32767. 
+> 2. As long as the total pixel numebr is smaller than 16M pixels.
 
   - Supports **Dirty Regions** for refreshing specified areas only
     - Provides a debug mode for dirty regions
