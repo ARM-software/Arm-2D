@@ -3660,10 +3660,13 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 #define C8BIT_TRGT_LOAD(base, stride, pred)             vldrbq_z_u16(base, pred)
 #define C8BIT_TRGT_LOAD_STRIDE(base, stride, pred)      vldrbq_gather_offset_z_u16(base, stride, pred);
 #define C8BIT_SCAL_OPACITY_NONE(transp, opac, pred)     transp
-#define C8BIT_SCAL_OPACITY(transp, opac, pred)          (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
-/* no high part extraction for A1 mask */
-#define C8BIT_SCAL_OPACITY_A1(transp, opac, pred)       (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
+//#define C8BIT_SCAL_OPACITY(transp, opac, pred)          (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
+///* no high part extraction for A1 mask */
+//#define C8BIT_SCAL_OPACITY_A1(transp, opac, pred)       (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
 
+#define C8BIT_SCAL_OPACITY(transp, opac, pred)          (uint16x8_t) vmulhq((uint8x16_t) transp, opac)
+/* no high part extraction for A1 mask */
+#define C8BIT_SCAL_OPACITY_A1(transp, opac, pred)       (uint16x8_t) vmulq((uint8x16_t) transp, opac)
 
 #define RGB565_TRGT_LOAD(base, stride, pred)            vldrbq_z_u16(base, pred)
 #define RGB565_TRGT_LOAD_STRIDE(base, stride, pred)     vldrbq_gather_offset_z_u16(base, stride, pred);
@@ -3674,9 +3677,10 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
 #define CCCN888_TRGT_LOAD(base, stride, pred)           vldrbq_z_u16(base, pred)
 #define CCCN888_TRGT_LOAD_STRIDE(base, stride, pred)    vldrbq_gather_offset_z_u16(base, stride, pred);
 #define CCCN888_SCAL_OPACITY_NONE(transp, opac, pred)   transp
-#define CCCN888_SCAL_OPACITY(transp, opac, pred)        (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
-#define CCCN888_SCAL_OPACITY_A1(transp, opac, pred)     (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
-
+//#define CCCN888_SCAL_OPACITY(transp, opac, pred)        (uint16x8_t) vmulhq_x((uint8x16_t) transp, opac, pred)
+//#define CCCN888_SCAL_OPACITY_A1(transp, opac, pred)     (uint16x8_t) vmulq_x((uint8x16_t) transp, opac, pred)
+#define CCCN888_SCAL_OPACITY(transp, opac, pred)        (uint16x8_t) vmulhq((uint8x16_t) transp, opac)
+#define CCCN888_SCAL_OPACITY_A1(transp, opac, pred)     (uint16x8_t) vmulq((uint8x16_t) transp, opac)
 
 /* 1, 2 and 4-bit alpha expansions helper tables */
 static uint8_t A1_expand_offs[8*2]= {
@@ -6023,7 +6027,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_opacity)(uint32_t 
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#if 0 //def USE_MVE_INTRINSICS
+#ifdef USE_MVE_INTRINSICS
 
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD, _,
                                         CCCN888_SCAL_OPACITY, vOpacity, 1, 254);
