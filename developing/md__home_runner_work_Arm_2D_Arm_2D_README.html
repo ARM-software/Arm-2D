@@ -292,14 +292,24 @@ In this version (v1.2.4)</h2>
 </ul>
 </li>
 <li><b>Display Adapter Service for connecting LCD</b><ul>
-<li><p class="startli">Generic Partial Frame-buffer (PFB)</p><ul>
+<li>Generic Partial Frame-buffer (PFB)<ul>
 <li>Easy to Use: transparent for applications</li>
 <li>No limitation on screen resolution **(See note 1)**</li>
 <li>Flexible in PFB size and shape (it could be a line or a rectangular with any size) **(See note 2)**</li>
 <li>Supports PFB alignment for both width and height.</li>
 </ul>
-<p class="startli">&gt; [!NOTE] &gt; &gt; 1. As long as the size is smaller than 32767 * 32767. &gt; &gt; 2. As long as the total pixel numebr is smaller than 16M pixels.</p>
 </li>
+</ul>
+</li>
+</ul>
+<blockquote class="doxtable">
+<p >&zwj;[!NOTE]</p>
+<ol type="1">
+<li>As long as the size is smaller than 32767 * 32767.</li>
+<li>As long as the total pixel numebr is smaller than 16M pixels. </li>
+</ol>
+</blockquote>
+<ul>
 <li>Supports <b>Dirty Regions</b> for refreshing specified areas only<ul>
 <li>Provides a debug mode for dirty regions</li>
 <li>Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.</li>
@@ -316,8 +326,7 @@ In this version (v1.2.4)</h2>
 </li>
 <li><b>[new]</b> Adds an nano-drawing mode as an alternative option of the Scene Player.</li>
 </ul>
-</li>
-<li><b>Transform</b> (i.e. rotation and scaling)<ul>
+<p ><b>Transform</b> (i.e. rotation and scaling)</p><ul>
 <li>With/Without Colour-keying</li>
 <li>Supports an optional <b>Opacity</b> ratio</li>
 <li>Supports Anti-Alias.<ul>
@@ -329,19 +338,18 @@ In this version (v1.2.4)</h2>
 <li>Supports using floating point numbers (i.e. <code>float</code>) to specify the pivot coordinate.</li>
 <li><b>[new]</b> Supports using negative scaling ratios for x/y mirroring</li>
 </ul>
-</li>
-<li><b>Filters</b><ul>
+<p ><b>Filters</b></p>
+<ul>
 <li>Generic Anti-alias and Fast IIR-Blur</li>
 <li>Colour Inversion</li>
 </ul>
-</li>
-<li><b>An Unified and User-Friendly Programmers' Model</b><ul>
+<p ><b>An Unified and User-Friendly Programmers' Model</b></p><ul>
 <li>APIs can be used in <b>Synchronous</b> manner ( <b>Classic Blocking-code</b> ) and/or <b>Asynchronous</b> manner ( <b>Event-Driven</b> )</li>
 <li>Supports both <b>bare-metal</b> and <b>RTOS</b> environments</li>
 <li>Ultra-small memory footprint</li>
 </ul>
-</li>
-<li><b>Helper Services, Tools and Others</b><ul>
+<p ><b>Helper Services, Tools and Others</b></p>
+<ul>
 <li><b>Timer Services</b><ul>
 <li>Timeout: <code>arm_2d_helper_is_time_out</code></li>
 <li>Time-based functions:<ul>
@@ -395,8 +403,8 @@ In this version (v1.2.4)</h2>
 </ul>
 </li>
 </ul>
-</li>
-<li><b>CMSIS-Pack is available.</b></li>
+<p ><b>CMSIS-Pack is available.</b></p>
+<ul>
 <li><b>Ready and Welcome 3rd party adoption</b><ul>
 <li>Accelerating <a href="https://lvgl.io/">LVGL</a> as <a href="https://docs.lvgl.io/master/details/integration/renderers/arm2d.html">soft-GPU</a> when Helium is ready</li>
 <li>Accelerating <a href="https://www.cranksoftware.com/">CrankSoftware</a> as <a href="https://info.cranksoftware.com/platforms/demo-images/renesas/ra8d1">soft-GPU</a> when Helium is ready</li>
