@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        20. April 2025
- * $Revision:    V.1.4.11
+ * $Date:        11. September 2025
+ * $Revision:    V.1.4.12
  *
  * -------------------------------------------------------------------- */
 
@@ -959,7 +959,7 @@ Author: Adam Dunkels
             };                                                                  \
             uint8_t *ptPTState = &(__STATE);                                    \
             switch (__STATE) {                                                  \
-                case __COUNTER__ - count_offset: 
+                case __COUNTER__ - count_offset: (void)(*ptPTState);
 
 #define ARM_PT_ENTRY(...)                                                       \
             (*ptPTState) = (__COUNTER__ - count_offset + 1) >> 1;               \
