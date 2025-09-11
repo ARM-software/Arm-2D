@@ -84,6 +84,9 @@ var group__gKernel =
     [ "arm_2d_op_t", "group__gKernel.html#structarm__2d__op__t", null ],
     [ "arm_2d_op_msk_t", "group__gKernel.html#structarm__2d__op__msk__t", null ],
     [ "arm_2d_op_src_t", "group__gKernel.html#structarm__2d__op__src__t", null ],
+    [ "arm_2d_op_src_opc_t", "group__gKernel.html#structarm__2d__op__src__opc__t", [
+      [ "chOpacity", "group__gKernel.html#a9afeab52797ac054bc9f2dac20bab288", null ]
+    ] ],
     [ "arm_2d_op_src_msk_t", "group__gKernel.html#structarm__2d__op__src__msk__t", null ],
     [ "arm_2d_op_src_msk_opc_t", "group__gKernel.html#structarm__2d__op__src__msk__opc__t", [
       [ "chOpacity", "group__gKernel.html#aa9395f719e2f99b23712cab3e6f15ac7", null ]
@@ -214,6 +217,13 @@ var group__gKernel =
       [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
     ] ],
     [ "arm_2d_op_src_t.Source", "group__gKernel.html#structarm__2d__op__src__t_8Source", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
+    ] ],
+    [ "arm_2d_op_src_opc_t.Target", "group__gKernel.html#structarm__2d__op__src__opc__t_8Target", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
+    ] ],
+    [ "arm_2d_op_src_opc_t.Source", "group__gKernel.html#structarm__2d__op__src__opc__t_8Source", [
       [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
     ] ],
     [ "arm_2d_op_src_msk_t.Target", "group__gKernel.html#structarm__2d__op__src__msk__t_8Target", [
@@ -476,7 +486,8 @@ var group__gKernel =
       [ "ARM_2D_ERR_UNKNOWN", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca3d3a4e2f06abe0d664cf0fe5ae12150d", null ],
       [ "ARM_2D_ERR_NONE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cac601feecce64fc72409b457f4f4b09c8", null ],
       [ "ARM_2D_RT_FALSE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1ca9cfd9a5b02b83013e62cc7a7d4cd10da", null ],
-      [ "ARM_2D_RT_TRUE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cab7e56d0f8ca1a29fb1f93b781d335716", null ]
+      [ "ARM_2D_RT_TRUE", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1cab7e56d0f8ca1a29fb1f93b781d335716", null ],
+      [ "ARM_2D_RT_FRAME_SKIPPED", "group__gKernel.html#gga27a24a896295488772e6d847c790fd1caf2c830c9cbb2fe95aecbdf5538e5deb8", null ]
     ] ],
     [ "arm_2d_cmp_t", "group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59", [
       [ "ARM_2D_CMP_SMALLER", "group__gKernel.html#gga3249990f0553a40aa0e48e3568172e59afeef30963a857f2b0a15a8a7d1f01495", null ],

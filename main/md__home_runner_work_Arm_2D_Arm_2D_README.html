@@ -250,12 +250,12 @@ Table of Content</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Features</h1>
 <h2><a class="anchor" id="autotoc_md6"></a>
-In this version (v1.2.3)</h2>
+In this version (v1.2.4)</h2>
 <p >Since Arm-2D provides <b>Low-Level 2D Image Processing Services</b> that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many <b>Deep Embedded Display systems</b> soon after it debuted in 2020. Now you can find its <a href="https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&amp;origin=HASH_TAG_FROM_FEED">precence</a> from the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">tiniest Cortex-M0</a> to the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">Raspberry Pi 5 powerhouse</a>. The supported features include but not limited to:</p>
 <ul>
 <li><b>Alpha-Blending</b> / <b>Masks</b><ul>
 <li>With or without Colour-Keying</li>
-<li>Filling-Colour with a mask and an optional opacity<ul>
+<li>Filling-Colour with optional mask and opacity<ul>
 <li>For drawing anti-alias icons/texts in a specified colour</li>
 <li>Supports A1, A2, A4 and A8 masks</li>
 <li>Supports horizontal and vertical line masks</li>
@@ -268,7 +268,7 @@ In this version (v1.2.3)</h2>
 </li>
 </ul>
 </li>
-<li><b>Image Copy (Blit)</b><ul>
+<li>**Image Copy (Blit) **<ul>
 <li>With or without Colour-Keying</li>
 <li>Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring</li>
 <li>Supports <b>masks</b> on the source side and/or the target side</li>
@@ -283,9 +283,10 @@ In this version (v1.2.3)</h2>
 <li>Implicit colour conversion for <b>ARGB8888</b> (<b>ccca8888</b>)</li>
 </ul>
 </li>
-<li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>E-ink displays</b> (the 2bits and 4bits colour formats)<ul>
+<li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>E-ink devices</b> (the 1bit, 2bits and 4bits colour formats)<ul>
 <li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside the Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
 <li>Provides a dedicated colour solution in the display adapter service for monochrome display devices.</li>
+<li><b>[new]</b> Provides a smart <b>Full-Frame-Refresh</b> mode for e-ink devices to flush the whole frame for any updates on the screen.</li>
 </ul>
 </li>
 </ul>
@@ -313,6 +314,7 @@ In this version (v1.2.3)</h2>
 <li>Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)</li>
 </ul>
 </li>
+<li><b>[new]</b> Adds an nano-drawing mode as an alternative option of the Scene Player.</li>
 </ul>
 </li>
 <li><b>Transform</b> (i.e. rotation and scaling)<ul>
@@ -323,8 +325,9 @@ In this version (v1.2.3)</h2>
 </ul>
 </li>
 <li>Supports source masks</li>
-<li><b>[new]</b> Supports specifying different scaling ratios for X and Y axes, respectively</li>
-<li><b>[new]</b> Supports using floating point numbers (i.e. <code>float</code>) to specify the pivot coordinate.</li>
+<li>Supports specifying different scaling ratios for X and Y axes, respectively</li>
+<li>Supports using floating point numbers (i.e. <code>float</code>) to specify the pivot coordinate.</li>
+<li><b>[new]</b> Supports using negative scaling ratios for x/y mirroring</li>
 </ul>
 </li>
 <li><b>Filters</b><ul>
@@ -342,7 +345,7 @@ In this version (v1.2.3)</h2>
 <li><b>Timer Services</b><ul>
 <li>Timeout: <code>arm_2d_helper_is_time_out</code></li>
 <li>Time-based functions:<ul>
-<li>Liner: <code>arm_2d_helper_time_liner_slider</code></li>
+<li>Liner: <code>arm_2d_helper_time_liner_slider</code> and <b>[new]</b> <code>arm_2d_helper_timer_liner_slider_i64</code></li>
 <li>Cosine: <code>arm_2d_helper_time_cos_slider</code></li>
 <li>S-curve: <code>arm_2d_helper_time_half_cos_slider</code></li>
 </ul>
@@ -352,7 +355,7 @@ In this version (v1.2.3)</h2>
 <li><b>Virtual Resource</b><ul>
 <li>Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.</li>
 <li>Supports background-image-loading mode that requests <b>NO</b> extra PFB block.</li>
-<li><b>[new]</b> A JPEG loader derived from TJpgDec<ul>
+<li>JPEG loaders derived from <a href="https://elm-chan.org/fsw/tjpgd/">TJpgDec</a> and <b>[new]</b> <a href="https://github.com/JiapengLi/zjpgd">ZJpgD</a><ul>
 <li>Supports and Optimized for PFB and Dirty Regions</li>
 </ul>
 </li>
@@ -405,7 +408,7 @@ New Features Planned in the Future</h2>
 <ul>
 <li>Perspective Transform</li>
 <li>Supports DMAC-350</li>
-<li>SVE2 Acceleration</li>
+<li>SVE2 or NEON Acceleration</li>
 </ul>
 <div class="image">
 <img src="FuturePlans.png" alt=""/>
@@ -628,7 +631,7 @@ Performance Comparison among some Cortex-M processors</div></div>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >16 May 2025 </p>
+<p >05 September 2025 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
