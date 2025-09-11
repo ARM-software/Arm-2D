@@ -219,7 +219,6 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_cccn888)( uint32_t *__RESTRICT pwS
 {
     int_fast16_t iWidth = ptCopySize->iWidth;
     int_fast16_t iHeight = ptCopySize->iHeight;
-#ifdef USE_MVE_INTRINSICS
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -230,59 +229,7 @@ void __MVE_WRAPPER( __arm_2d_impl_ccca8888_to_cccn888)( uint32_t *__RESTRICT pwS
         pwSourceBase += iSourceStride;
         pwTargetBase += iTargetStride;
     }
-#else
-    /* offset to replicate the opacity accross the 4 channels */
-    const uint16x8_t offset = {3, 3, 3, 3, 7, 7, 7, 7};
 
-    for (int_fast16_t y = 0; y < iHeight; y++) {
-
-        const uint8_t *__RESTRICT pwSource = (const uint8_t *)pwSourceBase;
-        uint8_t       *__RESTRICT pwTarget = (uint8_t *)pwTargetBase;
-
-
-        register unsigned loopCnt  __asm("lr");
-        loopCnt = iWidth;
-
-      __asm volatile(
-            ".p2align 2                                         \n"
-
-            "   vmsr            p0, %[repl_pred_msk]            \n"
-
-            "   vpst                                            \n"
-            "   vldrbt.u16      q5, [%[pwSource], %q[offset]]   \n"
-            "   vmov.i16        q0, #0x100                      \n"
-            "   vldrb.u16       q4, [%[pwSource]], #8           \n"
-
-            // 2 x 32-bit pixel / loop
-            "   wlstp.64        lr, %[loopCnt], 1f              \n"
-
-            "2:                                                 \n"
-            "   vmul.i16        q4, q5, q4                      \n"
-            "   vldrb.u16       q2, [%[pwTarget]]               \n"
-            // transparency
-            "   vsub.i16        q3, q0, q5                      \n"
-            "   vmul.i16        q3, q3, q2                      \n"
-            // Opacity
-            "   vpst                                            \n"
-            "   vldrbt.u16      q5, [%[pwSource], %q[offset]]   \n"
-            "   vadd.i16        q3, q3, q4                      \n"
-            "   vldrb.u16       q4, [%[pwSource]], #8           \n"
-            "   vshr.u16        q3, q3, #0x8                    \n"
-
-            "   vstrb.16        q3, [%[pwTarget]], #8           \n"
-            "   letp            lr, 2b                          \n"
-            "1:                                                 \n"
-            : [pwTarget] "+r" (pwTarget),
-              [pwSource] "+r" (pwSource), [loopCnt] "+r"(loopCnt)
-            : [repl_pred_msk] "r" (0x3f3f), [offset] "t" (offset)
-            : "q0", "q1", "q2", "q3",
-              "q4", "q5",
-              "memory" );
-
-        pwSourceBase += iSourceStride;
-        pwTargetBase += iTargetStride;
-    }
-#endif
 }
 
 __OVERRIDE_WEAK
