@@ -227,10 +227,12 @@ void scene_gas_gauge_loader(void)
     arm_2d_scene_gas_gauge_init(&DISP0_ADAPTER);
 }
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_space_badge_loader(void) 
 {
     arm_2d_scene_space_badge_init(&DISP0_ADAPTER);
 }
+#endif
 
 void scene_music_player_loader(void) 
 {
@@ -292,10 +294,12 @@ void scene_knob_loader(void)
     arm_2d_scene_knob_init(&DISP0_ADAPTER);
 }
 
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_user_defined_opcode_loader(void) 
 {
     arm_2d_scene_user_defined_opcode_init(&DISP0_ADAPTER);
 }
+#endif
 
 void scene_mono_loading_loader(void) 
 {
@@ -423,10 +427,12 @@ static demo_scene_t const c_SceneLoaders[] = {
         20000,
         scene_matrix_loader,
     },
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
     {
         20000,
         scene_space_badge_loader,
     },
+#endif
     {
         30000,
         scene_music_player_loader,
@@ -542,7 +548,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_matrix_loader,
+        scene_transform_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader
         //scene_mono_list_loader,
