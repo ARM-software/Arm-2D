@@ -134,8 +134,8 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        arm_2d_utils.h</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for Arm-2D Library</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        20. April 2025</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.11</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        11. September 2025</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.4.12</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
@@ -1072,7 +1072,7 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span><span class="preprocessor">            };                                                                  \</span></div>
 <div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span><span class="preprocessor">            uint8_t *ptPTState = &amp;(__STATE);                                    \</span></div>
 <div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span><span class="preprocessor">            switch (__STATE) {                                                  \</span></div>
-<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span><span class="preprocessor">                case __COUNTER__ - count_offset: </span></div>
+<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span><span class="preprocessor">                case __COUNTER__ - count_offset: (void)(*ptPTState);</span></div>
 <div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span> </div>
 <div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span><span class="preprocessor">#define ARM_PT_ENTRY(...)                                                       \</span></div>
 <div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span><span class="preprocessor">            (*ptPTState) = (__COUNTER__ - count_offset + 1) &gt;&gt; 1;               \</span></div>
