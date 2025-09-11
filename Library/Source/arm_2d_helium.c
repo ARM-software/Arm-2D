@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        04. September 2025
- * $Revision:    V.1.5.0
+ * $Date:        11. September 2025
+ * $Revision:    V.1.6.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -3506,13 +3506,13 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
                                                                                                \
             vecTransp = SCAL_OPACITY(vecTransp, OPACITY, tailPred);                            \
                                                                                                \
-            ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                                \
+            ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                          \
                                                                                                \
-            uint16x8_t      vecAlpha = vsubq_x_u16(v256, vecTransp, tailPred);                 \
+            uint16x8_t      vecAlpha = vsubq_u16(v256, vecTransp);                             \
                                                                                                \
-            vecTarget = vmulq_x(vecTarget, vecAlpha, tailPred);                                \
-            vecTarget = vmlaq_m(vecTarget, vecTransp, (uint16_t) Colour, tailPred);            \
-            vecTarget = vshrq_x(vecTarget, 8, tailPred);                                                        \
+            vecTarget = vmulq(vecTarget, vecAlpha);                                            \
+            vecTarget = vmlaq(vecTarget, vecTransp, (uint16_t) Colour);                        \
+            vecTarget = vshrq(vecTarget, 8);                                                   \
                                                                                                \
             vstrbq_p_u16(pTarget8, vecTarget, tailPred);                                       \
                                                                                                \
@@ -3624,22 +3624,22 @@ static  uint32_t __draw_pattern_src_bitmask_rgb32[16] = {
                                                                                                \
             ALPHA_255_COMP_VEC16(vecTransp, COMPVAL);                                          \
                                                                                                \
-            uint16x8_t      vecAlpha = vsubq_x_u16(v256, vecTransp, tailPred);                 \
+            uint16x8_t      vecAlpha = vsubq_u16(v256, vecTransp);                             \
                                                                                                \
                                                                                                \
             /*  scale ch0 vector with alpha vector */                                          \
-            vecTargetC0 = vmulq_x(vecTargetC0, vecAlpha, tailPred);                            \
+            vecTargetC0 = vmulq(vecTargetC0, vecAlpha);                                        \
             /*  blend ch0 vector with input ch0 color*/                                        \
-            vecTargetC0 = vmlaq_m(vecTargetC0, vecTransp, (uint16_t) c0, tailPred);            \
+            vecTargetC0 = vmlaq(vecTargetC0, vecTransp, (uint16_t) c0);                        \
             vecTargetC0 = vecTargetC0 >> 8;                                                    \
                                                                                                \
             /* repeat for ch1 and ch2 */                                                       \
-            vecTargetC1 = vmulq_x(vecTargetC1, vecAlpha, tailPred);                            \
-            vecTargetC1 = vmlaq_m(vecTargetC1, vecTransp, (uint16_t) c1, tailPred);            \
+            vecTargetC1 = vmulq(vecTargetC1, vecAlpha);                                        \
+            vecTargetC1 = vmlaq(vecTargetC1, vecTransp, (uint16_t) c1);                        \
             vecTargetC1 = vecTargetC1 >> 8;                                                    \
                                                                                                \
-            vecTargetC2 = vmulq_x(vecTargetC2, vecAlpha, tailPred);                            \
-            vecTargetC2 = vmlaq_m(vecTargetC2, vecTransp, (uint16_t) c2, tailPred);            \
+            vecTargetC2 = vmulq(vecTargetC2, vecAlpha);                                        \
+            vecTargetC2 = vmlaq(vecTargetC2, vecTransp, (uint16_t) c2);                        \
             vecTargetC2 = vecTargetC2 >> 8;                                                    \
                                                                                                \
             /* store and merge chan0, chan1, chan2 */                                          \
@@ -5772,6 +5772,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask)(uint32_t * __R
     }
 }
 
+
 __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __RESTRICT pTarget,
                                                      int16_t iTargetStride,
@@ -5885,7 +5886,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __R
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             ,[alph255] "r" (255)
 #endif
-            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
+            :"q0", "q1", "q2", "q3", "memory", "cc");
 
 #endif
         pchAlpha += (iAlphaStride);
