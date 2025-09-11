@@ -293,7 +293,20 @@ void __arm_2d_helium_ccca8888_blend_to_gray8(
     int_fast16_t iBlockCount
 )
 {
-#ifdef USE_MVE_INTRINSICS
+/* In Arm Compiler 6.24, it reports an issue: 
+
+    E:\Work\Arm-2D\Library\Source\arm_2d_helium.c(347): error: invalid instruction, any one of the following would fix this:
+      347 |         "   vldrb.u16       q4, [%[pchTarget]]              \n"
+          |          ^
+    E:\Work\Arm-2D\examples\[template][bare-metal][an552]\project\mdk\<inline asm>(19): note: instantiated into assembly here
+       19 |    vldrb.u16       q4, [r11]              
+          |    ^
+    E:\Work\Arm-2D\Library\Source\arm_2d_helium.c(347): note: invalid operand for instruction
+    
+    Here is an ugly workaround: using intrinsics.
+*/
+
+#if 1 //def USE_MVE_INTRINSICS
     const uint16x8_t v256 = vdupq_n_u16(256);
     do {
         mve_pred16_t    tailPred = vctp16q(iBlockCount);
