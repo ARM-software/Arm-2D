@@ -5688,85 +5688,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask)(uint32_t * __R
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#if 1//def USE_MVE_INTRINSICS
-
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A2, _,
                                         CCCN888_SCAL_OPACITY_NONE, _, 1/4, 255);
-#else
 
-        register unsigned blkCnt __asm("lr");
-        blkCnt = iWidth;
-
-    __asm volatile(
-            "vecAlphaCompl            .req q2                             \n"
-
-            ".p2align 2                                                   \n"
-            /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-
-            "   wlstp.16                lr, %[loopCnt], 1f                \n"
-            "2:                                                           \n"
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            /* if alpha == 255, boost to 256 */
-            "   vpt.i16                 eq, q1, %[alph255]                \n"
-            "   vmovt.i16               q1, #256                          \n"
-#endif
-
-            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
-            /*  scale ch0 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]]  \n"
-            /*  blend ch0 vector with input ch0 color*/
-            "   vmla.s16                q3, q1, %[c0]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-
-            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]]  \n"
-
-            /*  scale ch1 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
-            /*  blend ch1 vector with input ch1 color*/
-            "   vmla.s16                q3, q1, %[c1]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
-
-            "   adds                    %[pTargetCh0], #32                \n"
-            "   adds                    %[pTargetCh1], #32                \n"
-
-            /*  scale ch2 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  blend ch2 vector with input ch2 color*/
-            "   vmla.s16                q3, q1, %[c2]                     \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
-
-            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
-
-            "   letp                    lr, 2b                            \n"
-            "1:                                                           \n"
-
-            " .unreq vecAlphaCompl                                        \n"
-
-            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
-             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
-            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
-             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            ,[alph255] "r" (255)
-#endif
-            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
-
-#endif
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
     }
@@ -5810,85 +5734,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask)(uint32_t * __R
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#if 1 //def USE_MVE_INTRINSICS
-
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A4, _,
                                         CCCN888_SCAL_OPACITY_NONE, _, 1/2, 255);
-#else
 
-        register unsigned blkCnt __asm("lr");
-        blkCnt = iWidth;
-
-    __asm volatile(
-            "vecAlphaCompl            .req q2                             \n"
-
-            ".p2align 2                                                   \n"
-            /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-
-            "   wlstp.16                lr, %[loopCnt], 1f                \n"
-            "2:                                                           \n"
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            /* if alpha == 255, boost to 256 */
-            "   vpt.i16                 eq, q1, %[alph255]                \n"
-            "   vmovt.i16               q1, #256                          \n"
-#endif
-
-            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
-            /*  scale ch0 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
-            /*  blend ch0 vector with input ch0 color*/
-            "   vmla.s16                q3, q1, %[c0]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-
-            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  scale ch1 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
-            /*  blend ch1 vector with input ch1 color*/
-            "   vmla.s16                q3, q1, %[c1]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
-
-            "   adds                    %[pTargetCh0], #32                \n"
-            "   adds                    %[pTargetCh1], #32                \n"
-
-            /*  scale ch2 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  blend ch2 vector with input ch2 color*/
-            "   vmla.s16                q3, q1, %[c2]                     \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
-
-            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
-
-            "   letp                    lr, 2b                            \n"
-            "1:                                                           \n"
-
-            " .unreq vecAlphaCompl                                        \n"
-
-            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
-             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
-            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
-             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            ,[alph255] "r" (255)
-#endif
-            :"q0", "q1", "q2", "q3", "memory", "cc");
-
-#endif
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
     }
@@ -6092,86 +5940,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a2_mask_opacity)(uint32
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#if 1 //def USE_MVE_INTRINSICS
-
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A2, _,
                                         CCCN888_SCAL_OPACITY, vOpacity, 1/4, 254);
-#else
 
-        register unsigned blkCnt __asm("lr");
-        blkCnt = iWidth;
-
-    __asm volatile(
-            "vecAlphaCompl            .req q2                             \n"
-
-            ".p2align 2                                                   \n"
-            /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
-
-            "   wlstp.16                lr, %[loopCnt], 1f                \n"
-            "2:                                                           \n"
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            /* if vOpacity == 254, boost to 256 */
-            "   vpt.i16                 eq, q1, %[opa254]                 \n"
-            "   vmovt.i16               q1, #256                          \n"
-#endif
-
-            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
-            /*  scale ch0 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
-            /*  blend ch0 vector with input ch0 color*/
-            "   vmla.s16                q3, q1, %[c0]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-
-            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  scale ch1 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
-            /*  blend ch1 vector with input ch1 color*/
-            "   vmla.s16                q3, q1, %[c1]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
-
-            "   adds                    %[pTargetCh0], #32                \n"
-            "   adds                    %[pTargetCh1], #32                \n"
-
-            /*  scale ch2 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  blend ch2 vector with input ch2 color*/
-            "   vmla.s16                q3, q1, %[c2]                     \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
-
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
-
-            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
-
-            "   letp                    lr, 2b                            \n"
-            "1:                                                           \n"
-
-            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
-             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
-            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
-             [vOpacity] "t"(vOpacity),
-             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-             ,[opa254] "r" (254)
-#endif
-            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
-
-#endif
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
     }
@@ -6216,86 +5987,10 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_a4_mask_opacity)(uint32
         uint8_t *       pTargetCh1 = pTargetCh0 + 1;
         uint8_t *       pTargetCh2 = pTargetCh0 + 2;
 
-#if 1 //def USE_MVE_INTRINSICS
 
         CCCN888_COLOUR_FILLING_MASK_INNER_MVE(CCCN888_TRGT_LOAD_A4, _,
                                         CCCN888_SCAL_OPACITY, vOpacity, 1/2, 254);
-#else
 
-        register unsigned blkCnt __asm("lr");
-        blkCnt = iWidth;
-
-    __asm volatile(
-            "vecAlphaCompl            .req q2                             \n"
-
-            ".p2align 2                                                   \n"
-            /* expand chan0 */
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
-
-            "   wlstp.16                lr, %[loopCnt], 1f                \n"
-            "2:                                                           \n"
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            /* if vOpacity == 254, boost to 256 */
-            "   vpt.i16                 eq, q1, %[opa254]                 \n"
-            "   vmovt.i16               q1, #256                          \n"
-#endif
-
-            "   vsub.i16                vecAlphaCompl, %q[vec256], q1     \n"
-            /*  scale ch0 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan1 */
-            "   vldrb.u16               q0, [%[pTargetCh1], %q[str4Offs]] \n"
-            /*  blend ch0 vector with input ch0 color*/
-            "   vmla.s16                q3, q1, %[c0]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-
-            "   vstrb.16                q3, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  scale ch1 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-
-            /* expand chan2 */
-            "   vldrb.u16               q0, [%[pTargetCh2], %q[str4Offs]] \n"
-            /*  blend ch1 vector with input ch1 color*/
-            "   vmla.s16                q3, q1, %[c1]                     \n"
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh1], %q[str4Offs]] \n"
-
-            "   adds                    %[pTargetCh0], #32                \n"
-            "   adds                    %[pTargetCh1], #32                \n"
-
-            /*  scale ch2 vector with alpha vector */
-            "   vmul.u16                q3, q0, vecAlphaCompl             \n"
-            "   vldrb.u16               q0, [%[pTargetCh0], %q[str4Offs]] \n"
-
-            /*  blend ch2 vector with input ch2 color*/
-            "   vmla.s16                q3, q1, %[c2]                     \n"
-            "   vldrb.u16               q1, [%[pAlpha]], #8               \n"
-            "   vmulh.u8                q1, q1, %q[vOpacity]              \n"
-
-            "   vshr.u16                q3, q3, #8                        \n"
-            "   vstrb.16                q3, [%[pTargetCh2], %q[str4Offs]] \n"
-
-            "   add.w                   %[pTargetCh2], %[pTargetCh2], #32 \n"
-
-            "   letp                    lr, 2b                            \n"
-            "1:                                                           \n"
-
-            :[pTargetCh0] "+r"(pTargetCh0),  [pTargetCh1] "+r"(pTargetCh1),
-             [pTargetCh2] "+r"(pTargetCh2), [pAlpha] "+l" (pAlpha), [loopCnt] "+r"(blkCnt)
-            :[vec256] "t" (v256),[str4Offs] "t" (vStride4Offs),
-             [vOpacity] "t"(vOpacity),
-             [c0] "r"(c0), [c1] "r"(c1), [c2] "r"(c2)
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-             ,[opa254] "r" (254)
-#endif
-            :"q0", "q1", "q2", "q3", "memory", "cc", "r14");
-
-#endif
         pchAlpha += (iAlphaStride);
         pTarget += (iTargetStride);
     }
