@@ -715,8 +715,6 @@ static void __user_scene_player_init(void)
     extern arm_2d_helper_2d_copy_handler_t __disp_adapter%Instance%_request_2d_copy;
     extern arm_2d_helper_dma_copy_handler_t __disp_adapter%Instance%_request_dma_copy;
     
-    
-        arm_2d_helper_3fb_cfg_t tCFG = {
         arm_2d_helper_3fb_cfg_t tCFG = {
             .tScreenSize = {
 #if     __DISP%Instance%_CFG_ROTATE_SCREEN__ == 1\
