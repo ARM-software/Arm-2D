@@ -483,14 +483,17 @@ static demo_scene_t const c_SceneLoaders[] = {
         12000,
         scene_menu_loader,
     },
+/*
     {
         10000,
         scene_ruler_loader,
     },
+
     {
         10000,
         scene_hollow_out_list_loader,
     },
+*/
     {
         20000,
         scene_panel_loader,
@@ -538,6 +541,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        scene_ruler_loader,
         //scene_histogram_loader,
         //scene_space_badge_loader,
         //scene_pave_loader,
@@ -547,7 +551,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_console_window_loader
         //scene_balls_loader,
         //scene_iir_blur_loader,
-        scene_progress_status_loader,
+        //scene_progress_status_loader,
         //scene_matrix_loader,
         //scene_tjpgd_loader,
         //scene_rickrolling_loader,
