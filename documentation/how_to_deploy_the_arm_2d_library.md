@@ -257,9 +257,9 @@ void app_2d_main_thread (void *argument)
         uint32_t wTick = osKernelGetTickCount();
       
         do {
-        		arm_fsm_rt_t tResult = disp_adapter0_task();
-        		if (tResult == arm_fsm_rt_cpl || tResult == ARM_2D_RT_FRAME_SKIPPED) {
-            		break;
+            arm_fsm_rt_t tResult = disp_adapter0_task();
+            if (tResult == arm_fsm_rt_cpl || tResult == ARM_2D_RT_FRAME_SKIPPED) {
+                break;
             }
         } while(1);
         
