@@ -325,7 +325,7 @@ AddDisplayAdapter</div></div>
 <div class="line">      </div>
 <div class="line">        <span class="keywordflow">do</span> {</div>
 <div class="line">            <a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a> tResult = disp_adapter0_task();</div>
-<div class="line">            <span class="keywordflow">if</span> (tResult == <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> || tResult == <a class="code hl_enumvalue" href="group__gKernel.html#gga27a24a896295488772e6d847c790fd1caf2c830c9cbb2fe95aecbdf5538e5deb8" title="frame is skipped">ARM_2D_RT_FRAME_SKIPPED</a>) {</div>
+<div class="line">            <span class="keywordflow">if</span> (tResult == <a class="code hl_enumvalue" href="group__gKernel.html#gga373f79d09c0d15653ca46ea08e0377fcacf7b5f9e66c44d332ea46d05860d78d1" title="fsm complete">arm_fsm_rt_cpl</a> || tResult == (<a class="code hl_enumeration" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc" title="finite-state-machine status return (Compatible with arm_status, minimal integer: int8_t)">arm_fsm_rt_t</a>)<a class="code hl_enumvalue" href="group__gKernel.html#gga27a24a896295488772e6d847c790fd1caf2c830c9cbb2fe95aecbdf5538e5deb8" title="frame is skipped">ARM_2D_RT_FRAME_SKIPPED</a>) {</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
 <div class="line">            }</div>
 <div class="line">        } <span class="keywordflow">while</span>(1);</div>
