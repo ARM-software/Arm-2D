@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        28. Dec 2024
- * $Revision:    V.2.3.1
+ * $Date:        21 Oct 2025
+ * $Revision:    V.2.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -285,10 +285,11 @@ ARM_PROTECTED(
 
             uint16_t                        hwSelection;                        /*!< item selection */
             uint8_t                         chState;                            /*!< state used by list core task */
-            uint8_t                         bIsMoving   : 1;                    /*!< a flag to indicate whether the list is moving */
-            uint8_t                         bNeedRedraw : 1;                    /*!< a flag to indicate whether a redraw is requested, this is a sticky flag */
-            uint8_t                         bScrolling  : 1;                    /*!< a flag to indicate whether the list is scrolling or not */
-            uint8_t                                     : 5;                    /*!< reserved */
+            uint8_t                         bIsMoving           : 1;            /*!< a flag to indicate whether the list is moving */
+            uint8_t                         bNeedRedraw         : 1;            /*!< a flag to indicate whether a redraw is requested, this is a sticky flag */
+            uint8_t                         bScrolling          : 1;            /*!< a flag to indicate whether the list is scrolling or not */
+            uint8_t                         bListSizeChanged    : 1;            /*!< a flag to indicate the list size has been changed */
+            uint8_t                                             : 4;            /*!< reserved */
 
             struct {
                 int16_t iSteps;                                                 /*!< steps to move */
@@ -301,7 +302,7 @@ ARM_PROTECTED(
 ARM_PROTECTED(
 
     uint8_t chState;
-    bool bListSizeChanged;
+    uint8_t chDrawingState;
     int16_t iStartOffset;
     int32_t nOffset;
 
@@ -309,9 +310,11 @@ ARM_PROTECTED(
         struct {
             int16_t iTopVisibleOffset;
             uint16_t hwTopVisibleItemID;
+            uint16_t hwTopDistance;
             
             int16_t iBottomVisibleOffset;
             uint16_t hwBottomVisibleItemID;
+            uint16_t hwBottomDistance;
         } CalMidAligned;
     };
 )

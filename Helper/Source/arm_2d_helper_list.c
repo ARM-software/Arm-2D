@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        28. Dec 2024
- * $Revision:    V.2.3.1
+ * $Date:        21 Oct 2025
+ * $Revision:    V.2.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -152,7 +152,7 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
         }
     }
     
-    this.bListSizeChanged = true;
+    this.Runtime.bListSizeChanged = true;
     this.Runtime.bIsRegCalInit = false;
 
     return ARM_2D_ERR_NONE;
@@ -959,8 +959,8 @@ bool __arm_2d_list_core_update_normal(
     arm_2d_list_item_t *ptItem = NULL;
     
     /* update start-offset */
-    if (this.bListSizeChanged) {
-        this.bListSizeChanged = false;
+    if (this.Runtime.bListSizeChanged) {
+        this.Runtime.bListSizeChanged = false;
         
         /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
@@ -1065,8 +1065,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
     
 
     /* update start-offset */
-    if (this.bListSizeChanged) {
-        this.bListSizeChanged = false;
+    if (this.Runtime.bListSizeChanged) {
+        this.Runtime.bListSizeChanged = false;
         
         /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
@@ -2149,8 +2149,12 @@ ARM_PT_BEGIN(this.chState)
 
     }
 
+    this.CalMidAligned.hwTopDistance = __UINT16_MAX__;
+    this.CalMidAligned.hwBottomDistance = __UINT16_MAX__;
+
     /* start draw items */
     do {
+__label_draw_top:
         /* move to the top item */
         ptItem = __arm_2d_list_core_get_item(   
                     ptThis, 
@@ -2179,7 +2183,13 @@ ARM_PT_BEGIN(this.chState)
             int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
             
             iDistance = iCentre - iDistance;
-            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+
+            this.CalMidAligned.hwTopDistance = ABS(iDistance);
+            if (this.CalMidAligned.hwTopDistance <= this.CalMidAligned.hwBottomDistance) {
+                goto __label_draw_bottom;
+            }
+
+            this.Runtime.tWorkingArea.tParam.hwRatio = this.CalMidAligned.hwTopDistance;
             
             if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
                 this.Runtime.tWorkingArea.tParam.chOpacity = 0;
@@ -2206,7 +2216,7 @@ ARM_PT_BEGIN(this.chState)
                                                   + ptItem->Padding.chPrevious
                                                   + ptItem->Padding.chNext;
             
-            /* move to the top item */
+            /* move to the next item */
             ptItem = __arm_2d_list_core_get_item(   
                         ptThis, 
                         fnIterator, 
@@ -2218,6 +2228,9 @@ ARM_PT_BEGIN(this.chState)
             this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
         } while(0);
 
+        goto __label_draw_top;
+
+__label_draw_bottom:
         /* move to the bottom item */
         ptItem = __arm_2d_list_core_get_item(   
                     ptThis, 
@@ -2245,7 +2258,13 @@ ARM_PT_BEGIN(this.chState)
             int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
             
             iDistance = iCentre - iDistance;
-            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
+
+            this.CalMidAligned.hwBottomDistance = ABS(iDistance);
+            if (this.CalMidAligned.hwBottomDistance < this.CalMidAligned.hwTopDistance) {
+                goto __label_draw_top;
+            }
+        
+            this.Runtime.tWorkingArea.tParam.hwRatio = this.CalMidAligned.hwBottomDistance;
             
             if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
                 this.Runtime.tWorkingArea.tParam.chOpacity = 0;
@@ -2265,7 +2284,7 @@ ARM_PT_BEGIN(this.chState)
 
         /* update bottom visiable item id and offset */
         do {
-            /* move to the top item */
+            /* move to the previous item */
             ptItem = __arm_2d_list_core_get_item(   
                         ptThis, 
                         fnIterator, 
@@ -2286,6 +2305,8 @@ ARM_PT_BEGIN(this.chState)
                  + ptItem->Padding.chNext;
 
         } while(0);
+
+        goto __label_draw_bottom;
 
     } while(true);
 
@@ -2551,7 +2572,6 @@ ARM_PT_BEGIN(this.chState)
                 nOffset -= this.tCFG.nTotalLength;
             } while(true);
         }
-
 
         int32_t nTempOffset = nOffset;
         
