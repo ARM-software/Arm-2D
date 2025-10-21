@@ -557,7 +557,13 @@ static arm_2d_list_item_t *__arm_2d_simple_list_iterator(
 
     /* validate item size */
     if (this.tTempItem.tSize.iHeight <= 0) {
-        this.tTempItem.tSize.iHeight = this.tSimpleListCFG.ptFont->tCharSize.iHeight;
+        if (NULL != this.tSimpleListCFG.ptFont) {
+            this.tTempItem.tSize.iHeight = this.tSimpleListCFG.ptFont->tCharSize.iHeight;
+        } else {
+            this.tTempItem.tSize.iHeight 
+                = this.use_as____arm_2d_list_core_t
+                    .Runtime.tileList.tRegion.tSize.iHeight;
+        }
     }
     if (this.tTempItem.tSize.iWidth <= 0) {
         this.tTempItem.tSize.iWidth 
@@ -584,20 +590,23 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
-    assert(NULL != ptCFG->ptFont);
+
     assert(ptCFG->hwCount > 0);
 
     this.tSimpleListCFG = *ptCFG;
-    if (NULL == ptCFG->ptFont) {
-        return ARM_2D_ERR_INVALID_PARAM;
+
+#if 0
+    if (NULL == this.tSimpleListCFG.ptFont) {
+        this.tSimpleListCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
     }
+#endif
 
     int16_t iItemHeight = ptCFG->chPreviousPadding + ptCFG->chNextPadding;
     arm_2d_size_t tItemSize = ptCFG->tItemSize;
     if (0 == tItemSize.iHeight) {
-        int16_t iFontHeight = ptCFG->ptFont->tCharSize.iHeight;
-
+        
         if (NULL != ptCFG->ptFont) {
+            int16_t iFontHeight = ptCFG->ptFont->tCharSize.iHeight;
             iItemHeight += iFontHeight + (iFontHeight >> 2);
             tItemSize.iHeight = iFontHeight + (iFontHeight >> 2);
         } else {
@@ -654,13 +663,6 @@ arm_2d_err_t __simple_list_init(__simple_list_t *ptThis,
 
         __arm_2d_list_core_init(&this.use_as____arm_2d_list_core_t, &tCFG);
     } while(0);
-
-    
-    
-    if (NULL == this.tSimpleListCFG.ptFont) {
-        this.tSimpleListCFG.ptFont = (arm_2d_font_t *)&ARM_2D_FONT_6x8;
-    }
-    
     
     if (0 == this.tSimpleListCFG.chOpacity) {
         this.tSimpleListCFG.chOpacity = 255;
