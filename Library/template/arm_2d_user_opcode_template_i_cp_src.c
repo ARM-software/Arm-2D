@@ -139,17 +139,25 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_user_<user opcode template>( __arm_2d_sub_task_
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
 
     arm_2d_region_t tTargetRegion = {0};
-    
-    if (NULL == ((arm_2d_op_t *)ptThis)->Target.ptRegion) {
-        tTargetRegion.tSize = ((arm_2d_op_t *)ptThis)->Target.ptTile->tRegion.tSize;
-    } else {
-        tTargetRegion = *(((arm_2d_op_t *)ptThis)->Target.ptRegion);
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
+
+    if (NULL != OPCODE.Target.ptRegion) {
+        tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
+
     tTargetRegion.tLocation 
-        = arm_2d_get_absolute_location( ((arm_2d_op_t *)ptThis)->Target.ptTile,
+        = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     __arm_2d_impl_cccn888_user_<user opcode template>(   ptTask->Param.tCopy.tSource.pBuffer,
                                                     ptTask->Param.tCopy.tSource.iStride,

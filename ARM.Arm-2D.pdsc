@@ -278,8 +278,8 @@
             <file category="header"      name="Helper/template/arm_2d_scene_template.h" attr="template"  select="User Scene Template"   version="1.4.0" />
 
             <!-- the template for user defined OPCODEs -->
-            <file category="sourceC"     name="Library/template/arm_2d_user_opcode_template_i_cp_src.c" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.1.1" />
-            <file category="header"      name="Library/template/arm_2d_user_opcode_template_i_cp_src.h" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.1.1" />
+            <file category="sourceC"     name="Library/template/arm_2d_user_opcode_template_i_cp_src.c" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.2.0" />
+            <file category="header"      name="Library/template/arm_2d_user_opcode_template_i_cp_src.h" attr="template"  select="OPCODE Template for Copy-Like Operations"   version="1.2.0" />
 
             <file category="sourceC"     name="Library/template/arm_2d_user_opcode_template_i_draw.c" attr="template"  select="OPCODE Template for Drawing operations"   version="1.0.1" />
             <file category="header"      name="Library/template/arm_2d_user_opcode_template_i_draw.h" attr="template"  select="OPCODE Template for Drawing operations"   version="1.0.1" />
