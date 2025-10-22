@@ -23,6 +23,7 @@
 #include "arm_2d.h"
 
 #include <ft2build.h>
+#include FT_FREETYPE_H
 
 #ifdef   __cplusplus
 extern "C" {

@@ -33,7 +33,7 @@
 #ifndef __ARM_2D_FT2BUILD_H__
 #define __ARM_2D_FT2BUILD_H__
 
-#warning using customized freetype 
+//#warning using customized freetype 
 
 #define FT_CONFIG_OPTIONS_H  <custom/ftoption.h>
 #define FT_CONFIG_MODULES_H  <custom/ftmodule.h>
