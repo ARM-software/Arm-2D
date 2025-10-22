@@ -23,7 +23,7 @@
  *               -and-mask
  *
  * $Date:        20 Oct 2025
- * $Revision:    V.1.0.0
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *

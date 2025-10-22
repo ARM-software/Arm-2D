@@ -23,7 +23,7 @@
  *               -and-mask
  *
  * $Date:        20 Oct 2025
- * $Revision:    V.1.0.0
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -422,7 +422,10 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_4pts_alpha_gradient_and_mask(
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -803,7 +806,10 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_3pts_alpha_gradient_and_mask(
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -1154,7 +1160,10 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_horizontal_alpha_gradient_and
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -1511,7 +1520,10 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_vertical_alpha_gradient_and_m
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -1906,7 +1918,10 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient_and_mask
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -2287,7 +2302,10 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_3pts_alpha_gradient_and_mask
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -2638,7 +2656,10 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_horizontal_alpha_gradient_an
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -2995,7 +3016,10 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_vertical_alpha_gradient_and_
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -3390,7 +3414,10 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_4pts_alpha_gradient_and_mas
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -3771,7 +3798,10 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_3pts_alpha_gradient_and_mas
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -4122,7 +4152,10 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_alpha_gradient_a
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
@@ -4479,7 +4512,10 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_alpha_gradient_and
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
 
-    tTargetRegion.tSize = ptTask->Param.tCopy.tCopySize;
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
