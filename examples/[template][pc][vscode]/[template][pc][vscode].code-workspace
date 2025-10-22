@@ -83,7 +83,9 @@
 			"zjpgd.h": "c",
 			"arm_2d_example_loaders.h": "c",
 			"arm_2d_types.h": "c",
-			"inttypes.h": "c"
+			"inttypes.h": "c",
+			"tjpgd_loader.h": "c",
+			"freetype_loader.h": "c"
 		},
 		"cSpell.words": [
 			"cccn"

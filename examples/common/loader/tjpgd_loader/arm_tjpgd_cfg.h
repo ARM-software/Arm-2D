@@ -1,6 +1,8 @@
 /*----------------------------------------------*/
 /* TJpgDec System Configurations R0.03          */
 /*----------------------------------------------*/
+#ifndef __ARM_2D_TJPGDEC_CFG_H__
+#define __ARM_2D_TJPGDEC_CFG_H__
 
 #include "arm_2d_cfg.h"
 
@@ -72,3 +74,4 @@
 #   define JD_SWAP_RED_AND_BLUE     1
 #endif
 
+#endif

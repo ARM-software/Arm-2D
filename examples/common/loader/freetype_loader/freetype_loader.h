@@ -16,24 +16,46 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_EXAMPLE_LOADERS_H__
-#define __ARM_2D_EXAMPLE_LOADERS_H__
+#ifndef __FREETYPE_LOADER_H__
+#define __FREETYPE_LOADER_H__
 
 /*============================ INCLUDES ======================================*/
+#include "arm_2d.h"
 
-#include "./tjpgd_loader/tjpgd_loader.h"
-#include "./zjpgd_loader/zjpgd_loader.h"
-#include "./freetype_loader/freetype_loader.h"
+#include <ft2build.h>
 
 #ifdef   __cplusplus
 extern "C" {
 #endif
 
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
+#   pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+/*============================ MACROS ========================================*/
+
+/* OOC header, please DO NOT modify  */
+#ifdef __FREETYPE_LOADER_IMPLEMENT__
+#   undef   __FREETYPE_LOADER_IMPLEMENT__
+#   define  __ARM_2D_IMPL__
+#elif defined(__FREETYPE_LOADER_INHERIT__)
+#   undef   __FREETYPE_LOADER_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
+#include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
 
 #ifdef   __cplusplus
 }

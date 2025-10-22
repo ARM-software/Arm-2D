@@ -26,6 +26,7 @@ CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/tjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/zjpgd/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
 
@@ -43,6 +44,8 @@ CC_INC  += ../../examples/common/opcodes
 CC_INC  += ../../examples/common/loader
 CC_INC  += ../../examples/common/loader/tjpgd_loader
 CC_INC  += ../../examples/common/loader/zjpgd_loader
+CC_INC  += ../../examples/common/loader/freetype_loader
+CC_INC  += ../../examples/common/loader/freetype_loader/freetype/include
 CC_INC  += ../../examples/common/scenes/fitness
 CC_INC  += ../../examples/common/scenes/meter
 CC_INC  += ../../examples/common/scenes/watch
@@ -58,6 +61,7 @@ CC_INC  += ../../examples/demos/monochrome
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += _RTE_
 CC_DEF  += VT_SCALING_RATIO=1
+CC_DEF  += FT2BUILD_H_
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
@@ -112,9 +116,9 @@ CCFLAG  +=  -ffunction-sections -fdata-sections
 CCFLAG  +=  -fno-ms-extensions
 CCFLAG  +=  -Wno-macro-redefined
 
-CCFLAG  +=  -Ofast
-CCFLAG  +=  -flto
-LDFLAG  +=  -flto
+CCFLAG  +=  -O0
+//CCFLAG  +=  -flto
+//LDFLAG  +=  -flto
 LDFLAG  +=  -lpthread
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
