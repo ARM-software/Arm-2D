@@ -63,6 +63,62 @@
 /*============================ IMPLEMENTATION ================================*/
 
 
+void __arm_2d_freetype_test(arm_2d_tile_t *ptTile, 
+                            arm_2d_region_t *ptRegion, 
+                            const char *pchFontFilePath, 
+                            const uint8_t *pchUTF8)
+{
+    FT_Library lib; FT_Face face;
+    FT_Init_FreeType(&lib);
+
+    //run_os_command("ls .");
+    FT_New_Face(lib, pchFontFilePath, 0, &face);
+
+    FT_Select_Charmap(face, FT_ENCODING_UNICODE);
+
+    FT_Set_Pixel_Sizes(face, 0, 32);
+
+    uint32_t cp = arm_2d_helper_utf8_to_unicode(pchUTF8);
+    FT_UInt glyph = FT_Get_Char_Index(face, cp);
+
+    FT_Int32 flags = FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT;
+
+    FT_Load_Glyph(face, glyph, flags);
+    FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+
+    FT_Bitmap* bm = &face->glyph->bitmap;
+    if (bm->pixel_mode != FT_PIXEL_MODE_GRAY || bm->num_grays != 256) {
+        assert(false);
+    }
+
+    arm_2d_tile_t tGlyphMask = {
+        .tRegion = {
+            .tSize = {
+                .iWidth = bm->width,
+                .iHeight = bm->rows,
+            },
+        },
+        .tInfo = {
+            .bIsRoot = true,
+            .bHasEnforcedColour = true,
+            .tColourInfo = {
+                .chScheme = ARM_2D_COLOUR_8BIT,
+            },
+        },
+        .pchBuffer = (uint8_t *)bm->buffer,
+    };
+
+    arm_2d_fill_colour_with_mask(   ptTile, 
+                                    ptRegion, 
+                                    &tGlyphMask, 
+                                    (__arm_2d_color_t){GLCD_COLOR_BLACK});
+
+    FT_Done_Face(face);
+    FT_Done_FreeType(lib);
+
+
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

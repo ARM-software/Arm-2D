@@ -53,6 +53,11 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+extern
+void __arm_2d_freetype_test(arm_2d_tile_t *ptTile, 
+                            arm_2d_region_t *ptRegion, 
+                            const char *pchFontFilePath, 
+                            const uint8_t *pchUTF8);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

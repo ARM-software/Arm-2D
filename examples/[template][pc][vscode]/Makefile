@@ -41,6 +41,8 @@ CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/
 CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/truetype/truetype.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/smooth/smooth.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/autofit/autofit.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/cff/cff.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/psaux/psaux.c)
 
 CC_INC  := .
 CC_INC  += platform
