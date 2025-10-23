@@ -26,9 +26,21 @@ CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/tjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/zjpgd/*.c)
-CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
+
+# customized freetype #
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/base/ftsystem.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/base/ftinit.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/base/ftbase.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/base/ftdebug.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/base/ftbitmap.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/base/ftglyph.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/sfnt/sfnt.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/truetype/truetype.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/smooth/smooth.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/freetype/src/autofit/autofit.c)
 
 CC_INC  := .
 CC_INC  += platform
