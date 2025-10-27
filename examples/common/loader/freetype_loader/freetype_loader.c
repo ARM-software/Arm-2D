@@ -62,6 +62,259 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+ARM_NONNULL(1,2)
+static
+arm_2d_err_t __arm_freetype_loader_allocate_memory_for_a8_mask( 
+                                                arm_freetype_loader_t *ptThis,
+                                                arm_2d_size_t *ptNewSize)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptNewSize);
+
+    if (    (ptNewSize->iWidth <= this.A8Mask.tSize.iWidth)
+      &&    (ptNewSize->iHeight <= this.A8Mask.tSize.iHeight)) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    if (NULL != this.A8Mask.pchBuffer) {
+        __arm_2d_free_scratch_memory(   ARM_2D_MEM_TYPE_FAST, 
+                                        this.A8Mask.pchBuffer);
+
+        this.A8Mask.pchBuffer = NULL;
+    }
+    this.A8Mask.pchBuffer = NULL;
+
+    memset(&this.A8Mask.tSize, 0, sizeof(this.A8Mask.tSize));
+
+    size_t tNewSize = (ptNewSize->iHeight + 2) 
+                    * (ptNewSize->iWidth + 2);
+    
+    this.A8Mask.pchBuffer = __arm_2d_allocate_scratch_memory(   
+                                                        tNewSize,
+                                                        1,
+                                                        ARM_2D_MEM_TYPE_FAST);
+    if (NULL == this.A8Mask.pchBuffer) {
+        return ARM_2D_ERR_INSUFFICIENT_RESOURCE;
+    }
+
+    this.A8Mask.tSize = *ptNewSize;
+
+    return ARM_2D_ERR_NONE;
+}
+
+static
+IMPL_FONT_GET_CHAR_DESCRIPTOR(__freetype_loader_get_char_descriptor)
+{
+    assert(NULL != ptFont);
+    assert(NULL != ptDescriptor);
+    assert(NULL != pchCharCode);
+        
+    arm_freetype_loader_t *ptThis = (arm_freetype_loader_t *)ptFont;
+    memset(ptDescriptor, 0, sizeof(arm_2d_char_descriptor_t));
+
+    do {
+        if (!this.bValid) {
+            break;
+        }
+
+        uint32_t wUnicode = arm_2d_helper_utf8_to_unicode(pchCharCode);
+        FT_UInt tGlyph = FT_Get_Char_Index(this.tFace, wUnicode);
+        if (0 == tGlyph) {
+            /* encounter unsupported char, use white space to replace  */
+            tGlyph = FT_Get_Char_Index(this.tFace, ' ');
+            assert(0 != tGlyph);
+        }
+
+        if (FT_Err_Ok != FT_Load_Glyph( this.tFace, 
+                                        tGlyph, 
+                                        FT_LOAD_DEFAULT         | 
+                                        FT_LOAD_FORCE_AUTOHINT  | 
+                                        FT_LOAD_TARGET_LIGHT    )) {
+            break;
+        }
+
+        if (FT_Err_Ok != FT_Render_Glyph(   this.tFace->glyph, 
+                                            FT_RENDER_MODE_NORMAL)) {
+            break;
+        }
+
+        FT_Bitmap * ptBitmap = &this.tFace->glyph->bitmap;
+        assert(ptBitmap->pixel_mode == FT_PIXEL_MODE_GRAY);
+        assert(ptBitmap->num_grays == 256);
+
+        this.A8Mask.tGlyph.tRegion.tSize.iHeight = ptBitmap->rows;
+        this.A8Mask.tGlyph.tRegion.tSize.iWidth = ptBitmap->width;
+        this.A8Mask.tGlyph.pchBuffer = ptBitmap->buffer;
+
+        arm_2d_err_t tResult = 
+            __arm_freetype_loader_allocate_memory_for_a8_mask(  
+                                                ptThis,
+                                                &this.A8Mask.tGlyph.tRegion.tSize);
+        if (tResult < 0) {
+            this.s5ErrCode = tResult;
+            break;
+        }
+
+        ptDescriptor->tileChar.tInfo = this.A8Mask.tGlyph.tInfo;
+        ptDescriptor->tileChar.tRegion.tSize.iWidth = this.A8Mask.tGlyph.tRegion.tSize.iWidth + 2;
+        ptDescriptor->tileChar.tRegion.tSize.iHeight = this.A8Mask.tGlyph.tRegion.tSize.iHeight + 2;
+        ptDescriptor->tileChar.pchBuffer = this.A8Mask.pchBuffer;
+
+        ptDescriptor->iBearingX = this.tFace->glyph->bitmap_left + 1;
+        ptDescriptor->iBearingY = this.tFace->glyph->bitmap_top + 1;
+        ptDescriptor->iAdvance = this.tFace->glyph->advance.x + 1;
+
+        arm_2d_region_t tTargetRegion = {
+            .tLocation = {1,1},
+            .tSize = this.A8Mask.tGlyph.tRegion.tSize,
+        };
+
+        arm_2d_sw_normal_root_tile_copy(&this.A8Mask.tGlyph,
+                                        &ptDescriptor->tileChar,
+                                        &tTargetRegion, 
+                                        1);
+        
+        
+        //ptDescriptor->chCodeLength = arm_2d_helper_get_utf8_byte_valid_length((uint8_t *)pchCharCode);
+
+    } while(0);
+#if 0
+    
+
+    ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
+    ptDescriptor->tileChar.tInfo.bDerivedResource = true;
+    
+    ptDescriptor->chCodeLength = 1;
+    ptDescriptor->tileChar.tRegion.tSize = ptFont->tCharSize;
+    ptDescriptor->iBearingX = 0;
+    ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
+    ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
+
+
+    arm_foreach( arm_2d_char_idx_t, &ARM_2D_FONT_A4_DIGITS_ONLY.tNumbers, this.hwCount, ptItem) {
+        if (    *pchCharCode >= ptItem->chStartCode[0] 
+            &&  *pchCharCode < (ptItem->chStartCode[0] + ptItem->hwCount)) {
+            int16_t iOffset = *pchCharCode - ptItem->chStartCode[0];
+            
+            ptDescriptor->tileChar.tRegion.tLocation.iY 
+                = (ptItem->hwOffset + iOffset) * ptFont->tCharSize.iHeight;
+            return ptDescriptor;
+        }
+    }
+
+    /* default: use blank */
+    ptDescriptor->tileChar.tRegion.tLocation.iY 
+        = this.tLookUpTable[this.hwDefaultCharIndex].hwOffset 
+        * ptFont->tCharSize.iHeight;
+#endif
+
+    return ptDescriptor;
+}
+
+ARM_NONNULL(1,2)
+arm_2d_font_t *arm_freetype_loader_file_io_init(arm_freetype_loader_t *ptThis,
+                                                const char *pchPath,
+                                                int16_t iIndex,
+                                                int16_t iFontPixelSize)
+{
+    assert(NULL != pchPath);
+    
+    do {
+        if (NULL == ptThis) {
+            assert(NULL != ptThis);
+            break;
+        }
+
+        memset(ptThis, 0, sizeof(arm_freetype_loader_t));
+
+        if (iFontPixelSize <= 0) {
+            iFontPixelSize = 32;
+        }
+        this.iFontPixelSize = iFontPixelSize;
+
+        this.A8Mask.tGlyph = (arm_2d_tile_t) {
+            .tInfo = {
+                .bIsRoot = true,
+                .bHasEnforcedColour = true,
+                .tColourInfo = {
+                    .chScheme = ARM_2D_COLOUR_8BIT,
+                },
+            },
+        };
+
+        this.s5ErrCode = 
+            __arm_freetype_loader_allocate_memory_for_a8_mask(
+                                            ptThis, 
+                                            (arm_2d_size_t []){
+                                            {iFontPixelSize, iFontPixelSize}});
+        if (this.s5ErrCode < 0) {
+            break;
+        }
+
+        FT_Init_FreeType(&this.tLibrary);
+
+        if (FT_Err_Ok != FT_New_Face(   this.tLibrary, 
+                                        pchPath, 
+                                        iIndex, 
+                                        &this.tFace)) {
+            break;
+        }
+
+        if (FT_Err_Ok != FT_Select_Charmap(this.tFace, FT_ENCODING_UNICODE)) {
+            break;
+        }
+
+        FT_Set_Pixel_Sizes(this.tFace, 0, this.iFontPixelSize);
+
+        /* initialize font */
+        arm_using(arm_2d_font_t *ptFont = &this.use_as__arm_2d_font_t) {
+            ptFont->tCharSize   = this.A8Mask.tSize;
+            ptFont->nCount      = -1;
+            ptFont->fnDrawChar  = &__arm_2d_lcd_text_default_a8_font_draw_char;
+            ptFont->fnGetCharDescriptor 
+                                = &__freetype_loader_get_char_descriptor;
+        };
+
+        
+
+        this.bValid = true;
+        
+        return &this.use_as__arm_2d_font_t;
+    } while(0);
+
+    if (NULL != ptThis) {
+        FT_Done_Face(this.tFace);
+        FT_Done_FreeType(this.tLibrary);
+    }
+
+    return NULL;
+}
+
+void arm_freetype_loader_depose(arm_freetype_loader_t *ptThis)
+{
+    if (NULL == ptThis) {
+        return ;
+    }
+
+    FT_Done_Face(this.tFace);
+    FT_Done_FreeType(this.tLibrary);
+
+    __arm_2d_free_scratch_memory(   ARM_2D_MEM_TYPE_FAST, 
+                                    this.A8Mask.pchBuffer);
+    
+    memset(ptThis, 0, sizeof(arm_freetype_loader_t));
+}
+
+ARM_NONNULL(1)
+arm_2d_err_t arm_freetype_get_error(arm_freetype_loader_t *ptThis)
+{
+    if (NULL == ptThis) {
+        assert(false);
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    return this.s5ErrCode;
+}
 
 void __arm_2d_freetype_test(arm_2d_tile_t *ptTile, 
                             arm_2d_region_t *ptRegion, 

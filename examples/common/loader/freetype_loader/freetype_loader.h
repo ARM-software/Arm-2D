@@ -20,10 +20,7 @@
 #define __FREETYPE_LOADER_H__
 
 /*============================ INCLUDES ======================================*/
-#include "arm_2d.h"
-
-#include <ft2build.h>
-#include FT_FREETYPE_H
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -35,6 +32,9 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 /*============================ MACROS ========================================*/
 
@@ -50,8 +50,59 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+typedef struct arm_freetype_loader_t {
+    implement(arm_2d_font_t);
+
+ARM_PRIVATE(
+    uint16_t bFontSourceStoredInMemory  : 1;
+    uint16_t bValid                     : 1;
+    uint16_t                            : 1;
+    int16_t  s5ErrCode                  : 5;
+    uint16_t                            : 8;
+    int16_t  iFontPixelSize;
+
+    union {
+        struct {
+            const char *pchFontPath;
+        } FileIO;
+
+        struct {
+            void * pBuffer;
+            size_t tSize;
+        } Memory;
+    }FontSource;
+
+    FT_Library  tLibrary; 
+    FT_Face     tFace;
+
+    struct {
+        uint8_t *pchBuffer;
+        arm_2d_size_t tSize;
+        arm_2d_tile_t tGlyph;
+    } A8Mask;
+    
+)
+
+} arm_freetype_loader_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+
+extern
+ARM_NONNULL(1,2)
+arm_2d_font_t *arm_freetype_loader_file_io_init(arm_freetype_loader_t *ptThis,
+                                                const char *pchPath,
+                                                int16_t iIndex,
+                                                int16_t iFontPixelSize);
+
+extern
+void arm_freetype_loader_depose(arm_freetype_loader_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+arm_2d_err_t arm_freetype_get_error(arm_freetype_loader_t *ptThis);
+
 
 extern
 void __arm_2d_freetype_test(arm_2d_tile_t *ptTile, 
