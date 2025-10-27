@@ -474,25 +474,43 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="3.1.0" condition="Arm-2D-Loaders">
-          <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec etc.</description>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="4.0.0" condition="Arm-2D-Loaders">
+          <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec and loading font files using FreeType etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/tjpgd_loader.h" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
-            <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"     attr="config" version="1.1.0"/>
+            <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"       attr="config" version="1.1.0"/>
 
             <file category="header"      name="examples/common/loader/zjpgd_loader/zjpgd_loader.h" />
             <file category="sourceC"     name="examples/common/loader/zjpgd_loader/zjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/zjpgd_loader/zjpgd/zjpgd.c" />
-            <file category="header"      name="examples/common/loader/zjpgd_loader/arm_zjpgd_cfg.h"     attr="config" version="1.0.0"/>
+            <file category="header"      name="examples/common/loader/zjpgd_loader/arm_zjpgd_cfg.h"       attr="config" version="1.0.0"/>
+
+            <file category="include"     name="examples/common/loader/freetype_loader/freetype/include" />
+            <file category="header"      name="examples/common/loader/freetype_loader/freetype_loader.h" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype_loader.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/base/ftsystem.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/base/ftinit.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/base/ftbase.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/base/ftdebug.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/base/ftbitmap.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/base/ftglyph.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/sfnt/sfnt.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/truetype/truetype.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/smooth/smooth.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/autofit/autofit.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/cff/cff.c" />
+            <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype/src/psaux/psaux.c" />
+            <file category="header"      name="examples/common/loader/freetype_loader/arm_freetype_cfg.h" attr="config" version="1.0.0"/>
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Extra_Loaders
     #define RTE_Acceleration_Arm_2D_Extra_JPEG_Loader
     #define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
     #define RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader
+    #define RTE_Acceleration_Arm_2D_Extra_FreeType_Loader
           </RTE_Components_h>
         </component>
 
