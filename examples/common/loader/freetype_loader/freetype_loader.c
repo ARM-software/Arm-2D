@@ -155,58 +155,33 @@ IMPL_FONT_GET_CHAR_DESCRIPTOR(__freetype_loader_get_char_descriptor)
             break;
         }
 
+        int16_t iA8Width = this.A8Mask.tGlyph.tRegion.tSize.iWidth + 2;
+        int16_t iA8Height = this.A8Mask.tGlyph.tRegion.tSize.iHeight + 2;
+        
         ptDescriptor->tileChar.tInfo = this.A8Mask.tGlyph.tInfo;
-        ptDescriptor->tileChar.tRegion.tSize.iWidth = this.A8Mask.tGlyph.tRegion.tSize.iWidth + 2;
-        ptDescriptor->tileChar.tRegion.tSize.iHeight = this.A8Mask.tGlyph.tRegion.tSize.iHeight + 2;
+        ptDescriptor->tileChar.tRegion.tSize.iWidth = iA8Width;
+        ptDescriptor->tileChar.tRegion.tSize.iHeight = iA8Height;
         ptDescriptor->tileChar.pchBuffer = this.A8Mask.pchBuffer;
-
-        ptDescriptor->iBearingX = this.tFace->glyph->bitmap_left + 1;
-        ptDescriptor->iBearingY = this.tFace->glyph->bitmap_top + 1;
-        ptDescriptor->iAdvance = this.tFace->glyph->advance.x + 1;
 
         arm_2d_region_t tTargetRegion = {
             .tLocation = {1,1},
             .tSize = this.A8Mask.tGlyph.tRegion.tSize,
         };
 
+        memset(this.A8Mask.pchBuffer, 0, iA8Width * iA8Height );
         arm_2d_sw_normal_root_tile_copy(&this.A8Mask.tGlyph,
                                         &ptDescriptor->tileChar,
                                         &tTargetRegion, 
                                         1);
         
-        
+        ptDescriptor->iBearingX = this.tFace->glyph->bitmap_left + 1;
+        ptDescriptor->iBearingY = this.tFace->glyph->bitmap_top + 1;
+        ptDescriptor->iAdvance = (this.tFace->glyph->advance.x >> 6) + 1;
+
         //ptDescriptor->chCodeLength = arm_2d_helper_get_utf8_byte_valid_length((uint8_t *)pchCharCode);
 
     } while(0);
-#if 0
-    
 
-    ptDescriptor->tileChar.ptParent = (arm_2d_tile_t *)&ptFont->tileFont;
-    ptDescriptor->tileChar.tInfo.bDerivedResource = true;
-    
-    ptDescriptor->chCodeLength = 1;
-    ptDescriptor->tileChar.tRegion.tSize = ptFont->tCharSize;
-    ptDescriptor->iBearingX = 0;
-    ptDescriptor->iBearingY = ptFont->tCharSize.iHeight;
-    ptDescriptor->iAdvance = ptFont->tCharSize.iWidth;
-
-
-    arm_foreach( arm_2d_char_idx_t, &ARM_2D_FONT_A4_DIGITS_ONLY.tNumbers, this.hwCount, ptItem) {
-        if (    *pchCharCode >= ptItem->chStartCode[0] 
-            &&  *pchCharCode < (ptItem->chStartCode[0] + ptItem->hwCount)) {
-            int16_t iOffset = *pchCharCode - ptItem->chStartCode[0];
-            
-            ptDescriptor->tileChar.tRegion.tLocation.iY 
-                = (ptItem->hwOffset + iOffset) * ptFont->tCharSize.iHeight;
-            return ptDescriptor;
-        }
-    }
-
-    /* default: use blank */
-    ptDescriptor->tileChar.tRegion.tLocation.iY 
-        = this.tLookUpTable[this.hwDefaultCharIndex].hwOffset 
-        * ptFont->tCharSize.iHeight;
-#endif
 
     return ptDescriptor;
 }
@@ -273,6 +248,8 @@ arm_2d_font_t *arm_freetype_loader_file_io_init(arm_freetype_loader_t *ptThis,
             ptFont->fnDrawChar  = &__arm_2d_lcd_text_default_a8_font_draw_char;
             ptFont->fnGetCharDescriptor 
                                 = &__freetype_loader_get_char_descriptor;
+            ptFont->tileFont.pchBuffer = this.A8Mask.pchBuffer;
+            ptFont->tileFont.tInfo.bIsRoot = true;
         };
 
         

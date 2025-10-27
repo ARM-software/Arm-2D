@@ -54,7 +54,7 @@ extern "C" {
 typedef struct arm_freetype_loader_t {
     implement(arm_2d_font_t);
 
-ARM_PRIVATE(
+//ARM_PRIVATE(
     uint16_t bFontSourceStoredInMemory  : 1;
     uint16_t bValid                     : 1;
     uint16_t                            : 1;
@@ -82,7 +82,7 @@ ARM_PRIVATE(
         arm_2d_tile_t tGlyph;
     } A8Mask;
     
-)
+//)
 
 } arm_freetype_loader_t;
 
