@@ -1436,7 +1436,6 @@ bool __file_exists(const char *path, const char *pchMode)
     return false;
 }
 
-extern
 ARM_NONNULL(1, 2)
 arm_2d_err_t arm_zjpgd_io_file_loader_init(arm_zjpgd_io_file_loader_t *ptThis, 
                                            const char *pchFilePath)
