@@ -235,11 +235,17 @@ void image_box_show(image_box_t *ptThis,
                 } else if (NULL == this.tCFG.ptilePhotoMask) {
 
                     if (this.tCFG.__bNoScaling) {
-                        arm_2d_tile_copy_with_opacity_only(  
-                                                this.tCFG.ptilePhoto,
-                                                &__image_box,
-                                                &__image_box_canvas,
-                                                chOpacity);
+                        if (255 == chOpacity) {
+                            arm_2d_tile_copy_only(  this.tCFG.ptilePhoto,
+                                                    &__image_box,
+                                                    &__image_box_canvas);
+                        } else {
+                            arm_2d_tile_copy_with_opacity_only(  
+                                                    this.tCFG.ptilePhoto,
+                                                    &__image_box,
+                                                    &__image_box_canvas,
+                                                    chOpacity);
+                        }
                     } else {
                         arm_2d_point_float_t tCentre = {
                             .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
