@@ -233,12 +233,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_rickrolling_handler)
         arm_2d_align_centre(__top_canvas, 
                             this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize ) {
             
-        #if 0
-            arm_2d_tile_copy(  (const arm_2d_tile_t *)&this.tFilm,
-                                    ptTile,
-                                    &__centre_region, 0);
-        #else
+        #if ARM_2D_DEMO_USE_CRT_SCREEN
             crt_screen_show(&this.tCRTScreen, ptTile, &__centre_region, 255, bIsNewFrame);
+        #else
+            arm_2d_tile_copy_only(  (const arm_2d_tile_t *)&this.tFilm,
+                                    ptTile,
+                                    &__centre_region);
         #endif
             
             arm_2d_helper_dirty_region_update_item( 
