@@ -425,6 +425,45 @@ int __arm_zjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue
         .nAddress = (uintptr_t)pSource,
     };
 
+    if (this.tCFG.bInverseColour) {
+        size_t tPixelCount = tBlockRegion.tSize.iHeight * tBlockRegion.tSize.iWidth;
+
+        switch (this.u3PixelByteSize) {
+            case 1: {
+                    /* cheat with compiler using __RESTRICT */
+                    uint8_t * __RESTRICT pchSrc = (uint8_t *)pSource;
+                    uint8_t * __RESTRICT pchDes = (uint8_t *)pSource;
+
+                    do {
+                        *pchDes++ = ~*pchSrc++;
+                    } while(--tPixelCount);
+                }
+                break;
+            case 2: {
+                    /* cheat with compiler using __RESTRICT */
+                    uint16_t * __RESTRICT phwSrc = (uint16_t *)pSource;
+                    uint16_t * __RESTRICT phwDes = (uint16_t *)pSource;
+
+                    do {
+                        *phwDes++ = ~*phwSrc++;
+                    } while(--tPixelCount);
+                }
+                break;
+            case 4: {
+                    /* cheat with compiler using __RESTRICT */
+                    uint32_t * __RESTRICT pwSrc = (uint32_t *)pSource;
+                    uint32_t * __RESTRICT pwDes = (uint32_t *)pSource;
+
+                    do {
+                        *pwDes++ = ~*pwSrc++;
+                    } while(--tPixelCount);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     arm_2d_region_t tTargetRegion = this.ImageBuffer.tRegion;
 
     arm_2d_tile_t tTargetTile = {

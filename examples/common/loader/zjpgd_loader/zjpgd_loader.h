@@ -140,7 +140,8 @@ typedef struct arm_zjpgd_loader_cfg_t {
     uint8_t bUseHeapForVRES     : 1;
     uint8_t u2ScratchMemType    : 2;
     uint8_t u2WorkMode          : 2;
-    uint8_t                     : 5;
+    uint8_t bInverseColour      : 1;
+    uint8_t                     : 4;
 
     arm_2d_color_info_t tColourInfo;
 
