@@ -192,81 +192,131 @@ void image_box_show(image_box_t *ptThis,
                     this.tCFG.fXRatio = MAX(fXRatio, fYRatio);
                     this.tCFG.fYRatio = this.tCFG.fXRatio;
                 }
+
+                if (fabs(fXRatio - 1.0f) <= 0.01 && fabs(fYRatio - 1.0f) <= 0.01) {
+                    this.tCFG.__bNoScaling = true;
+                } else {
+                    this.tCFG.__bNoScaling = false;
+                }
             }
         }
 
         /* draw photo */
         if (NULL != this.tCFG.ptilePhoto) {
-
             do {
-                arm_2d_point_float_t tCentre = {
-                    .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
-                    .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
-                };
 
                 if (this.tCFG.__bShowGrayScale) {
-
-                    arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
-                                        &this.OPCODE.tFillColourTransform,
-                                        this.tCFG.ptilePhoto,
-                                        &__image_box,
-                                        &__image_box_canvas,
-                                        tCentre,
-                                        0.0f,
-                                        this.tCFG.fXRatio,
-                                        this.tCFG.fYRatio,
-                                        this.tCFG.tScreenColour.tColour,
-                                        chOpacity);
-                    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tFillColourTransform);
+                    if (this.tCFG.__bNoScaling) {
+                        arm_2d_fill_colour_with_mask_and_opacity(  
+                                                &__image_box,
+                                                &__image_box_canvas,
+                                                this.tCFG.ptilePhoto,
+                                                (__arm_2d_color_t){this.tCFG.tScreenColour.tColour},
+                                                chOpacity);
+                    } else {
+                        arm_2d_point_float_t tCentre = {
+                            .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
+                            .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
+                        };
+                        arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
+                                            &this.OPCODE.tFillColourTransform,
+                                            this.tCFG.ptilePhoto,
+                                            &__image_box,
+                                            &__image_box_canvas,
+                                            tCentre,
+                                            0.0f,
+                                            this.tCFG.fXRatio,
+                                            this.tCFG.fYRatio,
+                                            this.tCFG.tScreenColour.tColour,
+                                            chOpacity);
+                        ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tFillColourTransform);
+                    }
 
                 } else if (NULL == this.tCFG.ptilePhotoMask) {
-                    arm_2dp_tile_transform_xy_only_with_opacity(
-                                        &this.OPCODE.tTileTransOpa,
-                                        this.tCFG.ptilePhoto,
-                                        &__image_box,
-                                        &__image_box_canvas,
-                                        tCentre,
-                                        0.0f,
-                                        this.tCFG.fXRatio,
-                                        this.tCFG.fYRatio,
-                                        chOpacity);
 
-                    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tTileTransOpa);
+                    if (this.tCFG.__bNoScaling) {
+                        arm_2d_tile_copy_with_opacity_only(  
+                                                this.tCFG.ptilePhoto,
+                                                &__image_box,
+                                                &__image_box_canvas,
+                                                chOpacity);
+                    } else {
+                        arm_2d_point_float_t tCentre = {
+                            .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
+                            .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
+                        };
+                        arm_2dp_tile_transform_xy_only_with_opacity(
+                                            &this.OPCODE.tTileTransOpa,
+                                            this.tCFG.ptilePhoto,
+                                            &__image_box,
+                                            &__image_box_canvas,
+                                            tCentre,
+                                            0.0f,
+                                            this.tCFG.fXRatio,
+                                            this.tCFG.fYRatio,
+                                            chOpacity);
+
+                        ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tTileTransOpa);
+                    }
+
+                    
                 } else {
-                    arm_2dp_tile_transform_xy_with_src_mask_and_opacity(
-                                        &this.OPCODE.tTileTransSrcMaskOpa,
-                                        this.tCFG.ptilePhoto,
-                                        this.tCFG.ptilePhotoMask,
-                                        &__image_box,
-                                        &__image_box_canvas,
-                                        tCentre,
-                                        0.0f,
-                                        this.tCFG.fXRatio,
-                                        this.tCFG.fYRatio,
-                                        chOpacity);
+                    if (this.tCFG.__bNoScaling) {
+                        arm_2d_tile_copy_with_src_mask_and_opacity_only(  
+                                                this.tCFG.ptilePhoto,
+                                                this.tCFG.ptilePhotoMask,
+                                                &__image_box,
+                                                &__image_box_canvas,
+                                                chOpacity);
+                    } else {
+                        arm_2d_point_float_t tCentre = {
+                            .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
+                            .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
+                        };
+                        arm_2dp_tile_transform_xy_with_src_mask_and_opacity(
+                                            &this.OPCODE.tTileTransSrcMaskOpa,
+                                            this.tCFG.ptilePhoto,
+                                            this.tCFG.ptilePhotoMask,
+                                            &__image_box,
+                                            &__image_box_canvas,
+                                            tCentre,
+                                            0.0f,
+                                            this.tCFG.fXRatio,
+                                            this.tCFG.fYRatio,
+                                            chOpacity);
 
-                    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tTileTransSrcMaskOpa);
+                        ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tTileTransSrcMaskOpa);
+                    }
                 }
             } while(0);
         } else if (NULL != this.tCFG.ptilePhotoMask) {
-            arm_2d_point_float_t tCentre = {
-                    .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
-                    .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
-                };
+             if (this.tCFG.__bNoScaling) {
+                arm_2d_fill_colour_with_mask_and_opacity(  
+                                        &__image_box,
+                                        &__image_box_canvas,
+                                        this.tCFG.ptilePhotoMask,
+                                        (__arm_2d_color_t){this.tCFG.tScreenColour.tColour},
+                                        chOpacity);
+            } else {
+                arm_2d_point_float_t tCentre = {
+                        .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
+                        .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
+                    };
 
-            arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
-                                &this.OPCODE.tFillColourTransform,
-                                this.tCFG.ptilePhotoMask,
-                                &__image_box,
-                                &__image_box_canvas,
-                                tCentre,
-                                0.0f,
-                                this.tCFG.fXRatio,
-                                this.tCFG.fYRatio,
-                                this.tCFG.tScreenColour.tColour,
-                                chOpacity);
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
+                                    &this.OPCODE.tFillColourTransform,
+                                    this.tCFG.ptilePhotoMask,
+                                    &__image_box,
+                                    &__image_box_canvas,
+                                    tCentre,
+                                    0.0f,
+                                    this.tCFG.fXRatio,
+                                    this.tCFG.fYRatio,
+                                    this.tCFG.tScreenColour.tColour,
+                                    chOpacity);
 
-            ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tFillColourTransform);
+                ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tFillColourTransform);
+            }
         }
     }
 
