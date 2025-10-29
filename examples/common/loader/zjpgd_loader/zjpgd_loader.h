@@ -142,6 +142,8 @@ typedef struct arm_zjpgd_loader_cfg_t {
     uint8_t u2WorkMode          : 2;
     uint8_t                     : 5;
 
+    arm_2d_color_info_t tColourInfo;
+
     struct {
         const arm_zjpgd_loader_io_t *ptIO;
         uintptr_t pTarget;

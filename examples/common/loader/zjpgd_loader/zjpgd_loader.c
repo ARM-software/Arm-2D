@@ -185,26 +185,30 @@ arm_2d_err_t arm_zjpgd_loader_init( arm_zjpgd_loader_t *ptThis,
     this.vres.tTile.tInfo.bVirtualResource = true;
 
     this.Decoder.u3ZJDOutputColourFormat = ZJD_FORMAT;
-    if (this.vres.tTile.tInfo.bHasEnforcedColour &&  0 != this.vres.tTile.tColourInfo.chScheme) {
+
+    if (this.tCFG.tColourInfo.chScheme != 0) {
         /* use user specified colour format */
-        switch (this.vres.tTile.tColourInfo.chScheme) {
+        switch (this.tCFG.tColourInfo.chScheme) {
             case ARM_2D_COLOUR_GRAY8:
                 this.Decoder.u3ZJDOutputColourFormat = ZJD_GRAYSCALE;
+                this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
                 break;
             case ARM_2D_COLOUR_RGB565:
                 this.Decoder.u3ZJDOutputColourFormat = ZJD_RGB565;
+                this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
                 break;
             case ARM_2D_COLOUR_BGRA8888:
                 this.Decoder.u3ZJDOutputColourFormat = ZJD_BGRA8888;
+                this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
+                break;
+            default:
+                this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR;
                 break;
         }
     } else {
         this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR;
-        this.vres.tTile.tInfo.bHasEnforcedColour = true;
-        
     }
-
-    
+    this.vres.tTile.tInfo.bHasEnforcedColour = true;
 
     do {
         size_t nPixelSize = sizeof(COLOUR_INT);
