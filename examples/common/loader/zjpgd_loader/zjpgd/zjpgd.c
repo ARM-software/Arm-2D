@@ -34,19 +34,24 @@ static void *zjd_malloc(zjd_t *zjd, int32_t len)
 
 #define CVACC_COEF   1024
 
+static inline uint8_t y2grayscale(int Y)
+{
+    return BYTECLIP(Y);
+}
+
 static inline uint8_t ycbcr2r(int Y, int Cb, int Cr)
 {
-    return BYTECLIP(Y + ((int)(1.402 * CVACC_COEF) * Cr) / CVACC_COEF);
+    return BYTECLIP(Y + ((int)(1.402f * CVACC_COEF) * Cr) / CVACC_COEF);
 }
 
 static inline uint8_t ycbcr2g(int Y, int Cb, int Cr)
 {
-    return BYTECLIP(Y - (((int)(0.344 * CVACC_COEF) * Cb + (int)(0.714 * CVACC_COEF) * Cr) / CVACC_COEF));
+    return BYTECLIP(Y - (((int)(0.344f * CVACC_COEF) * Cb + (int)(0.714f * CVACC_COEF) * Cr) / CVACC_COEF));
 }
 
 static inline uint8_t ycbcr2b(int Y, int Cb, int Cr)
 {
-    return BYTECLIP(Y + ((int)(1.772 * CVACC_COEF) * Cb) / CVACC_COEF);
+    return BYTECLIP(Y + ((int)(1.772f * CVACC_COEF) * Cb) / CVACC_COEF);
 }
 
 static inline bool is_rect_intersect(const zjd_rect_t *r0, const zjd_rect_t *r1)
@@ -122,7 +127,7 @@ void zjd_log(zjd_t *zjd)
 static inline int zjd_get_hc(zjd_huff_t *huff, uint32_t dreg, uint8_t dbit, uint8_t *val)
 {
     uint8_t i, n_codes;
-    uint16_t n_bits;
+    uint16_t n_bits = 0;
 
     const uint8_t *hb = huff->bits;
     const uint16_t *hc = huff->code;
@@ -131,7 +136,8 @@ static inline int zjd_get_hc(zjd_huff_t *huff, uint32_t dreg, uint8_t dbit, uint
     /* Incremental search for all codes */
     for (i = 1; i <= 16; i++) {
         n_codes = *hb++;
-        n_bits = dreg >> (32 - i);
+        n_bits = (uint16_t)((n_bits << 1) | (dreg >> 31));
+        dreg <<= 1;
         while (n_codes--)  {
             if (n_bits == *hc) {  /* Compare code */
                 if (i > dbit) {
@@ -154,7 +160,7 @@ static inline int zjd_get_hc(zjd_huff_t *huff, uint32_t dreg, uint8_t dbit, uint
 // YUV → Grayscale (1 byte)
 static void yuv_to_grayscale(uint8_t **pix, int yy, int cb, int cr)
 {
-    *(*pix)++ = (uint8_t)yy;  // Just use Y channel
+    *(*pix)++ = y2grayscale(yy);
 }
 
 // YUV → RGB888 (R, G, B)
@@ -182,8 +188,12 @@ static void yuv_to_rgb565(uint8_t **pix, int yy, int cb, int cr)
 
     uint16_t rgb = ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 
+#if 0
     *(*pix)++ = rgb & 0xFF;
     *(*pix)++ = (rgb >> 8) & 0xFF;
+#else
+    *(*((uint16_t **)pix))++ = rgb;
+#endif
 }
 
 // YUV → BGR565 (2 bytes)
@@ -195,26 +205,52 @@ static void yuv_to_bgr565(uint8_t **pix, int yy, int cb, int cr)
 
     uint16_t bgr = ((b & 0xF8) << 8) | ((g & 0xFC) << 3) | (r >> 3);
 
+#if 0
     *(*pix)++ = bgr & 0xFF;
     *(*pix)++ = (bgr >> 8) & 0xFF;
+#else
+    *(*((uint16_t **)pix))++ = bgr;
+#endif
 }
 
 // YUV → RGBA8888 (R, G, B, A)
 static void yuv_to_rgba8888(uint8_t **pix, int yy, int cb, int cr)
 {
+#if 0
     *(*pix)++ = ycbcr2r(yy, cb, cr);
     *(*pix)++ = ycbcr2g(yy, cb, cr);
     *(*pix)++ = ycbcr2b(yy, cb, cr);
     *(*pix)++ = 0xFF;  // Alpha channel
+#else
+    uint32_t rgba = 0xFF00;
+    rgba |= ycbcr2b(yy, cb, cr);
+    rgba <<= 8;
+    rgba |= ycbcr2g(yy, cb, cr);
+    rgba <<= 8;
+    rgba |= ycbcr2r(yy, cb, cr);
+
+    *(*((uint32_t **)pix))++ = rgba;
+#endif
 }
 
 // YUV → BGRA888 (B, G, R, A)
 static void yuv_to_bgra8888(uint8_t **pix, int yy, int cb, int cr)
 {
+#if 0
     *(*pix)++ = ycbcr2b(yy, cb, cr);
     *(*pix)++ = ycbcr2g(yy, cb, cr);
     *(*pix)++ = ycbcr2r(yy, cb, cr);
     *(*pix)++ = 0xFF;  // Alpha channel
+#else
+    uint32_t bgra = 0xFF00;
+    bgra |= ycbcr2r(yy, cb, cr);
+    bgra <<= 8;
+    bgra |= ycbcr2g(yy, cb, cr);
+    bgra <<= 8;
+    bgra |= ycbcr2b(yy, cb, cr);
+
+    *(*((uint32_t **)pix))++ = bgra;
+#endif
 }
 
 static const zjd_yuv2pix_t zjd_yuv2pix_tab[] = {
@@ -229,162 +265,196 @@ static const zjd_yuv2pix_t zjd_yuv2pix_tab[] = {
 
 /*-------------------------------------------------------------------------*/
 // YUV Scan
-static int yuv400_scan(zjd_t *zjd, zjd_rect_t *mcu_rect, const zjd_rect_t *tgt_rect)
-{
-    uint8_t *pix;
-    zjd_yuv_t *py;
-    int yy, cb = 0, cr = 0;
-
-    /* Build a RGB MCU from discrete components */
-    pix = (uint8_t *)zjd->workbuf;
-    py = zjd->mcubuf;
-    for (unsigned int iy = 0; iy < 8; iy++) {
-        for (unsigned int ix = 0; ix < 8; ix++) {
-            yy = *py++;   /* Get Y component */
-            zjd->yuv2pix(&pix, yy, cb, cr);
-        }
-    }
-
-    return zjd->ofunc(zjd, mcu_rect, zjd->workbuf);
+#define DEFINE_YUV400_SCAN(NAME, YUV2PIX_FUNC)                          \
+static int NAME(zjd_t *zjd, zjd_rect_t *mcu_rect,                       \
+                       const zjd_rect_t *tgt_rect)                      \
+{                                                                       \
+    uint8_t *pix;                                                       \
+    zjd_yuv_t *py;                                                      \
+    int yy, cb = 0, cr = 0;                                             \
+                                                                        \
+    /* Build a RGB MCU from discrete components */                      \
+    pix = (uint8_t *)zjd->workbuf;                                      \
+    py = zjd->mcubuf;                                                   \
+    for (unsigned int iy = 0; iy < 8; iy++) {                           \
+        for (unsigned int ix = 0; ix < 8; ix++) {                       \
+            yy = *py++;   /* Get Y component */                         \
+            YUV2PIX_FUNC(&pix, yy, cb, cr);                             \
+        }                                                               \
+    }                                                                   \
+                                                                        \
+    return zjd->ofunc(zjd, mcu_rect, zjd->workbuf);                     \
 }
 
-static int yuv444_scan(zjd_t *zjd, zjd_rect_t *mcu_rect, const zjd_rect_t *tgt_rect)
-{
-    uint8_t *pix = (uint8_t *)zjd->workbuf;
-    zjd_yuv_t *py, *pcb, *pcr;
-    int yy, cb, cr;
-
-    /* In YUV444, each pixel has its own Y, Cb, Cr values */
-    py  = zjd->mcubuf;        // Y block start
-    pcb = py + 64;           // Cb block start
-    pcr = pcb + 64;          // Cr block start
-
-    for (unsigned int iy = 0; iy < 8; iy++) {
-        for (unsigned int ix = 0; ix < 8; ix++) {
-            yy = *py++;
-            cb = *pcb++ - 128;
-            cr = *pcr++ - 128;
-
-            zjd->yuv2pix(&pix, yy, cb, cr);
-        }
-    }
-
-    ZJD_LOG("RGB888 (YUV444): (x:%u,y:%u)-(%u,%u)", mcu_rect->x, mcu_rect->y, mcu_rect->w, mcu_rect->h);
-    pix = (uint8_t *)zjd->workbuf;
-    ZJD_RGBDUMP(pix, 3 * 64);
-
-    return zjd->ofunc(zjd, mcu_rect, zjd->workbuf);
+#define DEFINE_YUV444_SCAN(NAME, YUV2PIX_FUNC)                          \
+static int NAME(zjd_t *zjd, zjd_rect_t *mcu_rect,                       \
+                       const zjd_rect_t *tgt_rect)                      \
+{                                                                       \
+    uint8_t *pix = (uint8_t *)zjd->workbuf;                             \
+    zjd_yuv_t *py, *pcb, *pcr;                                          \
+    int yy, cb, cr;                                                     \
+                                                                        \
+    /* In YUV444, each pixel has its own Y, Cb, Cr values */            \
+    py  = zjd->mcubuf;        /* Y block start */                       \
+    pcb = py + 64;            /* Cb block start */                      \
+    pcr = pcb + 64;           /* Cr block start */                      \
+                                                                        \
+    for (unsigned int iy = 0; iy < 8; iy++) {                           \
+        for (unsigned int ix = 0; ix < 8; ix++) {                       \
+            yy = *py++;                                                 \
+            cb = *pcb++ - 128;                                          \
+            cr = *pcr++ - 128;                                          \
+                                                                        \
+            YUV2PIX_FUNC(&pix, yy, cb, cr);                             \
+        }                                                               \
+    }                                                                   \
+                                                                        \
+    ZJD_LOG("RGB888 (YUV444): (x:%u,y:%u)-(%u,%u)",                     \
+            mcu_rect->x, mcu_rect->y, mcu_rect->w, mcu_rect->h);        \
+    pix = (uint8_t *)zjd->workbuf;                                      \
+    ZJD_RGBDUMP(pix, 3 * 64);                                           \
+                                                                        \
+    return zjd->ofunc(zjd, mcu_rect, zjd->workbuf);                     \
 }
 
-static int yuv422_scan(zjd_t *zjd, zjd_rect_t *mcu_rect, const zjd_rect_t *tgt_rect)
-{
-    int iy, ix, icmp;
-    zjd_yuv_t *py, *pcb, *pcr;
-    uint8_t *pix = (uint8_t *)zjd->workbuf;
-
-    int y_block_col, y_block_row;
-    int yy, cb, cr;
-
-    zjd_rect_t rect;
-
-    // 4 blocks: Y1, Y2, Cb, Cr → 16x8 Y region
-    pcb = zjd->component[2].mcubuf;     // Cb block starts after Y1 + Y2
-    pcr = zjd->component[3].mcubuf;     // Cr block starts after Cb
-
-    // Loop through the two Y blocks (icmp = 0: left, 1: right)
-    for (icmp = 0; icmp < 2; icmp++) {
-        py = zjd->component[icmp].mcubuf;
-        pix = (uint8_t *)zjd->workbuf;
-
-        // Block positions: 0=(0,0), 1=(8,0)
-        y_block_col = (icmp & 1) << 3;  // 0 or 8
-        y_block_row = 0;                // Only one row of Y blocks
-
-        rect.x = mcu_rect->x + y_block_col;
-        rect.y = mcu_rect->y + y_block_row;
-        rect.w = 8;
-        rect.h = 8;
-
-        if ((tgt_rect != NULL) && !is_rect_intersect(&rect, tgt_rect)) {
-            continue;   // Skip this block if it does not intersect with the target rectangle
-        }
-
-        for (iy = 0; iy < 8; iy++) {
-            for (ix = 0; ix < 8; ix++) {
-                int x_abs = y_block_col + ix;
-                int y_abs = y_block_row + iy;
-
-                // Cb/Cr sampled at 2:1 horizontally, 1:1 vertically → 8x8 UV blocks
-                int uv_idx = (y_abs << 3) + (x_abs >> 1);
-
-                yy = *py++;
-                cb = pcb[uv_idx] - 128;
-                cr = pcr[uv_idx] - 128;
-
-                zjd->yuv2pix(&pix, yy, cb, cr);
-            }
-        }
-
-        if (!zjd->ofunc(zjd, &rect, zjd->workbuf)) {
-            return 0;
-        }
-    }
-
-    return 1;
+#define DEFINE_YUV422_SCAN(NAME, YUV2PIX_FUNC)                          \
+static int NAME(zjd_t *zjd, zjd_rect_t *mcu_rect,                       \
+                       const zjd_rect_t *tgt_rect)                      \
+{                                                                       \
+    int iy, ix, icmp;                                                   \
+    zjd_yuv_t *py, *pcb, *pcr;                                          \
+    uint8_t *pix = (uint8_t *)zjd->workbuf;                             \
+    int y_block_col, y_block_row;                                       \
+    int yy, cb, cr;                                                     \
+    zjd_rect_t rect;                                                    \
+                                                                        \
+    pcb = zjd->component[2].mcubuf;                                     \
+    pcr = zjd->component[3].mcubuf;                                     \
+                                                                        \
+    for (icmp = 0; icmp < 2; icmp++) {                                  \
+        py = zjd->component[icmp].mcubuf;                               \
+        pix = (uint8_t *)zjd->workbuf;                                  \
+        y_block_col = (icmp & 1) << 3;                                  \
+        y_block_row = 0;                                                \
+        rect.x = mcu_rect->x + y_block_col;                             \
+        rect.y = mcu_rect->y + y_block_row;                             \
+        rect.w = 8;                                                     \
+        rect.h = 8;                                                     \
+        if ((tgt_rect != NULL) && !is_rect_intersect(&rect, tgt_rect))  \
+            continue;                                                   \
+        for (iy = 0; iy < 8; iy++) {                                    \
+            for (ix = 0; ix < 8; ix++) {                                \
+                int x_abs = y_block_col + ix;                           \
+                int y_abs = y_block_row + iy;                           \
+                int uv_idx = (y_abs << 3) + (x_abs >> 1);               \
+                yy = *py++;                                             \
+                cb = pcb[uv_idx] - 128;                                 \
+                cr = pcr[uv_idx] - 128;                                 \
+                YUV2PIX_FUNC(&pix, yy, cb, cr);                         \
+            }                                                           \
+        }                                                               \
+        if (!zjd->ofunc(zjd, &rect, zjd->workbuf))                      \
+            return 0;                                                   \
+    }                                                                   \
+    return 1;                                                           \
 }
 
-static int yuv420_scan(zjd_t *zjd, zjd_rect_t *mcu_rect, const zjd_rect_t *tgt_rect)
-{
-    int iy, ix, icmp;
-    zjd_yuv_t *py, *pcb, *pcr;
-    uint8_t *pix = (uint8_t *)zjd->workbuf;
-
-    int y_block_col, y_block_row;
-    int yy, cb, cr;
-
-    zjd_rect_t rect;
-
-    // 6 blocks: Y1,Y2,Y3,Y4,Cb,Cr
-    pcb = zjd->component[4].mcubuf; // Cb block start
-    pcr = zjd->component[5].mcubuf; // Cr block start
-
-    for (icmp = 0; icmp < 4; icmp++) {
-        py = zjd->component[icmp].mcubuf;
-        pix = (uint8_t *)zjd->workbuf;
-
-        // 0: (0, 0), 1: (8, 0), 2: (0, 8), 3: (8, 8)
-        y_block_col = (icmp & 1) << 3;
-        y_block_row = (icmp >> 1) << 3;
-
-        rect.x = mcu_rect->x + y_block_col;
-        rect.y = mcu_rect->y + y_block_row;
-        rect.w = 8;
-        rect.h = 8;
-
-        if ((tgt_rect != NULL) && !is_rect_intersect(&rect, tgt_rect)) {
-            continue;   // Skip this block if it does not intersect with the target rectangle
-        }
-
-        for (iy = 0; iy < 8; iy++) {
-            for (ix = 0; ix < 8; ix++) {
-                int x_abs = y_block_col + ix;
-                int y_abs = y_block_row + iy;
-                int uv_idx = ((y_abs >> 1) << 3) + (x_abs >> 1);    // y/2 * 8 + x/2
-
-                yy = *py++;
-                cb = pcb[uv_idx] - 128;
-                cr = pcr[uv_idx] - 128;
-
-                zjd->yuv2pix(&pix, yy, cb, cr);
-            }
-        }
-        if (!zjd->ofunc(zjd, &rect, zjd->workbuf)) {
-            return 0;
-        }
-    }
-
-    return 1;
+#define DEFINE_YUV420_SCAN(NAME, YUV2PIX_FUNC)                          \
+static int NAME(zjd_t *zjd, zjd_rect_t *mcu_rect,                       \
+                       const zjd_rect_t *tgt_rect)                      \
+{                                                                       \
+    int iy, ix, icmp;                                                   \
+    zjd_yuv_t *py, *pcb, *pcr;                                          \
+    uint8_t *pix = (uint8_t *)zjd->workbuf;                             \
+    int y_block_col, y_block_row;                                       \
+    int yy, cb, cr;                                                     \
+    zjd_rect_t rect;                                                    \
+                                                                        \
+    pcb = zjd->component[4].mcubuf;                                     \
+    pcr = zjd->component[5].mcubuf;                                     \
+                                                                        \
+    for (icmp = 0; icmp < 4; icmp++) {                                  \
+        py = zjd->component[icmp].mcubuf;                               \
+        pix = (uint8_t *)zjd->workbuf;                                  \
+        y_block_col = (icmp & 1) << 3;                                  \
+        y_block_row = (icmp >> 1) << 3;                                 \
+        rect.x = mcu_rect->x + y_block_col;                             \
+        rect.y = mcu_rect->y + y_block_row;                             \
+        rect.w = 8;                                                     \
+        rect.h = 8;                                                     \
+        if ((tgt_rect != NULL) && !is_rect_intersect(&rect, tgt_rect))  \
+            continue;                                                   \
+        for (iy = 0; iy < 8; iy++) {                                    \
+            for (ix = 0; ix < 8; ix++) {                                \
+                int x_abs = y_block_col + ix;                           \
+                int y_abs = y_block_row + iy;                           \
+                int uv_idx = ((y_abs >> 1) << 3) + (x_abs >> 1);        \
+                yy = *py++;                                             \
+                cb = pcb[uv_idx] - 128;                                 \
+                cr = pcr[uv_idx] - 128;                                 \
+                YUV2PIX_FUNC(&pix, yy, cb, cr);                         \
+            }                                                           \
+        }                                                               \
+        if (!zjd->ofunc(zjd, &rect, zjd->workbuf))                      \
+            return 0;                                                   \
+    }                                                                   \
+    return 1;                                                           \
 }
+
+DEFINE_YUV400_SCAN(yuv400_scan, zjd->yuv2pix)
+DEFINE_YUV444_SCAN(yuv444_scan, zjd->yuv2pix)
+DEFINE_YUV422_SCAN(yuv422_scan, zjd->yuv2pix)
+DEFINE_YUV420_SCAN(yuv420_scan, zjd->yuv2pix)
+
+DEFINE_YUV444_SCAN(yuv444_fast_scan_grayscale, yuv_to_grayscale)
+DEFINE_YUV444_SCAN(yuv444_fast_scan_rgb565, yuv_to_rgb565)
+DEFINE_YUV444_SCAN(yuv444_fast_scan_rgb888, yuv_to_rgb888)
+DEFINE_YUV444_SCAN(yuv444_fast_scan_rgba8888, yuv_to_rgba8888)
+
+DEFINE_YUV420_SCAN(yuv420_fast_scan_grayscale, yuv_to_grayscale)
+DEFINE_YUV420_SCAN(yuv420_fast_scan_rgb565, yuv_to_rgb565)
+DEFINE_YUV420_SCAN(yuv420_fast_scan_rgb888, yuv_to_rgb888)
+DEFINE_YUV420_SCAN(yuv420_fast_scan_rgba8888, yuv_to_rgba8888)
+
+typedef struct {
+    zjd_yuvfmt_t yuvfmt;
+    zjd_outfmt_t outfmt;
+    zjd_yuv_scan_t yuv_scan;
+} zjd_yuv_scan_tbl_t;
+
+static const zjd_yuv_scan_tbl_t zjd_yuv_scan_tbl[] = {
+    // { ZJD_YUV400, ZJD_GRAYSCALE, yuv400_scan },
+    // { ZJD_YUV400, ZJD_RGB565,    yuv400_scan },
+    // { ZJD_YUV400, ZJD_BGR565,    yuv400_scan },
+    // { ZJD_YUV400, ZJD_RGB888,    yuv400_scan },
+    // { ZJD_YUV400, ZJD_BGR888,    yuv400_scan },
+    // { ZJD_YUV400, ZJD_RGBA8888,  yuv400_scan },
+    // { ZJD_YUV400, ZJD_BGRA8888,  yuv400_scan },
+
+    // { ZJD_YUV422, ZJD_GRAYSCALE, yuv422_scan },
+    // { ZJD_YUV422, ZJD_RGB565,    yuv422_scan },
+    // { ZJD_YUV422, ZJD_BGR565,    yuv422_scan },
+    // { ZJD_YUV422, ZJD_RGB888,    yuv422_scan },
+    // { ZJD_YUV422, ZJD_BGR888,    yuv422_scan },
+    // { ZJD_YUV422, ZJD_RGBA8888,  yuv422_scan },
+    // { ZJD_YUV422, ZJD_BGRA8888,  yuv422_scan },
+
+    { ZJD_YUV420, ZJD_GRAYSCALE, yuv420_fast_scan_grayscale },
+    { ZJD_YUV420, ZJD_RGB565,    yuv420_fast_scan_rgb565 },
+    // { ZJD_YUV420, ZJD_BGR565,    yuv420_scan },
+    // { ZJD_YUV420, ZJD_RGB888,    yuv420_scan },
+    // { ZJD_YUV420, ZJD_BGR888,    yuv420_scan },
+    { ZJD_YUV420, ZJD_RGBA8888,  yuv420_fast_scan_rgba8888 },
+    // { ZJD_YUV420, ZJD_BGRA8888,  yuv420_scan },
+
+    { ZJD_YUV444, ZJD_GRAYSCALE, yuv444_fast_scan_grayscale },
+    { ZJD_YUV444, ZJD_RGB565,    yuv444_fast_scan_rgb565 },
+    // { ZJD_YUV444, ZJD_BGR565,    yuv444_scan },
+    // { ZJD_YUV444, ZJD_RGB888,    yuv444_scan },
+    // { ZJD_YUV444, ZJD_BGR888,    yuv444_scan },
+    { ZJD_YUV444, ZJD_RGBA8888,  yuv444_fast_scan_rgba8888 },
+    // { ZJD_YUV444, ZJD_BGRA8888,  yuv444_scan },
+};
 
 static int zjd_mcu_scan(zjd_t *zjd, uint8_t n_cmp, zjd_rect_t *mcu_rect, const zjd_rect_t *tgt_rect)
 {
@@ -584,6 +654,7 @@ static zjd_res_t zjd_sos_handler(zjd_t *zjd, zjd_tbl_t *tbl, const uint8_t *buf,
 {
     int i, n;
     uint8_t b;
+    zjd_yuvfmt_t yuvfmt;
 
     ZJD_LOG("SOS start of scan:");
     if (!zjd->width || !zjd->height) {
@@ -667,15 +738,19 @@ static zjd_res_t zjd_sos_handler(zjd_t *zjd, zjd_tbl_t *tbl, const uint8_t *buf,
     if ((zjd->ncomp == 1) && (zjd->msx == 1) && (zjd->msy == 1)) {
         ZJD_LOG("YUV400");
         zjd->yuv_scan = yuv400_scan;
+        yuvfmt = ZJD_YUV400;
     } else if ((zjd->ncomp == 3) && (zjd->msx == 1) && (zjd->msy == 1)) {
         ZJD_LOG("YUV444");
         zjd->yuv_scan = yuv444_scan;
+        yuvfmt = ZJD_YUV444;
     } else if ((zjd->ncomp == 3) && (zjd->msx == 2) && (zjd->msy == 2)) {
         ZJD_LOG("YUV420");
         zjd->yuv_scan = yuv420_scan;
+        yuvfmt = ZJD_YUV420;
     } else if ((zjd->ncomp == 3) && (zjd->msx == 2) && (zjd->msy == 1)) {
         ZJD_LOG("YUV422");
         zjd->yuv_scan = yuv422_scan;
+        yuvfmt = ZJD_YUV422;
     } else {
         return ZJD_ERR_YUV;
     }
@@ -686,6 +761,16 @@ static zjd_res_t zjd_sos_handler(zjd_t *zjd, zjd_tbl_t *tbl, const uint8_t *buf,
 
     /* Save compressed data address offset */
     zjd->imgoft = zjd->oft;
+
+    /* override yuv_scan with optimized fast version */
+    for (i = 0; i < sizeof(zjd_yuv_scan_tbl) / sizeof(zjd_yuv_scan_tbl[0]); i++) {
+        if ((zjd_yuv_scan_tbl[i].yuvfmt == yuvfmt) &&
+            (zjd_yuv_scan_tbl[i].outfmt == outfmt)) {
+            zjd->yuv_scan = zjd_yuv_scan_tbl[i].yuv_scan;
+            ZJD_LOG("Found yuv_scan for fmt: %d", outfmt);
+            break;
+        }
+    }
 
     return ZJD_OK;
 }

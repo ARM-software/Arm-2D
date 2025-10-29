@@ -16,8 +16,15 @@
 
 #define ZJD_VER_MAJOR           0
 #define ZJD_VER_MINOR           1
-#define ZJD_VER_PATCH           2
+#define ZJD_VER_PATCH           4
 #define ZJD_VERSION             (ZJD_VER_MAJOR << 16 | ZJD_VER_MINOR << 8 | ZJD_VER_PATCH)
+
+typedef enum {
+    ZJD_YUV400 = 0,
+    ZJD_YUV422 = 1,
+    ZJD_YUV420 = 2,
+    ZJD_YUV444 = 3,
+} zjd_yuvfmt_t;
 
 typedef enum {
     ZJD_GRAYSCALE    = 0,    // 1B
