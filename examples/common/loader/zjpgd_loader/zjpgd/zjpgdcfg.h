@@ -7,7 +7,7 @@
 #define __ZJPGDCFG_H__
 
 #ifdef ZJD_USR_CFG
-#include "zjpgdusr.h"
+#   include ZJD_USR_CFG
 #endif
 
 #ifndef ZJD_MEM_POOL_SZ

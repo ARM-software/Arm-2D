@@ -11,8 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 
-//#include "zjpgdcfg.h"
-#include "arm_zjpgd_cfg.h"
+#include "zjpgdcfg.h"
 
 #define ZJD_VER_MAJOR           0
 #define ZJD_VER_MINOR           1

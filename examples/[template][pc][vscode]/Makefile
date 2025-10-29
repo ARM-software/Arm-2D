@@ -76,6 +76,7 @@ CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += _RTE_
 CC_DEF  += VT_SCALING_RATIO=1
 CC_DEF  += FT2BUILD_H_
+CC_DEF  += ZJD_USR_CFG=\"arm_zjpgd_cfg.h\"
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
