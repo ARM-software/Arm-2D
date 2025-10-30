@@ -204,7 +204,6 @@ void image_box_show(image_box_t *ptThis,
         /* draw photo */
         if (NULL != this.tCFG.ptilePhoto) {
             do {
-
                 if (this.tCFG.__bShowGrayScale) {
                     if (this.tCFG.__bNoScaling) {
                         arm_2d_fill_colour_with_mask_and_opacity(  

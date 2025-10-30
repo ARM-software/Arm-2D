@@ -168,7 +168,7 @@ arm_2d_err_t arm_zjpgd_loader_init( arm_zjpgd_loader_t *ptThis,
     } else if (NULL == ptCFG->ptScene) {
         return ARM_2D_ERR_MISSING_PARAM;
     } else if ( (!ptCFG->bUseHeapForVRES)
-             && (NULL == ptCFG->ptScene->ptPlayer)) {
+             && (NULL == ptCFG->ptScene)) {
         return ARM_2D_ERR_MISSING_PARAM;
     } else if (NULL == ptCFG->ImageIO.ptIO) {
         return ARM_2D_ERR_MISSING_PARAM;
@@ -949,8 +949,8 @@ intptr_t __arm_zjpgd_vres_asset_loader( uintptr_t pTarget,
         if (NULL == pBuffer) {
             return (intptr_t)NULL;
         }
-    } else {
-        arm_2d_pfb_t *ptPFB = __arm_2d_helper_pfb_new(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t);
+    } else if (NULL != this.tCFG.ptScene->ptPlayer) {
+        arm_2d_pfb_t *ptPFB = __arm_2d_helper_pfb_new(&(this.tCFG.ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t));
         assert(NULL != ptPFB);
         
         assert(ptPFB->u24Size >= tBufferSize);
@@ -959,6 +959,8 @@ intptr_t __arm_zjpgd_vres_asset_loader( uintptr_t pTarget,
             return (intptr_t)NULL;
         }
         pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
+    } else {
+        return (intptr_t)NULL;
     }
 
     /* load content into the buffer */
