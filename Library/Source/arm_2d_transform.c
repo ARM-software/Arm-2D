@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        14 May 2025
- * $Revision:    V.2.3.2
+ * $Date:        03 Nov 2025
+ * $Revision:    V.2.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -402,8 +402,21 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
     ptSource->pchBuffer = NULL;                 //!< special case
 
     arm_2d_region_t tOrigValidRegion;
-    if (NULL == arm_2d_tile_get_root(this.Origin.ptTile, &tOrigValidRegion, NULL)) {
+
+    arm_2d_tile_t *ptOrigin = arm_2d_tile_get_root( this.Origin.ptTile, 
+                                                    &tOrigValidRegion, 
+                                                    NULL);
+    if (NULL == ptOrigin) {
         return ARM_2D_ERR_OUT_OF_REGION;
+    }
+
+    /*
+     * NOTE (a):  As a Virtual Resource will eventually be present as a root tile
+     *            at the backend, the tOrigValidRegion should always start from
+     *            (0,0)
+     */
+    if (ptOrigin->tInfo.bVirtualResource) {
+        tOrigValidRegion.tLocation = (arm_2d_location_t){0,0};
     }
 
     //! angle validation
@@ -415,13 +428,16 @@ static arm_2d_err_t __arm_2d_transform_preprocess_source(
         ptTransform->fScaleY = ptTransform->fScaleX;
     }
 
-    /* update source center (using root tile's coordinates) */
-    do {
+    /*
+     * See NOTE (a) above. 
+     */
+    if (!ptOrigin->tInfo.bVirtualResource) {
+        /* update source center (using root tile's coordinates) */
         arm_2d_location_t tResourceAsoluteLocation;
         arm_2d_tile_get_absolute_location(this.Origin.ptTile, &tResourceAsoluteLocation);
         ptTransform->tCenter.fX += tResourceAsoluteLocation.iX;
         ptTransform->tCenter.fY += tResourceAsoluteLocation.iY;
-    } while(0);
+    }
 
     //! calculate the source region
     do {
