@@ -280,6 +280,8 @@ extern "C" {
 #define ARM_2D_SCENE_METER_USE_JPG              1
 #define ARM_2D_SCENE_HISTOGRAM_USE_JPG          1
 #define VT_SCALING_RATIO                        1
+#define ARM_2D_DEMO_USE_CRT_SCREEN              1
+#define ARM_2D_DEMO_JPGD_USE_FILE               0
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
