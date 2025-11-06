@@ -3152,6 +3152,9 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CC
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_tile_2xssaa_transform.c"
 
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_transformed_mask_and_target_mask.c"
+
 
 #ifdef   __cplusplus
 }
