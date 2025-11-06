@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.7.0
+ * $Date:        6. Nov 2025
+ * $Revision:    V.1.7.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -524,6 +524,9 @@ enum {
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS_AND_OPACITY,                         //!< todo in the future
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK_AND_OPACITY,                   //!< todo in the future
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
 
     __ARM_2D_OP_IDX_FILTER_IIR_BLUR,
     __ARM_2D_OP_IDX_FILTER_REVERSE_COLOUR,
