@@ -386,8 +386,8 @@ ARM_NONNULL(1)
 void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                                 const arm_2d_region_t *ptRegion,
                                 COLOUR_INT tColour,
-                                arm_2d_border_opacity_t Opacity,
-                                arm_2d_corner_opacity_t CornerOpacity,
+                                arm_2d_border_opacity_t tOpacity,
+                                arm_2d_corner_opacity_t tCornerOpacity,
                                 const arm_2d_tile_t *ptCircleMask)
 {
 
@@ -442,51 +442,59 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
 
 
         /* top left corner */
-        arm_2d_align_top_left(  __round_corner_box_canvas,
-                                tileCircleQuaterMask.tRegion.tSize) {
-            arm_2d_fill_colour_with_mask_and_opacity(   
-                                                    &__round_corner_box, 
-                                                    &__top_left_region, 
-                                                    &tileCircleQuaterMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    CornerOpacity.chTopLeft);
-            ARM_2D_OP_WAIT_ASYNC();
+        if (tCornerOpacity.chTopLeft) {
+            arm_2d_align_top_left(  __round_corner_box_canvas,
+                                    tileCircleQuaterMask.tRegion.tSize) {
+                arm_2d_fill_colour_with_mask_and_opacity(   
+                                                        &__round_corner_box, 
+                                                        &__top_left_region, 
+                                                        &tileCircleQuaterMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tCornerOpacity.chTopLeft);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
         }
 
         /* top right corner */
-        arm_2d_align_top_right( __round_corner_box_canvas,
-                                tileCircleQuaterMask.tRegion.tSize) {
-            arm_2d_fill_colour_with_mask_x_mirror_and_opacity(   
-                                                    &__round_corner_box, 
-                                                    &__top_right_region, 
-                                                    &tileCircleQuaterMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    CornerOpacity.chTopRight);
-            ARM_2D_OP_WAIT_ASYNC();
+        if (tCornerOpacity.chTopRight) {
+            arm_2d_align_top_right( __round_corner_box_canvas,
+                                    tileCircleQuaterMask.tRegion.tSize) {
+                arm_2d_fill_colour_with_mask_x_mirror_and_opacity(   
+                                                        &__round_corner_box, 
+                                                        &__top_right_region, 
+                                                        &tileCircleQuaterMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tCornerOpacity.chTopRight);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
         }
 
         /* bottom left corner */
-        arm_2d_align_bottom_left(   __round_corner_box_canvas,
-                                    tileCircleQuaterMask.tRegion.tSize) {
-            arm_2d_fill_colour_with_mask_y_mirror_and_opacity(   
-                                                    &__round_corner_box, 
-                                                    &__bottom_left_region, 
-                                                    &tileCircleQuaterMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    CornerOpacity.chBottomLeft);
-            ARM_2D_OP_WAIT_ASYNC();
+        if (tCornerOpacity.chBottomLeft) {
+            arm_2d_align_bottom_left(   __round_corner_box_canvas,
+                                        tileCircleQuaterMask.tRegion.tSize) {
+                arm_2d_fill_colour_with_mask_y_mirror_and_opacity(   
+                                                        &__round_corner_box, 
+                                                        &__bottom_left_region, 
+                                                        &tileCircleQuaterMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tCornerOpacity.chBottomLeft);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
         }
 
         /* bottom right corner */
-        arm_2d_align_bottom_right(  __round_corner_box_canvas,
-                                    tileCircleQuaterMask.tRegion.tSize) {
-            arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
-                                                    &__round_corner_box, 
-                                                    &__bottom_right_region, 
-                                                    &tileCircleQuaterMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    CornerOpacity.chBottomRight);
-            ARM_2D_OP_WAIT_ASYNC();
+        if (tCornerOpacity.chBottomRight) {
+            arm_2d_align_bottom_right(  __round_corner_box_canvas,
+                                        tileCircleQuaterMask.tRegion.tSize) {
+                arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(   
+                                                        &__round_corner_box, 
+                                                        &__bottom_right_region, 
+                                                        &tileCircleQuaterMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tCornerOpacity.chBottomRight);
+                ARM_2D_OP_WAIT_ASYNC();
+            }
         }
 
         arm_2d_dock_vertical(__round_corner_box_canvas,
@@ -494,29 +502,33 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                              -  tileCircleQuaterMask.tRegion.tSize.iHeight * 2) {
 
             /* left border */
-            arm_2d_dock_left(   __vertical_region, 
-                                tileCircleHorizontalLineLeftMask.tRegion.tSize.iWidth) {
+            if (tOpacity.chLeft) {
+                arm_2d_dock_left(   __vertical_region, 
+                                    tileCircleHorizontalLineLeftMask.tRegion.tSize.iWidth) {
 
-                arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
-                                                    &__round_corner_box, 
-                                                    &__left_region, 
-                                                    &tileCircleHorizontalLineLeftMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    Opacity.chLeft);
-                ARM_2D_OP_WAIT_ASYNC();
+                    arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
+                                                        &__round_corner_box, 
+                                                        &__left_region, 
+                                                        &tileCircleHorizontalLineLeftMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tOpacity.chLeft);
+                    ARM_2D_OP_WAIT_ASYNC();
+                }
             }
 
             /* right border */
-            arm_2d_dock_right(  __vertical_region, 
-                                tileCircleHorizontalLineRightMask.tRegion.tSize.iWidth) {
-                
-                arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
-                                                    &__round_corner_box, 
-                                                    &__right_region, 
-                                                    &tileCircleHorizontalLineRightMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    Opacity.chRight);
-                ARM_2D_OP_WAIT_ASYNC();
+            if (tOpacity.chRight) {
+                arm_2d_dock_right(  __vertical_region, 
+                                    tileCircleHorizontalLineRightMask.tRegion.tSize.iWidth) {
+                    
+                    arm_2d_fill_colour_with_horizontal_line_mask_and_opacity(
+                                                        &__round_corner_box, 
+                                                        &__right_region, 
+                                                        &tileCircleHorizontalLineRightMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tOpacity.chRight);
+                    ARM_2D_OP_WAIT_ASYNC();
+                }
             }
         }
 
@@ -525,29 +537,33 @@ void __draw_round_corner_border(const arm_2d_tile_t *ptTarget,
                              -  tileCircleQuaterMask.tRegion.tSize.iWidth * 2) {
 
             /* top border */
-            arm_2d_dock_top(    __horizontal_region, 
-                                tileCircleVerticalLineTopMask.tRegion.tSize.iHeight) {
-                
-                arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
-                                                    &__round_corner_box, 
-                                                    &__top_region, 
-                                                    &tileCircleVerticalLineTopMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    Opacity.chTop);
-                ARM_2D_OP_WAIT_ASYNC();
+            if (tOpacity.chTop) {
+                arm_2d_dock_top(    __horizontal_region, 
+                                    tileCircleVerticalLineTopMask.tRegion.tSize.iHeight) {
+                    
+                    arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                                        &__round_corner_box, 
+                                                        &__top_region, 
+                                                        &tileCircleVerticalLineTopMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tOpacity.chTop);
+                    ARM_2D_OP_WAIT_ASYNC();
+                }
             }
 
             /* bottom border */
-            arm_2d_dock_bottom( __horizontal_region, 
-                                tileCircleVerticalLineBottomMask.tRegion.tSize.iHeight) {
-                
-                arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
-                                                    &__round_corner_box, 
-                                                    &__bottom_region, 
-                                                    &tileCircleVerticalLineBottomMask, 
-                                                    (__arm_2d_color_t){tColour},
-                                                    Opacity.chBottom);
-                ARM_2D_OP_WAIT_ASYNC();
+            if (tOpacity.chBottom) {
+                arm_2d_dock_bottom( __horizontal_region, 
+                                    tileCircleVerticalLineBottomMask.tRegion.tSize.iHeight) {
+                    
+                    arm_2d_fill_colour_with_vertical_line_mask_and_opacity(
+                                                        &__round_corner_box, 
+                                                        &__bottom_region, 
+                                                        &tileCircleVerticalLineBottomMask, 
+                                                        (__arm_2d_color_t){tColour},
+                                                        tOpacity.chBottom);
+                    ARM_2D_OP_WAIT_ASYNC();
+                }
             }
         }
     }
