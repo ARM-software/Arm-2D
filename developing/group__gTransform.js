@@ -92,7 +92,6 @@ var group__gTransform =
       [ "ptTargetSide", "group__gTransform.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
     [ "arm_2d_op_fill_cl_msk_opa_trans_t", "group__gTransform.html#ga9c6bb51b7b8851f0d640d54a06027f69", null ],
-    [ "arm_2d_op_fill_cl_trans_msk_des_msk_opa_t", "group__gTransform.html#ga1559aaf65afca82ca6ee1158c5e6c05a", null ],
     [ "arm_2dp_gray8_tile_transform_with_colour_keying_prepare", "group__gTransform.html#gaf878690eec2db2cb9c46b73b9b431fe5", null ],
     [ "arm_2dp_gray8_tile_transform_xy_with_colour_keying_prepare", "group__gTransform.html#ga2bcff9a35e09452a45fa7f94ae780bcc", null ],
     [ "arm_2dp_rgb565_tile_transform_with_colour_keying_prepare", "group__gTransform.html#ga9fe8fe51d0906a8d2f7c91e690f919e0", null ],
