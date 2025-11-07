@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        03 Nov 2025
- * $Revision:    V.2.4.0
+ * $Date:        07 Nov 2025
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M cores
  *

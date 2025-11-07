@@ -18,7 +18,7 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d_features.h"
+ * Title:        arm_2d_features.h
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *

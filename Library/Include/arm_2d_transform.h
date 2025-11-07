@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d_transform.h"
+ * Title:        arm_2d_transform.h
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        03 Nov 2025
- * $Revision:    V.2.4.0
+ * $Date:        07 Nov 2025
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4345,10 +4345,6 @@ typedef struct arm_2d_op_trans_msk_opa_t {
     
 } arm_2d_op_trans_msk_opa_t;
 
-/*! \brief arm_2d_op_fill_cl_trans_msk_des_msk_opa_t is alias of arm_2d_op_trans_msk_opa_t
- */
-typedef arm_2d_op_trans_msk_opa_t arm_2d_op_fill_cl_trans_msk_des_msk_opa_t;
-
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
@@ -5318,6 +5314,7 @@ arm_fsm_rt_t arm_2dp_tile_transform_xy( arm_2d_op_trans_t *ptOP,
 
 /*========================= POST INCLUDES ====================================*/
 #include "__arm_2d_tile_2xssaa_transform.h"
+#include "__arm_2d_fill_colour_with_transformed_mask_target_mask_and_opacity.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

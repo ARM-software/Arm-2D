@@ -18,7 +18,7 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d.h"
+ * Title:        arm_2d_filter.h
  * Description:  Public header file for filters header files
  *
  * $Date:        29. Nov 2024

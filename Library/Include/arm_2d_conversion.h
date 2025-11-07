@@ -18,7 +18,7 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d.h"
+ * Title:        arm_2d_conversion.h
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
