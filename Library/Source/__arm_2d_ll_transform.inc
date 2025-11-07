@@ -1080,8 +1080,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(
 
             __ARM_2D_FUNC(get_alpha_with_opacity) (
                             &tPointFast,
-                            &ptParam->tOrigin.
-                            tValidRegion,
+                            &ptParam->tOrigin.tValidRegion,
                             pchOrigin,
                             iOrigStride,
                             pTargetBase,

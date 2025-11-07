@@ -123,7 +123,11 @@
 
 #define __MTWM_TYPE(__NAME)   ___MTWM_TYPE(__NAME, __API_MTWM_COLOUR)
 
-#define MASK_COLOR(sz)  (sz == 8) ? ptInfo->Mask.chColour : ((sz == 16) ?  ptInfo->Mask.hwColour :  ptInfo->Mask.wColour)
+#define MASK_COLOR(sz)  (   (sz == 8)                                           \
+                        ? ptInfo->Mask.chColour                                 \
+                        :   (   (sz == 16)                                      \
+                            ?   ptInfo->Mask.hwColour                           \
+                            :   ptInfo->Mask.wColour))
 
 /*============================ PROTOTYPES ====================================*/
 extern

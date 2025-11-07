@@ -4309,6 +4309,8 @@ typedef struct arm_2d_op_trans_msk_t {
 } arm_2d_op_trans_msk_t;
 
 
+
+
 /*! \brief arm_2d_op_trans_msk_t is inherit from arm_2d_op_trans_msk_t
  */
 typedef struct arm_2d_op_trans_msk_opa_t {
@@ -4342,6 +4344,10 @@ typedef struct arm_2d_op_trans_msk_opa_t {
     uint8_t                     chOpacity;      //!< opacity
     
 } arm_2d_op_trans_msk_opa_t;
+
+/*! \brief arm_2d_op_fill_cl_trans_msk_des_msk_opa_t is alias of arm_2d_op_trans_msk_opa_t
+ */
+typedef arm_2d_op_trans_msk_opa_t arm_2d_op_fill_cl_trans_msk_des_msk_opa_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
