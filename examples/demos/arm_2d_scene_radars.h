@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_RADAR_H__
-#define __ARM_2D_SCENE_RADAR_H__
+#ifndef __ARM_2D_SCENE_RADARS_H__
+#define __ARM_2D_SCENE_RADARS_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -51,10 +51,10 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_RADAR_IMPLEMENT__
+#ifdef __USER_SCENE_RADARS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_RADAR_INHERIT__
+#ifdef __USER_SCENE_RADARS_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -62,24 +62,24 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_radar and add it to a user specified scene player
+ * \brief initalize scene_radars and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_radar_t will be allocated from HEAP and freed on
+ *            user_scene_radars_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_radar_t* the user_scene_radar_t instance
+ * \return user_scene_radars_t* the user_scene_radars_t instance
  */
-#define arm_2d_scene_radar_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_radar_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_radars_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_radars_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene radar
+ * \brief a user class for scene radars
  */
-typedef struct user_scene_radar_t user_scene_radar_t;
+typedef struct user_scene_radars_t user_scene_radars_t;
 
-struct user_scene_radar_t {
+struct user_scene_radars_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
@@ -88,6 +88,8 @@ ARM_PRIVATE(
     bool bUserAllocated;
 
     spin_zoom_widget_t tScanSector;
+
+    arm_2d_op_fill_cl_trans_msk_des_msk_opa_t   tTransOP;
 
 )
     /* place your public member here */
@@ -99,8 +101,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_radar_t *ptScene);
+user_scene_radars_t *__arm_2d_scene_radars_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_radars_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -108,8 +110,8 @@ user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAd
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_RADAR_IMPLEMENT__
-#undef __USER_SCENE_RADAR_INHERIT__
+#undef __USER_SCENE_RADARS_IMPLEMENT__
+#undef __USER_SCENE_RADARS_INHERIT__
 
 #ifdef   __cplusplus
 }

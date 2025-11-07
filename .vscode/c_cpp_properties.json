@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "MacOS Apple Silicon",
+            "name": "MacOS Apple Silicons",
             "compilerPath": "/usr/bin/clang",
             "intelliSenseMode": "macos-clang-arm64",
             "includePath": [
@@ -19,6 +19,7 @@
                 "examples/common/loader/tjpgd_loader",
                 "examples/common/loader/zjpgd_loader",
                 "examples/common/loader/freetype_loader",
+                "examples/common/loader/freetype_loader/freetype/include",
                 "examples/demos",
                 "examples/demos/monochrome",
                 "examples/demos/Physac/src",

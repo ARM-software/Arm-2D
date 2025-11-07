@@ -216,6 +216,11 @@ void scene_transform_loader(void)
     arm_2d_scene_transform_init(&DISP0_ADAPTER);
 }
 
+void scene_radars_loader(void) 
+{
+    arm_2d_scene_radars_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -539,7 +544,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_hollow_out_list_loader,
+        scene_radars_loader,
+        //scene_rickrolling_loader,
         //scene_histogram_loader,
         //scene_space_badge_loader,
         //scene_pave_loader,
@@ -749,6 +755,7 @@ ARM_PT_END()
 
 int app_2d_main_thread (void *argument)
 {
+#if 0
     /* example code for nano-drawing in blocking mode */
     do {
         arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
@@ -777,6 +784,7 @@ int app_2d_main_thread (void *argument)
          */
         SDL_Delay(1000);
     } while(0);
+#endif
 
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();

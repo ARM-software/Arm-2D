@@ -101,7 +101,7 @@ extern "C" {
 
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_prepare(
-                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        arm_2d_op_fill_cl_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_tile_t *ptTargetMask,
                                         const arm_2d_point_float_t tCentre,
@@ -407,6 +407,10 @@ __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
     ARM_2D_IMPL(arm_2d_op_fill_cl_trans_msk_des_msk_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_RGB565 == OP_CORE.ptOp->Info.Colour.chScheme);
 
+    if (0 == this.chOpacity) {
+        return arm_fsm_rt_cpl;
+    }
+
     ARM_TYPE_CONVERT(ptTask->Param
                         .tCopyOrigMask
                             .use_as____arm_2d_param_copy_orig_t
@@ -418,6 +422,12 @@ __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
                         .tOrigin
                             .nOffset;
 
+
+    arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
+    if (tErr != ARM_2D_ERR_NONE) {
+        return (arm_fsm_rt_t)tErr;
+    }
+    
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
             ==  ptTask->Param.tCopyOrigMask
@@ -467,9 +477,11 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565 = {
             .bHasSource             = true,
             .bHasTarget             = true,
             .bHasDesMask            = true,
+            .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
+        .chInClassOffset    = offsetof(arm_2d_op_fill_cl_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
             .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565),

@@ -132,8 +132,8 @@ CCFLAG  +=  -fno-ms-extensions
 CCFLAG  +=  -Wno-macro-redefined
 
 CCFLAG  +=  -O0
-//CCFLAG  +=  -flto
-//LDFLAG  +=  -flto
+#CCFLAG  +=  -flto
+#LDFLAG  +=  -flto
 LDFLAG  +=  -lpthread
 
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#

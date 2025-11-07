@@ -144,7 +144,7 @@ typedef arm_2d_op_trans_msk_opa_t arm_2d_op_fill_cl_trans_msk_des_msk_opa_t;
 extern
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_prepare(
-                                        arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
+                                        arm_2d_op_fill_cl_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_tile_t *ptTargetMask,
                                         const arm_2d_point_float_t tCentre,

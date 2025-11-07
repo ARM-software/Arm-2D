@@ -18,8 +18,8 @@
 
 /*============================ INCLUDES ======================================*/
 
-#define __USER_SCENE_RADAR_IMPLEMENT__
-#include "arm_2d_scene_radar.h"
+#define __USER_SCENE_RADARS_IMPLEMENT__
+#include "arm_2d_scene_radars.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
@@ -115,33 +115,36 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
+ARM_NOINIT
+static arm_2d_location_t s_tScanSectorCenter;
+
 /*============================ IMPLEMENTATION ================================*/
 
-static void __on_scene_radar_load(arm_2d_scene_t *ptScene)
+static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.tScanSector);
-
 }
 
-static void __after_scene_radar_switching(arm_2d_scene_t *ptScene)
+static void __after_scene_radars_switching(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_radar_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
     
     spin_zoom_widget_depose(&this.tScanSector);
 
+    ARM_2D_OP_DEPOSE(this.tTransOP);
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -154,56 +157,62 @@ static void __on_scene_radar_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene radar                                                                    *
+ * Scene radars                                                                    *
  *----------------------------------------------------------------------------*/
 #if 0  /* deprecated */
-static void __on_scene_radar_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_radars_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_radar_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_radars_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 #endif
 
 
-static void __on_scene_radar_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    
+    int32_t nResult; 
+    if (arm_2d_helper_time_liner_slider(0, 3600, 5000ul, &nResult, &this.lTimestamp[0])) {
+        this.lTimestamp[0] = 0;
+    }
+
+    spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 2.0f);
+
 }
 
-static void __on_scene_radar_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_frame_complete(&this.tScanSector);
 }
 
-static void __before_scene_radar_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_radars_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)ptScene;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene_radar_handler)
+IMPL_PFB_ON_DRAW(__draw_simple_radar)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(ptTile);
     ARM_2D_PARAM(bIsNewFrame);
 
-    user_scene_radar_t *ptThis = (user_scene_radar_t *)pTarget;
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)pTarget;
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
@@ -220,8 +229,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radar_handler)
                             &__bottom_centre_region,
                             &c_tileSatelliteMapSmallGRAY8,
                             (__arm_2d_color_t) {GLCD_COLOR_RED},
-                            128);
+                            128-32);
                 }
+
+                spin_zoom_widget_show(&this.tScanSector, ptTile, &__dock_region, NULL, 255 - 64);
 
                 draw_round_corner_border(   ptTile, 
                                             &__dock_region, 
@@ -229,15 +240,100 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radar_handler)
                                             (arm_2d_border_opacity_t)
                                                 {0, 0, 0, 0},
                                             (arm_2d_corner_opacity_t)
-                                                {255, 255, 255, 255});
+                                                {128, 128, 128, 128});
                 
                 
-            }
-
-
-                                    
+            }                    
         }
 
+    /*-----------------------draw the scene end  -----------------------*/
+    }
+    ARM_2D_OP_WAIT_ASYNC();
+
+    return arm_fsm_rt_cpl;
+}
+
+
+static
+IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)pTarget;
+
+    arm_2d_canvas(ptTile, __top_canvas) {
+    /*-----------------------draw the scene begin-----------------------*/
+        
+        /* following code is just a demo, you can remove them */
+
+        arm_2d_align_centre(__top_canvas, 240, 240 ) {
+
+            arm_2d_dock(__centre_region, 20) {
+
+                arm_2d_point_float_t tCentre = {
+                    .fY = c_tileScanSectorMask.tRegion.tSize.iHeight - 1,
+                };
+
+                arm_2d_align_bottom_centre(__dock_region, c_tileSatelliteMapSmallGRAY8.tRegion.tSize) {
+                    arm_2d_tile_t tMapTile = 
+                        impl_child_tile(c_tileSatelliteMapSmallGRAY8,
+                                        0,
+                                        -__bottom_centre_region.tLocation.iY,
+                                        c_tileSatelliteMapSmallGRAY8.tRegion.tSize.iWidth,
+                                        __dock_region.tSize.iHeight
+                                        );
+
+                    arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(
+                            &this.tTransOP,
+                            &c_tileScanSectorMask,
+                            ptTile,
+                            &tMapTile,
+                            &__dock_region,
+                            tCentre,
+                            ARM_2D_ANGLE(spin_zoom_widget_get_current_angle(&this.tScanSector)),
+                            2.0f,
+                            2.0f,
+                            GLCD_COLOR_RED,
+                            255
+                        );
+                    
+                    ARM_2D_OP_WAIT_ASYNC(&this.tTransOP);
+                }
+                
+                spin_zoom_widget_show(&this.tScanSector, ptTile, &__dock_region, NULL, 50);
+
+                draw_round_corner_border(   ptTile, 
+                                            &__dock_region, 
+                                            GLCD_COLOR_RED, 
+                                            (arm_2d_border_opacity_t)
+                                                {0, 0, 0, 0},
+                                            (arm_2d_corner_opacity_t)
+                                                {128, 128, 128, 128});
+            }
+        }
+
+    /*-----------------------draw the scene end  -----------------------*/
+    }
+    ARM_2D_OP_WAIT_ASYNC();
+
+    return arm_fsm_rt_cpl;
+}
+
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)pTarget;
+
+    arm_2d_canvas(ptTile, __top_canvas) {
+    /*-----------------------draw the scene begin-----------------------*/
+        
+        __draw_radar_with_mono_scan_sector_pattern(pTarget, ptTile, bIsNewFrame);
 
     /*-----------------------draw the scene end  -----------------------*/
     }
@@ -247,8 +343,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radar_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_radar_t *ptThis)
+user_scene_radars_t *__arm_2d_scene_radars_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_radars_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -272,9 +368,9 @@ user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAd
                                                         = __top_canvas.tSize.iWidth;
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_radar_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_radar_t),
-                                                        __alignof__(user_scene_radar_t),
+        ptThis = (user_scene_radars_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_radars_t),
+                                                        __alignof__(user_scene_radars_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -284,9 +380,9 @@ user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAd
         bUserAllocated = true;
     }
 
-    memset(ptThis, 0, sizeof(user_scene_radar_t));
+    memset(ptThis, 0, sizeof(user_scene_radars_t));
 
-    *ptThis = (user_scene_radar_t){
+    *ptThis = (user_scene_radars_t){
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
@@ -294,29 +390,29 @@ user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAd
 
             /* Please uncommon the callbacks if you need them
              */
-            .fnOnLoad       = &__on_scene_radar_load,
-            .fnScene        = &__pfb_draw_scene_radar_handler,
-            .fnAfterSwitch  = &__after_scene_radar_switching,
+            .fnOnLoad       = &__on_scene_radars_load,
+            .fnScene        = &__pfb_draw_scene_radars_handler,
+            .fnAfterSwitch  = &__after_scene_radars_switching,
 
             /* if you want to use predefined dirty region list, please uncomment the following code */
             //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
-            //.fnOnBGStart    = &__on_scene_radar_background_start,        /* deprecated */
-            //.fnOnBGComplete = &__on_scene_radar_background_complete,     /* deprecated */
-            .fnOnFrameStart = &__on_scene_radar_frame_start,
-            .fnBeforeSwitchOut = &__before_scene_radar_switching_out,
-            .fnOnFrameCPL   = &__on_scene_radar_frame_complete,
-            .fnDepose       = &__on_scene_radar_depose,
+            //.fnOnBGStart    = &__on_scene_radars_background_start,        /* deprecated */
+            //.fnOnBGComplete = &__on_scene_radars_background_complete,     /* deprecated */
+            .fnOnFrameStart = &__on_scene_radars_frame_start,
+            .fnBeforeSwitchOut = &__before_scene_radars_switching_out,
+            .fnOnFrameCPL   = &__on_scene_radars_frame_complete,
+            .fnDepose       = &__on_scene_radars_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
-    /* ------------   initialize members of user_scene_radar_t begin ---------------*/
+    /* ------------   initialize members of user_scene_radars_t begin ---------------*/
     // initialize second pointer
     do {
-        static arm_2d_location_t s_tScanSectorCenter;
+        
         s_tScanSectorCenter.iX = 0;
         s_tScanSectorCenter.iY = c_tileScanSectorMask.tRegion.tSize.iHeight - 1;
 
@@ -345,7 +441,9 @@ user_scene_radar_t *__arm_2d_scene_radar_init(   arm_2d_scene_player_t *ptDispAd
         spin_zoom_widget_init(&this.tScanSector, &tCFG);
     } while(0);
 
-    /* ------------   initialize members of user_scene_radar_t end   ---------------*/
+    ARM_2D_OP_INIT(this.tTransOP);
+
+    /* ------------   initialize members of user_scene_radars_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 
