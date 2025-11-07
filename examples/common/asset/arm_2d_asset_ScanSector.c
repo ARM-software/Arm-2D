@@ -2905,9 +2905,6 @@ const arm_2d_tile_t c_tileScanSectorMask2 = {
     .nAddress = ((intptr_t)c_bmpScanSectorCCCA8888) + 3,
 };
 
-
-
-
 extern const arm_2d_tile_t c_tileScanSectorMask;
 
 ARM_SECTION("arm2d.tile.c_tileScanSectorMask")
