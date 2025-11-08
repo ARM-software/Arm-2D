@@ -70,6 +70,16 @@ typedef struct dynamic_nebula_on_draw_particle_evt_t {
     void *pTarget;
 } dynamic_nebula_on_draw_particle_evt_t;
 
+typedef void dynamic_nebula_update_particle_handler_t(  void *pObj,
+                                                        dynamic_nebula_t *ptThis,
+                                                        dynamic_nebula_particle_t *ptParticle,
+                                                        float fAngle);
+
+typedef struct dynamic_nebula_on_update_particle_evt_t {
+    dynamic_nebula_update_particle_handler_t *fnHandler;
+    void *pTarget;
+} dynamic_nebula_on_update_particle_evt_t;
+
 typedef struct dynamic_nebula_cfg_t {
     int16_t     iRadius;
     int16_t     iVisibleRingWidth;
@@ -84,7 +94,10 @@ typedef struct dynamic_nebula_cfg_t {
     float       fSpeed;
 
     dynamic_nebula_particle_t               *ptParticles;
+
     dynamic_nebula_on_draw_particle_evt_t   evtOnDrawParticles;
+    dynamic_nebula_on_update_particle_evt_t evtOnUpdateParticle;
+
 } dynamic_nebula_cfg_t;
 
 /*!
