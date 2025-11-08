@@ -78,6 +78,13 @@
 #define this (*ptThis)
 
 /*============================ TYPES =========================================*/
+enum {
+    BOGEY_UNKNOW,
+    BOGEY_SCANNING,
+    BOGEY_TRACKING,
+    BOGEY_LOST,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
@@ -87,6 +94,8 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileSatelliteMapSmallGRAY8;
 extern const arm_2d_tile_t c_tileScanSectorMask;
+extern const arm_2d_tile_t c_tileTinyDotMask;
+extern const arm_2d_tile_t c_tileTinyCrossMask;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -126,6 +135,16 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.tScanSector);
+
+    arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
+        /* initialize transform helper */
+
+        arm_2d_helper_dirty_region_add_items(
+                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                &ptBogey->tDirtyRegionItem,
+                                1);
+    }
+
 }
 
 static void __after_scene_radars_switching(arm_2d_scene_t *ptScene)
@@ -145,6 +164,13 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
     spin_zoom_widget_depose(&this.tScanSector);
 
     ARM_2D_OP_DEPOSE(this.tTransOP);
+
+    arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
+        arm_2d_helper_dirty_region_remove_items(
+                                &this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                &ptBogey->tDirtyRegionItem,
+                                1);
+    }
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -182,11 +208,40 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     int32_t nResult; 
+    bool bIsNewScan = false;
     if (arm_2d_helper_time_liner_slider(0, 3600, 5000ul, &nResult, &this.lTimestamp[0])) {
         this.lTimestamp[0] = 0;
+        bIsNewScan = true;
+        nResult = 0;
     }
 
     spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 2.0f);
+
+    arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
+
+        if (ptBogey->chOpacity > 64) {
+            ptBogey->chOpacity -= 2;
+        } else {
+            ptBogey->chOpacity = 64;
+        }
+
+        if (bIsNewScan) {
+            ptBogey->bIsLocationUpdated = false;
+        }
+    
+        if (!ptBogey->bIsLocationUpdated) {
+
+            if (nResult >= ptBogey->iAngle) {
+                //ptBogey->chOpacity = 255;
+                ptBogey->bAllowUpdateLocation = true;
+                ptBogey->bIsLocationUpdated = true;
+                //ptBogey->bIsDetected = true;
+            }
+        }
+
+    }
+
+    //printf("\r\n");
 
 }
 
@@ -276,6 +331,15 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
                     .fY = c_tileScanSectorMask.tRegion.tSize.iHeight - 1,
                 };
 
+
+                /* show bogeys */
+                dynamic_nebula_show(&this.tNebula, 
+                                    ptTile, 
+                                    &__dock_region, 
+                                    GLCD_COLOR_RED, 
+                                    255,
+                                    bIsNewFrame);
+
                 arm_2d_align_bottom_centre(__dock_region, c_tileSatelliteMapSmallGRAY8.tRegion.tSize) {
                     arm_2d_tile_t tMapTile = 
                         impl_child_tile(c_tileSatelliteMapSmallGRAY8,
@@ -333,6 +397,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
         
+        //__draw_simple_radar(pTarget, ptTile, bIsNewFrame);
         __draw_radar_with_mono_scan_sector_pattern(pTarget, ptTile, bIsNewFrame);
 
     /*-----------------------draw the scene end  -----------------------*/
@@ -342,8 +407,119 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
     return arm_fsm_rt_cpl;
 }
 
+static
+void __draw_bogey_handler(  void *pObj,
+                            dynamic_nebula_t *ptDN,
+                            const arm_2d_tile_t *ptTile,
+                            arm_2d_location_t tLocation,
+                            uint8_t chOpacity,
+                            int16_t iDistance)
+{
+    assert(NULL != pObj);
+    assert(NULL != ptDN);
+
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)pObj;
+    __radar_bogey_t *ptBogey = (__radar_bogey_t *) ptDN->ptCurrent;
+
+    const arm_2d_tile_t *ptIcon = NULL;
+
+    if (ptBogey->bAllowUpdateLocation) {
+        ptBogey->bAllowUpdateLocation = false;
+
+        switch (ptBogey->u4State) {
+            default:
+            case BOGEY_UNKNOW:
+                ptBogey->u4State = BOGEY_SCANNING;
+                ptBogey->iAngle = ptBogey->iNewAngle;
+                break;
+            case BOGEY_SCANNING:
+                ptBogey->u4State = BOGEY_TRACKING;
+                ptBogey->iDistance = iDistance;
+                ptBogey->tDetectedPos = tLocation;
+                //ptBogey->chOpacity = 255;
+                return;
+            case BOGEY_TRACKING:
+                if (iDistance <= 40 || ptBogey->iDistance < iDistance) {
+                    ptBogey->u4State = BOGEY_LOST;
+                } else {
+                    ptBogey->tDetectedPos = tLocation;
+                    ptBogey->iDistance = iDistance;
+                }
+                ptBogey->chOpacity = 255;
+                break;
+            case BOGEY_LOST:
+                if (ptBogey->iDistance < iDistance) {
+                    ptBogey->u4State = BOGEY_UNKNOW;
+                }
+                break;
+        }
+    }
+
+    switch (ptBogey->u4State) {
+        default:
+        case BOGEY_UNKNOW:
+        case BOGEY_SCANNING:
+            return ;
+
+        case BOGEY_TRACKING:
+            ptIcon = &c_tileTinyDotMask;
+            break;
+
+        case BOGEY_LOST:
+            ptIcon = &c_tileTinyCrossMask;
+            break;
+    }
+
+    arm_2d_region_t tDrawRegion = {
+        .tLocation = ptBogey->tDetectedPos,
+        .tSize = ptIcon->tRegion.tSize,
+    };
+
+    tDrawRegion.tLocation.iX -= tDrawRegion.tSize.iWidth >> 1;
+    tDrawRegion.tLocation.iY -= tDrawRegion.tSize.iHeight >> 1;
+
+    if (0 != ptBogey->chOpacity) {
+        arm_2d_fill_colour_with_mask_and_opacity(   ptTile, 
+                                                    &tDrawRegion, 
+                                                    ptIcon, 
+                                                    (__arm_2d_color_t){ GLCD_COLOR_RED},
+                                                    ptBogey->chOpacity);
+    }
+
+    arm_2d_helper_dirty_region_update_item( 
+        &ptBogey->tDirtyRegionItem,
+        ptTile,
+        NULL,
+        &tDrawRegion);
+
+}
+
+static
+void __update_bogey_handler(void *pObj,
+                            dynamic_nebula_t *ptDN,
+                            dynamic_nebula_particle_t *ptParticle,
+                            int_fast16_t iAngle)
+{
+    assert(NULL != pObj);
+    assert(NULL != ptParticle);
+    ARM_2D_UNUSED(ptDN);
+
+    assert(iAngle >= 0 && iAngle < 3600);
+
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)pObj;
+    __radar_bogey_t *ptBogey = (__radar_bogey_t *)ptParticle;
+
+    ptBogey->iNewAngle = iAngle;
+    //ptBogey->chOpacity = 0;
+
+    //ptBogey->bIsLocationUpdated = false;
+    //ptBogey->bAllowUpdateLocation = false;
+
+}
+
 ARM_NONNULL(1)
-user_scene_radars_t *__arm_2d_scene_radars_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_radars_t *__arm_2d_scene_radars_init(   
+                                        arm_2d_scene_player_t *ptDispAdapter,
                                         user_scene_radars_t *ptThis)
 {
     bool bUserAllocated = false;
@@ -442,6 +618,43 @@ user_scene_radars_t *__arm_2d_scene_radars_init(   arm_2d_scene_player_t *ptDisp
     } while(0);
 
     ARM_2D_OP_INIT(this.tTransOP);
+
+    /* initialize bogeys */
+    do {
+        int16_t iRadius = 100;
+        dynamic_nebula_cfg_t tCFG = {
+            .fSpeed = 0.03f,
+            .iRadius = iRadius,
+            .iVisibleRingWidth = 60,
+            .hwParticleCount = dimof(this.tBogeys),
+            .ptParticles = (dynamic_nebula_particle_t *)this.tBogeys,
+            .hwParticleTypeSize = sizeof(__radar_bogey_t),
+            .iFullyVisibleRingWidth = 80,
+
+            .bMovingOutward = false,
+            .u8FadeOutEdgeWidth = 8,
+
+            .evtOnDrawParticles = {
+                .fnHandler = &__draw_bogey_handler,
+                .pTarget = ptThis,
+            },
+
+            .evtOnUpdateParticle = {
+                .fnHandler = &__update_bogey_handler,
+                .pTarget = ptThis,
+            },
+        };
+        dynamic_nebula_init(&this.tNebula, &tCFG);
+
+        arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
+            ptBogey->u4State = BOGEY_SCANNING;
+            ptBogey->bIsLocationUpdated = false;
+            ptBogey->iAngle = ptBogey->iNewAngle;
+            ptBogey->iDistance = dynamic_nebula_get_particle_distance(
+                                        &this.tNebula, 
+                                        &(ptBogey->use_as__dynamic_nebula_particle_t));
+        }
+    } while(0);
 
     /* ------------   initialize members of user_scene_radars_t end   ---------------*/
 

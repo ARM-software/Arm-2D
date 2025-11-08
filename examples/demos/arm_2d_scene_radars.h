@@ -74,6 +74,24 @@ extern "C" {
             __arm_2d_scene_radars_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+typedef struct __radar_bogey_t {
+    implement(dynamic_nebula_particle_t);
+    int16_t iAngle;
+    int16_t iNewAngle;
+    int16_t iDistance;
+
+    uint8_t chOpacity;
+    uint8_t u4State                 : 4;
+    uint8_t bAllowUpdateLocation    : 1;
+    uint8_t bIsLocationUpdated      : 1;
+    uint8_t                         : 2;
+
+    arm_2d_location_t tDetectedPos;
+
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+} __radar_bogey_t;
+
 /*!
  * \brief a user class for scene radars
  */
@@ -90,6 +108,9 @@ ARM_PRIVATE(
     spin_zoom_widget_t tScanSector;
 
     arm_2d_op_fill_cl_trans_msk_des_msk_opa_t   tTransOP;
+
+    dynamic_nebula_t    tNebula;
+    __radar_bogey_t     tBogeys[6];
 
 )
     /* place your public member here */

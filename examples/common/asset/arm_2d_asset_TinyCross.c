@@ -1,0 +1,379 @@
+
+/* Generated on Sat Nov  8 04:02:53 2025 from -i */
+/* Re-sized : True */
+/* Rotated : 0.0 deg */
+
+
+
+#include "arm_2d.h"
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wcast-qual"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress=1296
+#endif
+
+
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpTinyCrossAlpha")
+static const uint8_t c_bmpTinyCrossAlpha[10*10] = {
+/* -0- */
+0xaa, 0x65, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5d, 0xb0, 
+/* -1- */
+0x51, 0xe6, 0x57, 0x00, 0x00, 0x00, 0x00, 0x50, 0xe7, 0x58, 
+/* -2- */
+0x00, 0x45, 0xec, 0x56, 0x00, 0x00, 0x4f, 0xed, 0x4d, 0x00, 
+/* -3- */
+0x00, 0x00, 0x48, 0xec, 0x4f, 0x48, 0xec, 0x4f, 0x00, 0x00, 
+/* -4- */
+0x00, 0x00, 0x00, 0x43, 0xea, 0xec, 0x4a, 0x00, 0x00, 0x00, 
+/* -5- */
+0x00, 0x00, 0x00, 0x44, 0xea, 0xec, 0x4b, 0x00, 0x00, 0x00, 
+/* -6- */
+0x00, 0x00, 0x49, 0xec, 0x4e, 0x47, 0xec, 0x50, 0x00, 0x00, 
+/* -7- */
+0x00, 0x47, 0xec, 0x56, 0x00, 0x00, 0x4e, 0xec, 0x4e, 0x00, 
+/* -8- */
+0x52, 0xe7, 0x56, 0x00, 0x00, 0x00, 0x00, 0x4e, 0xe7, 0x59, 
+/* -9- */
+0xaa, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5c, 0xb0, 
+};
+
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpTinyCrossA1Alpha")
+static const uint8_t c_bmpTinyCrossA1Alpha[2*10] = {
+/* -0- */
+0x01, 0x02, 
+/* -1- */
+0x02, 0x01, 
+/* -2- */
+0x84, 0x00, 
+/* -3- */
+0x48, 0x00, 
+/* -4- */
+0x30, 0x00, 
+/* -5- */
+0x30, 0x00, 
+/* -6- */
+0x48, 0x00, 
+/* -7- */
+0x84, 0x00, 
+/* -8- */
+0x02, 0x01, 
+/* -9- */
+0x01, 0x02, 
+};
+
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpTinyCrossA2Alpha")
+static const uint8_t c_bmpTinyCrossA2Alpha[3*10] = {
+/* -0- */
+0x06, 0x00, 0x09, 
+/* -1- */
+0x1d, 0x40, 0x07, 
+/* -2- */
+0x74, 0xd0, 0x01, 
+/* -3- */
+0xd0, 0x75, 0x00, 
+/* -4- */
+0x40, 0x1f, 0x00, 
+/* -5- */
+0x40, 0x1f, 0x00, 
+/* -6- */
+0xd0, 0x75, 0x00, 
+/* -7- */
+0x74, 0xd0, 0x01, 
+/* -8- */
+0x1d, 0x40, 0x07, 
+/* -9- */
+0x06, 0x00, 0x09, 
+};
+
+ARM_ALIGN(4) ARM_SECTION("arm2d.asset.c_bmpTinyCrossA4Alpha")
+static const uint8_t c_bmpTinyCrossA4Alpha[5*10] = {
+/* -0- */
+0x6a, 0x00, 0x00, 0x00, 0xb5, 
+/* -1- */
+0xe5, 0x05, 0x00, 0x50, 0x5e, 
+/* -2- */
+0x40, 0x5e, 0x00, 0xe4, 0x04, 
+/* -3- */
+0x00, 0xe4, 0x44, 0x4e, 0x00, 
+/* -4- */
+0x00, 0x40, 0xee, 0x04, 0x00, 
+/* -5- */
+0x00, 0x40, 0xee, 0x04, 0x00, 
+/* -6- */
+0x00, 0xe4, 0x44, 0x5e, 0x00, 
+/* -7- */
+0x40, 0x5e, 0x00, 0xe4, 0x04, 
+/* -8- */
+0xe5, 0x05, 0x00, 0x40, 0x5e, 
+/* -9- */
+0x6a, 0x00, 0x00, 0x00, 0xb5, 
+};
+
+
+ARM_SECTION("arm2d.asset.c_bmpTinyCrossGRAY8")
+const uint8_t c_bmpTinyCrossGRAY8[10*10] = {
+/* -0- */
+0x83, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x92, 0x92, 
+/* -1- */
+0x82, 0x83, 0x83, 0x00, 0x00, 0x00, 0x00, 0x8d, 0x91, 0x91, 
+/* -2- */
+0x00, 0x83, 0x84, 0x84, 0x00, 0x00, 0x8a, 0x8d, 0x8d, 0x00, 
+/* -3- */
+0x00, 0x00, 0x81, 0x84, 0x85, 0x88, 0x89, 0x8a, 0x00, 0x00, 
+/* -4- */
+0x00, 0x00, 0x00, 0x82, 0x84, 0x86, 0x87, 0x00, 0x00, 0x00, 
+/* -5- */
+0x00, 0x00, 0x00, 0x82, 0x81, 0x84, 0x84, 0x00, 0x00, 0x00, 
+/* -6- */
+0x00, 0x00, 0x7d, 0x7e, 0x80, 0x83, 0x84, 0x83, 0x00, 0x00, 
+/* -7- */
+0x00, 0x7b, 0x7b, 0x7c, 0x00, 0x00, 0x82, 0x84, 0x83, 0x00, 
+/* -8- */
+0x78, 0x77, 0x7a, 0x00, 0x00, 0x00, 0x00, 0x83, 0x83, 0x84, 
+/* -9- */
+0x77, 0x77, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x82, 0x83, 
+};
+
+ARM_SECTION("arm2d.asset.c_bmpTinyCrossRGB565")
+const uint16_t c_bmpTinyCrossRGB565[10*10] = {
+/* -0- */
+0xf365, 0xeb65, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xebe9, 0xebe9, 
+/* -1- */
+0xeb65, 0xf365, 0xf365, 0x0000, 0x0000, 0x0000, 0x0000, 0xebc8, 0xebe9, 0xebe9, 
+/* -2- */
+0x0000, 0xf365, 0xf365, 0xf385, 0x0000, 0x0000, 0xeba7, 0xebc8, 0xeba8, 0x0000, 
+/* -3- */
+0x0000, 0x0000, 0xeb65, 0xf365, 0xf385, 0xf3a6, 0xf3a6, 0xeba7, 0x0000, 0x0000, 
+/* -4- */
+0x0000, 0x0000, 0x0000, 0xeb65, 0xf365, 0xf385, 0xf386, 0x0000, 0x0000, 0x0000, 
+/* -5- */
+0x0000, 0x0000, 0x0000, 0xf365, 0xf365, 0xf365, 0xf385, 0x0000, 0x0000, 0x0000, 
+/* -6- */
+0x0000, 0x0000, 0xeb44, 0xeb44, 0xeb44, 0xf365, 0xf365, 0xeb65, 0x0000, 0x0000, 
+/* -7- */
+0x0000, 0xe344, 0xeb24, 0xeb24, 0x0000, 0x0000, 0xeb65, 0xf365, 0xeb65, 0x0000, 
+/* -8- */
+0xe303, 0xe303, 0xe324, 0x0000, 0x0000, 0x0000, 0x0000, 0xf365, 0xf365, 0xf365, 
+/* -9- */
+0xe303, 0xe303, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xeb65, 0xeb65, 
+};
+
+ARM_SECTION("arm2d.asset.c_bmpTinyCrossCCCA8888")
+const uint32_t c_bmpTinyCrossCCCA8888[10*10] = {
+/* -0- */
+0xaaf06f2b, 0x65ef6f2d, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x5dee7e4a, 0xb0ec7e4c, 
+/* -1- */
+0x51ef6e28, 0xe6f16e2a, 0x57f06f2b, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x50eb7942, 0xe7ee7c48, 0x58ed7c4b, 
+/* -2- */
+0x00000000, 0x45f06e2c, 0xecf26f2a, 0x56f0702c, 0x00000000, 0x00000000, 0x4fee773a, 0xedef7840, 0x4dee7742, 0x00000000, 
+/* -3- */
+0x00000000, 0x00000000, 0x48ed6d2a, 0xecf26f2a, 0x4ff2702d, 0x48f07435, 0xecf07437, 0x4fee773a, 0x00000000, 0x00000000, 
+/* -4- */
+0x00000000, 0x00000000, 0x00000000, 0x43ef6e29, 0xeaf36f2a, 0xecf3712e, 0x4af17133, 0x00000000, 0x00000000, 0x00000000, 
+/* -5- */
+0x00000000, 0x00000000, 0x00000000, 0x44f06c29, 0xeaf06c28, 0xecf36f2a, 0x4bf1702c, 0x00000000, 0x00000000, 0x00000000, 
+/* -6- */
+0x00000000, 0x00000000, 0x49ea6826, 0xeced6924, 0x4eee6b27, 0x47f06f2b, 0xecf26f2a, 0x50ef6f2c, 0x00000000, 0x00000000, 
+/* -7- */
+0x00000000, 0x47e56823, 0xecea6622, 0x56ea6723, 0x00000000, 0x00000000, 0x4eee6f2a, 0xecf26f2a, 0x4eee6f2d, 0x00000000, 
+/* -8- */
+0x52e6631f, 0xe7e5631e, 0x56e76423, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x4ef16f2a, 0xe7f16e29, 0x59f06f2d, 
+/* -9- */
+0xaae4631e, 0x64e5631e, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x5cee6e29, 0xb0ef6e2b, 
+};
+
+
+extern const arm_2d_tile_t c_tileTinyCrossGRAY8;
+ARM_SECTION("arm2d.tile.c_tileTinyCrossGRAY8")
+const arm_2d_tile_t c_tileTinyCrossGRAY8 = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_GRAY8,
+        },
+    },
+    .pchBuffer = (uint8_t*)c_bmpTinyCrossGRAY8,
+};
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossRGB565;
+ARM_SECTION("arm2d.tile.c_tileTinyCrossRGB565")
+const arm_2d_tile_t c_tileTinyCrossRGB565 = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_RGB565,
+        },
+    },
+    .phwBuffer = (uint16_t*)c_bmpTinyCrossRGB565,
+};
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossCCCA8888;
+
+ARM_SECTION("arm2d.tile.c_tileTinyCrossCCCA8888")
+const arm_2d_tile_t c_tileTinyCrossCCCA8888 = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_BGRA8888,
+        },
+    },
+    .pwBuffer = (uint32_t*)c_bmpTinyCrossCCCA8888,
+};
+
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossMask2;
+
+ARM_SECTION("arm2d.tile.c_tileTinyCrossMask2")
+const arm_2d_tile_t c_tileTinyCrossMask2 = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_CHANNEL_8in32,
+        },
+    },
+    .nAddress = ((intptr_t)c_bmpTinyCrossCCCA8888) + 3,
+};
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossMask;
+
+ARM_SECTION("arm2d.tile.c_tileTinyCrossMask")
+const arm_2d_tile_t c_tileTinyCrossMask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_8BIT,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpTinyCrossAlpha,
+};
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossA1Mask;
+
+ARM_SECTION("arm2d.tile.c_tileTinyCrossA1Mask")
+const arm_2d_tile_t c_tileTinyCrossA1Mask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_MASK_A1,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpTinyCrossA1Alpha,
+};
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossA2Mask;
+
+ARM_SECTION("arm2d.tile.c_tileTinyCrossA2Mask")
+const arm_2d_tile_t c_tileTinyCrossA2Mask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_MASK_A2,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpTinyCrossA2Alpha,
+};
+
+
+
+
+extern const arm_2d_tile_t c_tileTinyCrossA4Mask;
+
+ARM_SECTION("arm2d.tile.c_tileTinyCrossA4Mask")
+const arm_2d_tile_t c_tileTinyCrossA4Mask = {
+    .tRegion = {
+        .tSize = {
+            .iWidth = 10,
+            .iHeight = 10,
+        },
+    },
+    .tInfo = {
+        .bIsRoot = true,
+        .bHasEnforcedColour = true,
+        .tColourInfo = {
+            .chScheme = ARM_2D_COLOUR_MASK_A4,
+        },
+    },
+    .pchBuffer = (uint8_t *)c_bmpTinyCrossA4Alpha,
+};
+
+
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_warning=1296
+#endif
+
+

@@ -94,22 +94,33 @@ void dynamic_nebula_init( dynamic_nebula_t *ptThis, dynamic_nebula_cfg_t *ptCFG)
     this.fFadeOutOpacityStep = 255.0f / (float)this.tCFG.u8FadeOutEdgeWidth;
 
     do {
-        float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
+        int_fast16_t iAngle = rand() % 3600;
+        float fAngle = ARM_2D_ANGLE((float)iAngle / 10.0f);
         
         ptParticle->fSin = arm_sin_f32(fAngle);
         ptParticle->fCos = arm_cos_f32(fAngle);
         ptParticle->fOffset = (float)(rand() % this.tCFG.iVisibleRingWidth);
-        ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.hwParticleTypeSize);
 
-        
         ARM_2D_INVOKE_RT_VOID(this.tCFG.evtOnUpdateParticle.fnHandler, 
             ARM_2D_PARAM(
                 this.tCFG.evtOnUpdateParticle.pTarget,
                 ptThis,
                 ptParticle, 
-                fAngle));
+                iAngle));
+
+        ptParticle = (dynamic_nebula_particle_t *)(((uintptr_t)ptParticle) + this.tCFG.hwParticleTypeSize);
     } while(--n);
 
+}
+
+extern
+ARM_NONNULL(1,2)
+int16_t dynamic_nebula_get_particle_distance(dynamic_nebula_t *ptThis, dynamic_nebula_particle_t *ptParticle)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptParticle);
+
+    return (int16_t)ptParticle->fOffset + this.tCFG.iRadius - this.tCFG.iVisibleRingWidth;
 }
 
 ARM_NONNULL(1)
@@ -167,7 +178,8 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                         if (ptParticle->fOffset >= (float)this.tCFG.iVisibleRingWidth) {
                             ptParticle->fOffset = 0.0f;
 
-                            float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
+                            int_fast16_t iAngle = rand() % 3600;
+                            float fAngle = ARM_2D_ANGLE((float)iAngle / 10.0f);
             
                             ptParticle->fSin = arm_sin_f32(fAngle);
                             ptParticle->fCos = arm_cos_f32(fAngle);
@@ -177,7 +189,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                                     this.tCFG.evtOnUpdateParticle.pTarget,
                                     ptThis,
                                     ptParticle, 
-                                    fAngle));
+                                    iAngle));
                         }
                     } else {
                         ptParticle->fOffset -= this.tCFG.fSpeed;
@@ -185,7 +197,8 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                         if (ptParticle->fOffset <= 0.0f) {
                             ptParticle->fOffset = (float)this.tCFG.iVisibleRingWidth;
 
-                            float fAngle = ARM_2D_ANGLE((float)(rand() % 3600) / 10.0f);
+                            int_fast16_t iAngle = rand() % 3600;
+                            float fAngle = ARM_2D_ANGLE((float)iAngle / 10.0f);
             
                             ptParticle->fSin = arm_sin_f32(fAngle);
                             ptParticle->fCos = arm_cos_f32(fAngle);
@@ -195,7 +208,7 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
                                     this.tCFG.evtOnUpdateParticle.pTarget,
                                     ptThis,
                                     ptParticle, 
-                                    fAngle));
+                                    iAngle));
                         }
                     }
 
