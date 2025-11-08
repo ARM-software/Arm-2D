@@ -73,6 +73,8 @@
 #   error Unsupported colour depth!
 #endif
 
+#define LAST_STAND_DEFENCE_RADIUS   40
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -84,6 +86,7 @@ enum {
     BOGEY_TRACKING,
     BOGEY_LOST,
 };
+
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -232,10 +235,8 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
         if (!ptBogey->bIsLocationUpdated) {
 
             if (nResult >= ptBogey->iAngle) {
-                //ptBogey->chOpacity = 255;
                 ptBogey->bAllowUpdateLocation = true;
                 ptBogey->bIsLocationUpdated = true;
-                //ptBogey->bIsDetected = true;
             }
         }
 
@@ -251,6 +252,10 @@ static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_frame_complete(&this.tScanSector);
+
+    arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
+        ptBogey->u2State = ptBogey->u2NextState;
+    }
 }
 
 static void __before_scene_radars_switching_out(arm_2d_scene_t *ptScene)
@@ -426,21 +431,20 @@ void __draw_bogey_handler(  void *pObj,
     if (ptBogey->bAllowUpdateLocation) {
         ptBogey->bAllowUpdateLocation = false;
 
-        switch (ptBogey->u4State) {
-            default:
+        switch (ptBogey->u2State) {
             case BOGEY_UNKNOW:
-                ptBogey->u4State = BOGEY_SCANNING;
+                ptBogey->u2NextState = BOGEY_SCANNING;
                 ptBogey->iAngle = ptBogey->iNewAngle;
                 break;
             case BOGEY_SCANNING:
-                ptBogey->u4State = BOGEY_TRACKING;
+                ptBogey->u2NextState = BOGEY_TRACKING;
                 ptBogey->iDistance = iDistance;
                 ptBogey->tDetectedPos = tLocation;
-                //ptBogey->chOpacity = 255;
+                ptBogey->chOpacity = 255;
                 return;
             case BOGEY_TRACKING:
-                if (iDistance <= 40 || ptBogey->iDistance < iDistance) {
-                    ptBogey->u4State = BOGEY_LOST;
+                if (iDistance <= LAST_STAND_DEFENCE_RADIUS || ptBogey->iDistance < iDistance) {
+                    ptBogey->u2NextState = BOGEY_LOST;
                 } else {
                     ptBogey->tDetectedPos = tLocation;
                     ptBogey->iDistance = iDistance;
@@ -449,13 +453,13 @@ void __draw_bogey_handler(  void *pObj,
                 break;
             case BOGEY_LOST:
                 if (ptBogey->iDistance < iDistance) {
-                    ptBogey->u4State = BOGEY_UNKNOW;
+                    ptBogey->u2NextState = BOGEY_UNKNOW;
                 }
                 break;
         }
     }
 
-    switch (ptBogey->u4State) {
+    switch (ptBogey->u2State) {
         default:
         case BOGEY_UNKNOW:
         case BOGEY_SCANNING:
@@ -510,11 +514,6 @@ void __update_bogey_handler(void *pObj,
     __radar_bogey_t *ptBogey = (__radar_bogey_t *)ptParticle;
 
     ptBogey->iNewAngle = iAngle;
-    //ptBogey->chOpacity = 0;
-
-    //ptBogey->bIsLocationUpdated = false;
-    //ptBogey->bAllowUpdateLocation = false;
-
 }
 
 ARM_NONNULL(1)
@@ -625,11 +624,11 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         dynamic_nebula_cfg_t tCFG = {
             .fSpeed = 0.03f,
             .iRadius = iRadius,
-            .iVisibleRingWidth = 60,
+            .iVisibleRingWidth = iRadius - LAST_STAND_DEFENCE_RADIUS,
             .hwParticleCount = dimof(this.tBogeys),
             .ptParticles = (dynamic_nebula_particle_t *)this.tBogeys,
             .hwParticleTypeSize = sizeof(__radar_bogey_t),
-            .iFullyVisibleRingWidth = 80,
+            //.iFullyVisibleRingWidth = iRadius,
 
             .bMovingOutward = false,
             .u8FadeOutEdgeWidth = 8,
@@ -647,12 +646,8 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         dynamic_nebula_init(&this.tNebula, &tCFG);
 
         arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
-            ptBogey->u4State = BOGEY_SCANNING;
-            ptBogey->bIsLocationUpdated = false;
+            ptBogey->u2State = BOGEY_UNKNOW;
             ptBogey->iAngle = ptBogey->iNewAngle;
-            ptBogey->iDistance = dynamic_nebula_get_particle_distance(
-                                        &this.tNebula, 
-                                        &(ptBogey->use_as__dynamic_nebula_particle_t));
         }
     } while(0);
 

@@ -82,7 +82,8 @@ typedef struct __radar_bogey_t {
     int16_t iDistance;
 
     uint8_t chOpacity;
-    uint8_t u4State                 : 4;
+    uint8_t u2State                 : 2;
+    uint8_t u2NextState             : 2;
     uint8_t bAllowUpdateLocation    : 1;
     uint8_t bIsLocationUpdated      : 1;
     uint8_t                         : 2;
