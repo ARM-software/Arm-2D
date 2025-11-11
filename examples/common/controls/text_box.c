@@ -393,8 +393,8 @@ int64_t text_box_set_scrolling_position_offset(text_box_t *ptThis, int16_t iOffs
     if (iOffset < 0) {
         lPosition += iOffset;
     } else {
-        int64_t lSafeMargin = __INT64_MAX__ - this.Request.lTargetPositionInPixel;
-        if (iOffset > lSafeMargin) {
+        uint64_t dwSafeMargin = __INT64_MAX__ - this.Request.lTargetPositionInPixel;
+        if (iOffset > dwSafeMargin) {
             lPosition = __INT64_MAX__;
         } else {
             lPosition += iOffset;

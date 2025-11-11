@@ -4723,6 +4723,14 @@ void __arm_2d_helper_dirty_region_item_update(
         this.chUpdateLifeCycle = ptHelper->chUpdateLifeCycle;
     }
 
+    if (ARM_2D_RT_TRUE != arm_2d_target_tile_is_new_frame(ptTargetTile)) {
+        if (NULL == arm_2d_tile_get_root(ptTargetTile, NULL, NULL)) {
+            this.bIgnore = true;
+
+            return ;
+        }
+    }
+
     if (NULL == ptNewRegion) {
         this.bIgnore = true;
 
