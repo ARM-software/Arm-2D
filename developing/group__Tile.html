@@ -294,6 +294,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa2c90673706f32707b09561eb42e87a9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gaa2c90673706f32707b09561eb42e87a9">arm_2d_tile_get_root</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptValidRegion, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptOffset)</td></tr>
 <tr class="memdesc:gaa2c90673706f32707b09561eb42e87a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the root tile and the valid region for a given tile  <a href="group__Tile.html#gaa2c90673706f32707b09561eb42e87a9">More...</a><br /></td></tr>
 <tr class="separator:gaa2c90673706f32707b09561eb42e87a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae32720190d29e89ef42d8813db731d0a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gae32720190d29e89ef42d8813db731d0a">__arm_2d_tile_get_virtual_screen_or_root_only</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **ppVirtualScreen, bool bQuitWhenFindVirtualScreen)</td></tr>
+<tr class="memdesc:gae32720190d29e89ef42d8813db731d0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the root tile (and/or the virtual screen tile) without checking the validation region  <a href="group__Tile.html#gae32720190d29e89ef42d8813db731d0a">More...</a><br /></td></tr>
+<tr class="separator:gae32720190d29e89ef42d8813db731d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a188b8ca4402c7853bf966e2dd05ef0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0">__arm_2d_tile_get_virtual_screen_or_root</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptValidRegion, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptOffset, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **ppVirtualScreen, bool bQuitWhenFindVirtualScreen)</td></tr>
 <tr class="memdesc:ga7a188b8ca4402c7853bf966e2dd05ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the root tile (and/or the virtual screen tile)  <a href="group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0">More...</a><br /></td></tr>
 <tr class="separator:ga7a188b8ca4402c7853bf966e2dd05ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3579,6 +3582,51 @@ wColour</td>
 <div class="line">|                                                                        |</div>
 <div class="line">+------------------------------------------------------------------------+</div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="gae32720190d29e89ef42d8813db731d0a" name="gae32720190d29e89ef42d8813db731d0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae32720190d29e89ef42d8813db731d0a">&#9670;&#160;</a></span>__arm_2d_tile_get_virtual_screen_or_root_only()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> * __arm_2d_tile_get_virtual_screen_or_root_only </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
+          <td class="paramname"><em>ptTile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> **&#160;</td>
+          <td class="paramname"><em>ppVirtualScreen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bQuitWhenFindVirtualScreen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the root tile (and/or the virtual screen tile) without checking the validation region </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptTile</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ppVirtualScreen</td><td>the virtual screen tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bQuitWhenFindVirtualScreen</td><td>whether stop searching when encounter the virtual screen tile. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>const arm_2d_tile_t* the root tile or the virtual screen tile when bQuitWhenFindVirtualScreen is true </dd></dl>
+
 </div>
 </div>
 <a id="ga7a188b8ca4402c7853bf966e2dd05ef0" name="ga7a188b8ca4402c7853bf966e2dd05ef0"></a>
