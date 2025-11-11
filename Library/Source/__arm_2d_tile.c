@@ -904,11 +904,11 @@ arm_2d_region_t *arm_2d_tile_region_diff(   const arm_2d_tile_t *ptTarget,
                           +----------------------------------------+
  */
 ARM_NONNULL(1,2,3)
-arm_2d_tile_t *arm_2d_tile_generate_child(
-                                        const arm_2d_tile_t *ptParentTile,
-                                        const arm_2d_region_t *ptRegion,
-                                        arm_2d_tile_t *ptOutput,
-                                        bool bClipRegion)
+arm_2d_tile_t *__arm_2d_tile_generate_child(const arm_2d_tile_t *ptParentTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptOutput,
+                                            bool bClipRegion,
+                                            bool bValidateBeforeReturn)
 {
     assert(NULL != ptParentTile);
     assert(NULL != ptRegion);
@@ -925,7 +925,8 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
         if (!arm_2d_region_intersect(   &tParentRegion,
                                         &(ptOutput->tRegion),
                                         &(ptOutput->tRegion)
-                                        )) {
+                                        )
+        &&  bValidateBeforeReturn) {
             /* out of range */
             return NULL;
         }
@@ -937,7 +938,8 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
         if (!arm_2d_region_intersect(   &tParentRegion,
                                         &(ptOutput->tRegion),
                                         NULL //&(ptOutput->tRegion) //!< **note**
-                                        )) {
+                                        )
+        &&  bValidateBeforeReturn) {
             /* out of range */
             return NULL;
         }
@@ -953,6 +955,20 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
     ptOutput->ptParent = (arm_2d_tile_t *)ptParentTile;
 
     return ptOutput;
+}
+
+ARM_NONNULL(1,2,3)
+arm_2d_tile_t *arm_2d_tile_generate_child(
+                                        const arm_2d_tile_t *ptParentTile,
+                                        const arm_2d_region_t *ptRegion,
+                                        arm_2d_tile_t *ptOutput,
+                                        bool bClipRegion)
+{
+    return __arm_2d_tile_generate_child(ptParentTile, 
+                                        ptRegion, 
+                                        ptOutput, 
+                                        bClipRegion, 
+                                        false);
 }
 
 ARM_NONNULL(1)

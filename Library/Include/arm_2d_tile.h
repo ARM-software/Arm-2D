@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the basic tile operations
  *
  * $Date:        11. Nov 2025
- * $Revision:    V.1.5.2
+ * $Revision:    V.1.5.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1032,6 +1032,14 @@ arm_2d_err_t arm_2d_target_tile_is_new_frame(const arm_2d_tile_t *ptTarget);
                           +----------------------------------------+
    \endcode
  */
+extern
+ARM_NONNULL(1,2,3)
+arm_2d_tile_t *__arm_2d_tile_generate_child(const arm_2d_tile_t *ptParentTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            arm_2d_tile_t *ptOutput,
+                                            bool bClipRegion,
+                                            bool bValidateBeforeReturn);
+
 extern 
 ARM_NONNULL(1,2,3)
 arm_2d_tile_t *arm_2d_tile_generate_child(

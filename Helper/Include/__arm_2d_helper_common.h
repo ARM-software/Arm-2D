@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.8.4
+ * $Date:        11. Nov 2025
+ * $Revision:    V.1.8.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1050,11 +1050,11 @@ extern "C" {
                     ARM_2D_SAFE_NAME(ContainerRegion).tSize.iHeight             \
                         -= ARM_2D_SAFE_NAME(tMargin).chTop                      \
                         + ARM_2D_SAFE_NAME(tMargin).chBottom;                   \
-                    arm_2d_tile_generate_child(                                 \
+                    __arm_2d_tile_generate_child(                               \
                                             ARM_2D_SAFE_NAME(ptTile),           \
                                             &ARM_2D_SAFE_NAME(ContainerRegion), \
                                             &(__container_name),                \
-                                            false);                             \
+                                            false, false);                      \
                 },                                                              \
                 {                                                               \
                     (void)0;                                                    \
