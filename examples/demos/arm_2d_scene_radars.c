@@ -106,6 +106,7 @@ extern const arm_2d_tile_t c_tileTinyDotMask;
 extern const arm_2d_tile_t c_tileTinyCrossMask;
 extern const arm_2d_tile_t c_tileRadarBackgroundGRAY8;
 
+extern
 const
 struct {
     implement(arm_2d_user_font_t);
