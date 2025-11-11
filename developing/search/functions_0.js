@@ -55,8 +55,9 @@ var searchData=
   ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fbefore_5fswitching_5fevent_5fhandler_52',['__arm_2d_scene_player_register_before_switching_event_handler',['../group__gHelper.html#ga5228b63f6a1c3ba273d465f8ec6df648',1,'arm_2d_helper_scene.h']]],
   ['_5f_5farm_5f2d_5fscene_5fplayer_5fregister_5fon_5fdraw_5fnavigation_5fevent_5fhandler_53',['__arm_2d_scene_player_register_on_draw_navigation_event_handler',['../group__gHelper.html#ga516674d7d321e4ecb058fd3b8ddbab70',1,'arm_2d_helper_scene.h']]],
   ['_5f_5farm_5f2d_5fscene_5fplayer_5fset_5fswitching_5fmode_54',['__arm_2d_scene_player_set_switching_mode',['../group__gHelper.html#ga141d41ffe2e75ff8cd17f9e9f553d0bc',1,'arm_2d_helper_scene.h']]],
-  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_55',['__arm_2d_tile_get_virtual_screen_or_root',['../group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0',1,'arm_2d_tile.h']]],
-  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_5fonly_56',['__arm_2d_tile_get_virtual_screen_or_root_only',['../group__Tile.html#gae32720190d29e89ef42d8813db731d0a',1,'arm_2d_tile.h']]],
-  ['_5f_5farm_5flcd_5fget_5fstring_5fbox_57',['__arm_lcd_get_string_box',['../group__gHelper.html#gac83c3bd7507b213993857a6788bc58d4',1,'arm_2d_helper_font.h']]],
-  ['_5f_5farm_5flcd_5fget_5fstring_5fline_5fbox_58',['__arm_lcd_get_string_line_box',['../group__gHelper.html#ga8d2b118c36f530c23112032faf13e484',1,'arm_2d_helper_font.h']]]
+  ['_5f_5farm_5f2d_5ftile_5fgenerate_5fchild_55',['__arm_2d_tile_generate_child',['../group__Tile.html#gab3d06c8512da448763ff3debed5e7a87',1,'arm_2d_tile.h']]],
+  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_56',['__arm_2d_tile_get_virtual_screen_or_root',['../group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0',1,'arm_2d_tile.h']]],
+  ['_5f_5farm_5f2d_5ftile_5fget_5fvirtual_5fscreen_5for_5froot_5fonly_57',['__arm_2d_tile_get_virtual_screen_or_root_only',['../group__Tile.html#gae32720190d29e89ef42d8813db731d0a',1,'arm_2d_tile.h']]],
+  ['_5f_5farm_5flcd_5fget_5fstring_5fbox_58',['__arm_lcd_get_string_box',['../group__gHelper.html#gac83c3bd7507b213993857a6788bc58d4',1,'arm_2d_helper_font.h']]],
+  ['_5f_5farm_5flcd_5fget_5fstring_5fline_5fbox_59',['__arm_lcd_get_string_line_box',['../group__gHelper.html#ga8d2b118c36f530c23112032faf13e484',1,'arm_2d_helper_font.h']]]
 ];

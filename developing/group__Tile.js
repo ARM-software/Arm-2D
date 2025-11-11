@@ -26,7 +26,7 @@ var group__Tile =
     [ "__arm_2d_tile_get_virtual_screen_or_root_only", "group__Tile.html#gae32720190d29e89ef42d8813db731d0a", null ],
     [ "__arm_2d_tile_get_virtual_screen_or_root", "group__Tile.html#ga7a188b8ca4402c7853bf966e2dd05ef0", null ],
     [ "arm_2d_target_tile_is_new_frame", "group__Tile.html#gab793615ac10a2bbbfd4c1714afb1d6e4", null ],
-    [ "arm_2d_tile_generate_child", "group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde", null ],
+    [ "__arm_2d_tile_generate_child", "group__Tile.html#gab3d06c8512da448763ff3debed5e7a87", null ],
     [ "arm_2d_get_absolute_location", "group__Tile.html#gaee6bb96917f6ed4eb60ba9d8a952e6d0", null ],
     [ "arm_2d_tile_width_compare", "group__Tile.html#ga1e4eba78b58b49a3f3eaaba0ebb62f58", null ],
     [ "arm_2d_tile_height_compare", "group__Tile.html#ga52d50c0f2d468f4ad08b4b1c5501bd4d", null ],

@@ -303,8 +303,11 @@ Functions</h2></td></tr>
 <tr class="memitem:gab793615ac10a2bbbfd4c1714afb1d6e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga27a24a896295488772e6d847c790fd1c">arm_2d_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gab793615ac10a2bbbfd4c1714afb1d6e4">arm_2d_target_tile_is_new_frame</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget)</td></tr>
 <tr class="memdesc:gab793615ac10a2bbbfd4c1714afb1d6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether a given target tile contains the boolean value of bIsNewFrame, if it is, return the bIsNewFrame value  <a href="group__Tile.html#gab793615ac10a2bbbfd4c1714afb1d6e4">More...</a><br /></td></tr>
 <tr class="separator:gab793615ac10a2bbbfd4c1714afb1d6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae4ee095763b33e1a6e9b0203263edfde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde">arm_2d_tile_generate_child</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptOutput, bool bClipRegion)</td></tr>
-<tr class="memdesc:gae4ee095763b33e1a6e9b0203263edfde"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a child tile from the target tile with a given region  <a href="group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde">More...</a><br /></td></tr>
+<tr class="memitem:gab3d06c8512da448763ff3debed5e7a87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gab3d06c8512da448763ff3debed5e7a87">__arm_2d_tile_generate_child</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptParentTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptOutput, bool bClipRegion, bool bValidateBeforeReturn)</td></tr>
+<tr class="memdesc:gab3d06c8512da448763ff3debed5e7a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate a child tile from the target tile with a given region  <a href="group__Tile.html#gab3d06c8512da448763ff3debed5e7a87">More...</a><br /></td></tr>
+<tr class="separator:gab3d06c8512da448763ff3debed5e7a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4ee095763b33e1a6e9b0203263edfde"><td class="memItemLeft" align="right" valign="top"><a id="gae4ee095763b33e1a6e9b0203263edfde" name="gae4ee095763b33e1a6e9b0203263edfde"></a>
+<a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_tile_generate_child</b> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptOutput, bool bClipRegion)</td></tr>
 <tr class="separator:gae4ee095763b33e1a6e9b0203263edfde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaee6bb96917f6ed4eb60ba9d8a952e6d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gaee6bb96917f6ed4eb60ba9d8a952e6d0">arm_2d_get_absolute_location</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tLocation, bool bOnVirtualScreen)</td></tr>
 <tr class="memdesc:gaee6bb96917f6ed4eb60ba9d8a952e6d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the absolute location on a specified target tile  <a href="group__Tile.html#gaee6bb96917f6ed4eb60ba9d8a952e6d0">More...</a><br /></td></tr>
@@ -3722,17 +3725,17 @@ wColour</td>
 
 </div>
 </div>
-<a id="gae4ee095763b33e1a6e9b0203263edfde" name="gae4ee095763b33e1a6e9b0203263edfde"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae4ee095763b33e1a6e9b0203263edfde">&#9670;&#160;</a></span>arm_2d_tile_generate_child()</h2>
+<a id="gab3d06c8512da448763ff3debed5e7a87" name="gab3d06c8512da448763ff3debed5e7a87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab3d06c8512da448763ff3debed5e7a87">&#9670;&#160;</a></span>__arm_2d_tile_generate_child()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> * arm_2d_tile_generate_child </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> * __arm_2d_tile_generate_child </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
-          <td class="paramname"><em>ptTargetTile</em>, </td>
+          <td class="paramname"><em>ptParentTile</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -3750,7 +3753,13 @@ wColour</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>bClipRegion</em>&#160;</td>
+          <td class="paramname"><em>bClipRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bValidateBeforeReturn</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3778,7 +3787,7 @@ wColour</td>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>If you want to use the child tile generated by <a class="el" href="group__Tile.html#gae4ee095763b33e1a6e9b0203263edfde" title="generate a child tile from the target tile with a given region">arm_2d_tile_generate_child()</a> as a source tile / mask, please set the bDerivedResource to true manually, otherwise all mirror related operation will NOT work correctly.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If you want to use the child tile generated by arm_2d_tile_generate_child() as a source tile / mask, please set the bDerivedResource to true manually, otherwise all mirror related operation will NOT work correctly.</dd></dl>
 <div class="fragment"><div class="line">HOW IT WORKS:</div>
 <div class="line"> </div>
 <div class="line"> Parent Tile (NOT necessarily a ROOT tile )</div>
