@@ -87,6 +87,11 @@ enum {
     BOGEY_LOST,
 };
 
+enum {
+    RADAR_IDX_SCAN_SECTOR_STYLE,
+    RADAR_IDX_TORCH_LIGHT_STYLE,
+};
+
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -95,10 +100,17 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
-extern const arm_2d_tile_t c_tileSatelliteMapSmallGRAY8;
+//extern const arm_2d_tile_t c_tileSatelliteMapSmallGRAY8;
 extern const arm_2d_tile_t c_tileScanSectorMask;
 extern const arm_2d_tile_t c_tileTinyDotMask;
 extern const arm_2d_tile_t c_tileTinyCrossMask;
+extern const arm_2d_tile_t c_tileRadarBackgroundGRAY8;
+
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_LiberationSansRegular14_A4;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -148,6 +160,8 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
                                 1);
     }
 
+    foldable_panel_on_load(&this.tScreen);
+
 }
 
 static void __after_scene_radars_switching(arm_2d_scene_t *ptScene)
@@ -174,6 +188,8 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
                                 &ptBogey->tDirtyRegionItem,
                                 1);
     }
+
+    foldable_panel_depose(&this.tScreen);
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -204,6 +220,36 @@ static void __on_scene_radars_background_complete(arm_2d_scene_t *ptScene)
 }
 #endif
 
+static arm_fsm_rt_t __scene_radars_actions(arm_2d_scene_t *ptScene)
+{
+    user_scene_radars_t *ptThis = (user_scene_radars_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+
+ARM_PT_BEGIN(this.chPT)
+
+    /* wait for 1s at the begining */
+    ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
+    this.chRadarIndex = RADAR_IDX_SCAN_SECTOR_STYLE;
+
+    foldable_panel_unfold(&this.tScreen);
+    ARM_PT_DELAY_MS(20000, &this.lTimestamp[1]);
+
+    foldable_panel_fold(&this.tScreen);
+
+    /* wait for 1s before next round */
+    ARM_PT_DELAY_MS(2000, &this.lTimestamp[1]);
+    this.chRadarIndex = RADAR_IDX_TORCH_LIGHT_STYLE;
+
+    foldable_panel_unfold(&this.tScreen);
+    ARM_PT_DELAY_MS(20000, &this.lTimestamp[1]);
+
+    foldable_panel_fold(&this.tScreen);
+    ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
+
+ARM_PT_END();
+
+    return arm_fsm_rt_cpl;
+}
 
 static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 {
@@ -242,7 +288,9 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     }
 
-    //printf("\r\n");
+    __scene_radars_actions(ptScene);
+
+    foldable_panel_on_frame_start(&this.tScreen);
 
 }
 
@@ -256,6 +304,8 @@ static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
     arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
         ptBogey->u2State = ptBogey->u2NextState;
     }
+
+    foldable_panel_on_frame_complete(&this.tScreen);
 }
 
 static void __before_scene_radars_switching_out(arm_2d_scene_t *ptScene)
@@ -279,31 +329,47 @@ IMPL_PFB_ON_DRAW(__draw_simple_radar)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 240, 240 ) {
+        arm_2d_align_centre(__top_canvas, c_tileRadarBackgroundGRAY8.tRegion.tSize ) {
             
-            arm_2d_dock(__centre_region, 20) {
+            arm_2d_fill_colour_with_mask_and_opacity(
+                    ptTile, 
+                    &__centre_region,
+                    &c_tileRadarBackgroundGRAY8,
+                    (__arm_2d_color_t) {ARM_2D_DEMO_RADAR_COLOUR},
+                    128-32);
 
-                arm_2d_align_bottom_centre(__dock_region, c_tileSatelliteMapSmallGRAY8.tRegion.tSize) {
-                    arm_2d_fill_colour_with_mask_and_opacity(
-                            ptTile, 
-                            &__bottom_centre_region,
-                            &c_tileSatelliteMapSmallGRAY8,
-                            (__arm_2d_color_t) {GLCD_COLOR_RED},
-                            128-32);
-                }
+            /* show bogeys */
+            dynamic_nebula_show(&this.tNebula, 
+                                ptTile, 
+                                &__centre_region, 
+                                ARM_2D_DEMO_RADAR_COLOUR, 
+                                255,
+                                bIsNewFrame);
 
-                spin_zoom_widget_show(&this.tScanSector, ptTile, &__dock_region, NULL, 255 - 64);
+            spin_zoom_widget_show(&this.tScanSector, ptTile, &__centre_region, NULL, 255 - 64);
 
-                draw_round_corner_border(   ptTile, 
-                                            &__dock_region, 
-                                            GLCD_COLOR_RED, 
-                                            (arm_2d_border_opacity_t)
-                                                {0, 0, 0, 0},
-                                            (arm_2d_corner_opacity_t)
-                                                {128, 128, 128, 128});
+            draw_round_corner_border(   ptTile, 
+                                        &__centre_region, 
+                                        ARM_2D_DEMO_RADAR_COLOUR, 
+                                        (arm_2d_border_opacity_t)
+                                            {0, 0, 0, 0},
+                                        (arm_2d_corner_opacity_t)
+                                            {128, 128, 128, 128});
                 
-                
-            }                    
+            arm_2d_size_t tLabelSize = arm_lcd_printf_to_buffer(
+                (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4, 
+                "Scan Sector Style");
+
+            arm_2d_align_centre(__centre_region, tLabelSize) {
+
+                //arm_2d_helper_draw_box(ptTile, &__centre_region, 1, ARM_2D_DEMO_RADAR_COLOUR, 255);
+                arm_lcd_text_set_target_framebuffer(ptTile);
+                arm_lcd_text_set_draw_region(&__centre_region);
+                arm_lcd_text_set_colour(ARM_2D_DEMO_RADAR_COLOUR, GLCD_COLOR_BLACK);
+
+                arm_lcd_printf_buffer(0);
+
+            }      
         }
 
     /*-----------------------draw the scene end  -----------------------*/
@@ -328,59 +394,70 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 240, 240 ) {
+        arm_2d_align_centre(__top_canvas, c_tileRadarBackgroundGRAY8.tRegion.tSize ) {
 
-            arm_2d_dock(__centre_region, 20) {
+            arm_2d_fill_colour_with_mask_and_opacity(
+                    ptTile, 
+                    &__centre_region,
+                    &c_tileRadarBackgroundGRAY8,
+                    (__arm_2d_color_t) {ARM_2D_DEMO_RADAR_COLOUR},
+                    64);
 
-                arm_2d_point_float_t tCentre = {
-                    .fY = c_tileScanSectorMask.tRegion.tSize.iHeight - 1,
-                };
+            /* show bogeys */
+            dynamic_nebula_show(&this.tNebula, 
+                                ptTile, 
+                                &__centre_region, 
+                                ARM_2D_DEMO_RADAR_COLOUR, 
+                                255,
+                                bIsNewFrame);
 
 
-                /* show bogeys */
-                dynamic_nebula_show(&this.tNebula, 
-                                    ptTile, 
-                                    &__dock_region, 
-                                    GLCD_COLOR_RED, 
-                                    255,
-                                    bIsNewFrame);
+            arm_2d_point_float_t tCentre = {
+                .fX = 1,
+                .fY = c_tileScanSectorMask.tRegion.tSize.iHeight - 2,
+            };
 
-                arm_2d_align_bottom_centre(__dock_region, c_tileSatelliteMapSmallGRAY8.tRegion.tSize) {
-                    arm_2d_tile_t tMapTile = 
-                        impl_child_tile(c_tileSatelliteMapSmallGRAY8,
-                                        0,
-                                        -__bottom_centre_region.tLocation.iY,
-                                        c_tileSatelliteMapSmallGRAY8.tRegion.tSize.iWidth,
-                                        __dock_region.tSize.iHeight
-                                        );
+            arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(
+                    &this.tTransOP,
+                    &c_tileScanSectorMask,
+                    ptTile,
+                    &c_tileRadarBackgroundGRAY8,
+                    &__centre_region,
+                    tCentre,
+                    ARM_2D_ANGLE(spin_zoom_widget_get_current_angle(&this.tScanSector)),
+                    2.0f,
+                    2.0f,
+                    ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR,
+                    255
+                );
+            
+            ARM_2D_OP_WAIT_ASYNC(&this.tTransOP);
+            
+            spin_zoom_widget_show(&this.tScanSector, ptTile, &__centre_region, NULL, 50);
 
-                    arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(
-                            &this.tTransOP,
-                            &c_tileScanSectorMask,
-                            ptTile,
-                            &tMapTile,
-                            &__dock_region,
-                            tCentre,
-                            ARM_2D_ANGLE(spin_zoom_widget_get_current_angle(&this.tScanSector)),
-                            2.0f,
-                            2.0f,
-                            GLCD_COLOR_RED,
-                            255
-                        );
-                    
-                    ARM_2D_OP_WAIT_ASYNC(&this.tTransOP);
-                }
-                
-                spin_zoom_widget_show(&this.tScanSector, ptTile, &__dock_region, NULL, 50);
+            draw_round_corner_border(   ptTile, 
+                                        &__centre_region, 
+                                        ARM_2D_DEMO_RADAR_COLOUR, 
+                                        (arm_2d_border_opacity_t)
+                                            {0, 0, 0, 0},
+                                        (arm_2d_corner_opacity_t)
+                                            {128, 128, 128, 128});
 
-                draw_round_corner_border(   ptTile, 
-                                            &__dock_region, 
-                                            GLCD_COLOR_RED, 
-                                            (arm_2d_border_opacity_t)
-                                                {0, 0, 0, 0},
-                                            (arm_2d_corner_opacity_t)
-                                                {128, 128, 128, 128});
+            arm_2d_size_t tLabelSize = arm_lcd_printf_to_buffer(
+                (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4, 
+                "Torch Light Style");
+
+            arm_2d_align_centre(__centre_region, tLabelSize) {
+
+                //arm_2d_helper_draw_box(ptTile, &__centre_region, 1, ARM_2D_DEMO_RADAR_COLOUR, 255);
+                arm_lcd_text_set_target_framebuffer(ptTile);
+                arm_lcd_text_set_draw_region(&__centre_region);
+                arm_lcd_text_set_colour(ARM_2D_DEMO_RADAR_COLOUR, GLCD_COLOR_BLACK);
+
+                arm_lcd_printf_buffer(0);
+
             }
+
         }
 
     /*-----------------------draw the scene end  -----------------------*/
@@ -402,8 +479,21 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
         
-        //__draw_simple_radar(pTarget, ptTile, bIsNewFrame);
-        __draw_radar_with_mono_scan_sector_pattern(pTarget, ptTile, bIsNewFrame);
+        arm_2d_align_centre(__top_canvas, c_tileRadarBackgroundGRAY8.tRegion.tSize) {
+            arm_2d_tile_t *ptPanel = foldable_panel_show(
+                                        &this.tScreen,
+                                        ptTile, 
+                                        &__centre_region,
+                                        bIsNewFrame);
+
+            assert(NULL != ptPanel);
+
+            if (RADAR_IDX_SCAN_SECTOR_STYLE == this.chRadarIndex) {
+                __draw_simple_radar(pTarget, ptPanel, bIsNewFrame);
+            } else if (RADAR_IDX_TORCH_LIGHT_STYLE == this.chRadarIndex) {
+                __draw_radar_with_mono_scan_sector_pattern(pTarget, ptPanel, bIsNewFrame);
+            }
+        }
 
     /*-----------------------draw the scene end  -----------------------*/
     }
@@ -483,11 +573,12 @@ void __draw_bogey_handler(  void *pObj,
     tDrawRegion.tLocation.iY -= tDrawRegion.tSize.iHeight >> 1;
 
     if (0 != ptBogey->chOpacity) {
-        arm_2d_fill_colour_with_mask_and_opacity(   ptTile, 
-                                                    &tDrawRegion, 
-                                                    ptIcon, 
-                                                    (__arm_2d_color_t){ GLCD_COLOR_RED},
-                                                    ptBogey->chOpacity);
+        arm_2d_fill_colour_with_mask_and_opacity(   
+            ptTile, 
+            &tDrawRegion, 
+            ptIcon, 
+            (__arm_2d_color_t){ ARM_2D_DEMO_RADAR_BOGEY_COLOUR},
+            ptBogey->chOpacity);
     }
 
     arm_2d_helper_dirty_region_update_item( 
@@ -579,7 +670,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .fnOnFrameCPL   = &__on_scene_radars_frame_complete,
             .fnDepose       = &__on_scene_radars_depose,
 
-            .bUseDirtyRegionHelper = true,
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -609,7 +700,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .Source = {
                 .ptMask = &c_tileScanSectorMask,
                 .tCentre = s_tScanSectorCenter,
-                .tColourToFill = GLCD_COLOR_RED,
+                .tColourToFill = ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR,
             },
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
@@ -649,6 +740,16 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             ptBogey->u2State = BOGEY_UNKNOW;
             ptBogey->iAngle = ptBogey->iNewAngle;
         }
+    } while(0);
+
+    /* init normal foldable panels */
+    do {
+        foldable_panel_cfg_t tCFG = {
+            .bShowScanLines = true,
+            .ptScene = &this.use_as__arm_2d_scene_t,
+            .tLineColour.tColour = ARM_2D_DEMO_RADAR_COLOUR,
+        };
+        foldable_panel_init(&this.tScreen, &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_radars_t end   ---------------*/

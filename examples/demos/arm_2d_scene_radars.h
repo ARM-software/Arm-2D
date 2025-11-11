@@ -50,6 +50,18 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
+#ifndef ARM_2D_DEMO_RADAR_COLOUR
+#   define ARM_2D_DEMO_RADAR_COLOUR                 GLCD_COLOR_NIXIE_TUBE
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
+#   define ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR     GLCD_COLOR_RED
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_BOGEY_COLOUR
+#   define ARM_2D_DEMO_RADAR_BOGEY_COLOUR           ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
+#endif
+
 /* OOC header, please DO NOT modify  */
 #ifdef __USER_SCENE_RADARS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
@@ -103,8 +115,10 @@ struct user_scene_radars_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
+    uint8_t chPT;
+    uint8_t chRadarIndex;
 
     spin_zoom_widget_t tScanSector;
 
@@ -112,6 +126,8 @@ ARM_PRIVATE(
 
     dynamic_nebula_t    tNebula;
     __radar_bogey_t     tBogeys[6];
+
+    foldable_panel_t    tScreen;
 
 )
     /* place your public member here */
