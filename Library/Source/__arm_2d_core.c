@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        04 Nov 2024
- * $Revision:    V.1.8.5
+ * $Date:        11 Nov 2025
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1052,37 +1052,50 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                         .tSize = ptThis->Target.ptTile->tRegion.tSize,
                     };
                     
-                    arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
-                                                        &tTempRegion.tLocation);
-                    
-                    tTempRegion.tLocation.iX 
-                        = tTargetTileParam.tValidRegion.tLocation.iX 
-                        - tTempRegion.tLocation.iX;
+                    /* calculate the offset and adjustment from the target*/
+                    do {
+                        arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
+                                                            &tTempRegion.tLocation);
+                        /* calculate the x offset */
+                        tTempRegion.tLocation.iX 
+                            = tTargetTileParam.tValidRegion.tLocation.iX 
+                            - tTempRegion.tLocation.iX;
 
-                    tTempRegion.tSize.iWidth
-                        = tTargetTileParam.tValidRegion.tSize.iWidth 
-                        - tTempRegion.tSize.iWidth;
+                        /* calculate the width adjustment */
+                        tTempRegion.tSize.iWidth
+                            = tTargetTileParam.tValidRegion.tSize.iWidth 
+                            - tTempRegion.tSize.iWidth;
+                    } while(0);
                 
-                    
-                    arm_2d_region_t tNewTargetMaskRegion = ptTargetMask->tRegion;
+                    /* NOTE: The new target mask region has to use the target mask validation 
+                     * region as the starting reference
+                     */
+                    arm_2d_region_t tNewTargetMaskRegion = tTargetMaskParam.tValidRegion;
                 
-                    tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
-                    tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
-                    
-                    // when the target mask is not 1-horizontal line mask
-                    if (ptTargetMask->tRegion.tSize.iHeight != 1 ) {
-                        tTempRegion.tLocation.iY 
-                            = tTargetTileParam.tValidRegion.tLocation.iY 
-                            - tTempRegion.tLocation.iY;
-                    
-                        tTempRegion.tSize.iHeight
-                            = tTargetTileParam.tValidRegion.tSize.iHeight 
-                            - tTempRegion.tSize.iHeight;
-                    
+                    /* apply the offset and adjustment to the target mask */
+                    do {
+                        /* apply the x offset and width adjustment to the target mask */
+                        tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                        tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
                         
-                        tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
-                        tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
-                    }
+                        // when the target mask is not 1-horizontal line mask
+                        if (ptTargetMask->tRegion.tSize.iHeight != 1 ) {
+
+                            /* calculate the y offset */
+                            tTempRegion.tLocation.iY 
+                                = tTargetTileParam.tValidRegion.tLocation.iY 
+                                - tTempRegion.tLocation.iY;
+                        
+                            /* calculate the height adjustment */
+                            tTempRegion.tSize.iHeight
+                                = tTargetTileParam.tValidRegion.tSize.iHeight 
+                                - tTempRegion.tSize.iHeight;
+
+                            /* apply the y offset and height adjustment to the target mask */
+                            tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                            tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                        }
+                    } while(0);
                 
                     ptTargetMask = arm_2d_tile_generate_child( 
                                             ptTargetMask,
@@ -1172,37 +1185,51 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                         .tSize = ptThis->Target.ptTile->tRegion.tSize,
                     };
                     
-                    arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
-                                                        &tTempRegion.tLocation);
-                    
-                    tTempRegion.tLocation.iX 
-                        = tTargetTileParam.tValidRegion.tLocation.iX 
-                        - tTempRegion.tLocation.iX;
-
-                    tTempRegion.tSize.iWidth
-                        = tTargetTileParam.tValidRegion.tSize.iWidth 
-                        - tTempRegion.tSize.iWidth;
-                
-                    
-                    arm_2d_region_t tNewTargetMaskRegion = ptTargetMask->tRegion;
-                
-                    tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
-                    tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
-                    
-                    // when the target mask is not 1-horizontal line mask
-                    if (ptTargetMask->tRegion.tSize.iHeight != 1 ) {
-                        tTempRegion.tLocation.iY 
-                            = tTargetTileParam.tValidRegion.tLocation.iY 
-                            - tTempRegion.tLocation.iY;
-                    
-                        tTempRegion.tSize.iHeight
-                            = tTargetTileParam.tValidRegion.tSize.iHeight 
-                            - tTempRegion.tSize.iHeight;
-                    
+                    /* calculate the offset and adjustment from the target*/
+                    do {
+                        arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
+                                                            &tTempRegion.tLocation);
                         
-                        tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
-                        tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
-                    }
+                        /* calculate the x offset */
+                        tTempRegion.tLocation.iX 
+                            = tTargetTileParam.tValidRegion.tLocation.iX 
+                            - tTempRegion.tLocation.iX;
+
+                        /* calculate the width adjustment */
+                        tTempRegion.tSize.iWidth
+                            = tTargetTileParam.tValidRegion.tSize.iWidth 
+                            - tTempRegion.tSize.iWidth;
+                    } while(0);
+                
+                    /* NOTE: The new target mask region has to use the target mask validation 
+                     * region as the starting reference
+                     */
+                    arm_2d_region_t tNewTargetMaskRegion = tTargetMaskParam.tValidRegion;
+                
+                    /* apply the offset and adjustment to the target mask */
+                    do {
+                        /* apply the x offset and width adjustment to the target mask */
+                        tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                        tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
+
+                        // when the target mask is not 1-horizontal line mask
+                        if (ptTargetMask->tRegion.tSize.iHeight != 1 ) {
+
+                            /* calculate the y offset */
+                            tTempRegion.tLocation.iY 
+                                = tTargetTileParam.tValidRegion.tLocation.iY 
+                                - tTempRegion.tLocation.iY;
+                        
+                            /* calculate the height adjustment */
+                            tTempRegion.tSize.iHeight
+                                = tTargetTileParam.tValidRegion.tSize.iHeight 
+                                - tTempRegion.tSize.iHeight;
+
+                            /* apply the y offset and height adjustment to the target mask */
+                            tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                            tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                        }
+                    } while(0);
                 
                     ptTargetMask = arm_2d_tile_generate_child( 
                                             ptTargetMask,
