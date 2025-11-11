@@ -167,7 +167,7 @@ arm_2d_region_t progress_bar_round_show(   progress_bar_round_t *ptThis,
     assert(NULL!= ptThis);
     assert(NULL != this.tCFG.ptCircleMask);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTarget);
+    bool bIsNewFrame = (ARM_2D_RT_TRUE == arm_2d_target_tile_is_new_frame(ptTarget));
 
     if (bIsNewFrame) {
 

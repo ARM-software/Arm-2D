@@ -227,7 +227,7 @@ void cloudy_glass_show( cloudy_glass_t *ptThis,
     assert(NULL!= ptThis);
     assert(NULL!= ptTile);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     int16_t iDirtyRegionLength = this.tCFG.iDirtyRegionRadius * 2;
 

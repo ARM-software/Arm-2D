@@ -321,7 +321,7 @@ void __draw_transform_object_handler( void *pObj,
 
     __transform_obj_t *ptTransObj = (__transform_obj_t *) ptDN->ptCurrent;
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     float fScale = ((float)iDistance / (float)dynamic_nebula_get_radius(ptDN)) * 2.0f;
 

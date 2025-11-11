@@ -308,7 +308,7 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
     assert(NULL != ptThis);
     assert(NULL != ptTile);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
     if (!this.tCFG.bUseFloatPointInCentre) {
@@ -353,7 +353,7 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_with_mask(
     assert(NULL != ptThis);
     assert(NULL != ptTile);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
     if (!this.tCFG.bUseFloatPointInCentre) {
@@ -396,7 +396,7 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_only(
     assert(NULL != ptThis);
     assert(NULL != ptTile);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
     if (!this.tCFG.bUseFloatPointInCentre) {
@@ -438,7 +438,7 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_colour_keying(
     assert(NULL != ptThis);
     assert(NULL != ptTile);
 
-    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTile);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
     if (!this.tCFG.bUseFloatPointInCentre) {

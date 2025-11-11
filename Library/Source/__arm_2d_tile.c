@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        04. September 2025
- * $Revision:    V.1.6.1
+ * $Date:        11. Nov 2025
+ * $Revision:    V.1.6.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -442,6 +442,81 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
     return ptTile;
 }
 
+ARM_NONNULL(1)
+const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root_only(
+                                        const arm_2d_tile_t *ptTile,
+                                        const arm_2d_tile_t **ppVirtualScreen,
+                                        bool bQuitWhenFindVirtualScreen)
+{
+    assert(NULL != ptTile);
+
+    if (NULL != ppVirtualScreen) {
+        *ppVirtualScreen = NULL;        /* initialise */
+    }
+
+    if (arm_2d_is_root_tile(ptTile)) {
+        return ptTile;
+    }
+
+    if (ptTile->tInfo.bVirtualScreen) {
+        if (NULL != ppVirtualScreen) {
+            /* ensure this is the first virtual screen */
+            if (NULL == *ppVirtualScreen) {
+                *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
+            }
+        }
+        
+        if (bQuitWhenFindVirtualScreen) {
+            return ptTile;
+        }
+    }
+
+    do {
+
+        //! get parent
+        ptTile = (const arm_2d_tile_t *)ptTile->ptParent;
+        if (NULL == ptTile) {
+            break;
+        }
+
+        /*! calculate the valid range in parent tile
+         *!
+         *! \note the location of the parent tile is used to indicate its
+         *!       relative location between the it and its parent.
+         *!       when calculate the valid range in parent, we have to assume
+         *!       that the location is always (0,0)
+         *!
+         */
+        arm_2d_region_t tParentRegion = {
+            .tSize = ptTile->tRegion.tSize,
+        };
+
+        if (arm_2d_is_root_tile(ptTile)) {
+            /* root tile can has offset */
+            tParentRegion.tLocation = ptTile->tRegion.tLocation;
+        }
+
+        if (ptTile->tInfo.bVirtualScreen) {
+            if (NULL != ppVirtualScreen) {
+                /* ensure this is the first virtual screen */
+                if (NULL == *ppVirtualScreen) {
+                    *ppVirtualScreen = (arm_2d_tile_t *)ptTile;
+                }
+            }
+            
+            if (bQuitWhenFindVirtualScreen) {
+                break;
+            }
+        }
+
+        if (arm_2d_is_root_tile(ptTile)) {
+            break;
+        }
+
+    } while(true);
+
+    return ptTile;
+}
 
 
 ARM_NONNULL(1)
@@ -641,11 +716,9 @@ arm_2d_err_t arm_2d_target_tile_is_new_frame(const arm_2d_tile_t *ptTarget)
     const arm_2d_tile_t *ptScreen = NULL;
     arm_2d_err_t tResult = ARM_2D_ERR_INVALID_PARAM;
     do {
-        if (NULL == __arm_2d_tile_get_virtual_screen_or_root(   ptTarget,
-                                                                NULL,
-                                                                NULL,
-                                                                &ptScreen,
-                                                                true)) {
+        if (NULL == __arm_2d_tile_get_virtual_screen_or_root_only(  ptTarget,
+                                                                    &ptScreen,
+                                                                    true)) {
             break;
         }
 
