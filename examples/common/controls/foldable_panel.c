@@ -530,28 +530,28 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
 
                     this.tDrawRegion = __centre_region;
 
+                    arm_2d_container(ptTile, __inner_panel, &__centre_region) {
+                        /* save inner panel */
+                        this.tInnerPanel = __inner_panel;
+
+                        arm_2d_region_t tUserRegion = {
+                            .tLocation = {
+                                .iX = __outer_panel_canvas.tLocation.iX - __centre_region.tLocation.iX,
+                                .iY = __outer_panel_canvas.tLocation.iY - __centre_region.tLocation.iY,
+                            },
+                            .tSize = this.tOuterPanelSize,
+                        };
+
+                        arm_2d_container(&this.tInnerPanel, __user_panel, &tUserRegion) {
+                            /* save user panel */
+                            this.tUserPanel = __user_panel;
+                        }
+                    }
+
                     if (__centre_region.tSize.iHeight == 0 || __centre_region.tSize.iWidth == 0) {
                         /* special case */
                         this.tUserPanel.tRegion.tSize = this.tInnerPanelSize;
-                    } else {
-                        arm_2d_container(ptTile, __inner_panel, &__centre_region) {
-                            /* save inner panel */
-                            this.tInnerPanel = __inner_panel;
-
-                            arm_2d_region_t tUserRegion = {
-                                .tLocation = {
-                                    .iX = __outer_panel_canvas.tLocation.iX - __centre_region.tLocation.iX,
-                                    .iY = __outer_panel_canvas.tLocation.iY - __centre_region.tLocation.iY,
-                                },
-                                .tSize = this.tOuterPanelSize,
-                            };
-
-                            arm_2d_container(&this.tInnerPanel, __user_panel, &tUserRegion) {
-                                /* save user panel */
-                                this.tUserPanel = __user_panel;
-                            }
-                        }
-                    }
+                }
                 }
             }
         }

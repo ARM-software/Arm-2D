@@ -921,6 +921,11 @@ arm_2d_tile_t *__arm_2d_tile_generate_child(const arm_2d_tile_t *ptParentTile,
         .tSize = ptParentTile->tRegion.tSize,
     };
 
+    /*
+     * NOTE: When bValidateBeforeReturn is false, 
+     *       __arm_2d_tile_get_virtual_screen_or_root_only is more useful.
+     */
+
     if (bClipRegion) {
         if (!arm_2d_region_intersect(   &tParentRegion,
                                         &(ptOutput->tRegion),

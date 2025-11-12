@@ -489,12 +489,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
 
             assert(NULL != ptPanel);
 
-            if (ptPanel->tRegion.tSize.iHeight > 0 && ptPanel->tRegion.tSize.iWidth) {
-                if (RADAR_IDX_SCAN_SECTOR_STYLE == this.chRadarIndex) {
-                    __draw_simple_radar(pTarget, ptPanel, bIsNewFrame);
-                } else if (RADAR_IDX_TORCH_LIGHT_STYLE == this.chRadarIndex) {
-                    __draw_radar_with_mono_scan_sector_pattern(pTarget, ptPanel, bIsNewFrame);
-                }
+            if (RADAR_IDX_SCAN_SECTOR_STYLE == this.chRadarIndex) {
+                __draw_simple_radar(pTarget, ptPanel, bIsNewFrame);
+            } else if (RADAR_IDX_TORCH_LIGHT_STYLE == this.chRadarIndex) {
+                __draw_radar_with_mono_scan_sector_pattern(pTarget, ptPanel, bIsNewFrame);
             }
 
         }
@@ -674,7 +672,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .fnOnFrameCPL   = &__on_scene_radars_frame_complete,
             .fnDepose       = &__on_scene_radars_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
