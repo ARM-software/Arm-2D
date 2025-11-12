@@ -468,7 +468,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
         
-        arm_2d_align_centre(__top_canvas, c_tileRadarBackgroundGRAY8.tRegion.tSize) {
+        arm_2d_align_centre(__top_canvas, 
+                            c_tileRadarBackgroundGRAY8.tRegion.tSize) {
             arm_2d_tile_t *ptPanel = foldable_panel_show(
                                         &this.tScreen,
                                         ptTile, 

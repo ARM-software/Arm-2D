@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        11. Nov 2025
- * $Revision:    V.1.8.5
+ * $Date:        12. Nov 2025
+ * $Revision:    V.1.8.6
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1058,7 +1058,7 @@ extern "C" {
                 },                                                              \
                 {                                                               \
                     (void)0;                                                    \
-                }) arm_2d_canvas( &__container_name, __container_name##_canvas)
+                })
 
 /*!
  * \brief generate a child tile with a given name, a reference region and an 
@@ -1084,9 +1084,17 @@ extern "C" {
                             ...)                                                \
             __arm_2d_container( (__tile_ptr),                                   \
                                 __container_name,                               \
-                                (__region_ptr),##__VA_ARGS__)
+                                (__region_ptr),##__VA_ARGS__)                   \
+                arm_2d_canvas( &__container_name, __container_name##_canvas)
 
-
+#define arm_2d_container_open(  __tile_ptr,                                     \
+                                __container_name,                               \
+                                __region_ptr,                                   \
+                                ...)                                            \
+            __arm_2d_container( (__tile_ptr),                                   \
+                                __container_name,                               \
+                                (__region_ptr),##__VA_ARGS__)                   \
+                arm_2d_canvas_open( &__container_name, __container_name##_canvas)
 
 /*!
  * \brief Please do NOT use this macro directly directly

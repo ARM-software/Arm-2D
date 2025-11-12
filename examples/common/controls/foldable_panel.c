@@ -580,7 +580,7 @@ void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
                                                                     NULL, 
                                                                     true);
 
-            arm_2d_dock_left((*ptRegion), 1) {
+            arm_2d_dock_left_open((*ptRegion), 1) {
                 __left_region.tLocation 
                     = arm_2d_get_absolute_location(ptTile, 
                                                     __left_region.tLocation, 
@@ -593,7 +593,7 @@ void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
                     &__left_region);
             }
 
-            arm_2d_dock_right((*ptRegion), 1) {
+            arm_2d_dock_right_open((*ptRegion), 1) {
                 __right_region.tLocation 
                     = arm_2d_get_absolute_location(ptTile, 
                                                     __right_region.tLocation, 
@@ -606,7 +606,7 @@ void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
                     &__right_region);
             }
 
-            arm_2d_dock_top((*ptRegion), 1) {
+            arm_2d_dock_top_open((*ptRegion), 1) {
                 __top_region.tLocation 
                     = arm_2d_get_absolute_location(ptTile, 
                                                     __top_region.tLocation, 
@@ -619,7 +619,7 @@ void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
                     &__top_region);
             }
 
-            arm_2d_dock_bottom((*ptRegion), 1) {
+            arm_2d_dock_bottom_open((*ptRegion), 1) {
 
                 __bottom_region.tLocation 
                     = arm_2d_get_absolute_location(ptTile, 
