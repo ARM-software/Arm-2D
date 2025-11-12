@@ -102,6 +102,10 @@ typedef struct spin_zoom_widget_cfg_t {
         };
     } Source;
 
+    struct {
+        const arm_2d_tile_t     *ptMask;
+    } Target;
+
     spin_zoom_widget_mode_t *ptTransformMode;
 
     struct {
@@ -132,17 +136,21 @@ typedef struct spin_zoom_widget_cfg_t {
 
 struct spin_zoom_widget_t {
 
-
 ARM_PROTECTED(
     spin_zoom_widget_cfg_t tCFG;
 )
 
 ARM_PRIVATE(
     union {
-        arm_2d_op_fill_cl_msk_opa_trans_t   tFillColourTransform;
-        arm_2d_op_trans_msk_opa_t           tTileTransform;
-        arm_2d_op_trans_opa_t               tTile;
+        arm_2d_op_fill_cl_msk_opa_trans_t           tFillColourTransform;
+        arm_2d_op_fill_cl_trans_msk_des_msk_opa_t   tFillColourTransformTargetMask;
+        arm_2d_op_trans_msk_opa_t                   tTileTransform;
+        arm_2d_op_trans_opa_t                       tTile;
     } OPCODE;
+
+    struct {
+        spin_zoom_widget_mode_t *ptTransformMode;
+    } Request;
 
     arm_2d_helper_dirty_region_transform_t  tHelper;
 )
@@ -152,6 +160,9 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR;
+
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK;
 
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_MASK;
@@ -195,6 +206,12 @@ float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis);
 extern
 ARM_NONNULL(1)
 void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis);
+
+extern
+ARM_NONNULL(1,2)
+void spin_zoom_widget_update_transform_mode(
+                                    spin_zoom_widget_t *ptThis, 
+                                    spin_zoom_widget_mode_t *ptTransformMode);
 
 extern
 ARM_NONNULL(1,2)

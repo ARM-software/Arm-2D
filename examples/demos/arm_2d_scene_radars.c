@@ -231,6 +231,9 @@ ARM_PT_BEGIN(this.chPT)
     /* wait for 1s at the begining */
     ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
     this.chRadarIndex = RADAR_IDX_SCAN_SECTOR_STYLE;
+    spin_zoom_widget_update_transform_mode(
+                                &this.tScanSector, 
+                                &SPIN_ZOOM_MODE_FILL_COLOUR );
 
     foldable_panel_unfold(&this.tScreen);
     ARM_PT_DELAY_MS(20000, &this.lTimestamp[1]);
@@ -240,6 +243,10 @@ ARM_PT_BEGIN(this.chPT)
     /* wait for 1s before next round */
     ARM_PT_DELAY_MS(2000, &this.lTimestamp[1]);
     this.chRadarIndex = RADAR_IDX_TORCH_LIGHT_STYLE;
+
+    spin_zoom_widget_update_transform_mode(
+                                &this.tScanSector, 
+                                &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK );
 
     foldable_panel_unfold(&this.tScreen);
     ARM_PT_DELAY_MS(20000, &this.lTimestamp[1]);
@@ -265,8 +272,6 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
         nResult = 0;
     }
 
-    spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 2.0f);
-
     arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
 
         if (ptBogey->chOpacity > 64) {
@@ -291,6 +296,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     __scene_radars_actions(ptScene);
 
+    spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 2.0f);
     foldable_panel_on_frame_start(&this.tScreen);
 
 }
@@ -411,30 +417,12 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
                                 ARM_2D_DEMO_RADAR_COLOUR, 
                                 255,
                                 bIsNewFrame);
-
-
-            arm_2d_point_float_t tCentre = {
-                .fX = 1,
-                .fY = c_tileScanSectorMask.tRegion.tSize.iHeight - 2,
-            };
-
-            arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(
-                    &this.tTransOP,
-                    &c_tileScanSectorMask,
-                    ptTile,
-                    &c_tileRadarBackgroundGRAY8,
-                    &__centre_region,
-                    tCentre,
-                    ARM_2D_ANGLE(spin_zoom_widget_get_current_angle(&this.tScanSector)),
-                    2.0f,
-                    2.0f,
-                    ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR,
-                    255
-                );
             
-            ARM_2D_OP_WAIT_ASYNC(&this.tTransOP);
-            
-            //spin_zoom_widget_show(&this.tScanSector, ptTile, &__centre_region, NULL, 50);
+            spin_zoom_widget_show(  &this.tScanSector, 
+                                    ptTile, 
+                                    &__centre_region, 
+                                    NULL, 
+                                    255);
 
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
@@ -672,7 +660,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .fnOnFrameCPL   = &__on_scene_radars_frame_complete,
             .fnDepose       = &__on_scene_radars_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -703,6 +691,9 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
                 .ptMask = &c_tileScanSectorMask,
                 .tCentre = s_tScanSectorCenter,
                 .tColourToFill = ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR,
+            },
+            .Target = {
+                .ptMask = &c_tileRadarBackgroundGRAY8,
             },
             .ptScene = (arm_2d_scene_t *)ptThis,
         };

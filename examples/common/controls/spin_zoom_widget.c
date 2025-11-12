@@ -73,6 +73,15 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour(
                                             const arm_2d_point_float_t *ptPivot,
                                             uint8_t chOpacity);
 
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour_with_target_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity);
+
 static
 arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_with_mask( 
                                             spin_zoom_widget_t *ptThis, 
@@ -102,6 +111,10 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_colour_keying(
 
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR = {
     .fnTransform = &__spin_zoom_widget_transform_mode_fill_colour,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_fill_colour_with_target_mask,
 };
 
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_MASK = {
@@ -189,6 +202,11 @@ void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue
 
     /* call helper's on-frame-start event handler */
     arm_2d_helper_dirty_region_transform_on_frame_start(&this.tHelper);
+
+    if (NULL != this.Request.ptTransformMode) {
+        this.tCFG.ptTransformMode = this.Request.ptTransformMode;
+        this.Request.ptTransformMode = NULL;
+    }
 }
 
 ARM_NONNULL(1)
@@ -210,13 +228,29 @@ void spin_zoom_widget_on_frame_start_f32( spin_zoom_widget_t *ptThis, float fVal
 
     /* call helper's on-frame-start event handler */
     arm_2d_helper_dirty_region_transform_on_frame_start(&this.tHelper);
+
+    if (NULL != this.Request.ptTransformMode) {
+        this.tCFG.ptTransformMode = this.Request.ptTransformMode;
+        this.Request.ptTransformMode = NULL;
+    }
 }
 
 ARM_NONNULL(1)
-void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis)
+void spin_zoom_widget_on_frame_complete(spin_zoom_widget_t *ptThis)
 {
     assert(NULL != ptThis);
 
+}
+
+ARM_NONNULL(1,2)
+void spin_zoom_widget_update_transform_mode(
+                                    spin_zoom_widget_t *ptThis, 
+                                    spin_zoom_widget_mode_t *ptTransformMode)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTransformMode);
+
+    this.Request.ptTransformMode = ptTransformMode;
 }
 
 ARM_NONNULL(1,2)
@@ -295,6 +329,52 @@ float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis)
 {
     assert(NULL != ptThis);
     return this.tHelper.fAngle;
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour_with_target_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+
+    arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
+    if (!this.tCFG.bUseFloatPointInCentre) {
+        tCentre.fX = this.tCFG.Source.tCentre.iX;
+        tCentre.fY = this.tCFG.Source.tCentre.iY;
+    }
+
+    /* draw pointer */
+    arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(
+            &this.OPCODE.tFillColourTransformTargetMask,
+            this.tCFG.Source.ptMask,
+            ptTile,
+            this.tCFG.Target.ptMask,
+            ptRegion,
+            tCentre,
+            ARM_2D_ANGLE(this.tHelper.fAngle),
+            this.tHelper.fScaleX,
+            this.tHelper.fScaleY,
+            this.tCFG.Source.tColourToFill,
+            chOpacity,
+            ptPivot);
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+
 }
 
 static
