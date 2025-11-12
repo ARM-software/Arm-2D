@@ -572,63 +572,66 @@ void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
     assert(NULL!= ptTile);
     assert(NULL!= ptRegion);
 
+
     if (bIsNewFrame && this.tCFG.bUseDirtyRegions) {
-        const arm_2d_tile_t *ptRootTile 
-                = __arm_2d_tile_get_virtual_screen_or_root_only(ptTile, 
-                                                                NULL, 
-                                                                true);
+        arm_2d_canvas(ptTile, __canvas) {
+            const arm_2d_tile_t *ptRootTile 
+                    = __arm_2d_tile_get_virtual_screen_or_root_only(ptTile, 
+                                                                    NULL, 
+                                                                    true);
 
-        arm_2d_dock_left((*ptRegion), 1) {
-            __left_region.tLocation 
-                = arm_2d_get_absolute_location(ptTile, 
-                                                __left_region.tLocation, 
-                                                true);
+            arm_2d_dock_left((*ptRegion), 1) {
+                __left_region.tLocation 
+                    = arm_2d_get_absolute_location(ptTile, 
+                                                    __left_region.tLocation, 
+                                                    true);
 
-            __arm_2d_helper_dirty_region_item_update(
-                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_LEFT],
-                ptRootTile,
-                NULL,
-                &__left_region);
-        }
+                __arm_2d_helper_dirty_region_item_update(
+                    &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_LEFT],
+                    ptRootTile,
+                    NULL,
+                    &__left_region);
+            }
 
-        arm_2d_dock_right((*ptRegion), 1) {
-            __right_region.tLocation 
-                = arm_2d_get_absolute_location(ptTile, 
-                                                __right_region.tLocation, 
-                                                true);
+            arm_2d_dock_right((*ptRegion), 1) {
+                __right_region.tLocation 
+                    = arm_2d_get_absolute_location(ptTile, 
+                                                    __right_region.tLocation, 
+                                                    true);
 
-            __arm_2d_helper_dirty_region_item_update(
-                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_RIGHT],
-                ptRootTile,
-                NULL,
-                &__right_region);
-        }
+                __arm_2d_helper_dirty_region_item_update(
+                    &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_RIGHT],
+                    ptRootTile,
+                    NULL,
+                    &__right_region);
+            }
 
-        arm_2d_dock_top((*ptRegion), 1) {
-            __top_region.tLocation 
-                = arm_2d_get_absolute_location(ptTile, 
-                                                __top_region.tLocation, 
-                                                true);
+            arm_2d_dock_top((*ptRegion), 1) {
+                __top_region.tLocation 
+                    = arm_2d_get_absolute_location(ptTile, 
+                                                    __top_region.tLocation, 
+                                                    true);
 
-            __arm_2d_helper_dirty_region_item_update(
-                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_TOP],
-                ptRootTile,
-                NULL,
-                &__top_region);
-        }
+                __arm_2d_helper_dirty_region_item_update(
+                    &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_TOP],
+                    ptRootTile,
+                    NULL,
+                    &__top_region);
+            }
 
-        arm_2d_dock_bottom((*ptRegion), 1) {
+            arm_2d_dock_bottom((*ptRegion), 1) {
 
-            __bottom_region.tLocation 
-                = arm_2d_get_absolute_location(ptTile, 
-                                                __bottom_region.tLocation, 
-                                                true);
+                __bottom_region.tLocation 
+                    = arm_2d_get_absolute_location(ptTile, 
+                                                    __bottom_region.tLocation, 
+                                                    true);
 
-            __arm_2d_helper_dirty_region_item_update(
-                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_BOTTOM],
-                ptRootTile,
-                NULL,
-                &__bottom_region);
+                __arm_2d_helper_dirty_region_item_update(
+                    &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_BOTTOM],
+                    ptRootTile,
+                    NULL,
+                    &__bottom_region);
+            }
         }
     }
 
