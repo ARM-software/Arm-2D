@@ -434,7 +434,7 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
             
             ARM_2D_OP_WAIT_ASYNC(&this.tTransOP);
             
-            spin_zoom_widget_show(&this.tScanSector, ptTile, &__centre_region, NULL, 50);
+            //spin_zoom_widget_show(&this.tScanSector, ptTile, &__centre_region, NULL, 50);
 
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
@@ -672,7 +672,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .fnOnFrameCPL   = &__on_scene_radars_frame_complete,
             .fnDepose       = &__on_scene_radars_depose,
 
-            .bUseDirtyRegionHelper = true,
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
