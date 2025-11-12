@@ -63,6 +63,14 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+enum {
+    FOLDABLE_PANEL_DIRTY_REGION_LEFT    = 0,
+    FOLDABLE_PANEL_DIRTY_REGION_RIGHT,
+    FOLDABLE_PANEL_DIRTY_REGION_TOP,
+    FOLDABLE_PANEL_DIRTY_REGION_BOTTOM,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -91,13 +99,24 @@ void foldable_panel_init( foldable_panel_t *ptThis,
 
     //this.tInnerPanelSize.iHeight = 0;
     //this.tInnerPanelSize.iWidth = 0;
+
+    if (NULL == this.tCFG.ptScene) {
+        this.tCFG.bUseDirtyRegions = false;
+    }
+
 }
 
 ARM_NONNULL(1)
 void foldable_panel_depose( foldable_panel_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_remove_items(   
+                                    &this.tCFG.ptScene->tDirtyRegionHelper,
+                                    this.DirtyRegion.tDirtyRegionItems,
+                                    dimof(this.DirtyRegion.tDirtyRegionItems));
+    }
 }
 
 ARM_NONNULL(1)
@@ -105,13 +124,53 @@ void foldable_panel_on_load( foldable_panel_t *ptThis)
 {
     assert(NULL != ptThis);
     
+    if (this.tCFG.bUseDirtyRegions && NULL != this.tCFG.ptScene) {
+
+        arm_2d_helper_dirty_region_add_items(   
+                                    &this.tCFG.ptScene->tDirtyRegionHelper,
+                                    this.DirtyRegion.tDirtyRegionItems,
+                                    dimof(this.DirtyRegion.tDirtyRegionItems));
+        
+        arm_foreach(arm_2d_helper_dirty_region_item_t, 
+                    this.DirtyRegion.tDirtyRegionItems,
+                    ptItem) {
+            arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure( 
+                                                                    ptItem, 
+                                                                    true);
+            arm_2d_helper_dirty_region_item_suspend_update(ptItem, true);
+        }
+    }
 }
 
 ARM_NONNULL(1)
 void foldable_panel_on_frame_start( foldable_panel_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
+    if (this.tCFG.bUseDirtyRegions) {
+
+        /* X direction */
+        bool bSuspend = (   this.tInnerPanelSize.iWidth 
+                        ==  this.DirtyRegion.tLastInnerPanelSize.iWidth);
+
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_LEFT], 
+            bSuspend);
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_RIGHT], 
+            bSuspend);
+
+        /* Y direction */
+        bSuspend = (   this.tInnerPanelSize.iHeight 
+                   ==  this.DirtyRegion.tLastInnerPanelSize.iHeight);
+
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_TOP], 
+            bSuspend);
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_BOTTOM], 
+            bSuspend);
+    }
 }
 
 static arm_fsm_rt_t __folding(foldable_panel_t *ptThis)
@@ -395,6 +454,10 @@ void foldable_panel_on_frame_complete( foldable_panel_t *ptThis)
     assert(NULL != ptThis);
     arm_fsm_rt_t tResult = arm_fsm_rt_err;
 
+    if (this.tCFG.bUseDirtyRegions) {
+        this.DirtyRegion.tLastInnerPanelSize = this.tInnerPanelSize;
+    }
+
     switch(this.u8Status) {
         default:
         case FOLDABLE_PANEL_STATUS_FOLDED:
@@ -498,6 +561,79 @@ arm_2d_region_t * foldable_panel_get_draw_region(foldable_panel_t *ptThis)
     return &this.tDrawRegion;
 }
 
+ARM_NONNULL(1, 2, 3)
+static
+void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
+                                            const arm_2d_tile_t *ptTile, 
+                                            const arm_2d_region_t *ptRegion, 
+                                            bool bIsNewFrame)
+{
+    assert(NULL!= ptThis);
+    assert(NULL!= ptTile);
+    assert(NULL!= ptRegion);
+
+    if (bIsNewFrame && this.tCFG.bUseDirtyRegions) {
+        const arm_2d_tile_t *ptRootTile 
+                = __arm_2d_tile_get_virtual_screen_or_root_only(ptTile, 
+                                                                NULL, 
+                                                                true);
+
+        arm_2d_dock_left((*ptRegion), 1) {
+            __left_region.tLocation 
+                = arm_2d_get_absolute_location(ptTile, 
+                                                __left_region.tLocation, 
+                                                true);
+
+            __arm_2d_helper_dirty_region_item_update(
+                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_LEFT],
+                ptRootTile,
+                NULL,
+                &__left_region);
+        }
+
+        arm_2d_dock_right((*ptRegion), 1) {
+            __right_region.tLocation 
+                = arm_2d_get_absolute_location(ptTile, 
+                                                __right_region.tLocation, 
+                                                true);
+
+            __arm_2d_helper_dirty_region_item_update(
+                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_RIGHT],
+                ptRootTile,
+                NULL,
+                &__right_region);
+        }
+
+        arm_2d_dock_top((*ptRegion), 1) {
+            __top_region.tLocation 
+                = arm_2d_get_absolute_location(ptTile, 
+                                                __top_region.tLocation, 
+                                                true);
+
+            __arm_2d_helper_dirty_region_item_update(
+                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_TOP],
+                ptRootTile,
+                NULL,
+                &__top_region);
+        }
+
+        arm_2d_dock_bottom((*ptRegion), 1) {
+
+            __bottom_region.tLocation 
+                = arm_2d_get_absolute_location(ptTile, 
+                                                __bottom_region.tLocation, 
+                                                true);
+
+            __arm_2d_helper_dirty_region_item_update(
+                &this.DirtyRegion.tDirtyRegionItems[FOLDABLE_PANEL_DIRTY_REGION_BOTTOM],
+                ptRootTile,
+                NULL,
+                &__bottom_region);
+        }
+    }
+
+}
+
 
 ARM_NONNULL(1)
 arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
@@ -551,7 +687,18 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
                     if (__centre_region.tSize.iHeight == 0 || __centre_region.tSize.iWidth == 0) {
                         /* special case */
                         this.tUserPanel.tRegion.tSize = this.tInnerPanelSize;
-                }
+                    }
+
+
+                    /* update dirty regions */
+                    if (this.tCFG.bUseDirtyRegions && !this.tCFG.bShowScanLines) {
+
+                        __foldable_panel_update_dirty_regions(  ptThis,
+                                                                ptTile,
+                                                                &__centre_region,
+                                                                bIsNewFrame);
+
+                    }
                 }
             }
         }
@@ -571,6 +718,11 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
                         arm_2d_fill_colour( &__outer_panel, 
                                             &__centre_region,
                                             this.tCFG.tLineColour.tColour);
+                    
+                        __foldable_panel_update_dirty_regions(  ptThis,
+                                                                &__outer_panel,
+                                                                &__centre_region,
+                                                                bIsNewFrame);
                     }
                 } else if (0 == this.tInnerPanelSize.iWidth) {
                     tBoarderSize.iWidth = 1;
@@ -580,6 +732,11 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
                         arm_2d_fill_colour( &__outer_panel, 
                                             &__centre_region,
                                             this.tCFG.tLineColour.tColour);
+
+                        __foldable_panel_update_dirty_regions(  ptThis,
+                                                                &__outer_panel,
+                                                                &__centre_region,
+                                                                bIsNewFrame);
                     }
                 } else {
                     tBoarderSize.iWidth += 2;
@@ -591,6 +748,10 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
                                                 1, 
                                                 this.tCFG.tLineColour.tColour,
                                                 255);
+                        __foldable_panel_update_dirty_regions(  ptThis,
+                                                                &__outer_panel,
+                                                                &__centre_region,
+                                                                bIsNewFrame);
                     }
                 }
             }

@@ -61,7 +61,8 @@ typedef struct foldable_panel_cfg_t {
 
     uint32_t bShowScanLines                 : 1;
     uint32_t bAlignTimeline                 : 1;
-    uint32_t                                : 7;
+    uint32_t bUseDirtyRegions               : 1;
+    uint32_t                                : 5;
     uint32_t u12VerticalFoldingTimeInMS     : 12;
     uint32_t u12HorizontalFoldingTimeInMS   : 12;
     COLOUR_TYPE_T tLineColour;
@@ -78,7 +79,6 @@ ARM_PRIVATE(
 
     foldable_panel_cfg_t tCFG;
 
-    /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
     arm_2d_tile_t tInnerPanel;
     arm_2d_tile_t tUserPanel;
@@ -95,6 +95,11 @@ ARM_PRIVATE(
     uint8_t bFoldRequest            : 1;
 
     uint8_t chPT;
+
+    struct {
+        arm_2d_helper_dirty_region_item_t tDirtyRegionItems[4];
+        arm_2d_size_t tLastInnerPanelSize;
+    } DirtyRegion;
 
 )
     /* place your public member here */

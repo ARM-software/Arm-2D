@@ -741,6 +741,8 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .bShowScanLines = true,
             .ptScene = &this.use_as__arm_2d_scene_t,
             .tLineColour.tColour = ARM_2D_DEMO_RADAR_COLOUR,
+            
+            .bUseDirtyRegions = true,
         };
         foldable_panel_init(&this.tScreen, &tCFG);
     } while(0);
