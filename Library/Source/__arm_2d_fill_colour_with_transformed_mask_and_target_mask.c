@@ -174,10 +174,6 @@ void __cl_with_trans_msk_des_msk_get_alpha_with_opacity(
                                             uint16_t hwMaskColour,
                                             uint_fast16_t hwOpacity)
 {
-    if (pchTargetMask == 0) {
-        /* skip */
-        return ;
-    }
 
 #if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                          \
     &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1
@@ -345,6 +341,13 @@ void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_target_mask_and_o
         uint8_t *pchTargetMaskLine = pchTargetMaskBase;
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            uint8_t *pchTargetMask = pchTargetMaskLine++;
+            if (*pchTargetMask == 0) {
+                phwTargetLine++;
+                continue;
+            }
+
             arm_2d_point_fx_t tPointFast;
 
             tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
@@ -375,7 +378,6 @@ void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_target_mask_and_o
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
                 phwTargetLine++;
-                pchTargetMaskLine++;
                 continue;
             }
 
@@ -385,7 +387,7 @@ void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_target_mask_and_o
                             pchOrigin,
                             iOrigStride,
                             phwTargetLine++,
-                            pchTargetMaskLine++,
+                            pchTargetMask,
                             hwMaskColour,
                             chOpacity);
         }
