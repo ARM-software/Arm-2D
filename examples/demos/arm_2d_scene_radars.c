@@ -732,7 +732,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     do {
         int16_t iRadius = c_tileRadarBackgroundGRAY8.tRegion.tSize.iWidth >> 1;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.01f,
+            .fSpeed = 0.02f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius - LAST_STAND_DEFENCE_RADIUS,
             .hwParticleCount = dimof(this.tBogeys),
