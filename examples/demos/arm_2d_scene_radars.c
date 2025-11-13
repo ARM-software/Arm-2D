@@ -272,7 +272,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     int32_t nResult; 
     bool bIsNewScan = false;
-    if (arm_2d_helper_time_liner_slider(0, 3600, 20000ul, &nResult, &this.lTimestamp[0])) {
+    if (arm_2d_helper_time_liner_slider(0, 3600, 5000ul, &nResult, &this.lTimestamp[0])) {
         this.lTimestamp[0] = 0;
         bIsNewScan = true;
         nResult = 0;
@@ -364,19 +364,6 @@ IMPL_PFB_ON_DRAW(__draw_simple_radar)
                                     &__centre_region, 
                                     NULL, 
                                     255 - 64);
-
-            arm_2d_region_t tReferenceRegion;
-
-        #if 0
-            arm_2d_calculate_reference_target_region_after_transform(
-                                                        (arm_2d_op_trans_t *)&this.tScanSector, 
-                                                        &tReferenceRegion,
-                                                        s_tReferencePoints,
-                                                        dimof(s_tReferencePoints)
-                                                        );
-            
-            arm_2d_helper_draw_box(ptTile, &tReferenceRegion, 1, GLCD_COLOR_BLUE, 255);
-        #endif
 
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
