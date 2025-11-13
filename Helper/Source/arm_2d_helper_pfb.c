@@ -4785,11 +4785,13 @@ void __arm_2d_helper_dirty_region_item_update(
                 break;
             }
 
-            if (!arm_2d_region_intersect(   &tNewRegion, 
-                                            &tValidRegionOnVirtualScreen,
-                                            &tNewRegion)) {
-                this.bIgnore = true;
-                break;
+            if (!this.bForceToUseMinimalEnclosure) {
+                if (!arm_2d_region_intersect(   &tNewRegion, 
+                                                &tValidRegionOnVirtualScreen,
+                                                &tNewRegion)) {
+                    this.bIgnore = true;
+                    break;
+                }
             }
         }
 
