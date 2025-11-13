@@ -236,7 +236,7 @@ ARM_PT_BEGIN(this.chPT)
                                 &SPIN_ZOOM_MODE_FILL_COLOUR );
 
     foldable_panel_unfold(&this.tScreen);
-    ARM_PT_DELAY_MS(20000, &this.lTimestamp[1]);
+    ARM_PT_DELAY_MS(10000, &this.lTimestamp[1]);
 
     foldable_panel_fold(&this.tScreen);
 
@@ -249,7 +249,7 @@ ARM_PT_BEGIN(this.chPT)
                                 &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK );
 
     foldable_panel_unfold(&this.tScreen);
-    ARM_PT_DELAY_MS(20000, &this.lTimestamp[1]);
+    ARM_PT_DELAY_MS(30000, &this.lTimestamp[1]);
 
     foldable_panel_fold(&this.tScreen);
     ARM_PT_DELAY_MS(1000, &this.lTimestamp[1]);
@@ -369,7 +369,6 @@ IMPL_PFB_ON_DRAW(__draw_simple_radar)
 
             arm_2d_align_centre(__centre_region, tLabelSize) {
 
-                //arm_2d_helper_draw_box(ptTile, &__centre_region, 1, ARM_2D_DEMO_RADAR_COLOUR, 255);
                 arm_lcd_text_set_target_framebuffer(ptTile);
                 arm_lcd_text_set_draw_region(&__centre_region);
                 arm_lcd_text_set_colour(ARM_2D_DEMO_RADAR_COLOUR, GLCD_COLOR_BLACK);
@@ -438,7 +437,6 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
 
             arm_2d_align_centre(__centre_region, tLabelSize) {
 
-                //arm_2d_helper_draw_box(ptTile, &__centre_region, 1, ARM_2D_DEMO_RADAR_COLOUR, 255);
                 arm_lcd_text_set_target_framebuffer(ptTile);
                 arm_lcd_text_set_draw_region(&__centre_region);
                 arm_lcd_text_set_colour(ARM_2D_DEMO_RADAR_COLOUR, GLCD_COLOR_BLACK);
@@ -705,9 +703,9 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
     /* initialize bogeys */
     do {
-        int16_t iRadius = 100;
+        int16_t iRadius = c_tileRadarBackgroundGRAY8.tRegion.tSize.iWidth >> 1;
         dynamic_nebula_cfg_t tCFG = {
-            .fSpeed = 0.03f,
+            .fSpeed = 0.01f,
             .iRadius = iRadius,
             .iVisibleRingWidth = iRadius - LAST_STAND_DEFENCE_RADIUS,
             .hwParticleCount = dimof(this.tBogeys),
