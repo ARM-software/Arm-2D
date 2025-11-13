@@ -171,13 +171,6 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
     }
 
     foldable_panel_on_load(&this.tScreen);
-
-    this.chRadarIndex = RADAR_IDX_SCAN_SECTOR_STYLE;
-    spin_zoom_widget_update_transform_mode(
-                                &this.tScanSector, 
-                                &SPIN_ZOOM_MODE_FILL_COLOUR );
-
-    foldable_panel_unfold(&this.tScreen);
 }
 
 static void __after_scene_radars_switching(arm_2d_scene_t *ptScene)
@@ -307,7 +300,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     }
 
-    //__scene_radars_actions(ptScene);
+    __scene_radars_actions(ptScene);
 
     spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 1.0f);
     foldable_panel_on_frame_start(&this.tScreen);
