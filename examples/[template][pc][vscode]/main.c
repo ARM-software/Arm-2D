@@ -822,7 +822,7 @@ int app_2d_main_thread (void *argument)
         }
 
         /* if you ONLY use the NANO-Drawing mode, please remove the disp_adapter0_task() */
-        disp_adapter0_task();
+        disp_adapter0_task(60);
 
         if (!s_tDemoCTRL.bIsTimeout) {
 
