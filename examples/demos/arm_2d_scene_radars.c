@@ -757,9 +757,6 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
             ptBogey->u2State = BOGEY_UNKNOW;
             ptBogey->u2NextState = BOGEY_UNKNOW;
-            ptBogey->bIsLocationUpdated = true;
-            ptBogey->chOpacity = 64;
-            ptBogey->iAngle = ptBogey->iNewAngle;
         }
     } while(0);
 
