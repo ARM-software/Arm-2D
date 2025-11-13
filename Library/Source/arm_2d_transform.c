@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        07 Nov 2025
- * $Revision:    V.2.5.0
+ * $Date:        13 Nov 2025
+ * $Revision:    V.2.6.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -580,22 +580,217 @@ static void __arm_2d_transform_preprocess_target(
             .fY = ptTransform->tCenter.fY - (float)ptTransform->tDummySourceOffset.iY,
         };
 
+    #if 0
         if (NULL == ptTargetCentre) {
             arm_2d_point_float_t tTargetCenter = {
                 .fX = (float)tTargetRegion.tSize.iWidth / 2.0f,
                 .fY = (float)tTargetRegion.tSize.iHeight / 2.0f,
             };
 
+            ptTransform->Target.tPivot = tTargetCenter;
+
             tOffset.fX = tTargetCenter.fX - tOffset.fX;
             tOffset.fY = tTargetCenter.fY - tOffset.fY;
         } else {
             tOffset.fX = ptTargetCentre->fX - tOffset.fX;
             tOffset.fY = ptTargetCentre->fY - tOffset.fY;
+
+            ptTransform->Target.tPivot = *ptTargetCentre;
         }
+    #else
+        if (NULL == ptTargetCentre) {
+            ptTransform->Target.tPivot.fX = (float)tTargetRegion.tSize.iWidth / 2.0f;
+            ptTransform->Target.tPivot.fY = (float)tTargetRegion.tSize.iHeight / 2.0f;
+        } else {
+            ptTransform->Target.tPivot = *ptTargetCentre;
+        }
+
+        tOffset.fX = ptTransform->Target.tPivot.fX - tOffset.fX;
+        tOffset.fY = ptTransform->Target.tPivot.fY - tOffset.fY;
+
+    #endif
         ptTransform->Target.tRegion.tLocation.iX += (tOffset.fX + (tOffset.fX < 0 ? -0.5f : 0.5f));
         ptTransform->Target.tRegion.tLocation.iY += (tOffset.fY + (tOffset.fY < 0 ? -0.5f : 0.5f));
 
     } while(0);
+}
+
+ARM_NONNULL(1,2)
+arm_2d_region_t *arm_2d_calculate_reference_target_region_after_transform(
+                                                    arm_2d_op_trans_t *ptThis,
+                                                    arm_2d_region_t *ptOutput,
+                                                    arm_2d_location_t *ptReferencePoints,
+                                                    uint_fast8_t chPointsCount)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptOutput);
+
+    if (NULL == ptReferencePoints || 0 == chPointsCount) {
+        /* use the default value */
+        *ptOutput = *this.Target.ptRegion;
+        return ptOutput;
+    }
+
+    __arm_2d_transform_info_t *ptTransform
+        = (__arm_2d_transform_info_t *)
+            (   (uintptr_t)ptThis
+            +   this.use_as__arm_2d_op_core_t.ptOp->Info.chInClassOffset);
+
+    
+    /* calculate transformed source size and tDummySourceOffset */
+    arm_2d_location_t tDummySourceOffset = {0};
+    arm_2d_size_t tTransformedSourceSize = {0};
+
+    do {
+        arm_2d_point_float_t tPoint;
+
+        arm_2d_point_float_t tTopLeft = {.fX = (float)INT16_MAX, .fY = (float)INT16_MAX};
+        arm_2d_point_float_t tBottomRight = {.fX = (float)INT16_MIN, .fY = (float)INT16_MIN};
+
+        float fScaleX = 1.0f / ptTransform->fScaleX;
+        float fScaleY = 1.0f / ptTransform->fScaleY;
+
+        arm_foreach(arm_2d_location_t, ptReferencePoints, chPointsCount, ptPoint) {
+            __arm_2d_transform_point(   ptPoint,
+                                        &ptTransform->tCenter,
+                                        ptTransform->fAngle,
+                                        fScaleX,
+                                        fScaleY,
+                                        &tPoint);
+            do {
+                tTopLeft.fX = MIN(tTopLeft.fX, tPoint.fX);
+                tTopLeft.fY = MIN(tTopLeft.fY, tPoint.fY);
+
+                tBottomRight.fX = MAX(tBottomRight.fX, tPoint.fX);
+                tBottomRight.fY = MAX(tBottomRight.fY, tPoint.fY);
+            } while(0);
+        }
+
+        /* expand */
+        tTopLeft.fX -= 1.0f;
+        tTopLeft.fY -= 1.0f;
+
+        tBottomRight.fX += 1.0f;
+        tBottomRight.fY += 1.0f;
+
+        //! calculate the region
+        tDummySourceOffset = (arm_2d_location_t){
+                                (int16_t)(tTopLeft.fX + (tTopLeft.fX < 0 ? -0.5f : 0.5f)), 
+                                (int16_t)(tTopLeft.fY + (tTopLeft.fY < 0 ? -0.5f : 0.5f)),
+                            };
+
+        tTransformedSourceSize.iHeight = (int16_t)(tBottomRight.fY - tTopLeft.fY + 1.9f);
+        tTransformedSourceSize.iWidth = (int16_t)(tBottomRight.fX - tTopLeft.fX + 1.9f);
+    } while(0);
+
+    /* output: tDummySourceOffset and tTransformedSourceSize */
+
+    /* calculate reference target region */
+    do {
+        arm_2d_region_t tTargetRegion = {
+            .tSize = this.Target.ptTile->tRegion.tSize,
+        };
+
+        arm_2d_region_t tReferenceRegion = {
+            .tSize = tTransformedSourceSize,
+        };
+
+        //! align with the specified center point
+        arm_2d_point_float_t tOffset = {
+            .fX = ptTransform->tCenter.fX - (float)tDummySourceOffset.iX,
+            .fY = ptTransform->tCenter.fY - (float)tDummySourceOffset.iY,
+        };
+
+        tOffset.fX = ptTransform->Target.tPivot.fX - tOffset.fX;
+        tOffset.fY = ptTransform->Target.tPivot.fY - tOffset.fY;
+
+        tReferenceRegion.tLocation.iX += (tOffset.fX + (tOffset.fX < 0 ? -0.5f : 0.5f));
+        tReferenceRegion.tLocation.iY += (tOffset.fY + (tOffset.fY < 0 ? -0.5f : 0.5f));
+
+        *ptOutput = tReferenceRegion;
+    } while(0);
+
+    return ptOutput;
+}
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_tile_transform_xy( arm_2d_op_trans_t *ptOP,
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_point_float_t *ptTargetCentre)
+{
+    assert(NULL != ptTarget);
+
+    ARM_2D_IMPL(arm_2d_op_trans_t, ptOP);
+    arm_2d_point_float_t tTargetCentre;
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+
+    if (this.bInvalid) {
+        __arm_2d_op_depose( (arm_2d_op_core_t *)ptThis, 
+                            (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS);
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS;
+    }
+
+    arm_2d_region_t tTargetRegion = {
+        .tSize = ptTarget->tRegion.tSize
+    };
+    if (NULL == ptRegion) {
+        ptRegion = &tTargetRegion;
+    }
+
+    __arm_2d_transform_info_t *ptTransform
+        = (__arm_2d_transform_info_t *)
+            (   (uintptr_t)ptThis
+            +   this.use_as__arm_2d_op_core_t.ptOp->Info.chInClassOffset);
+
+
+    this.Target.ptTile = arm_2d_tile_generate_child(
+                                                ptTarget,
+                                                ptRegion,
+                                                &ptTransform->Target.tTile,
+                                                false);
+    if (NULL == this.Target.ptTile) {
+        arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
+        if (ARM_2D_RUNTIME_FEATURE.TREAT_OUT_OF_RANGE_AS_COMPLETE) {
+            tResult = arm_fsm_rt_cpl;
+        }
+
+        return __arm_2d_op_depose((arm_2d_op_core_t *)ptThis, tResult);
+    }
+
+    if (NULL != ptTargetCentre) {
+        tTargetCentre.fX = ptTargetCentre->fX - ptRegion->tLocation.iX;
+        tTargetCentre.fY = ptTargetCentre->fY - ptRegion->tLocation.iY;
+
+        ptTargetCentre = &tTargetCentre;
+    }
+
+    this.Target.ptRegion = NULL;
+
+    __arm_2d_transform_preprocess_target(   ptThis, ptTargetCentre);
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+}
+
+ARM_NONNULL(2)
+arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
+                                 const arm_2d_tile_t *ptTarget,
+                                 const arm_2d_region_t *ptRegion,
+                                 const arm_2d_location_t *ptTargetCentre)
+{
+    if (NULL != ptTargetCentre) {
+        arm_2d_point_float_t tTargetCentre = {
+            .fX = ptTargetCentre->iX,
+            .fY = ptTargetCentre->iY,
+        };
+
+        return arm_2dp_tile_transform_xy(ptOP, ptTarget, ptRegion, &tTargetCentre);
+
+    }
+
+    return arm_2dp_tile_transform_xy(ptOP, ptTarget, ptRegion, NULL);
 }
 
 ARM_NONNULL(2)
@@ -1550,89 +1745,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_transform_only_with_opacity(__arm_2d_sub_task_t
     }
     return arm_fsm_rt_cpl;
 }
-
-
-ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_tile_transform_xy( arm_2d_op_trans_t *ptOP,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_region_t *ptRegion,
-                                        const arm_2d_point_float_t *ptTargetCentre)
-{
-    assert(NULL != ptTarget);
-
-    ARM_2D_IMPL(arm_2d_op_trans_t, ptOP);
-    arm_2d_point_float_t tTargetCentre;
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-
-    if (this.bInvalid) {
-        __arm_2d_op_depose( (arm_2d_op_core_t *)ptThis, 
-                            (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS);
-        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_STATUS;
-    }
-
-    arm_2d_region_t tTargetRegion = {
-        .tSize = ptTarget->tRegion.tSize
-    };
-    if (NULL == ptRegion) {
-        ptRegion = &tTargetRegion;
-    }
-
-    __arm_2d_transform_info_t *ptTransform
-        = (__arm_2d_transform_info_t *)
-            (   (uintptr_t)ptThis
-            +   this.use_as__arm_2d_op_core_t.ptOp->Info.chInClassOffset);
-
-
-    this.Target.ptTile = arm_2d_tile_generate_child(
-                                                ptTarget,
-                                                ptRegion,
-                                                &ptTransform->Target.tTile,
-                                                false);
-    if (NULL == this.Target.ptTile) {
-        arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
-        if (ARM_2D_RUNTIME_FEATURE.TREAT_OUT_OF_RANGE_AS_COMPLETE) {
-            tResult = arm_fsm_rt_cpl;
-        }
-
-        return __arm_2d_op_depose((arm_2d_op_core_t *)ptThis, tResult);
-    }
-
-    if (NULL != ptTargetCentre) {
-        tTargetCentre.fX = ptTargetCentre->fX - ptRegion->tLocation.iX;
-        tTargetCentre.fY = ptTargetCentre->fY - ptRegion->tLocation.iY;
-
-        ptTargetCentre = &tTargetCentre;
-    }
-
-    this.Target.ptRegion = NULL;
-
-    __arm_2d_transform_preprocess_target(   ptThis, ptTargetCentre);
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-}
-
-ARM_NONNULL(2)
-arm_fsm_rt_t arm_2dp_tile_transform(arm_2d_op_trans_t *ptOP,
-                                 const arm_2d_tile_t *ptTarget,
-                                 const arm_2d_region_t *ptRegion,
-                                 const arm_2d_location_t *ptTargetCentre)
-{
-    if (NULL != ptTargetCentre) {
-        arm_2d_point_float_t tTargetCentre = {
-            .fX = ptTargetCentre->iX,
-            .fY = ptTargetCentre->iY,
-        };
-
-        return arm_2dp_tile_transform_xy(ptOP, ptTarget, ptRegion, &tTargetCentre);
-
-    }
-
-    return arm_2dp_tile_transform_xy(ptOP, ptTarget, ptRegion, NULL);
-}
-
-
 
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_gray8_tile_transform_xy_with_src_mask_prepare(

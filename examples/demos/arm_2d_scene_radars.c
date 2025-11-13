@@ -143,6 +143,9 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 ARM_NOINIT
 static arm_2d_location_t s_tScanSectorCenter;
 
+ARM_NOINIT
+arm_2d_location_t s_tReferencePoints[4];
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
@@ -151,6 +154,12 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.tScanSector);
+
+    /* 
+     * NOTE: this assignment only works after calling spin_zoom_widget_on_load()
+     */
+    this.tScanSector.tHelper.SourceReference.ptPoints = s_tReferencePoints;
+    this.tScanSector.tHelper.SourceReference.chCount = dimof(s_tReferencePoints);
 
     arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
         /* initialize transform helper */
@@ -163,6 +172,12 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
 
     foldable_panel_on_load(&this.tScreen);
 
+    this.chRadarIndex = RADAR_IDX_SCAN_SECTOR_STYLE;
+    spin_zoom_widget_update_transform_mode(
+                                &this.tScanSector, 
+                                &SPIN_ZOOM_MODE_FILL_COLOUR );
+
+    foldable_panel_unfold(&this.tScreen);
 }
 
 static void __after_scene_radars_switching(arm_2d_scene_t *ptScene)
@@ -180,8 +195,6 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
     /*--------------------- insert your depose code begin --------------------*/
     
     spin_zoom_widget_depose(&this.tScanSector);
-
-    ARM_2D_OP_DEPOSE(this.tTransOP);
 
     arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
         arm_2d_helper_dirty_region_remove_items(
@@ -266,7 +279,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     int32_t nResult; 
     bool bIsNewScan = false;
-    if (arm_2d_helper_time_liner_slider(0, 3600, 5000ul, &nResult, &this.lTimestamp[0])) {
+    if (arm_2d_helper_time_liner_slider(0, 3600, 20000ul, &nResult, &this.lTimestamp[0])) {
         this.lTimestamp[0] = 0;
         bIsNewScan = true;
         nResult = 0;
@@ -294,9 +307,9 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     }
 
-    __scene_radars_actions(ptScene);
+    //__scene_radars_actions(ptScene);
 
-    spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 2.0f);
+    spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 1.0f);
     foldable_panel_on_frame_start(&this.tScreen);
 
 }
@@ -353,7 +366,24 @@ IMPL_PFB_ON_DRAW(__draw_simple_radar)
                                 255,
                                 bIsNewFrame);
 
-            spin_zoom_widget_show(&this.tScanSector, ptTile, &__centre_region, NULL, 255 - 64);
+            spin_zoom_widget_show(  &this.tScanSector, 
+                                    ptTile, 
+                                    &__centre_region, 
+                                    NULL, 
+                                    255 - 64);
+
+            arm_2d_region_t tReferenceRegion;
+
+        #if 0
+            arm_2d_calculate_reference_target_region_after_transform(
+                                                        (arm_2d_op_trans_t *)&this.tScanSector, 
+                                                        &tReferenceRegion,
+                                                        s_tReferencePoints,
+                                                        dimof(s_tReferencePoints)
+                                                        );
+            
+            arm_2d_helper_draw_box(ptTile, &tReferenceRegion, 1, GLCD_COLOR_BLUE, 255);
+        #endif
 
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
@@ -665,11 +695,14 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     };
 
     /* ------------   initialize members of user_scene_radars_t begin ---------------*/
+
+
+
     // initialize second pointer
     do {
         
-        s_tScanSectorCenter.iX = 0;
-        s_tScanSectorCenter.iY = c_tileScanSectorMask.tRegion.tSize.iHeight - 1;
+        s_tScanSectorCenter.iX = 2;
+        s_tScanSectorCenter.iY = c_tileScanSectorMask.tRegion.tSize.iHeight - 3;
 
         spin_zoom_widget_cfg_t tCFG = {
             .Indicator = {
@@ -699,7 +732,21 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         spin_zoom_widget_init(&this.tScanSector, &tCFG);
     } while(0);
 
-    ARM_2D_OP_INIT(this.tTransOP);
+    /* update reference points*/
+    do {
+        float fRadius = c_tileScanSectorMask.tRegion.tSize.iWidth - 2;
+        s_tReferencePoints[0].iX = 1;
+        s_tReferencePoints[0].iY = c_tileScanSectorMask.tRegion.tSize.iHeight - 2;
+
+        s_tReferencePoints[1].iX = s_tReferencePoints[0].iX + (fRadius * arm_cos_f32(ARM_2D_ANGLE(45)) + 0.5f);
+        s_tReferencePoints[1].iY = s_tReferencePoints[0].iY - (fRadius * arm_sin_f32(ARM_2D_ANGLE(45)) + 0.5f);
+
+        s_tReferencePoints[2].iX = s_tReferencePoints[0].iX + fRadius;
+        s_tReferencePoints[2].iY = s_tReferencePoints[0].iY;
+
+        s_tReferencePoints[3].iX = s_tReferencePoints[0].iX + (fRadius * arm_cos_f32(ARM_2D_ANGLE(22.5f)) + 0.5f);
+        s_tReferencePoints[3].iY = s_tReferencePoints[0].iY - (fRadius * arm_sin_f32(ARM_2D_ANGLE(22.5f)) + 0.5f);
+    } while(0);
 
     /* initialize bogeys */
     do {
@@ -745,6 +792,8 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         };
         foldable_panel_init(&this.tScreen, &tCFG);
     } while(0);
+
+
 
     /* ------------   initialize members of user_scene_radars_t end   ---------------*/
 

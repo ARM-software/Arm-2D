@@ -122,8 +122,6 @@ ARM_PRIVATE(
 
     spin_zoom_widget_t tScanSector;
 
-    arm_2d_op_fill_cl_trans_msk_des_msk_opa_t   tTransOP;
-
     dynamic_nebula_t    tNebula;
     __radar_bogey_t     tBogeys[6];
 

@@ -21,8 +21,8 @@
  * Title:        arm_2d_transform.h
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        07 Nov 2025
- * $Revision:    V.2.5.0
+ * $Date:        13 Nov 2025
+ * $Revision:    V.2.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4189,7 +4189,7 @@ typedef struct __arm_2d_transform_info_t {
     float                   fAngle;         //!< target angle
     float                   fScaleX;        //!< scaling factor
     float                   fScaleY;        //!< scaling factor   
-    arm_2d_point_float_t    tCenter;        //!< pivot
+    arm_2d_point_float_t    tCenter;        //!< pivot on Source
 
     union {
         uint8_t             chColour;       //!< the key colour in 8bit
@@ -4197,13 +4197,13 @@ typedef struct __arm_2d_transform_info_t {
         uint16_t            hwColour;       //!< the key colour in 32bit
     } Mask;
 
-    
     /* private members used by runtime */
 ARM_PRIVATE(
-    arm_2d_location_t       tDummySourceOffset;
+    arm_2d_location_t           tDummySourceOffset;
     struct {
-        arm_2d_region_t     tRegion;
-        arm_2d_tile_t       tTile;
+        arm_2d_region_t         tRegion;
+        arm_2d_tile_t           tTile;
+        arm_2d_point_float_t    tPivot;     //!< pivot on target
     } Target;
 )
 
@@ -5309,7 +5309,25 @@ arm_fsm_rt_t arm_2dp_tile_transform_xy( arm_2d_op_trans_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_point_float_t *ptTargetCentre);
-
+/*!
+ * \brief Calculate a reference region on target side with given reference points on
+ *        source side. 
+ * 
+ * \note  you MUST call this API after arm_2dp_tile_transform_xy.
+ * 
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[out] ptOutput an arm_2d_region_t pointer points to the output buffer
+ * \param[in] ptReferencePoints the reference points
+ * \param[in] chPointsCount the number of reference points
+ * \return arm_2d_region_t * the reference region
+ */
+extern
+ARM_NONNULL(1,2)
+arm_2d_region_t *arm_2d_calculate_reference_target_region_after_transform(
+                                                    arm_2d_op_trans_t *ptOP,
+                                                    arm_2d_region_t *ptOutput,
+                                                    arm_2d_location_t *ptReferencePoints,
+                                                    uint_fast8_t chPointsCount);
 /*! @} */
 
 /*========================= POST INCLUDES ====================================*/

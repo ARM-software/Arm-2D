@@ -136,9 +136,7 @@ typedef struct spin_zoom_widget_cfg_t {
 
 struct spin_zoom_widget_t {
 
-ARM_PROTECTED(
-    spin_zoom_widget_cfg_t tCFG;
-)
+    
 
 ARM_PRIVATE(
     union {
@@ -151,8 +149,14 @@ ARM_PRIVATE(
     struct {
         spin_zoom_widget_mode_t *ptTransformMode;
     } Request;
+)
 
+ARM_PUBLIC(
     arm_2d_helper_dirty_region_transform_t  tHelper;
+)
+
+ARM_PROTECTED(
+    spin_zoom_widget_cfg_t tCFG;
 )
     
 };

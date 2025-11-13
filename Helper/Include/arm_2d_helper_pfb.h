@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        10. September 2025
- * $Revision:    V.2.4.1
+ * $Date:        13. Nov 2025
+ * $Revision:    V.2.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -953,6 +953,12 @@ typedef struct arm_2d_helper_dirty_region_transform_t {
     float fScaleY;
 
     arm_2d_helper_dirty_region_item_t tItem;
+
+    struct {
+        arm_2d_location_t *ptPoints;
+        uint8_t chCount;
+    } SourceReference;     
+
 ARM_PRIVATE(
     
     arm_2d_op_t *ptTransformOP;
