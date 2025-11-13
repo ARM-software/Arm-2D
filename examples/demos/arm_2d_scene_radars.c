@@ -289,13 +289,10 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
         if (bIsNewScan) {
             ptBogey->bIsLocationUpdated = false;
         }
-    
-        if (!ptBogey->bIsLocationUpdated) {
 
-            if (nResult >= ptBogey->iAngle) {
-                ptBogey->bAllowUpdateLocation = true;
-                ptBogey->bIsLocationUpdated = true;
-            }
+        if (nResult >= ptBogey->iAngle && !ptBogey->bIsLocationUpdated) {
+            ptBogey->bAllowUpdateLocation = true;
+            ptBogey->bIsLocationUpdated = true;
         }
 
     }
@@ -304,6 +301,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 1.0f);
     foldable_panel_on_frame_start(&this.tScreen);
+
 
 }
 
@@ -519,20 +517,21 @@ void __draw_bogey_handler(  void *pObj,
 
     if (ptBogey->bAllowUpdateLocation) {
         ptBogey->bAllowUpdateLocation = false;
-
+        
         switch (ptBogey->u2State) {
             case BOGEY_UNKNOW:
                 ptBogey->u2NextState = BOGEY_SCANNING;
                 ptBogey->iAngle = ptBogey->iNewAngle;
-                break;
+                
+                break ;
             case BOGEY_SCANNING:
                 ptBogey->u2NextState = BOGEY_TRACKING;
                 ptBogey->iDistance = iDistance;
                 ptBogey->tDetectedPos = tLocation;
                 ptBogey->chOpacity = 255;
-                return;
+                break;
             case BOGEY_TRACKING:
-                if (iDistance <= LAST_STAND_DEFENCE_RADIUS || ptBogey->iDistance < iDistance) {
+                if (iDistance <= LAST_STAND_DEFENCE_RADIUS || (ptBogey->iAngle != ptBogey->iNewAngle)) {
                     ptBogey->u2NextState = BOGEY_LOST;
                 } else {
                     ptBogey->tDetectedPos = tLocation;
@@ -541,7 +540,7 @@ void __draw_bogey_handler(  void *pObj,
                 ptBogey->chOpacity = 255;
                 break;
             case BOGEY_LOST:
-                if (ptBogey->iDistance < iDistance) {
+                if (ptBogey->iAngle != ptBogey->iNewAngle) {
                     ptBogey->u2NextState = BOGEY_UNKNOW;
                 }
                 break;
@@ -757,6 +756,9 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
         arm_foreach(__radar_bogey_t, this.tBogeys, ptBogey) {
             ptBogey->u2State = BOGEY_UNKNOW;
+            ptBogey->u2NextState = BOGEY_UNKNOW;
+            ptBogey->bIsLocationUpdated = true;
+            ptBogey->chOpacity = 64;
             ptBogey->iAngle = ptBogey->iNewAngle;
         }
     } while(0);
