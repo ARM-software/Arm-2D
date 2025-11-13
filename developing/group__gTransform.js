@@ -135,5 +135,6 @@ var group__gTransform =
     [ "arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare", "group__gTransform.html#gad9d33d43c90d236486a4e9fd8c349f7f", null ],
     [ "arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare", "group__gTransform.html#gad958f0d6a5e092e0399709d37e228022", null ],
     [ "arm_2dp_tile_transform", "group__gTransform.html#ga86c351a1272f5af292756c4f86f8e8d2", null ],
-    [ "arm_2dp_tile_transform_xy", "group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6", null ]
+    [ "arm_2dp_tile_transform_xy", "group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6", null ],
+    [ "arm_2d_calculate_reference_target_region_after_transform", "group__gTransform.html#gae22836047459ba5253f8d48dc1ba672b", null ]
 ];

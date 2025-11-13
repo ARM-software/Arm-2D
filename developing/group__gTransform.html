@@ -137,6 +137,7 @@ Data Structures</h2></td></tr>
 <tr class="memitem:union____arm__2d__transform__info__t_8Mask"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#union____arm__2d__transform__info__t_8Mask">__arm_2d_transform_info_t.Mask</a></td></tr>
 <tr class="separator:union____arm__2d__transform__info__t_8Mask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct____arm__2d__transform__info__t_8____unnamed100____"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100____">__arm_2d_transform_info_t.__unnamed100__</a></td></tr>
+<tr class="memdesc:struct____arm__2d__transform__info__t_8____unnamed100____"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; pivot on target  <a href="group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100____">More...</a><br /></td></tr>
 <tr class="separator:struct____arm__2d__transform__info__t_8____unnamed100____"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct____arm__2d__transform__info__t_8____unnamed100_____8Target"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#struct____arm__2d__transform__info__t_8____unnamed100_____8Target">__arm_2d_transform_info_t.__unnamed100__.Target</a></td></tr>
 <tr class="separator:struct____arm__2d__transform__info__t_8____unnamed100_____8Target"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -698,6 +699,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8eb8867fca95508c4397ee0c0ddad6e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga373f79d09c0d15653ca46ea08e0377fc">arm_fsm_rt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6">arm_2dp_tile_transform_xy</a> (<a class="el" href="group__gTransform.html#structarm__2d__op__trans__t">arm_2d_op_trans_t</a> *ptOP, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptRegion, const <a class="el" href="group__gKernel.html#structarm__2d__point__float__t">arm_2d_point_float_t</a> *ptTargetCentre)</td></tr>
 <tr class="memdesc:ga8eb8867fca95508c4397ee0c0ddad6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">start a transform operation  <a href="group__gTransform.html#ga8eb8867fca95508c4397ee0c0ddad6e6">More...</a><br /></td></tr>
 <tr class="separator:ga8eb8867fca95508c4397ee0c0ddad6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae22836047459ba5253f8d48dc1ba672b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gTransform.html#gae22836047459ba5253f8d48dc1ba672b">arm_2d_calculate_reference_target_region_after_transform</a> (<a class="el" href="group__gTransform.html#structarm__2d__op__trans__t">arm_2d_op_trans_t</a> *ptOP, <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptOutput, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *ptReferencePoints, uint_fast8_t chPointsCount)</td></tr>
+<tr class="memdesc:gae22836047459ba5253f8d48dc1ba672b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate a reference region on target side with given reference points on source side.  <a href="group__gTransform.html#gae22836047459ba5253f8d48dc1ba672b">More...</a><br /></td></tr>
+<tr class="separator:gae22836047459ba5253f8d48dc1ba672b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -739,7 +743,7 @@ scaling factor <br  />
 <td class="fieldname">
 tCenter</td>
 <td class="fielddoc">
-pivot </td></tr>
+pivot on Source </td></tr>
 <tr><td class="fieldtype">
 <a id="a489854ba01ffb70d3528d22c245f15e3" name="a489854ba01ffb70d3528d22c245f15e3"></a>union <a class="el" href="group__gTransform.html#union____arm__2d__transform__info__t_8Mask">__arm_2d_transform_info_t.Mask</a></td>
 <td class="fieldname">
@@ -751,7 +755,7 @@ Mask</td>
 <td class="fieldname">
 __unnamed__</td>
 <td class="fielddoc">
-</td></tr>
+&lt; pivot on target </td></tr>
 </table>
 
 </div>
@@ -1042,7 +1046,8 @@ the key colour in 32bit </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="fieldtable">
+<div class="textblock"><p >&lt; pivot on target </p>
+</div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
 <a id="a11ea4130fff3d37621e8dbfbb892acf6" name="a11ea4130fff3d37621e8dbfbb892acf6"></a><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a></td>
@@ -1083,6 +1088,12 @@ tRegion</td>
 <a id="a3ef57e15d8635fbd804cda70471a4c4a" name="a3ef57e15d8635fbd804cda70471a4c4a"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
 <td class="fieldname">
 tTile</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a414864e2029134613d7334d4754dcae9" name="a414864e2029134613d7334d4754dcae9"></a><a class="el" href="group__gKernel.html#structarm__2d__point__float__t">arm_2d_point_float_t</a></td>
+<td class="fieldname">
+tPivot</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -17906,6 +17917,59 @@ target side mask </td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="gae22836047459ba5253f8d48dc1ba672b" name="gae22836047459ba5253f8d48dc1ba672b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae22836047459ba5253f8d48dc1ba672b">&#9670;&#160;</a></span>arm_2d_calculate_reference_target_region_after_transform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> * arm_2d_calculate_reference_target_region_after_transform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gTransform.html#structarm__2d__op__trans__t">arm_2d_op_trans_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *&#160;</td>
+          <td class="paramname"><em>ptOutput</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> *&#160;</td>
+          <td class="paramname"><em>ptReferencePoints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint_fast8_t&#160;</td>
+          <td class="paramname"><em>chPointsCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate a reference region on target side with given reference points on source side. </p>
+<dl class="section note"><dt>Note</dt><dd>you MUST call this API after arm_2dp_tile_transform_xy.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptOP</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ptOutput</td><td>an <a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> pointer points to the output buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptReferencePoints</td><td>the reference points </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chPointsCount</td><td>the number of reference points </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__region__t" title="a type for an rectangular area">arm_2d_region_t</a> * the reference region </dd></dl>
 
 </div>
 </div>
