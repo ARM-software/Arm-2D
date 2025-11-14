@@ -201,6 +201,12 @@ extern "C" {
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__              0
 #endif
 
+// <q> Force to disable Anti-Alias in Fill-colour-with-transformed-mask-and-opacity.
+// <i> This feature is disabled by default. You can disable it to improve performance as long as the rendering is good enough.
+#ifndef __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+#   define __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__   0
+#endif
+
 // </h>
 
 // <h>Extra Components

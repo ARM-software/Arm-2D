@@ -22,8 +22,8 @@
  * Description:  The header file of APIs for colour-filling-with-transformed-
  *               -mask-target-mask-and-opacity
  * 
- * $Date:        07. Nov 2025
- * $Revision:    V.0.1.0
+ * $Date:        14 Nov 2025
+ * $Revision:    v1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -59,7 +59,20 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(\
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8BIT' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+    ] 
+%}
+
+{%- for has_opacity in [
+    ('and_target_mask'),
+    ('target_mask_and_opacity' ),
+    ] 
+%}
+
+#define arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}(\
                                         __CB_ADDR,                              \
                                         __MASK_ADDR,                            \
                                         __DES_TILE_ADDR,                        \
@@ -72,7 +85,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_prepare(\
+        arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__DES_MASK_ADDR),                      \
@@ -89,7 +102,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(\
+#define arm_2d_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}(\
                                         __CB_ADDR,                              \
                                         __MASK_ADDR,                            \
                                         __DES_TILE_ADDR,                        \
@@ -102,7 +115,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_prepare(\
+        arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__DES_MASK_ADDR),                      \
@@ -117,6 +130,10 @@ extern "C" {
                             (__DES_REGION_ADDR),                                \
                             (NULL,##__VA_ARGS__));                              \
     })
+
+{%- endfor %}
+{%- endfor %}
+
 /*============================ TYPES =========================================*/
 
 /*! \brief arm_2d_op_fill_cl_trans_msk_des_msk_opa_t is alias of arm_2d_op_trans_msk_opa_t
@@ -127,8 +144,20 @@ typedef arm_2d_op_trans_msk_opa_t arm_2d_op_fill_cl_trans_msk_des_msk_opa_t;
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+{%- for colour_name, colour_int, colour_int_prefix, colour_int_no_bits in [
+    ('gray8', 'uint8_t', 'ch', '8BIT' ),
+    ('rgb565', 'uint16_t', 'hw', '16BIT' ),
+    ('cccn888', 'uint32_t', 'w', '32BIT' ),
+    ] 
+%}
+{%- for has_opacity in [
+    ('and_target_mask'),
+    ('target_mask_and_opacity' ),
+    ] 
+%}
+
 /*!
- * \brief Prepare for a rgb565 colour-filling with a mask (to be transformed), 
+ * \brief Prepare for a {{colour_name}} colour-filling with a mask (to be transformed), 
  *        a target mask and a given opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the mask to be transformed
@@ -138,12 +167,15 @@ typedef arm_2d_op_trans_msk_opa_t arm_2d_op_fill_cl_trans_msk_des_msk_opa_t;
  * \param[in] fScaleX the scaling factor for X axis
  * \param[in] fScaleY the scaling factor for X axis
  * \param[in] hwFillColour the colour to fill
+
+{%- if has_opacity == 'target_mask_and_opacity' %}
  * \param[in] chOpacity the opacity
+{%- endif %}
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_prepare(
+arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_prepare(
                                         arm_2d_op_fill_cl_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_tile_t *ptTargetMask,
@@ -151,8 +183,15 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_op
                                         float fAngle,
                                         float fScaleX,
                                         float fScaleY,
-                                        uint_fast16_t hwFillColour,
-                                        uint_fast8_t chOpacity);
+                                        {{colour_int}} {{colour_int_prefix}}FillColour
+                                    {%- if has_opacity == 'target_mask_and_opacity' -%}
+                                        ,
+                                        uint_fast8_t chOpacity
+                                    {%- endif -%}
+                                     );
+
+{%- endfor %}
+{%- endfor %}
 
 /*! @} */
 

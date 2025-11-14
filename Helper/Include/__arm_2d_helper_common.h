@@ -279,12 +279,18 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask_and_xy_mirror
 #   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
                 arm_2d_gray8_fill_colour_with_mask_xy_mirror_and_opacity
+
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_gray8_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity    \
+                arm_2dp_gray8_fill_colour_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_fill_colour_with_transformed_mask_and_target_mask            \
+                arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask
+
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_gray8_fill_colour_with_horizontal_line_mask
 #   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
@@ -520,12 +526,18 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask_and_xy_mirror
 #   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
                 arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity
+
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_rgb565_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity    \
+                arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_fill_colour_with_transformed_mask_and_target_mask            \
+                arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask
+
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_rgb565_fill_colour_with_horizontal_line_mask
 #   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
@@ -760,12 +772,18 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask_and_xy_mirror
 #   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
                 arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity
+
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_cccn888_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity    \
+                arm_2dp_cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_fill_colour_with_transformed_mask_and_target_mask            \
+                arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask
+    
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_cccn888_fill_colour_with_horizontal_line_mask
 #   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \

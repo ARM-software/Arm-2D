@@ -351,7 +351,7 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour_with_target_mask(
     }
 
     /* draw pointer */
-    arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity(
+    arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity(
             &this.OPCODE.tFillColourTransformTargetMask,
             this.tCFG.Source.ptMask,
             ptTile,

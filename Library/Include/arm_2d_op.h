@@ -23,7 +23,7 @@
  *               interface header files 
  *
  * $Date:        14 Nov 2025
- * $Revision:    V.1.10.0
+ * $Revision:    V.1.11.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -905,6 +905,14 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888;
 
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888;
 /*============================ PROTOTYPES ====================================*/
 
 
