@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        13 Nov 2025
- * $Revision:    V.2.6.0
+ * $Date:        14 Nov 2025
+ * $Revision:    V.2.7.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2417,7 +2417,7 @@ __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity(__arm_2d_sub_task_t *ptT
 
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+arm_2d_err_t arm_2dp_gray8_fill_colour_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_point_float_t tCentre,
@@ -2445,7 +2445,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepar
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8;
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
@@ -2471,7 +2471,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
                                         uint_fast8_t chFillColour,
                                         uint_fast8_t chOpacity)
 {
-    return arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+    return arm_2dp_gray8_fill_colour_with_transformed_mask_and_opacity_prepare(
         ptOP, 
         ptMask, 
         (arm_2d_point_float_t){ .fX = tCentre.iX, .fY = tCentre.iY },
@@ -2484,7 +2484,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
 }
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_point_float_t tCentre,
@@ -2512,7 +2512,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepa
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565;
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
@@ -2538,7 +2538,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
                                         uint_fast16_t hwFillColour,
                                         uint_fast8_t chOpacity)
 {
-    return arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+    return arm_2dp_rgb565_fill_colour_with_transformed_mask_and_opacity_prepare(
                     ptOP, 
                     ptMask, 
                     (arm_2d_point_float_t){ .fX = tCentre.iX, .fY = tCentre.iY },
@@ -2551,7 +2551,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
 }
 
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+arm_2d_err_t arm_2dp_cccn888_fill_colour_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_point_float_t tCentre,
@@ -2579,7 +2579,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prep
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888;
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
@@ -2605,7 +2605,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
                                         uint32_t wFillColour,
                                         uint_fast8_t chOpacity)
 {
-    return arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+    return arm_2dp_cccn888_fill_colour_with_transformed_mask_and_opacity_prepare(
                     ptOP, 
                     ptMask, 
                     (arm_2d_point_float_t){ .fX = tCentre.iX, .fY = tCentre.iY },
@@ -2617,7 +2617,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
                 );
 }
 
-arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_transformed_mask_and_opacity(
                                                     __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptTask->ptOP);
@@ -2647,7 +2647,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
     return arm_fsm_rt_cpl;
 }
 
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_opacity(
                                                     __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptTask->ptOP);
@@ -2676,7 +2676,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform(
     return arm_fsm_rt_cpl;
 }
 
-arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_opacity(
                                                     __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opa_trans_t, ptTask->ptOP);
@@ -2783,16 +2783,16 @@ def_low_lv_io(__ARM_2D_IO_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_CCCN888,
                 __arm_2d_cccn888_sw_transform_with_src_mask_and_opacity);
 
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8,
-                __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform);
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8,
+                __arm_2d_gray8_sw_colour_filling_with_transformed_mask_and_opacity);
 
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565,
-                __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform);
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565,
+                __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_opacity);
 
 __WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888,
-                __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform);
+def_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888,
+                __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_opacity);
 
 
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_GRAY8 = {
@@ -3190,7 +3190,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_CCCN888 = 
 
 
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -3201,18 +3201,18 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GR
             .bHasTarget             = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
+        .chOpIndex          = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_fill_cl_msk_opa_trans_t, tTransform),
 
         .LowLevelIO = {
-            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8),
+            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8),
             .ptFillOrigLike = NULL,
         },
     },
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -3223,18 +3223,18 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RG
             .bHasTarget             = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
+        .chOpIndex          = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_fill_cl_msk_opa_trans_t, tTransform),
 
         .LowLevelIO = {
-            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565),
+            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565),
             .ptFillOrigLike = NULL,
         },
     },
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -3245,11 +3245,11 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CC
             .bHasTarget             = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex          = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
+        .chOpIndex          = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_fill_cl_msk_opa_trans_t, tTransform),
 
         .LowLevelIO = {
-            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888),
+            .ptCopyOrigLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888),
             .ptFillOrigLike = NULL,
         },
     },

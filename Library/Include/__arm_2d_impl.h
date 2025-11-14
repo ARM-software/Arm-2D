@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        6. Nov 2025
- * $Revision:    V.1.7.1
+ * $Date:        14 Nov 2025
+ * $Revision:    V.1.7.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -476,7 +476,7 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_REPEAT,
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_TRANFORM,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY,
 
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_AND_OPACITY,
@@ -1503,15 +1503,15 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_transformed_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern

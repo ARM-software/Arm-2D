@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        7. Nov 2025
- * $Revision:    V.1.9.0
+ * $Date:        14 Nov 2025
+ * $Revision:    V.1.10.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -40,6 +40,20 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 #define LOW_LEVEL_IO__ARM_2D_IO_NONE    (*(void *)NULL)
+
+/*! 
+ *  \addtogroup Deprecated
+ *  @{
+ */
+#define ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8              \
+            ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8
+
+#define ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565             \
+            ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565
+
+#define ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888            \
+            ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888
+/*! @} */
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
@@ -856,13 +870,13 @@ extern
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_GRAY8;
