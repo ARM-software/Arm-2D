@@ -241,7 +241,7 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
     {%- else %}
-        uint16_t hwAlpha = wTotalAlpha >> 16;
+        uint16_t hwAlpha = wTotalAlpha >> 8;
     {%- endif %}
 
         /* handle target mask */

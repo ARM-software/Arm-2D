@@ -206,7 +206,7 @@ void __gray8_fill_colour_with_transformed_mask_and_target_mask_process_point(
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
     if (wTotalAlpha) {
-        uint16_t hwAlpha = wTotalAlpha >> 16;
+        uint16_t hwAlpha = wTotalAlpha >> 8;
 
         /* handle target mask */
         uint8_t chTargetAlpha = *pchTargetMask;
@@ -1002,7 +1002,7 @@ void __rgb565_fill_colour_with_transformed_mask_and_target_mask_process_point(
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
     if (wTotalAlpha) {
-        uint16_t hwAlpha = wTotalAlpha >> 16;
+        uint16_t hwAlpha = wTotalAlpha >> 8;
 
         /* handle target mask */
         uint8_t chTargetAlpha = *pchTargetMask;
@@ -1798,7 +1798,7 @@ void __cccn888_fill_colour_with_transformed_mask_and_target_mask_process_point(
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
     if (wTotalAlpha) {
-        uint16_t hwAlpha = wTotalAlpha >> 16;
+        uint16_t hwAlpha = wTotalAlpha >> 8;
 
         /* handle target mask */
         uint8_t chTargetAlpha = *pchTargetMask;
