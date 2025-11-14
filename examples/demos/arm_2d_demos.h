@@ -51,6 +51,7 @@
 #include "arm_2d_scene_qrcode.h"
 #include "arm_2d_scene_space_badge.h"
 #include "arm_2d_scene_radars.h"
+#include "arm_2d_scene_blink.h"
 
 /* monochrome demos */
 #if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)
