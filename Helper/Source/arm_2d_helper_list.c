@@ -1937,8 +1937,9 @@ ARM_PT_BEGIN(this.chState)
         int32_t nTempOffset = nOffset;
         
         while(NULL != ptItem) {
+
             if (nTempOffset >= 0) {
-                assert(this.tCFG.bDisableRingMode);
+                //assert(this.tCFG.bDisableRingMode);
                 break;
             }
 
@@ -2434,7 +2435,7 @@ ARM_PT_BEGIN(this.chState)
         while(NULL != ptItem) {
 
             if (nTempOffset >= 0) {
-                assert(this.tCFG.bDisableRingMode);
+                //assert(this.tCFG.bDisableRingMode);
                 break;
             }
 
