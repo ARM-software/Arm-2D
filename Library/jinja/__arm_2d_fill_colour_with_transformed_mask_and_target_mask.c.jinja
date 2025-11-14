@@ -458,11 +458,12 @@ __arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{has_opacity}}
                         .tOrigin
                             .nOffset;
 
-
+#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
+#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
