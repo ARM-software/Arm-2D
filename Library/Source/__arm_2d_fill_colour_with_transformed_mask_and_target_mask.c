@@ -405,12 +405,10 @@ __arm_2d_gray8_sw_colour_filling_with_transformed_mask_and_target_mask(
                         .tOrigin
                             .nOffset;
 
-#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
-#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -804,12 +802,10 @@ __arm_2d_gray8_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
                         .tOrigin
                             .nOffset;
 
-#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
-#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -1203,12 +1199,10 @@ __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_target_mask(
                         .tOrigin
                             .nOffset;
 
-#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
-#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -1602,12 +1596,10 @@ __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
                         .tOrigin
                             .nOffset;
 
-#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
-#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -2001,12 +1993,10 @@ __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_target_mask(
                         .tOrigin
                             .nOffset;
 
-#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
-#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
@@ -2400,12 +2390,10 @@ __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_target_mask_and_opacity
                         .tOrigin
                             .nOffset;
 
-#if 0
     arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
-#endif
     
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
