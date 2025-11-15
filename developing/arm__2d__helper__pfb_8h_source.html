@@ -134,8 +134,8 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d_helper_pfb.h&quot;</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file for the PFB helper service </span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        13. Nov 2025</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.2.4.2</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        14. Nov 2025</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.2.4.3</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -1891,27 +1891,27 @@ $(document).ready(function(){initNavTree('arm__2d__helper__pfb_8h_source.html','
 <div class="line"><a id="l01778" name="l01778"></a><span class="lineno"> 1778</span><span class="comment"> * \brief force the dirty region helper to suspend the dirty region update.</span></div>
 <div class="line"><a id="l01779" name="l01779"></a><span class="lineno"> 1779</span><span class="comment"> * </span></div>
 <div class="line"><a id="l01780" name="l01780"></a><span class="lineno"> 1780</span><span class="comment"> * \param[in] ptThis the target helper</span></div>
-<div class="line"><a id="l01781" name="l01781"></a><span class="lineno"> 1781</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
+<div class="line"><a id="l01781" name="l01781"></a><span class="lineno"> 1781</span><span class="comment"> * \param[in] bSuspend whether suspend the update.</span></div>
 <div class="line"><a id="l01782" name="l01782"></a><span class="lineno"> 1782</span><span class="comment"> * \return boolean the original setting</span></div>
 <div class="line"><a id="l01783" name="l01783"></a><span class="lineno"> 1783</span><span class="comment"> */</span></div>
 <div class="line"><a id="l01784" name="l01784"></a><span class="lineno"> 1784</span>extern</div>
 <div class="line"><a id="l01785" name="l01785"></a><span class="lineno"> 1785</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01786" name="l01786"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e"> 1786</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga08ef5a533a251fbb5c8b860c7e402e1e" title="force the dirty region helper to suspend the dirty region update.">arm_2d_helper_dirty_region_suspend_update</a>(</div>
+<div class="line"><a id="l01786" name="l01786"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaae86e15d47b7356545f5c35aa9e787e7"> 1786</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gaae86e15d47b7356545f5c35aa9e787e7" title="force the dirty region helper to suspend the dirty region update.">arm_2d_helper_dirty_region_suspend_update</a>(</div>
 <div class="line"><a id="l01787" name="l01787"></a><span class="lineno"> 1787</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis,</div>
-<div class="line"><a id="l01788" name="l01788"></a><span class="lineno"> 1788</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
+<div class="line"><a id="l01788" name="l01788"></a><span class="lineno"> 1788</span>                                        <span class="keywordtype">bool</span> bSuspend);</div>
 <div class="line"><a id="l01789" name="l01789"></a><span class="lineno"> 1789</span><span class="comment"></span> </div>
 <div class="line"><a id="l01790" name="l01790"></a><span class="lineno"> 1790</span><span class="comment">/*!</span></div>
 <div class="line"><a id="l01791" name="l01791"></a><span class="lineno"> 1791</span><span class="comment"> * \brief force the arm_2d_helper_dirty_region_item_t object to suspend the </span></div>
 <div class="line"><a id="l01792" name="l01792"></a><span class="lineno"> 1792</span><span class="comment"> *        dirty region update.</span></div>
 <div class="line"><a id="l01793" name="l01793"></a><span class="lineno"> 1793</span><span class="comment"> * </span></div>
 <div class="line"><a id="l01794" name="l01794"></a><span class="lineno"> 1794</span><span class="comment"> * \param[in] ptThis the target item</span></div>
-<div class="line"><a id="l01795" name="l01795"></a><span class="lineno"> 1795</span><span class="comment"> * \param[in] bEnable whether enable this feature.</span></div>
+<div class="line"><a id="l01795" name="l01795"></a><span class="lineno"> 1795</span><span class="comment"> * \param[in] bSuspend whether suspend the update.</span></div>
 <div class="line"><a id="l01796" name="l01796"></a><span class="lineno"> 1796</span><span class="comment"> * \return boolean the original setting</span></div>
 <div class="line"><a id="l01797" name="l01797"></a><span class="lineno"> 1797</span><span class="comment"> */</span></div>
 <div class="line"><a id="l01798" name="l01798"></a><span class="lineno"> 1798</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l01799" name="l01799"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43"> 1799</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga017de82f4efa0309cf39a8364c933a43" title="force the arm_2d_helper_dirty_region_item_t object to suspend the dirty region update.">arm_2d_helper_dirty_region_item_suspend_update</a>(</div>
+<div class="line"><a id="l01799" name="l01799"></a><span class="lineno"><a class="line" href="group__gHelper.html#gaaf2ffba8e1eae3bd15a3f394a3a6f869"> 1799</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#gaaf2ffba8e1eae3bd15a3f394a3a6f869" title="force the arm_2d_helper_dirty_region_item_t object to suspend the dirty region update.">arm_2d_helper_dirty_region_item_suspend_update</a>(</div>
 <div class="line"><a id="l01800" name="l01800"></a><span class="lineno"> 1800</span>                                        <a class="code hl_struct" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis,</div>
-<div class="line"><a id="l01801" name="l01801"></a><span class="lineno"> 1801</span>                                        <span class="keywordtype">bool</span> bEnable);</div>
+<div class="line"><a id="l01801" name="l01801"></a><span class="lineno"> 1801</span>                                        <span class="keywordtype">bool</span> bSuspend);</div>
 <div class="line"><a id="l01802" name="l01802"></a><span class="lineno"> 1802</span> </div>
 <div class="line"><a id="l01803" name="l01803"></a><span class="lineno"> 1803</span><span class="comment">/*----------------------------------------------------------------------------*</span></div>
 <div class="line"><a id="l01804" name="l01804"></a><span class="lineno"> 1804</span><span class="comment"> * The Transform Helper Service (Deprecated)                                  *</span></div>
