@@ -122,6 +122,10 @@ static void __on_scene_blink_load(arm_2d_scene_t *ptScene)
     user_scene_blink_t *ptThis = (user_scene_blink_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_helper_dirty_region_add_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
+                                         &this.EyeBallMove.tDirtyRegionItem,
+                                         1);
+
     spin_zoom_widget_on_load(&this.Eye.tSocket);
     spin_zoom_widget_on_load(&this.Eye.tEyeBall);
 }
@@ -174,18 +178,15 @@ static void __on_scene_blink_background_complete(arm_2d_scene_t *ptScene)
 
 static arm_fsm_rt_t __blink_action(user_scene_blink_t *ptThis)
 {
-    srand(arm_2d_helper_get_system_timestamp());
     uint8_t chRolling;
 
 ARM_PT_BEGIN(this.Blink.chPT)
 
     do {
         chRolling = rand() & 0xFF;
-
         if (chRolling <= this.Blink.chRatio) {
             break;
         }
-
         ARM_PT_YIELD(arm_fsm_rt_on_going);
     } while(true);
 
@@ -202,7 +203,7 @@ ARM_PT_BEGIN(this.Blink.chPT)
         do {
             int32_t nResult;
             if (arm_2d_helper_time_cos_slider(  100, 
-                                                1, 
+                                                1,      /* IMPORTANT: This value can NOT be zero */
                                                 200,    /* 200 ms*/
                                                 0, 
                                                 &nResult, 
@@ -227,13 +228,126 @@ ARM_PT_END()
 
 }
 
+static arm_fsm_rt_t __eyeball_move(user_scene_blink_t *ptThis)
+{
+
+ARM_PT_BEGIN(this.EyeBallMove.chPT)
+
+    do {
+        if ((this.EyeBallMove.tNewOffset.iX != this.EyeBallMove.tOffset.iX)
+        ||  (this.EyeBallMove.tNewOffset.iY != this.EyeBallMove.tOffset.iY)) {
+
+            this.lTimestamp[2] = 0;
+            this.lTimestamp[3] = 0;
+
+            arm_2d_helper_dirty_region_item_suspend_update(
+                                    &this.EyeBallMove.tDirtyRegionItem, 
+                                    false);
+            break;
+        }
+        this.EyeBallMove.tStartPoint = this.EyeBallMove.tOffset;
+        
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    } while(true);
+
+    do {
+        int32_t nResult;
+        bool bFinishedX = false;
+        bool bFinishedY = false;
+        int32_t lFinishInMs = ((int32_t)this.EyeBallMove.iMoveTimeIn50Ms * 50ul) + 50ul;
+        if (arm_2d_helper_time_liner_slider(this.EyeBallMove.tStartPoint.iX,
+                                            this.EyeBallMove.tNewOffset.iX,
+                                            lFinishInMs,
+                                            &nResult,
+                                            &this.lTimestamp[2])) {
+            bFinishedX = true;
+        }
+        this.EyeBallMove.tOffset.iX = nResult;
+
+        if (arm_2d_helper_time_liner_slider(this.EyeBallMove.tStartPoint.iY,
+                                            this.EyeBallMove.tNewOffset.iY,
+                                            lFinishInMs,
+                                            &nResult,
+                                            &this.lTimestamp[3])) {
+            bFinishedY = true;
+        }
+        this.EyeBallMove.tOffset.iY = nResult;
+
+        if (bFinishedX && bFinishedY) {
+            break;
+        }
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    } while(true);
+    
+     ARM_PT_YIELD(arm_fsm_rt_on_going);
+    arm_2d_helper_dirty_region_item_suspend_update(
+                            &this.EyeBallMove.tDirtyRegionItem, 
+                            true);
+ARM_PT_END()
+
+    return arm_fsm_rt_cpl;
+
+}
+
+static arm_fsm_rt_t __forcus_generator(user_scene_blink_t *ptThis)
+{
+    uint8_t chRolling;
+
+ARM_PT_BEGIN(this.ForcusGenerator.chPT)
+
+    do {
+        chRolling = rand() & 0xFF;
+        if (chRolling <= this.ForcusGenerator.chRatio) {
+
+            arm_2d_size_t tSize = c_tileLeftEyeMask.tRegion.tSize;
+            tSize.iHeight -= tSize.iHeight >> 2;
+            tSize.iWidth -= tSize.iWidth >> 2;
+
+            arm_2d_location_t tOffset = {
+                .iX = rand() % tSize.iWidth,
+                .iY = rand() % tSize.iHeight,
+            };
+
+            tOffset.iX -= tSize.iWidth >> 1;
+            tOffset.iY -= tSize.iHeight >> 1;
+
+            this.EyeBallMove.tNewOffset = tOffset;
+            this.EyeBallMove.iMoveTimeIn50Ms = rand() % (500 / 50);
+            break;
+        }
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    } while(true);
+
+
+    /* wait move complete */
+    do {
+        if ((this.EyeBallMove.tNewOffset.iX == this.EyeBallMove.tOffset.iX)
+        &&  (this.EyeBallMove.tNewOffset.iY == this.EyeBallMove.tOffset.iY)) {
+
+            break;
+        }
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    } while(true);
+
+    ARM_PT_DELAY_MS(this.ForcusGenerator.chDelayAfterEachMoveIn100MS * 100 + 500,
+                    &this.lTimestamp[4]);
+
+ARM_PT_END()
+
+    return arm_fsm_rt_cpl;
+
+}
+
 static void __on_scene_blink_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_blink_t *ptThis = (user_scene_blink_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    srand(arm_2d_helper_get_system_timestamp());
 
     __blink_action(ptThis);
+    __forcus_generator(ptThis);
+    __eyeball_move(ptThis);
 
     spin_zoom_widget_on_frame_start_xy( &this.Eye.tSocket, 
                                         0, 
@@ -286,13 +400,27 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
 
         arm_2d_align_centre_open(__top_canvas, c_tileEyeballMask.tRegion.tSize) {
 
+            arm_2d_region_t tEyeBallRegion = {
+                .tLocation = {
+                    .iX =  __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX,
+                    .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,
+                },
+                .tSize = c_tileEyeballMask.tRegion.tSize,
+            };
 
+            __arm_2d_hint_optimize_for_pfb__(tEyeBallRegion) {
 
-            spin_zoom_widget_show(  &this.Eye.tEyeBall, 
-                                    ptTile, 
-                                    &__centre_region, 
-                                    &tPivot, 
-                                    255);
+                spin_zoom_widget_show(  &this.Eye.tEyeBall, 
+                                        ptTile, 
+                                        &tEyeBallRegion, 
+                                        &tPivot, 
+                                        255);
+            }
+
+            arm_2d_helper_dirty_region_update_item( &this.EyeBallMove.tDirtyRegionItem,  
+                                                    ptTile,
+                                                    NULL,
+                                                    &tEyeBallRegion);
         }
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -439,7 +567,7 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
             },
             .Target.ptMask = &c_tileEyeballMask,
 
-            .ptScene = (arm_2d_scene_t *)ptThis,
+            //.ptScene = (arm_2d_scene_t *)ptThis,
         };
         spin_zoom_widget_init(&this.Eye.tEyeBall, &tCFG);
     } while(0);
@@ -451,6 +579,10 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
         this.Blink.chRatio = 32;
         this.Blink.chDoubleBlinkRatio = 64;
         this.Blink.chDelayAfterBlinkingIn100MS = 20;
+
+        this.ForcusGenerator.chDelayAfterEachMoveIn100MS = 5;
+        this.ForcusGenerator.chPT = 0;
+        this.ForcusGenerator.chRatio = 64;
     } while(0);
     /* ------------   initialize members of user_scene_blink_t end   ---------------*/
 

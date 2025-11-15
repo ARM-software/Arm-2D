@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        13. Nov 2025
- * $Revision:    V.2.4.2
+ * $Date:        14. Nov 2025
+ * $Revision:    V.2.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4974,14 +4974,14 @@ bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_item_suspend_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
-                                        bool bEnable)
+                                        bool bSuspend)
 {
     bool bOrigin = false;
     assert(NULL != ptThis);
 
     arm_irq_safe {
         bOrigin = this.bSuspendUpdate;
-        this.bSuspendUpdate = bEnable;
+        this.bSuspendUpdate = bSuspend;
     }
 
     return bOrigin;
@@ -4990,13 +4990,13 @@ bool arm_2d_helper_dirty_region_item_suspend_update(
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_suspend_update(
                                         arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable)
+                                        bool bSuspend)
 {
     bool bOrigin = false;
     assert(NULL != ptThis);
 
     return arm_2d_helper_dirty_region_item_suspend_update(  &this.tDefaultItem,
-                                                            bEnable);
+                                                            bSuspend);
 }
 
 /*----------------------------------------------------------------------------*

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        13. Nov 2025
- * $Revision:    V.2.4.2
+ * $Date:        14. Nov 2025
+ * $Revision:    V.2.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1778,27 +1778,27 @@ bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
  * \brief force the dirty region helper to suspend the dirty region update.
  * 
  * \param[in] ptThis the target helper
- * \param[in] bEnable whether enable this feature.
+ * \param[in] bSuspend whether suspend the update.
  * \return boolean the original setting
  */
 extern
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_suspend_update(
                                         arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable);
+                                        bool bSuspend);
 
 /*!
  * \brief force the arm_2d_helper_dirty_region_item_t object to suspend the 
  *        dirty region update.
  * 
  * \param[in] ptThis the target item
- * \param[in] bEnable whether enable this feature.
+ * \param[in] bSuspend whether suspend the update.
  * \return boolean the original setting
  */
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_item_suspend_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
-                                        bool bEnable);
+                                        bool bSuspend);
 
 /*----------------------------------------------------------------------------*
  * The Transform Helper Service (Deprecated)                                  *

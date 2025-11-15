@@ -84,7 +84,7 @@ struct user_scene_blink_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[5];
     bool bUserAllocated;
 
     struct {
@@ -96,6 +96,20 @@ ARM_PRIVATE(
         uint8_t chDelayAfterBlinkingIn100MS;
     } Blink;
 
+    struct {
+        arm_2d_location_t tOffset;
+        arm_2d_location_t tNewOffset;
+        arm_2d_location_t tStartPoint;
+        uint8_t iMoveTimeIn50Ms;
+        uint8_t chPT;
+        arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+    } EyeBallMove;
+
+    struct {
+        uint8_t chPT;
+        uint8_t chRatio;
+        uint8_t chDelayAfterEachMoveIn100MS;
+    } ForcusGenerator;
 
     struct {
         spin_zoom_widget_t tSocket;
