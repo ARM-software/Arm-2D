@@ -84,8 +84,23 @@ struct user_scene_blink_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
+
+    struct {
+        int8_t iEyelidOffset;
+        uint8_t chPT;
+        uint8_t chRatio;
+        uint8_t chDoubleBlinkRatio;
+        uint8_t chBlinkCount;
+        uint8_t chDelayAfterBlinkingIn100MS;
+    } Blink;
+
+
+    struct {
+        spin_zoom_widget_t tSocket;
+        spin_zoom_widget_t tEyeBall;
+    } Eye;
 
 )
     /* place your public member here */

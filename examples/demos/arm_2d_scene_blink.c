@@ -84,6 +84,10 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+extern const arm_2d_tile_t c_tileLeftEyeMask;
+extern const arm_2d_tile_t c_tileEyeballMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -118,6 +122,8 @@ static void __on_scene_blink_load(arm_2d_scene_t *ptScene)
     user_scene_blink_t *ptThis = (user_scene_blink_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    spin_zoom_widget_on_load(&this.Eye.tSocket);
+    spin_zoom_widget_on_load(&this.Eye.tEyeBall);
 }
 
 static void __after_scene_blink_switching(arm_2d_scene_t *ptScene)
@@ -133,7 +139,8 @@ static void __on_scene_blink_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
-    
+    spin_zoom_widget_depose(&this.Eye.tSocket);
+    spin_zoom_widget_depose(&this.Eye.tEyeBall);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -165,12 +172,77 @@ static void __on_scene_blink_background_complete(arm_2d_scene_t *ptScene)
 }
 #endif
 
+static arm_fsm_rt_t __blink_action(user_scene_blink_t *ptThis)
+{
+    srand(arm_2d_helper_get_system_timestamp());
+    uint8_t chRolling;
+
+ARM_PT_BEGIN(this.Blink.chPT)
+
+    do {
+        chRolling = rand() & 0xFF;
+
+        if (chRolling <= this.Blink.chRatio) {
+            break;
+        }
+
+        ARM_PT_YIELD(arm_fsm_rt_on_going);
+    } while(true);
+
+    chRolling = rand() & 0xFF;
+    
+    if (chRolling <= this.Blink.chDoubleBlinkRatio) {
+        this.Blink.chBlinkCount = 2;
+    } else {
+        this.Blink.chBlinkCount = 1;
+    }
+
+    /* double blink */
+    do {
+        do {
+            int32_t nResult;
+            if (arm_2d_helper_time_cos_slider(  100, 
+                                                1, 
+                                                200,    /* 200 ms*/
+                                                0, 
+                                                &nResult, 
+                                                &this.lTimestamp[0])) {
+                this.lTimestamp[0] = 0;
+                this.Blink.iEyelidOffset = nResult;
+                break;
+            }
+            this.Blink.iEyelidOffset = nResult;
+
+            ARM_PT_YIELD(arm_fsm_rt_on_going);
+        } while(true);
+    } while(--this.Blink.chBlinkCount);
+
+    ARM_PT_DELAY_MS((   this.Blink.chDelayAfterBlinkingIn100MS * 100ul 
+                    +   100), 
+                    &this.lTimestamp[1]);
+
+ARM_PT_END()
+
+    return arm_fsm_rt_cpl;
+
+}
 
 static void __on_scene_blink_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_blink_t *ptThis = (user_scene_blink_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+
+    __blink_action(ptThis);
+
+    spin_zoom_widget_on_frame_start_xy( &this.Eye.tSocket, 
+                                        0, 
+                                        1.0f,
+                                        (float)this.Blink.iEyelidOffset / 100.0f);
+    spin_zoom_widget_on_frame_start_xy( &this.Eye.tEyeBall, 
+                                        0, 
+                                        1.0f,
+                                        (float)this.Blink.iEyelidOffset / 100.0f);
 }
 
 static void __on_scene_blink_frame_complete(arm_2d_scene_t *ptScene)
@@ -178,12 +250,8 @@ static void __on_scene_blink_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_blink_t *ptThis = (user_scene_blink_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
+    spin_zoom_widget_on_frame_complete(&this.Eye.tSocket);
+    spin_zoom_widget_on_frame_complete(&this.Eye.tEyeBall);
 }
 
 static void __before_scene_blink_switching_out(arm_2d_scene_t *ptScene)
@@ -204,50 +272,28 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
-        
-        /* following code is just a demo, you can remove them */
+        arm_2d_location_t tPivot = {
+            .iX = __top_canvas.tSize.iWidth >> 1,
+            .iY = (__top_canvas.tSize.iHeight >> 1) 
+                + (c_tileLeftEyeMask.tRegion.tSize.iHeight >> 2),
+        };
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
+        spin_zoom_widget_show(  &this.Eye.tSocket, 
+                                ptTile, 
+                                NULL, 
+                                &tPivot, 
+                                255);
+
+        arm_2d_align_centre_open(__top_canvas, c_tileEyeballMask.tRegion.tSize) {
+
+
+
+            spin_zoom_widget_show(  &this.Eye.tEyeBall, 
+                                    ptTile, 
                                     &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
+                                    &tPivot, 
                                     255);
-            
-            ARM_2D_OP_WAIT_ASYNC();
-            
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
-                                        (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
-                                    
         }
-
-
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
-        }
-    #else
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
-    #endif
-
-        /* draw text at the top-left corner */
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -307,7 +353,7 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_WHITE}, 
+            .tCanvas = {GLCD_COLOR_BLACK}, 
 
             /* Please uncommon the callbacks if you need them
              */
@@ -325,14 +371,87 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
             .fnOnFrameCPL   = &__on_scene_blink_frame_complete,
             .fnDepose       = &__on_scene_blink_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
     /* ------------   initialize members of user_scene_blink_t begin ---------------*/
 
+    /* initialize Eye Socket */
+    do {
 
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 3600,
+                },
+                .Step = {
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+            .Source = {
+                .ptMask = &c_tileLeftEyeMask,
+                .tCentre = (arm_2d_location_t){
+                    .iX = c_tileLeftEyeMask.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileLeftEyeMask.tRegion.tSize.iHeight
+                        - (c_tileLeftEyeMask.tRegion.tSize.iHeight >> 2), 
+                },
+                .tColourToFill = GLCD_COLOR_WHITE,
+            },
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.Eye.tSocket, &tCFG);
+    } while(0);
+
+    /* initialize Eyeball */
+    do {
+
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 3600,
+                },
+                .Step = {
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK,
+            .Source = {
+                .ptMask = &c_tileLeftEyeMask,
+                .tCentre = (arm_2d_location_t){
+                    .iX = c_tileLeftEyeMask.tRegion.tSize.iWidth >> 1,
+                    .iY = c_tileLeftEyeMask.tRegion.tSize.iHeight
+                        - (c_tileLeftEyeMask.tRegion.tSize.iHeight >> 2), 
+                },
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .Target.ptMask = &c_tileEyeballMask,
+
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.Eye.tEyeBall, &tCFG);
+    } while(0);
+
+    /* Blink */
+    do {
+        this.Blink.chPT = 0;
+        this.Blink.iEyelidOffset = 100;
+        this.Blink.chRatio = 32;
+        this.Blink.chDoubleBlinkRatio = 64;
+        this.Blink.chDelayAfterBlinkingIn100MS = 20;
+    } while(0);
     /* ------------   initialize members of user_scene_blink_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
