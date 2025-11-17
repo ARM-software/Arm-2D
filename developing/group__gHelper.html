@@ -954,9 +954,9 @@ uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_helper_3f
 <tr class="memitem:ga7bcd77eaa2757462a020c51e95dd738e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga7bcd77eaa2757462a020c51e95dd738e">arm_2d_helper_dirty_region_on_frame_start</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__t">arm_2d_helper_dirty_region_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga7bcd77eaa2757462a020c51e95dd738e"><td class="mdescLeft">&#160;</td><td class="mdescRight">the on-frame-start event handler for a given dirty region helper  <a href="group__gHelper.html#ga7bcd77eaa2757462a020c51e95dd738e">More...</a><br /></td></tr>
 <tr class="separator:ga7bcd77eaa2757462a020c51e95dd738e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1792843d56bee874557b2456ebdd763"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gac1792843d56bee874557b2456ebdd763">__arm_2d_helper_dirty_region_item_update</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptVisibleArea, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptNewRegion)</td></tr>
-<tr class="memdesc:gac1792843d56bee874557b2456ebdd763"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a specified new region while erase the previous region  <a href="group__gHelper.html#gac1792843d56bee874557b2456ebdd763">More...</a><br /></td></tr>
-<tr class="separator:gac1792843d56bee874557b2456ebdd763"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbf4ed4456d44e8854af50f7ca0b9127"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gadbf4ed4456d44e8854af50f7ca0b9127">__arm_2d_helper_dirty_region_item_update</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptVisibleArea, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptNewRegion)</td></tr>
+<tr class="memdesc:gadbf4ed4456d44e8854af50f7ca0b9127"><td class="mdescLeft">&#160;</td><td class="mdescRight">update a specified new region while erase the previous region  <a href="group__gHelper.html#gadbf4ed4456d44e8854af50f7ca0b9127">More...</a><br /></td></tr>
+<tr class="separator:gadbf4ed4456d44e8854af50f7ca0b9127"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4bd40f135c5fece94b139acb05d20ab3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga4bd40f135c5fece94b139acb05d20ab3">arm_2d_helper_dirty_region_item_set_extra_region</a> (<a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *ptThis, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTargetTile, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptVisibleArea, const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *ptExtraRegion)</td></tr>
 <tr class="memdesc:ga4bd40f135c5fece94b139acb05d20ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">update the "extra area" of a specified dirty region item  <a href="group__gHelper.html#ga4bd40f135c5fece94b139acb05d20ab3">More...</a><br /></td></tr>
 <tr class="separator:ga4bd40f135c5fece94b139acb05d20ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4923,6 +4923,12 @@ bOnlyUpdateMinimalEnclosure: 1</td>
 <td class="fielddoc">
 </td></tr>
 <tr><td class="fieldtype">
+<a id="a7e7e0c2be4da76ee3e7b65ca63b3106c" name="a7e7e0c2be4da76ee3e7b65ca63b3106c"></a>uint8_t</td>
+<td class="fieldname">
+bNewRegionIsDifferent: 1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
 <a id="aced44421815168a4488137351b171144" name="aced44421815168a4488137351b171144"></a>uint8_t</td>
 <td class="fieldname">
 chUpdateLifeCycle</td>
@@ -6498,7 +6504,7 @@ chPTState</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#gac1792843d56bee874557b2456ebdd763" title="update a specified new region while erase the previous region">__arm_2d_helper_dirty_region_item_update</a>((__item_ptr),              \</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#gadbf4ed4456d44e8854af50f7ca0b9127" title="update a specified new region while erase the previous region">__arm_2d_helper_dirty_region_item_update</a>((__item_ptr),              \</div>
 <div class="line">                                                     (__target_tile_ptr),       \</div>
 <div class="line">                                                     (__visible_region_ptr),    \</div>
 <div class="line">                                                     (__new_region_ptr))</div>
@@ -6559,7 +6565,7 @@ chPTState</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#gac1792843d56bee874557b2456ebdd763" title="update a specified new region while erase the previous region">__arm_2d_helper_dirty_region_item_update</a>((__item_ptr),              \</div>
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__gHelper.html#gadbf4ed4456d44e8854af50f7ca0b9127" title="update a specified new region while erase the previous region">__arm_2d_helper_dirty_region_item_update</a>((__item_ptr),              \</div>
 <div class="line">                                                     (__target_tile_ptr),       \</div>
 <div class="line">                                                     (__visible_region_ptr),    \</div>
 <div class="line">                                                     (__new_region_ptr))</div>
@@ -11147,14 +11153,14 @@ For normal usage, please DO NOT use this function unless you know what you are d
 
 </div>
 </div>
-<a id="gac1792843d56bee874557b2456ebdd763" name="gac1792843d56bee874557b2456ebdd763"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac1792843d56bee874557b2456ebdd763">&#9670;&#160;</a></span>__arm_2d_helper_dirty_region_item_update()</h2>
+<a id="gadbf4ed4456d44e8854af50f7ca0b9127" name="gadbf4ed4456d44e8854af50f7ca0b9127"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadbf4ed4456d44e8854af50f7ca0b9127">&#9670;&#160;</a></span>__arm_2d_helper_dirty_region_item_update()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void __arm_2d_helper_dirty_region_item_update </td>
+          <td class="memname">bool __arm_2d_helper_dirty_region_item_update </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__helper__dirty__region__item__t">arm_2d_helper_dirty_region_item_t</a> *&#160;</td>
           <td class="paramname"><em>ptThis</em>, </td>
@@ -11195,6 +11201,7 @@ For normal usage, please DO NOT use this function unless you know what you are d
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean whether the old region and the new region are different. </dd></dl>
 
 </div>
 </div>

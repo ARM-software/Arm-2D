@@ -8,7 +8,7 @@ var searchData=
   ['_5f_5farm_5f2d_5fgray8_5funpack_5',['__arm_2d_gray8_unpack',['../group__gConversion.html#gaa3449d3c2634e135df028620d67eb880',1,'arm_2d_conversion.h']]],
   ['_5f_5farm_5f2d_5fhelper_5f3fb_5fdraw_5fbitmap_6',['__arm_2d_helper_3fb_draw_bitmap',['../group__gHelper.html#gad9504b41c541cc4bbee54bfbba49f496',1,'arm_2d_helper_pfb.h']]],
   ['_5f_5farm_5f2d_5fhelper_5fcolour_5fslider_7',['__arm_2d_helper_colour_slider',['../group__gHelper.html#gaf0581f6d478d0a665cd4ae477e6be6db',1,'arm_2d_helper.h']]],
-  ['_5f_5farm_5f2d_5fhelper_5fdirty_5fregion_5fitem_5fupdate_8',['__arm_2d_helper_dirty_region_item_update',['../group__gHelper.html#gac1792843d56bee874557b2456ebdd763',1,'arm_2d_helper_pfb.h']]],
+  ['_5f_5farm_5f2d_5fhelper_5fdirty_5fregion_5fitem_5fupdate_8',['__arm_2d_helper_dirty_region_item_update',['../group__gHelper.html#gadbf4ed4456d44e8854af50f7ca0b9127',1,'arm_2d_helper_pfb.h']]],
   ['_5f_5farm_5f2d_5fhelper_5fdirty_5fregion_5ftransform_5fupdate_5fvalue0_9',['__arm_2d_helper_dirty_region_transform_update_value0',['../group__gHelper.html#ga956d6b70cb9e40af90bc2a0acaf15a86',1,'arm_2d_helper_pfb.h']]],
   ['_5f_5farm_5f2d_5fhelper_5fdirty_5fregion_5ftransform_5fupdate_5fvalue1_10',['__arm_2d_helper_dirty_region_transform_update_value1',['../group__gHelper.html#ga435f2869aaf8761fc6133ba8e878f3bf',1,'arm_2d_helper_pfb.h']]],
   ['_5f_5farm_5f2d_5fhelper_5fdirty_5fregion_5fupdate_5fdirty_5fregions_11',['__arm_2d_helper_dirty_region_update_dirty_regions',['../group__gHelper.html#ga93ba6ba7cde8a34b016b092ee3d0c8d0',1,'arm_2d_helper_pfb.h']]],
