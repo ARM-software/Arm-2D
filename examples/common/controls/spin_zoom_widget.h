@@ -249,6 +249,20 @@ extern
 ARM_NONNULL(1)
 void spin_zoom_widget_set_colour( spin_zoom_widget_t *ptThis, COLOUR_INT tColour);
 
+extern
+ARM_NONNULL(1)
+void spin_zoom_widget_set_source(   spin_zoom_widget_t  *ptThis, 
+                                    const arm_2d_tile_t *ptSource,
+                                    const arm_2d_tile_t *ptMask,
+                                    arm_2d_location_t   tCentre);
+
+extern
+ARM_NONNULL(1)
+void spin_zoom_widget_set_source_f32(   spin_zoom_widget_t *ptThis, 
+                                        const arm_2d_tile_t *ptSource,
+                                        const arm_2d_tile_t *ptMask,
+                                        arm_2d_point_float_t tCentre);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
