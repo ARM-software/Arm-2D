@@ -131,11 +131,19 @@ CCFLAG  +=  -ffunction-sections -fdata-sections
 CCFLAG  +=  -fno-ms-extensions
 CCFLAG  +=  -Wno-macro-redefined
 
-CCFLAG  +=  -O0
-#CCFLAG  +=  -flto
-#LDFLAG  +=  -flto
 LDFLAG  +=  -lpthread
 
+ifeq ($(OS),Windows_NT)
+	# Windows GCC has known compilation issue for -O0
+	CCFLAG  +=  -Ofast
+	CCFLAG  +=  -flto
+	LDFLAG  +=  -flto
+else
+	# For other platform, we are allowed to set the optimization level
+	CCFLAG  +=  -O0
+	#CCFLAG  +=  -flto
+	#LDFLAG  +=  -flto
+endif
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
 _Comma := ,
