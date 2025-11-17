@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        14. Nov 2025
- * $Revision:    V.2.4.3
+ * $Date:        16. Nov 2025
+ * $Revision:    V.2.4.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -911,7 +911,8 @@ ARM_PRIVATE(
     uint8_t bSuspendUpdate              : 1;
     uint8_t bIgnore                     : 1;
     uint8_t bOnlyUpdateMinimalEnclosure : 1;
-    uint8_t                             : 4;
+    uint8_t bNewRegionIsDifferent       : 1;
+    uint8_t                             : 3;
     uint8_t chUpdateLifeCycle;                  /* a life cycle counter used to avoid repeated update operations in the same frame.*/
 
     uint16_t u16Key;
@@ -1691,10 +1692,11 @@ void arm_2d_helper_dirty_region_on_frame_start(
  *            the ptNewRegion, NULL means no clipping.
  * \param[in] ptNewRegion the new region to update, NULL means nothing 
  *            to update
+ * \return boolean whether the old region and the new region are different.
  */
 extern
 ARM_NONNULL(1,2)
-void __arm_2d_helper_dirty_region_item_update(
+bool __arm_2d_helper_dirty_region_item_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,

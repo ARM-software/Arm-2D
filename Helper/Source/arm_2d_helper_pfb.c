@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        14. Nov 2025
- * $Revision:    V.2.4.3
+ * $Date:        16. Nov 2025
+ * $Revision:    V.2.4.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4704,7 +4704,7 @@ void arm_2d_helper_dirty_region_item_set_extra_region(
 
 
 ARM_NONNULL(1,2)
-void __arm_2d_helper_dirty_region_item_update(
+bool __arm_2d_helper_dirty_region_item_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
@@ -4718,23 +4718,25 @@ void __arm_2d_helper_dirty_region_item_update(
     if (NULL != ptHelper) {
         if (ptHelper->chUpdateLifeCycle == this.chUpdateLifeCycle) {
             /* already updated */
-            return ;
+            return this.bNewRegionIsDifferent;
         }
         this.chUpdateLifeCycle = ptHelper->chUpdateLifeCycle;
     }
+
+    this.bNewRegionIsDifferent = false;
 
     if (ARM_2D_RT_TRUE != arm_2d_target_tile_is_new_frame(ptTargetTile)) {
         if (NULL == arm_2d_tile_get_root(ptTargetTile, NULL, NULL)) {
             this.bIgnore = true;
 
-            return ;
+            return this.bNewRegionIsDifferent;
         }
     }
 
     if (NULL == ptNewRegion) {
         this.bIgnore = true;
 
-        return ;
+        return this.bNewRegionIsDifferent;
     }
     this.bIgnore = false;
     this.bOnlyUpdateMinimalEnclosure = false;
@@ -4801,6 +4803,13 @@ void __arm_2d_helper_dirty_region_item_update(
         /* update the new region */
         this.tNewRegion = tNewRegion;
 
+        if ((this.tNewRegion.tLocation.iX != this.tOldRegion.tLocation.iX)
+        ||  (this.tNewRegion.tLocation.iY != this.tOldRegion.tLocation.iY)
+        ||  (this.tNewRegion.tSize.iWidth != this.tOldRegion.tSize.iWidth)
+        ||  (this.tNewRegion.tSize.iHeight != this.tOldRegion.tSize.iHeight)) {
+            this.bNewRegionIsDifferent = true;
+        }
+
         /* region optimization */
         arm_2d_region_t tOverlapArea, tEnclosureArea;
         if (this.bForceToUseMinimalEnclosure) {
@@ -4841,6 +4850,8 @@ void __arm_2d_helper_dirty_region_item_update(
             }
         }
     } while(0);
+
+    return this.bNewRegionIsDifferent;
 
 }
 
@@ -5074,6 +5085,7 @@ void arm_2d_helper_dirty_region_transform_update(
         ptRegion = (this.ptTransformOP->Target.ptRegion);
     }
 
+    bool bIsRegionDifferent = false;
     if (NULL != ptCanvas) {
         arm_2d_region_t tCanvasInTarget = *ptCanvas;
 
@@ -5082,18 +5094,22 @@ void arm_2d_helper_dirty_region_transform_update(
          */
         tCanvasInTarget.tLocation.iX -= ptTarget->tRegion.tLocation.iX;
         tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
-        
-        __arm_2d_helper_dirty_region_item_update(
-                                        &this.tItem,
-                                        ptTarget,
-                                        &tCanvasInTarget,
-                                        ptRegion);
+
+        bIsRegionDifferent = __arm_2d_helper_dirty_region_item_update(
+                                                            &this.tItem,
+                                                            ptTarget,
+                                                            &tCanvasInTarget,
+                                                            ptRegion);
     } else {
-        __arm_2d_helper_dirty_region_item_update(
-                                        &this.tItem,
-                                        ptTarget,
-                                        NULL,
-                                        ptRegion);
+        bIsRegionDifferent = __arm_2d_helper_dirty_region_item_update(
+                                                            &this.tItem,
+                                                            ptTarget,
+                                                            NULL,
+                                                            ptRegion);
+    }
+
+    if (bIsRegionDifferent && bIsNewFrame) {
+        arm_2d_helper_dirty_region_item_suspend_update(&this.tItem, false);
     }
 }
 

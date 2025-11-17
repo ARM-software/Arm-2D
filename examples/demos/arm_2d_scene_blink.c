@@ -122,10 +122,6 @@ static void __on_scene_blink_load(arm_2d_scene_t *ptScene)
     user_scene_blink_t *ptThis = (user_scene_blink_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_2d_helper_dirty_region_add_items(&this.use_as__arm_2d_scene_t.tDirtyRegionHelper,
-                                         &this.EyeBallMove.tDirtyRegionItem,
-                                         1);
-
     spin_zoom_widget_on_load(&this.Eye.tSocket);
     spin_zoom_widget_on_load(&this.Eye.tEyeBall);
 }
@@ -240,9 +236,6 @@ ARM_PT_BEGIN(this.EyeBallMove.chPT)
             this.lTimestamp[2] = 0;
             this.lTimestamp[3] = 0;
 
-            arm_2d_helper_dirty_region_item_suspend_update(
-                                    &this.EyeBallMove.tDirtyRegionItem, 
-                                    false);
             break;
         }
         this.EyeBallMove.tStartPoint = this.EyeBallMove.tOffset;
@@ -278,11 +271,7 @@ ARM_PT_BEGIN(this.EyeBallMove.chPT)
         }
         ARM_PT_YIELD(arm_fsm_rt_on_going);
     } while(true);
-    
-     ARM_PT_YIELD(arm_fsm_rt_on_going);
-    arm_2d_helper_dirty_region_item_suspend_update(
-                            &this.EyeBallMove.tDirtyRegionItem, 
-                            true);
+
 ARM_PT_END()
 
     return arm_fsm_rt_cpl;
@@ -345,7 +334,7 @@ static void __on_scene_blink_frame_start(arm_2d_scene_t *ptScene)
 
     srand(arm_2d_helper_get_system_timestamp());
 
-    __blink_action(ptThis);
+    //__blink_action(ptThis);
     __forcus_generator(ptThis);
     __eyeball_move(ptThis);
 
@@ -392,6 +381,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
                 + (c_tileLeftEyeMask.tRegion.tSize.iHeight >> 2),
         };
 
+
         spin_zoom_widget_show(  &this.Eye.tSocket, 
                                 ptTile, 
                                 NULL, 
@@ -416,11 +406,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
                                         &tPivot, 
                                         255);
             }
-
-            arm_2d_helper_dirty_region_update_item( &this.EyeBallMove.tDirtyRegionItem,  
-                                                    ptTile,
-                                                    NULL,
-                                                    &tEyeBallRegion);
         }
 
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -567,7 +552,7 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
             },
             .Target.ptMask = &c_tileEyeballMask,
 
-            //.ptScene = (arm_2d_scene_t *)ptThis,
+            .ptScene = (arm_2d_scene_t *)ptThis,
         };
         spin_zoom_widget_init(&this.Eye.tEyeBall, &tCFG);
     } while(0);
