@@ -1571,16 +1571,16 @@ void __MTWM_FUNC(transform_with_mask)(
 }
 
 
-
+#if !__API_MTWM_CFG_SUPPORT_SOURCE_MASK
 __OVERRIDE_WEAK
 
 #if __API_MTWM_CFG_SUPPORT_OPACITY
-void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)(   
+void __MTWM_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)(   
                                     __arm_2d_param_copy_orig_msk_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
                                     uint_fast16_t hwOpacity)
 #else
-void __ARM_2D_FUNC(colour_filling_with_transformed_mask_and_target_mask)(   
+void __MTWM_FUNC(colour_filling_with_transformed_mask_and_target_mask)(   
                                     __arm_2d_param_copy_orig_msk_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo)
 #endif
@@ -1761,6 +1761,7 @@ void __ARM_2D_FUNC(colour_filling_with_transformed_mask_and_target_mask)(
         pchTargetMaskBase += iTargetMaskStride;
     }
 }
+#endif
 
 
 
