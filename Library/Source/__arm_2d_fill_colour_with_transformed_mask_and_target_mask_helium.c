@@ -187,7 +187,7 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
     vst1q_p(phwTarget, vTarget, predTail);
 #else
     mve_pred16_t predTail = vctp16q(elts);
-    uint16x8_t vTarget = vld1q_z_u16(phwTarget, preTail);
+    uint16x8_t vTarget = vld1q_z_u16(phwTarget, predTail);
     int16x8_t vXi = ((ptPoint->X) >> 6);
     int16x8_t vYi = ((ptPoint->Y) >> 6);
     uint16x8_t vHwPixelAlpha;
