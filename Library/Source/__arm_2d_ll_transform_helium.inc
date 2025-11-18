@@ -22,8 +22,8 @@
  * Title:        __arm_2d_transform_helium.inc
  * Description:  c code template for transform
  *
- * $Date:        15. May 2025
- * $Revision:    V.2.3.0
+ * $Date:        18. Nov 2025
+ * $Revision:    V.2.4.0
  *
  * -------------------------------------------------------------------- */
 
@@ -147,13 +147,15 @@ void __ARM_2D_FUNC(transform)(  __arm_2d_param_copy_orig_t *ptParam,
                                                   &ptParam->tOrigin.tValidRegion,
                                                   pOrigin,
                                                   iOrigStride,
-                                                  pTargetBaseCur, MaskColour);
+                                                  pTargetBaseCur, 
+                                                  MaskColour);
             } else if (0 != p) {
                 __ARM_2D_FUNC(get_pixel_colour)(&tPointV,
                                                   &ptParam->tOrigin.tValidRegion,
                                                   pOrigin,
                                                   iOrigStride,
-                                                  pTargetBaseCur, MaskColour,
+                                                  pTargetBaseCur, 
+                                                  MaskColour,
                                                   nbVecElts);
             }
             pTargetBaseCur += 8;
@@ -408,9 +410,10 @@ void __ARM_2D_FUNC(transform_only)(   __arm_2d_param_copy_orig_t *ptParam,
 
 
 __OVERRIDE_WEAK
-void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptParam,
+void __ARM_2D_FUNC(transform_with_opacity)(
+                                    __arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
-                                    uint_fast16_t hwRatio)
+                                    uint_fast16_t hwOpacity)
 {
     int32_t         iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int32_t         iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
@@ -430,7 +433,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
     arm_2d_rot_linear_regr_t regrCoefs[2];
     arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-    hwRatio += (hwRatio == 255);
+    hwOpacity += (hwOpacity == 255);
 #endif
 
     /* get regression parameters over 1st and last column */
@@ -507,7 +510,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                  iOrigStride,
                                                  pTargetBaseCur,
                                                  MaskColour, 
-                                                 hwRatio);
+                                                 hwOpacity);
                 } else if (0 != p) {
                     __ARM_2D_FUNC(get_pixel_colour_with_alpha)(
                                                  &tPointV,
@@ -516,7 +519,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                  iOrigStride,
                                                  pTargetBaseCur,
                                                  MaskColour, 
-                                                 hwRatio,
+                                                 hwOpacity,
                                                  nbVecElts);
                 }
                 pTargetBaseCur += 8;
@@ -578,7 +581,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                 iOrigStride,
                                                 pTargetBaseCur, 
                                                 MaskColour, 
-                                                hwRatio);
+                                                hwOpacity);
                 } else if (0 != p) {
                     __MVE_WRAPPER(__arm_2d_impl_rgb565_get_pixel_colour_with_alpha_offs_compensated)(
                                                 &tPointV, 
@@ -587,7 +590,7 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                 iOrigStride,
                                                 pTargetBaseCur, 
                                                 MaskColour, 
-                                                hwRatio, 
+                                                hwOpacity, 
                                                 nbVecElts);
                 }
 
@@ -603,9 +606,10 @@ void __ARM_2D_FUNC(transform_with_opacity)(   __arm_2d_param_copy_orig_t *ptPara
 
 
 __OVERRIDE_WEAK
-void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptParam,
+void __ARM_2D_FUNC(transform_only_opacity)(   
+                                    __arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
-                                    uint_fast16_t hwRatio)
+                                    uint_fast16_t hwOpacity)
 {
     int32_t         iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int32_t         iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
@@ -624,7 +628,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
     arm_2d_rot_linear_regr_t regrCoefs[2];
     arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-    hwRatio += (hwRatio == 255);
+    hwOpacity += (hwOpacity == 255);
 #endif
 
     /* get regression parameters over 1st and last column */
@@ -701,7 +705,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                 pOrigin, 
                                                 iOrigStride,
                                                 pTargetBaseCur,
-                                                hwRatio);
+                                                hwOpacity);
 
                 } else if (0 != p) {
 
@@ -711,7 +715,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                 pOrigin, 
                                                 iOrigStride,
                                                 pTargetBaseCur,
-                                                hwRatio,
+                                                hwOpacity,
                                                 nbVecElts);
                 }
 
@@ -775,7 +779,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                 pOrigin, 
                                                 iOrigStride,
                                                 pTargetBaseCur, 
-                                                hwRatio);
+                                                hwOpacity);
                 } else if (0 != p) {
 
                     __MVE_WRAPPER(__arm_2d_impl_rgb565_transform_only_get_pixel_colour_with_alpha_offs_compensated)(
@@ -784,7 +788,7 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
                                                 pOrigin, 
                                                 iOrigStride,
                                                 pTargetBaseCur, 
-                                                hwRatio, 
+                                                hwOpacity, 
                                                 nbVecElts);
                 }
 
@@ -801,9 +805,10 @@ void __ARM_2D_FUNC(transform_only_opacity)(   __arm_2d_param_copy_orig_t *ptPara
 
 
 __OVERRIDE_WEAK
-void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy_orig_t *ptParam,
+void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   
+                                    __arm_2d_param_copy_orig_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo,
-                                    uint_fast16_t hwRatio)
+                                    uint_fast16_t hwOpacity)
 {
     int32_t         iHeight = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iHeight;
     int32_t         iWidth = ptParam->use_as____arm_2d_param_copy_t.tCopySize.iWidth;
@@ -823,7 +828,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
     arm_2d_rot_linear_regr_t regrCoefs[2];
     arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-    hwRatio += (hwRatio == 255);
+    hwOpacity += (hwOpacity == 255);
 #endif
 
     __arm_2d_transform_regression(
@@ -892,14 +897,14 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
                                                             pchOrigin, iOrigStride,
                                                             pTargetBaseCur,
                                                             MaskColour, 
-                                                            hwRatio);
+                                                            hwOpacity);
                 } else if (0 != p) {
                     __ARM_2D_FUNC(get_alpha_with_opacity)(  &tPointV,
                                                             &ptParam->tOrigin.tValidRegion,
                                                             pchOrigin, iOrigStride,
                                                             pTargetBaseCur,
                                                             MaskColour, 
-                                                            hwRatio, 
+                                                            hwOpacity, 
                                                             nbVecElts);
                 }
 
@@ -912,7 +917,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(   __arm_2d_param_copy
 }
 
 
-
+#if 0
 __OVERRIDE_WEAK
 void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)(   
                                     __arm_2d_param_copy_orig_msk_t *ptParam,
@@ -1007,72 +1012,73 @@ void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)
     slopeY = ARSHIFT(slopeY, nrmSlopeY);
 
 
-        for (int32_t y = 0; y < iHeight; y++) {
-            /* 1st column estimates */
-            int32_t         colFirstY =
-                __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
-            int32_t         colFirstX =
-                __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+    for (int32_t y = 0; y < iHeight; y++) {
+        /* 1st column estimates */
+        int32_t         colFirstY =
+            __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t         colFirstX =
+            __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
 
-            /* Q6 conversion */
-            colFirstX = colFirstX >> 10;
-            colFirstY = colFirstY >> 10;
+        /* Q6 conversion */
+        colFirstX = colFirstX >> 10;
+        colFirstY = colFirstY >> 10;
 
-            int32_t         nbVecElts = iWidth;
-            int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
-            __API_INT_TYPE *pTargetLine = pTargetBase;
-            uint8_t *pchTargetMaskLine = pchTargetMaskBase;
+        int32_t         nbVecElts = iWidth;
+        int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+        __API_INT_TYPE *pTargetLine = pTargetBase;
+        uint8_t *pchTargetMaskLine = pchTargetMaskBase;
 
-            /* Q9.6 coversion */
-            vX = SET_Q6INT(vX);
+        /* Q9.6 coversion */
+        vX = SET_Q6INT(vX);
 
-            while (nbVecElts > 0) {
-                /* interpolation */
-                arm_2d_point_s16x8_t tPointV, tPointTemp;
+        while (nbVecElts > 0) {
+            /* interpolation */
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
 
-                tPointV.X = vqdmulhq_n_s16(vX, slopeX);
-                tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
 
-                tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
-                tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
 
-                tPointTemp.X = tPointV.X >> 6;
-                tPointTemp.Y = tPointV.Y >> 6;
-                mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
-                                        ptOriginValidRegion, 
-                                        &tPointTemp);
-                p &= vctp16q(nbVecElts);
-                
-                if (0xFFFF == p) {
-                    __ARM_2D_FUNC(fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src)(  
-                                                            &tPointV,
-                                                            ptOriginValidRegion,
-                                                            pchOrigin, iOrigStride,
-                                                            pTargetLine,
-                                                            pchTargetMaskLine,
-                                                            MaskColour, 
-                                                            hwOpacity);
-                } else if (0 != p) {
-                    __ARM_2D_FUNC(fill_colour_with_transformed_mask_target_mask_and_opacity_process_point)(  
-                                                            &tPointV,
-                                                            ptOriginValidRegion,
-                                                            pchOrigin, iOrigStride,
-                                                            pTargetLine,
-                                                            pchTargetMaskLine,
-                                                            MaskColour, 
-                                                            hwOpacity, 
-                                                            nbVecElts);
-                }
-
-                pTargetLine += 8;
-                pchTargetMaskLine += 8;
-                vX += SET_Q6INT(8);
-                nbVecElts -= 8;
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                    ptOriginValidRegion, 
+                                    &tPointTemp);
+            p &= vctp16q(nbVecElts);
+            
+            if (0xFFFF == p) {
+                __ARM_2D_FUNC(fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src)(  
+                                                        &tPointV,
+                                                        ptOriginValidRegion,
+                                                        pchOrigin, iOrigStride,
+                                                        pTargetLine,
+                                                        pchTargetMaskLine,
+                                                        MaskColour, 
+                                                        hwOpacity);
+            } else if (0 != p) {
+                __ARM_2D_FUNC(fill_colour_with_transformed_mask_target_mask_and_opacity_process_point)(  
+                                                        &tPointV,
+                                                        ptOriginValidRegion,
+                                                        pchOrigin, iOrigStride,
+                                                        pTargetLine,
+                                                        pchTargetMaskLine,
+                                                        MaskColour, 
+                                                        hwOpacity, 
+                                                        nbVecElts);
             }
-            pTargetBase += iTargetStride;
-            pchTargetMaskBase += iTargetMaskStride;
+
+            pTargetLine += 8;
+            pchTargetMaskLine += 8;
+            vX += SET_Q6INT(8);
+            nbVecElts -= 8;
         }
+        pTargetBase += iTargetStride;
+        pchTargetMaskBase += iTargetMaskStride;
+    }
 }
+#endif
 
 #define __API_MTWM_COLOUR                       __API_COLOUR
 #define __API_MTWM_COLOUR_NAME                  __API_COLOUR_NAME

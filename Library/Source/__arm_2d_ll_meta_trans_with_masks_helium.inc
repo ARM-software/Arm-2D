@@ -25,8 +25,8 @@
  *                  - transform_with_src_chn_mask
  *                  - transform_with_src_mask
  *
- * $Date:        15. May 2025
- * $Revision:    V.2.2.0
+ * $Date:        18. Nov 2025
+ * $Revision:    V.2.3.0
  *
  * -------------------------------------------------------------------- */
 
@@ -1569,6 +1569,199 @@ void __MTWM_FUNC(transform_with_mask)(
         pTargetBase += iTargetStride;
     }
 }
+
+
+
+__OVERRIDE_WEAK
+
+#if __API_MTWM_CFG_SUPPORT_OPACITY
+void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)(   
+                                    __arm_2d_param_copy_orig_msk_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t hwOpacity)
+#else
+void __ARM_2D_FUNC(colour_filling_with_transformed_mask_and_target_mask)(   
+                                    __arm_2d_param_copy_orig_msk_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo)
+#endif
+{
+    int_fast16_t    iHeight = ptParam->use_as____arm_2d_param_copy_orig_t
+                                .use_as____arm_2d_param_copy_t
+                                    .tCopySize
+                                        .iHeight;
+
+    int_fast16_t    iWidth = ptParam->use_as____arm_2d_param_copy_orig_t
+                                .use_as____arm_2d_param_copy_t
+                                    .tCopySize
+                                        .iWidth;
+
+    int_fast16_t    iTargetStride = ptParam->use_as____arm_2d_param_copy_orig_t
+                                .use_as____arm_2d_param_copy_t
+                                    .tTarget
+                                        .iStride;
+
+    __API_INT_TYPE  *pTargetBase = ptParam->use_as____arm_2d_param_copy_orig_t
+                                        .use_as____arm_2d_param_copy_t
+                                            .tTarget
+                                                .pBuffer;
+                                            
+    uint8_t         *pchOrigin = (uint8_t *)ptParam
+                                        ->use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .pBuffer;
+
+    int_fast16_t    iOrigStride = ptParam
+                                    ->use_as____arm_2d_param_copy_orig_t
+                                        .tOrigin
+                                            .iStride;
+
+    arm_2d_region_t *ptOriginValidRegion = 
+                        &ptParam->use_as____arm_2d_param_copy_orig_t
+                            .tOrigin
+                                .tValidRegion;
+
+    uint8_t         *pchTargetMaskBase = (uint8_t *)ptParam->tDesMask.pBuffer;
+
+    int_fast16_t    iTargetMaskStride = ptParam->tDesMask.iStride;
+
+    __API_INT_TYPE  MaskColour = MASK_COLOR(__API_INT_TYPE_BIT_NUM);
+
+    float           fAngle = -ptInfo->fAngle;
+
+    arm_2d_location_t   tOffset = ptParam
+                                    ->use_as____arm_2d_param_copy_orig_t
+                                        .use_as____arm_2d_param_copy_t
+                                            .tSource
+                                                .tValidRegion
+                                                    .tLocation;
+
+    arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
+
+    q31_t           invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t SrcPt = ptInfo->tDummySourceOffset;
+
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__) && __API_MTWM_CFG_SUPPORT_OPACITY
+    hwOpacity += (hwOpacity == 255);
+#endif
+
+    __arm_2d_transform_regression(
+        &ptParam
+            ->use_as____arm_2d_param_copy_orig_t
+                .use_as____arm_2d_param_copy_t
+                    .tCopySize,
+        &SrcPt,
+        fAngle,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
+        &tOffset,
+        pCenter,
+        iOrigStride,
+        regrCoefs);
+
+
+    /* slopes between 1st and last columns */
+    int32_t         slopeY, slopeX;
+
+    slopeY = MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX = MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    int32_t         nrmSlopeX = 17 - __CLZ(ABS(slopeX));
+    int32_t         nrmSlopeY = 17 - __CLZ(ABS(slopeY));
+
+    slopeX = ARSHIFT(slopeX, nrmSlopeX);
+    slopeY = ARSHIFT(slopeY, nrmSlopeY);
+
+
+    for (int32_t y = 0; y < iHeight; y++) {
+        /* 1st column estimates */
+        int32_t         colFirstY =
+            __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t         colFirstX =
+            __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+        /* Q6 conversion */
+        colFirstX = colFirstX >> 10;
+        colFirstY = colFirstY >> 10;
+
+        int32_t         nbVecElts = iWidth;
+        int16x8_t       vX = (int16x8_t) vidupq_n_u16(0, 1);
+        __API_INT_TYPE *pTargetLine = pTargetBase;
+        uint8_t *pchTargetMaskLine = pchTargetMaskBase;
+
+        /* Q9.6 coversion */
+        vX = SET_Q6INT(vX);
+
+        while (nbVecElts > 0) {
+            /* interpolation */
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
+
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                    ptOriginValidRegion, 
+                                    &tPointTemp);
+            p &= vctp16q(nbVecElts);
+            
+        #if __API_MTWM_CFG_SUPPORT_OPACITY
+            if (0xFFFF == p) {
+                __ARM_2D_FUNC(fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src)(  
+                                                        &tPointV,
+                                                        ptOriginValidRegion,
+                                                        pchOrigin, iOrigStride,
+                                                        pTargetLine,
+                                                        pchTargetMaskLine,
+                                                        MaskColour, 
+                                                        hwOpacity);
+            } else if (0 != p) {
+                __ARM_2D_FUNC(fill_colour_with_transformed_mask_target_mask_and_opacity_process_point)(  
+                                                        &tPointV,
+                                                        ptOriginValidRegion,
+                                                        pchOrigin, iOrigStride,
+                                                        pTargetLine,
+                                                        pchTargetMaskLine,
+                                                        MaskColour, 
+                                                        hwOpacity, 
+                                                        nbVecElts);
+            }
+        #else
+            if (0xFFFF == p) {
+                __ARM_2D_FUNC(fill_colour_with_transformed_mask_and_target_mask_process_point_inside_src)(  
+                                                        &tPointV,
+                                                        ptOriginValidRegion,
+                                                        pchOrigin, iOrigStride,
+                                                        pTargetLine,
+                                                        pchTargetMaskLine,
+                                                        MaskColour);
+            } else if (0 != p) {
+                __ARM_2D_FUNC(fill_colour_with_transformed_mask_and_target_mask_process_point)(  
+                                                        &tPointV,
+                                                        ptOriginValidRegion,
+                                                        pchOrigin, iOrigStride,
+                                                        pTargetLine,
+                                                        pchTargetMaskLine,
+                                                        MaskColour, 
+                                                        nbVecElts);
+            }
+        #endif
+
+            pTargetLine += 8;
+            pchTargetMaskLine += 8;
+            vX += SET_Q6INT(8);
+            nbVecElts -= 8;
+        }
+        pTargetBase += iTargetStride;
+        pchTargetMaskBase += iTargetMaskStride;
+    }
+}
+
 
 
 #undef get_pixel_colour_mask
