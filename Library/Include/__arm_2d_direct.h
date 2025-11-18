@@ -11341,6 +11341,40 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize);
 
+extern
+void __arm_2d_impl_gray8_colour_filling_with_transformed_mask_and_target_mask(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_and_target_mask(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_transformed_mask_and_target_mask(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_transformed_mask_target_mask_and_opacity(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_target_mask_and_opacity(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_transformed_mask_target_mask_and_opacity(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t chOpacity);
+
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_ARM_COMPILER_5__
