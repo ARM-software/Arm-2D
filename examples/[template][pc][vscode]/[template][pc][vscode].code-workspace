@@ -13,7 +13,9 @@
 			"arm_2d_helper.h": "c",
 			"arm_2d_helper_pfb.h": "c",
 			"arm_2d_example_controls.h": "c",
-			"*.log": "c"
+			"*.log": "c",
+			"*.inc": "c",
+			"*.jinja": "c"
 		},
 		"cSpell.words": [
 			"cccn"
