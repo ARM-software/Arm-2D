@@ -2977,6 +2977,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
                            vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
                            vcmphiq_n_u16(vHwPixelAlpha, 255));
 
+
+
+#if 0
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     arm_2d_color_bgra8888_t tSrcPix;
@@ -3010,6 +3013,12 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
                                 vminq(vTargetG, vdupq_n_u16(255)), predTail);
     vstrbq_scatter_offset_p_u16((uint8_t *) pTarget + 2, sg,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
+#else
+    __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(   MaskColour,
+                                                            pwTarget,
+                                                            vHwPixelAlpha,
+                                                            predTail);
+#endif
 
 }
 
@@ -3057,6 +3066,9 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
                            vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
                            vcmphiq_n_u16(vHwPixelAlpha, 255));
 
+
+
+#if 0
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     arm_2d_color_bgra8888_t tSrcPix;
@@ -3091,6 +3103,12 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
                                 vminq(vBlendedG, vdupq_n_u16(255)));
     vstrbq_scatter_offset_u16((uint8_t *) pTarget + 2, sg,
                                 vminq(vBlendedR, vdupq_n_u16(255)));
+#else
+
+    __arm_2d_helium_cccn888_8pix_fill_colour_with_mask( MaskColour,
+                                                        pwTarget,
+                                                        vHwPixelAlpha);
+#endif
 
 }
 
@@ -3143,6 +3161,7 @@ void __MVE_WRAPPER(
                                                     vldrbq_z_u16(pchTargetMask, predTail), 
                                                     hwOpacity);
 
+#if 0
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     arm_2d_color_bgra8888_t tSrcPix;
@@ -3176,6 +3195,13 @@ void __MVE_WRAPPER(
                                 vminq(vTargetG, vdupq_n_u16(255)), predTail);
     vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
+#else
+    __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(   wMaskColour,
+                                                            pwTarget,
+                                                            vHwPixelAlpha,
+                                                            predTail);
+
+#endif
 
 }
 
@@ -3227,10 +3253,11 @@ void __MVE_WRAPPER(
                                                     vldrbq_u16(pchTargetMask), 
                                                     hwOpacity);
 
+#if 0
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     arm_2d_color_bgra8888_t tSrcPix;
-    tSrcPix.tValue = wMaskColour;
+    tSrcPix.tValue = wMaskColour; 
     uint16x8_t      vTargetR, vTargetG, vTargetB;
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
@@ -3261,8 +3288,14 @@ void __MVE_WRAPPER(
                                 vminq(vBlendedG, vdupq_n_u16(255)));
     vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vBlendedR, vdupq_n_u16(255)));
+#else
+    __arm_2d_helium_cccn888_8pix_fill_colour_with_mask( wMaskColour,
+                                                        pwTarget,
+                                                        vHwPixelAlpha);
+#endif
 
 }
+
 
 
 __STATIC_INLINE
@@ -3313,6 +3346,8 @@ void __MVE_WRAPPER(
                                                 vldrbq_z_u16(pchTargetMask, predTail));
 
     /* blending */
+    
+#if 0
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     arm_2d_color_bgra8888_t tSrcPix;
     tSrcPix.tValue = wMaskColour;
@@ -3345,6 +3380,12 @@ void __MVE_WRAPPER(
                                 vminq(vTargetG, vdupq_n_u16(255)), predTail);
     vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
+#else
+    __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(   wMaskColour,
+                                                            pwTarget,
+                                                            vHwPixelAlpha,
+                                                            predTail);
+#endif
 
 }
 
@@ -3395,6 +3436,7 @@ void __MVE_WRAPPER(
                                                 vldrbq_u16(pchTargetMask));
 
     /* blending */
+#if 0
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     arm_2d_color_bgra8888_t tSrcPix;
     tSrcPix.tValue = wMaskColour;
@@ -3428,6 +3470,11 @@ void __MVE_WRAPPER(
                                 vminq(vBlendedG, vdupq_n_u16(255)));
     vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vBlendedR, vdupq_n_u16(255)));
+#else
+    __arm_2d_helium_cccn888_8pix_fill_colour_with_mask( wMaskColour,
+                                                        pwTarget,
+                                                        vHwPixelAlpha);
+#endif
 
 }
 
