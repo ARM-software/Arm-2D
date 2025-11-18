@@ -91,8 +91,12 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
                                                     uint_fast16_t hwOpacity, 
                                                     uint32_t elts)
 {
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+
     mve_pred16_t predTail = vctp16q(elts);
-    uint16x8_t vTarget = vld1q_u16(phwTarget);
+    uint16x8_t vTarget = vld1q_z_u16(phwTarget, predTail);
     int16x8_t vXi = ((ptPoint->X) >> 6);
     int16x8_t vYi = ((ptPoint->Y) >> 6);
     uint16x8_t vHwPixelAlpha;
@@ -181,6 +185,43 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
 
     vst1q_p(phwTarget, vTarget, predTail);
+#else
+    mve_pred16_t predTail = vctp16q(elts);
+    uint16x8_t vTarget = vld1q_z_u16(phwTarget, preTail);
+    int16x8_t vXi = ((ptPoint->X) >> 6);
+    int16x8_t vYi = ((ptPoint->Y) >> 6);
+    uint16x8_t vHwPixelAlpha;
+
+    mve_pred16_t predGlb = 0;
+
+    do {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+        mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16(ptOrigValidRegion, &vPoint);
+        predGlb |= p;
+        int16_t correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint8_t *pOriginCorrected = pchOrigin + (correctionOffset * iOrigStride);
+        vHwPixelAlpha = vldrbq_gather_offset_z_u16(pOriginCorrected, ptOffs, predTail & p);
+
+    } while(0);
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_z_u16(pchTargetMask, predTail), 
+                                                    hwOpacity);
+
+    uint16x8_t vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t vBlended;
+    __arm_2d_color_fast_rgb_t tSrcPix;
+
+    __arm_2d_rgb565_unpack(*(&hwMaskColour), &tSrcPix);
+
+    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, &tSrcPix, vhwTransparency);
+
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vst1q_p(phwTarget, vTarget, predTail);
+
+#endif
 }
 
 __STATIC_INLINE
@@ -194,6 +235,11 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
                                             uint16_t hwMaskColour,
                                             uint_fast16_t hwOpacity)
 {
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+
     uint16x8_t vTarget = vld1q_u16(phwTarget);
     
 
@@ -275,6 +321,38 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
                                                             vhwTransparency);
 
     vst1q(phwTarget, vBlended);
+#else
+
+    uint16x8_t vTarget = vld1q_u16(phwTarget);
+    int16x8_t vXi = ((ptPoint->X) >> 6);
+    int16x8_t vYi = ((ptPoint->Y) >> 6);
+    uint16x8_t vHwPixelAlpha;
+
+    do {
+        arm_2d_point_s16x8_t vPoint = {.X = vXi, .Y = vYi};
+        int16_t correctionOffset = vminvq_s16(32767, vPoint.Y) - 1;
+        uint16x8_t ptOffs = vPoint.X + (vPoint.Y - correctionOffset) * iOrigStride;
+        uint8_t *pOriginCorrected = pchOrigin + (correctionOffset * iOrigStride);
+        vHwPixelAlpha = vldrbq_gather_offset_u16(pOriginCorrected, ptOffs);
+    } while(0);
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_u16(pchTargetMask), 
+                                                    hwOpacity);
+
+    uint16x8_t vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t vBlended;
+    __arm_2d_color_fast_rgb_t tSrcPix;
+
+    __arm_2d_rgb565_unpack(*(&hwMaskColour), &tSrcPix);
+
+    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget,
+                                                            &tSrcPix,
+                                                            vhwTransparency);
+
+    vst1q(phwTarget, vBlended);
+
+#endif
 }
 
 __OVERRIDE_WEAK 
