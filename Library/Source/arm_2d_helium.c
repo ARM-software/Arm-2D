@@ -265,6 +265,40 @@ uint16x8_t __arm_2d_unpack_and_blend_cccn888(const uint8_t * pwTarget, uint16x8_
     return (vTrg * vTrans + vSrc * opa) >> 8;
 }
 
+/**
+  @brief         return 3 vector of 16-bit channels (8-bit widened) taken from a memory reference
+  @param[in]     pMem           pointer to packed 8-bit channel
+  @param[out]    R              vector of 16-bit widened R channel
+  @param[out]    G              vector of 16-bit widened G channel
+  @param[out]    B              vector of 16-bit widened B channel
+ */
+void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem, uint16x8_t * R, uint16x8_t * G,
+                                     uint16x8_t * B)
+{
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+
+    *B = vldrbq_gather_offset_u16(pMem, sg);
+    *G = vldrbq_gather_offset_u16(pMem + 1, sg);
+    *R = vldrbq_gather_offset_u16(pMem + 2, sg);
+}
+
+/**
+  @brief         interleave 3 x 16-bit widened vectors into 8-bit memory reference
+                 (4th channel untouched)
+  @param[in]     pMem           pointer to packed 8-bit channel
+  @param[in]     R              vector of 16-bit widened R channel
+  @param[in]     G              vector of 16-bit widened G channel
+  @param[in]     B              vector of 16-bit widened B channel
+ */
+void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uint16x8_t B)
+{
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+
+    vstrbq_scatter_offset_u16(pMem,     sg, vminq(B, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16(pMem + 1, sg, vminq(G, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16(pMem + 2, sg, vminq(R, vdupq_n_u16(255)));
+    //vstrbq_scatter_offset_u16(pMem + 3, sg, vdupq_n_u16(0));
+}
 
 __STATIC_FORCEINLINE
 uint16x8_t __arm_2d_scale_alpha_mask_opa(uint16x8_t opa, uint16x8_t vSrcMask,
