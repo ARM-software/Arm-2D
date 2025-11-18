@@ -58,7 +58,7 @@ extern "C" {
 //     <32=>    32Bits
 // <i> The colour depth of your screen
 #ifndef __DISP0_CFG_COLOUR_DEPTH__
-#   define __DISP0_CFG_COLOUR_DEPTH__                              16
+#   define __DISP0_CFG_COLOUR_DEPTH__                              32
 #endif
 
 // <o>Width of the screen <8-32767>

@@ -2901,7 +2901,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
                                                     arm_2d_region_t * ptOrigValidRegion,
                                                     uint8_t * pOrigin,
                                                     int16_t iOrigStride,
-                                                    uint32_t * pTarget,
+                                                    uint32_t * pwTarget,
                                                     uint32_t MaskColour,
                                                     uint_fast16_t hwOpacity, uint32_t elts)
 {
@@ -2950,7 +2950,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
 
     /* merge vector with expanded Mask colour */
     vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8R));
@@ -2969,17 +2969,18 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
 
     /* pack */
     uint16x8_t      sg = vidupq_n_u16(0, 4);
-    vstrbq_scatter_offset_p_u16((uint8_t *) pTarget, sg,
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget, sg,
                                 vminq(vTargetB, vdupq_n_u16(255)), predTail);
-    vstrbq_scatter_offset_p_u16((uint8_t *) pTarget + 1, sg,
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 1, sg,
                                 vminq(vTargetG, vdupq_n_u16(255)), predTail);
-    vstrbq_scatter_offset_p_u16((uint8_t *) pTarget + 2, sg,
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
 #else
     __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(   MaskColour,
                                                             pwTarget,
                                                             vHwPixelAlpha,
-                                                            predTail);
+                                                            predTail,
+                                                            predGlb);
 #endif
 
 }
@@ -2990,7 +2991,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
                                                     arm_2d_region_t * ptOrigValidRegion,
                                                     uint8_t * pOrigin,
                                                     int16_t iOrigStride,
-                                                    uint32_t * pTarget,
+                                                    uint32_t * pwTarget,
                                                     uint32_t MaskColour,
                                                     uint_fast16_t hwOpacity)
 {
@@ -3039,7 +3040,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, 
+    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -3059,11 +3060,11 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
 
     /* pack */
     uint16x8_t      sg = vidupq_n_u16(0, 4);
-    vstrbq_scatter_offset_u16((uint8_t *) pTarget, sg,
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget, sg,
                                 vminq(vBlendedB, vdupq_n_u16(255)));
-    vstrbq_scatter_offset_u16((uint8_t *) pTarget + 1, sg,
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 1, sg,
                                 vminq(vBlendedG, vdupq_n_u16(255)));
-    vstrbq_scatter_offset_u16((uint8_t *) pTarget + 2, sg,
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vBlendedR, vdupq_n_u16(255)));
 #else
 
@@ -3161,7 +3162,8 @@ void __MVE_WRAPPER(
     __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(   wMaskColour,
                                                             pwTarget,
                                                             vHwPixelAlpha,
-                                                            predTail);
+                                                            predTail,
+                                                            predGlb);
 
 #endif
 
@@ -3346,7 +3348,8 @@ void __MVE_WRAPPER(
     __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(   wMaskColour,
                                                             pwTarget,
                                                             vHwPixelAlpha,
-                                                            predTail);
+                                                            predTail,
+                                                            predGlb);
 #endif
 
 }
