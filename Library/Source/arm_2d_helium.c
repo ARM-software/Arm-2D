@@ -272,6 +272,7 @@ uint16x8_t __arm_2d_unpack_and_blend_cccn888(const uint8_t * pwTarget, uint16x8_
   @param[out]    G              vector of 16-bit widened G channel
   @param[out]    B              vector of 16-bit widened B channel
  */
+__STATIC_FORCEINLINE
 void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem, uint16x8_t * R, uint16x8_t * G,
                                      uint16x8_t * B)
 {
@@ -290,6 +291,7 @@ void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem, uint16x8_t * R, uint1
   @param[in]     G              vector of 16-bit widened G channel
   @param[in]     B              vector of 16-bit widened B channel
  */
+__STATIC_FORCEINLINE
 void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uint16x8_t B)
 {
     uint16x8_t      sg = vidupq_n_u16(0, 4);
