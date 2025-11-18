@@ -1865,7 +1865,6 @@ void __arm_2d_helium_rgb565_blend_with_src_chn_mask(
     } while (iBlockCount > 0);
 }
 
-
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_transform_helium.c"
 
@@ -1904,9 +1903,6 @@ void __arm_2d_helium_rgb565_blend_with_src_chn_mask(
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_ccca8888_transform_helium.c"
-
-#define __ARM_2D_COMPILATION_UNIT
-#include "__arm_2d_fill_colour_with_transformed_mask_and_target_mask_helium.c"
 
 
 /*----------------------------------------------------------------------------*

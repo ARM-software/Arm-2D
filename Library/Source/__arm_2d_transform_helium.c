@@ -2314,6 +2314,133 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_get_alpha_with_opacity_inside_src )(
     vstrbq_u16(pTarget, vBlended);
 }
 
+static
+void __MVE_WRAPPER( __arm_2d_impl_gray8_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point)(
+                                        ARM_2D_POINT_VEC * ptPoint,
+                                        arm_2d_region_t * ptOrigValidRegion,
+                                        uint8_t * pchOrigin,
+                                        int16_t iOrigStride,
+                                        uint8_t * pchTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint8_t chMaskColour,
+                                        uint_fast16_t hwOpacity, 
+                                        uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vldrbq_z_u16(pchTarget, predTail);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    mve_pred16_t    predGlb = 0;
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA(ptPoint, vXi, vYi, pchOrigin,
+                                               ptOrigValidRegion, iOrigStride,
+                                               predTail, predGlb, vAvgPixel);
+
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmphiq_n_u16(vHwPixelAlpha, 255));
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                             iOrigStride, predTail,
+                                             vHwPixelAlpha, predGlb);
+
+//        vHwPixelAlpha = vpselq(vdupq_n_u16(hwOpacity),
+//                               vrshrq_n_u16(vmulq(vHwPixelAlpha, (uint16_t) hwOpacity), 8),
+//                               vcmpeqq_n_u16(vHwPixelAlpha, 255));
+    }
+#endif
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_z_u16(pchTargetMask, predTail), 
+                                                    hwOpacity);
+
+    /* blending */
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t      vBlended =
+        vrshrq_n_u16(vqaddq(vHwPixelAlpha * vdupq_n_u16(chMaskColour), vTarget * vhwTransparency),8);
+
+    /* select between target pixel, averaged pixed */
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vstrbq_p_u16(pchTarget, vTarget, predTail);
+}
+
+
+static
+void __MVE_WRAPPER( 
+    __arm_2d_impl_gray8_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src )(
+                                                    ARM_2D_POINT_VEC * ptPoint,
+                                                     arm_2d_region_t * ptOrigValidRegion,
+                                                     uint8_t * pchOrigin,
+                                                     int16_t iOrigStride,
+                                                     uint8_t * pchTarget,
+                                                     uint8_t *pchTargetMask,
+                                                     uint8_t chMaskColour,
+                                                     uint_fast16_t hwOpacity)
+{
+    uint16x8_t      vTarget = vldrbq_u16(pchTarget);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA_INSIDE_SRC(
+                                                ptPoint, vXi, vYi, pchOrigin,
+                                                ptOrigValidRegion, iOrigStride,
+                                                vAvgPixel);
+
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_INSIDE_SRC(
+                                        vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                        iOrigStride,
+                                        vHwPixelAlpha);
+
+    }
+#endif
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_u16(pchTargetMask), 
+                                                    hwOpacity);
+
+    /* blending */
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t      vBlended =
+        vrshrq_n_u16(   vqaddq(vHwPixelAlpha * vdupq_n_u16(chMaskColour), 
+                        vTarget * vhwTransparency),
+                        8);
+
+    vstrbq_u16(pchTarget, vBlended);
+}
+
 
 
 static
@@ -2441,6 +2568,136 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_alpha_with_opacity_inside_src )(
 
     vst1q(pTarget, vBlended);
 }
+
+
+
+static
+void __MVE_WRAPPER( 
+    __arm_2d_impl_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point )
+                                                    (ARM_2D_POINT_VEC * ptPoint,
+                                                     arm_2d_region_t * ptOrigValidRegion,
+                                                     uint8_t * pchOrigin,
+                                                     int16_t iOrigStride,
+                                                     uint16_t *phwTarget,
+                                                     uint8_t *pchTargetMask,
+                                                     uint16_t hwMaskColour,
+                                                     uint_fast16_t hwOpacity, 
+                                                     uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q_z_u16(phwTarget, predTail);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    mve_pred16_t    predGlb = 0;
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA(ptPoint, vXi, vYi, pchOrigin,
+                                               ptOrigValidRegion, iOrigStride,
+                                               predTail, predGlb, vAvgPixel);
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                             iOrigStride, predTail,
+                                             vHwPixelAlpha, predGlb);
+    }
+#endif
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_z_u16(pchTargetMask, predTail), 
+                                                    hwOpacity);
+
+    /* blending */
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t      vBlended;
+    __arm_2d_color_fast_rgb_t tSrcPix;
+
+    __arm_2d_rgb565_unpack(*(&hwMaskColour), &tSrcPix);
+
+    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, &tSrcPix, vhwTransparency);
+
+    /* select between target pixel, averaged pixed */
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vst1q_p(phwTarget, vTarget, predTail);
+}
+
+
+static
+void __MVE_WRAPPER( 
+    __arm_2d_impl_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src )(
+                                        ARM_2D_POINT_VEC * ptPoint,
+                                        arm_2d_region_t * ptOrigValidRegion,
+                                        uint8_t *pchOrigin,
+                                        int16_t iOrigStride,
+                                        uint16_t *phwTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint16_t hwMaskColour,
+                                        uint_fast16_t hwOpacity)
+{
+    uint16x8_t      vTarget = vld1q_u16(phwTarget);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA_INSIDE_SRC(  
+                                                ptPoint, vXi, vYi, pchOrigin,
+                                                ptOrigValidRegion, iOrigStride,
+                                                vAvgPixel);
+
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_INSIDE_SRC(
+                                        vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                        iOrigStride,
+                                        vHwPixelAlpha);
+    }
+#endif
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_u16(pchTargetMask), 
+                                                    hwOpacity);
+
+    /* blending */
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t      vBlended;
+    __arm_2d_color_fast_rgb_t tSrcPix;
+
+    __arm_2d_rgb565_unpack(*(&hwMaskColour), &tSrcPix);
+
+    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, 
+                                                             &tSrcPix, 
+                                                             vhwTransparency);
+
+    vst1q(phwTarget, vBlended);
+}
+
 
 
 static
@@ -2602,6 +2859,178 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
                                 vminq(vBlendedR, vdupq_n_u16(255)));
 
 }
+
+
+static
+void __MVE_WRAPPER( 
+    __arm_2d_impl_cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point )(
+                                            ARM_2D_POINT_VEC * ptPoint,
+                                            arm_2d_region_t * ptOrigValidRegion,
+                                            uint8_t * pchOrigin,
+                                            int16_t iOrigStride,
+                                            uint32_t * pwTarget,
+                                            uint8_t *pchTargetMask,
+                                            uint32_t wMaskColour,
+                                            uint_fast16_t hwOpacity, 
+                                            uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    mve_pred16_t    predGlb = 0;
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA(ptPoint, vXi, vYi, pchOrigin,
+                                               ptOrigValidRegion, iOrigStride,
+                                               predTail, predGlb, vAvgPixel);
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(
+                                vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                iOrigStride, predTail, vHwPixelAlpha, predGlb);
+
+    }
+#endif
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_z_u16(pchTargetMask, predTail), 
+                                                    hwOpacity);
+
+    /* blending */
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    arm_2d_color_bgra8888_t tSrcPix;
+    tSrcPix.tValue = wMaskColour;
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+    uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
+
+    /* get vectors of 8 x R, G, B pix */
+    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
+
+    /* merge vector with expanded Mask colour */
+    vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8R));
+    vBlendedR = vBlendedR >> 8;
+
+    vBlendedG = vqaddq(vTargetG * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8G));
+    vBlendedG = vBlendedG >> 8;
+
+    vBlendedB = vqaddq(vTargetB * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8B));
+    vBlendedB = vBlendedB >> 8;
+
+    /* select between target pixel, averaged pixed */
+    vTargetR = vpselq_u16(vBlendedR, vTargetR, predGlb);
+    vTargetG = vpselq_u16(vBlendedG, vTargetG, predGlb);
+    vTargetB = vpselq_u16(vBlendedB, vTargetB, predGlb);
+
+    /* pack */
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget, sg,
+                                vminq(vTargetB, vdupq_n_u16(255)), predTail);
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 1, sg,
+                                vminq(vTargetG, vdupq_n_u16(255)), predTail);
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 2, sg,
+                                vminq(vTargetR, vdupq_n_u16(255)), predTail);
+
+}
+
+static
+void __MVE_WRAPPER( 
+    __arm_2d_impl_cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src )(
+                                                    ARM_2D_POINT_VEC * ptPoint,
+                                                    arm_2d_region_t * ptOrigValidRegion,
+                                                    uint8_t *pchOrigin,
+                                                    int16_t iOrigStride,
+                                                    uint32_t *pwTarget,
+                                                    uint8_t *pchTargetMask,
+                                                    uint32_t wMaskColour,
+                                                    uint_fast16_t hwOpacity)
+{
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA_INSIDE_SRC(  
+                                                ptPoint, vXi, vYi, pchOrigin,
+                                                ptOrigValidRegion, iOrigStride,
+                                                vAvgPixel);
+
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_INSIDE_SRC(
+                                        vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                        iOrigStride, vHwPixelAlpha);
+
+    }
+#endif
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+                                                    vldrbq_u16(pchTargetMask), 
+                                                    hwOpacity);
+
+    /* blending */
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    arm_2d_color_bgra8888_t tSrcPix;
+    tSrcPix.tValue = wMaskColour;
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+    uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
+
+    /* get vectors of 8 x R, G, B pix */
+    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
+                                    &vTargetR, 
+                                    &vTargetG, 
+                                    &vTargetB);
+
+    /* merge vector with expanded Mask colour */
+    vBlendedR = vqaddq(vTargetR * vhwTransparency, 
+                        vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8R));
+    vBlendedR = vBlendedR >> 8;
+
+    vBlendedG = vqaddq(vTargetG * vhwTransparency, 
+                        vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8G));
+    vBlendedG = vBlendedG >> 8;
+
+    vBlendedB = vqaddq(vTargetB * vhwTransparency, 
+                        vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8B));
+    vBlendedB = vBlendedB >> 8;
+
+    /* pack */
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget, sg,
+                                vminq(vBlendedB, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 1, sg,
+                                vminq(vBlendedG, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 2, sg,
+                                vminq(vBlendedR, vdupq_n_u16(255)));
+
+}
+
 
 static
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_get_pixel_colour)(
