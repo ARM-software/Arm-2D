@@ -1085,6 +1085,7 @@ void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)
 #define __API_MTWM_INT_TYPE                     __API_INT_TYPE
 #define __API_MTWM_INT_TYPE_BIT_NUM             __API_INT_TYPE_BIT_NUM
 #define __API_MTWM_CFG_SUPPORT_SOURCE_MASK      1
+#define __API_MTWM_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK    1
 
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask
 #define transform_with_mask                     transform_with_src_mask
@@ -1112,6 +1113,7 @@ void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)
 #define __API_MTWM_INT_TYPE_BIT_NUM             __API_INT_TYPE_BIT_NUM
 #define __API_MTWM_CFG_SUPPORT_SOURCE_MASK      1
 #define __API_MTWM_CFG_SUPPORT_OPACITY          1
+#define __API_MTWM_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK    1
 
 #define get_pixel_colour_mask                   get_pixel_colour_src_mask_opa
 #define transform_with_mask                     transform_with_src_mask_and_opacity
