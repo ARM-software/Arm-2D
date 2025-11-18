@@ -980,7 +980,10 @@ void __ARM_2D_FUNC(colour_filling_with_transformed_mask_target_mask_and_opacity)
 #endif
 
     __arm_2d_transform_regression(
-        &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
+        &ptParam
+            ->use_as____arm_2d_param_copy_orig_t
+                .use_as____arm_2d_param_copy_t
+                    .tCopySize,
         &SrcPt,
         fAngle,
         ptInfo->fScaleX,
