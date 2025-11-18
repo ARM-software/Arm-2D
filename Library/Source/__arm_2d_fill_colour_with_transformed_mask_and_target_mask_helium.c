@@ -23,7 +23,7 @@
  *               colour-filling-with-transformed-mask-and-target-mask
  *
  * $Date:        18 Nov 2025
- * $Revision:    V.0.5.0
+ * $Revision:    V.0.5.1
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -315,14 +315,25 @@ __MVE_WRAPPER(
                                         .tOrigin
                                             .iStride;
 
+    arm_2d_region_t *ptOriginValidRegion = 
+                        &ptParam->use_as____arm_2d_param_copy_orig_t
+                            .tOrigin
+                                .tValidRegion;
+
     uint8_t         *pchTargetMaskBase = (uint8_t *)ptParam->tDesMask.pBuffer;
     int_fast16_t    iTargetMaskStride = ptParam->tDesMask.iStride;
                                         
     uint16_t        hwMaskColour = ptInfo->Mask.hwColour;
 
     float fAngle = -ptInfo->fAngle;
-    arm_2d_location_t tOffset =
-        ptParam->use_as____arm_2d_param_copy_t.tSource.tValidRegion.tLocation;
+
+    arm_2d_location_t   tOffset = ptParam
+                                    ->use_as____arm_2d_param_copy_orig_t
+                                        .use_as____arm_2d_param_copy_t
+                                            .tSource
+                                                .tValidRegion
+                                                    .tLocation;
+
     arm_2d_point_float_t *pCenter = &(ptInfo->tCenter);
 
     q31_t invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
@@ -331,15 +342,19 @@ __MVE_WRAPPER(
 
     hwOpacity += (hwOpacity == 255);
 
-    __arm_2d_transform_regression(  &ptParam->use_as____arm_2d_param_copy_t.tCopySize,
-                                    &SrcPt,
-                                    fAngle,
-                                    ptInfo->fScaleX,
-                                    ptInfo->fScaleY,
-                                    &tOffset,
-                                    pCenter,
-                                    iOrigStride,
-                                    regrCoefs);
+    __arm_2d_transform_regression(  
+        &ptParam
+            ->use_as____arm_2d_param_copy_orig_t
+                .use_as____arm_2d_param_copy_t
+                    .tCopySize,
+        &SrcPt,
+        fAngle,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
+        &tOffset,
+        pCenter,
+        iOrigStride,
+        regrCoefs);
 
     int32_t slopeY, slopeX;
 
@@ -381,24 +396,25 @@ __MVE_WRAPPER(
 
             tPointTemp.X = tPointV.X >> 6;
             tPointTemp.Y = tPointV.Y >> 6;
+            
             mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
-                &ptParam->tOrigin.tValidRegion,
-                &tPointTemp);
+                                                        ptOriginValidRegion,
+                                                        &tPointTemp);
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_rgb565_get_alpha_with_opacity_inside_src(
+                __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point_inside_src(
                                                 &tPointV,
-                                                &ptParam->tOrigin.tValidRegion,
+                                                ptOriginValidRegion,
                                                 pchOrigin, iOrigStride,
                                                 phwTargetLine,
                                                 pchTargetMaskLine,
                                                 hwMaskColour,
                                                 hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_rgb565_get_alpha_with_opacity(
+                __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_point(
                                                 &tPointV,
-                                                &ptParam->tOrigin.tValidRegion,
+                                                ptOriginValidRegion,
                                                 pchOrigin, iOrigStride,
                                                 phwTargetLine,
                                                 pchTargetMaskLine,

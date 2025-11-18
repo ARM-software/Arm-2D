@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_ccca8888_trans.inc
  * Description:  c code template for ccca8888 tile transform operations
  *
- * $Date:        8. September 2025
- * $Revision:    V.1.1.0
+ * $Date:        18. Nov 2025
+ * $Revision:    V.1.1.1
  *
  * -------------------------------------------------------------------- */
 
@@ -70,6 +70,7 @@
 
 #define __CCCA8888_TRANS_TYPE(__NAME)   ___CCCA8888_TRANS_TYPE(__NAME, __API_CCCA8888_TRANS_COLOUR)
 
+#undef MASK_COLOR
 #define MASK_COLOR(sz)  (sz == 8) ? ptInfo->Mask.chColour : ((sz == 16) ?  ptInfo->Mask.hwColour :  ptInfo->Mask.wColour)
 
 /*============================ PROTOTYPES ====================================*/

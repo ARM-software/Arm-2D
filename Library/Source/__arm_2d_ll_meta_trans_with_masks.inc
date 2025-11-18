@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_trans_with_masks.inc
  * Description:  c code template for tile transform with masks operations
  *
- * $Date:        24. May 2022
- * $Revision:    V.1.1.2
+ * $Date:        18. Nov 2025
+ * $Revision:    V.1.1.3
  *
  * -------------------------------------------------------------------- */
 
@@ -123,6 +123,7 @@
 
 #define __MTWM_TYPE(__NAME)   ___MTWM_TYPE(__NAME, __API_MTWM_COLOUR)
 
+#undef MASK_COLOR
 #define MASK_COLOR(sz)  (   (sz == 8)                                           \
                         ? ptInfo->Mask.chColour                                 \
                         :   (   (sz == 16)                                      \
