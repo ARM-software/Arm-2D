@@ -44,6 +44,7 @@
 #   pragma clang diagnostic ignored "-Wunused-variable"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wsign-compare"
 #endif
 
 /*============================ MACROS ========================================*/
