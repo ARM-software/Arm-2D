@@ -102,7 +102,7 @@ extern "C" {
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          28
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          120
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -340,7 +340,26 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
+#define DISP_ADAPTER0_NANO_DRAW()                                               \
+                                                                                \
+    arm_using(const arm_2d_tile_t *ptTile = NULL)                               \
+        arm_using(bool bIsNewFrame = true)                                      \
+            for (__disp_adapter0_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
+                (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
+                        = __disp_adapter0_nano_draw();                          \
+                    if (NULL != ARM_2D_SAFE_NAME(ptUserDraw)) {                 \
+                        ptTile = ARM_2D_SAFE_NAME(ptUserDraw)->ptTile;          \
+                        bIsNewFrame = ARM_2D_SAFE_NAME(ptUserDraw)->bIsNewFrame;\
+                    };                                                          \
+                    (NULL != ARM_2D_SAFE_NAME(ptUserDraw));                     \
+                    }));)
 /*============================ TYPES =========================================*/
+
+typedef struct {
+    arm_2d_tile_t *ptTile;
+    bool bIsNewFrame;
+} __disp_adapter0_draw_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
@@ -354,6 +373,14 @@ void disp_adapter0_init(void);
 extern
 arm_fsm_rt_t __disp_adapter0_task(void);
 
+extern
+arm_2d_scene_t *disp_adapter0_nano_prepare(void);
+
+extern
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);
+
+extern
+arm_2d_scene_t *disp_adapter0_get_default_scene(void);
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!

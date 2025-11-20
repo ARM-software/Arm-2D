@@ -1658,7 +1658,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\Eyeball.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\Eyeball.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -1673,7 +1673,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\LeftEye.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\LeftEye.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -1907,7 +1907,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_blink.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_blink.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -1916,7 +1916,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_blink.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_blink.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -2411,7 +2411,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.5" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -2420,7 +2420,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.5" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -2429,7 +2429,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.5" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>
@@ -2438,7 +2438,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.5" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN542"/>

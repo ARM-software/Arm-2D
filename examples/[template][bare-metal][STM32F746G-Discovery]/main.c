@@ -373,6 +373,12 @@ void scene_music_player_loader(void)
     arm_2d_scene_music_player_init(&DISP0_ADAPTER);
 }
 
+void scene_flight_attitude_instrument_loader(void) 
+{
+    arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
+}
+
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -393,7 +399,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -560,7 +566,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_basics_loader,
+        scene_flight_attitude_instrument_loader,
         //scene_watch_face_01_loader,
         //scene_balls_loader,
         //scene_matrix_loader,

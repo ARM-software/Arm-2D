@@ -150,7 +150,7 @@ static void __on_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptScene);
 }
 
-#if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
@@ -175,7 +175,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 
     return arm_fsm_rt_cpl;
 }
-#endif
 
 #if __DISP0_CFG_NAVIGATION_LAYER_MODE__
 
@@ -716,8 +715,6 @@ static void __user_scene_player_init(void)
     extern arm_2d_helper_2d_copy_handler_t __disp_adapter0_request_2d_copy;
     extern arm_2d_helper_dma_copy_handler_t __disp_adapter0_request_dma_copy;
     
-    
-        arm_2d_helper_3fb_cfg_t tCFG = {
         arm_2d_helper_3fb_cfg_t tCFG = {
             .tScreenSize = {
 #if     __DISP0_CFG_ROTATE_SCREEN__ == 1\
@@ -916,6 +913,26 @@ bool disp_adapter0_putchar(uint8_t chChar)
 /*----------------------------------------------------------------------------*
  * Display Adapter Entry                                                      *
  *----------------------------------------------------------------------------*/
+static arm_2d_scene_t s_tDefaultScene = {
+#if __DISP0_CFG_COLOR_SOLUTION__ == 1
+    /* the canvas colour */
+    .tCanvas = {GLCD_COLOR_BLACK},
+#else
+    /* the canvas colour */
+    .tCanvas = {GLCD_COLOR_WHITE}, 
+#endif
+
+    .fnScene        = &__pfb_draw_handler,
+    //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+    .fnOnFrameStart = &__on_frame_start,
+    .fnOnFrameCPL   = &__on_frame_complete,
+    .fnDepose       = NULL,
+};
+
+arm_2d_scene_t *disp_adapter0_get_default_scene(void)
+{
+    return &s_tDefaultScene;
+}
 
 void disp_adapter0_init(void)
 {
@@ -936,28 +953,10 @@ void disp_adapter0_init(void)
 
 #if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
     do {
-        static arm_2d_scene_t s_tScenes[] = {
-            [0] = {
-            
-            #if __DISP0_CFG_COLOR_SOLUTION__ == 1
-                /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_BLACK},
-            #else
-                /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_WHITE}, 
-            #endif
-
-                .fnScene        = &__pfb_draw_handler,
-                //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-                .fnOnFrameStart = &__on_frame_start,
-                .fnOnFrameCPL   = &__on_frame_complete,
-                .fnDepose       = NULL,
-            },
-        };
         arm_2d_scene_player_append_scenes( 
                                         &DISP0_ADAPTER,
-                                        (arm_2d_scene_t *)s_tScenes,
-                                        dimof(s_tScenes));
+                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        1);
     } while(0);
 #endif
 }
@@ -965,6 +964,40 @@ void disp_adapter0_init(void)
 arm_fsm_rt_t __disp_adapter0_task(void)
 {
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
+}
+
+arm_2d_scene_t *disp_adapter0_nano_prepare(void)
+{
+    arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
+    s_tDefaultScene.fnBackground = NULL;
+    s_tDefaultScene.fnScene = NULL;
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER, 
+                                            ARM_2D_SCENE_SWITCH_MODE_NONE);
+
+    arm_2d_scene_player_append_scenes(  &DISP0_ADAPTER,
+                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        1);
+    return &s_tDefaultScene;
+}
+
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void)
+{
+    static __disp_adapter0_draw_t s_tDraw = {0};
+
+    do {
+        arm_fsm_rt_t tResult = __disp_adapter0_task();
+        
+        if (tResult == arm_fsm_rt_cpl || tResult == (arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED) {
+            return NULL;
+        } else if ((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW == tResult) {
+            s_tDraw.bIsNewFrame = arm_2d_helper_pfb_get_current_framebuffer(
+                        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                        (const arm_2d_tile_t **)&s_tDraw.ptTile
+                    );
+
+            return &s_tDraw;
+        }
+    } while(1);   
 }
 
 
