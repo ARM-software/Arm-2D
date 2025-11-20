@@ -59,6 +59,9 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef ARM_2D_DEMO_FAI_SHOW_HORIZON
+#   define ARM_2D_DEMO_FAI_SHOW_HORIZON     0
+#endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -89,7 +92,10 @@ ARM_PRIVATE(
 
     struct {
         spin_zoom_widget_t tLand;
+    #if ARM_2D_DEMO_FAI_SHOW_HORIZON
         spin_zoom_widget_t tHorizon;
+    #endif
+    
         spin_zoom_widget_t tMarker;
         q16_t q16PitchRatio;
     } Roll;
@@ -103,10 +109,6 @@ ARM_PRIVATE(
     int16_t iPitchScale;
     
 )
-
-
-
-    
     
 };
 

@@ -142,6 +142,9 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
+ARM_NOINIT
+arm_2d_location_t s_tReferencePoints[4];
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_flight_attitude_instrument_load(arm_2d_scene_t *ptScene)
@@ -150,7 +153,13 @@ static void __on_scene_flight_attitude_instrument_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.Roll.tLand);
+
+    this.Roll.tLand.tHelper.SourceReference.ptPoints = s_tReferencePoints;
+    this.Roll.tLand.tHelper.SourceReference.chCount = dimof(s_tReferencePoints);
+
+#if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_on_load(&this.Roll.tHorizon);
+#endif
     spin_zoom_widget_on_load(&this.Roll.tMarker);
     spin_zoom_widget_on_load(&this.Pitch.tMarker);
 
@@ -172,7 +181,9 @@ static void __on_scene_flight_attitude_instrument_depose(arm_2d_scene_t *ptScene
     /*--------------------- insert your depose code begin --------------------*/
 
     spin_zoom_widget_depose(&this.Roll.tLand);
+#if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_depose(&this.Roll.tHorizon);
+#endif
     spin_zoom_widget_depose(&this.Roll.tMarker);
     spin_zoom_widget_depose(&this.Pitch.tMarker);
 
@@ -245,6 +256,7 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
                                                     this.iPitchScale))
                                 });
 
+#if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_set_source(&this.Roll.tHorizon, 
                                 NULL,
                                 &HORIZON_MASK,
@@ -254,6 +266,7 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
                                         mul_n_q16(  this.Roll.q16PitchRatio, 
                                                     this.iPitchScale))
                                 });
+#endif
 
     spin_zoom_widget_set_source(&this.Pitch.tMarker, 
                                 NULL,
@@ -270,9 +283,11 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
                                     this.iRollScale, 
                                     LAND_MASK_SCARE_RATIO);
 
+#if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_on_frame_start(&this.Roll.tHorizon, 
                                     this.iRollScale, 
                                     LAND_MASK_SCARE_RATIO);
+#endif
 
     spin_zoom_widget_on_frame_start(&this.Roll.tMarker, 
                                     this.iRollScale, 
@@ -289,12 +304,6 @@ static void __on_scene_flight_attitude_instrument_frame_complete(arm_2d_scene_t 
     user_scene_flight_attitude_instrument_t *ptThis = (user_scene_flight_attitude_instrument_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
 static void __before_scene_flight_attitude_instrument_switching_out(arm_2d_scene_t *ptScene)
@@ -335,13 +344,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
                                     NULL, 
                                     255);
 
+        #if ARM_2D_DEMO_FAI_SHOW_HORIZON
             /* draw horizon */
             spin_zoom_widget_show(  &this.Roll.tHorizon,
                                     ptTile,
                                     &__centre_region, 
                                     NULL, 
                                     255);
-
+        #endif
 
             arm_2d_align_centre(__centre_region, PITCH_SCALE_MARKER_VISUAL_AREA_MASK.tRegion.tSize) {
                 /* draw pitch marker */
@@ -529,17 +539,33 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
             },
             .Target.ptMask = &VISUAL_AREA_MASK,
 
-            /* do NOT enable dirty region */
-            //.ptScene = (arm_2d_scene_t *)ptThis,
+        #if !ARM_2D_DEMO_FAI_SHOW_HORIZON
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        #endif
         };
         spin_zoom_widget_init(&this.Roll.tLand, &tCFG);
 
         float fPitchHeight = ((float)VISUAL_AREA_MASK.tRegion.tSize.iHeight / LAND_MASK_SCARE_RATIO) / 2.0f;
 
         this.Roll.q16PitchRatio = reinterpret_q16_f32(fPitchHeight / 900.0f);
+
+        /* update reference points*/
+        do {
+            s_tReferencePoints[0].iX = 0;
+            s_tReferencePoints[0].iY = 0;
+
+            s_tReferencePoints[1].iX = LAND_MASK.tRegion.tSize.iWidth - 1;
+            s_tReferencePoints[1].iY = 0;
+
+            s_tReferencePoints[2].iX = 0;
+            s_tReferencePoints[2].iY = 3;
+
+            s_tReferencePoints[3].iX = LAND_MASK.tRegion.tSize.iWidth - 1;
+            s_tReferencePoints[3].iY = 3;
+        } while(0);
     } while(0);
 
-
+#if ARM_2D_DEMO_FAI_SHOW_HORIZON
     /* initialize horizon */
     do {
         spin_zoom_widget_cfg_t tCFG = {
@@ -571,6 +597,7 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
         };
         spin_zoom_widget_init(&this.Roll.tHorizon, &tCFG);
     } while(0);
+#endif
 
     /* initialize roll marker */
     do {
