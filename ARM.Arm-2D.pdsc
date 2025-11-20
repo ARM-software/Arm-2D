@@ -926,6 +926,24 @@
           </RTE_Components_h>
         </component>
 
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cversion="1.0.0" condition="Arm-2D-Demos">
+          <description>An demo for the flight attitude instrument. </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_flight_attitude_instrument.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_flight_attitude_instrument.h" attr="config" version="1.0.0" />
+            
+            <file category="sourceC"     name="examples/demos/roll_scale_marker.c"  attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/rounded_square.c"     attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/solid_circle_small.c" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/solid_line.c"         attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/solid_square.c"       attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/demos/pitch_scale_marker.c" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Flight_Attitude_Instrument
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cversion="1.6.1" condition="Arm-2D-Demos">
           <description>An series of demos for monochrome screens, for example OLEDs and e-ink paper devices. </description>
           <files>
