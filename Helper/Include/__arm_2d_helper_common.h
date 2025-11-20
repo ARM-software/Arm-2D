@@ -863,6 +863,7 @@ extern "C" {
 #define GLCD_COLOR_LIGHT_GREY   __RGB( 192, 192, 192  )
 #define GLCD_COLOR_DARK_GREY    __RGB( 128, 128, 128  )
 #define GLCD_COLOR_BLUE         __RGB(   0,   0, 255  )
+#define GLCD_COLOR_SKY_BLUE     __RGB( 135, 206, 235  )
 #define GLCD_COLOR_GREEN        __RGB(   0, 255,   0  )
 #define GLCD_COLOR_CYAN         __RGB(   0, 255, 255  )
 #define GLCD_COLOR_RED          __RGB( 255,   0,   0  )

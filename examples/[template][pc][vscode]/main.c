@@ -226,6 +226,11 @@ void scene_blink_loader(void)
     arm_2d_scene_blink_init(&DISP0_ADAPTER);
 }
 
+void scene_flight_attitude_instrument_loader(void) 
+{
+    arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -367,7 +372,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -557,7 +562,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_blink_loader,
+        scene_flight_attitude_instrument_loader,
+        //scene_blink_loader,
         //scene_rickrolling_loader,
         //scene_histogram_loader,
         //scene_space_badge_loader,

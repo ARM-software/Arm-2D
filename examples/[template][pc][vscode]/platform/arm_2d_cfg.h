@@ -195,6 +195,12 @@ extern "C" {
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__              1
 #endif
 
+// <q> Force to disable Anti-Alias in Fill-colour-with-transformed-mask-and-opacity.
+// <i> This feature is disabled by default. You can disable it to improve performance as long as the rendering is good enough.
+#ifndef __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+#   define __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__   0
+#endif
+
 // <h>Extra Components
 // =======================
 //
@@ -220,14 +226,14 @@ extern "C" {
 // <i> The width of your screen for running benchmark
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__                                     480
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen for running benchmark
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    481
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
 #endif
 
 // <o>Number of iterations <1-2000>
@@ -282,6 +288,9 @@ extern "C" {
 #define VT_SCALING_RATIO                        1
 #define ARM_2D_DEMO_USE_CRT_SCREEN              1
 #define ARM_2D_DEMO_JPGD_USE_FILE               0
+
+//#define ARM_2D_DEMO_RADAR_COLOUR              GLCD_COLOR_NIXIE_TUBE
+//#define ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR    GLCD_COLOR_GREEN
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
