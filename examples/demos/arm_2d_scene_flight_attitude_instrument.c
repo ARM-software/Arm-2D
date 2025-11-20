@@ -145,6 +145,9 @@ END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 ARM_NOINIT
 arm_2d_location_t s_tReferencePoints[4];
 
+ARM_NOINIT
+arm_2d_location_t s_tRollScaleMarkerReferencePoints[5];
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_flight_attitude_instrument_load(arm_2d_scene_t *ptScene)
@@ -161,6 +164,9 @@ static void __on_scene_flight_attitude_instrument_load(arm_2d_scene_t *ptScene)
     spin_zoom_widget_on_load(&this.Roll.tHorizon);
 #endif
     spin_zoom_widget_on_load(&this.Roll.tMarker);
+    this.Roll.tMarker.tHelper.SourceReference.ptPoints = s_tRollScaleMarkerReferencePoints;
+    this.Roll.tMarker.tHelper.SourceReference.chCount = dimof(s_tRollScaleMarkerReferencePoints);
+
     spin_zoom_widget_on_load(&this.Pitch.tMarker);
 
 
@@ -539,9 +545,8 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
             },
             .Target.ptMask = &VISUAL_AREA_MASK,
 
-        #if !ARM_2D_DEMO_FAI_SHOW_HORIZON
             .ptScene = (arm_2d_scene_t *)ptThis,
-        #endif
+
         };
         spin_zoom_widget_init(&this.Roll.tLand, &tCFG);
 
@@ -593,7 +598,7 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
             },
             .Target.ptMask = &VISUAL_AREA_MASK,
 
-            .ptScene = (arm_2d_scene_t *)ptThis,
+            //.ptScene = (arm_2d_scene_t *)ptThis,
         };
         spin_zoom_widget_init(&this.Roll.tHorizon, &tCFG);
     } while(0);
@@ -629,6 +634,25 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
         spin_zoom_widget_init(&this.Roll.tMarker, &tCFG);
+
+        /* update reference points*/
+        do {
+            s_tRollScaleMarkerReferencePoints[0].iX = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iWidth >> 1;
+            s_tRollScaleMarkerReferencePoints[0].iY = 0;
+
+            s_tRollScaleMarkerReferencePoints[1].iX = 0;
+            s_tRollScaleMarkerReferencePoints[1].iY = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iHeight >> 1;
+
+            s_tRollScaleMarkerReferencePoints[2].iX = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iWidth - 1;
+            s_tRollScaleMarkerReferencePoints[2].iY = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iHeight >> 1;
+
+            s_tRollScaleMarkerReferencePoints[3].iX = 0;
+            s_tRollScaleMarkerReferencePoints[3].iY = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iHeight - 1;
+
+            s_tRollScaleMarkerReferencePoints[4].iX = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iWidth - 1;
+            s_tRollScaleMarkerReferencePoints[4].iY = ROLL_SCALE_MARKER_MASK.tRegion.tSize.iHeight - 1;
+        } while(0);
+
     } while(0);
 
 
