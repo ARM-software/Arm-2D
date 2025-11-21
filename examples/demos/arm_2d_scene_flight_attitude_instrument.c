@@ -80,8 +80,8 @@
 #define VISUAL_AREA_MASK                    c_tileRoundedSquareMask
 
 #define LAND_SKY_MASK                       c_tileSolidSquareMask
-#define LAND_SKY_MASK_SCARE_RATIO           1.5f
-#define LAND_SKY_MASK_BOARDER_WIDTH         5
+#define LAND_SKY_MASK_SCARE_RATIO           3.6f
+#define LAND_SKY_MASK_BOARDER_WIDTH         0.5f
 
 #define HORIZON_MASK                        c_tileSolidLineMask
 
@@ -261,32 +261,32 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
     this.bTransformSky = this.iPitchScale > 0;
 
     if (this.bTransformSky) {
-        spin_zoom_widget_set_source(&this.Roll.tLand, 
+        spin_zoom_widget_set_source_f32(&this.Roll.tLand, 
                                     NULL,
                                     &LAND_SKY_MASK,
-                                    (arm_2d_location_t) {
-                                        LAND_SKY_MASK.tRegion.tSize.iWidth >> 1,
-                                          (LAND_SKY_MASK.tRegion.tSize.iHeight - 1)
-                                        - LAND_SKY_MASK_BOARDER_WIDTH 
-                                        + reinterpret_s16_q16( 
-                                            mul_n_q16(  this.Roll.q16PitchRatio, 
-                                                        this.iPitchScale))
+                                    (arm_2d_point_float_t) {
+                                        .fX = LAND_SKY_MASK.tRegion.tSize.iWidth / 2.0f,
+                                        .fY = (LAND_SKY_MASK.tRegion.tSize.iHeight - 1)
+                                            - LAND_SKY_MASK_BOARDER_WIDTH 
+                                            + this.Roll.fPitchRatio
+                                            * (float)this.iPitchScale,
                                     });
         spin_zoom_widget_set_colour(&this.Roll.tLand, SKY_COLOUR);
 
         this.Roll.tLand.tHelper.SourceReference.ptPoints = s_tHorizonReferencePoints[HORIZON_SKY];
         this.Roll.tLand.tHelper.SourceReference.chCount = dimof(s_tHorizonReferencePoints[HORIZON_SKY]);
     } else {
-        spin_zoom_widget_set_source(&this.Roll.tLand, 
-                                    NULL,
-                                    &LAND_SKY_MASK,
-                                    (arm_2d_location_t) {
-                                        LAND_SKY_MASK.tRegion.tSize.iWidth >> 1,
-                                        LAND_SKY_MASK_BOARDER_WIDTH + 
-                                        reinterpret_s16_q16( 
-                                            mul_n_q16(  this.Roll.q16PitchRatio, 
-                                                        this.iPitchScale))
-                                    });
+
+        spin_zoom_widget_set_source_f32(&this.Roll.tLand, 
+                                        NULL,
+                                        &LAND_SKY_MASK,
+                                        (arm_2d_point_float_t) {
+                                            .fX = LAND_SKY_MASK.tRegion.tSize.iWidth / 2.0f,
+                                            .fY =   LAND_SKY_MASK_BOARDER_WIDTH
+                                                +   this.Roll.fPitchRatio
+                                                *   (float)this.iPitchScale,
+                                        });
+
         spin_zoom_widget_set_colour(&this.Roll.tLand, LAND_COLOUR);
         this.Roll.tLand.tHelper.SourceReference.ptPoints = s_tHorizonReferencePoints[HORIZON_LAND];
         this.Roll.tLand.tHelper.SourceReference.chCount = dimof(s_tHorizonReferencePoints[HORIZON_LAND]);
@@ -586,7 +586,7 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
 
         float fPitchHeight = ((float)VISUAL_AREA_MASK.tRegion.tSize.iHeight / LAND_SKY_MASK_SCARE_RATIO) / 2.0f;
 
-        this.Roll.q16PitchRatio = reinterpret_q16_f32(fPitchHeight / 900.0f);
+        this.Roll.fPitchRatio = fPitchHeight / 900.0f;
 
         /* update reference points*/
         do {
