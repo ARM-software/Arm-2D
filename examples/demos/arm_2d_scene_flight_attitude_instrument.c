@@ -143,9 +143,11 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 ARM_NOINIT
+static
 arm_2d_location_t s_tReferencePoints[4];
 
 ARM_NOINIT
+static
 arm_2d_location_t s_tRollScaleMarkerReferencePoints[5];
 
 /*============================ IMPLEMENTATION ================================*/

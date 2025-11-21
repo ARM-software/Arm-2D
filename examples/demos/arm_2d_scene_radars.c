@@ -144,6 +144,7 @@ ARM_NOINIT
 static arm_2d_location_t s_tScanSectorCenter;
 
 ARM_NOINIT
+static
 arm_2d_location_t s_tReferencePoints[4];
 
 /*============================ IMPLEMENTATION ================================*/
