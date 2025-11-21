@@ -421,7 +421,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
                         arm_lcd_text_set_draw_region(&__top_centre_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
 
-                        arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, this.iRollScale / 10);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, -this.iRollScale / 10);
 
                 }
                                         
