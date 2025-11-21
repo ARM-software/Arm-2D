@@ -332,8 +332,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
-        
-
         arm_2d_align_centre(__top_canvas, VISUAL_AREA_MASK.tRegion.tSize) {
 
             int16_t iVisualAreaWidth = VISUAL_AREA_MASK.tRegion.tSize.iWidth;
@@ -343,7 +341,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
                                     &__centre_region,
                                     &VISUAL_AREA_MASK,
                                     (__arm_2d_color_t) {GLCD_COLOR_SKY_BLUE});
-
 
             /* draw land */
             spin_zoom_widget_show(  &this.Roll.tLand,
@@ -405,36 +402,26 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
 
                 arm_2d_align_top_centre(__dock_region, tRollScaleLabelSize.iWidth + 4,
                                                        tRollScaleLabelSize.iHeight + 6) {
-                        
-                    //arm_2d_helper_draw_box(ptTile, &__top_centre_region, 1, GLCD_COLOR_GREEN, 255);
-                        draw_round_corner_border(   ptTile, 
-                                                    &__top_centre_region, 
-                                                    GLCD_COLOR_WHITE, 
-                                                    (arm_2d_border_opacity_t)
-                                                        {128, 128, 128, 128},
-                                                    (arm_2d_corner_opacity_t)
-                                                        {128, 128, 128, 128});
 
+                    draw_round_corner_border(   ptTile, 
+                                                &__top_centre_region, 
+                                                GLCD_COLOR_WHITE, 
+                                                (arm_2d_border_opacity_t)
+                                                    {128, 128, 128, 128},
+                                                (arm_2d_corner_opacity_t)
+                                                    {128, 128, 128, 128});
 
-                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-                        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4);
-                        arm_lcd_text_set_draw_region(&__top_centre_region);
-                        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4);
+                    arm_lcd_text_set_draw_region(&__top_centre_region);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
 
-                        arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, -this.iRollScale / 10);
-
+                    arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, -this.iRollScale / 10);
                 }
-                                        
-                
             }
-            
-            
         }
 
-
-
         /* draw text at the top-left corner */
-
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);
