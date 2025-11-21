@@ -143,9 +143,11 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 ARM_NOINIT
+static
 arm_2d_location_t s_tReferencePoints[4];
 
 ARM_NOINIT
+static
 arm_2d_location_t s_tRollScaleMarkerReferencePoints[5];
 
 /*============================ IMPLEMENTATION ================================*/
@@ -239,7 +241,7 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
         //    nResult -= 3600;
         //}
 
-        this.iRollScale = nResult;
+        this.iRollScale = 450 ;//nResult;
 
     } while(0);
 
@@ -249,7 +251,7 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
 
         arm_2d_helper_time_cos_slider(-300, 300, 17000, 0, &nResult, &this.lTimestamp[1]);
 
-        this.iPitchScale = nResult;
+        this.iPitchScale = 0;// nResult;
     } while(0);
 
     spin_zoom_widget_set_source(&this.Roll.tLand, 
@@ -419,7 +421,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
                         arm_lcd_text_set_draw_region(&__top_centre_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
 
-                        arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, this.iRollScale / 10);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, -this.iRollScale / 10);
 
                 }
                                         
@@ -509,7 +511,7 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
             .fnOnFrameCPL   = &__on_scene_flight_attitude_instrument_frame_complete,
             .fnDepose       = &__on_scene_flight_attitude_instrument_depose,
 
-            .bUseDirtyRegionHelper = true,
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };

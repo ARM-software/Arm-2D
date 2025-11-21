@@ -291,6 +291,16 @@ void scene_blink_loader(void)
     arm_2d_scene_blink_init(&DISP0_ADAPTER);
 }
 
+void scene_radars_loader(void) 
+{
+    arm_2d_scene_radars_init(&DISP0_ADAPTER);
+}
+
+void scene_flight_attitude_instrument_loader(void) 
+{
+    arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
+}
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_user_defined_opcode_loader(void) 
 {
@@ -539,7 +549,9 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_blink_loader,
+        scene_flight_attitude_instrument_loader,
+        //scene_radars_loader,
+        //scene_blink_loader,
         //scene_pave_loader,
         //scene_matrix_loader,
         //scene_watch_face_01_loader,
