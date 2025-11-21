@@ -79,8 +79,10 @@
 
 #define VISUAL_AREA_MASK                    c_tileRoundedSquareMask
 
-#define LAND_MASK                           c_tileSolidSquareMask
-#define LAND_MASK_SCARE_RATIO               1.5f
+#define LAND_SKY_MASK                       c_tileSolidSquareMask
+#define LAND_SKY_MASK_SCARE_RATIO           1.5f
+#define LAND_SKY_MASK_BOARDER_WIDTH         5
+
 #define HORIZON_MASK                        c_tileSolidLineMask
 
 #define ROLL_SCALE_MARKER_MASK              c_tileRollScaleMarkerMask
@@ -90,8 +92,18 @@
 #define PITCH_SCALE_MARKER_SCARE_RATIO      1.0f
 #define PITCH_SCALE_MARKER_VISUAL_AREA_MASK c_tileSolidCircleSmallMask
 
+#define LAND_COLOUR                         __RGB(111, 78, 55)
+#define SKY_COLOUR                          GLCD_COLOR_SKY_BLUE
+
+
 
 /*============================ TYPES =========================================*/
+
+enum {
+    HORIZON_LAND,
+    HORIZON_SKY,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern const arm_2d_tile_t c_tileCMSISLogo;
@@ -143,9 +155,11 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
 ARM_NOINIT
-arm_2d_location_t s_tReferencePoints[4];
+static
+arm_2d_location_t s_tHorizonReferencePoints[2][4];
 
 ARM_NOINIT
+static
 arm_2d_location_t s_tRollScaleMarkerReferencePoints[5];
 
 /*============================ IMPLEMENTATION ================================*/
@@ -156,9 +170,6 @@ static void __on_scene_flight_attitude_instrument_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     spin_zoom_widget_on_load(&this.Roll.tLand);
-
-    this.Roll.tLand.tHelper.SourceReference.ptPoints = s_tReferencePoints;
-    this.Roll.tLand.tHelper.SourceReference.chCount = dimof(s_tReferencePoints);
 
 #if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_on_load(&this.Roll.tHorizon);
@@ -234,11 +245,6 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
         int32_t nResult;
 
         arm_2d_helper_time_cos_slider(-450, 450, 7000, 0, &nResult, &this.lTimestamp[0]);
-        //nResult += 3600;
-        //if (nResult >= 3600) {
-        //    nResult -= 3600;
-        //}
-
         this.iRollScale = nResult;
 
     } while(0);
@@ -252,22 +258,46 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
         this.iPitchScale = nResult;
     } while(0);
 
-    spin_zoom_widget_set_source(&this.Roll.tLand, 
-                                NULL,
-                                &LAND_MASK,
-                                (arm_2d_location_t) {
-                                    LAND_MASK.tRegion.tSize.iWidth >> 1,
-                                    reinterpret_s16_q16( 
-                                        mul_n_q16(  this.Roll.q16PitchRatio, 
-                                                    this.iPitchScale))
-                                });
+    this.bTransformSky = this.iPitchScale > 0;
+
+    if (this.bTransformSky) {
+        spin_zoom_widget_set_source(&this.Roll.tLand, 
+                                    NULL,
+                                    &LAND_SKY_MASK,
+                                    (arm_2d_location_t) {
+                                        LAND_SKY_MASK.tRegion.tSize.iWidth >> 1,
+                                          (LAND_SKY_MASK.tRegion.tSize.iHeight - 1)
+                                        - LAND_SKY_MASK_BOARDER_WIDTH 
+                                        + reinterpret_s16_q16( 
+                                            mul_n_q16(  this.Roll.q16PitchRatio, 
+                                                        this.iPitchScale))
+                                    });
+        spin_zoom_widget_set_colour(&this.Roll.tLand, SKY_COLOUR);
+
+        this.Roll.tLand.tHelper.SourceReference.ptPoints = s_tHorizonReferencePoints[HORIZON_SKY];
+        this.Roll.tLand.tHelper.SourceReference.chCount = dimof(s_tHorizonReferencePoints[HORIZON_SKY]);
+    } else {
+        spin_zoom_widget_set_source(&this.Roll.tLand, 
+                                    NULL,
+                                    &LAND_SKY_MASK,
+                                    (arm_2d_location_t) {
+                                        LAND_SKY_MASK.tRegion.tSize.iWidth >> 1,
+                                        LAND_SKY_MASK_BOARDER_WIDTH + 
+                                        reinterpret_s16_q16( 
+                                            mul_n_q16(  this.Roll.q16PitchRatio, 
+                                                        this.iPitchScale))
+                                    });
+        spin_zoom_widget_set_colour(&this.Roll.tLand, LAND_COLOUR);
+        this.Roll.tLand.tHelper.SourceReference.ptPoints = s_tHorizonReferencePoints[HORIZON_LAND];
+        this.Roll.tLand.tHelper.SourceReference.chCount = dimof(s_tHorizonReferencePoints[HORIZON_LAND]);
+    }
 
 #if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_set_source(&this.Roll.tHorizon, 
                                 NULL,
                                 &HORIZON_MASK,
                                 (arm_2d_location_t) {
-                                    LAND_MASK.tRegion.tSize.iWidth >> 1,
+                                    LAND_SKY_MASK.tRegion.tSize.iWidth >> 1,
                                     reinterpret_s16_q16( 
                                         mul_n_q16(  this.Roll.q16PitchRatio, 
                                                     this.iPitchScale))
@@ -287,12 +317,12 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
 
     spin_zoom_widget_on_frame_start(&this.Roll.tLand, 
                                     this.iRollScale, 
-                                    LAND_MASK_SCARE_RATIO);
+                                    LAND_SKY_MASK_SCARE_RATIO);
 
 #if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_on_frame_start(&this.Roll.tHorizon, 
                                     this.iRollScale, 
-                                    LAND_MASK_SCARE_RATIO);
+                                    LAND_SKY_MASK_SCARE_RATIO);
 #endif
 
     spin_zoom_widget_on_frame_start(&this.Roll.tMarker, 
@@ -330,26 +360,40 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
-        
-
         arm_2d_align_centre(__top_canvas, VISUAL_AREA_MASK.tRegion.tSize) {
 
             int16_t iVisualAreaWidth = VISUAL_AREA_MASK.tRegion.tSize.iWidth;
 
-            arm_2d_fill_colour_with_mask(   
+            if (this.bTransformSky) {
+                /* draw land */
+                arm_2d_fill_colour_with_mask(   
                                     ptTile, 
                                     &__centre_region,
                                     &VISUAL_AREA_MASK,
-                                    (__arm_2d_color_t) {GLCD_COLOR_SKY_BLUE});
+                                    (__arm_2d_color_t) {LAND_COLOUR});
 
+                /* draw sky */
+                spin_zoom_widget_show(  &this.Roll.tSky,
+                                        ptTile,
+                                        &__centre_region, 
+                                        NULL, 
+                                        255);
 
-            /* draw land */
-            spin_zoom_widget_show(  &this.Roll.tLand,
-                                    ptTile,
-                                    &__centre_region, 
-                                    NULL, 
-                                    255);
+            } else {
+                /* draw sky */
+                arm_2d_fill_colour_with_mask(   
+                                    ptTile, 
+                                    &__centre_region,
+                                    &VISUAL_AREA_MASK,
+                                    (__arm_2d_color_t) {SKY_COLOUR});
 
+                /* draw land */
+                spin_zoom_widget_show(  &this.Roll.tLand,
+                                        ptTile,
+                                        &__centre_region, 
+                                        NULL, 
+                                        255);
+            }
         #if ARM_2D_DEMO_FAI_SHOW_HORIZON
             /* draw horizon */
             spin_zoom_widget_show(  &this.Roll.tHorizon,
@@ -403,36 +447,26 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_flight_attitude_instrument_handler)
 
                 arm_2d_align_top_centre(__dock_region, tRollScaleLabelSize.iWidth + 4,
                                                        tRollScaleLabelSize.iHeight + 6) {
-                        
-                    //arm_2d_helper_draw_box(ptTile, &__top_centre_region, 1, GLCD_COLOR_GREEN, 255);
-                        draw_round_corner_border(   ptTile, 
-                                                    &__top_centre_region, 
-                                                    GLCD_COLOR_WHITE, 
-                                                    (arm_2d_border_opacity_t)
-                                                        {128, 128, 128, 128},
-                                                    (arm_2d_corner_opacity_t)
-                                                        {128, 128, 128, 128});
 
+                    draw_round_corner_border(   ptTile, 
+                                                &__top_centre_region, 
+                                                GLCD_COLOR_WHITE, 
+                                                (arm_2d_border_opacity_t)
+                                                    {128, 128, 128, 128},
+                                                (arm_2d_corner_opacity_t)
+                                                    {128, 128, 128, 128});
 
-                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
-                        arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4);
-                        arm_lcd_text_set_draw_region(&__top_centre_region);
-                        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                    arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                    arm_lcd_text_set_font((arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4);
+                    arm_lcd_text_set_draw_region(&__top_centre_region);
+                    arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
 
-                        arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, this.iRollScale / 10);
-
+                    arm_lcd_printf_label(ARM_2D_ALIGN_TOP_CENTRE, "%"PRId16, -this.iRollScale / 10);
                 }
-                                        
-                
             }
-            
-            
         }
 
-
-
         /* draw text at the top-left corner */
-
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);
@@ -536,12 +570,12 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
             },
             .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK,
             .Source = {
-                .ptMask = &LAND_MASK,
+                .ptMask = &LAND_SKY_MASK,
                 .tCentre = (arm_2d_location_t){
-                    .iX = LAND_MASK.tRegion.tSize.iWidth >> 1,
+                    .iX = LAND_SKY_MASK.tRegion.tSize.iWidth >> 1,
                     .iY = 0, 
                 },
-                .tColourToFill = __RGB(111, 78, 55),
+                .tColourToFill = LAND_COLOUR,
             },
             .Target.ptMask = &VISUAL_AREA_MASK,
 
@@ -550,24 +584,39 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
         };
         spin_zoom_widget_init(&this.Roll.tLand, &tCFG);
 
-        float fPitchHeight = ((float)VISUAL_AREA_MASK.tRegion.tSize.iHeight / LAND_MASK_SCARE_RATIO) / 2.0f;
+        float fPitchHeight = ((float)VISUAL_AREA_MASK.tRegion.tSize.iHeight / LAND_SKY_MASK_SCARE_RATIO) / 2.0f;
 
         this.Roll.q16PitchRatio = reinterpret_q16_f32(fPitchHeight / 900.0f);
 
         /* update reference points*/
         do {
-            s_tReferencePoints[0].iX = 0;
-            s_tReferencePoints[0].iY = 0;
+            s_tHorizonReferencePoints[HORIZON_LAND][0].iX = 0;
+            s_tHorizonReferencePoints[HORIZON_LAND][0].iY = 0;
 
-            s_tReferencePoints[1].iX = LAND_MASK.tRegion.tSize.iWidth - 1;
-            s_tReferencePoints[1].iY = 0;
+            s_tHorizonReferencePoints[HORIZON_LAND][1].iX = LAND_SKY_MASK.tRegion.tSize.iWidth - 1;
+            s_tHorizonReferencePoints[HORIZON_LAND][1].iY = 0;
 
-            s_tReferencePoints[2].iX = 0;
-            s_tReferencePoints[2].iY = 3;
+            s_tHorizonReferencePoints[HORIZON_LAND][2].iX = 0;
+            s_tHorizonReferencePoints[HORIZON_LAND][2].iY = 3;
 
-            s_tReferencePoints[3].iX = LAND_MASK.tRegion.tSize.iWidth - 1;
-            s_tReferencePoints[3].iY = 3;
+            s_tHorizonReferencePoints[HORIZON_LAND][3].iX = LAND_SKY_MASK.tRegion.tSize.iWidth - 1;
+            s_tHorizonReferencePoints[HORIZON_LAND][3].iY = 3;
+
+
+            s_tHorizonReferencePoints[HORIZON_SKY][0].iX = 0;
+            s_tHorizonReferencePoints[HORIZON_SKY][0].iY = LAND_SKY_MASK.tRegion.tSize.iHeight - 1;
+
+            s_tHorizonReferencePoints[HORIZON_SKY][1].iX = LAND_SKY_MASK.tRegion.tSize.iWidth - 1;
+            s_tHorizonReferencePoints[HORIZON_SKY][1].iY = LAND_SKY_MASK.tRegion.tSize.iHeight - 1;
+
+            s_tHorizonReferencePoints[HORIZON_SKY][2].iX = 0;
+            s_tHorizonReferencePoints[HORIZON_SKY][2].iY = LAND_SKY_MASK.tRegion.tSize.iHeight - 4;
+
+            s_tHorizonReferencePoints[HORIZON_SKY][3].iX = LAND_SKY_MASK.tRegion.tSize.iWidth - 1;
+            s_tHorizonReferencePoints[HORIZON_SKY][3].iY = LAND_SKY_MASK.tRegion.tSize.iHeight - 4;
         } while(0);
+
+        this.bTransformSky = true;
     } while(0);
 
 #if ARM_2D_DEMO_FAI_SHOW_HORIZON

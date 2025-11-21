@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_FLIGHT_ATTITUDE_INSTRUMENT_H__
-#define __ARM_2D_SCENE_FLIGHT_ATTITUDE_INSTRUMENT_H__
+#ifndef __ARM_2D_SCENE_RADARS_H__
+#define __ARM_2D_SCENE_RADARS_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -50,69 +50,85 @@ extern "C" {
 
 /*============================ MACROS ========================================*/
 
+#ifndef ARM_2D_DEMO_RADAR_COLOUR
+#   define ARM_2D_DEMO_RADAR_COLOUR                 GLCD_COLOR_NIXIE_TUBE
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
+#   define ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR     GLCD_COLOR_RED
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_BOGEY_COLOUR
+#   define ARM_2D_DEMO_RADAR_BOGEY_COLOUR           ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
+#endif
+
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_FLIGHT_ATTITUDE_INSTRUMENT_IMPLEMENT__
+#ifdef __USER_SCENE_RADARS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_FLIGHT_ATTITUDE_INSTRUMENT_INHERIT__
+#ifdef __USER_SCENE_RADARS_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
 
-#ifndef ARM_2D_DEMO_FAI_SHOW_HORIZON
-#   define ARM_2D_DEMO_FAI_SHOW_HORIZON     0
-#endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_flight_attitude_instrument and add it to a user specified scene player
+ * \brief initalize scene_radars and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_flight_attitude_instrument_t will be allocated from HEAP and freed on
+ *            user_scene_radars_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_flight_attitude_instrument_t* the user_scene_flight_attitude_instrument_t instance
+ * \return user_scene_radars_t* the user_scene_radars_t instance
  */
-#define arm_2d_scene_flight_attitude_instrument_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_flight_attitude_instrument_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_radars_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_radars_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
-/*!
- * \brief a user class for scene flight_attitude_instrument
- */
-typedef struct user_scene_flight_attitude_instrument_t user_scene_flight_attitude_instrument_t;
 
-struct user_scene_flight_attitude_instrument_t {
+typedef struct __radar_bogey_t {
+    implement(dynamic_nebula_particle_t);
+    int16_t iAngle;
+    int16_t iNewAngle;
+    int16_t iDistance;
+
+    uint8_t chOpacity;
+    uint8_t u2State                 : 2;
+    uint8_t u2NextState             : 2;
+    uint8_t bAllowUpdateLocation    : 1;
+    uint8_t bIsLocationUpdated      : 1;
+    uint8_t                         : 2;
+
+    arm_2d_location_t tDetectedPos;
+
+    arm_2d_helper_dirty_region_item_t tDirtyRegionItem;
+} __radar_bogey_t;
+
+/*!
+ * \brief a user class for scene radars
+ */
+typedef struct user_scene_radars_t user_scene_radars_t;
+
+struct user_scene_radars_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
     bool bUserAllocated;
-    bool bTransformSky;
+    uint8_t chPT;
+    uint8_t chRadarIndex;
 
-    struct {
-        union {
-            spin_zoom_widget_t tLand;
-            spin_zoom_widget_t tSky;
-        };
-    #if ARM_2D_DEMO_FAI_SHOW_HORIZON
-        spin_zoom_widget_t tHorizon;
-    #endif
-    
-        spin_zoom_widget_t tMarker;
-        q16_t q16PitchRatio;
-    } Roll;
+    spin_zoom_widget_t tScanSector;
 
-    struct {
-        spin_zoom_widget_t tMarker;
-        q16_t q16PitchRatio;
-    } Pitch;
+    dynamic_nebula_t    tNebula;
+    __radar_bogey_t     tBogeys[6];
 
-    int16_t iRollScale;
-    int16_t iPitchScale;
-    
+    foldable_panel_t    tScreen;
+
 )
+    /* place your public member here */
     
 };
 
@@ -121,8 +137,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrument_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_flight_attitude_instrument_t *ptScene);
+user_scene_radars_t *__arm_2d_scene_radars_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_radars_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -130,8 +146,8 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_FLIGHT_ATTITUDE_INSTRUMENT_IMPLEMENT__
-#undef __USER_SCENE_FLIGHT_ATTITUDE_INSTRUMENT_INHERIT__
+#undef __USER_SCENE_RADARS_IMPLEMENT__
+#undef __USER_SCENE_RADARS_INHERIT__
 
 #ifdef   __cplusplus
 }

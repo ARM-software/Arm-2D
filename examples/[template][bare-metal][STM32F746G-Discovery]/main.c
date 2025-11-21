@@ -378,6 +378,12 @@ void scene_flight_attitude_instrument_loader(void)
     arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
 }
 
+void scene_radars_loader(void) 
+{
+    arm_2d_scene_radars_init(&DISP0_ADAPTER);
+}
+
+
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
@@ -566,6 +572,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
+        //scene_radars_loader,
         scene_flight_attitude_instrument_loader,
         //scene_watch_face_01_loader,
         //scene_balls_loader,
