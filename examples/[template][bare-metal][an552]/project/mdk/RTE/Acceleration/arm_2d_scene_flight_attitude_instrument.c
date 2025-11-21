@@ -241,7 +241,7 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
         //    nResult -= 3600;
         //}
 
-        this.iRollScale = 450 ;//nResult;
+        this.iRollScale = nResult;
 
     } while(0);
 
@@ -251,7 +251,7 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
 
         arm_2d_helper_time_cos_slider(-300, 300, 17000, 0, &nResult, &this.lTimestamp[1]);
 
-        this.iPitchScale = 0;// nResult;
+        this.iPitchScale = nResult;
     } while(0);
 
     spin_zoom_widget_set_source(&this.Roll.tLand, 
