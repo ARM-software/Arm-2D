@@ -12,6 +12,7 @@
 #   pragma clang diagnostic ignored "-Wreserved-identifier"
 #   pragma clang diagnostic ignored "-Wunused-parameter"
 #   pragma clang diagnostic ignored "-Wsign-compare"
+#   pragma clang diagnostic ignored "-Wunused-function"
 #endif
 
 /*-------------------------------------------------------------------------*/

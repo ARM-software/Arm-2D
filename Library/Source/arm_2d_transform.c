@@ -687,9 +687,9 @@ arm_2d_region_t *arm_2d_calculate_reference_target_region_after_transform(
 
     /* calculate reference target region */
     do {
-        arm_2d_region_t tTargetRegion = {
-            .tSize = this.Target.ptTile->tRegion.tSize,
-        };
+//        arm_2d_region_t tTargetRegion = {
+//            .tSize = this.Target.ptTile->tRegion.tSize,
+//        };
 
         arm_2d_region_t tReferenceRegion = {
             .tSize = tTransformedSourceSize,
