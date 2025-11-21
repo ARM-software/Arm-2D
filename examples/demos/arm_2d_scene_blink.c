@@ -334,7 +334,7 @@ static void __on_scene_blink_frame_start(arm_2d_scene_t *ptScene)
 
     srand(arm_2d_helper_get_system_timestamp());
 
-    //__blink_action(ptThis);
+    __blink_action(ptThis);
     __forcus_generator(ptThis);
     __eyeball_move(ptThis);
 
