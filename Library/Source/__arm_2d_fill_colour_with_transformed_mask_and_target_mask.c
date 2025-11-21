@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_transformed_mask_and_target_mask.c
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
- * $Date:        14 Nov 2025
- * $Revision:    v1.0.0
+ * $Date:        20 Nov 2025
+ * $Revision:    v1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -180,11 +180,38 @@ void __gray8_fill_colour_with_transformed_mask_and_target_mask_process_point(
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -224,6 +251,13 @@ void __gray8_fill_colour_with_transformed_mask_and_target_mask_process_point(
     };
 
     uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == wPixelAlpha) {
+        return ;
+    }
+#endif
+
 
 
     uint8_t chTargetAlpha = *pchTargetMask;
@@ -572,11 +606,38 @@ void __gray8_fill_colour_with_transformed_mask_target_mask_and_opacity_process_p
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -617,6 +678,13 @@ void __gray8_fill_colour_with_transformed_mask_target_mask_and_opacity_process_p
     };
 
     uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == wPixelAlpha) {
+        return ;
+    }
+#endif
+
 
     wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
@@ -974,11 +1042,38 @@ void __rgb565_fill_colour_with_transformed_mask_and_target_mask_process_point(
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -1018,6 +1113,13 @@ void __rgb565_fill_colour_with_transformed_mask_and_target_mask_process_point(
     };
 
     uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == wPixelAlpha) {
+        return ;
+    }
+#endif
+
 
 
     uint8_t chTargetAlpha = *pchTargetMask;
@@ -1366,11 +1468,38 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -1411,6 +1540,13 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
     };
 
     uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == wPixelAlpha) {
+        return ;
+    }
+#endif
+
 
     wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
@@ -1768,11 +1904,38 @@ void __cccn888_fill_colour_with_transformed_mask_and_target_mask_process_point(
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -1812,6 +1975,13 @@ void __cccn888_fill_colour_with_transformed_mask_and_target_mask_process_point(
     };
 
     uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == wPixelAlpha) {
+        return ;
+    }
+#endif
+
 
 
     uint8_t chTargetAlpha = *pchTargetMask;
@@ -2160,11 +2330,38 @@ void __cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity_process
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -2205,6 +2402,13 @@ void __cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity_process
     };
 
     uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == wPixelAlpha) {
+        return ;
+    }
+#endif
+
 
     wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
