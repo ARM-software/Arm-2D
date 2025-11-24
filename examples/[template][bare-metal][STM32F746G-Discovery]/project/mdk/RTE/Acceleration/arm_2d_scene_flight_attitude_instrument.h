@@ -101,7 +101,7 @@ ARM_PRIVATE(
     #endif
     
         spin_zoom_widget_t tMarker;
-        q16_t q16PitchRatio;
+        float fPitchRatio;
     } Roll;
 
     struct {
