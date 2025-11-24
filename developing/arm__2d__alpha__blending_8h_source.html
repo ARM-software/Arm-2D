@@ -134,8 +134,8 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        arm_2d_alpha_blending.h</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file to contain the alpha related APIs</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        18 August 2025</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.10.0</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * $Date:        24 Nov 2025</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Revision:    V.1.11.0</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -4526,23 +4526,24 @@ $(document).ready(function(){initNavTree('arm__2d__alpha__blending_8h_source.htm
 <div class="line"><a id="l04413" name="l04413"></a><span class="lineno"> 4413</span> </div>
 <div class="line"><a id="l04414" name="l04414"></a><span class="lineno"> 4414</span><span class="comment">/*========================= POST INCLUDES ====================================*/</span></div>
 <div class="line"><a id="l04415" name="l04415"></a><span class="lineno"> 4415</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_mask_and_mirroring.h&quot;</span></div>
-<div class="line"><a id="l04416" name="l04416"></a><span class="lineno"> 4416</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_horizontal_line_mask.h&quot;</span></div>
-<div class="line"><a id="l04417" name="l04417"></a><span class="lineno"> 4417</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_vertical_line_mask.h&quot;</span></div>
-<div class="line"><a id="l04418" name="l04418"></a><span class="lineno"> 4418</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_alpha_gradient.h&quot;</span></div>
-<div class="line"><a id="l04419" name="l04419"></a><span class="lineno"> 4419</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_alpha_gradient_and_mask.h&quot;</span></div>
-<div class="line"><a id="l04420" name="l04420"></a><span class="lineno"> 4420</span><span class="preprocessor">#include &quot;__arm_2d_tile_copy_with_source_mask_and_opacity.h&quot;</span></div>
-<div class="line"><a id="l04421" name="l04421"></a><span class="lineno"> 4421</span><span class="preprocessor">#include &quot;__arm_2d_tile_fill_with_source_mask_and_opacity.h&quot;</span></div>
-<div class="line"><a id="l04422" name="l04422"></a><span class="lineno"> 4422</span><span class="preprocessor">#include &quot;__arm_2d_tile_fill_with_opacity.h&quot;</span></div>
-<div class="line"><a id="l04423" name="l04423"></a><span class="lineno"> 4423</span> </div>
-<div class="line"><a id="l04424" name="l04424"></a><span class="lineno"> 4424</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l04425" name="l04425"></a><span class="lineno"> 4425</span><span class="preprocessor">#pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l04426" name="l04426"></a><span class="lineno"> 4426</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l04427" name="l04427"></a><span class="lineno"> 4427</span> </div>
-<div class="line"><a id="l04428" name="l04428"></a><span class="lineno"> 4428</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l04429" name="l04429"></a><span class="lineno"> 4429</span>}</div>
-<div class="line"><a id="l04430" name="l04430"></a><span class="lineno"> 4430</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l04431" name="l04431"></a><span class="lineno"> 4431</span> </div>
-<div class="line"><a id="l04432" name="l04432"></a><span class="lineno"> 4432</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l04416" name="l04416"></a><span class="lineno"> 4416</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_masks_and_mirroring.h&quot;</span></div>
+<div class="line"><a id="l04417" name="l04417"></a><span class="lineno"> 4417</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_horizontal_line_mask.h&quot;</span></div>
+<div class="line"><a id="l04418" name="l04418"></a><span class="lineno"> 4418</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_vertical_line_mask.h&quot;</span></div>
+<div class="line"><a id="l04419" name="l04419"></a><span class="lineno"> 4419</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_alpha_gradient.h&quot;</span></div>
+<div class="line"><a id="l04420" name="l04420"></a><span class="lineno"> 4420</span><span class="preprocessor">#include &quot;__arm_2d_fill_colour_with_alpha_gradient_and_mask.h&quot;</span></div>
+<div class="line"><a id="l04421" name="l04421"></a><span class="lineno"> 4421</span><span class="preprocessor">#include &quot;__arm_2d_tile_copy_with_source_mask_and_opacity.h&quot;</span></div>
+<div class="line"><a id="l04422" name="l04422"></a><span class="lineno"> 4422</span><span class="preprocessor">#include &quot;__arm_2d_tile_fill_with_source_mask_and_opacity.h&quot;</span></div>
+<div class="line"><a id="l04423" name="l04423"></a><span class="lineno"> 4423</span><span class="preprocessor">#include &quot;__arm_2d_tile_fill_with_opacity.h&quot;</span></div>
+<div class="line"><a id="l04424" name="l04424"></a><span class="lineno"> 4424</span> </div>
+<div class="line"><a id="l04425" name="l04425"></a><span class="lineno"> 4425</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l04426" name="l04426"></a><span class="lineno"> 4426</span><span class="preprocessor">#pragma clang diagnostic pop</span></div>
+<div class="line"><a id="l04427" name="l04427"></a><span class="lineno"> 4427</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l04428" name="l04428"></a><span class="lineno"> 4428</span> </div>
+<div class="line"><a id="l04429" name="l04429"></a><span class="lineno"> 4429</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l04430" name="l04430"></a><span class="lineno"> 4430</span>}</div>
+<div class="line"><a id="l04431" name="l04431"></a><span class="lineno"> 4431</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l04432" name="l04432"></a><span class="lineno"> 4432</span> </div>
+<div class="line"><a id="l04433" name="l04433"></a><span class="lineno"> 4433</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
