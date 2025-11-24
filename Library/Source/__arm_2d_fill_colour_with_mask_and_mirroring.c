@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_mask_and_mirroring.c
  * Description:  APIs for colour-filling-with-mask-and-mirroring
  *
- * $Date:        20. Feb 2024
- * $Revision:    V.0.6.1
+ * $Date:        24. Nov 2025
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -392,6 +392,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_x_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror(
@@ -754,6 +755,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_y_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror(
@@ -1140,7 +1142,6 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_xy_mirror_and_opacity(
         }
     #endif
     } else {
-
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_gray8_colour_filling_mask_xy_mirror(
@@ -1480,7 +1481,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_x_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
-    
+
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror(
@@ -2206,6 +2207,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror(
@@ -2568,7 +2570,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_x_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
-    
+
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror(
@@ -3294,6 +3296,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #else
+
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (this.chRatio == 255) {
             __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror(
