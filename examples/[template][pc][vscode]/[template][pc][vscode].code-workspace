@@ -15,7 +15,8 @@
 			"arm_2d_example_controls.h": "c",
 			"*.log": "c",
 			"*.inc": "c",
-			"*.jinja": "c"
+			"*.jinja": "c",
+			"__locale": "c"
 		},
 		"cSpell.words": [
 			"cccn"
