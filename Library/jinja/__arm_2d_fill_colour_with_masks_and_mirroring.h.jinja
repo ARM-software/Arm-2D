@@ -22,7 +22,7 @@
  * Description:  A private header file for 
  *               colour-filling-with-masks-and-mirroring
  *
- * $Date:        24. Nov 2025
+ * $Date:        25. Nov 2025
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -157,7 +157,7 @@ extern "C" {
 
 {% if mirror_name == 'only' -%}
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_only(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -167,7 +167,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_only(
                                         arm_2d_color_{{colour_name | lower}}_t tColour);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -178,7 +178,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_opacity_
                                         uint8_t chOpacity);
 {%- else -%}
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_{{mirror_name | lower}}(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -189,7 +189,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_{{mirror
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_{{mirror_name | lower}}_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,

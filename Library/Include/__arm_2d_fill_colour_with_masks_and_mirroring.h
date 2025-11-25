@@ -22,7 +22,7 @@
  * Description:  A private header file for 
  *               colour-filling-with-masks-and-mirroring
  *
- * $Date:        24. Nov 2025
+ * $Date:        25. Nov 2025
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -421,7 +421,7 @@ extern "C" {
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_only(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -431,7 +431,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_only(
                                         arm_2d_color_gray8_t tColour);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -442,7 +442,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_opacity_only(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_x_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -453,7 +453,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_x_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -464,7 +464,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_y_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -475,7 +475,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_y_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -486,7 +486,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_xy_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -497,7 +497,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_xy_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -508,7 +508,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_only(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -518,7 +518,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_only(
                                         arm_2d_color_rgb565_t tColour);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -529,7 +529,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_opacity_only(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_x_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -540,7 +540,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_x_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -551,7 +551,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_y_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -562,7 +562,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_y_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -573,7 +573,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_xy_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -584,7 +584,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_xy_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -595,7 +595,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_only(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -605,7 +605,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_only(
                                         arm_2d_color_cccn888_t tColour);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -616,7 +616,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_opacity_only(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_x_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -627,7 +627,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_x_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -638,7 +638,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_y_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -649,7 +649,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_y_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -660,7 +660,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror_and_opacity(
                                         uint8_t chOpacity);
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_xy_mirror(
                                         arm_2d_op_fill_cl_msk_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
@@ -671,7 +671,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_xy_mirror(
 
 
 extern
-ARM_NONNULL(2,4)
+ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror_and_opacity(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
