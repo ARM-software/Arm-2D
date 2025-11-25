@@ -3665,6 +3665,9 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_DES_MASK_AND_XY_MIRROR_CCCN888
 #include "__arm_2d_fill_colour_with_mask_and_mirroring.c"
 
 #define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_masks_and_mirroring.c"
+
+#define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_horizontal_line_mask.c"
 
 #define __ARM_2D_COMPILATION_UNIT

@@ -1,0 +1,423 @@
+/*
+ * Copyright (C) 2010-2024 Arm Limited or its affiliates. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        __arm_2d_fill_colour_with_masks_and_mirroring.c
+ * Description:  APIs for colour-filling-with-masks-and-mirroring
+ *
+ * $Date:        25. Nov 2025
+ * $Revision:    V.1.0.0
+ *
+ * Target Processor:  Cortex-M cores
+ *
+ * -------------------------------------------------------------------- */
+
+/*============================ INCLUDES ======================================*/
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wempty-translation-unit"
+#endif
+
+#ifdef __ARM_2D_COMPILATION_UNIT
+#undef __ARM_2D_COMPILATION_UNIT
+
+#define __ARM_2D_IMPL__
+
+#include "arm_2d.h"
+#include "__arm_2d_impl.h"
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+#   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
+#   pragma clang diagnostic ignored "-Wcast-qual"
+#   pragma clang diagnostic ignored "-Wcast-align"
+#   pragma clang diagnostic ignored "-Wextra-semi-stmt"
+#   pragma clang diagnostic ignored "-Wsign-conversion"
+#   pragma clang diagnostic ignored "-Wunused-function"
+#   pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+#   pragma clang diagnostic ignored "-Wdouble-promotion"
+#   pragma clang diagnostic ignored "-Wunused-parameter"
+#   pragma clang diagnostic ignored "-Wimplicit-float-conversion"
+#   pragma clang diagnostic ignored "-Wimplicit-int-conversion"
+#   pragma clang diagnostic ignored "-Wtautological-pointer-compare"
+#   pragma clang diagnostic ignored "-Wmissing-prototypes"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wsign-compare"
+#   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#   pragma diag_suppress 174,177,188,68,513,144
+#endif
+
+/*============================ MACROS ========================================*/
+/*============================ MACROFIED FUNCTIONS ===========================*/
+/*============================ TYPES =========================================*/
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+/*============================ LOCAL VARIABLES ===============================*/
+/*============================ INCLUDES ======================================*/
+/*============================ IMPLEMENTATION ================================*/
+
+{%- for colour_name, colour_int, colour_int_prefix in [
+    ('gray8', 'uint8_t', 'ch' ),
+    ('rgb565', 'uint16_t', 'hw' ),
+    ('cccn888', 'uint32_t', 'w' ),
+    ] 
+%}
+
+{%- for mirror_name,
+        mask_x_init, mask_next_alpha,
+        chn_mask_x_init, chn_mask_next_alpha,
+        mask_y_init, mask_move_to_next_line, 
+        chn_mask_y_init, chn_mask_move_to_next_line 
+in [
+    (   'ONLY',
+        '', 'pchSourceMaskLine++',
+        '', 'pwSourceMaskLine++',
+        '', 'pchSourceMask += iSourceMaskStride;', 
+        '', 'pwSourceMask += iSourceMaskStride;'),
+    (   'X_MIRROR',
+        'pchSourceMaskLine += iWidth - 1;', 'pchSourceMaskLine--',
+        'pwSourceMaskLine += iWidth - 1;', 'pwSourceMaskLine--',
+        '', 'pchSourceMask += iSourceMaskStride;', 
+        '', 'pwSourceMask += iSourceMaskStride;'),
+    (   'Y_MIRROR',
+        '', 'pchSourceMaskLine++',
+        '', 'pwSourceMaskLine++',
+        'pchSourceMask += iSourceMaskStride * (iHeight - 1);', 'pchSourceMask -= iSourceMaskStride;', 
+        'pwSourceMask += iSourceMaskStride * (iHeight - 1);', 'pwSourceMask -= iSourceMaskStride;'),
+    (   'XY_MIRROR',
+        'pchSourceMaskLine += iWidth - 1;', 'pchSourceMaskLine--',
+        'pwSourceMaskLine += iWidth - 1;', 'pwSourceMaskLine--',
+        'pchSourceMask += iSourceMaskStride * (iHeight - 1);', 'pchSourceMask -= iSourceMaskStride;', 
+        'pwSourceMask += iSourceMaskStride * (iHeight - 1);', 'pwSourceMask -= iSourceMaskStride;'),
+    ] 
+%}
+
+
+{%- for has_opacity in [
+    (''),
+    ('_and_opacity' ),
+    ] 
+%}
+
+/*
+ * Target Colour: {{colour_name | upper}}
+ */
+
+/*----------------------------------------------------------------------------*
+ * Fill colour with mask, {{mirror_name | lower | replace('_', ' ')}} {{has_opacity | lower | replace('_', ' ')}}                                *
+ *----------------------------------------------------------------------------*/
+
+__WEAK
+{%- if mirror_name == 'ONLY' %}
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASKS{{has_opacity | upper}}_ONLY_{{colour_name | upper}}, 
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks{{has_opacity}}_only);
+{%- else %}
+    {%- if has_opacity == '_and_opacity' %}
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASKS_{{mirror_name | upper()}}_AND_OPACITY_{{colour_name | upper}}, 
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_{{mirror_name | lower}}_and_opacity);
+    {%- else %}
+def_low_lv_io(  __ARM_2D_IO_FILL_COLOUR_WITH_MASKS_AND_{{mirror_name | upper()}}_{{colour_name | upper}}, 
+                __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_and_{{mirror_name | lower}});
+    {%- endif %}
+{%- endif %}
+{% if mirror_name == 'ONLY' %}
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS{{has_opacity | upper}}_ONLY_{{colour_name | upper}} = {
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasDesMask    = true,
+            .bAllowEnforcedColour   = true,
+        },
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS{{has_opacity | upper }}_ONLY,
+        
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASKS{{has_opacity | upper }}_ONLY_{{colour_name | upper}}),
+            .ptFillLike = NULL, 
+        },
+    },
+};
+{%- else %}
+    {%- if has_opacity == '_and_opacity' %}
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_{{mirror_name | upper()}}_AND_OPACITY_{{colour_name | upper}} = {
+    {%- else %}
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_{{mirror_name | upper()}}_{{colour_name | upper}} = {
+    {%- endif %}
+    .Info = {
+        .Colour = {
+            .chScheme   = ARM_2D_COLOUR_{{colour_name | upper}},
+        },
+        .Param = {
+            .bHasSource     = true,
+            .bHasTarget     = true,
+            .bHasDesMask    = true,
+            .bAllowEnforcedColour   = true,
+        },
+    {%- if has_opacity == '_and_opacity' %}
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_{{mirror_name | upper()}}_AND_OPACITY,
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASKS_{{mirror_name | upper()}}_AND_OPACITY_{{colour_name | upper}}),
+            .ptFillLike = NULL, 
+        },
+    {%- else %}
+        .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_{{mirror_name | upper()}},
+        .LowLevelIO = {
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_MASKS_AND_{{mirror_name | upper()}}_{{colour_name | upper}}),
+            .ptFillLike = NULL, 
+        },
+    {%- endif %}
+
+    },
+};
+{%- endif %}
+
+ARM_NONNULL(2,4,5)
+{%- if mirror_name == 'ONLY' %}
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks{{has_opacity}}_only(
+{%- else %}
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_{{mirror_name | lower }}{{has_opacity}}(
+{%- endif -%}
+                                    {%- if has_opacity == '_and_opacity' %}
+                                        arm_2d_op_fill_cl_msks_opc_t *ptOP,
+                                    {%- else %}
+                                        arm_2d_op_fill_cl_msks_t *ptOP,
+                                    {%- endif %}
+                                        const arm_2d_tile_t *ptTarget,
+                                        const arm_2d_region_t *ptRegion,
+                                        const arm_2d_tile_t *ptSourceMask,
+                                        const arm_2d_tile_t *ptTargetMask,
+                                        arm_2d_color_{{colour_name | lower}}_t tColour
+                                    {%- if has_opacity == '_and_opacity' -%}
+                                        ,
+                                        uint8_t chOpacity
+                                    {%- endif -%}
+                                    )
+{
+    assert(NULL != ptTarget);
+    assert(NULL != ptSourceMask);
+    assert(NULL != ptTargetMask);
+
+{%- if has_opacity == '_and_opacity' %}
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+{%- else %}
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+{%- endif %}
+
+    /* validate the source mask */
+    if (!__arm_2d_valid_mask(ptSourceMask, 
+                                __ARM_2D_MASK_ALLOW_A8
+                            )) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    /* validate the target mask */
+    if (!__arm_2d_valid_mask(ptSourceMask, 
+                                __ARM_2D_MASK_ALLOW_A8
+                            )) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+    }
+    arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, ptTarget, ptTargetMask, 0 );
+    if (tErr != ARM_2D_ERR_NONE) {
+        return (arm_fsm_rt_t)tErr;
+    }
+
+    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
+        return arm_fsm_rt_on_going;
+    }
+{% if mirror_name == 'ONLY' %}
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASKS{{has_opacity | upper }}_ONLY_{{colour_name | upper}};
+{%- else %}
+    {%- if has_opacity == '_and_opacity' %}
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASKS_{{mirror_name | upper()}}_AND_OPACITY_{{colour_name | upper}};
+    {%- else %}
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_{{mirror_name | upper()}}_{{colour_name | upper}};
+    {%- endif %}
+{%- endif %}
+
+    this.Target.ptTile = ptTarget;
+    this.Target.ptRegion = ptRegion;
+    this.Mask.ptTile = ptSourceMask;
+
+{%- if mirror_name == 'ONLY' %}
+    this.wMode = ARM_2D_CP_MODE_COPY;
+{%- else %}
+    this.wMode = ARM_2D_CP_MODE_{{mirror_name | upper()}};
+{%- endif %}
+    this.{{colour_int_prefix}}Colour = tColour.tValue;
+
+{%- if has_opacity == '_and_opacity' %}
+    this.chOpacity = chOpacity;
+{%- endif %}
+
+    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
+
+}
+
+__WEAK
+{%- if mirror_name == 'ONLY' %}
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks{{has_opacity}}_only(
+{%- else %}
+    {%- if has_opacity == '_and_opacity' %}
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_{{mirror_name | lower }}_and_opacity(
+    {%- else %}
+void __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_and_{{mirror_name | lower }}(
+    {%- endif %}
+{%- endif %}
+                            {{colour_int}} *__RESTRICT p{{colour_int_prefix}}Target,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            {{colour_int}} {{colour_int_prefix}}Colour
+                        {%- if has_opacity == '_and_opacity' -%}
+                            ,
+                            uint16_t hwOpacity
+                        {%- endif -%}
+                        )
+{
+    int_fast16_t iHeight = ptCopySize->iHeight;
+    int_fast16_t iWidth  = ptCopySize->iWidth;
+
+    {{mask_y_init}}
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+
+        uint8_t *__RESTRICT pchSourceMaskLine = pchSourceMask;
+        uint8_t *__RESTRICT pchTargetMaskLine = pchTargetMask;
+        {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}Target;
+        {{mask_x_init}}
+
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+            uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*{{mask_next_alpha}}) >> 8;
+            hwPixelAlpha += (hwPixelAlpha == 254);
+
+        {%- if has_opacity == '_and_opacity' %}
+            uint16_t hwTrans = 255 - (hwPixelAlpha * hwOpacity >> 8);
+        {%- else %}
+            uint16_t hwTrans = 255 - hwPixelAlpha;
+        {%- endif %}
+
+            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}TargetLine++, hwTrans);
+        }
+
+        {{mask_move_to_next_line}}
+        p{{colour_int_prefix}}Target += iTargetStride;
+        pchTargetMask += iTargetMaskStride;
+    }
+}
+
+/* default software adaptor for low-level interface */
+{%- if mirror_name == 'ONLY' %}
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks{{has_opacity}}_only(
+{%- else %}
+    {%- if has_opacity == '_and_opacity' %}
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_{{mirror_name | lower }}{{has_opacity}}(
+    {%- else %}
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_and_{{mirror_name | lower }}(
+    {%- endif %}
+{%- endif %}
+                                                __arm_2d_sub_task_t *ptTask)
+{
+{%- if has_opacity == '_and_opacity' %}
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptTask->ptOP);
+    uint16_t hwOpacity = this.chOpacity;
+    hwOpacity += (hwOpacity == 255);
+{%- else %}
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptTask->ptOP);
+{%- endif %}
+
+    __arm_2d_param_copy_t *ptParamCopy = &ptTask->Param
+                                            .tCopyMask
+                                                .use_as____arm_2d_param_copy_t;
+
+    if ((ARM_2D_CHANNEL_8in32 == ptParamCopy->tSource.tColour.chScheme)
+    ||  (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopyMask.tDesMask.tColour.chScheme)) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    } else {
+{%- if has_opacity == '_and_opacity' %}
+    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
+        if (this.chOpacity == 255) {
+        {%- if mirror_name == 'ONLY' %}
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_only(
+        {%- else %}
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_and_{{mirror_name | lower }}(
+        {%- endif %}
+                            ptParamCopy->tTarget.pBuffer,
+                            ptParamCopy->tTarget.iStride,
+                            ptParamCopy->tSource.pBuffer,                //!< alpha tile
+                            ptParamCopy->tSource.iStride,                //!< alpha tile
+                            ptTask->Param.tCopyMask.tDesMask.pBuffer,
+                            ptTask->Param.tCopyMask.tDesMask.iStride,
+                            &(ptParamCopy->tCopySize),
+                            this.{{colour_int_prefix}}Colour);
+        } else 
+    #endif
+{%- endif %}
+        {
+        {%- if mirror_name == 'ONLY' %}
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks{{has_opacity}}_only(
+        {%- else %}
+            {%- if has_opacity == '_and_opacity' %}
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_{{mirror_name | lower }}_and_opacity(
+            {%- else %}
+            __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_and_{{mirror_name | lower }}(
+            {%- endif %}
+        {%- endif %}
+                            ptParamCopy->tTarget.pBuffer,
+                            ptParamCopy->tTarget.iStride,
+                            ptParamCopy->tSource.pBuffer,                //!< alpha tile
+                            ptParamCopy->tSource.iStride,                //!< alpha tile
+                            ptTask->Param.tCopyMask.tDesMask.pBuffer,
+                            ptTask->Param.tCopyMask.tDesMask.iStride,
+                            &(ptParamCopy->tCopySize),
+                            this.{{colour_int_prefix}}Colour
+                        {%- if has_opacity == '_and_opacity' -%}
+                            ,
+                            hwOpacity
+                        {%- endif -%}
+                        );
+        }
+    }
+    return arm_fsm_rt_cpl;
+}
+
+{%- endfor %}
+
+{%- endfor %}
+
+{%- endfor %}
+
+#ifdef   __cplusplus
+}
+#endif
+
+#endif /* __ARM_2D_COMPILATION_UNIT */
+

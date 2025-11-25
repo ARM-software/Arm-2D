@@ -137,6 +137,65 @@ extern "C" {
 {%- endfor %}
 
 /*============================ TYPES =========================================*/
+
+/*!
+ * \brief the class for colour filling with masks
+ * \note arm_2d_op_fill_cl_msks_t inherits from arm_2d_op_src_msk_t
+ */
+typedef struct arm_2d_op_fill_cl_msks_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< source tile
+    }Source;
+    uint32_t wMode;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
+    } Mask;
+
+    union {
+        uint8_t  chColour;                      //!< 8bit key colour
+        uint16_t hwColour;                      //!< 16bit key colour
+        uint32_t wColour;                       //!< 32bit key colour
+    };
+} arm_2d_op_fill_cl_msks_t;
+
+/*!
+ * \brief the class for colour filling with masks and opacity
+ * \note arm_2d_op_fill_cl_msks_opc_t inherits from arm_2d_op_src_msk_opc_t
+ */
+typedef struct arm_2d_op_fill_cl_msks_opc_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< source tile
+    }Source;
+    uint32_t wMode;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptSourceSide;          //!< source side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
+    } Mask;
+
+    uint8_t chOpacity;                                  //!< opacity
+
+    union {
+        uint8_t  chColour;                      //!< 8bit key colour
+        uint16_t hwColour;                      //!< 16bit key colour
+        uint32_t wColour;                       //!< 32bit key colour
+    };
+} arm_2d_op_fill_cl_msks_opc_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
@@ -159,7 +218,7 @@ extern "C" {
 extern
 ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_only(
-                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptSourceMask,
@@ -169,7 +228,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_only(
 extern
 ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_opacity_only(
-                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msks_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptSourceMask,
@@ -180,7 +239,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_opacity_
 extern
 ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_{{mirror_name | lower}}(
-                                        arm_2d_op_fill_cl_msk_t *ptOP,
+                                        arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptSourceMask,
@@ -191,7 +250,7 @@ arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_{{mirror
 extern
 ARM_NONNULL(2,4,5)
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_{{mirror_name | lower}}_and_opacity(
-                                        arm_2d_op_fill_cl_msk_opc_t *ptOP,
+                                        arm_2d_op_fill_cl_msks_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_tile_t *ptSourceMask,
