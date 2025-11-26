@@ -231,6 +231,11 @@ void scene_flight_attitude_instrument_loader(void)
     arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
 }
 
+void scene_shaped_panel_loader(void) 
+{
+    arm_2d_scene_shaped_panel_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -562,7 +567,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_flight_attitude_instrument_loader,
+        scene_shaped_panel_loader,
+        //scene_flight_attitude_instrument_loader,
         //scene_blink_loader,
         //scene_rickrolling_loader,
         //scene_histogram_loader,

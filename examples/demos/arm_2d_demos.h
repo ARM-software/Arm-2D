@@ -53,6 +53,7 @@
 #include "arm_2d_scene_radars.h"
 #include "arm_2d_scene_blink.h"
 #include "arm_2d_scene_flight_attitude_instrument.h"
+#include "arm_2d_scene_shaped_panel.h"
 
 /* monochrome demos */
 #if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)
