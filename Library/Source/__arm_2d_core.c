@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        11 Nov 2025
- * $Revision:    V.1.9.0
+ * $Date:        26 Nov 2025
+ * $Revision:    V.1.9.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2439,11 +2439,11 @@ arm_2d_err_t  __arm_mask_validate(  const arm_2d_tile_t *ptSource,
         /*! \note the target mask tile should be bigger than or equals to the  
          *!       target tile in width
          */
-        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptDesMask, ptTarget)) {
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptDesMask, ptTarget, false)) {
             return ARM_2D_ERR_INVALID_PARAM;
         }
         
-        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptDesMask, ptTarget)) {
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptDesMask, ptTarget, false)) {
             if (1 != ptDesMask->tRegion.tSize.iHeight) {
                 return ARM_2D_ERR_INVALID_PARAM;
             } else if (ARM_2D_CHANNEL_8in32 == ptDesMask->tColourInfo.chScheme) {

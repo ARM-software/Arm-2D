@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        11. Nov 2025
- * $Revision:    V.1.6.2
+ * $Date:        26. Nov 2025
+ * $Revision:    V.1.6.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -738,24 +738,30 @@ arm_2d_err_t arm_2d_target_tile_is_new_frame(const arm_2d_tile_t *ptTarget)
 
 
 ARM_NONNULL(1,2)
-arm_2d_cmp_t arm_2d_tile_width_compare( const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptReference)
+arm_2d_cmp_t __arm_2d_tile_width_compare(   const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_tile_t *ptReference,
+                                            bool bClipBeforeCompare)
 {
     assert(ptTarget != NULL);
     assert(ptReference != NULL);
-    arm_2d_region_t tTargetRegion;
-    arm_2d_region_t tReferenceRegion;
+    arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tReferenceRegion = {0};
     
-    ptTarget = arm_2d_tile_get_root(ptTarget, &tTargetRegion, NULL);
-    ptReference = arm_2d_tile_get_root(ptReference, &tReferenceRegion, NULL);
-    
-    if (NULL == ptTarget) {
-        if (NULL != ptReference) {
-            return ARM_2D_CMP_SMALLER;
+    if (bClipBeforeCompare) {
+        ptTarget = arm_2d_tile_get_root(ptTarget, &tTargetRegion, NULL);
+        ptReference = arm_2d_tile_get_root(ptReference, &tReferenceRegion, NULL);
+        
+        if (NULL == ptTarget) {
+            if (NULL != ptReference) {
+                return ARM_2D_CMP_SMALLER;
+            }
+            return ARM_2D_CMP_EQUALS;
+        } else if (NULL == ptReference) {
+            return ARM_2D_CMP_LARGER;
         }
-        return ARM_2D_CMP_EQUALS;
-    } else if (NULL == ptReference) {
-        return ARM_2D_CMP_LARGER;
+    } else {
+        tTargetRegion.tSize = ptTarget->tRegion.tSize;
+        tReferenceRegion.tSize = ptReference->tRegion.tSize;
     }
     
     if (tTargetRegion.tSize.iWidth > tReferenceRegion.tSize.iWidth) {
@@ -769,24 +775,32 @@ arm_2d_cmp_t arm_2d_tile_width_compare( const arm_2d_tile_t *ptTarget,
 
 
 ARM_NONNULL(1,2)
-arm_2d_cmp_t arm_2d_tile_height_compare(const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptReference)
-{
+arm_2d_cmp_t __arm_2d_tile_height_compare(  const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_tile_t *ptReference,
+                                            bool bClipBeforeCompare)
+    {
     assert(ptTarget != NULL);
     assert(ptReference != NULL);
-    arm_2d_region_t tTargetRegion;
-    arm_2d_region_t tReferenceRegion;
+
+    arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tReferenceRegion = {0};
     
-    ptTarget = arm_2d_tile_get_root(ptTarget, &tTargetRegion, NULL);
-    ptReference = arm_2d_tile_get_root(ptReference, &tReferenceRegion, NULL);
+    if (bClipBeforeCompare) {
     
-    if (NULL == ptTarget) {
-        if (NULL != ptReference) {
-            return ARM_2D_CMP_SMALLER;
+        ptTarget = arm_2d_tile_get_root(ptTarget, &tTargetRegion, NULL);
+        ptReference = arm_2d_tile_get_root(ptReference, &tReferenceRegion, NULL);
+        
+        if (NULL == ptTarget) {
+            if (NULL != ptReference) {
+                return ARM_2D_CMP_SMALLER;
+            }
+            return ARM_2D_CMP_EQUALS;
+        } else if (NULL == ptReference) {
+            return ARM_2D_CMP_LARGER;
         }
-        return ARM_2D_CMP_EQUALS;
-    } else if (NULL == ptReference) {
-        return ARM_2D_CMP_LARGER;
+    } else {
+        tTargetRegion.tSize = ptTarget->tRegion.tSize;
+        tReferenceRegion.tSize = ptReference->tRegion.tSize;
     }
     
     if (tTargetRegion.tSize.iHeight > tReferenceRegion.tSize.iHeight) {

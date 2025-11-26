@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        11. Nov 2025
- * $Revision:    V.1.5.3
+ * $Date:        26. Nov 2025
+ * $Revision:    V.1.5.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -763,6 +763,16 @@ extern "C" {
                                                     __BUF_PTR_NAME,             \
                                                     (__MODE))     
 
+
+#define arm_2d_tile_width_compare(__target_tile_ptr, __ref_tile_ptr, ...)       \
+            __arm_2d_tile_width_compare((__target_tile_ptr),                    \
+                                        (__ref_tile_ptr),                       \
+                                        (true, ##__VA_ARGS__))
+
+#define arm_2d_tile_height_compare(__target_tile_ptr, __ref_tile_ptr, ...)      \
+            __arm_2d_tile_height_compare((__target_tile_ptr),                   \
+                                        (__ref_tile_ptr),                       \
+                                        (true, ##__VA_ARGS__))
 /*============================ TYPES =========================================*/
 
 typedef arm_2d_op_src_t arm_2d_op_cp_t;
@@ -1068,22 +1078,26 @@ arm_2d_location_t arm_2d_get_absolute_location( const arm_2d_tile_t *ptTile,
  * \brief compare the widths of two tiles
  * \param[in] ptTarget the target tile
  * \param[in] ptReference the reference tile
+ * \param[in] whether clipping the two tiles before comparing
  * \return arm_2d_cmp_t the comparision result
  */
 extern
 ARM_NONNULL(1,2)
-arm_2d_cmp_t arm_2d_tile_width_compare( const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptReference);
+arm_2d_cmp_t __arm_2d_tile_width_compare(   const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_tile_t *ptReference,
+                                            bool bClipBeforeCompare);
 /*!
  * \brief compare the heights of two tiles
  * \param[in] ptTarget the target tile
  * \param[in] ptReference the reference tile
+ * \param[in] whether clipping the two tiles before comparing
  * \return arm_2d_cmp_t the comparision result
  */
 extern
 ARM_NONNULL(1,2)
-arm_2d_cmp_t arm_2d_tile_height_compare(const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptReference);
+arm_2d_cmp_t __arm_2d_tile_height_compare(  const arm_2d_tile_t *ptTarget,
+                                            const arm_2d_tile_t *ptReference,
+                                            bool bClipBeforeCompare);
 
 /*!
  * \brief compare the shape (both widths and heights) of two tiles
