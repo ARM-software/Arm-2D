@@ -89,6 +89,7 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileSolidCircleSmallMask;
 extern const arm_2d_tile_t c_tileRoundedSquareMask;
+extern const arm_2d_tile_t c_tilePointerSecMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -144,6 +145,8 @@ static void __on_scene_shaped_panel_load(arm_2d_scene_t *ptScene)
     user_scene_shaped_panel_t *ptThis = (user_scene_shaped_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    spin_zoom_widget_on_load(&this.tTransform);
+
 }
 
 static void __after_scene_shaped_panel_switching(arm_2d_scene_t *ptScene)
@@ -159,7 +162,7 @@ static void __on_scene_shaped_panel_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
-    
+    spin_zoom_widget_depose(&this.tTransform);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -214,6 +217,15 @@ static void __on_scene_shaped_panel_frame_start(arm_2d_scene_t *ptScene)
             }
         }
         this.tOffset.iY = nResult;
+    } while(0);
+
+    /* calculate the Seconds */
+    do {
+        int64_t lTimeStampInMs = arm_2d_helper_convert_ticks_to_ms(
+                                arm_2d_helper_get_system_timestamp());
+
+        lTimeStampInMs %= (5ul * 1000ul); 
+        spin_zoom_widget_on_frame_start(&this.tTransform, lTimeStampInMs, 0.9f);
     } while(0);
 }
 
@@ -296,6 +308,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_shaped_panel_handler)
                         }
                     }
                 }
+
+                arm_2d_align_bottom_right_open(   __shaped_panel_canvas,
+                                            __shaped_panel_canvas.tSize.iWidth >> 2,
+                                            __shaped_panel_canvas.tSize.iHeight >> 2) {
+
+                    spin_zoom_widget_show_with_normal_pivot(
+                        &this.tTransform,
+                        &__shaped_panel,
+                        NULL,
+                        &__bottom_right_region.tLocation,
+                        255);
+                }
+
+
             }
         }
 
@@ -385,7 +411,37 @@ user_scene_shaped_panel_t *__arm_2d_scene_shaped_panel_init(   arm_2d_scene_play
     };
 
     /* ------------   initialize members of user_scene_shaped_panel_t begin ---------------*/
+    // initialize second pointer
+    do {
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 0.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 360.0f,
+                    .nValue = 5*1000ul,
+                },
+                .Step = {
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK,
+            .Source = {
+                .ptMask = &c_tilePointerSecMask,
+                .tCentre = (arm_2d_location_t) {
+                    .iX = (c_tilePointerSecMask.tRegion.tSize.iWidth >> 1),
+                    .iY = 100,
+                },
+                .tColourToFill = GLCD_COLOR_RED,
+            },
+            .Target.ptMask = &PANEL_SHAPE_MASK,
 
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tTransform, &tCFG);
+    } while(0);
 
     /* ------------   initialize members of user_scene_shaped_panel_t end   ---------------*/
 

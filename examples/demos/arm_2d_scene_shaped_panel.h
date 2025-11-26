@@ -90,6 +90,8 @@ ARM_PRIVATE(
 
     arm_2d_location_t tOffset;
 
+    spin_zoom_widget_t tTransform;
+
 )
     /* place your public member here */
     
