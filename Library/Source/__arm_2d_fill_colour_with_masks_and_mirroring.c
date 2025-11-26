@@ -21,7 +21,7 @@
  * Title:        __arm_2d_fill_colour_with_masks_and_mirroring.c
  * Description:  APIs for colour-filling-with-masks-and-mirroring
  *
- * $Date:        25. Nov 2025
+ * $Date:        26. Nov 2025
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -122,7 +122,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_only(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -150,7 +150,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_only(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.chColour = tColour.tValue;
 
@@ -270,7 +271,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_opacity_only(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -298,7 +299,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_opacity_only(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -435,7 +437,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -463,7 +465,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.chColour = tColour.tValue;
 
@@ -583,7 +586,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -611,7 +614,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -748,7 +752,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -776,7 +780,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.chColour = tColour.tValue;
 
@@ -896,7 +901,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -924,7 +929,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1061,7 +1067,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -1089,7 +1095,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.chColour = tColour.tValue;
 
@@ -1209,7 +1216,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -1237,7 +1244,8 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1374,7 +1382,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_only(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -1402,7 +1410,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_only(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.hwColour = tColour.tValue;
 
@@ -1522,7 +1531,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_opacity_only(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -1550,7 +1559,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_opacity_only(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1687,7 +1697,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -1715,7 +1725,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.hwColour = tColour.tValue;
 
@@ -1835,7 +1846,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -1863,7 +1874,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2000,7 +2012,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2028,7 +2040,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.hwColour = tColour.tValue;
 
@@ -2148,7 +2161,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2176,7 +2189,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2313,7 +2327,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2341,7 +2355,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.hwColour = tColour.tValue;
 
@@ -2461,7 +2476,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2489,7 +2504,8 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2626,7 +2642,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_only(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2654,7 +2670,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_only(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.wColour = tColour.tValue;
 
@@ -2774,7 +2791,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_opacity_only(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2802,7 +2819,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_opacity_only(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2939,7 +2957,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -2967,7 +2985,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.wColour = tColour.tValue;
 
@@ -3087,7 +3106,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -3115,7 +3134,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -3252,7 +3272,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -3280,7 +3300,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.wColour = tColour.tValue;
 
@@ -3400,7 +3421,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -3428,7 +3449,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -3565,7 +3587,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -3593,7 +3615,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.wColour = tColour.tValue;
 
@@ -3713,7 +3736,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror_and_opacity(
     assert(NULL != ptTarget);
     assert(NULL != ptSourceMask);
     assert(NULL != ptTargetMask);
-    ARM_2D_IMPL(arm_2d_op_fill_cl_msk_opc_t, ptOP);
+    ARM_2D_IMPL(arm_2d_op_fill_cl_msks_opc_t, ptOP);
 
     /* validate the source mask */
     if (!__arm_2d_valid_mask(ptSourceMask, 
@@ -3741,7 +3764,8 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror_and_opacity(
 
     this.Target.ptTile = ptTarget;
     this.Target.ptRegion = ptRegion;
-    this.Mask.ptTile = ptSourceMask;
+    this.Source.ptTile = ptSourceMask;
+    this.Mask.ptTargetSide = ptTargetMask;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;

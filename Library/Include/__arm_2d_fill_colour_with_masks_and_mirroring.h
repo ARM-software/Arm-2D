@@ -22,7 +22,7 @@
  * Description:  A private header file for 
  *               colour-filling-with-masks-and-mirroring
  *
- * $Date:        25. Nov 2025
+ * $Date:        26. Nov 2025
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
