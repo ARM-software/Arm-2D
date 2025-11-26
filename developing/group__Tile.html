@@ -247,6 +247,10 @@ Macros</h2></td></tr>
 <tr class="separator:ga3e15ef5ed466c38997228a74ea539be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga35cde51709d5ffc8bfef0ba6dd04bf8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga35cde51709d5ffc8bfef0ba6dd04bf8b">arm_2d_get_address_and_region_from_tile_with_mirroring</a>( __TILE_PTR,  __VALID_REGION_NAME,  __LOCATION_OFFSET_PTR,  __TYPE,  __BUF_PTR_NAME,  __MODE)</td></tr>
 <tr class="separator:ga35cde51709d5ffc8bfef0ba6dd04bf8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae511c4441587d1cfdebeb506108f11e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gae511c4441587d1cfdebeb506108f11e2">arm_2d_tile_width_compare</a>(__target_tile_ptr,  __ref_tile_ptr, ...)</td></tr>
+<tr class="separator:gae511c4441587d1cfdebeb506108f11e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9ed8a963f6875b1b853501265d5b0d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gaa9ed8a963f6875b1b853501265d5b0d7">arm_2d_tile_height_compare</a>(__target_tile_ptr,  __ref_tile_ptr, ...)</td></tr>
+<tr class="separator:gaa9ed8a963f6875b1b853501265d5b0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -312,12 +316,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaee6bb96917f6ed4eb60ba9d8a952e6d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gaee6bb96917f6ed4eb60ba9d8a952e6d0">arm_2d_get_absolute_location</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTile, <a class="el" href="group__gKernel.html#structarm__2d__location__t">arm_2d_location_t</a> tLocation, bool bOnVirtualScreen)</td></tr>
 <tr class="memdesc:gaee6bb96917f6ed4eb60ba9d8a952e6d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the absolute location on a specified target tile  <a href="group__Tile.html#gaee6bb96917f6ed4eb60ba9d8a952e6d0">More...</a><br /></td></tr>
 <tr class="separator:gaee6bb96917f6ed4eb60ba9d8a952e6d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e4eba78b58b49a3f3eaaba0ebb62f58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga1e4eba78b58b49a3f3eaaba0ebb62f58">arm_2d_tile_width_compare</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptReference)</td></tr>
-<tr class="memdesc:ga1e4eba78b58b49a3f3eaaba0ebb62f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">compare the widths of two tiles  <a href="group__Tile.html#ga1e4eba78b58b49a3f3eaaba0ebb62f58">More...</a><br /></td></tr>
-<tr class="separator:ga1e4eba78b58b49a3f3eaaba0ebb62f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52d50c0f2d468f4ad08b4b1c5501bd4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga52d50c0f2d468f4ad08b4b1c5501bd4d">arm_2d_tile_height_compare</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptReference)</td></tr>
-<tr class="memdesc:ga52d50c0f2d468f4ad08b4b1c5501bd4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">compare the heights of two tiles  <a href="group__Tile.html#ga52d50c0f2d468f4ad08b4b1c5501bd4d">More...</a><br /></td></tr>
-<tr class="separator:ga52d50c0f2d468f4ad08b4b1c5501bd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2e9e4acf2122e02d64acb585207a4ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gae2e9e4acf2122e02d64acb585207a4ae">__arm_2d_tile_width_compare</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptReference, bool bClipBeforeCompare)</td></tr>
+<tr class="memdesc:gae2e9e4acf2122e02d64acb585207a4ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">compare the widths of two tiles  <a href="group__Tile.html#gae2e9e4acf2122e02d64acb585207a4ae">More...</a><br /></td></tr>
+<tr class="separator:gae2e9e4acf2122e02d64acb585207a4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d7b03a258f830595549fa17574c0f00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#ga5d7b03a258f830595549fa17574c0f00">__arm_2d_tile_height_compare</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptReference, bool bClipBeforeCompare)</td></tr>
+<tr class="memdesc:ga5d7b03a258f830595549fa17574c0f00"><td class="mdescLeft">&#160;</td><td class="mdescRight">compare the heights of two tiles  <a href="group__Tile.html#ga5d7b03a258f830595549fa17574c0f00">More...</a><br /></td></tr>
+<tr class="separator:ga5d7b03a258f830595549fa17574c0f00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1691a6b16079881afadce5014ebcefb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Tile.html#gab1691a6b16079881afadce5014ebcefb">arm_2d_tile_shape_compare</a> (const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptTarget, const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *ptReference)</td></tr>
 <tr class="memdesc:gab1691a6b16079881afadce5014ebcefb"><td class="mdescLeft">&#160;</td><td class="mdescRight">compare the shape (both widths and heights) of two tiles  <a href="group__Tile.html#gab1691a6b16079881afadce5014ebcefb">More...</a><br /></td></tr>
 <tr class="separator:gab1691a6b16079881afadce5014ebcefb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3255,6 +3259,80 @@ wColour</td>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="gae511c4441587d1cfdebeb506108f11e2" name="gae511c4441587d1cfdebeb506108f11e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae511c4441587d1cfdebeb506108f11e2">&#9670;&#160;</a></span>arm_2d_tile_width_compare</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_tile_width_compare</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__target_tile_ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__ref_tile_ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__Tile.html#gae2e9e4acf2122e02d64acb585207a4ae" title="compare the widths of two tiles">__arm_2d_tile_width_compare</a>((__target_tile_ptr),                    \</div>
+<div class="line">                                        (__ref_tile_ptr),                       \</div>
+<div class="line">                                        (<span class="keyword">true</span>, ##__VA_ARGS__))</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="gaa9ed8a963f6875b1b853501265d5b0d7" name="gaa9ed8a963f6875b1b853501265d5b0d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa9ed8a963f6875b1b853501265d5b0d7">&#9670;&#160;</a></span>arm_2d_tile_height_compare</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2d_tile_height_compare</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__target_tile_ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__ref_tile_ptr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">            <a class="code hl_function" href="group__Tile.html#ga5d7b03a258f830595549fa17574c0f00" title="compare the heights of two tiles">__arm_2d_tile_height_compare</a>((__target_tile_ptr),                   \</div>
+<div class="line">                                        (__ref_tile_ptr),                       \</div>
+<div class="line">                                        (<span class="keyword">true</span>, ##__VA_ARGS__))</div>
+</div><!-- fragment -->
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ga257faa203a12d4121d37c1ce2c2ae5bf" name="ga257faa203a12d4121d37c1ce2c2ae5bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga257faa203a12d4121d37c1ce2c2ae5bf">&#9670;&#160;</a></span>__arm_2d_copy_mode_t</h2>
@@ -3851,14 +3929,14 @@ wColour</td>
 
 </div>
 </div>
-<a id="ga1e4eba78b58b49a3f3eaaba0ebb62f58" name="ga1e4eba78b58b49a3f3eaaba0ebb62f58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1e4eba78b58b49a3f3eaaba0ebb62f58">&#9670;&#160;</a></span>arm_2d_tile_width_compare()</h2>
+<a id="gae2e9e4acf2122e02d64acb585207a4ae" name="gae2e9e4acf2122e02d64acb585207a4ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2e9e4acf2122e02d64acb585207a4ae">&#9670;&#160;</a></span>__arm_2d_tile_width_compare()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a> arm_2d_tile_width_compare </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a> __arm_2d_tile_width_compare </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
           <td class="paramname"><em>ptTarget</em>, </td>
@@ -3867,7 +3945,13 @@ wColour</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
-          <td class="paramname"><em>ptReference</em>&#160;</td>
+          <td class="paramname"><em>ptReference</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bClipBeforeCompare</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3882,6 +3966,7 @@ wColour</td>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptReference</td><td>the reference tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">whether</td><td>clipping the two tiles before comparing </td></tr>
   </table>
   </dd>
 </dl>
@@ -3889,14 +3974,14 @@ wColour</td>
 
 </div>
 </div>
-<a id="ga52d50c0f2d468f4ad08b4b1c5501bd4d" name="ga52d50c0f2d468f4ad08b4b1c5501bd4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga52d50c0f2d468f4ad08b4b1c5501bd4d">&#9670;&#160;</a></span>arm_2d_tile_height_compare()</h2>
+<a id="ga5d7b03a258f830595549fa17574c0f00" name="ga5d7b03a258f830595549fa17574c0f00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d7b03a258f830595549fa17574c0f00">&#9670;&#160;</a></span>__arm_2d_tile_height_compare()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a> arm_2d_tile_height_compare </td>
+          <td class="memname"><a class="el" href="group__gKernel.html#ga3249990f0553a40aa0e48e3568172e59">arm_2d_cmp_t</a> __arm_2d_tile_height_compare </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
           <td class="paramname"><em>ptTarget</em>, </td>
@@ -3905,7 +3990,13 @@ wColour</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *&#160;</td>
-          <td class="paramname"><em>ptReference</em>&#160;</td>
+          <td class="paramname"><em>ptReference</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>bClipBeforeCompare</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3920,6 +4011,7 @@ wColour</td>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptTarget</td><td>the target tile </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ptReference</td><td>the reference tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">whether</td><td>clipping the two tiles before comparing </td></tr>
   </table>
   </dd>
 </dl>
