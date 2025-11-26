@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        25 Nov 2025
- * $Revision:    V.1.11.0
+ * $Date:        26 Nov 2025
+ * $Revision:    V.1.11.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -11405,7 +11405,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_only(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour);
+                            uint32_t wColour);
 
 
 extern
@@ -11441,7 +11441,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_only(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour,
+                            uint32_t wColour,
                             uint16_t hwOpacity);
 
 
@@ -11476,7 +11476,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_x_mirror(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour);
+                            uint32_t wColour);
 
 
 extern
@@ -11512,7 +11512,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and_opacity(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour,
+                            uint32_t wColour,
                             uint16_t hwOpacity);
 
 
@@ -11547,7 +11547,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_y_mirror(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour);
+                            uint32_t wColour);
 
 
 extern
@@ -11583,7 +11583,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and_opacity(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour,
+                            uint32_t wColour,
                             uint16_t hwOpacity);
 
 
@@ -11618,7 +11618,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_xy_mirror(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour);
+                            uint32_t wColour);
 
 
 extern
@@ -11654,7 +11654,7 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_and_opacity(
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
-                            uint16_t wColour,
+                            uint32_t wColour,
                             uint16_t hwOpacity);
 
 #if defined(__clang__)
