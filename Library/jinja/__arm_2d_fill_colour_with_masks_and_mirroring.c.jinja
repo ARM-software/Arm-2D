@@ -200,7 +200,11 @@ ARM_NONNULL(2,4,5)
 {%- if mirror_name == 'ONLY' %}
 arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks{{has_opacity}}_only(
 {%- else %}
-arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_{{mirror_name | lower }}{{has_opacity}}(
+    {%- if has_opacity == '_and_opacity' %}
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_{{mirror_name | lower }}_and_opacity(
+    {%- else %}
+arm_fsm_rt_t arm_2dp_{{colour_name | lower}}_fill_colour_with_masks_and_{{mirror_name | lower }}(
+    {%- endif -%}
 {%- endif -%}
                                     {%- if has_opacity == '_and_opacity' %}
                                         arm_2d_op_fill_cl_msks_opc_t *ptOP,
@@ -344,7 +348,7 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_and_{{mirro
 arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks{{has_opacity}}_only(
 {%- else %}
     {%- if has_opacity == '_and_opacity' %}
-arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_{{mirror_name | lower }}{{has_opacity}}(
+arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_{{mirror_name | lower }}_and_opacity(
     {%- else %}
 arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_colour_filling_with_masks_and_{{mirror_name | lower }}(
     {%- endif %}

@@ -73,6 +73,8 @@
 #   error Unsupported colour depth!
 #endif
 
+#define PANEL_SHAPE_MASK            c_tileSolidCircleSmallMask
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -84,6 +86,9 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+extern const arm_2d_tile_t c_tileSolidCircleSmallMask;
+extern const arm_2d_tile_t c_tileRoundedSquareMask;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -171,6 +176,19 @@ static void __on_scene_shaped_panel_frame_start(arm_2d_scene_t *ptScene)
     user_scene_shaped_panel_t *ptThis = (user_scene_shaped_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    /* vibration */
+    do {
+        int32_t nResult;
+        int16_t iWidth = (PANEL_SHAPE_MASK.tRegion.tSize.iWidth >> 1);
+        int16_t iHeight = (PANEL_SHAPE_MASK.tRegion.tSize.iHeight >> 1);
+
+        /* calculate core vibration */
+        arm_2d_helper_time_cos_slider(-iWidth, iWidth, 5000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[0]);
+        this.tOffset.iX = nResult;
+        
+        arm_2d_helper_time_cos_slider(-iHeight, iHeight, 10000, ARM_2D_ANGLE(30.0f), &nResult, &this.lTimestamp[1]);
+        this.tOffset.iY = nResult;
+    } while(0);
 }
 
 static void __on_scene_shaped_panel_frame_complete(arm_2d_scene_t *ptScene)
@@ -178,12 +196,6 @@ static void __on_scene_shaped_panel_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_shaped_panel_t *ptThis = (user_scene_shaped_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
 static void __before_scene_shaped_panel_switching_out(arm_2d_scene_t *ptScene)
@@ -204,57 +216,48 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_shaped_panel_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
+
+        arm_2d_align_centre(__top_canvas, PANEL_SHAPE_MASK.tRegion.tSize) {
+
+            arm_2d_container(ptTile, __shaped_panel, &__centre_region) {
         
-        /* following code is just a demo, you can remove them */
+                arm_2d_fill_colour_with_mask(ptTile,
+                            &__centre_region,
+                            &PANEL_SHAPE_MASK,
+                            (__arm_2d_color_t){GLCD_COLOR_ORANGE});
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
-                                    255);
-            
-            ARM_2D_OP_WAIT_ASYNC();
-            
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
-                                        (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
-                                    
-        }
+                arm_2d_align_centre_open(__shaped_panel_canvas, c_tileCMSISLogoMask.tRegion.tSize) {
+                    arm_2d_region_t tLogoRegion = __centre_region;
+                    tLogoRegion.tLocation.iX += this.tOffset.iX;
+                    tLogoRegion.tLocation.iY += this.tOffset.iY;
 
 
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
+                    arm_2d_rgb565_fill_colour_with_masks_and_opacity(
+                    //arm_2d_rgb565_fill_colour_with_masks_y_mirror_and_opacity()
+                        &__shaped_panel,
+                        &tLogoRegion,
+                        &c_tileCMSISLogoMask,
+                        &PANEL_SHAPE_MASK,
+                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
+                        255,
+                        ARM_2D_CP_MODE_X_MIRROR);
+                }
+
+
+            }
+
         }
-    #else
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
-    #endif
 
         /* draw text at the top-left corner */
 
+    #if 0
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
         arm_lcd_puts("Scene shaped_panel");
+    #endif
 
     /*-----------------------draw the scene end  -----------------------*/
     }
@@ -307,7 +310,7 @@ user_scene_shaped_panel_t *__arm_2d_scene_shaped_panel_init(   arm_2d_scene_play
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_WHITE}, 
+            .tCanvas = {GLCD_COLOR_BLACK}, 
 
             /* Please uncommon the callbacks if you need them
              */

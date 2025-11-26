@@ -1162,6 +1162,7 @@ void arm_2d_sw_normal_root_tile_copy(   const arm_2d_tile_t *ptSource,
 enum __arm_2d_copy_mode_t {
     ARM_2D_CP_MODE_COPY =         0,
     ARM_2D_CP_MODE_FILL =         _BV(0),
+    ARM_2D_CP_MODE_NO_MIRROR =    0,
     ARM_2D_CP_MODE_Y_MIRROR =     _BV(2),
     ARM_2D_CP_MODE_X_MIRROR =     _BV(3),
     ARM_2D_CP_MODE_XY_MIRROR =    ARM_2D_CP_MODE_X_MIRROR |

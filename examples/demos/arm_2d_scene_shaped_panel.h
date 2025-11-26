@@ -84,8 +84,10 @@ struct user_scene_shaped_panel_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     bool bUserAllocated;
+
+    arm_2d_location_t tOffset;
 
 )
     /* place your public member here */

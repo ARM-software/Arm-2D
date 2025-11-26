@@ -434,7 +434,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_GRAY8 = {
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror(
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_x_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -757,7 +757,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_GRAY8 = {
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror(
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_y_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -1080,7 +1080,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_GRAY8 = 
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror(
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_xy_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -1726,7 +1726,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_RGB565 = 
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror(
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_x_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -2049,7 +2049,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_RGB565 = 
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror(
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_y_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -2372,7 +2372,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_RGB565 =
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror(
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_xy_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -3018,7 +3018,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_CCCN888 =
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror(
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_x_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -3341,7 +3341,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_CCCN888 =
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror(
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_y_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -3664,7 +3664,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_CCCN888 
 };
 
 ARM_NONNULL(2,4,5)
-arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror(
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_xy_mirror(
                                         arm_2d_op_fill_cl_msks_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
