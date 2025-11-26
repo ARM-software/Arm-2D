@@ -321,10 +321,14 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_and_{{mirro
             hwPixelAlpha += (hwPixelAlpha == 254);
 
         {%- if has_opacity == '_and_opacity' %}
-            uint16_t hwTrans = 255 - (hwPixelAlpha * hwOpacity >> 8);
+            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
         {%- else %}
-            uint16_t hwTrans = 255 - hwPixelAlpha;
+            uint16_t hwTrans = 256 - hwPixelAlpha;
         {%- endif %}
+
+#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+            hwAlpha -= (hwAlpha == 1);
+#endif
 
             __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}TargetLine++, hwTrans);
         }
