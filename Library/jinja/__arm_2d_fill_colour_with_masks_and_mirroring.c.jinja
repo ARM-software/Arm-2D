@@ -22,7 +22,7 @@
  * Description:  APIs for colour-filling-with-masks-and-mirroring
  *
  * $Date:        26. Nov 2025
- * $Revision:    V.1.0.0
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
