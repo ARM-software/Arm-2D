@@ -116,6 +116,27 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
 
 END_IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions)
 
+enum {
+    API_FILL_COLOUR,
+    API_TILE_COPY,
+};
+
+static const
+struct {
+    uint8_t u4CopyMode          : 4;
+    uint8_t u1APISelect         : 1;
+} c_tModes[] = {
+    {ARM_2D_CP_MODE_NO_MIRROR,  API_FILL_COLOUR},
+    {ARM_2D_CP_MODE_X_MIRROR,   API_FILL_COLOUR},
+    {ARM_2D_CP_MODE_Y_MIRROR,   API_FILL_COLOUR},
+    {ARM_2D_CP_MODE_XY_MIRROR,  API_FILL_COLOUR},
+
+    {ARM_2D_CP_MODE_NO_MIRROR,  API_TILE_COPY},
+    {ARM_2D_CP_MODE_X_MIRROR,   API_TILE_COPY},
+    {ARM_2D_CP_MODE_Y_MIRROR,   API_TILE_COPY},
+    {ARM_2D_CP_MODE_XY_MIRROR,  API_TILE_COPY},
+};
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_shaped_panel_load(arm_2d_scene_t *ptScene)
@@ -186,7 +207,12 @@ static void __on_scene_shaped_panel_frame_start(arm_2d_scene_t *ptScene)
         arm_2d_helper_time_cos_slider(-iWidth, iWidth, 5000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[0]);
         this.tOffset.iX = nResult;
         
-        arm_2d_helper_time_cos_slider(-iHeight, iHeight, 10000, ARM_2D_ANGLE(30.0f), &nResult, &this.lTimestamp[1]);
+        if (arm_2d_helper_time_cos_slider(-iHeight, iHeight, 10000, ARM_2D_ANGLE(30.0f), &nResult, &this.lTimestamp[1])) {
+            this.chTestIndex++;
+            if (this.chTestIndex >= dimof(c_tModes)) {
+                this.chTestIndex = 0;
+            }
+        }
         this.tOffset.iY = nResult;
     } while(0);
 }
@@ -240,7 +266,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_shaped_panel_handler)
                         &PANEL_SHAPE_MASK,
                         (__arm_2d_color_t){GLCD_COLOR_BLACK},
                         255,
-                        ARM_2D_CP_MODE_X_MIRROR);
+                        c_tModes[this.chTestIndex].u4CopyMode);
                 }
 
 
