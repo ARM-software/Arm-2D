@@ -204,10 +204,10 @@ static void __on_scene_shaped_panel_frame_start(arm_2d_scene_t *ptScene)
         int16_t iHeight = (PANEL_SHAPE_MASK.tRegion.tSize.iHeight >> 1);
 
         /* calculate core vibration */
-        arm_2d_helper_time_cos_slider(-iWidth, iWidth, 5000, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[0]);
+        arm_2d_helper_time_cos_slider(-iWidth, iWidth, 2500, ARM_2D_ANGLE(0.0f), &nResult, &this.lTimestamp[0]);
         this.tOffset.iX = nResult;
         
-        if (arm_2d_helper_time_cos_slider(-iHeight, iHeight, 10000, ARM_2D_ANGLE(30.0f), &nResult, &this.lTimestamp[1])) {
+        if (arm_2d_helper_time_cos_slider(-iHeight, iHeight, 5000, ARM_2D_ANGLE(30.0f), &nResult, &this.lTimestamp[1])) {
             this.chTestIndex++;
             if (this.chTestIndex >= dimof(c_tModes)) {
                 this.chTestIndex = 0;
@@ -247,31 +247,56 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_shaped_panel_handler)
 
             arm_2d_container(ptTile, __shaped_panel, &__centre_region) {
         
+                /* draw the shaped panel */
                 arm_2d_fill_colour_with_mask(ptTile,
                             &__centre_region,
                             &PANEL_SHAPE_MASK,
                             (__arm_2d_color_t){GLCD_COLOR_ORANGE});
 
-                arm_2d_align_centre_open(__shaped_panel_canvas, c_tileCMSISLogoMask.tRegion.tSize) {
+                arm_2d_align_centre_open(   __shaped_panel_canvas, 
+                                            c_tileCMSISLogoMask.tRegion.tSize) {
+                    
                     arm_2d_region_t tLogoRegion = __centre_region;
+
                     tLogoRegion.tLocation.iX += this.tOffset.iX;
                     tLogoRegion.tLocation.iY += this.tOffset.iY;
 
+                    __arm_2d_hint_optimize_for_pfb__(tLogoRegion) {
 
-                    arm_2d_rgb565_fill_colour_with_masks_and_opacity(
-                    //arm_2d_rgb565_fill_colour_with_masks_y_mirror_and_opacity()
-                        &__shaped_panel,
-                        &tLogoRegion,
-                        &c_tileCMSISLogoMask,
-                        &PANEL_SHAPE_MASK,
-                        (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                        255,
-                        c_tModes[this.chTestIndex].u4CopyMode);
+                        /* update dirty region */
+                        arm_2d_helper_dirty_region_update_item( 
+                            &this.use_as__arm_2d_scene_t
+                                    .tDirtyRegionHelper
+                                        .tDefaultItem,
+                            (arm_2d_tile_t *)&__shaped_panel,
+                            NULL,
+                            &tLogoRegion);
+
+                        switch (c_tModes[this.chTestIndex].u1APISelect) {
+                            default:
+                            case API_FILL_COLOUR:
+                                arm_2d_fill_colour_with_masks_and_opacity(
+                                    &__shaped_panel,
+                                    &tLogoRegion,
+                                    &c_tileCMSISLogoMask,
+                                    &PANEL_SHAPE_MASK,
+                                    (__arm_2d_color_t){GLCD_COLOR_WHITE},
+                                    128,
+                                    c_tModes[this.chTestIndex].u4CopyMode);
+                                break;
+                            case API_TILE_COPY:
+                                arm_2d_tile_copy_with_masks(
+                                    &c_tileCMSISLogo,
+                                    &c_tileCMSISLogoMask,
+                                    &__shaped_panel,
+                                    &PANEL_SHAPE_MASK,
+                                    &tLogoRegion,
+                                    c_tModes[this.chTestIndex].u4CopyMode);
+                                break;
+                        }
+                    }
                 }
-
-
             }
-
         }
 
         /* draw text at the top-left corner */
@@ -354,7 +379,7 @@ user_scene_shaped_panel_t *__arm_2d_scene_shaped_panel_init(   arm_2d_scene_play
             .fnOnFrameCPL   = &__on_scene_shaped_panel_frame_complete,
             .fnDepose       = &__on_scene_shaped_panel_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };

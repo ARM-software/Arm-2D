@@ -218,6 +218,8 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arm_2d_asset_TinyCross.c
             examples/common/asset/arm_2d_asset_TinyDot.c
             examples/common/asset/arm_2d_asset_ScanSector.c
+            examples/common/asset/arm_2d_asset_SolidCircleSmall.c
+            examples/common/asset/arm_2d_asset_RoundedSquare.c
 
             examples/common/asset/arm_2d_asset_icon_automobile.c
             examples/common/asset/arm_2d_asset_icon_compute.c 

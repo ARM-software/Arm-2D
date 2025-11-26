@@ -109,6 +109,10 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_masks_and_opacity                            \
+                arm_2d_gray8_fill_colour_with_masks_and_opacity
+#   define arm_2d_fill_colour_with_masks                                        \
+                arm_2d_gray8_fill_colour_with_masks
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_gray8_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -356,6 +360,10 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_masks_and_opacity                            \
+                arm_2d_rgb565_fill_colour_with_masks_and_opacity
+#   define arm_2d_fill_colour_with_masks                                        \
+                arm_2d_rgb565_fill_colour_with_masks
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_rgb565_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -602,6 +610,10 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_masks_and_opacity                            \
+                arm_2d_cccn888_fill_colour_with_masks_and_opacity
+#   define arm_2d_fill_colour_with_masks                                        \
+                arm_2d_cccn888_fill_colour_with_masks
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_cccn888_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
