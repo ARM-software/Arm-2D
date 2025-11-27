@@ -178,9 +178,9 @@ var NAVTREEINDEX0 =
 "group__gAlpha.html#a76aae367b0d10ccb4492541180f67787":[12,3,19,0],
 "group__gAlpha.html#a82f795cd9e802d4bc7b5eae1b6d71b6b":[12,3,3,1],
 "group__gAlpha.html#a847ada916032c171108dd3c81e465d32":[12,3,1,4],
+"group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d":[12,3,21,2],
 "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d":[12,3,12,2],
 "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d":[12,3,15,2],
-"group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d":[12,3,21,2],
 "group__gAlpha.html#a9f162c8dd605b531b0443f4f8d74453d":[12,3,18,2],
 "group__gAlpha.html#aa21a9ba5550a24390cb81ef70a26becd":[12,3,3,2],
 "group__gAlpha.html#aa25ee06c23b4722003bbbf0abaf6b995":[12,3,1,0],
@@ -223,6 +223,7 @@ var NAVTREEINDEX0 =
 "group__gAlpha.html#ga33d6a688e3340722dae54282ca5f7a84":[12,3,155],
 "group__gAlpha.html#ga3b9f690962ca54aa2a895e77958ee522":[12,3,32],
 "group__gAlpha.html#ga3c6d07c5c7a04e9c29a73eb2edfee836":[12,3,158],
+"group__gAlpha.html#ga3dc17ba31a734c0123cec8a56c48a857":[12,3,56],
 "group__gAlpha.html#ga3e93bb32a4e9c38d32f3cd304321974a":[12,3,46],
 "group__gAlpha.html#ga43eddda947855c709700ba3ca41f7dc7":[12,3,143],
 "group__gAlpha.html#ga442bd60e971cd84459c6e8aaf6f8bb08":[12,3,64],
@@ -243,11 +244,10 @@ var NAVTREEINDEX0 =
 "group__gAlpha.html#ga59eed8a7dd7d2b8bc2a36bc8d5de7345":[12,3,36],
 "group__gAlpha.html#ga5b3b5582b17262c49bc42773d557ac25":[12,3,93],
 "group__gAlpha.html#ga5ce95446c832d85e6c41193976e1232f":[12,3,156],
+"group__gAlpha.html#ga5dc869d95021852f76179a082ef20bf2":[12,3,58],
 "group__gAlpha.html#ga5ead20e249f7b86985d67719a58ef846":[12,3,66],
 "group__gAlpha.html#ga5ffe7eb3b32a017c2b1917ed45e4ddbf":[12,3,178],
 "group__gAlpha.html#ga6108f8dfed628e237155db33d1c212b2":[12,3,35],
 "group__gAlpha.html#ga63c10789111cbdcafc8812a9b6bf392d":[12,3,163],
-"group__gAlpha.html#ga650e80af988f9b5ca1edae99f72f13b8":[12,3,125],
-"group__gAlpha.html#ga6577214c5f68540e81e0744279f87f5a":[12,3,173],
-"group__gAlpha.html#ga65ffcd9c8dabfdb7b1e5a8c5bc506a11":[12,3,54]
+"group__gAlpha.html#ga650e80af988f9b5ca1edae99f72f13b8":[12,3,125]
 };

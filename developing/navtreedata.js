@@ -303,7 +303,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "deprecated.html",
-"group__gAlpha.html#ga67bb801939d0a09c919b23554d2205f7",
+"group__gAlpha.html#ga6577214c5f68540e81e0744279f87f5a",
 "group__gHelper.html#ad39f930095be0f78da8c8728afbc82cd",
 "group__gHelper.html#ggab79c6ab3540af636c218dc40fa065ac3a9fdadfcd1760116f28c178c439e575bc",
 "group__gKernel.html#ga2425bdc7b91ff8e18252aa8b7806dfb4",
