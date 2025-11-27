@@ -949,7 +949,8 @@ extern "C" {
                                 (__OPCODE_PTR),                                 \
                                 (__SOURCE_ADDR),                                \
                                 (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
+                                (__REGION_ADDR),                                \
+                                ##__VA_ARGS__);                                 \
     } else {                                                                    \
         switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
             &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
@@ -1008,7 +1009,8 @@ extern "C" {
                                 (__OPCODE_PTR),                                 \
                                 (__SOURCE_ADDR),                                \
                                 (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
+                                (__REGION_ADDR),                                \
+                                ##__VA_ARGS__);                                 \
     } else {                                                                    \
         switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
             &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
@@ -1067,7 +1069,8 @@ extern "C" {
                                 (__OPCODE_PTR),                                 \
                                 (__SOURCE_ADDR),                                \
                                 (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
+                                (__REGION_ADDR),                                \
+                                ##__VA_ARGS__);                                 \
     } else {                                                                    \
         switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
             &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \

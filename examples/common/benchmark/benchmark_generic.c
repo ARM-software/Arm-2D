@@ -438,12 +438,12 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     //! handle the left half of the screen
     do {
-    #if 0 /* equivalent */
+    #if 1 /* equivalent */
         //!< fill background with CMSISlogo (with colour keying)
-        arm_2d_rgb16_tile_copy( &c_tileCMSISLogo,
-                                ptTile,
-                                &c_tFillRegion,
-                                ptLayers[BENCHMARK_LAYER_ICON].wMode);
+        arm_2d_tile_copy(   &c_tileCMSISLogo,
+                            ptTile,
+                            &c_tFillRegion,
+                            ptLayers[BENCHMARK_LAYER_ICON].wMode);
     #else
 
         switch (ptLayers[BENCHMARK_LAYER_ICON].wMode) {
