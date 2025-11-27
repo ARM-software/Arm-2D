@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        12. Nov 2025
- * $Revision:    V.1.8.6
+ * $Date:        27. Nov 2025
+ * $Revision:    V.1.8.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -96,12 +96,12 @@ extern "C" {
 #   define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_gray8
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_gray8_t
-
 #   define arm_2dp_filter_iir_blur  arm_2dp_gray8_filter_iir_blur
-
 #   define arm_2dp_filter_iir_blur_depose                                       \
                 arm_2dp_gray8_filter_iir_blur_depose
 
+#   define arm_2d_tile_fill                                                     \
+                arm_2d_c8bit_tile_fill
 #   define arm_2d_draw_pattern      arm_2d_c8bit_draw_pattern
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_gray8_fill_colour_with_opacity
@@ -347,12 +347,12 @@ extern "C" {
 #   define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_rgb565
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_rgb565_t
-
 #   define arm_2dp_filter_iir_blur  arm_2dp_rgb565_filter_iir_blur
-
 #   define arm_2dp_filter_iir_blur_depose                                       \
                 arm_2dp_rgb565_filter_iir_blur_depose
 
+#   define arm_2d_tile_fill                                                     \
+                arm_2d_rgb16_tile_fill
 #   define arm_2d_draw_pattern      arm_2d_rgb16_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_rgb565_fill_colour_with_opacity
@@ -598,11 +598,12 @@ extern "C" {
 #   define arm_2d_pixel_from_brga8888  
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_cccn888_t
-
 #   define arm_2dp_filter_iir_blur  arm_2dp_cccn888_filter_iir_blur
 #   define arm_2dp_filter_iir_blur_depose                                       \
                 arm_2dp_cccn888_filter_iir_blur_depose
 
+#   define arm_2d_tile_fill                                                     \
+                arm_2d_rgb32_tile_fill
 #   define arm_2d_draw_pattern      arm_2d_rgb32_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_cccn888_fill_colour_with_opacity
