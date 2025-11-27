@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        04 September 2025
- * $Revision:    V.1.10.1
+ * $Date:        27 Nov 2025
+ * $Revision:    V.1.11.1
  *
  * Target Processor:  Cortex-M cores
  *

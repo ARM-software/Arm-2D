@@ -753,9 +753,9 @@ In the current version of the Arm-2D library, all examples are written in Asynch
 | ***arm_2dp_gray8_fill_colour_with_opacity***                 | Fill a given region in the target tile with a specified ***GRAY8*** colour and opacity. |                |
 | ***arm_2dp_rgb565_fill_colour_with_opacity***                | Fill a given region in the target tile with a specified ***RGB565*** colour and opacity. |                |
 | ***arm_2dp_cccn888_fill_colour_with_opacity***               | Fill a given region in the target tile with a specified ***CCCN888*** colour and opacity. |                |
-| ***arm_2dp_gray8_fill_colour_with_mask***                    | fill a target tile with a given ***GRAY8*** colour and a A8 mask |                |
-| ***arm_2dp_rgb565_fill_colour_with_mask***                   | fill a target tile with a given ***RGB565*** colour and a A8 mask |                |
-| ***arm_2dp_cccn888_fill_colour_with_mask***                  | fill a target tile with a given ***CCCN888*** colour and a A8 mask |                |
+| ***arm_2dp_gray8_fill_colour_with_mask_only***                    | fill a target tile with a given ***GRAY8*** colour and a A8 mask |                |
+| ***arm_2dp_rgb565_fill_colour_with_mask_only***                   | fill a target tile with a given ***RGB565*** colour and a A8 mask |                |
+| ***arm_2dp_cccn888_fill_colour_with_mask_only***                  | fill a target tile with a given ***CCCN888*** colour and a A8 mask |                |
 | ***arm_2dp_gray8_fill_colour_with_a8_mask***                 | fill a target tile with a given ***GRAY8*** colour and a A8 mask |                |
 | ***arm_2dp_rgb565_fill_colour_with_a8_mask***                | fill a target tile with a given ***RGB565*** colour and a A8 mask |                |
 | ***arm_2dp_cccn888_fill_colour_with_a8_mask***               | fill a target tile with a given ***CCCN888*** colour and a A8 mask |                |
