@@ -22,7 +22,7 @@
  * Description:  APIs for various alpha related operations
  *
  * $Date:        27 Nov 2025
- * $Revision:    V.1.11.1
+ * $Revision:    V.1.12.1
  *
  * Target Processor:  Cortex-M cores
  *

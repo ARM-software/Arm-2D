@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the alpha related APIs
  *
  * $Date:        27 Nov 2025
- * $Revision:    V.1.12.0
+ * $Revision:    V.1.12.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -135,11 +135,11 @@ extern "C" {
             arm_2dp_rgb565_tile_copy_with_colour_keying_and_opacity
 #define arm_2dp_cccn888_alpha_blending_with_colour_keying                       \
             arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity
-#define arm_2d_gray8_alpha_blending_with_colour_keying                         \
+#define arm_2d_gray8_alpha_blending_with_colour_keying                          \
             arm_2d_gray8_tile_copy_with_colour_keying_and_opacity
-#define arm_2d_rgb565_alpha_blending_with_colour_keying                        \
+#define arm_2d_rgb565_alpha_blending_with_colour_keying                         \
             arm_2d_rgb565_tile_copy_with_colour_keying_and_opacity
-#define arm_2d_cccn888_alpha_blending_with_colour_keying                       \
+#define arm_2d_cccn888_alpha_blending_with_colour_keying                        \
             arm_2d_cccn888_tile_copy_with_colour_keying_and_opacity
 
 /*! @} */
@@ -616,7 +616,7 @@ extern "C" {
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)                                  \
-            arm_2dp_gray8_fill_colour_with_mask_and_opacity(                    \
+            arm_2dp_gray8_fill_colour_with_mask_and_opacity_only(               \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -630,7 +630,7 @@ extern "C" {
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)                                  \
-            arm_2dp_rgb565_fill_colour_with_mask_and_opacity(                   \
+            arm_2dp_rgb565_fill_colour_with_mask_and_opacity_only(              \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -644,7 +644,7 @@ extern "C" {
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)                                  \
-            arm_2dp_cccn888_fill_colour_with_mask_and_opacity(                  \
+            arm_2dp_cccn888_fill_colour_with_mask_and_opacity_only(             \
                                   NULL,                                         \
                                  (__TARGET_ADDR),                               \
                                  (__REGION_ADDR),                               \
@@ -658,7 +658,7 @@ extern "C" {
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)                                  \
-            arm_2dp_cccn888_fill_colour_with_mask_and_opacity(                  \
+            arm_2dp_cccn888_fill_colour_with_mask_and_opacity_only(             \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -779,7 +779,7 @@ extern "C" {
                                       __REGION_ADDR,/*   region address */      \
                                       __ALPHA,      /*   colour */              \
                                       __COLOUR)     /*   alpha */               \
-            arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity(                  \
+            arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity(           \
                                                     NULL,                       \
                                                  (__SRC_ADDR),                  \
                                                  (__DES_ADDR),                  \
@@ -2639,7 +2639,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_a4_mask_and_opacity(
  */
 extern
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity(
+arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -2659,7 +2659,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_mask_and_opacity(
  */
 extern
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_opacity(
+arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
@@ -2679,7 +2679,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_mask_and_opacity(
  */
 extern
 ARM_NONNULL(2,4)
-arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_opacity(
+arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_mask_and_opacity_only(
                                         arm_2d_op_fill_cl_msk_opc_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
