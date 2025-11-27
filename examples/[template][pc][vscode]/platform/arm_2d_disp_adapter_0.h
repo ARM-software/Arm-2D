@@ -96,13 +96,13 @@ extern "C" {
 // <o>Width of the PFB block
 // <i> The width of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
-#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           __DISP0_CFG_SCEEN_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__                           8 //__DISP0_CFG_SCEEN_WIDTH__
 #endif
 
 // <o>Height of the PFB block
 // <i> The height of your PFB block size used in disp0
 #ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
-#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          (__DISP0_CFG_SCEEN_HEIGHT__ / 10)
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__                          8 //(__DISP0_CFG_SCEEN_HEIGHT__ / 10)
 #endif
 
 // <o>Width Alignment of generated PFBs
@@ -201,43 +201,43 @@ extern "C" {
 // <q> Enable Dirty Region Debug Mode
 // <i> Draw dirty regions on the screen for debug.
 #ifndef __DISP0_CFG_DEBUG_DIRTY_REGIONS__
-#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                       1
+#   define __DISP0_CFG_DEBUG_DIRTY_REGIONS__                        0
 #endif
 
 // <q> Enable Dirty Region Optimization Service
 // <i> Optimize dirty regions to avoid fresh overlapped areas
 #ifndef __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__
-#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                    1
+#   define __DISP0_CFG_OPTIMIZE_DIRTY_REGIONS__                     1
 #endif
 
 // <o> Dirty Region Pool Size <4-255>
 // <i> The number of dirty region items available for the dirty region optimization service
 #ifndef __DISP0_CFG_DIRTY_REGION_POOL_SIZE__
-#   define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__                    8
+#   define __DISP0_CFG_DIRTY_REGION_POOL_SIZE__                     8
 #endif
 
 // <q> Swap the high and low bytes
 // <i> Swap the high and low bytes of the 16bit-pixels
 #ifndef __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__
-#   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__             0
+#   define __DISP0_CFG_SWAP_RGB16_HIGH_AND_LOW_BYTES__              0
 #endif
 
 // <q>Enable the helper service for Asynchronous Flushing
 // <i> Please select this option when using asynchronous flushing, e.g. DMA + ISR 
 #ifndef __DISP0_CFG_ENABLE_ASYNC_FLUSHING__
-#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                     0
+#   define __DISP0_CFG_ENABLE_ASYNC_FLUSHING__                      0
 #endif
 
 // <q>Enable the helper service for 3FB (LCD Direct Mode)
 // <i> You can select this option when your LCD controller supports direct mode
 #ifndef __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
-#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                 1
+#   define __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__                  1
 #endif
 
 // <q>Disable the default scene
 // <i> Remove the default scene for this display adapter. We highly recommend you to disable the default scene when creating real applications.
 #ifndef __DISP0_CFG_DISABLE_DEFAULT_SCENE__
-#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                     1
+#   define __DISP0_CFG_DISABLE_DEFAULT_SCENE__                      1
 #endif
 
 // <o>Maximum number of Virtual Resources used per API
