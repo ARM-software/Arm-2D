@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        26. Nov 2025
- * $Revision:    V.1.6.3
+ * $Date:        27. Nov 2025
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1105,6 +1105,7 @@ void arm_2d_sw_normal_root_tile_copy(   const arm_2d_tile_t *ptSource,
     }
 }
 
+#if 0
 /*----------------------------------------------------------------------------*
  * Copy/Fill tile to destination with Mirroring                               *
  *----------------------------------------------------------------------------*/
@@ -1370,6 +1371,7 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy( __arm_2d_sub_task_t *ptTask)
 
     return arm_fsm_rt_cpl;
 }
+#endif
 
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill( __arm_2d_sub_task_t *ptTask)
 {
@@ -1933,13 +1935,14 @@ arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying(
 /*----------------------------------------------------------------------------*
  * Low Level IO Interfaces                                                    *
  *----------------------------------------------------------------------------*/
+#if 0
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_C8BIT, __arm_2d_c8bit_sw_tile_copy);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_RGB16, __arm_2d_rgb16_sw_tile_copy);
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_RGB32, __arm_2d_rgb32_sw_tile_copy);
-
+#endif
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_ONLY_C8BIT, __arm_2d_c8bit_sw_tile_copy_only);
@@ -2115,7 +2118,7 @@ __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_COLOUR_MASKING_AND_XY_MIRROR_RGB32, 
                 __arm_2d_rgb32_sw_tile_fill_with_colour_keying_and_xy_mirror);
 
-
+#if 0
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_C8BIT = {
     .Info = {
         .Colour = {
@@ -2178,6 +2181,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB32 = {
         },
     },
 };
+#endif
 
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_C8BIT = {

@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        25 Nov 2025
- * $Revision:    V.1.12.0
+ * $Date:        27 Nov 2025
+ * $Revision:    V.1.12.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -68,6 +68,7 @@ const __arm_2d_op_info_t ARM_2D_OP_BARRIER;
 /*----------------------------------------------------------------------------*
  * Basic Tile Operation (Core)                                                *
  *----------------------------------------------------------------------------*/
+#if 0
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_C8BIT;    
 
@@ -76,6 +77,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB16;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB32;
+#endif
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_C8BIT;    

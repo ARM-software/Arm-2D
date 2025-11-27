@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the basic tile operations
  *
  * $Date:        27. Nov 2025
- * $Revision:    V.1.6.0
+ * $Revision:    V.1.7.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -774,7 +774,8 @@ extern "C" {
                                         (__ref_tile_ptr),                       \
                                         (true, ##__VA_ARGS__))
 
-#define arm_2d_c8bit_tile_fill(     __SOURCE_ADDR,  /*   source tile address */ \
+#define arm_2dp_c8bit_tile_fill(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     ...)            /*   mode */                \
@@ -783,25 +784,29 @@ extern "C" {
     switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
            &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
         case ARM_2D_CP_MODE_NO_MIRROR:                                          \
-            tResult = arm_2d_c8bit_tile_fill_only(                              \
+            tResult = arm_2dp_c8bit_tile_fill_only(                             \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_X_MIRROR:                                           \
-            tResult = arm_2d_c8bit_tile_fill_with_x_mirror(                     \
+            tResult = arm_2dp_c8bit_tile_fill_with_x_mirror(                    \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_Y_MIRROR:                                           \
-            tResult = arm_2d_c8bit_tile_fill_with_y_mirror(                     \
+            tResult = arm_2dp_c8bit_tile_fill_with_y_mirror(                    \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_XY_MIRROR:                                          \
-            tResult = arm_2d_c8bit_tile_fill_with_xy_mirror(                    \
+            tResult = arm_2dp_c8bit_tile_fill_with_xy_mirror(                   \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
@@ -810,7 +815,18 @@ extern "C" {
     tResult;                                                                    \
 })
 
-#define arm_2d_rgb16_tile_fill(     __SOURCE_ADDR,  /*   source tile address */ \
+#define arm_2d_c8bit_tile_fill( __SOURCE_ADDR,  /*   source tile address */     \
+                                __TARGET_ADDR,  /*   target tile address*/      \
+                                __REGION_ADDR,  /*   target region address*/    \
+                                ...)            /*   mode */                    \
+            arm_2dp_c8bit_tile_fill(NULL,                                       \
+                                    (__SOURCE_ADDR),                            \
+                                    (__TARGET_ADDR),                            \
+                                    (__REGION_ADDR),                            \
+                                    ##__VA_ARGS__)
+
+#define arm_2dp_rgb16_tile_fill(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     ...)            /*   mode */                \
@@ -819,25 +835,29 @@ extern "C" {
     switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
            &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
         case ARM_2D_CP_MODE_NO_MIRROR:                                          \
-            tResult = arm_2d_rgb16_tile_fill_only(                              \
+            tResult = arm_2dp_rgb16_tile_fill_only(                             \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_X_MIRROR:                                           \
-            tResult = arm_2d_rgb16_tile_fill_with_x_mirror(                     \
+            tResult = arm_2dp_rgb16_tile_fill_with_x_mirror(                    \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_Y_MIRROR:                                           \
-            tResult = arm_2d_rgb16_tile_fill_with_y_mirror(                     \
+            tResult = arm_2dp_rgb16_tile_fill_with_y_mirror(                    \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_XY_MIRROR:                                          \
-            tResult = arm_2d_rgb16_tile_fill_with_xy_mirror(                    \
+            tResult = arm_2dp_rgb16_tile_fill_with_xy_mirror(                   \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
@@ -846,7 +866,18 @@ extern "C" {
     tResult;                                                                    \
 })
 
-#define arm_2d_rgb32_tile_fill(     __SOURCE_ADDR,  /*   source tile address */ \
+#define arm_2d_rgb16_tile_fill( __SOURCE_ADDR,  /*   source tile address */     \
+                                __TARGET_ADDR,  /*   target tile address*/      \
+                                __REGION_ADDR,  /*   target region address*/    \
+                                ...)            /*   mode */                    \
+            arm_2dp_rgb16_tile_fill(NULL,                                       \
+                                    (__SOURCE_ADDR),                            \
+                                    (__TARGET_ADDR),                            \
+                                    (__REGION_ADDR),                            \
+                                    ##__VA_ARGS__)
+
+#define arm_2dp_rgb32_tile_fill(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     ...)            /*   mode */                \
@@ -855,30 +886,221 @@ extern "C" {
     switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
            &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
         case ARM_2D_CP_MODE_NO_MIRROR:                                          \
-            tResult = arm_2d_rgb32_tile_fill_only(                              \
+            tResult = arm_2dp_rgb32_tile_fill_only(                             \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_X_MIRROR:                                           \
-            tResult = arm_2d_rgb32_tile_fill_with_x_mirror(                     \
+            tResult = arm_2dp_rgb32_tile_fill_with_x_mirror(                    \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_Y_MIRROR:                                           \
-            tResult = arm_2d_rgb32_tile_fill_with_y_mirror(                     \
+            tResult = arm_2dp_rgb32_tile_fill_with_y_mirror(                    \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
         case ARM_2D_CP_MODE_XY_MIRROR:                                          \
-            tResult = arm_2d_rgb32_tile_fill_with_xy_mirror(                    \
+            tResult = arm_2dp_rgb32_tile_fill_with_xy_mirror(                   \
+                            (__OPCODE_PTR),                                     \
                             (__SOURCE_ADDR),                                    \
                             (__TARGET_ADDR),                                    \
                             (__REGION_ADDR));                                   \
             break;                                                              \
     }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_rgb32_tile_fill( __SOURCE_ADDR,  /*   source tile address */     \
+                                __TARGET_ADDR,  /*   target tile address*/      \
+                                __REGION_ADDR,  /*   target region address*/    \
+                                ...)            /*   mode */                    \
+            arm_2dp_rgb32_tile_fill(NULL,                                       \
+                                    (__SOURCE_ADDR),                            \
+                                    (__TARGET_ADDR),                            \
+                                    (__REGION_ADDR),                            \
+                                    ##__VA_ARGS__)
+
+/*!
+ * \brief tile copy with specified mode
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMode the copy mode
+ * \return arm_fsm_rt_t the operation result
+ */
+#define arm_2dp_c8bit_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
+        tResult = arm_2dp_c8bit_tile_fill(                                      \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+    } else {                                                                    \
+        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
+            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
+            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
+                tResult = arm_2dp_c8bit_tile_copy_only(                         \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_X_MIRROR:                                       \
+                tResult = arm_2dp_c8bit_tile_copy_with_x_mirror(                \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
+                tResult = arm_2dp_c8bit_tile_copy_with_y_mirror(                \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
+                tResult = arm_2dp_c8bit_tile_copy_with_xy_mirror(               \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+        }                                                                       \
+    };                                                                          \
+    tResult;                                                                    \
+})
+
+/*!
+ * \brief tile copy with specified mode
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMode the copy mode
+ * \return arm_fsm_rt_t the operation result
+ */
+#define arm_2dp_rgb16_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
+        tResult = arm_2dp_rgb16_tile_fill(                                      \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+    } else {                                                                    \
+        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
+            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
+            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
+                tResult = arm_2dp_rgb16_tile_copy_only(                         \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_X_MIRROR:                                       \
+                tResult = arm_2dp_rgb16_tile_copy_with_x_mirror(                \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
+                tResult = arm_2dp_rgb16_tile_copy_with_y_mirror(                \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
+                tResult = arm_2dp_rgb16_tile_copy_with_xy_mirror(               \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+        }                                                                       \
+    };                                                                          \
+    tResult;                                                                    \
+})
+
+/*!
+ * \brief tile copy with specified mode
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[in] ptSource the source tile
+ * \param[in] ptTarget the target tile
+ * \param[in] ptRegion the target region, NULL means using the region of the 
+ *            target tile.
+ * \param[in] wMode the copy mode
+ * \return arm_fsm_rt_t the operation result
+ */
+#define arm_2dp_rgb32_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
+        tResult = arm_2dp_rgb32_tile_fill(                                      \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+    } else {                                                                    \
+        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
+            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
+            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
+                tResult = arm_2dp_rgb32_tile_copy_only(                         \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_X_MIRROR:                                       \
+                tResult = arm_2dp_rgb32_tile_copy_with_x_mirror(                \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
+                tResult = arm_2dp_rgb32_tile_copy_with_y_mirror(                \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
+                tResult = arm_2dp_rgb32_tile_copy_with_xy_mirror(               \
+                                (__OPCODE_PTR),                                 \
+                                (__SOURCE_ADDR),                                \
+                                (__TARGET_ADDR),                                \
+                                (__REGION_ADDR));                               \
+                break;                                                          \
+        }                                                                       \
+    };                                                                          \
     tResult;                                                                    \
 })
 
@@ -1278,6 +1500,9 @@ enum __arm_2d_copy_mode_t {
                                   ARM_2D_CP_MODE_Y_MIRROR,
 };
 
+
+
+#if 0
 /*!
  * \brief tile copy with specified mode
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -1331,6 +1556,7 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_copy(arm_2d_op_cp_t *ptOP,
                                      const arm_2d_tile_t *ptTarget,
                                      const arm_2d_region_t *ptRegion,
                                      uint32_t wMode);
+#endif
 
 /*----------------------------------------------------------------------------*
  * Copy Only                                                                  *
