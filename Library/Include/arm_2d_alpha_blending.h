@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        27 Nov 2025
- * $Revision:    V.1.12.1
+ * $Date:        28 Nov 2025
+ * $Revision:    V.1.12.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -385,46 +385,6 @@ extern "C" {
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#if 0
-#define arm_2d_gray8_fill_colour_with_mask(                                     \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    __ALPHA_ADDR,   /*   alpha tile address */  \
-                                    __COLOUR)       /*   colour */              \
-            arm_2dp_gray8_fill_colour_with_mask_only(                           \
-                                      NULL,                                     \
-                                     (__TARGET_ADDR),                           \
-                                     (__REGION_ADDR),                           \
-                                     (__ALPHA_ADDR),                            \
-                                     (__COLOUR))
-
-#define arm_2d_rgb565_fill_colour_with_mask(                                    \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    __ALPHA_ADDR,   /*   alpha tile address */  \
-                                    __COLOUR)       /*   colour */              \
-            arm_2dp_rgb565_fill_colour_with_mask_only(                          \
-                                      NULL,                                     \
-                                     (__TARGET_ADDR),                           \
-                                     (__REGION_ADDR),                           \
-                                     (__ALPHA_ADDR),                            \
-                                     (__COLOUR))
-
-#define arm_2d_cccn888_fill_colour_with_mask(                                   \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    __ALPHA_ADDR,   /*   alpha tile address */  \
-                                    __COLOUR)       /*   colour */              \
-            arm_2dp_cccn888_fill_colour_with_mask_only(                         \
-                                      NULL,                                     \
-                                     (__TARGET_ADDR),                           \
-                                     (__REGION_ADDR),                           \
-                                     (__ALPHA_ADDR),                            \
-                                     (__COLOUR))
-#endif
-
-
-
 #define arm_2d_rgb888_fill_colour_with_mask(                                    \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
@@ -613,50 +573,6 @@ extern "C" {
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR),                                \
                                      (__OPACITY))
-
-#if 0
-#define arm_2d_gray8_fill_colour_with_mask_and_opacity(                         \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    __ALPHA_ADDR,   /*   alpha tile address */  \
-                                    __COLOUR,       /*   colour */              \
-                                    __OPACITY)                                  \
-            arm_2dp_gray8_fill_colour_with_mask_and_opacity_only(               \
-                                      NULL,                                     \
-                                     (__TARGET_ADDR),                           \
-                                     (__REGION_ADDR),                           \
-                                     (__ALPHA_ADDR),                            \
-                                     (__COLOUR),                                \
-                                     (__OPACITY))
-
-#define arm_2d_rgb565_fill_colour_with_mask_and_opacity(                        \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    __ALPHA_ADDR,   /*   alpha tile address */  \
-                                    __COLOUR,       /*   colour */              \
-                                    __OPACITY)                                  \
-            arm_2dp_rgb565_fill_colour_with_mask_and_opacity_only(              \
-                                      NULL,                                     \
-                                     (__TARGET_ADDR),                           \
-                                     (__REGION_ADDR),                           \
-                                     (__ALPHA_ADDR),                            \
-                                     (__COLOUR),                                \
-                                     (__OPACITY))
-
-#define arm_2d_cccn888_fill_colour_with_mask_and_opacity(                       \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    __ALPHA_ADDR,   /*   alpha tile address */  \
-                                    __COLOUR,       /*   colour */              \
-                                    __OPACITY)                                  \
-            arm_2dp_cccn888_fill_colour_with_mask_and_opacity_only(             \
-                                      NULL,                                     \
-                                     (__TARGET_ADDR),                           \
-                                     (__REGION_ADDR),                           \
-                                     (__ALPHA_ADDR),                            \
-                                     (__COLOUR),                                \
-                                     (__OPACITY))
-#endif 
 
 #define arm_2d_rgb888_fill_colour_with_mask_and_opacity(                        \
                                     __TARGET_ADDR,  /*   target tile address*/  \
