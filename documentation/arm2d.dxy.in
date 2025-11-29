@@ -2322,6 +2322,8 @@ INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = ARM_NONNULL(...)= \
                          __attribute__(...)= \
                          ARM_PRIVATE(...):=struct{__VA_ARGS__}; \
+                         ARM_PROTECTED(...):=struct{__VA_ARGS__}; \
+                         ARM_PUBLIC(...):=struct{__VA_ARGS__}; \
                          "implement_ex(__struct,__name):=__struct" \
                          __name \
                          inherit(x):=x \
