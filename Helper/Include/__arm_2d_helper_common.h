@@ -23,7 +23,7 @@
  *               arm-2d helper services
  *
  * $Date:        01. Dec 2025
- * $Revision:    V.1.8.9
+ * $Revision:    V.1.8.10
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -127,6 +127,8 @@ extern "C" {
                 arm_2d_gray8_tile_copy_with_masks_and_y_mirror
 #   define arm_2d_tile_copy_with_masks_and_xy_mirror                            \
                 arm_2d_gray8_tile_copy_with_masks_and_xy_mirror
+#   define arm_2d_tile_fill_with_masks                                          \
+                arm_2d_gray8_tile_fill_with_masks
 #   define arm_2d_tile_fill_with_masks_only                                     \
                 arm_2d_gray8_tile_fill_with_masks_only
 #   define arm_2d_tile_fill_with_masks_and_x_mirror                             \
@@ -382,6 +384,8 @@ extern "C" {
                 arm_2d_rgb565_tile_copy_with_masks_and_y_mirror
 #   define arm_2d_tile_copy_with_masks_and_xy_mirror                            \
                 arm_2d_rgb565_tile_copy_with_masks_and_xy_mirror
+#   define arm_2d_tile_fill_with_masks                                          \
+                arm_2d_rgb565_tile_fill_with_masks
 #   define arm_2d_tile_fill_with_masks_only                                     \
                 arm_2d_rgb565_tile_fill_with_masks_only
 #   define arm_2d_tile_fill_with_masks_and_x_mirror                             \
@@ -637,6 +641,8 @@ extern "C" {
                 arm_2d_cccn888_tile_copy_with_masks_and_y_mirror
 #   define arm_2d_tile_copy_with_masks_and_xy_mirror                            \
                 arm_2d_cccn888_tile_copy_with_masks_and_xy_mirror
+#   define arm_2d_tile_fill_with_masks                                          \
+                arm_2d_cccn888_tile_fill_with_masks
 #   define arm_2d_tile_fill_with_masks_only                                     \
                 arm_2d_cccn888_tile_fill_with_masks_only
 #   define arm_2d_tile_fill_with_masks_and_x_mirror                             \
