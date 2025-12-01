@@ -22,7 +22,7 @@
  * Description:  header files for internal users or professional developers
  *
  * $Date:        01 Dec 2025
- * $Revision:    V.1.7.7
+ * $Revision:    V.1.7.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1015,31 +1015,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_masks_and_xy_mirror(
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_masks_and_xy_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
 
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_src_mask_only(
