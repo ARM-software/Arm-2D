@@ -1053,6 +1053,7 @@ void __disp_adapter0_vres_asset_2dcopy( uintptr_t pObj,
         pSrc += iSourceStride * iPixelSize;
     }
 }
+
 __WEAK
 bool __disp_adapter0_vres_asset_hint_on_load(uintptr_t pObj, 
                                             arm_2d_vres_t *ptVRES, 
@@ -1062,6 +1063,14 @@ bool __disp_adapter0_vres_asset_hint_on_load(uintptr_t pObj,
     ARM_2D_UNUSED(ptVRES);
     ARM_2D_UNUSED(ptRegion);
 
+    /*
+     * NOTE: When return true, it means user provides buffer and stores
+     *       the buffer address in ptVRES->tTile.nAddress. Once you have
+     *       return true, you take the responsiblity to manage the buffer,
+     *       and make sure you return true in 
+     *       __disp_adapter0_vres_asset_hint_depose also.
+     *       
+     */
     return false;
 }
 
@@ -1072,7 +1081,15 @@ bool __disp_adapter0_vres_asset_hint_depose(uintptr_t pObj,
 {
     ARM_2D_UNUSED(pObj);
     ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(pBuffer);
 
+    /*
+     * NOTE: When return true, it means user provides buffer and stores
+     *       the buffer address in ptVRES->tTile.nAddress. 
+     * NOTE: It is YOUR responsibility to manage the buffer (e.g. release) 
+     *       and the display adapter service will NOT release the buffer
+     *       for you. 
+     */
     return false;
 }
 
@@ -1106,8 +1123,8 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
 
     /* background load mode */
     do {
-        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES 
-        &&  !bUserAllocated) {
+        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES     /* NOT copy only */
+        &&  !bUserAllocated) {                                                  /* NO user provided buffer*/
             break;
         }
 
