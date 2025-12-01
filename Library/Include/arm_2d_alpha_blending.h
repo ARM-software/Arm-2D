@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the alpha related APIs
  *
  * $Date:        01 Dec 2025
- * $Revision:    V.1.12.3
+ * $Revision:    V.1.13.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3051,6 +3051,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity(
                                                 uint_fast8_t chRatio,
                                                 arm_2d_color_cccn888_t tColour);
 
+#if 0
 /*----------------------------------------------------------------------------*
  * Copy tile to target tile with a source mask, a target mask and a given mode*
  *----------------------------------------------------------------------------*/
@@ -3120,6 +3121,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks(
                                         const arm_2d_tile_t *ptDesMask,
                                         const arm_2d_region_t *ptRegion,
                                         uint32_t wMode);
+#endif 
 
 /*----------------------------------------------------------------------------*
  * Copy tile to target tile with a source mask and a target mask              *

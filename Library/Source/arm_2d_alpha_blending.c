@@ -22,7 +22,7 @@
  * Description:  APIs for various alpha related operations
  *
  * $Date:        01 Dec 2025
- * $Revision:    V.1.12.3
+ * $Revision:    V.1.13.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -201,197 +201,6 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with specified masks                              *
  *----------------------------------------------------------------------------*/
-
-ARM_NONNULL(2,3,4,5)
-arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptSrcMask);
-    assert(NULL != ptTarget);
-    assert(NULL != ptDesMask);
-
-    ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
-
-#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (wMode == ARM_2D_CP_MODE_COPY && NULL == ptDesMask && NULL != ptSrcMask) {
-        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
-        if (NULL == ptSourceRoot) {
-            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-        }
-        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
-            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
-                case ARM_2D_COLOUR_GRAY8:
-                case ARM_2D_COLOUR_CCCA8888:
-                    /* code */
-                    break;
-                
-                default:
-                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                    //break;
-            }
-        }
-    }
-#endif
-
-    arm_2d_err_t tErr = __arm_mask_validate(
-                                            ptSource, ptSrcMask,
-                                            ptTarget, ptDesMask, wMode);
-    if (tErr < 0) {
-        return (arm_fsm_rt_t)tErr;
-    }
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-    
-    //memset(ptThis, 0, sizeof(*ptThis));
-
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_MASK_GRAY8;
-
-    this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = ptRegion;
-    this.Source.ptTile = ptSource;
-    this.wMode = wMode;
-    this.Mask.ptSourceSide = ptSrcMask;
-    this.Mask.ptTargetSide = ptDesMask;
-
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-}
-
-ARM_NONNULL(2,3,4,5)
-arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptSrcMask);
-    assert(NULL != ptTarget);
-    assert(NULL != ptDesMask);
-
-    ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
-
-#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (wMode == ARM_2D_CP_MODE_COPY && NULL == ptDesMask && NULL != ptSrcMask) {
-        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
-        if (NULL == ptSourceRoot) {
-            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-        }
-        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
-            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
-                case ARM_2D_COLOUR_RGB565:
-                case ARM_2D_COLOUR_CCCA8888:
-                    /* code */
-                    break;
-                
-                default:
-                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                    //break;
-            }
-        }
-    }
-#endif
-
-    arm_2d_err_t tErr = __arm_mask_validate(
-                                            ptSource, ptSrcMask,
-                                            ptTarget, ptDesMask, wMode);
-    if (tErr < 0) {
-        return (arm_fsm_rt_t)tErr;
-    }
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-    
-    //memset(ptThis, 0, sizeof(*ptThis));
-
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_MASK_RGB565;
-
-    this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = ptRegion;
-    this.Source.ptTile = ptSource;
-    this.wMode = wMode;
-    this.Mask.ptSourceSide = ptSrcMask;
-    this.Mask.ptTargetSide = ptDesMask;
-
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-    
-
-}
-
-ARM_NONNULL(2,3,4,5)
-arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptSrcMask);
-    assert(NULL != ptTarget);
-    assert(NULL != ptDesMask);
-    
-    ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
-
-#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
-    if (wMode == ARM_2D_CP_MODE_COPY && NULL == ptDesMask && NULL != ptSrcMask) {
-        arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
-        if (NULL == ptSourceRoot) {
-            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
-        }
-        if (ptSourceRoot->tInfo.bHasEnforcedColour) {
-            switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
-                case ARM_2D_COLOUR_CCCN888:
-                case ARM_2D_COLOUR_CCCA8888:
-                    /* code */
-                    break;
-                
-                default:
-                    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
-                    //break;
-            }
-        }
-    }
-#endif
-
-    arm_2d_err_t tErr = __arm_mask_validate(
-                                            ptSource, ptSrcMask,
-                                            ptTarget, ptDesMask, wMode);
-    if (tErr < 0) {
-        return (arm_fsm_rt_t)tErr;
-    }
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-    
-    //memset(ptThis, 0, sizeof(*ptThis));
-
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_MASK_CCCN888;
-
-    this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = ptRegion;
-    this.Source.ptTile = ptSource;
-    this.wMode = wMode;
-    this.Mask.ptSourceSide = ptSrcMask;
-    this.Mask.ptTargetSide = ptDesMask;
-
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-}
 
 #define ARM_2D_CP_MODE_ONLY                 ARM_2D_CP_MODE_COPY
 #define ARM_2D_COLOUR_C8BIT                 ARM_2D_COLOUR_8BIT
@@ -1791,7 +1600,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_OPACITY_RGB888 = {
     },
 };
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -1812,7 +1621,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -1833,7 +1642,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -1854,7 +1663,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_CCCN888 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -1874,7 +1683,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -1894,7 +1703,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -1977,7 +1786,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_CCCN888 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -1997,7 +1806,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -2017,7 +1826,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -2100,7 +1909,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_CCCN888 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -2120,7 +1929,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -2140,7 +1949,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -2222,7 +2031,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_CCCN888 = {
     },
 };
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -2242,7 +2051,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -2262,7 +2071,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
