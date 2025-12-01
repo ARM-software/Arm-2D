@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        27. Nov 2025
- * $Revision:    V.1.8.0
+ * $Date:        01. Dec 2025
+ * $Revision:    V.1.8.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -36,8 +36,6 @@
 #ifdef   __cplusplus
 extern "C" {
 #endif
-
-
 
 /*============================ MACROS ========================================*/
 
@@ -64,32 +62,32 @@ extern "C" {
 #define arm_2d_c8bit_tile_copy( __SRC_ADDR,         /*   source tile address */ \
                                 __DES_ADDR,         /*   target tile address */ \
                                 __DES_REGION_ADDR,  /*   target region address*/\
-                                __MODE)             /*   mode */                \
+                                ...)                /*   mode */                \
             arm_2dp_c8bit_tile_copy(NULL,                                       \
                                     (__SRC_ADDR),                               \
                                     (__DES_ADDR),                               \
                                     (__DES_REGION_ADDR),                        \
-                                    (__MODE))
+                                    ##__VA_ARGS__)
 
 #define arm_2d_rgb16_tile_copy( __SRC_ADDR,         /*   source tile address */ \
                                 __DES_ADDR,         /*   target tile address */ \
                                 __DES_REGION_ADDR,  /*   target region address*/\
-                                __MODE)             /*   mode */                \
+                                ...)                /*   mode */                \
             arm_2dp_rgb16_tile_copy(NULL,                                       \
                                     (__SRC_ADDR),                               \
                                     (__DES_ADDR),                               \
                                     (__DES_REGION_ADDR),                        \
-                                    (__MODE))
+                                    ##__VA_ARGS__)
 
 #define arm_2d_rgb32_tile_copy( __SRC_ADDR,         /*   source tile address */ \
                                 __DES_ADDR,         /*   target tile address */ \
                                 __DES_REGION_ADDR,  /*   target region address*/\
-                                __MODE)             /*   mode */                \
+                                ...)                /*   mode */                \
             arm_2dp_rgb32_tile_copy(NULL,                                       \
                                     (__SRC_ADDR),                               \
                                     (__DES_ADDR),                               \
                                     (__DES_REGION_ADDR),                        \
-                                    (__MODE))
+                                    ##__VA_ARGS__)
 
 #define arm_2d_c8bit_tile_copy_only(                                            \
                                 __SRC_ADDR,         /*   source tile address */ \
@@ -2548,7 +2546,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_only(
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
 
-
 /*! 
  * \brief tile copy with colour-keying
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -2569,7 +2566,6 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying_only(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint32_t wMaskColour);
-
 
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with colour-keying and x-mirroring                *
@@ -2614,7 +2610,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_and_x_mirror(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
-
 
 /*! 
  * \brief tile copy with colour-keying and x-mirroring
@@ -2682,7 +2677,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_and_y_mirror(
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
 
-
 /*! 
  * \brief tile copy with colour-keying and y-mirroring
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -2747,7 +2741,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying_and_xy_mirror(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
-
 
 /*! 
  * \brief tile copy with colour-keying and xy-mirroring
@@ -2815,7 +2808,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_only(
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
 
-
 /*! 
  * \brief tile filling (tiling) with colour-keying
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -2836,7 +2828,6 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_only(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint32_t wMaskColour);
-
 
 /*----------------------------------------------------------------------------*
  * Tile filling (tiling) to destination with colour-keying and x-mirroring    *
@@ -2882,7 +2873,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_and_x_mirror(
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
 
-
 /*! 
  * \brief tile filling (tiling) with colour-keying and x-mirroring
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -2903,7 +2893,6 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_and_x_mirror(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint32_t wMaskColour);
-
 
 /*----------------------------------------------------------------------------*
  * Tile filling (tiling) to destination with colour-keying and y-mirroring    *
@@ -3015,7 +3004,6 @@ arm_fsm_rt_t arm_2dp_rgb16_tile_fill_with_colour_keying_and_xy_mirror(
                                             const arm_2d_region_t *ptRegion,
                                             uint16_t hwMaskColour);
 
-
 /*! 
  * \brief tile filling (tiling) with colour-keying and xy-mirroring
  * \param[in] ptOP the control block, NULL means using the default control block
@@ -3036,10 +3024,6 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_colour_keying_and_xy_mirror(
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion,
                                             uint32_t wMaskColour);
-
-
-
-
 
 /*! @} */
 
