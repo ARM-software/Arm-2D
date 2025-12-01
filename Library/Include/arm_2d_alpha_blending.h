@@ -966,6 +966,228 @@ extern "C" {
                                         ##__VA_ARGS__)
 
 /*!
+ * \brief copy a source tile to a target tile with masks and an optional mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __SRC_MSK_ADDR the mask on the source side
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __DES_MSK_ADDR the mask on the target side
+ * \param[in] __REGION the target region
+ * \param[in] ... the optional copy mode
+ * \return arm_fsm_rt_t the operation result
+ */
+#define arm_2dp_gray8_tile_copy_with_masks(                                     \
+                                    __OPCODE_PTR,   /*   arm_2d_op_cp_msk_t * */\
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address*/  \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION,       /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
+        tResult = arm_2dp_gray8_tile_fill_with_masks(                           \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION),                             \
+                                        ##__VA_ARGS__);                         \
+    } else {                                                                    \
+        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
+            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
+            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
+                tResult = arm_2dp_gray8_tile_copy_with_masks_only(              \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_X_MIRROR:                                       \
+                tResult = arm_2dp_gray8_tile_copy_with_masks_and_x_mirror(      \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
+                tResult = arm_2dp_gray8_tile_copy_with_masks_and_y_mirror(      \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
+                tResult = arm_2dp_gray8_tile_copy_with_masks_and_xy_mirror(     \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+        }                                                                       \
+    };                                                                          \
+    tResult;                                                                    \
+})
+
+/*!
+ * \brief copy a source tile to a target tile with masks and an optional mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __SRC_MSK_ADDR the mask on the source side
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __DES_MSK_ADDR the mask on the target side
+ * \param[in] __REGION the target region
+ * \param[in] ... the optional copy mode
+ * \return arm_fsm_rt_t the operation result
+ */
+#define arm_2dp_rgb565_tile_copy_with_masks(                                    \
+                                    __OPCODE_PTR,   /*   arm_2d_op_cp_msk_t * */\
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address*/  \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION,       /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
+        tResult = arm_2dp_rgb565_tile_fill_with_masks(                          \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION),                             \
+                                        ##__VA_ARGS__);                         \
+    } else {                                                                    \
+        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
+            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
+            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
+                tResult = arm_2dp_rgb565_tile_copy_with_masks_only(             \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_X_MIRROR:                                       \
+                tResult = arm_2dp_rgb565_tile_copy_with_masks_and_x_mirror(     \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
+                tResult = arm_2dp_rgb565_tile_copy_with_masks_and_y_mirror(     \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
+                tResult = arm_2dp_rgb565_tile_copy_with_masks_and_xy_mirror(    \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+        }                                                                       \
+    };                                                                          \
+    tResult;                                                                    \
+})
+
+/*!
+ * \brief copy a source tile to a target tile with masks and an optional mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __SRC_MSK_ADDR the mask on the source side
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __DES_MSK_ADDR the mask on the target side
+ * \param[in] __REGION the target region
+ * \param[in] ... the optional copy mode
+ * \return arm_fsm_rt_t the operation result
+ */
+#define arm_2dp_cccn888_tile_copy_with_masks(                                   \
+                                    __OPCODE_PTR,   /*   arm_2d_op_cp_msk_t * */\
+                                    __SRC_ADDR,     /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __DES_ADDR,     /*   target tile address*/  \
+                                    __DES_MSK_ADDR, /*   target mask address */ \
+                                    __REGION,       /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
+        tResult = arm_2dp_cccn888_tile_fill_with_masks(                         \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION),                             \
+                                        ##__VA_ARGS__);                         \
+    } else {                                                                    \
+        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
+            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
+            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
+                tResult = arm_2dp_cccn888_tile_copy_with_masks_only(            \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_X_MIRROR:                                       \
+                tResult = arm_2dp_cccn888_tile_copy_with_masks_and_x_mirror(    \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
+                tResult = arm_2dp_cccn888_tile_copy_with_masks_and_y_mirror(    \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
+                tResult = arm_2dp_cccn888_tile_copy_with_masks_and_xy_mirror(   \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__DES_MSK_ADDR),                       \
+                                        (__REGION));                            \
+                break;                                                          \
+        }                                                                       \
+    };                                                                          \
+    tResult;                                                                    \
+})
+
+/*!
  * \brief copy a source tile to a target tile with a source mask in a optional mode
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptSource the source tile
@@ -3844,71 +4066,6 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_masks_and_xy_mirror(
                                         const arm_2d_tile_t *ptDesMask,
                                         const arm_2d_region_t *ptRegion);
 
-#if 0
-/*----------------------------------------------------------------------------*
- * Copy tile to destination with a source mask and a specified mode           *
- *----------------------------------------------------------------------------*/
-/*!
- * \brief copy a source tile to a target tile with a source mask in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_src_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode); 
-
-/*!
- * \brief copy a source tile to a target tile with a source mask in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_src_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode);
-
-/*!
- * \brief copy a source tile to a target tile with a source mask in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_src_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode); 
-
-#endif
 
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with a specified source mask                      *

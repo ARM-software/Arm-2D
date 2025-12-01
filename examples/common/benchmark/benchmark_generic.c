@@ -592,7 +592,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
         //arm_2d_align_centre(__canvas, c_tileCMSISLogoMask.tRegion.tSize) {
 
 #if 1
-            arm_2d_tile_fill_with_masks(
+            arm_2d_tile_copy_with_masks(
                 &c_tileCMSISLogo,
                 &c_tileCMSISLogoMask,
                 &tTempPanel,
