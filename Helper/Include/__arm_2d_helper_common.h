@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        27. Nov 2025
- * $Revision:    V.1.8.7
+ * $Date:        01. Dec 2025
+ * $Revision:    V.1.8.8
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -102,6 +102,8 @@ extern "C" {
 
 #   define arm_2d_tile_fill                                                     \
                 arm_2d_c8bit_tile_fill
+#   define arm_2d_tile_fill_with_src_mask                                       \
+                arm_2d_gray8_tile_fill_with_src_mask
 #   define arm_2d_draw_pattern      arm_2d_c8bit_draw_pattern
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_gray8_fill_colour_with_opacity
@@ -353,6 +355,8 @@ extern "C" {
 
 #   define arm_2d_tile_fill                                                     \
                 arm_2d_rgb16_tile_fill
+#   define arm_2d_tile_fill_with_src_mask                                       \
+                arm_2d_rgb565_tile_fill_with_src_mask
 #   define arm_2d_draw_pattern      arm_2d_rgb16_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_rgb565_fill_colour_with_opacity
@@ -604,6 +608,8 @@ extern "C" {
 
 #   define arm_2d_tile_fill                                                     \
                 arm_2d_rgb32_tile_fill
+#   define arm_2d_tile_fill_with_src_mask                                       \
+                arm_2d_cccn888_tile_fill_with_src_mask    
 #   define arm_2d_draw_pattern      arm_2d_rgb32_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_cccn888_fill_colour_with_opacity

@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        28 Nov 2025
- * $Revision:    V.1.12.2
+ * $Date:        01 Dec 2025
+ * $Revision:    V.1.12.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -761,52 +761,182 @@ extern "C" {
                                         (__REGION),                             \
                                         (__MODE))
 
-#define arm_2d_gray8_tile_copy_with_src_mask(                                   \
-                                    __SRC_ADDR,     /*   source tile address */ \
-                                    __SRC_MSK_ADDR, /*   source mask address */ \
-                                    __DES_ADDR,     /*   target tile address */ \
-                                    __REGION,       /*   region address */      \
-                                    __MODE)         /*   copy mode */           \
-            arm_2dp_gray8_tile_copy_with_src_mask(                              \
-                                        NULL,                                   \
-                                        (__SRC_ADDR),                           \
-                                        (__SRC_MSK_ADDR),                       \
-                                        (__DES_ADDR),                           \
-                                        (__REGION),                             \
-                                        (__MODE))
-
-
-#define arm_2d_rgb565_tile_copy_with_src_mask(                                  \
-                                    __SRC_ADDR,     /*   source tile address */ \
-                                    __SRC_MSK_ADDR, /*   source mask address */ \
-                                    __DES_ADDR,     /*   target tile address */ \
-                                    __REGION,       /*   region address */      \
-                                    __MODE)         /*   copy mode */           \
-            arm_2dp_rgb565_tile_copy_with_src_mask(                             \
-                                        NULL,                                   \
-                                        (__SRC_ADDR),                           \
-                                        (__SRC_MSK_ADDR),                       \
-                                        (__DES_ADDR),                           \
-                                        (__REGION),                             \
-                                        (__MODE))
-
-
 #define arm_2d_rgb888_tile_copy_with_src_mask                                   \
             arm_2d_cccn888_tile_copy_with_src_mask
 
-#define arm_2d_cccn888_tile_copy_with_src_mask(                                 \
-                                    __SRC_ADDR,     /*   source tile address */ \
+#define arm_2dp_gray8_tile_fill_with_src_mask(                                  \
+                                    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
-                                    __DES_ADDR,     /*   target tile address */ \
-                                    __REGION,       /*   region address */      \
-                                    __MODE)         /*   copy mode */           \
-            arm_2dp_cccn888_tile_copy_with_src_mask(                            \
-                                        NULL,                                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2dp_gray8_tile_fill_with_src_mask_only(               \
+                                        (__OPCODE_PTR),                         \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
                                         (__DES_ADDR),                           \
-                                        (__REGION),                             \
-                                        (__MODE))
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult = arm_2dp_gray8_tile_fill_with_src_mask_and_x_mirror(       \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult = arm_2dp_gray8_tile_fill_with_src_mask_and_y_mirror(       \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult = arm_2dp_gray8_tile_fill_with_src_mask_and_xy_mirror(      \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_gray8_tile_fill_with_src_mask(                                   \
+                                __SOURCE_ADDR,  /*   source tile address */     \
+                                __TARGET_ADDR,  /*   target tile address*/      \
+                                __REGION_ADDR,  /*   target region address*/    \
+                                ...)            /*   mode */                    \
+            arm_2dp_gray8_tile_fill_with_src_mask(NULL,                         \
+                                    (__SOURCE_ADDR),                            \
+                                    (__TARGET_ADDR),                            \
+                                    (__REGION_ADDR),                            \
+                                    ##__VA_ARGS__)
+
+#define arm_2dp_rgb565_tile_fill_with_src_mask(                                 \
+                                    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2dp_rgb565_tile_fill_with_src_mask_only(              \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult = arm_2dp_rgb565_tile_fill_with_src_mask_and_x_mirror(      \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult = arm_2dp_rgb565_tile_fill_with_src_mask_and_y_mirror(      \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult = arm_2dp_rgb565_tile_fill_with_src_mask_and_xy_mirror(     \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_rgb565_tile_fill_with_src_mask(                                  \
+                                __SOURCE_ADDR,  /*   source tile address */     \
+                                __TARGET_ADDR,  /*   target tile address*/      \
+                                __REGION_ADDR,  /*   target region address*/    \
+                                ...)            /*   mode */                    \
+            arm_2dp_rgb565_tile_fill_with_src_mask(NULL,                        \
+                                    (__SOURCE_ADDR),                            \
+                                    (__TARGET_ADDR),                            \
+                                    (__REGION_ADDR),                            \
+                                    ##__VA_ARGS__)
+
+#define arm_2dp_cccn888_tile_fill_with_src_mask(                                \
+                                    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
+                                    __SOURCE_ADDR,  /*   source tile address */ \
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2dp_cccn888_tile_fill_with_src_mask_only(             \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult = arm_2dp_cccn888_tile_fill_with_src_mask_and_x_mirror(     \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult = arm_2dp_cccn888_tile_fill_with_src_mask_and_y_mirror(     \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult = arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror(    \
+                                        (__OPCODE_PTR),                         \
+                                        (__SRC_ADDR),                           \
+                                        (__SRC_MSK_ADDR),                       \
+                                        (__DES_ADDR),                           \
+                                        (__REGION));                            \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_cccn888_tile_fill_with_src_mask(                                 \
+                                __SOURCE_ADDR,  /*   source tile address */     \
+                                __TARGET_ADDR,  /*   target tile address*/      \
+                                __REGION_ADDR,  /*   target region address*/    \
+                                ...)            /*   mode */                    \
+            arm_2dp_cccn888_tile_fill_with_src_mask(NULL,                       \
+                                    (__SOURCE_ADDR),                            \
+                                    (__TARGET_ADDR),                            \
+                                    (__REGION_ADDR),                            \
+                                    ##__VA_ARGS__)
 
 #define arm_2d_gray8_tile_copy_with_src_mask_only(                              \
                                     __SRC_ADDR,     /*   source tile address */ \
