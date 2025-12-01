@@ -95,7 +95,7 @@ var group__gAlpha =
     [ "arm_2d_fill_cl_3p_al_grd_t.__unnamed179__.__unnamed181__", "group__gAlpha.html#unionarm__2d__fill__cl__3p__al__grd__t_8____unnamed179_____8____unnamed181____", null ],
     [ "arm_2d_fill_cl_2p_al_grd_t.__unnamed183__", "group__gAlpha.html#structarm__2d__fill__cl__2p__al__grd__t_8____unnamed183____", null ],
     [ "arm_2d_fill_cl_2p_al_grd_t.__unnamed183__.__unnamed185__", "group__gAlpha.html#unionarm__2d__fill__cl__2p__al__grd__t_8____unnamed183_____8____unnamed185____", null ],
-    [ "arm_2dp_c8bit_tile_copy_with_src_mask", "group__gAlpha.html#gabc7d5cc549187026d52a98e5b2e2b601", null ],
+    [ "arm_2dp_gray8_tile_copy_with_src_mask", "group__gAlpha.html#ga227e7fabab27ac0c96e191630c29d23a", null ],
     [ "arm_2dp_rgb565_tile_copy_with_src_mask", "group__gAlpha.html#gaea8d91a6c9d31b837381410ddaf3da7e", null ],
     [ "arm_2dp_cccn888_tile_copy_with_src_mask", "group__gAlpha.html#ga1f58a55bd7bfaa12a4668e444cf5117d", null ],
     [ "arm_2d_op_cp_msk_t", "group__gAlpha.html#ga8d81a82d787906c56381e84f8944969f", null ],
