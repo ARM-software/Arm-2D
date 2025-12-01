@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        25 Nov 2025
- * $Revision:    V.1.7.6
+ * $Date:        01 Dec 2025
+ * $Revision:    V.1.7.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -422,8 +422,7 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_X_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_XY_MIRROR,
-    
-    __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK,
+
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_AND_Y_MIRROR,
