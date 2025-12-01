@@ -89,15 +89,19 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
     bool bUserAllocated;
+    bool bTransformSky;
 
     struct {
-        spin_zoom_widget_t tLand;
+        union {
+            spin_zoom_widget_t tLand;
+            spin_zoom_widget_t tSky;
+        };
     #if ARM_2D_DEMO_FAI_SHOW_HORIZON
         spin_zoom_widget_t tHorizon;
     #endif
     
         spin_zoom_widget_t tMarker;
-        q16_t q16PitchRatio;
+        float fPitchRatio;
     } Roll;
 
     struct {
