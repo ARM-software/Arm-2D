@@ -1059,10 +1059,37 @@ void __disp_adapter%Instance%_vres_asset_2dcopy( uintptr_t pObj,
     }
 }
 
+__WEAK
+bool __disp_adapter%Instance%_vres_asset_hint_on_load(  uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES, 
+                                            arm_2d_region_t *ptRegion)
+{
+    ARM_2D_UNUSED(pObj);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(ptRegion);
+
+    return false;
+}
+
+__WEAK
+bool __disp_adapter%Instance%_vres_asset_hint_depose(uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES,
+                                            intptr_t pBuffer)
+{
+    ARM_2D_UNUSED(pObj);
+    ARM_2D_UNUSED(ptVRES);
+
+    return false;
+}
+
+
 intptr_t __disp_adapter%Instance%_vres_asset_loader (uintptr_t pObj, 
                                             arm_2d_vres_t *ptVRES, 
                                             arm_2d_region_t *ptRegion)
 {
+    bool bUserAllocated = 
+    __disp_adapter%Instance%_vres_asset_hint_on_load(pObj, ptVRES, ptRegion);
+
     COLOUR_INT *pBuffer = NULL;
     size_t nPixelSize = sizeof(COLOUR_INT);
     size_t tBufferSize;
@@ -1086,7 +1113,8 @@ intptr_t __disp_adapter%Instance%_vres_asset_loader (uintptr_t pObj,
 
     /* background load mode */
     do {
-        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES) {
+        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES 
+        &&  !bUserAllocated) {
             break;
         }
 
@@ -1112,7 +1140,6 @@ intptr_t __disp_adapter%Instance%_vres_asset_loader (uintptr_t pObj,
     /* default condition */
     tBufferSize = ptRegion->tSize.iHeight * nBytesPerLine;
     
-    
 #if __DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     pBuffer = __disp_adapter%Instance%_aligned_malloc(tBufferSize, nPixelSize);
     assert(NULL != pBuffer);
@@ -1131,6 +1158,7 @@ intptr_t __disp_adapter%Instance%_vres_asset_loader (uintptr_t pObj,
     }
     pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
 #endif
+
     /* load content into the buffer */
     if (nBitsPerPixel < 8) {
         /* A1, A2 and A4 support */
@@ -1178,6 +1206,10 @@ void __disp_adapter%Instance%_vres_buffer_deposer (
                                             arm_2d_vres_t *ptVRES, 
                                             intptr_t pBuffer )
 {
+    if (__disp_adapter%Instance%_vres_asset_hint_depose(pTarget, ptVRES, pBuffer)) {
+        return ;
+    }
+
 #if __DISP%Instance%_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);
