@@ -315,6 +315,15 @@ Macros</h2></td></tr>
 <tr class="separator:ga738271ec6efc2cfd304005a1a4124312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga76ff01648676a3d1f6353dc2b37331dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gAlpha.html#ga76ff01648676a3d1f6353dc2b37331dc">arm_2d_cccn888_tile_fill_with_masks</a>( __SRC_ADDR,  __SRC_MSK_ADDR,  __DES_ADDR,  __DES_MSK_ADDR,  __REGION,  ...)</td></tr>
 <tr class="separator:ga76ff01648676a3d1f6353dc2b37331dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga362e341d534008d418b9c9ae626b55c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gAlpha.html#ga362e341d534008d418b9c9ae626b55c7">arm_2dp_gray8_tile_copy_with_masks</a>( __OPCODE_PTR,  __SRC_ADDR,  __SRC_MSK_ADDR,  __DES_ADDR,  __DES_MSK_ADDR,  __REGION,  ...)</td></tr>
+<tr class="memdesc:ga362e341d534008d418b9c9ae626b55c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy a source tile to a target tile with masks and an optional mode  <a href="group__gAlpha.html#ga362e341d534008d418b9c9ae626b55c7">More...</a><br /></td></tr>
+<tr class="separator:ga362e341d534008d418b9c9ae626b55c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ac99c1c3db38a3ec0fceec26b702fc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gAlpha.html#ga1ac99c1c3db38a3ec0fceec26b702fc2">arm_2dp_rgb565_tile_copy_with_masks</a>( __OPCODE_PTR,  __SRC_ADDR,  __SRC_MSK_ADDR,  __DES_ADDR,  __DES_MSK_ADDR,  __REGION,  ...)</td></tr>
+<tr class="memdesc:ga1ac99c1c3db38a3ec0fceec26b702fc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy a source tile to a target tile with masks and an optional mode  <a href="group__gAlpha.html#ga1ac99c1c3db38a3ec0fceec26b702fc2">More...</a><br /></td></tr>
+<tr class="separator:ga1ac99c1c3db38a3ec0fceec26b702fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace67712bba1806aa491a467dba53f72c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gAlpha.html#gace67712bba1806aa491a467dba53f72c">arm_2dp_cccn888_tile_copy_with_masks</a>( __OPCODE_PTR,  __SRC_ADDR,  __SRC_MSK_ADDR,  __DES_ADDR,  __DES_MSK_ADDR,  __REGION,  ...)</td></tr>
+<tr class="memdesc:gace67712bba1806aa491a467dba53f72c"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy a source tile to a target tile with masks and an optional mode  <a href="group__gAlpha.html#gace67712bba1806aa491a467dba53f72c">More...</a><br /></td></tr>
+<tr class="separator:gace67712bba1806aa491a467dba53f72c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga227e7fabab27ac0c96e191630c29d23a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gAlpha.html#ga227e7fabab27ac0c96e191630c29d23a">arm_2dp_gray8_tile_copy_with_src_mask</a>( __OPCODE_PTR,  __SRC_ADDR,  __SRC_MSK_ADDR,  __DES_ADDR,  __REGION,  ...)</td></tr>
 <tr class="memdesc:ga227e7fabab27ac0c96e191630c29d23a"><td class="mdescLeft">&#160;</td><td class="mdescRight">copy a source tile to a target tile with a source mask in a optional mode  <a href="group__gAlpha.html#ga227e7fabab27ac0c96e191630c29d23a">More...</a><br /></td></tr>
 <tr class="separator:ga227e7fabab27ac0c96e191630c29d23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4613,6 +4622,225 @@ wColour</td>
 <div class="line">                                        (__REGION),                             \</div>
 <div class="line">                                        ##__VA_ARGS__)</div>
 </div><!-- fragment -->
+</div>
+</div>
+<a id="ga362e341d534008d418b9c9ae626b55c7" name="ga362e341d534008d418b9c9ae626b55c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga362e341d534008d418b9c9ae626b55c7">&#9670;&#160;</a></span>arm_2dp_gray8_tile_copy_with_masks</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2dp_gray8_tile_copy_with_masks</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__OPCODE_PTR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SRC_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SRC_MSK_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DES_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DES_MSK_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__REGION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>copy a source tile to a target tile with masks and an optional mode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__OPCODE_PTR</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SRC_ADDR</td><td>the source tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SRC_MSK_ADDR</td><td>the mask on the source side </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DES_ADDR</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DES_MSK_ADDR</td><td>the mask on the target side </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__REGION</td><td>the target region </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>the optional copy mode </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="ga1ac99c1c3db38a3ec0fceec26b702fc2" name="ga1ac99c1c3db38a3ec0fceec26b702fc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1ac99c1c3db38a3ec0fceec26b702fc2">&#9670;&#160;</a></span>arm_2dp_rgb565_tile_copy_with_masks</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2dp_rgb565_tile_copy_with_masks</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__OPCODE_PTR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SRC_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SRC_MSK_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DES_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DES_MSK_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__REGION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>copy a source tile to a target tile with masks and an optional mode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__OPCODE_PTR</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SRC_ADDR</td><td>the source tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SRC_MSK_ADDR</td><td>the mask on the source side </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DES_ADDR</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DES_MSK_ADDR</td><td>the mask on the target side </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__REGION</td><td>the target region </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>the optional copy mode </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operation result </dd></dl>
+
+</div>
+</div>
+<a id="gace67712bba1806aa491a467dba53f72c" name="gace67712bba1806aa491a467dba53f72c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gace67712bba1806aa491a467dba53f72c">&#9670;&#160;</a></span>arm_2dp_cccn888_tile_copy_with_masks</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define arm_2dp_cccn888_tile_copy_with_masks</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__OPCODE_PTR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SRC_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__SRC_MSK_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DES_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__DES_MSK_ADDR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">__REGION, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>copy a source tile to a target tile with masks and an optional mode </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">__OPCODE_PTR</td><td>the control block, NULL means using the default control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SRC_ADDR</td><td>the source tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__SRC_MSK_ADDR</td><td>the mask on the source side </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DES_ADDR</td><td>the target tile </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__DES_MSK_ADDR</td><td>the mask on the target side </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">__REGION</td><td>the target region </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">...</td><td>the optional copy mode </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>arm_fsm_rt_t the operation result </dd></dl>
+
 </div>
 </div>
 <a id="ga227e7fabab27ac0c96e191630c29d23a" name="ga227e7fabab27ac0c96e191630c29d23a"></a>
