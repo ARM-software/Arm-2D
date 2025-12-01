@@ -1723,7 +1723,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_CCCN888 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_ONLY_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -1744,7 +1744,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_ONLY_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -1765,7 +1765,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_ONLY_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -1846,7 +1846,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_CCCN888 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_X_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -1867,7 +1867,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_X_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -1888,7 +1888,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_X_MIRROR_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -1969,7 +1969,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_CCCN888 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_Y_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -1990,7 +1990,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_Y_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -2011,7 +2011,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_Y_MIRROR_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
@@ -2091,7 +2091,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_CCCN888 = 
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_GRAY8 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_XY_MIRROR_GRAY8 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_GRAY8,
@@ -2112,7 +2112,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_GRAY8 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_RGB565 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_XY_MIRROR_RGB565 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_RGB565,
@@ -2133,7 +2133,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_RGB565 = {
 };
 
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_CCCN888 = {
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_XY_MIRROR_CCCN888 = {
     .Info = {
         .Colour = {
             .chScheme   = ARM_2D_COLOUR_CCCN888,
