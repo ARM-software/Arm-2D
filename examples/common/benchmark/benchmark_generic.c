@@ -677,6 +677,14 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                         GLCD_COLOR_GREEN);
 
     
+#if 1
+        arm_2d_tile_fill_with_colour_keying(
+                &c_tilePictureSun,
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].ptTile,
+                NULL,
+                GLCD_COLOR_WHITE,
+                s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode);
+#else
     //!< fill a given tile with the sun icon (with colour-keying)
     switch(s_ptRefreshLayers[BENCHMARK_LAYER_FILL_ICON_WITH_COLOUR_KEYING].wMode) {
         case ARM_2D_CP_MODE_FILL:
@@ -708,6 +716,7 @@ static void __draw_layers(  const arm_2d_tile_t *ptTile,
                 GLCD_COLOR_WHITE);
                 break;
     }
+#endif
 
 #endif
 

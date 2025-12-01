@@ -22,7 +22,7 @@
  * Description:  header files for internal users or professional developers
  *
  * $Date:        01 Dec 2025
- * $Revision:    V.1.7.8
+ * $Revision:    V.1.7.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -385,7 +385,7 @@ enum {
     __ARM_2D_OP_IDX_BARRIER,
     __ARM_2D_OP_IDX_SYNC = __ARM_2D_OP_IDX_BARRIER,
     
-    __ARM_2D_OP_IDX_COPY,
+    //__ARM_2D_OP_IDX_COPY,
     __ARM_2D_OP_IDX_COPY_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_Y_MIRROR,
@@ -396,14 +396,13 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_XY_MIRROR,
 
-    
-    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING,
-    __ARM_2D_OP_IDX_COPY_ONLY_WITH_COLOUR_KEYING,
+
+    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_XY_MIRROR,
 
-    __ARM_2D_OP_IDX_FILL_ONLY_WITH_COLOUR_KEYING,
+    __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_ONLY,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_X_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR,
@@ -1263,19 +1262,6 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask_and_xy_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
 
-
-extern 
-arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern 
-arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying(
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern 
-arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying(
-                                        __arm_2d_sub_task_t *ptTask);
-
 extern 
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_only(
                                                 __arm_2d_sub_task_t *ptTask);
@@ -1287,7 +1273,6 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_only(
 extern 
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_only(
                                         __arm_2d_sub_task_t *ptTask);
-
 
 extern 
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_and_x_mirror(
@@ -1323,18 +1308,6 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_and_xy_mirror(
 
 extern 
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_and_xy_mirror(
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying( 
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying( 
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying( 
                                         __arm_2d_sub_task_t *ptTask);
 
 extern

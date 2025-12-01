@@ -772,7 +772,7 @@ extern "C" {
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
-#define arm_2dp_c8bit_tile_copy_with_src_mask(                                  \
+#define arm_2dp_gray8_tile_copy_with_src_mask(                                  \
                                     __OPCODE_PTR,   /*   arm_2d_op_cp_msk_t * */\
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
@@ -782,7 +782,7 @@ extern "C" {
 ({                                                                              \
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
     if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
-        tResult = arm_2dp_c8bit_tile_fill_with_src_mask(                        \
+        tResult = arm_2dp_gray8_tile_fill_with_src_mask(                        \
                                         (__OPCODE_PTR),                         \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -793,7 +793,7 @@ extern "C" {
         switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
             &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
             case ARM_2D_CP_MODE_NO_MIRROR:                                      \
-                tResult = arm_2dp_c8bit_tile_copy_with_src_mask_only(           \
+                tResult = arm_2dp_gray8_tile_copy_with_src_mask_only(           \
                                         (__OPCODE_PTR),                         \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -801,7 +801,7 @@ extern "C" {
                                         (__REGION));                            \
                 break;                                                          \
             case ARM_2D_CP_MODE_X_MIRROR:                                       \
-                tResult = arm_2dp_c8bit_tile_copy_with_src_mask_and_x_mirror(   \
+                tResult = arm_2dp_gray8_tile_copy_with_src_mask_and_x_mirror(   \
                                         (__OPCODE_PTR),                         \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -809,7 +809,7 @@ extern "C" {
                                         (__REGION));                            \
                 break;                                                          \
             case ARM_2D_CP_MODE_Y_MIRROR:                                       \
-                tResult = arm_2dp_c8bit_tile_copy_with_src_mask_and_y_mirror(   \
+                tResult = arm_2dp_gray8_tile_copy_with_src_mask_and_y_mirror(   \
                                         (__OPCODE_PTR),                         \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -817,7 +817,7 @@ extern "C" {
                                         (__REGION));                            \
                 break;                                                          \
             case ARM_2D_CP_MODE_XY_MIRROR:                                      \
-                tResult = arm_2dp_c8bit_tile_copy_with_src_mask_and_xy_mirror(  \
+                tResult = arm_2dp_gray8_tile_copy_with_src_mask_and_xy_mirror(  \
                                         (__OPCODE_PTR),                         \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \

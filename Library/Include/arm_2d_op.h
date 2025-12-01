@@ -23,7 +23,7 @@
  *               interface header files 
  *
  * $Date:        01 Dec 2025
- * $Revision:    V.1.13.0
+ * $Revision:    V.1.13.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -68,16 +68,6 @@ const __arm_2d_op_info_t ARM_2D_OP_BARRIER;
 /*----------------------------------------------------------------------------*
  * Basic Tile Operation (Core)                                                *
  *----------------------------------------------------------------------------*/
-#if 0
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_C8BIT;    
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB16;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB32;
-#endif
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_C8BIT;    
@@ -150,15 +140,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_RGB16;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_RGB32;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_C8BIT;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_RGB16;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_RGB32;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_ONLY_C8BIT;
