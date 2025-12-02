@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        01 Dec 2025
- * $Revision:    V.1.13.1
+ * $Date:        02 Dec 2025
+ * $Revision:    V.1.13.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -733,15 +733,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_RGB565;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_CCCN888;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_GRAY8;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_RGB565;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_GRAY8;

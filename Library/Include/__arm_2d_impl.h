@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        01 Dec 2025
- * $Revision:    V.1.7.9
+ * $Date:        02 Dec 2025
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -384,8 +384,7 @@ enum {
     /*------------ arm-2d operation idx begin --------------*/
     __ARM_2D_OP_IDX_BARRIER,
     __ARM_2D_OP_IDX_SYNC = __ARM_2D_OP_IDX_BARRIER,
-    
-    //__ARM_2D_OP_IDX_COPY,
+
     __ARM_2D_OP_IDX_COPY_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_Y_MIRROR,
@@ -433,7 +432,6 @@ enum {
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_AND_OPACITY_ONLY,
     __ARM_2D_OP_IDX_FILL_WITH_SOURCE_MASK_AND_OPACITY_ONLY,
 
-    __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_Y_MIRROR,
@@ -1111,32 +1109,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_src_mask_and_xy_mirror(
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_src_mask_and_xy_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
-
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
 
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask_only(

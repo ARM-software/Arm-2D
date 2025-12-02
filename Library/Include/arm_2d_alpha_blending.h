@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.h
  * Description:  Public header file to contain the alpha related APIs
  *
- * $Date:        01 Dec 2025
- * $Revision:    V.1.14.0
+ * $Date:        02 Dec 2025
+ * $Revision:    V.1.15.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3476,78 +3476,6 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_colour_keying_and_opacity(
                                                 uint_fast8_t chRatio,
                                                 arm_2d_color_cccn888_t tColour);
 
-#if 0
-/*----------------------------------------------------------------------------*
- * Copy tile to target tile with a source mask, a target mask and a given mode*
- *----------------------------------------------------------------------------*/
-
-/*!
- * \brief copy a source tile to a target tile with masks in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptDesMask the mask on the target side
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4,5)
-arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_masks(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode); 
-
-/*!
- * \brief copy a source tile to a target tile with masks in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptDesMask the mask on the target side
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4,5)
-arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_masks(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode);
-
-/*!
- * \brief copy a source tile to a target tile with masks in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptDesMask the mask on the target side
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4,5)
-arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_masks(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptSrcMask,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode);
-#endif 
-
 /*----------------------------------------------------------------------------*
  * Copy tile to target tile with a source mask and a target mask              *
  *----------------------------------------------------------------------------*/
@@ -4535,7 +4463,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror(
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion); 
 
-
+#if 0
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with a target mask and a specified mode           *
  *----------------------------------------------------------------------------*/
@@ -4599,6 +4527,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask(
                                         const arm_2d_tile_t *ptDesMask,
                                         const arm_2d_region_t *ptRegion,
                                         uint32_t wMode); 
+#endif
 
 /*----------------------------------------------------------------------------*
  * Copy tile to target tile with a source tile and a target mask              *

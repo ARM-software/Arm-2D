@@ -21,8 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        01 Dec 2025
- * $Revision:    V.1.14.0
+ * $Date:        02 Dec 2025
+ * $Revision:    V.1.15.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -365,135 +365,6 @@ extern "C" {
 #define __API_CMMW_INT_TYPE                   uint32_t
 
 #include "__arm_2d_copy_with_mask_and_mirror_wrapper.inc"
-
-
-
-/*----------------------------------------------------------------------------*
- * Copy tile to destination with a specified target mask                      *
- *----------------------------------------------------------------------------*/
-
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptTarget);
-    assert(NULL != ptDesMask);
-
-    ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
-
-    arm_2d_err_t tErr = __arm_mask_validate(
-                                            ptSource, NULL,
-                                            ptTarget, ptDesMask, wMode);
-    if (tErr < 0) {
-        return (arm_fsm_rt_t)tErr;
-    }
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-    
-    //memset(ptThis, 0, sizeof(*ptThis));
-
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_DES_MASK_GRAY8;
-
-    this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = ptRegion;
-    this.Source.ptTile = ptSource;
-    this.wMode = wMode;
-    this.Mask.ptSourceSide = NULL;
-    this.Mask.ptTargetSide = ptDesMask;
-
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-}
-
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptTarget);
-    assert(NULL != ptDesMask);
-
-    
-    ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
-
-    arm_2d_err_t tErr = __arm_mask_validate(
-                                            ptSource, NULL,
-                                            ptTarget, ptDesMask, wMode);
-    if (tErr < 0) {
-        return (arm_fsm_rt_t)tErr;
-    }
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-    
-    //memset(ptThis, 0, sizeof(*ptThis));
-
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_DES_MASK_RGB565;
-
-    this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = ptRegion;
-    this.Source.ptTile = ptSource;
-    this.wMode = wMode;
-    this.Mask.ptSourceSide = NULL;
-    this.Mask.ptTargetSide = ptDesMask;
-
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-    
-
-}
-
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode)
-{
-    assert(NULL != ptSource);
-    assert(NULL != ptTarget);
-    assert(NULL != ptDesMask);
-    
-    ARM_2D_IMPL(arm_2d_op_cp_msk_t, ptOP);
-
-    arm_2d_err_t tErr = __arm_mask_validate(
-                                            ptSource, NULL,
-                                            ptTarget, ptDesMask, wMode);
-    if (tErr < 0) {
-        return (arm_fsm_rt_t)tErr;
-    }
-
-    if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
-        return arm_fsm_rt_on_going;
-    }
-    
-    //memset(ptThis, 0, sizeof(*ptThis));
-
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_DES_MASK_CCCN888;
-
-    this.Target.ptTile = ptTarget;
-    this.Target.ptRegion = ptRegion;
-    this.Source.ptTile = ptSource;
-    this.wMode = wMode;
-    this.Mask.ptSourceSide = NULL;
-    this.Mask.ptTargetSide = ptDesMask;
-
-    return __arm_2d_op_invoke((arm_2d_op_core_t *)ptThis);
-}
 
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with specified transparency ratio (0~255)         *
@@ -1287,27 +1158,6 @@ def_low_lv_io(__ARM_2D_IO_FILL_WITH_SRC_MASK_AND_XY_MIRROR_RGB565,
 __WEAK
 def_low_lv_io(__ARM_2D_IO_FILL_WITH_SRC_MASK_AND_XY_MIRROR_CCCN888, 
                 __arm_2d_cccn888_sw_tile_fill_with_src_mask_and_xy_mirror);
-
-
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_GRAY8, 
-                __arm_2d_gray8_sw_tile_copy_with_des_mask);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_WITH_DES_MASK_GRAY8, 
-                __arm_2d_gray8_sw_tile_fill_with_des_mask);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_RGB565, 
-                __arm_2d_rgb565_sw_tile_copy_with_des_mask);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_WITH_DES_MASK_RGB565, 
-                __arm_2d_rgb565_sw_tile_fill_with_des_mask);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_CCCN888, 
-                __arm_2d_cccn888_sw_tile_copy_with_des_mask);
-__WEAK
-def_low_lv_io(__ARM_2D_IO_FILL_WITH_DES_MASK_CCCN888, 
-                __arm_2d_cccn888_sw_tile_fill_with_des_mask);
-
 
 __WEAK
 def_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_ONLY_GRAY8, 
@@ -2574,65 +2424,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_CCCN888
     },
 };
 
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_GRAY8 = {
-    .Info = {
-        .Colour = {
-            .chScheme   = ARM_2D_COLOUR_GRAY8,
-        },
-        .Param = {
-            .bHasSource     = true,
-            .bHasTarget     = true,
-            .bHasSrcMask    = false,
-            .bHasDesMask    = true,
-        },
-        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
-        
-        .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_GRAY8),
-            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_DES_MASK_GRAY8),
-        },
-    },
-};
-
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_RGB565 = {
-    .Info = {
-        .Colour = {
-            .chScheme   = ARM_2D_COLOUR_RGB565,
-        },
-        .Param = {
-            .bHasSource     = true,
-            .bHasTarget     = true,
-            .bHasSrcMask    = false,
-            .bHasDesMask    = true,
-        },
-        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
-        
-        .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_RGB565),
-            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_DES_MASK_RGB565),
-        },
-    },
-};
-
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_CCCN888 = {
-    .Info = {
-        .Colour = {
-            .chScheme   = ARM_2D_COLOUR_CCCN888,
-        },
-        .Param = {
-            .bHasSource     = true,
-            .bHasTarget     = true,
-            .bHasSrcMask    = false,
-            .bHasDesMask    = true,
-        },
-        .chOpIndex      = __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
-        
-        .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_COPY_WITH_DES_MASK_CCCN888),
-            .ptFillLike = ref_low_lv_io(__ARM_2D_IO_FILL_WITH_DES_MASK_CCCN888),
-        },
-    },
-};
 
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_GRAY8 = {
     .Info = {
