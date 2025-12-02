@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        01. Dec 2025
- * $Revision:    V.1.8.1
+ * $Date:        02. Dec 2025
+ * $Revision:    V.1.8.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -926,13 +926,14 @@ extern "C" {
                                     ##__VA_ARGS__)
 
 /*!
- * \brief tile copy with specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \brief tile copy with an optinoal mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] wMode the copy mode
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_c8bit_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
@@ -986,13 +987,14 @@ extern "C" {
 })
 
 /*!
- * \brief tile copy with specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \brief tile copy with an optinoal mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] wMode the copy mode
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_rgb16_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
@@ -1046,13 +1048,14 @@ extern "C" {
 })
 
 /*!
- * \brief tile copy with specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \brief tile copy with an optinoal mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] wMode the copy mode
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_rgb32_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
@@ -1109,16 +1112,16 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Tile Copy with colour-keying and an optional mode                          *
  *----------------------------------------------------------------------------*/
-
-/*! 
+/*!
  * \brief tile fill with colour-keying and an optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
+ * \param[in] __MSK_COLOUR the key colour in any 8bit colour format
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_c8bit_tile_fill_with_colour_keying(                             \
@@ -1181,15 +1184,16 @@ extern "C" {
                                     (__MSK_COLOUR),                             \
                                     ##__VA_ARGS__)
 
-/*! 
- * \brief tile fill with colour-keying and an optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+/*!
+ * \brie tile fill with colour-keying and an optional mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
+ * \param[in] __MSK_COLOUR the key colour in any 8bit colour format
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_rgb16_tile_fill_with_colour_keying(                             \
@@ -1256,13 +1260,14 @@ extern "C" {
 
 /*! 
  * \brief tile fill with colour-keying and an optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
+ * \param[in] __MSK_COLOUR the key colour in any 8bit colour format
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_rgb32_tile_fill_with_colour_keying(                             \
@@ -1327,13 +1332,14 @@ extern "C" {
 
 /*! 
  * \brief tile copy with colour-keying and an optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
+ * \param[in] __MSK_COLOUR the key colour in any 8bit colour format
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_c8bit_tile_copy_with_colour_keying(                             \
@@ -1398,13 +1404,14 @@ extern "C" {
 
 /*! 
  * \brief tile copy with colour-keying and an optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
+ * \param[in] __MSK_COLOUR the key colour in any 8bit colour format
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_rgb16_tile_copy_with_colour_keying(                             \
@@ -1469,13 +1476,14 @@ extern "C" {
 
 /*! 
  * \brief tile copy with colour-keying and an optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SOURCE_ADDR the source tile
+ * \param[in] __TARGET_ADDR the target tile
+ * \param[in] __REGION_ADDR the target region, NULL means using the region of the 
  *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
+ * \param[in] __MSK_COLOUR the key colour in any 8bit colour format
+ * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
 #define arm_2dp_rgb32_tile_copy_with_colour_keying(                             \
@@ -1537,67 +1545,6 @@ extern "C" {
     };                                                                          \
     tResult;                                                                    \
 })
-
-/*!
- * \brief tile copy with specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
- *            target tile.
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-#define arm_2dp_rgb32_tile_copy(    __OPCODE_PTR,   /*   arm_2d_op_cp_t * */    \
-                                    __SOURCE_ADDR,  /*   source tile address */ \
-                                    __TARGET_ADDR,  /*   target tile address*/  \
-                                    __REGION_ADDR,  /*   target region address*/\
-                                    ...)            /*   mode */                \
-({                                                                              \
-    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
-    if ((ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__) & ARM_2D_CP_MODE_FILL) {      \
-        tResult = arm_2dp_rgb32_tile_fill(                                      \
-                                (__OPCODE_PTR),                                 \
-                                (__SOURCE_ADDR),                                \
-                                (__TARGET_ADDR),                                \
-                                (__REGION_ADDR),                                \
-                                ##__VA_ARGS__);                                 \
-    } else {                                                                    \
-        switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                   \
-            &    ARM_2D_CP_MODE_XY_MIRROR) {                                    \
-            case ARM_2D_CP_MODE_NO_MIRROR:                                      \
-                tResult = arm_2dp_rgb32_tile_copy_only(                         \
-                                (__OPCODE_PTR),                                 \
-                                (__SOURCE_ADDR),                                \
-                                (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
-                break;                                                          \
-            case ARM_2D_CP_MODE_X_MIRROR:                                       \
-                tResult = arm_2dp_rgb32_tile_copy_with_x_mirror(                \
-                                (__OPCODE_PTR),                                 \
-                                (__SOURCE_ADDR),                                \
-                                (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
-                break;                                                          \
-            case ARM_2D_CP_MODE_Y_MIRROR:                                       \
-                tResult = arm_2dp_rgb32_tile_copy_with_y_mirror(                \
-                                (__OPCODE_PTR),                                 \
-                                (__SOURCE_ADDR),                                \
-                                (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
-                break;                                                          \
-            case ARM_2D_CP_MODE_XY_MIRROR:                                      \
-                tResult = arm_2dp_rgb32_tile_copy_with_xy_mirror(               \
-                                (__OPCODE_PTR),                                 \
-                                (__SOURCE_ADDR),                                \
-                                (__TARGET_ADDR),                                \
-                                (__REGION_ADDR));                               \
-                break;                                                          \
-        }                                                                       \
-    };                                                                          \
-    tResult;                                                                    \
-})
-
 
 /*============================ TYPES =========================================*/
 
@@ -2426,81 +2373,6 @@ arm_fsm_rt_t arm_2dp_rgb32_tile_fill_with_xy_mirror(
                                             const arm_2d_tile_t *ptSource,
                                             const arm_2d_tile_t *ptTarget,
                                             const arm_2d_region_t *ptRegion);
-
-#if 0
-/*----------------------------------------------------------------------------*
- * Copy/Fill tile to destination with colour-keying and mirroring             *
- *----------------------------------------------------------------------------*/
-
-/*! 
- * \brief tile copy with colour-keying and specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
- *            target tile.
- * \param[in] chMaskColour the key colour in any 8bit colour format
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_c8bit_tile_copy_with_colour_keying(
-                                            arm_2d_op_cp_cl_key_t *ptOP,
-                                            const arm_2d_tile_t *ptSource, 
-                                            const arm_2d_tile_t *ptTarget,
-                                            const arm_2d_region_t *ptRegion,
-                                            uint8_t chMaskColour,
-                                            uint32_t wMode);
-
-/*! 
- * \brief tile copy with colour-keying and specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
- *            target tile.
- * \param[in] hwMaskColour the key colour in any 16bit colour format
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- * 
- * \note  alpha channel is not handled, i.e. rgba5551
- */
-extern
-ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_rgb16_tile_copy_with_colour_keying(
-                                            arm_2d_op_cp_cl_key_t *ptOP,
-                                            const arm_2d_tile_t *ptSource, 
-                                            const arm_2d_tile_t *ptTarget,
-                                            const arm_2d_region_t *ptRegion,
-                                            uint16_t hwMaskColour,
-                                            uint32_t wMode);
-
-
-/*! 
- * \brief tile copy with colour-keying and specified mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region, NULL means using the region of the 
- *            target tile.
- * \param[in] wMaskColour the key colour in any 32bit colour format
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- * 
- * \note  alpha channel is not handled
- */
-extern
-ARM_NONNULL(2,3)
-arm_fsm_rt_t arm_2dp_rgb32_tile_copy_with_colour_keying(
-                                            arm_2d_op_cp_cl_key_t *ptOP,
-                                            const arm_2d_tile_t *ptSource, 
-                                            const arm_2d_tile_t *ptTarget,
-                                            const arm_2d_region_t *ptRegion,
-                                            uint32_t wMaskColour,
-                                            uint32_t wMode);
-
-#endif
 
 /*----------------------------------------------------------------------------*
  * Copy tile to destination with colour-keying                                *

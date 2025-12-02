@@ -967,7 +967,8 @@ extern "C" {
 
 /*!
  * \brief copy a source tile to a target tile with masks and an optional mode
- * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
  * \param[in] __SRC_ADDR the source tile
  * \param[in] __SRC_MSK_ADDR the mask on the source side
  * \param[in] __DES_ADDR the target tile
@@ -1041,7 +1042,8 @@ extern "C" {
 
 /*!
  * \brief copy a source tile to a target tile with masks and an optional mode
- * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
  * \param[in] __SRC_ADDR the source tile
  * \param[in] __SRC_MSK_ADDR the mask on the source side
  * \param[in] __DES_ADDR the target tile
@@ -1115,7 +1117,8 @@ extern "C" {
 
 /*!
  * \brief copy a source tile to a target tile with masks and an optional mode
- * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
  * \param[in] __SRC_ADDR the source tile
  * \param[in] __SRC_MSK_ADDR the mask on the source side
  * \param[in] __DES_ADDR the target tile
@@ -1188,12 +1191,14 @@ extern "C" {
 })
 
 /*!
- * \brief copy a source tile to a target tile with a source mask in a optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
+ * \brief copy a source tile to a target tile with a source mask and an optional
+ *         mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __SRC_MSK_ADDR the mask on the source side
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __REGION the target region
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
@@ -1268,12 +1273,14 @@ extern "C" {
                                     ##__VA_ARGS__)
 
 /*!
- * \brief copy a source tile to a target tile with a source mask in a optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
+ * \brief copy a source tile to a target tile with a source mask and an optional
+ *         mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __SRC_MSK_ADDR the mask on the source side
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __REGION the target region
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
@@ -1348,12 +1355,14 @@ extern "C" {
                                     ##__VA_ARGS__)
 
 /*!
- * \brief copy a source tile to a target tile with a source mask in a optional mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
+ * \brief copy a source tile to a target tile with a source mask and an optional
+ *         mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __SRC_MSK_ADDR the mask on the source side
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __REGION the target region
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
@@ -2691,7 +2700,8 @@ extern "C" {
 /*!
  * \brief fill a target tile with a source tile and a target mask in an optional 
  *        copy mode
- * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
  * \param[in] __SRC_ADDR the source tile
  * \param[in] __DES_ADDR the target tile
  * \param[in] __DES_MSK_ADDR the mask on the target side
@@ -2763,7 +2773,8 @@ extern "C" {
 /*!
  * \brief fill a target tile with a source tile and a target mask in an optional 
  *        copy mode
- * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
  * \param[in] __SRC_ADDR the source tile
  * \param[in] __DES_ADDR the target tile
  * \param[in] __DES_MSK_ADDR the mask on the target side
@@ -2834,7 +2845,8 @@ extern "C" {
 /*!
  * \brief fill a target tile with a source tile and a target mask in an optional 
  *        copy mode
- * \param[in] __OPCODE_PTR the control block, NULL means using the default control block
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
  * \param[in] __SRC_ADDR the source tile
  * \param[in] __DES_ADDR the target tile
  * \param[in] __DES_MSK_ADDR the mask on the target side
@@ -2904,12 +2916,13 @@ extern "C" {
 
 /*!
  * \brief copy a source tile to a target tile with a target mask and an optional 
- *        mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
+ *        copy mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __DES_MSK_ADDR the mask on the target side
+ * \param[in] __REGION the target region
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
@@ -2972,12 +2985,13 @@ extern "C" {
 
 /*!
  * \brief copy a source tile to a target tile with a target mask and an optional 
- *        mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
+ *        copy mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __DES_MSK_ADDR the mask on the target side
+ * \param[in] __REGION the target region
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
@@ -3040,12 +3054,13 @@ extern "C" {
 
 /*!
  * \brief copy a source tile to a target tile with a target mask and an optional 
- *        mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptSrcMask the mask on the source side
- * \param[in] ptTarget the target tile
- * \param[in] ptRegion the target region
+ *        copy mode
+ * \param[in] __OPCODE_PTR the control block, NULL means using the default 
+ *                         control block
+ * \param[in] __SRC_ADDR the source tile
+ * \param[in] __DES_ADDR the target tile
+ * \param[in] __DES_MSK_ADDR the mask on the target side
+ * \param[in] __REGION the target region
  * \param[in] ... the optional copy mode
  * \return arm_fsm_rt_t the operation result
  */
@@ -4879,72 +4894,6 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror(
                                         const arm_2d_tile_t *ptSrcMask,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion); 
-
-#if 0
-/*----------------------------------------------------------------------------*
- * Copy tile to destination with a target mask and a specified mode           *
- *----------------------------------------------------------------------------*/
-
-/*!
- * \brief copy a source tile to a target tile with a target mask in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptDesMask the mask on the target side
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode); 
-
-/*!
- * \brief copy a source tile to a target tile with a target mask in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptDesMask the mask on the target side
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode);
-
-/*!
- * \brief copy a source tile to a target tile with a target mask in a given mode
- * \param[in] ptOP the control block, NULL means using the default control block
- * \param[in] ptSource the source tile
- * \param[in] ptTarget the target tile
- * \param[in] ptDesMask the mask on the target side
- * \param[in] ptRegion the target region
- * \param[in] wMode the copy mode
- * \return arm_fsm_rt_t the operation result
- */
-extern
-ARM_NONNULL(2,3,4)
-arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask(
-                                        arm_2d_op_cp_msk_t *ptOP,
-                                        const arm_2d_tile_t *ptSource,
-                                        const arm_2d_tile_t *ptTarget,
-                                        const arm_2d_tile_t *ptDesMask,
-                                        const arm_2d_region_t *ptRegion,
-                                        uint32_t wMode); 
-#endif
 
 /*----------------------------------------------------------------------------*
  * Copy tile to target tile with a source tile and a target mask              *
