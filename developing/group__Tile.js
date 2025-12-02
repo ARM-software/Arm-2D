@@ -19,7 +19,6 @@ var group__Tile =
     [ "arm_2dp_c8bit_tile_copy", "group__Tile.html#ga4b3b125797db808b5236e3ece302f268", null ],
     [ "arm_2dp_rgb16_tile_copy", "group__Tile.html#gad1e4133b246b4fa0be8f6d4adde297ed", null ],
     [ "arm_2dp_rgb32_tile_copy", "group__Tile.html#gae15bcb6a44ad6cce3d98f9127963ca86", null ],
-    [ "arm_2dp_rgb32_tile_copy", "group__Tile.html#gae15bcb6a44ad6cce3d98f9127963ca86", null ],
     [ "arm_2dp_c8bit_tile_fill_with_colour_keying", "group__Tile.html#ga4e61b7b2d285f16f64097063164b1223", null ],
     [ "arm_2dp_rgb16_tile_fill_with_colour_keying", "group__Tile.html#ga6ed9015c7f983c6a5bd1d10519696797", null ],
     [ "arm_2dp_rgb32_tile_fill_with_colour_keying", "group__Tile.html#gaa42ddc9239ff1596f3c4cf8738cb10e3", null ],
