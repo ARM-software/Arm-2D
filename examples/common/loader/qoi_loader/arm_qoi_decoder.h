@@ -16,15 +16,16 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_EXAMPLE_LOADERS_H__
-#define __ARM_2D_EXAMPLE_LOADERS_H__
+#ifndef __ARM_QOI_DECODER_H__
+#define __ARM_QOI_DECODER_H__
 
 /*============================ INCLUDES ======================================*/
 
-#include "./tjpgd_loader/tjpgd_loader.h"
-#include "./zjpgd_loader/zjpgd_loader.h"
-#include "./freetype_loader/freetype_loader.h"
-#include "./qoi_loader/qoi_loader.h"
+#ifdef __ARM_QOI_DECODER_CFG__
+#   include __ARM_QOI_DECODER_CFG__
+#else
+#   include "arm_qoi_cfg.h"
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -33,6 +34,25 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+
+enum {
+    ARM_QOI_DEC_FORMAT_GRAY8,
+    ARM_QOI_DEC_FORMAT_MASK_ONLY,
+    ARM_QOI_DEC_FORMAT_RGB565,
+    ARM_QOI_DEC_FORMAT_CCCA8888,
+};
+
+typedef struct arm_qoi_dec_ctx_t {
+
+} arm_qoi_dec_ctx_t;
+
+typedef struct arm_qoi_dec_t {
+
+    arm_2d_size_t tSize;
+
+    uintptr_t pTarget;
+} arm_qoi_dec_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 

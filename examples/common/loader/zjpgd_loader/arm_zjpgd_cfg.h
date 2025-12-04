@@ -21,6 +21,7 @@
 #define ZJD_MEM_POOL_SZ                 (1024 * 3)
 #endif
 
+
 #if     __GLCD_CFG_COLOUR_DEPTH__ == 8
 #   define ZJD_FORMAT   ZJD_GRAYSCALE
 #elif   __GLCD_CFG_COLOUR_DEPTH__ == 16

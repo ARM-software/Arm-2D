@@ -26,6 +26,7 @@ CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/tjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/zjpgd/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/qoi_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
 
@@ -60,6 +61,7 @@ CC_INC  += ../../examples/common/loader/tjpgd_loader
 CC_INC  += ../../examples/common/loader/zjpgd_loader
 CC_INC  += ../../examples/common/loader/freetype_loader
 CC_INC  += ../../examples/common/loader/freetype_loader/freetype/include
+CC_INC  += ../../examples/common/loader/qoi_loader
 CC_INC  += ../../examples/common/scenes/fitness
 CC_INC  += ../../examples/common/scenes/meter
 CC_INC  += ../../examples/common/scenes/watch
