@@ -299,7 +299,7 @@
 
 ### Documentation and Misc
 
-* Fixes the `__REV16` in `arm_2d_user_arch_port.h` 
+* Fixes the `__rev16` in `arm_2d_user_arch_port.h` 
 * Improves Python scripts in the `tools` folder.
 * rename `getting_started_as_a_professional_user.md` to `getting_started_as_a_gui_stack_developer.md`
 

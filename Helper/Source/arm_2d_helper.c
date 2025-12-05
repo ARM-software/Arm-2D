@@ -1142,7 +1142,7 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
     if ((((uintptr_t) phwBuffer) & 0x03) == 0x02) {
         // handle the leading pixel
         uint32_t wTemp = *phwBuffer;
-        *phwBuffer++ = (uint16_t)__REV16(wTemp);
+        *phwBuffer++ = (uint16_t)__rev16(wTemp);
         wCount--;
     }
 
@@ -1154,13 +1154,13 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
     if (wWords > 0) {
         do {
             uint32_t wTemp = *pwBuffer;
-            *pwBuffer++ = __REV16(wTemp);
+            *pwBuffer++ = __rev16(wTemp);
         } while(--wWords);
     }
 
     if (wCount) {
         uint32_t wTemp = *pwBuffer;
-        (*(uint16_t *)pwBuffer) = (uint16_t)__REV16(wTemp);
+        (*(uint16_t *)pwBuffer) = (uint16_t)__rev16(wTemp);
     }
 }
 

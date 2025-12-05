@@ -68,19 +68,30 @@
 /**
   \brief   Reverse byte order (16 bit)
   \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
-  \param [in]    value  Value to reverse
+  \param [in]    wValue  the two half words to reverse
   \return               Reversed value
  */
-__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
+__STATIC_FORCEINLINE uint32_t __rev16(uint32_t wValue)
 {
-    uint16_t a,b;
-    uint32_t ret;
-    a=value&0xFFFF;
-    b=(value>>16)&0xFFFF;
-    ret=a;
-    ret=(ret<<16)&0xFFFF;
-    ret+=b;
-    return ret;
+    uint32_t wHigh = wValue & 0xFF00FF00;
+    uint32_t wLow = wValue & 0x00FF00FF;
+
+    return (wHigh >> 8) | (wLow << 8);
+}
+
+
+/**
+  \brief   Reverse byte order (32 bit)
+  \details Reverses the byte order within word. For example, 0x12345678 becomes 0x78563412.
+  \param [in]    wValue  the word to reverse
+  \return               Reversed value
+ */
+__STATIC_FORCEINLINE uint32_t __rev(uint32_t x)
+{
+    return ((x >> 24) & 0x000000FFU) |
+           ((x >>  8) & 0x0000FF00U) |
+           ((x <<  8) & 0x00FF0000U) |
+           ((x << 24) & 0xFF000000U);
 }
 
 

@@ -314,7 +314,7 @@
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
+__STATIC_FORCEINLINE uint32_t __rev16(uint32_t value)
 {
     uint16_t a,b;
     uint32_t ret;
