@@ -68,6 +68,67 @@ __STATIC_INLINE uint_fast8_t __arm_qoi_get_hash_index(uint32_t wPixelValue)
            & ((1 << 6) - 1));                       /* mod 64 */
 }
 
+static
+arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis, 
+                                        arm_qoi_dec_ctx_t *ptContext, 
+                                        bool bUpdateHeader)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptContext);
+    assert(NULL != this.tCFG.IO.fnRead);
+    assert(NULL != this.tCFG.IO.fnSeek);
+
+    /* initialize the working memory */
+    memset(ptContext, 0, sizeof(arm_qoi_dec_ctx_t));
+
+    /* get word-aligned working memory limit address */
+    uintptr_t pnAddress = ((uintptr_t)this.tCFG.pchWorkingMemory + this.tCFG.hwSize)
+                        & (~(uintptr_t)0x03);
+
+    /* get the context address */
+    pnAddress -= sizeof(arm_qoi_dec_ctx_t);
+
+    /* sign */
+    ptContext->ptQOIDec = ptThis;
+
+    size_t tBufferSize = (uintptr_t)this.tCFG.pchWorkingMemory - pnAddress;
+    ptContext->hwSize = MIN(__UINT16_MAX__, tBufferSize);
+
+    struct __arm_qoi_header tQOIHeader;
+
+    /* move to the head */
+    if (!this.tCFG.IO.fnSeek(this.pTarget, 0, SEEK_SET)) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
+
+    if (sizeof(tQOIHeader) > this.tCFG.IO.fnRead(this.pTarget, (uint8_t *)&tQOIHeader, sizeof(tQOIHeader) )) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
+
+    if (0 != memcmp("qoif", tQOIHeader.chMagic, 4)) {
+        return ARM_2D_ERR_IO_ERROR;
+    }
+
+    ptContext->tPosition = sizeof(tQOIHeader);
+
+    /* set previous pixel as {0, 0, 0, 0xFF} */
+    ptContext->tPrevious.wValue = 0xFF000000;
+
+    if (bUpdateHeader) {
+        uint32_t wWidth = __rev(tQOIHeader.wWidth);
+        uint32_t wHeight = __rev(tQOIHeader.wHeight);
+
+        if (wWidth > __INT16_MAX__ || wHeight > __INT16_MAX__) {
+            return ARM_2D_ERR_NOT_SUPPORT;
+        }
+
+        this.tSize.iWidth = (int16_t)wWidth;
+        this.tSize.iHeight = (int16_t)wHeight;
+    }
+
+    return ARM_2D_ERR_NONE;
+}
+
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_decoder_init(arm_qoi_dec_t *ptThis, arm_qoi_cfg_t *ptCFG)
 {
@@ -83,6 +144,10 @@ arm_2d_err_t arm_qoi_decoder_init(arm_qoi_dec_t *ptThis, arm_qoi_cfg_t *ptCFG)
         return ARM_2D_ERR_MISSING_PARAM;
     }
 
+    if (this.tCFG.chOutputColourFormat > __ARM_QOI_DEC_FORMAT_VALID) {
+        return ARM_2D_ERR_NOT_SUPPORT;
+    }
+
     /* initialize the working memory */
     memset(this.tCFG.pchWorkingMemory, 0, this.tCFG.hwSize);
 
@@ -95,42 +160,14 @@ arm_2d_err_t arm_qoi_decoder_init(arm_qoi_dec_t *ptThis, arm_qoi_cfg_t *ptCFG)
     /* set working context */
     this.ptWorking = (arm_qoi_dec_ctx_t *)pnAddress;
 
-    /* sign */
-    this.ptWorking->ptQOIDec = ptThis;
-
-    size_t tBufferSize = (uintptr_t)this.tCFG.pchWorkingMemory - pnAddress;
-    this.ptWorking->hwSize = MIN(__UINT16_MAX__, tBufferSize);
-
-    /* read header */
+    /* reset context */
     do {
-        struct __arm_qoi_header tQOIHeader;
-
-        /* move to the head */
-        if (!this.tCFG.IO.fnSeek(this.pTarget, 0, SEEK_SET)) {
-            return ARM_2D_ERR_IO_ERROR;
+        arm_2d_err_t tErr = 
+            __arm_qoi_reset_context(ptThis, this.ptWorking, true);
+        if (ARM_2D_ERR_NONE != tErr) {
+            return tErr;
         }
-
-        if (sizeof(tQOIHeader) > this.tCFG.IO.fnRead(this.pTarget, (uint8_t *)&tQOIHeader, sizeof(tQOIHeader) )) {
-            return ARM_2D_ERR_IO_ERROR;
-        }
-
-        if (0 != memcmp("qoif", tQOIHeader.chMagic, 4)) {
-            return ARM_2D_ERR_IO_ERROR;
-        }
-
-        uint32_t wWidth = __rev(tQOIHeader.wWidth);
-        uint32_t wHeight = __rev(tQOIHeader.wHeight);
-
-        if (wWidth > __INT16_MAX__ || wHeight > __INT16_MAX__) {
-            return ARM_2D_ERR_NOT_SUPPORT;
-        }
-
-        this.tSize.iWidth = (int16_t)wWidth;
-        this.tSize.iHeight = (int16_t)wHeight;
     } while(0);
-
-    /* set previous pixel as {0, 0, 0, 0xFF} */
-    this.ptWorking->tPrevious.wValue = 0xFF000000;
     
     this.bValid = true;
     return ARM_2D_ERR_NONE;
@@ -381,6 +418,72 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis,
 
 ARM_NONNULL(1)
 static
+arm_2d_err_t __arm_qoi_decode_stride_gray8(arm_qoi_dec_t *ptThis, 
+                                            uint8_t *pchTarget,
+                                            size_t tLength)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == pchTarget) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    do {
+        __arm_qoi_pixel_t tPixel;
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        __arm_2d_color_fast_rgb_t tColour;
+        __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+        *pchTarget++ = __arm_2d_gray8_pack(&tColour);
+
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
+arm_2d_err_t __arm_qoi_decode_stride_gray8_with_background(arm_qoi_dec_t *ptThis, 
+                                            uint8_t *pchTarget,
+                                            size_t tLength,
+                                            uint8_t chBackground)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == pchTarget) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    do {
+        __arm_qoi_pixel_t tPixel;
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        __arm_2d_color_fast_rgb_t tColour;
+        __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+
+        uint16_t hwPixel = __arm_2d_gray8_pack(&tColour);
+
+        uint16_t hwOpa= tPixel.tColour.chAlpha;
+        hwOpa += (hwOpa == 255);
+        uint16_t hwTrans = 256 - hwOpa;
+
+        *pchTarget++ = (hwPixel * hwOpa + (uint16_t)chBackground * hwTrans) >> 8;
+
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
 arm_2d_err_t __arm_qoi_decode_stride_channel(   arm_qoi_dec_t *ptThis, 
                                                 uint8_t *pchTarget,
                                                 size_t tLength,
@@ -510,6 +613,179 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
         *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
 
     } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1,2)
+arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
+                            void *pTarget,
+                            arm_2d_region_t *ptTargetRegion)
+{
+    assert(NULL != ptThis);
+    assert(NULL != pTarget);
+
+    if (!this.bValid) {
+        return ARM_2D_ERR_NOT_AVAILABLE;
+    }
+
+    arm_2d_region_t tTargetRegion = {
+        .tSize = this.tSize,
+    };
+
+    if (NULL != ptTargetRegion) {
+        if (!arm_2d_region_intersect(&tTargetRegion, ptTargetRegion, &tTargetRegion)) {
+            return ARM_2D_ERR_OUT_OF_REGION;
+        }
+    }
+
+    int16_t iStride = this.tSize.iWidth;
+    
+    int16_t x = 0, y = 0, iTargetStride = tTargetRegion.tSize.iWidth;
+
+    __arm_qoi_pixel_t tPixel;
+    arm_2d_location_t tCurrentLocation = {
+        .iY = this.ptWorking->tPixelDecoded / iStride,
+    };
+    tCurrentLocation.iX = this.ptWorking->tPixelDecoded - tCurrentLocation.iY * iStride;
+
+    y = tCurrentLocation.iY;
+    x = tCurrentLocation.iX;
+
+    if (y < tTargetRegion.tLocation.iY) {
+        goto entry_skip_headroom;
+    } else if (x < tTargetRegion.tLocation.iX && y == tTargetRegion.tLocation.iY) {
+        goto entry_skip_left;
+    } else {
+        /* we have to reset working context */
+        arm_2d_err_t tErr = 
+            __arm_qoi_reset_context(ptThis, this.ptWorking, false);
+        if (ARM_2D_ERR_NONE != tErr) {
+            return tErr;
+        }
+        x = 0;
+        y = 0;
+    }
+
+    /* skip headroom */
+    for (; y < tTargetRegion.tLocation.iY; y++) {
+        for (x = 0; x < iStride; x++) {
+entry_skip_headroom: 
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+        }
+    }
+    
+    /* decoding region of interest */
+    int16_t iHeight = tTargetRegion.tSize.iHeight + tTargetRegion.tLocation.iY;
+
+    /* skip left */
+    for (x = 0; x < tTargetRegion.tLocation.iX; x++) {
+entry_skip_left:
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+    }
+    
+    /* report reach the top left corner */
+    ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
+        ARM_2D_PARAM(   this.pTarget, 
+                        ptThis, 
+                        (arm_2d_location_t){x, y},
+                        this.ptWorking, 
+                        ARM_QOI_CTX_REPORT_TOP_LEFT));
+    
+    do {
+        int16_t iXOffset = 0;
+        iTargetStride = tTargetRegion.tSize.iWidth;
+
+        arm_2d_err_t tResult;
+        switch (this.tCFG.chOutputColourFormat) {
+            case ARM_QOI_DEC_FORMAT_CCCA8888:
+                tResult = __arm_qoi_decode_stride_ccca8888(ptThis, (uint32_t *)pTarget, iTargetStride);
+                break;
+            case ARM_QOI_DEC_FORMAT_CCCN888:
+                if (this.tCFG.bPreBlendBGColour) {
+                    tResult = __arm_qoi_decode_stride_cccn888_with_background(
+                                ptThis, 
+                                (uint32_t *)pTarget, 
+                                iTargetStride,
+                                this.tCFG.tBackgroundColour.wColour);
+                } else {
+                    tResult = __arm_qoi_decode_stride_ccca8888(
+                                ptThis, 
+                                (uint32_t *)pTarget, 
+                                iTargetStride);
+                }
+                break;
+            case ARM_QOI_DEC_FORMAT_RGB565:
+                if (this.tCFG.bPreBlendBGColour) {
+                    tResult = __arm_qoi_decode_stride_rgb565_with_background(
+                                ptThis, 
+                                (uint16_t *)pTarget, 
+                                iTargetStride,
+                                this.tCFG.tBackgroundColour.hwColour);
+                } else {
+                    tResult = __arm_qoi_decode_stride_rgb565(
+                                ptThis, 
+                                (uint16_t *)pTarget, 
+                                iTargetStride);
+                }
+                break;
+            case ARM_QOI_DEC_FORMAT_GRAY8:
+                if (this.tCFG.bPreBlendBGColour) {
+                    tResult = __arm_qoi_decode_stride_gray8_with_background(
+                                ptThis, 
+                                (uint8_t *)pTarget, 
+                                iTargetStride,
+                                this.tCFG.tBackgroundColour.chColour);
+                } else {
+                    tResult = __arm_qoi_decode_stride_gray8(
+                                ptThis, 
+                                (uint8_t *)pTarget, 
+                                iTargetStride);
+                }
+                break;
+            default: {
+                    uint_fast8_t chIndex = this.tCFG.chOutputColourFormat - ARM_QOI_DEC_FORMAT_CHN_B;
+                    tResult = __arm_qoi_decode_stride_channel(
+                            ptThis,
+                            (uint8_t *)pTarget,
+                            iTargetStride,
+                            chIndex);
+                }
+                break;
+        }
+
+        if (ARM_2D_ERR_NONE != tResult) {
+            return tResult;
+        }
+
+        y++;
+        if (y >= iHeight) {
+            break;
+        }
+
+        iXOffset += iTargetStride;
+
+        for (; iXOffset < iStride; iXOffset++) {
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+        }
+    } while(true);
+
+    tCurrentLocation.iY = this.ptWorking->tPixelDecoded / iStride;
+    tCurrentLocation.iX = this.ptWorking->tPixelDecoded - tCurrentLocation.iY * iStride;
+
+    /* report reach the bottom right corner */
+    ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
+        ARM_2D_PARAM(   this.pTarget, 
+                        ptThis, 
+                        tCurrentLocation,
+                        this.ptWorking, 
+                        ARM_QOI_CTX_REPORT_BOTTOM_RIGHT));
 
     return ARM_2D_ERR_NONE;
 }

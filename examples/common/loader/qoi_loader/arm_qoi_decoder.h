@@ -57,16 +57,16 @@ extern "C" {
 
 enum {
     ARM_QOI_DEC_FORMAT_CCCA8888 = 0,
-    ARM_QOI_DEC_FORMAT_CCCN888 = 0,
-
+    ARM_QOI_DEC_FORMAT_CCCN888,
+    ARM_QOI_DEC_FORMAT_RGB565,
     ARM_QOI_DEC_FORMAT_GRAY8,
-    ARM_QOI_DEC_FORMAT_CHN_R,
-    ARM_QOI_DEC_FORMAT_CHN_G,
+
     ARM_QOI_DEC_FORMAT_CHN_B,
+    ARM_QOI_DEC_FORMAT_CHN_G,
+    ARM_QOI_DEC_FORMAT_CHN_R,
     ARM_QOI_DEC_FORMAT_MASK_ONLY,
 
-    ARM_QOI_DEC_FORMAT_RGB565,
-    
+    __ARM_QOI_DEC_FORMAT_VALID = ARM_QOI_DEC_FORMAT_MASK_ONLY,
 
     ARM_QOI_OP_INDEX    = 0x0,
     ARM_QOI_OP_DIFF     = 0x1,
@@ -75,6 +75,11 @@ enum {
     ARM_QOI_OP_ID_RGB   = 0xFE,
     ARM_QOI_OP_ID_RGBA  = 0xFF,
 };
+
+typedef enum {
+    ARM_QOI_CTX_REPORT_TOP_LEFT,
+    ARM_QOI_CTX_REPORT_BOTTOM_RIGHT,
+} arm_qoi_ctx_evt_t;
 
 /*!
  * \brief the QOI header
@@ -196,16 +201,13 @@ typedef void __arm_qoi_ctx_report_t(uintptr_t pTarget,
                                     arm_qoi_dec_t *ptDecoder,
                                     arm_2d_location_t tLocation,
                                     arm_qoi_dec_ctx_t *ptContext,
-                                    enum {
-                                        ARM_QOI_CTX_REPORT_TOP_LEFT,
-                                        ARM_QOI_CTX_REPORT_BOTTOM_RIGHT,
-                                    } tEvent);
+                                    arm_qoi_ctx_evt_t tEvent);
 
 typedef struct arm_qoi_cfg_t {
     uint8_t *pchWorkingMemory;
     uint16_t hwSize;
     uint8_t chOutputColourFormat;
-    uint8_t bPreBlendBGColour   : 1;        //!< this option is only valid when the output colour format is rgb565 or cccn888
+    uint8_t bPreBlendBGColour   : 1;        //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
 
     struct {
         __arm_qoi_io_seek_t     *fnSeek;
@@ -213,7 +215,7 @@ typedef struct arm_qoi_cfg_t {
         __arm_qoi_ctx_report_t  *fnReport;
     } IO;
 
-    COLOUR_TYPE_T tBackgroundColour;        //!< this option is only valid when the output colour format is rgb565 or cccn888
+    COLOUR_TYPE_T tBackgroundColour;        //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
 } arm_qoi_cfg_t;
 
 struct arm_qoi_dec_t{
@@ -245,6 +247,12 @@ extern
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis, 
                                         arm_qoi_dec_ctx_t *ptContextOut);
+
+extern
+ARM_NONNULL(1,2)
+arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
+                            void *pTarget,
+                            arm_2d_region_t *ptTargetRegion);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
