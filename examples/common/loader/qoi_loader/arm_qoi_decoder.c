@@ -679,14 +679,6 @@ entry_skip_headroom:
     
     /* decoding region of interest */
     int16_t iHeight = tTargetRegion.tSize.iHeight + tTargetRegion.tLocation.iY;
-
-    /* skip left */
-    for (x = 0; x < tTargetRegion.tLocation.iX; x++) {
-entry_skip_left:
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
-    }
     
     /* report reach the top left corner */
     ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
@@ -695,9 +687,26 @@ entry_skip_left:
                         (arm_2d_location_t){x, y},
                         this.ptWorking, 
                         ARM_QOI_CTX_REPORT_TOP_LEFT));
-    
+
     do {
-        int16_t iXOffset = 0;
+        if (!(y & 0x0F)) {
+            /* report reference line */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
+                ARM_2D_PARAM(   this.tCFG.pTarget, 
+                                ptThis, 
+                                (arm_2d_location_t){0, y},
+                                this.ptWorking, 
+                                ARM_QOI_CTX_REPORT_TOP_LEFT));
+        }
+
+        /* skip left */
+        for (x = 0; x < tTargetRegion.tLocation.iX; x++) {
+entry_skip_left:
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+        }
+        
         iTargetStride = tTargetRegion.tSize.iWidth;
 
         arm_2d_err_t tResult;
@@ -767,13 +776,14 @@ entry_skip_left:
             break;
         }
 
-        iXOffset += iTargetStride;
+        x += iTargetStride;
 
-        for (; iXOffset < iStride; iXOffset++) {
+        for (; x < iStride; x++) {
             if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
         }
+
     } while(true);
 
     tCurrentLocation.iY = this.ptWorking->tPixelDecoded / iStride;

@@ -1168,8 +1168,8 @@ arm_2d_err_t arm_qoi_loader_add_reference_point_in_image( arm_qoi_loader_t *ptTh
     ptItem->tLocation = tLocation;
 
     arm_2d_size_t tBlockSize = {
-        //.iWidth = this.Decoder.tQOIDec.msx * 8,
-        //.iHeight = this.Decoder.tQOIDec.msy * 8,	
+        .iWidth = 16,
+        .iHeight = 16,	
     };
 
     __arm_qoi_context_add_to_list(&this.Reference.ptCandidates, 
