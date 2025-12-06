@@ -265,15 +265,27 @@ arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
 }
 
 static
-size_t __arm_qoi_loader_in_func (   arm_qoi_dec_t *ptDecoder,       
+bool __arm_qoi_loader_io_seek(  uintptr_t pTarget, 
+                                int32_t offset, 
+                                int32_t whence)
+{
+    //assert(NULL != pTarget);
+
+    arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)pTarget;
+
+    return ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
+                ARM_2D_PARAM(   this.tCFG.ImageIO.pTarget, 
+                                ptThis, 
+                                offset, 
+                                whence));
+}
+
+static
+size_t __arm_qoi_loader_io_read (   uintptr_t pTarget,       
                                     uint8_t *pchBuffer,
-                                    uint32_t wAddress,
                                     size_t tLength)
 {
-    arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)ptDecoder->pTarget;
-
-    ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
-                    ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis, wAddress, SEEK_SET));
+    arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)pTarget;
 
     size_t tResult = tLength;
     if (NULL != pchBuffer) {
@@ -288,18 +300,18 @@ size_t __arm_qoi_loader_in_func (   arm_qoi_dec_t *ptDecoder,
         //this.Decoder.nPosition += nResult;
     }
 
-    
     return tResult;
 }
 
 static
 int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 to abort */
+    void *pTarget,
     arm_qoi_dec_t* ptDecoder,                       /* Decompression object */
     arm_2d_region_t * ptRegion,                     /* Rectangle region of output image */
     void* pSource                                   /* Bitmap data to be output */
 )
 {
-    arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)ptDecoder->pTarget;
+    arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)pTarget;
 
     ARM_2D_LOG_INFO(
         CONTROLS, 
@@ -525,21 +537,24 @@ bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis)
             break;    
         }
 
-    #if 0
-        zjd_cfg_t tCFG = {
-            .arg = ptThis,
-            .outfmt = this.Decoder.u3QOIOutputColourFormat,
-            .buf = this.Decoder.pWorkMemory,
-            .buflen = __WORKING_MEMORY_SIZE__,
-            .ifunc = __arm_qoi_loader_in_func,
-            .ofunc = __arm_qoi_loader_write_to_vres_framebuffer,
+
+        arm_qoi_cfg_t tCFG = {
+            .pchWorkingMemory = this.Decoder.pWorkMemory,
+            .hwSize = __WORKING_MEMORY_SIZE__,
+            .chOutputColourFormat = this.Decoder.u3QOIOutputColourFormat,
+            .IO = {
+                .fnRead = &__arm_qoi_loader_io_read,
+                .fnSeek = &__arm_qoi_loader_io_seek,
+            },
+            .pTarget = (uintptr_t)ptThis,
         };
-        if (ARM_2D_ERR_NONE != zjd_init( &this.Decoder.tQOIDec, 
-                                &tCFG)) {
+
+        if (ARM_2D_ERR_NONE != arm_qoi_decoder_init( &this.Decoder.tQOIDec, 
+                                                    &tCFG)) {
             this.bErrorDetected = true;
             break;
         }
-    #endif
+        
 
         this.Decoder.bContextInitialized = false;
 

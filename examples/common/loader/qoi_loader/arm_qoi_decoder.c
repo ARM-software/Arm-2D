@@ -97,11 +97,11 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     struct __arm_qoi_header tQOIHeader;
 
     /* move to the head */
-    if (!this.tCFG.IO.fnSeek(this.pTarget, 0, SEEK_SET)) {
+    if (!this.tCFG.IO.fnSeek(this.tCFG.pTarget, 0, SEEK_SET)) {
         return ARM_2D_ERR_IO_ERROR;
     }
 
-    if (sizeof(tQOIHeader) > this.tCFG.IO.fnRead(this.pTarget, (uint8_t *)&tQOIHeader, sizeof(tQOIHeader) )) {
+    if (sizeof(tQOIHeader) > this.tCFG.IO.fnRead(this.tCFG.pTarget, (uint8_t *)&tQOIHeader, sizeof(tQOIHeader) )) {
         return ARM_2D_ERR_IO_ERROR;
     }
 
@@ -206,7 +206,7 @@ arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis,
     *this.ptWorking = *ptContextOut;
     
     /* resume read position */
-    if (!this.tCFG.IO.fnSeek(this.pTarget, 
+    if (!this.tCFG.IO.fnSeek(this.tCFG.pTarget, 
                              this.ptWorking->tPosition, 
                              SEEK_SET)) {
         return ARM_2D_ERR_IO_ERROR;
@@ -215,7 +215,7 @@ arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis,
     if (this.ptWorking->hwSize > 0) {
         /* refill the buffer */
         if (this.ptWorking->hwTail
-         >  this.tCFG.IO.fnRead(this.pTarget, 
+         >  this.tCFG.IO.fnRead(this.tCFG.pTarget, 
                                 this.tCFG.pchWorkingMemory,
                                 this.ptWorking->hwTail)) {
             return ARM_2D_ERR_IO_ERROR;
@@ -236,7 +236,7 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
 
     if (0 == this.ptWorking->hwSize) {
         /* no buffer */
-        return this.tCFG.IO.fnRead(this.pTarget, pchBuffer, tSize); 
+        return this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, tSize); 
     }
 
     size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
@@ -248,7 +248,7 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
 
         /* nothing to read */
         this.ptWorking->hwTail = 
-            this.tCFG.IO.fnRead(this.pTarget, 
+            this.tCFG.IO.fnRead(this.tCFG.pTarget, 
                                 this.tCFG.pchWorkingMemory, 
                                 this.ptWorking->hwSize);
         this.ptWorking->hwHead = 0;
@@ -690,7 +690,7 @@ entry_skip_left:
     
     /* report reach the top left corner */
     ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
-        ARM_2D_PARAM(   this.pTarget, 
+        ARM_2D_PARAM(   this.tCFG.pTarget, 
                         ptThis, 
                         (arm_2d_location_t){x, y},
                         this.ptWorking, 
@@ -780,8 +780,9 @@ entry_skip_left:
     tCurrentLocation.iX = this.ptWorking->tPixelDecoded - tCurrentLocation.iY * iStride;
 
     /* report reach the bottom right corner */
-    ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
-        ARM_2D_PARAM(   this.pTarget, 
+    ARM_2D_INVOKE_RT_VOID(
+        this.tCFG.IO.fnReport, 
+        ARM_2D_PARAM(   this.tCFG.pTarget, 
                         ptThis, 
                         tCurrentLocation,
                         this.ptWorking, 

@@ -204,6 +204,7 @@ typedef void __arm_qoi_ctx_report_t(uintptr_t pTarget,
                                     arm_qoi_ctx_evt_t tEvent);
 
 typedef struct arm_qoi_cfg_t {
+    uintptr_t pTarget;
     uint8_t *pchWorkingMemory;
     uint16_t hwSize;
     uint8_t chOutputColourFormat;
@@ -220,7 +221,7 @@ typedef struct arm_qoi_cfg_t {
 
 struct arm_qoi_dec_t{
     arm_2d_size_t tSize;
-    uintptr_t pTarget;
+    
 
 ARM_PRIVATE(
     arm_qoi_cfg_t tCFG;
