@@ -58,7 +58,7 @@
 #define this    (*ptThis)
 
 
-#define __WORKING_MEMORY_SIZE__     ARM_QOI_IO_BUFF_SIZE
+#define __WORKING_MEMORY_SIZE__     (ARM_QOI_IO_BUFF_SIZE + sizeof(arm_qoi_dec_ctx_t))
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/

@@ -267,8 +267,8 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
     //assert(NULL != ptThis);
     //assert(NULL != ptPixel);
 
-    if (this.ptWorking->u6RunCount) {
-        this.ptWorking->u6RunCount--;
+    if (this.ptWorking->chRunCount) {
+        this.ptWorking->chRunCount--;
 
         ptPixel->wValue = this.ptWorking->tPrevious.wValue;
         this.ptWorking->tPixelDecoded++;
@@ -335,7 +335,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
                 __arm_qoi_op_run_t tOPRun = {
                     .tHead.chID = tChunk.chID
                 };
-                this.ptWorking->u6RunCount = tOPRun.u6Run;
+                this.ptWorking->chRunCount = tOPRun.u6Run;
             }
             break;
     }

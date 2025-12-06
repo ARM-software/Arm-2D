@@ -175,11 +175,11 @@ ARM_PRIVATE(
     size_t tPixelDecoded;
     size_t tPosition;
 
-    uint16_t u6RunCount     : 6;
-    uint16_t                : 10;
     uint16_t hwTail;
     uint16_t hwHead;
     uint16_t hwSize;
+
+    uint8_t chRunCount;
 )
 } arm_qoi_dec_ctx_t;
 
