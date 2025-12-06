@@ -527,7 +527,6 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
     do {
         __arm_qoi_pixel_t tPixel;
         
-
         if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
             return ARM_2D_ERR_NOT_AVAILABLE;
         }
