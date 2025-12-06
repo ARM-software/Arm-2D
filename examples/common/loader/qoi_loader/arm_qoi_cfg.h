@@ -12,7 +12,7 @@
 // <h>Qoi System Configurations
 // =======================
 
-// <o>Width of the screen <0-256>
+// <o>Width of the screen <0-65535>
 // <i> The size of the IO buffer
 // <i> Default: 32
 #ifndef ARM_QOI_IO_BUFF_SIZE
