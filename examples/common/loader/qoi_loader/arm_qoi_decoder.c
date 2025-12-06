@@ -19,6 +19,7 @@
 /*============================ INCLUDES ======================================*/
 #define __QOI_DECODER_IMPLEMENT__
 #include "arm_qoi_decoder.h"
+#include "__arm_2d_impl.h"
 
 #include <stdlib.h>
 
@@ -349,4 +350,166 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
     return true;
 }
 
+ARM_NONNULL(1)
+static
+arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis, 
+                                            uint16_t *phwTarget,
+                                            size_t tLength)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == phwTarget) {
+        return ARM_2D_ERR_NONE;
+    }
 
+    do {
+        __arm_qoi_pixel_t tPixel;
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        __arm_2d_color_fast_rgb_t tColour;
+        __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+        *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
+
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
+arm_2d_err_t __arm_qoi_decode_stride_channel(   arm_qoi_dec_t *ptThis, 
+                                                uint8_t *pchTarget,
+                                                size_t tLength,
+                                                uint_fast8_t chIndex)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == pchTarget) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    do {
+        __arm_qoi_pixel_t tPixel;
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        *pchTarget++ = tPixel.tColour.chChannel[chIndex];
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
+arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
+                                            arm_qoi_dec_t *ptThis, 
+                                            uint16_t *phwTarget,
+                                            size_t tLength,
+                                            uint16_t hwBackground)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == phwTarget) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    do {
+        __arm_qoi_pixel_t tPixel;
+        
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        uint16_t hwOpa= tPixel.tColour.chAlpha;
+        hwOpa += (hwOpa == 255);
+        uint16_t hwTrans = 256 - hwOpa;
+
+        __arm_2d_color_fast_rgb_t tColour;
+        __arm_2d_rgb565_unpack(hwBackground, &tColour);
+
+        tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
+        tColour.BGRA[0] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
+        tColour.BGRA[0] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
+
+        *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
+
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
+arm_2d_err_t __arm_qoi_decode_stride_ccca8888(  arm_qoi_dec_t *ptThis, 
+                                                uint32_t *pwTarget,
+                                                size_t tLength)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == pwTarget) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    do {
+        __arm_qoi_pixel_t tPixel;
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        *pwTarget++ = tPixel.wValue;
+
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+static
+arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
+                                            arm_qoi_dec_t *ptThis, 
+                                            uint32_t *pwTarget,
+                                            size_t tLength,
+                                            uint32_t wBackground)
+{
+    assert(NULL != ptThis);
+    assert(this.bValid);
+    
+    if (0 == tLength || NULL == pwTarget) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    do {
+        __arm_qoi_pixel_t tPixel;
+
+        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+            return ARM_2D_ERR_NOT_AVAILABLE;
+        }
+
+        uint16_t hwOpa= tPixel.tColour.chAlpha;
+        hwOpa += (hwOpa == 255);
+        uint16_t hwTrans = 256 - hwOpa;
+
+        __arm_2d_color_fast_rgb_t tColour;
+        __arm_2d_ccca8888_unpack(wBackground, &tColour);
+
+        tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
+        tColour.BGRA[0] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
+        tColour.BGRA[0] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
+
+        *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
+
+    } while(tLength--);
+
+    return ARM_2D_ERR_NONE;
+}

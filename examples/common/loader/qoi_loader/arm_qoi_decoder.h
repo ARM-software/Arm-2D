@@ -27,7 +27,7 @@
 #   include "arm_qoi_cfg.h"
 #endif
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -57,6 +57,7 @@ extern "C" {
 
 enum {
     ARM_QOI_DEC_FORMAT_CCCA8888 = 0,
+    ARM_QOI_DEC_FORMAT_CCCN888 = 0,
 
     ARM_QOI_DEC_FORMAT_GRAY8,
     ARM_QOI_DEC_FORMAT_CHN_R,
@@ -204,12 +205,15 @@ typedef struct arm_qoi_cfg_t {
     uint8_t *pchWorkingMemory;
     uint16_t hwSize;
     uint8_t chOutputColourFormat;
+    uint8_t bPreBlendBGColour   : 1;        //!< this option is only valid when the output colour format is rgb565 or cccn888
 
     struct {
         __arm_qoi_io_seek_t     *fnSeek;
         __arm_qoi_io_read_t     *fnRead;
         __arm_qoi_ctx_report_t  *fnReport;
     } IO;
+
+    COLOUR_TYPE_T tBackgroundColour;        //!< this option is only valid when the output colour format is rgb565 or cccn888
 } arm_qoi_cfg_t;
 
 struct arm_qoi_dec_t{
