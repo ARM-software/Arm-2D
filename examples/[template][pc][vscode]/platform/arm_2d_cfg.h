@@ -97,7 +97,7 @@ extern "C" {
 // <q>Enable Log
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_CFG_ENABLE_LOG__
-#   define __ARM_2D_CFG_ENABLE_LOG__                                0
+#   define __ARM_2D_CFG_ENABLE_LOG__                                1
 #endif
 
 // <q>The terminal support colour
@@ -122,16 +122,7 @@ extern "C" {
             |   ARM_2D_LOG_CHN_TYPE_INFO                                        \
             |   ARM_2D_LOG_CHN_TYPE_WARNING                                     \
             |   ARM_2D_LOG_CHN_TYPE_ERROR                                       \
-            |   ARM_2D_LOG_CHN_PIPELINE                                         \
-            |   ARM_2D_LOG_CHN_OPCODE                                           \
-            |   ARM_2D_LOG_CHN_HELPER                                           \
-            |   ARM_2D_LOG_CHN_HELPER_PFB                                       \
-            |   ARM_2D_LOG_CHN_SCENE_PLAYER                                     \
-            |   ARM_2D_LOG_CHN_DIRTY_REGION_OPTIMISATION                        \
-            |   ARM_2D_LOG_CHN_STATISTICS                                       \
-            |   ARM_2D_LOG_CHN_CONTROLS                                         \
-            |   ARM_2D_LOG_CHN_GUI_STACK                                        \
-            |   ARM_2D_LOG_CHN_APP)
+            |   ARM_2D_LOG_CHN_CONTROLS)
 
 #endif
 

@@ -79,8 +79,7 @@ enum {
 typedef enum {
     ARM_QOI_CTX_REPORT_START,
     ARM_QOI_CTX_REPORT_TOP_LEFT,
-    ARM_QOI_CTX_REPORT_BOTTOM_RIGHT,
-    ARM_QOI_CTX_REPORT_REF_LINE,
+    ARM_QOI_CTX_REPORT_TOP_RIGHT,
     ARM_QOI_CTX_REPORT_REF_GRID,
     ARM_QOI_CTX_REPORT_END,
 } arm_qoi_ctx_evt_t;
@@ -268,6 +267,10 @@ arm_2d_location_t *arm_qoi_decoder_get_context_location(
                                             arm_qoi_dec_t *ptThis, 
                                             arm_qoi_dec_ctx_t *ptContext,
                                             arm_2d_location_t *ptLocationOut);
+
+extern
+ARM_NONNULL(1)
+size_t arm_qoi_decoder_get_context_pixel_number(arm_qoi_dec_ctx_t *ptContext);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

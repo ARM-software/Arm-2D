@@ -884,6 +884,14 @@ arm_2d_location_t *arm_qoi_decoder_get_context_location(arm_qoi_dec_t *ptThis,
     return __arm_qoi_decoder_get_context_location(ptThis, ptContext, ptLocationOut);
 }
 
+ARM_NONNULL(1)
+size_t arm_qoi_decoder_get_context_pixel_number(arm_qoi_dec_ctx_t *ptContext)
+{
+    assert(NULL != ptContext);
+
+    return ptContext->tPixelDecoded;
+}
+
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
                             void *pTarget,
@@ -923,7 +931,7 @@ arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
     /* decoding region of interest */
     int16_t iHeight = tTargetRegion.tSize.iHeight + tTargetRegion.tLocation.iY;
 
-    bool bHitTopLeft = true;
+    bool bFirstLine = true;
     bool bNeedToReport = (NULL != this.tCFG.IO.fnReport);
     bool bReferenceY = !(y & 0x0F) && bNeedToReport;
     
@@ -964,14 +972,6 @@ entry_skip_headroom:
     do {
         bReferenceY = !(y & 0x0F) && bNeedToReport;
 
-        ARM_2D_INVOKE_RT_VOID(
-            this.tCFG.IO.fnReport, 
-            ARM_2D_PARAM(   this.tCFG.pTarget, 
-                            ptThis, 
-                            (arm_2d_location_t){0, y},
-                            this.ptWorking, 
-                            ARM_QOI_CTX_REPORT_REF_LINE));
-
         /* skip left */
         for (x = 0; x < tTargetRegion.tLocation.iX; x++) {
 entry_skip_left:
@@ -980,8 +980,7 @@ entry_skip_left:
             }
         }
 
-        if (bHitTopLeft) {
-            bHitTopLeft = false;
+        if (bFirstLine) {
             /* report reach the top left corner */
             ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
                 ARM_2D_PARAM(   this.tCFG.pTarget, 
@@ -1075,11 +1074,21 @@ entry_skip_left:
 
         nTargetAddress += tTargetStrideInByte;
 
-
         if (ARM_2D_ERR_NONE != tResult) {
             return tResult;
         }
         x += iTargetStride;
+
+        if (bFirstLine) {
+            bFirstLine = false;
+            /* report reach the top left corner */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
+                ARM_2D_PARAM(   this.tCFG.pTarget, 
+                                ptThis, 
+                                (arm_2d_location_t){x, y},
+                                this.ptWorking, 
+                                ARM_QOI_CTX_REPORT_TOP_RIGHT));
+        }
 
         y++;
         if (y >= iHeight) {
@@ -1095,15 +1104,6 @@ entry_skip_left:
     } while(true);
 
     __arm_qoi_decoder_get_current_location(ptThis, &tCurrentLocation);
-
-    /* report reach the bottom right corner */
-    ARM_2D_INVOKE_RT_VOID(
-        this.tCFG.IO.fnReport, 
-        ARM_2D_PARAM(   this.tCFG.pTarget, 
-                        ptThis, 
-                        tCurrentLocation,
-                        this.ptWorking, 
-                        ARM_QOI_CTX_REPORT_BOTTOM_RIGHT));
 
     if (this.ptWorking->tPixelDecoded >= this.tSize.iHeight * this.tSize.iWidth) {
         ARM_2D_INVOKE_RT_VOID(
