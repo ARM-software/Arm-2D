@@ -211,6 +211,7 @@ typedef struct arm_qoi_cfg_t {
     uint16_t hwSize;
     uint8_t chOutputColourFormat;
     uint8_t bPreBlendBGColour   : 1;        //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
+    uint8_t bInvertColour       : 1;
 
     struct {
         __arm_qoi_io_seek_t     *fnSeek;

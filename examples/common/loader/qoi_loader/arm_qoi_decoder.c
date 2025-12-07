@@ -462,20 +462,35 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis,
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+            *phwTarget++ = __arm_2d_rgb565_pack(&tColour) ;
 
-        __arm_2d_color_fast_rgb_t tColour;
-        __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
-        *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
-        ptLocation->iX++;
-    } while(--tLength);
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
+
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+            *phwTarget++ = __arm_2d_rgb565_pack(&tColour) ;
+            ptLocation->iX++;
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
@@ -496,20 +511,37 @@ arm_2d_err_t __arm_qoi_decode_stride_gray8(arm_qoi_dec_t *ptThis,
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    uint8_t chInvertMask = this.tCFG.bInvertColour ? 0xFF : 00;
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        __arm_2d_color_fast_rgb_t tColour;
-        __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
-        *pchTarget++ = __arm_2d_gray8_pack(&tColour);
-        ptLocation->iX++;
-    } while(--tLength);
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+            *pchTarget++ = __arm_2d_gray8_pack(&tColour) ^ chInvertMask;
+
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
+
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+            *pchTarget++ = __arm_2d_gray8_pack(&tColour) ^ chInvertMask;
+            ptLocation->iX++;
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
@@ -531,28 +563,52 @@ arm_2d_err_t __arm_qoi_decode_stride_gray8_with_background(arm_qoi_dec_t *ptThis
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    uint8_t chInvertMask = this.tCFG.bInvertColour ? 0xFF : 00;
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        __arm_2d_color_fast_rgb_t tColour;
-        __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
 
-        uint16_t hwPixel = __arm_2d_gray8_pack(&tColour);
+            uint16_t hwPixel = __arm_2d_gray8_pack(&tColour) ^ chInvertMask;
 
-        uint16_t hwOpa= tPixel.tColour.chAlpha;
-        hwOpa += (hwOpa == 255);
-        uint16_t hwTrans = 256 - hwOpa;
+            uint16_t hwOpa= tPixel.tColour.chAlpha;
+            hwOpa += (hwOpa == 255);
+            uint16_t hwTrans = 256 - hwOpa;
 
-        *pchTarget++ = (hwPixel * hwOpa + (uint16_t)chBackground * hwTrans) >> 8;
-        ptLocation->iX++;
+            *pchTarget++ = (hwPixel * hwOpa + (uint16_t)chBackground * hwTrans) >> 8;
 
-    } while(--tLength);
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
+
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
+
+            uint16_t hwPixel = __arm_2d_gray8_pack(&tColour) ^ chInvertMask;
+
+            uint16_t hwOpa= tPixel.tColour.chAlpha;
+            hwOpa += (hwOpa == 255);
+            uint16_t hwTrans = 256 - hwOpa;
+
+            *pchTarget++ = (hwPixel * hwOpa + (uint16_t)chBackground * hwTrans) >> 8;
+            ptLocation->iX++;
+
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
@@ -574,18 +630,32 @@ arm_2d_err_t __arm_qoi_decode_stride_channel(   arm_qoi_dec_t *ptThis,
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    uint8_t chInvertMask = this.tCFG.bInvertColour ? 0xFF : 00;
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        *pchTarget++ = tPixel.tColour.chChannel[chIndex];
-        ptLocation->iX++;
-    } while(--tLength);
+            *pchTarget++ = tPixel.tColour.chChannel[chIndex] ^ chInvertMask;
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
+
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+
+            *pchTarget++ = tPixel.tColour.chChannel[chIndex] ^ chInvertMask;
+            ptLocation->iX++;
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
@@ -608,30 +678,53 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
+            
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
-        
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            uint16_t hwOpa= tPixel.tColour.chAlpha;
+            hwOpa += (hwOpa == 255);
+            uint16_t hwTrans = 256 - hwOpa;
 
-        uint16_t hwOpa= tPixel.tColour.chAlpha;
-        hwOpa += (hwOpa == 255);
-        uint16_t hwTrans = 256 - hwOpa;
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_rgb565_unpack(hwBackground, &tColour);
 
-        __arm_2d_color_fast_rgb_t tColour;
-        __arm_2d_rgb565_unpack(hwBackground, &tColour);
+            tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
+            tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
+            tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
 
-        tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
-        tColour.BGRA[0] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
-        tColour.BGRA[0] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
+            *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
-        ptLocation->iX++;
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+            
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-    } while(--tLength);
+            uint16_t hwOpa= tPixel.tColour.chAlpha;
+            hwOpa += (hwOpa == 255);
+            uint16_t hwTrans = 256 - hwOpa;
+
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_rgb565_unpack(hwBackground, &tColour);
+
+            tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
+            tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
+            tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
+
+            *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
+            ptLocation->iX++;
+
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
@@ -654,18 +747,30 @@ arm_2d_err_t __arm_qoi_decode_stride_ccca8888(  arm_qoi_dec_t *ptThis,
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
+            
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
-        
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            *pwTarget++ = tPixel.wValue;
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        *pwTarget++ = tPixel.wValue;
-        ptLocation->iX++;
-    } while(--tLength);
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+            
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+
+            *pwTarget++ = tPixel.wValue;
+            ptLocation->iX++;
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
@@ -688,30 +793,54 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
         return ARM_2D_ERR_NONE;
     }
 
-    do {
-        __arm_qoi_pixel_t tPixel;
+    if (!bShowReference) {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-        __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
 
-        if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
-            return ARM_2D_ERR_NOT_AVAILABLE;
-        }
+            uint16_t hwOpa= tPixel.tColour.chAlpha;
+            hwOpa += (hwOpa == 255);
+            uint16_t hwTrans = 256 - hwOpa;
 
-        uint16_t hwOpa= tPixel.tColour.chAlpha;
-        hwOpa += (hwOpa == 255);
-        uint16_t hwTrans = 256 - hwOpa;
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(wBackground, &tColour);
 
-        __arm_2d_color_fast_rgb_t tColour;
-        __arm_2d_ccca8888_unpack(wBackground, &tColour);
+            tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
+            tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
+            tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
 
-        tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
-        tColour.BGRA[0] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
-        tColour.BGRA[0] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
+            *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
 
-        *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
-        ptLocation->iX++;
+        } while(--tLength);
+    } else {
+        do {
+            __arm_qoi_pixel_t tPixel;
 
-    } while(--tLength);
+            __arm_qoi_decode_report_grid(ptThis, ptLocation, bShowReference);
+
+            if (!__arm_qoi_get_next_pixel(ptThis, &tPixel)) {
+                return ARM_2D_ERR_NOT_AVAILABLE;
+            }
+
+            uint16_t hwOpa= tPixel.tColour.chAlpha;
+            hwOpa += (hwOpa == 255);
+            uint16_t hwTrans = 256 - hwOpa;
+
+            __arm_2d_color_fast_rgb_t tColour;
+            __arm_2d_ccca8888_unpack(wBackground, &tColour);
+
+            tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
+            tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
+            tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
+
+            *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
+            ptLocation->iX++;
+
+        } while(--tLength);
+    }
 
     return ARM_2D_ERR_NONE;
 }
