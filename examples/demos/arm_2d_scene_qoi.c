@@ -193,12 +193,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_handler)
                                     &this.tQOIBackground.vres.tTile,
                                     (__arm_2d_color_t){ GLCD_COLOR_GREEN});
                     break;
-                default:
+                case ARM_2D_COLOUR_CCCA8888:
                     arm_2d_tile_copy_with_opacity(  
                                             &this.tQOIBackground.vres.tTile,
                                             ptTile,
                                             &__centre_region,
                                             255);
+                    break;
+                default:
+                    arm_2d_tile_copy_only(  &this.tQOIBackground.vres.tTile,
+                                            ptTile,
+                                            &__centre_region);
+                    break;
             }
         }
 
@@ -282,10 +288,10 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
             .bUseHeapForVRES = false,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-            //.tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
+            .tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
             //.bInvertColour = true,
-            .bPreBlendWithBackgroundColour = true,
-            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+            //.bForceDisablePreBlendwithBG = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_GREEN,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_QOI_IO_FILE_LOADER,

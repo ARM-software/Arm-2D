@@ -227,13 +227,13 @@ typedef struct arm_qoi_cfg_t {
 struct arm_qoi_dec_t{
     arm_2d_size_t tSize;
     
+    uint8_t bValid;
+    int8_t chErrorCode;
+    uint8_t chChannels;
 
 ARM_PRIVATE(
     arm_qoi_cfg_t tCFG;
     arm_qoi_dec_ctx_t *ptWorking;
-
-    uint8_t bValid;
-    int8_t chErrorCode;
 )
 } ;
 

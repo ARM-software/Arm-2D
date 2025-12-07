@@ -215,6 +215,12 @@ arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
     }
     this.vres.tTile.tInfo.bHasEnforcedColour = true;
 
+    uint8_t chCurrentColourSize = (((ARM_2D_COLOUR & ARM_2D_COLOUR_SZ_msk)) >> ARM_2D_COLOUR_SZ_pos);
+    if ( (this.vres.tTile.tColourInfo.u3ColourSZ >= chCurrentColourSize)
+      && (this.vres.tTile.tColourInfo.u3ColourSZ < ARM_2D_COLOUR_SZ_24BIT)) {
+        this.tCFG.bUseHeapForVRES = true;
+    }
+
     do {
         size_t nPixelSize = sizeof(COLOUR_INT);
         //uint32_t nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
@@ -429,14 +435,22 @@ bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis)
             this.bErrorDetected = true;
             break;    
         }
-        
+        bool bPreBlendBGColour = false;
+
+        if (this.Decoder.tQOIDec.chChannels == 3) {
+            if (this.vres.tTile.tColourInfo.chScheme == ARM_2D_COLOUR_CCCA8888) {
+                this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR_CCCN888;
+            }
+        } else {
+            bPreBlendBGColour = !this.tCFG.bForceDisablePreBlendwithBG;
+        }
 
         arm_qoi_cfg_t tCFG = {
             .pchWorkingMemory = this.Decoder.pWorkMemory,
             .hwSize = __WORKING_MEMORY_SIZE__,
             .chOutputColourFormat = this.Decoder.u3QOIOutputColourFormat,
             .bInvertColour = this.tCFG.bInvertColour,
-            .bPreBlendBGColour = this.tCFG.bPreBlendWithBackgroundColour,
+            .bPreBlendBGColour = bPreBlendBGColour,
             .tBackgroundColour = this.tCFG.tBackgroundColour,
             
             .IO = {

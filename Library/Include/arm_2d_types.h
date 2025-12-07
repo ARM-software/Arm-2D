@@ -380,7 +380,9 @@ enum {
     ARM_2D_COLOUR_SZ_16BIT_msk  =   ARM_2D_COLOUR_SZ_16BIT<< 1,
     ARM_2D_COLOUR_SZ_32BIT_msk  =   ARM_2D_COLOUR_SZ_32BIT<< 1,
     ARM_2D_COLOUR_SZ_24BIT_msk  =   ARM_2D_COLOUR_SZ_24BIT<< 1,
-    ARM_2D_COLOUR_SZ_msk        =   (0x07 << 1),
+    ARM_2D_COLOUR_SZ_pos        =   1,
+    ARM_2D_COLOUR_SZ_msk        =   (0x07 << ARM_2D_COLOUR_SZ_pos),
+    
 
     ARM_2D_COLOUR_LITTLE_ENDIAN       = 0,
     ARM_2D_COLOUR_BIG_ENDIAN          = 1,

@@ -114,6 +114,8 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     /* set previous pixel as {0, 0, 0, 0xFF} */
     ptContext->tPrevious.wValue = 0xFF000000;
 
+    
+
     if (bUpdateHeader) {
         uint32_t wWidth = __rev(tQOIHeader.wWidth);
         uint32_t wHeight = __rev(tQOIHeader.wHeight);
@@ -124,6 +126,11 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
 
         this.tSize.iWidth = (int16_t)wWidth;
         this.tSize.iHeight = (int16_t)wHeight;
+        this.chChannels = tQOIHeader.chChannels;
+    }
+
+    if (3 == tQOIHeader.chChannels) {
+        this.tCFG.bPreBlendBGColour = false;
     }
 
     return ARM_2D_ERR_NONE;
