@@ -182,7 +182,7 @@ ARM_PRIVATE(
         uint8_t                         : 4;
     } Decoder;
 
-    arm_qoi_context_t tContext[5];
+    arm_qoi_context_t tContext[4];
 
     struct {
         arm_qoi_context_t *ptCandidates;

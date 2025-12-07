@@ -934,6 +934,15 @@ arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
         y = 0;
     }
 
+    /* start decoding from the very begining */
+    ARM_2D_INVOKE_RT_VOID(
+        this.tCFG.IO.fnReport, 
+        ARM_2D_PARAM(   this.tCFG.pTarget, 
+                        ptThis, 
+                        tCurrentLocation,
+                        this.ptWorking, 
+                        ARM_QOI_CTX_REPORT_START));
+
     /* skip headroom */
     for (; y < tTargetRegion.tLocation.iY; y++) {
         for (x = 0; x < iStride; x++) {
@@ -960,6 +969,14 @@ entry_skip_headroom:
 
     do {
         bool bReferenceY = !(y & 0x0F) && bNeedToReport;
+
+        ARM_2D_INVOKE_RT_VOID(
+            this.tCFG.IO.fnReport, 
+            ARM_2D_PARAM(   this.tCFG.pTarget, 
+                            ptThis, 
+                            (arm_2d_location_t){0, y},
+                            this.ptWorking, 
+                            ARM_QOI_CTX_REPORT_REF_LINE));
 
         /* skip left */
         for (x = 0; x < tTargetRegion.tLocation.iX; x++) {
@@ -1083,6 +1100,16 @@ entry_skip_left:
                         tCurrentLocation,
                         this.ptWorking, 
                         ARM_QOI_CTX_REPORT_BOTTOM_RIGHT));
+
+    if (this.ptWorking->tPixelDecoded >= this.tSize.iHeight * this.tSize.iWidth) {
+        ARM_2D_INVOKE_RT_VOID(
+            this.tCFG.IO.fnReport, 
+            ARM_2D_PARAM(   this.tCFG.pTarget, 
+                            ptThis, 
+                            tCurrentLocation,
+                            this.ptWorking, 
+                            ARM_QOI_CTX_REPORT_END));
+    }
 
     return ARM_2D_ERR_NONE;
 }

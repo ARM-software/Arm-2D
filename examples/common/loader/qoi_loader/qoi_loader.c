@@ -64,7 +64,6 @@
 /*============================ TYPES =========================================*/
 
 enum {
-    QOI_CONTEXT_START,
     QOI_CONTEXT_PREVIOUS_START,
     QOI_CONTEXT_PREVIOUS_FRAME_START,
     QOI_CONTEXT_PREVIOUS_LINE,
@@ -129,10 +128,9 @@ bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis);
 
 ARM_NONNULL(1,2)
 static
-void __arm_qoi_save_context_to(   arm_qoi_loader_t *ptThis, 
-                                    arm_qoi_context_t *ptContext,
-                                    int16_t iX,
-                                    int16_t iY);
+void __arm_qoi_save_context_to( arm_qoi_loader_t *ptThis, 
+                                arm_qoi_context_t *ptContext,
+                                arm_2d_location_t *ptLocation);
 
 ARM_NONNULL(1,2)
 static
@@ -321,20 +319,100 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
     arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)pTarget;
 
     switch (tEvent) {
+        case ARM_QOI_CTX_REPORT_START:
+            if (!this.Decoder.bContextInitialized) {
+                this.Decoder.bContextInitialized = true;
+
+                arm_qoi_dec_save_context(ptDecoder, &this.tContext[QOI_CONTEXT_CURRENT].tSnapshot);
+
+                this.tContext[QOI_CONTEXT_PREVIOUS_START]          = this.tContext[QOI_CONTEXT_CURRENT];
+                this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START]    = this.tContext[QOI_CONTEXT_CURRENT];
+                this.tContext[QOI_CONTEXT_PREVIOUS_LINE]           = this.tContext[QOI_CONTEXT_CURRENT];
+            }
+            break;
         case ARM_QOI_CTX_REPORT_TOP_LEFT:
+            if (this.bIsNewFrame) {
+
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    3, 
+                    "QOIec", 
+                    "Encounter a new frame, Save context to slot [QOI_CONTEXT_PREVIOUS_FRAME_START]"
+                );
+
+                __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START], &tLocation);
+            }
+
+            /* start of the target region */
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                3, 
+                "QOIec", 
+                "Save context to slot [QOI_CONTEXT_PREVIOUS_START]"
+            );
+            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_START], &tLocation); 
             break;
         case ARM_QOI_CTX_REPORT_BOTTOM_RIGHT:
+
+            ARM_2D_LOG_INFO(
+                CONTROLS, 
+                3, 
+                "QOIec", 
+                "Save context to slot [QOI_CONTEXT_CURRENT]"
+            );
+            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_CURRENT], &tLocation);     
+            break;
+        case ARM_QOI_CTX_REPORT_REF_LINE:
+            if (0 == tLocation.iX) {
+                /* the start of a line */
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    3, 
+                    "QOIec", 
+                    "Save context to slot [QOI_CONTEXT_PREVIOUS_LINE]"
+                );
+                __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_LINE], &tLocation); 
+            }
             break;
         case ARM_QOI_CTX_REPORT_REF_GRID:
+            /* scan reference candidates */
+            if (this.bIsNewFrame) {
+                arm_qoi_context_t *ptCandiate = NULL;
+                arm_irq_safe {
+                    ptCandiate = this.Reference.ptCandidates;
+                    if (NULL != ptCandiate) {
+                        if (ptCandiate->tLocation.iX == tLocation.iX && ptCandiate->tLocation.iY == tLocation.iY) {
+                            /* save reference point */
+                            __arm_qoi_save_context_to(ptThis, ptCandiate, &tLocation);
+
+                            /* remove it from candidate list */
+                            ARM_LIST_STACK_POP(this.Reference.ptCandidates, ptCandiate);
+                            assert(NULL != ptCandiate);
+                        } else {
+                            ptCandiate = NULL;
+                        }
+                    }
+                }
+                if (NULL != ptCandiate) {
+                    __arm_qoi_context_add_to_list(&this.Reference.ptList, 
+                                                    ptCandiate, 
+                                                    this.Decoder.tBlockRegion.tSize,
+                                                    true);
+                }
+            }
             break;
-        
+        case ARM_QOI_CTX_REPORT_END:
+            if (this.bIsNewFrame) {
+                this.bIsNewFrame = false;
+            }
+            break;
         default:
             assert(false);
             break;
     }
-
 }
 
+#if 0
 static
 int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 to abort */
     void *pTarget,
@@ -363,10 +441,9 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
                 //zjd_save(ptDecoder, &this.tContext[QOI_CONTEXT_START].tSnapshot);
 
 
-                this.tContext[QOI_CONTEXT_PREVIOUS_START]          = this.tContext[QOI_CONTEXT_START];
-                this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START]    = this.tContext[QOI_CONTEXT_START];
-                this.tContext[QOI_CONTEXT_PREVIOUS_LINE]           = this.tContext[QOI_CONTEXT_START];
-                this.tContext[QOI_CONTEXT_CURRENT]                 = this.tContext[QOI_CONTEXT_START];
+                this.tContext[QOI_CONTEXT_PREVIOUS_START]          = this.tContext[QOI_CONTEXT_CURRENT];
+                this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START]    = this.tContext[QOI_CONTEXT_CURRENT];
+                this.tContext[QOI_CONTEXT_PREVIOUS_LINE]           = this.tContext[QOI_CONTEXT_CURRENT];
             }
         }
 
@@ -377,7 +454,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
             if (NULL != ptCandiate) {
                 if (ptCandiate->tLocation.iX == ptRegion->tLocation.iX && ptCandiate->tLocation.iY == ptRegion->tLocation.iY) {
                     /* save reference point */
-                    __arm_qoi_save_context_to(ptThis, ptCandiate, ptRegion->tLocation.iX, ptRegion->tLocation.iY);
+                    __arm_qoi_save_context_to(ptThis, ptCandiate, &(ptRegion->tLocation));
 
                     /* remove it from candidate list */
                     ARM_LIST_STACK_POP(this.Reference.ptCandidates, ptCandiate);
@@ -404,7 +481,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
                 "Encounter a new frame, Save context to slot [QOI_CONTEXT_PREVIOUS_FRAME_START]"
             );
 
-            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START], ptRegion->tLocation.iX, ptRegion->tLocation.iY);
+            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START], &(ptRegion->tLocation));
         }
 
         if (    ((ptRegion->tLocation.iX + ptRegion->tSize.iWidth) >= (this.Decoder.tDrawRegion.tLocation.iX + this.Decoder.tDrawRegion.tSize.iWidth))
@@ -417,7 +494,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
                 "QOIec", 
                 "Save context to slot [QOI_CONTEXT_CURRENT]"
             );
-            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_CURRENT], ptRegion->tLocation.iX, ptRegion->tLocation.iY);     
+            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_CURRENT], &(ptRegion->tLocation));     
 
         }
 
@@ -430,7 +507,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
                 "QOIec", 
                 "Save context to slot [QOI_CONTEXT_PREVIOUS_LINE]"
             );
-            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_LINE], ptRegion->tLocation.iX, ptRegion->tLocation.iY);     
+            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_LINE], &(ptRegion->tLocation));     
         }
 
         if ((ptRegion->tLocation.iX <= this.Decoder.tDrawRegion.tLocation.iX) 
@@ -443,7 +520,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
                 "QOIec", 
                 "Save context to slot [QOI_CONTEXT_PREVIOUS_START]"
             );
-            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_START], ptRegion->tLocation.iX, ptRegion->tLocation.iY);     
+            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_START], &(ptRegion->tLocation));     
         }
 
     }
@@ -540,7 +617,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
 
     return 1;    /* Continue to decompress */
 }
-
+#endif
 
 static
 bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis)
@@ -1047,7 +1124,7 @@ intptr_t __arm_qoi_vres_asset_loader( uintptr_t pTarget,
 
         switch(this.tCFG.u2WorkMode) {
             case ARM_QOI_MODE_PARTIAL_DECODED:
-                __arm_qoi_decode_partial( ptThis, 
+                __arm_qoi_decode_partial(   ptThis, 
                                             ptRegion, 
                                             (uint8_t *)pBuffer, 
                                             iTargetStride * this.u3PixelByteSize );
@@ -1276,18 +1353,16 @@ bool __arm_2d_qoi_is_context_before_the_target_region(arm_qoi_context_t *ptConte
 
 ARM_NONNULL(1,2)
 static
-void __arm_qoi_save_context_to(   arm_qoi_loader_t *ptThis, 
-                                    arm_qoi_context_t *ptContext,
-                                    int16_t iX,
-                                    int16_t iY)
+void __arm_qoi_save_context_to( arm_qoi_loader_t *ptThis, 
+                                arm_qoi_context_t *ptContext,
+                                arm_2d_location_t *ptLocation)
 {
     assert(NULL != ptThis);
     assert(NULL != ptContext);
 
     arm_qoi_dec_save_context(&this.Decoder.tQOIDec, &ptContext->tSnapshot);
 
-    ptContext->tLocation.iX = iX;
-    ptContext->tLocation.iY = iY;
+    ptContext->tLocation = *ptLocation;
 }
 
 /*----------------------------------------------------------------------------*
