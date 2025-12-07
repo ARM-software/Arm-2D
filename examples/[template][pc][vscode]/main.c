@@ -358,6 +358,13 @@ void scene_rickrolling_loader(void)
 }
 #endif
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+void scene_qoi_loader(void) 
+{
+    arm_2d_scene_qoi_init(&DISP0_ADAPTER);
+}
+#endif
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
@@ -377,7 +384,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -469,6 +476,12 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         8000,
         scene_rickrolling_loader,
+    },
+#endif
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+    {
+        5000,
+        scene_qoi_loader,
     },
 #endif
     {
@@ -567,7 +580,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_shaped_panel_loader,
+        scene_qoi_loader,
         //scene_flight_attitude_instrument_loader,
         //scene_blink_loader,
         //scene_rickrolling_loader,

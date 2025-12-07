@@ -135,6 +135,9 @@ CCFLAG  +=  -Wno-macro-redefined
 
 LDFLAG  +=  -lpthread
 
+# debug
+CC_DEF  += __ARM_2D_DEBUG__
+
 ifeq ($(OS),Windows_NT)
 	# Windows GCC has known compilation issue for -O0
 	CCFLAG  +=  -Ofast

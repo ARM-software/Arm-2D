@@ -85,6 +85,7 @@ typedef enum {
 /*!
  * \brief the QOI header
  */
+
 struct __arm_qoi_header {
     const char  chMagic[4];         //!< magic bytes "qoif"
     uint32_t    wWidth;             //!< image width in pixels (Big-endian)
@@ -95,9 +96,9 @@ struct __arm_qoi_header {
 
 typedef union __arm_qoi_rgba8888_t {
     struct {
-        uint8_t chRed;
-        uint8_t chGreen;
         uint8_t chBlue;
+        uint8_t chGreen;
+        uint8_t chRed;
         uint8_t chAlpha;
     };
     uint8_t chChannel[4];

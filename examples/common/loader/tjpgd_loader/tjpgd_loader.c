@@ -228,7 +228,7 @@ arm_2d_err_t arm_tjpgd_loader_init( arm_tjpgd_loader_t *ptThis,
         }
 
         this.u3PixelByteSize = nPixelSize;
-        this.u5BitsPerPixel = nBitsPerPixel;
+        this.u5BitsPerPixel = nBitsPerPixel - 1;
 
     } while(0);
 
@@ -882,7 +882,7 @@ intptr_t __arm_tjpgd_vres_asset_loader( uintptr_t pTarget,
 #else
     size_t nPixelSize = this.u3PixelByteSize;
     size_t tBufferSize = 0;
-    size_t nBitsPerPixel = this.u5BitsPerPixel;
+    size_t nBitsPerPixel = this.u5BitsPerPixel + 1;
     uint32_t nBytesPerLine = ptRegion->tSize.iWidth * nPixelSize;
 
     if (0 != ptVRES->tTile.tColourInfo.chScheme) {

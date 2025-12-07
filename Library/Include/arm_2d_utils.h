@@ -1339,7 +1339,7 @@ size_t strnlen(const char *pchString, size_t tMaxSize);
 #define ARM_PUBLIC(...)    struct {__VA_ARGS__};
 
 /* redefine macros */
-#if defined(__cplusplus)
+#if defined(__cplusplus) || defined(__ARM_2D_DEBUG__)
 #   define ARM_PRIVATE(...)                                                     \
         struct  {                                                               \
             __VA_ARGS__                                                         \

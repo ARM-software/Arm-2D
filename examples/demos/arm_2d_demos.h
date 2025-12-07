@@ -41,6 +41,7 @@
 #include "arm_2d_scene_filters.h"
 #include "arm_2d_scene_text_reader.h"
 #include "arm_2d_scene_tjpgd.h"
+#include "arm_2d_scene_qoi.h"
 #include "arm_2d_scene_rickrolling.h"
 #include "arm_2d_scene_matrix.h"
 #include "arm_2d_scene_iir_blur.h"
