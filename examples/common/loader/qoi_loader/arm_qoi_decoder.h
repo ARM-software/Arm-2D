@@ -79,7 +79,7 @@ enum {
 typedef enum {
     ARM_QOI_CTX_REPORT_TOP_LEFT,
     ARM_QOI_CTX_REPORT_BOTTOM_RIGHT,
-    ARM_QOI_CTX_REPORT_REF_LINE,
+    ARM_QOI_CTX_REPORT_REF_GRID,
 } arm_qoi_ctx_evt_t;
 
 /*!
