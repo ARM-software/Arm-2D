@@ -829,7 +829,7 @@ Macros</h2></td></tr>
 <tr class="memitem:gabc70250d4d707d3a9bd5e501fb06a5c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gabc70250d4d707d3a9bd5e501fb06a5c3">ARM_2D_M_COLOUR_GRAY8</a>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga4b39d00cce49c2c8aa193b86f9e4e0c0">ARM_2D_M_COLOUR_SZ_8BIT_msk</a></td></tr>
 <tr class="memdesc:gabc70250d4d707d3a9bd5e501fb06a5c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro for the gray8 colour format  <a href="group__gKernel.html#gabc70250d4d707d3a9bd5e501fb06a5c3">More...</a><br /></td></tr>
 <tr class="separator:gabc70250d4d707d3a9bd5e501fb06a5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69ac89993246851a17d786e90fd4d5bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga69ac89993246851a17d786e90fd4d5bb">ARM_2D_M_COLOUR_MASK_A8</a>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga4b39d00cce49c2c8aa193b86f9e4e0c0">ARM_2D_M_COLOUR_SZ_8BIT_msk</a></td></tr>
+<tr class="memitem:ga69ac89993246851a17d786e90fd4d5bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga69ac89993246851a17d786e90fd4d5bb">ARM_2D_M_COLOUR_MASK_A8</a></td></tr>
 <tr class="memdesc:ga69ac89993246851a17d786e90fd4d5bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro for the 8bit alpha mask  <a href="group__gKernel.html#ga69ac89993246851a17d786e90fd4d5bb">More...</a><br /></td></tr>
 <tr class="separator:ga69ac89993246851a17d786e90fd4d5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga441fd78aae18a38a35c0e5b1fe11dfed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga441fd78aae18a38a35c0e5b1fe11dfed">ARM_2D_M_COLOUR_16BIT</a>&#160;&#160;&#160;<a class="el" href="group__gKernel.html#gaa7d211247955d58dedc3146d539e4b05">ARM_2D_M_COLOUR_SZ_16BIT_msk</a></td></tr>
@@ -1128,7 +1128,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<b>ARM_2D_COLOUR_GRAY8</b> = ARM_2D_COLOUR_SZ_8BIT_msk
 , <br />
-&#160;&#160;<b>ARM_2D_COLOUR_MASK_A8</b> = ARM_2D_COLOUR_SZ_8BIT_msk
+&#160;&#160;<b>ARM_2D_COLOUR_MASK_A8</b> = ARM_2D_COLOUR_SZ_8BIT_msk | ARM_2D_COLOUR_VARIANT_msk
 , <br />
 &#160;&#160;<b>ARM_2D_COLOUR_16BIT</b> = ARM_2D_COLOUR_SZ_16BIT_msk
 , <br />
@@ -8900,8 +8900,8 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">                                    <a class="code hl_define" href="group__gKernel.html#gaa0e2782b565844c471cf1f198ec56979" title="bitmask for 1bit colour formats">ARM_2D_M_COLOUR_SZ_1BIT_msk</a>     |\</div>
-<div class="line">                                    <a class="code hl_define" href="group__gKernel.html#ga29b6ca6f40e2a188bf66d1288aadf4dc" title="bitmask for the VARIANT bitfield">ARM_2D_M_COLOUR_VARIANT_msk</a></div>
+<b>Value:</b><div class="fragment"><div class="line">                                    (   <a class="code hl_define" href="group__gKernel.html#gaa0e2782b565844c471cf1f198ec56979" title="bitmask for 1bit colour formats">ARM_2D_M_COLOUR_SZ_1BIT_msk</a> \</div>
+<div class="line">                                    |   <a class="code hl_define" href="group__gKernel.html#ga29b6ca6f40e2a188bf66d1288aadf4dc" title="bitmask for the VARIANT bitfield">ARM_2D_M_COLOUR_VARIANT_msk</a> )</div>
 </div><!-- fragment -->
 <p>macro for the monochrome </p>
 
@@ -9026,11 +9026,13 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ARM_2D_M_COLOUR_MASK_A8&#160;&#160;&#160;<a class="el" href="group__gKernel.html#ga4b39d00cce49c2c8aa193b86f9e4e0c0">ARM_2D_M_COLOUR_SZ_8BIT_msk</a></td>
+          <td class="memname">#define ARM_2D_M_COLOUR_MASK_A8</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Value:</b><div class="fragment"><div class="line">                                    (   <a class="code hl_define" href="group__gKernel.html#ga4b39d00cce49c2c8aa193b86f9e4e0c0" title="bitmask for 8bit colour formats">ARM_2D_M_COLOUR_SZ_8BIT_msk</a> \</div>
+<div class="line">                                    |   <a class="code hl_define" href="group__gKernel.html#ga29b6ca6f40e2a188bf66d1288aadf4dc" title="bitmask for the VARIANT bitfield">ARM_2D_M_COLOUR_VARIANT_msk</a>)</div>
+</div><!-- fragment -->
 <p>macro for the 8bit alpha mask </p>
 
 </div>
