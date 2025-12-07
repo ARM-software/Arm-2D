@@ -279,13 +279,13 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
         arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiMeterPanel, sizeof(c_qoiMeterPanel));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
-            .bUseHeapForVRES = true,
+            .bUseHeapForVRES = false,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-            .tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
             //.bInvertColour = true,
-            //.bPreBlendWithBackgroundColour = true,
-            //.tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+            .bPreBlendWithBackgroundColour = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_QOI_IO_FILE_LOADER,
