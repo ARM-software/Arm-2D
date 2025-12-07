@@ -109,7 +109,7 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
         return ARM_2D_ERR_IO_ERROR;
     }
 
-    ptContext->tPosition = sizeof(tQOIHeader);
+    ptContext->tPosition = 14;
 
     /* set previous pixel as {0, 0, 0, 0xFF} */
     ptContext->tPrevious.wValue = 0xFF000000;
