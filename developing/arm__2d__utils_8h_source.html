@@ -1452,7 +1452,7 @@ $(document).ready(function(){initNavTree('arm__2d__utils_8h_source.html',''); in
 <div class="line"><a id="l01339" name="l01339"></a><span class="lineno"> 1339</span><span class="preprocessor">#define ARM_PUBLIC(...)    struct {__VA_ARGS__};</span></div>
 <div class="line"><a id="l01340" name="l01340"></a><span class="lineno"> 1340</span> </div>
 <div class="line"><a id="l01341" name="l01341"></a><span class="lineno"> 1341</span><span class="comment">/* redefine macros */</span></div>
-<div class="line"><a id="l01342" name="l01342"></a><span class="lineno"> 1342</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l01342" name="l01342"></a><span class="lineno"> 1342</span><span class="preprocessor">#if defined(__cplusplus) || defined(__ARM_2D_DEBUG__)</span></div>
 <div class="line"><a id="l01343" name="l01343"></a><span class="lineno"> 1343</span><span class="preprocessor">#   define ARM_PRIVATE(...)                                                     \</span></div>
 <div class="line"><a id="l01344" name="l01344"></a><span class="lineno"> 1344</span><span class="preprocessor">        struct  {                                                               \</span></div>
 <div class="line"><a id="l01345" name="l01345"></a><span class="lineno"> 1345</span><span class="preprocessor">            __VA_ARGS__                                                         \</span></div>
