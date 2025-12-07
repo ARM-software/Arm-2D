@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        01. Dec 2025
- * $Revision:    V.1.8.10
+ * $Date:        07. Dec 2025
+ * $Revision:    V.1.8.11
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -609,7 +609,7 @@ extern "C" {
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
 #   define COLOUR_INT               uint32_t
-#   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCA8888
+#   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCN888
 
 #   define arm_2d_pixel_from_brga8888  
 
