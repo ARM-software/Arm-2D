@@ -16,7 +16,7 @@
 // <i> The size of the IO buffer
 // <i> Default: 32
 #ifndef ARM_QOI_IO_BUFF_SIZE
-#   define ARM_QOI_IO_BUFF_SIZE         32
+#   define ARM_QOI_IO_BUFF_SIZE         0
 #endif
 
 //</h>

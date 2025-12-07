@@ -138,7 +138,13 @@ arm_2d_err_t arm_qoi_decoder_init(arm_qoi_dec_t *ptThis, arm_qoi_cfg_t *ptCFG)
     memset(ptThis, 0, sizeof(arm_qoi_dec_t));
     this.tCFG = *ptCFG;
 
-    if (this.tCFG.hwSize < (sizeof(arm_qoi_dec_ctx_t) + 4) || NULL == this.tCFG.pchWorkingMemory) {
+    uintptr_t pnAddress = ((uintptr_t)this.tCFG.pchWorkingMemory + this.tCFG.hwSize)
+                        & (~(uintptr_t)0x03);
+
+    /* get the context address */
+    pnAddress -= sizeof(arm_qoi_dec_ctx_t);
+
+    if ((pnAddress < (uintptr_t)this.tCFG.pchWorkingMemory) || NULL == this.tCFG.pchWorkingMemory) {
         return ARM_2D_ERR_INVALID_PARAM;
     } else if (NULL == this.tCFG.IO.fnRead || NULL == this.tCFG.IO.fnSeek) {
         return ARM_2D_ERR_MISSING_PARAM;
@@ -152,11 +158,7 @@ arm_2d_err_t arm_qoi_decoder_init(arm_qoi_dec_t *ptThis, arm_qoi_cfg_t *ptCFG)
     memset(this.tCFG.pchWorkingMemory, 0, this.tCFG.hwSize);
 
     /* get word-aligned working memory limit address */
-    uintptr_t pnAddress = ((uintptr_t)this.tCFG.pchWorkingMemory + this.tCFG.hwSize)
-                        & (~(uintptr_t)0x03);
 
-    /* get the context address */
-    pnAddress -= sizeof(arm_qoi_dec_ctx_t);
     /* set working context */
     this.ptWorking = (arm_qoi_dec_ctx_t *)pnAddress;
 
