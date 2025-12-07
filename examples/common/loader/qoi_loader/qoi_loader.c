@@ -435,7 +435,7 @@ int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 
         .nAddress = (uintptr_t)pSource,
     };
 
-    if (this.tCFG.bInverseColour) {
+    if (this.tCFG.bInvertColour) {
         size_t tPixelCount = tBlockRegion.tSize.iHeight * tBlockRegion.tSize.iWidth;
 
         switch (this.u3PixelByteSize) {
@@ -544,12 +544,16 @@ bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis)
             this.bErrorDetected = true;
             break;    
         }
-
+        
 
         arm_qoi_cfg_t tCFG = {
             .pchWorkingMemory = this.Decoder.pWorkMemory,
             .hwSize = __WORKING_MEMORY_SIZE__,
             .chOutputColourFormat = this.Decoder.u3QOIOutputColourFormat,
+            .bInvertColour = this.tCFG.bInvertColour,
+            .bPreBlendBGColour = this.tCFG.bPreBlendWithBackgroundColour,
+            .tBackgroundColour = this.tCFG.tBackgroundColour,
+            
             .IO = {
                 .fnRead = &__arm_qoi_loader_io_read,
                 .fnSeek = &__arm_qoi_loader_io_seek,

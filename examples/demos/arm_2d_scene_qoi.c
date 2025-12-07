@@ -94,7 +94,7 @@ static void __on_scene_qoi_load(arm_2d_scene_t *ptScene)
     user_scene_qoi_t *ptThis = (user_scene_qoi_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_qoi_loader_on_load(&this.tJPGBackground);
+    arm_qoi_loader_on_load(&this.tQOIBackground);
 
 }
 
@@ -110,7 +110,7 @@ static void __on_scene_qoi_depose(arm_2d_scene_t *ptScene)
     user_scene_qoi_t *ptThis = (user_scene_qoi_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    arm_qoi_loader_depose(&this.tJPGBackground);
+    arm_qoi_loader_depose(&this.tQOIBackground);
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -145,7 +145,7 @@ static void __on_scene_qoi_frame_start(arm_2d_scene_t *ptScene)
     user_scene_qoi_t *ptThis = (user_scene_qoi_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_qoi_loader_on_frame_start(&this.tJPGBackground);
+    arm_qoi_loader_on_frame_start(&this.tQOIBackground);
 
 }
 
@@ -154,7 +154,7 @@ static void __on_scene_qoi_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_qoi_t *ptThis = (user_scene_qoi_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_qoi_loader_on_frame_complete(&this.tJPGBackground);
+    arm_qoi_loader_on_frame_complete(&this.tQOIBackground);
 
 }
 
@@ -182,14 +182,25 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_handler)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
+        arm_2d_align_centre(__top_canvas, this.tQOIBackground.vres.tTile.tRegion.tSize) {
             extern const arm_2d_tile_t c_tileMeterPanelCCCA8888;
 
-            arm_2d_tile_copy_with_opacity(  &this.tJPGBackground.vres.tTile,
+            switch (this.tQOIBackground.vres.tTile.tColourInfo.chScheme) {
+                case ARM_2D_COLOUR_GRAY8:
+                case ARM_2D_COLOUR_MASK_A8:
+                    arm_2d_fill_colour_with_mask(   
+                                    ptTile, 
+                                    &__centre_region, 
+                                    &this.tQOIBackground.vres.tTile,
+                                    (__arm_2d_color_t){ GLCD_COLOR_GREEN});
+                    break;
+                default:
+                    arm_2d_tile_copy_with_opacity(  
+                                            &this.tQOIBackground.vres.tTile,
                                             ptTile,
                                             &__centre_region,
                                             255);
-
+            }
         }
 
         /* draw text at the top-left corner */
@@ -198,7 +209,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene qoi");
+        arm_lcd_puts("Scene QOI Loader");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -272,7 +283,10 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
             .bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-            .tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8,
+            //.bInvertColour = true,
+            .bPreBlendWithBackgroundColour = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_QOI_IO_FILE_LOADER,
@@ -286,7 +300,7 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
         #endif
         };
 
-        arm_qoi_loader_init(&this.tJPGBackground, &tCFG);
+        arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
     } while(0);
 
     /* ------------   initialize members of user_scene_qoi_t end   ---------------*/
