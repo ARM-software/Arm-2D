@@ -66,8 +66,6 @@
 enum {
     QOI_CONTEXT_PREVIOUS_START,
     QOI_CONTEXT_PREVIOUS_FRAME_START,
-    QOI_CONTEXT_PREVIOUS_LINE,
-    QOI_CONTEXT_CURRENT,
 };
 
 /*============================ PROTOTYPES ====================================*/
@@ -323,21 +321,21 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
             if (!this.Decoder.bContextInitialized) {
                 this.Decoder.bContextInitialized = true;
 
-                arm_qoi_dec_save_context(ptDecoder, &this.tContext[QOI_CONTEXT_CURRENT].tSnapshot);
+                arm_qoi_dec_save_context(ptDecoder, &this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START].tSnapshot);
 
-                this.tContext[QOI_CONTEXT_PREVIOUS_START]          = this.tContext[QOI_CONTEXT_CURRENT];
-                this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START]    = this.tContext[QOI_CONTEXT_CURRENT];
-                this.tContext[QOI_CONTEXT_PREVIOUS_LINE]           = this.tContext[QOI_CONTEXT_CURRENT];
+                this.tContext[QOI_CONTEXT_PREVIOUS_START]          = this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START];
             }
             break;
         case ARM_QOI_CTX_REPORT_TOP_LEFT:
             if (this.bIsNewFrame) {
-
+                this.bIsNewFrame = false;
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
                     3, 
                     "QOIec", 
-                    "Encounter a new frame, Save context to slot [QOI_CONTEXT_PREVIOUS_FRAME_START]"
+                    "Encounter a new frame, Save context to slot [QOI_CONTEXT_PREVIOUS_FRAME_START], x = %d, y = %d",
+                    tLocation.iX,
+                    tLocation.iY
                 );
 
                 __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_FRAME_START], &tLocation);
@@ -348,35 +346,27 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
                 CONTROLS, 
                 3, 
                 "QOIec", 
-                "Save context to slot [QOI_CONTEXT_PREVIOUS_START]"
+                "Save context to slot [QOI_CONTEXT_PREVIOUS_START], x = %d, y = %d",
+                tLocation.iX,
+                tLocation.iY
             );
             __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_START], &tLocation); 
             break;
         case ARM_QOI_CTX_REPORT_BOTTOM_RIGHT:
-
             ARM_2D_LOG_INFO(
                 CONTROLS, 
                 3, 
                 "QOIec", 
-                "Save context to slot [QOI_CONTEXT_CURRENT]"
+                "Current x = %d, y = %d",
+                tLocation.iX,
+                tLocation.iY
             );
-            __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_CURRENT], &tLocation);     
             break;
         case ARM_QOI_CTX_REPORT_REF_LINE:
-            if (0 == tLocation.iX) {
-                /* the start of a line */
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    3, 
-                    "QOIec", 
-                    "Save context to slot [QOI_CONTEXT_PREVIOUS_LINE]"
-                );
-                __arm_qoi_save_context_to(ptThis, &this.tContext[QOI_CONTEXT_PREVIOUS_LINE], &tLocation); 
-            }
             break;
         case ARM_QOI_CTX_REPORT_REF_GRID:
             /* scan reference candidates */
-            if (this.bIsNewFrame) {
+            if (this.bFullFrame) {
                 arm_qoi_context_t *ptCandiate = NULL;
                 arm_irq_safe {
                     ptCandiate = this.Reference.ptCandidates;
@@ -402,8 +392,8 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
             }
             break;
         case ARM_QOI_CTX_REPORT_END:
-            if (this.bIsNewFrame) {
-                this.bIsNewFrame = false;
+            if (this.bFullFrame) {
+                this.bFullFrame = false;
             }
             break;
         default:
@@ -805,6 +795,7 @@ void __arm_qoi_decode_partial(arm_qoi_loader_t *ptThis,
         this.iTargetStrideInByte = iStrideInByte;
         this.ImageBuffer.tRegion = *ptRegion;
 
+    #if 0
         /* decoding */
         if (ARM_2D_ERR_NONE != arm_qoi_decode(  &this.Decoder.tQOIDec, 
                                                 pchBuffer, 
@@ -816,6 +807,18 @@ void __arm_qoi_decode_partial(arm_qoi_loader_t *ptThis,
             this.bErrorDetected = true;
             break;    
         }
+    #else
+        /* decoding */
+        if (ARM_2D_ERR_NONE != __arm_2d_qoi_decode( ptThis, 
+                                                    ptRegion,
+                                                    true)) {
+
+            this.ImageBuffer.pchBuffer = NULL;
+            this.iTargetStrideInByte = 0;
+            this.bErrorDetected = true;
+            break;    
+        }
+    #endif
 
     } while(0);
 
@@ -869,9 +872,12 @@ void arm_qoi_loader_on_load( arm_qoi_loader_t *ptThis)
             /* free scratch memory */
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
             this.Decoder.pWorkMemory = NULL;
+        } else if (!this.bErrorDetected) {
+            this.bFullFrame = true;
         }
         
     } while(0);
+
 
     if (this.bErrorDetected) {
 
@@ -1334,17 +1340,16 @@ arm_2d_err_t arm_qoi_loader_add_reference_point_on_virtual_screen(
 
 
 ARM_NONNULL(1)
-static
-bool __arm_2d_qoi_is_context_before_the_target_region(arm_qoi_context_t *ptContext, 
-                                                        arm_2d_location_t tLocation,
-                                                        arm_2d_size_t tBlockSize)
+__STATIC_FORCEINLINE
+bool __arm_2d_qoi_is_context_before_the_target_region(  arm_2d_location_t *ptContextLocation, 
+                                                        arm_2d_location_t *ptTargetLocation)
 {
-    assert(NULL != ptContext);
 
-    if ((ptContext->tLocation.iY <= tLocation.iY)
-    &&  (ptContext->tLocation.iX <= tLocation.iX)) {
+    if (ptContextLocation->iY < ptTargetLocation->iY) {
         return true;
-    } else if ((ptContext->tLocation.iY + tBlockSize.iHeight) <= tLocation.iY) {
+    } else if (ptContextLocation->iY > ptTargetLocation->iY) {
+        return false;
+    } else if (ptContextLocation->iX <= ptTargetLocation->iX) {
         return true;
     }
     
@@ -1377,45 +1382,39 @@ arm_2d_err_t  __arm_2d_qoi_decode (
 )
 {
     arm_2d_err_t rc = ARM_2D_ERR_NONE;
-#if 0
-    int16_t mx, my;
 
-
-    zjd_t *jd = &this.Decoder.tQOIDec;
+    arm_qoi_dec_t *ptQOIDec = &this.Decoder.tQOIDec;
     
-
     this.Decoder.tDrawRegion = (arm_2d_region_t){
-        .tSize = {
-            .iWidth = jd->width,
-            .iHeight = jd->height,
-        },
+        .tSize = ptQOIDec->tSize,
     };
 
 #define __CHECK_CONTEXT(__CONTEXT_NAME)                                         \
         ARM_2D_LOG_INFO(                                                        \
             CONTROLS,                                                           \
             1,                                                                  \
-            "QOI",                                                            \
+            "QOI",                                                              \
             "Check the context [" #__CONTEXT_NAME "] location: x=%d, y=%d...",  \
             this.tContext[__CONTEXT_NAME].tLocation.iX,                         \
             this.tContext[__CONTEXT_NAME].tLocation.iY                          \
         );                                                                      \
                                                                                 \
-        if (__arm_2d_qoi_is_context_before_the_target_region(                 \
-                                        &this.tContext[__CONTEXT_NAME],         \
-                                        this.Decoder.tDrawRegion.tLocation,     \
-                                        this.Decoder.tBlockRegion.tSize)) {     \
+        if (__arm_2d_qoi_is_context_before_the_target_region(                   \
+                                    &this.tContext[__CONTEXT_NAME].tLocation,   \
+                                    &this.Decoder.tDrawRegion.tLocation)) {     \
                                                                                 \
             ARM_2D_LOG_INFO(                                                    \
                 CONTROLS,                                                       \
                 2,                                                              \
-                "QOI",                                                        \
+                "QOI",                                                          \
                 "The the context [" #__CONTEXT_NAME                             \
                 "] location is right before the target location!"               \
             );                                                                  \
                                                                                 \
             /* use previous start point */                                      \
-            this.tContext[QOI_CONTEXT_CURRENT] = this.tContext[__CONTEXT_NAME];\
+            arm_qoi_dec_resume_context(                                         \
+                                    ptQOIDec,                                   \
+                                    &this.tContext[__CONTEXT_NAME].tSnapshot);  \
             break;                                                              \
         }
 
@@ -1446,7 +1445,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
             );
 
             /* nothing to load */
-            return QOI_OK;
+            return ARM_2D_ERR_NONE;
         }
 
         ARM_2D_LOG_INFO(
@@ -1461,32 +1460,26 @@ arm_2d_err_t  __arm_2d_qoi_decode (
         );
     }
 
-    mx = jd->msx * 8; my = jd->msy * 8;                                         /* Size of the MCU (pixel) */
-
-    this.Decoder.tBlockRegion = (arm_2d_region_t){
-        .tSize = {
-            .iHeight = my,
-            .iWidth = mx,
-        }
-    };
-
     if (bUseContex && this.Decoder.bContextInitialized) {
 
         do {
+            arm_2d_location_t tTempLocation;
+            arm_qoi_decoder_get_context_location(   ptQOIDec, 
+                                                    NULL, 
+                                                    &tTempLocation);
 
             ARM_2D_LOG_INFO(
                 CONTROLS, 
                 1, 
                 "QOIec", 
                 "Check the current location: x=%d, y=%d...",
-                this.tContext[QOI_CONTEXT_CURRENT].tLocation.iX,
-                this.tContext[QOI_CONTEXT_CURRENT].tLocation.iY
+                tTempLocation.iX,
+                tTempLocation.iY
             );
 
             if (__arm_2d_qoi_is_context_before_the_target_region(
-                                            &this.tContext[QOI_CONTEXT_CURRENT],
-                                            this.Decoder.tDrawRegion.tLocation,
-                                            this.Decoder.tBlockRegion.tSize)) {
+                        &tTempLocation,
+                        &this.Decoder.tDrawRegion.tLocation)) {
 
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
@@ -1499,7 +1492,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                 break;
             }
 
-            __CHECK_CONTEXT(QOI_CONTEXT_PREVIOUS_LINE);
+            //__CHECK_CONTEXT(QOI_CONTEXT_PREVIOUS_LINE);
             __CHECK_CONTEXT(QOI_CONTEXT_PREVIOUS_START);
             
 
@@ -1526,9 +1519,8 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                 );
 
                 if (__arm_2d_qoi_is_context_before_the_target_region(
-                                        ptReference,
-                                        this.Decoder.tDrawRegion.tLocation,
-                                        this.Decoder.tBlockRegion.tSize)) {
+                                        &ptReference->tLocation,
+                                        &this.Decoder.tDrawRegion.tLocation)) {
                     ARM_2D_LOG_INFO(
                         CONTROLS, 
                         3, 
@@ -1537,7 +1529,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                     );
                     
                     /* find the reference point */
-                    this.tContext[QOI_CONTEXT_CURRENT] = *ptReference;
+                    arm_qoi_dec_resume_context(ptQOIDec, &ptReference->tSnapshot);
                     bFindReferencePoint = true;
                     break;
                 }
@@ -1557,10 +1549,6 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                 "Failed to find any context...Reset to the start."
             );
 
-            /* use the very start point*/
-            this.tContext[QOI_CONTEXT_CURRENT] = this.tContext[QOI_CONTEXT_START];
-            this.tContext[QOI_CONTEXT_PREVIOUS_START] = this.tContext[QOI_CONTEXT_START];
-
         } while(0);
 
         ARM_2D_LOG_INFO(
@@ -1571,16 +1559,13 @@ arm_2d_err_t  __arm_2d_qoi_decode (
             "---------------------------------------------"
         );
 
-        /* resume context */
+    } 
 
-        this.Decoder.tBlockRegion.tLocation = this.tContext[QOI_CONTEXT_CURRENT].tLocation;
+    arm_qoi_decode( ptQOIDec, 
+                    this.ImageBuffer.pchBuffer, 
+                    &this.Decoder.tDrawRegion, 
+                    this.iTargetStrideInByte);
 
-        zjd_scan(jd, &this.tContext[QOI_CONTEXT_CURRENT].tSnapshot, (const zjd_rect_t *)&this.Decoder.tDrawRegion);
-
-
-    } else {
-        zjd_scan(jd, NULL, (const zjd_rect_t *)&this.Decoder.tDrawRegion);
-    }
 
     ARM_2D_LOG_INFO(
         CONTROLS, 
@@ -1590,7 +1575,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
         "==============================================================\r\n"
     );
 
-#endif
+
 	return rc;
 }
 

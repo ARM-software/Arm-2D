@@ -182,7 +182,7 @@ ARM_PRIVATE(
         uint8_t                         : 4;
     } Decoder;
 
-    arm_qoi_context_t tContext[4];
+    arm_qoi_context_t tContext[2];
 
     struct {
         arm_qoi_context_t *ptCandidates;
@@ -191,7 +191,8 @@ ARM_PRIVATE(
 
     uint16_t u3PixelByteSize        : 3;
     uint16_t u5BitsPerPixel         : 5;
-    uint16_t                        : 5;
+    uint16_t                        : 4;
+    uint16_t bFullFrame             : 1;
     uint16_t bIsNewFrame            : 1;
     uint16_t bErrorDetected         : 1;
     uint16_t bInitialized           : 1;
