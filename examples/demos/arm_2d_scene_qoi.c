@@ -284,7 +284,7 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
             //.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8,
             //.bInvertColour = true,
-            //.bPreBlendWithBackgroundColour = true,
+            .bPreBlendWithBackgroundColour = true,
             .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
