@@ -272,7 +272,7 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
     /* initialize Qoiec loader */
     do {
     #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "./record.qoi");
     #else
         extern const uint8_t c_qoiMeterPanel[20394];
 
@@ -282,10 +282,10 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
             .bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-            //.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8,
+            .tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
             //.bInvertColour = true,
-            .bPreBlendWithBackgroundColour = true,
-            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+            //.bPreBlendWithBackgroundColour = true,
+            //.tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_QOI_IO_FILE_LOADER,

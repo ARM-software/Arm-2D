@@ -16,15 +16,12 @@
 // <i> The size of the IO buffer
 // <i> Default: 32
 #ifndef ARM_QOI_IO_BUFF_SIZE
-#   define ARM_QOI_IO_BUFF_SIZE         0
+#   define ARM_QOI_IO_BUFF_SIZE         32
 #endif
 
 //</h>
 
 // <<< end of configuration section >>>
-
-
-
 
 
 #if     __GLCD_CFG_COLOUR_DEPTH__ == 8
