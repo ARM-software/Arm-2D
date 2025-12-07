@@ -425,7 +425,7 @@ int __arm_zjpgd_loader_write_to_vres_framebuffer (      /* Returns 1 to continue
         .nAddress = (uintptr_t)pSource,
     };
 
-    if (this.tCFG.bInverseColour) {
+    if (this.tCFG.bInvertColour) {
         size_t tPixelCount = tBlockRegion.tSize.iHeight * tBlockRegion.tSize.iWidth;
 
         switch (this.u3PixelByteSize) {
