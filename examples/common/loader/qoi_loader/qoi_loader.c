@@ -312,6 +312,30 @@ size_t __arm_qoi_loader_io_read (   uintptr_t pTarget,
 }
 
 static
+void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
+                                                arm_qoi_dec_t *ptDecoder,
+                                                arm_2d_location_t tLocation,
+                                                arm_qoi_dec_ctx_t *ptContext,
+                                                arm_qoi_ctx_evt_t tEvent)
+{
+    arm_qoi_loader_t *ptThis = (arm_qoi_loader_t *)pTarget;
+
+    switch (tEvent) {
+        case ARM_QOI_CTX_REPORT_TOP_LEFT:
+            break;
+        case ARM_QOI_CTX_REPORT_BOTTOM_RIGHT:
+            break;
+        case ARM_QOI_CTX_REPORT_REF_GRID:
+            break;
+        
+        default:
+            assert(false);
+            break;
+    }
+
+}
+
+static
 int __arm_qoi_loader_write_to_vres_framebuffer (    /* Returns 1 to continue, 0 to abort */
     void *pTarget,
     arm_qoi_dec_t* ptDecoder,                       /* Decompression object */
@@ -555,8 +579,11 @@ bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis)
             .tBackgroundColour = this.tCFG.tBackgroundColour,
             
             .IO = {
-                .fnRead = &__arm_qoi_loader_io_read,
-                .fnSeek = &__arm_qoi_loader_io_seek,
+                .fnRead     = &__arm_qoi_loader_io_read,
+                .fnSeek     = &__arm_qoi_loader_io_seek,
+                .fnReport   =   (this.tCFG.u2WorkMode == ARM_QOI_MODE_PARTIAL_DECODED)
+                            ?   &__arm_qoi_loader_ctx_report_evt_handler
+                            :   NULL,
             },
             .pTarget = (uintptr_t)ptThis,
         };

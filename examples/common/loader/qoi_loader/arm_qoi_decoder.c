@@ -955,8 +955,11 @@ entry_skip_headroom:
                         this.ptWorking, 
                         ARM_QOI_CTX_REPORT_TOP_LEFT));
 
+
+    bool bNeedToReport = (NULL != this.tCFG.IO.fnReport);
+
     do {
-        bool bReferenceY = !(y & 0x0F);
+        bool bReferenceY = !(y & 0x0F) && bNeedToReport;
 
         /* skip left */
         for (x = 0; x < tTargetRegion.tLocation.iX; x++) {
