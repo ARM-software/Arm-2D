@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        26 Nov 2025
- * $Revision:    V.1.9.1
+ * $Date:        07 Dec 2025
+ * $Revision:    V.1.9.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -2366,7 +2366,7 @@ bool __arm_2d_valid_mask(   const arm_2d_tile_t *ptAlpha,
             break;
         } 
         
-        if (    (ARM_2D_COLOUR_MASK_A8 == ptAlpha->tColourInfo.chScheme)
+        if (    (ARM_2D_COLOUR_SZ_8BIT == ptAlpha->tColourInfo.u3ColourSZ)
            &&   (chAllowMask & __ARM_2D_MASK_ALLOW_A8)) {
             return true;
         }

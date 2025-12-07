@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        09. September 2025
- * $Revision:    V.1.3.2
+ * $Date:        07. Dec 2025
+ * $Revision:    V.1.3.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -449,7 +449,7 @@ enum {
 
     ARM_2D_COLOUR_8BIT        =   ARM_2D_COLOUR_SZ_8BIT_msk,
     ARM_2D_COLOUR_GRAY8       =   ARM_2D_COLOUR_SZ_8BIT_msk,
-    ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk,
+    ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk | ARM_2D_COLOUR_VARIANT_msk,
 
     ARM_2D_COLOUR_16BIT       =   ARM_2D_COLOUR_SZ_16BIT_msk,
     ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,
@@ -487,8 +487,8 @@ enum {
 };
 
 /* macros for colour formats */
-#define ARM_2D_M_COLOUR_MONOCHROME  ARM_2D_M_COLOUR_SZ_1BIT_msk     |\
-                                    ARM_2D_M_COLOUR_VARIANT_msk                 //!< macro for the monochrome
+#define ARM_2D_M_COLOUR_MONOCHROME  (   ARM_2D_M_COLOUR_SZ_1BIT_msk \
+                                    |   ARM_2D_M_COLOUR_VARIANT_msk )          //!< macro for the monochrome
 #define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_MONOCHROME                  //!< macro for the 1bit colour format (alias)
 #define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_MONOCHROME                  //!< macro for the 1bin colour format (alias)
 
@@ -498,7 +498,8 @@ enum {
 
 #define ARM_2D_M_COLOUR_8BIT        ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the generic 8bit colour formats
 #define ARM_2D_M_COLOUR_GRAY8       ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the gray8 colour format
-#define ARM_2D_M_COLOUR_MASK_A8     ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the 8bit alpha mask
+#define ARM_2D_M_COLOUR_MASK_A8     (   ARM_2D_M_COLOUR_SZ_8BIT_msk \
+                                    |   ARM_2D_M_COLOUR_VARIANT_msk)            //!< macro for the 8bit alpha mask
 
 #define ARM_2D_M_COLOUR_16BIT       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
 #define ARM_2D_M_COLOUR_RGB16       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats

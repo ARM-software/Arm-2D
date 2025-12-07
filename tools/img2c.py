@@ -166,7 +166,7 @@ const arm_2d_tile_t c_tile{0}Mask = {{
         .bIsRoot = true,
         .bHasEnforcedColour = true,
         .tColourInfo = {{
-            .chScheme = ARM_2D_COLOUR_8BIT,
+            .chScheme = ARM_2D_COLOUR_MASK_A8,
         }},
     }},
     .pchBuffer = (uint8_t *)c_bmp{0}Alpha,
@@ -284,7 +284,7 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.5)')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.6)')
 
     parser.add_argument('-i', nargs='?', type = str,  required=False, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
