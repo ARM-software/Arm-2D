@@ -673,23 +673,54 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
     return ARM_2D_ERR_NONE;
 }
 
+__STATIC_FORCEINLINE
+arm_2d_location_t *__arm_qoi_decoder_get_context_location(  arm_qoi_dec_t *ptThis,
+                                                            arm_qoi_dec_ctx_t *ptContext,
+                                                            arm_2d_location_t *ptLocationOut)
+{
+    int16_t iStride = this.tSize.iWidth;
+    ptLocationOut->iY = ptContext->tPixelDecoded / iStride;
+    ptLocationOut->iX = ptContext->tPixelDecoded - ptLocationOut->iY * iStride;
+    return ptLocationOut;
+}
+
 __STATIC_INLINE
 arm_2d_location_t *__arm_qoi_decoder_get_current_location(  arm_qoi_dec_t *ptThis, 
                                                             arm_2d_location_t *ptLocationOut)
 {
-    int16_t iStride = this.tSize.iWidth;
-    ptLocationOut->iY = this.ptWorking->tPixelDecoded / iStride;
-    ptLocationOut->iX = this.ptWorking->tPixelDecoded - ptLocationOut->iY * iStride;
-    return ptLocationOut;
+    return __arm_qoi_decoder_get_context_location(ptThis, this.ptWorking, ptLocationOut);
 }
+
+ARM_NONNULL(1,3)
+arm_2d_location_t *arm_qoi_decoder_get_context_location(arm_qoi_dec_t *ptThis, 
+                                                        arm_qoi_dec_ctx_t *ptContext,
+                                                        arm_2d_location_t *ptLocationOut)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptLocationOut);
+
+    if (!this.bValid) {
+        return NULL;
+    }
+
+    if (NULL == ptContext) {
+        ptContext = this.ptWorking;
+    }
+
+    return __arm_qoi_decoder_get_context_location(ptThis, ptContext, ptLocationOut);
+}
+
 
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
                             void *pTarget,
-                            arm_2d_region_t *ptTargetRegion)
+                            arm_2d_region_t *ptTargetRegion,
+                            size_t tTargetStrideInByte)
 {
     assert(NULL != ptThis);
     assert(NULL != pTarget);
+
+    uintptr_t nTargetAddress = (uintptr_t)pTarget;
 
     if (!this.bValid) {
         return ARM_2D_ERR_NOT_AVAILABLE;
@@ -771,17 +802,18 @@ entry_skip_left:
         arm_2d_err_t tResult;
         switch (this.tCFG.chOutputColourFormat) {
             case ARM_QOI_DEC_FORMAT_CCCA8888:
-                tResult = __arm_qoi_decode_stride_ccca8888( ptThis, 
-                                                            (uint32_t *)pTarget, 
-                                                            iTargetStride,
-                                                            &tCurrentLocation,
-                                                            bReferenceY);
+                tResult = __arm_qoi_decode_stride_ccca8888( 
+                                                    ptThis, 
+                                                    (uint32_t *)nTargetAddress,
+                                                    iTargetStride,
+                                                    &tCurrentLocation,
+                                                    bReferenceY);
                 break;
             case ARM_QOI_DEC_FORMAT_CCCN888:
                 if (this.tCFG.bPreBlendBGColour) {
                     tResult = __arm_qoi_decode_stride_cccn888_with_background(
                                 ptThis, 
-                                (uint32_t *)pTarget, 
+                                (uint32_t *)nTargetAddress, 
                                 iTargetStride,
                                 this.tCFG.tBackgroundColour.wColour,
                                 &tCurrentLocation,
@@ -789,7 +821,7 @@ entry_skip_left:
                 } else {
                     tResult = __arm_qoi_decode_stride_ccca8888(
                                 ptThis, 
-                                (uint32_t *)pTarget, 
+                                (uint32_t *)nTargetAddress, 
                                 iTargetStride,
                                 &tCurrentLocation,
                                 bReferenceY);
@@ -799,7 +831,7 @@ entry_skip_left:
                 if (this.tCFG.bPreBlendBGColour) {
                     tResult = __arm_qoi_decode_stride_rgb565_with_background(
                                 ptThis, 
-                                (uint16_t *)pTarget, 
+                                (uint16_t *)nTargetAddress, 
                                 iTargetStride,
                                 this.tCFG.tBackgroundColour.hwColour,
                                 &tCurrentLocation,
@@ -807,7 +839,7 @@ entry_skip_left:
                 } else {
                     tResult = __arm_qoi_decode_stride_rgb565(
                                 ptThis, 
-                                (uint16_t *)pTarget, 
+                                (uint16_t *)nTargetAddress, 
                                 iTargetStride,
                                 &tCurrentLocation,
                                 bReferenceY);
@@ -817,7 +849,7 @@ entry_skip_left:
                 if (this.tCFG.bPreBlendBGColour) {
                     tResult = __arm_qoi_decode_stride_gray8_with_background(
                                 ptThis, 
-                                (uint8_t *)pTarget, 
+                                (uint8_t *)nTargetAddress, 
                                 iTargetStride,
                                 this.tCFG.tBackgroundColour.chColour,
                                 &tCurrentLocation,
@@ -825,7 +857,7 @@ entry_skip_left:
                 } else {
                     tResult = __arm_qoi_decode_stride_gray8(
                                 ptThis, 
-                                (uint8_t *)pTarget, 
+                                (uint8_t *)nTargetAddress, 
                                 iTargetStride,
                                 &tCurrentLocation,
                                 bReferenceY);
@@ -835,7 +867,7 @@ entry_skip_left:
                     uint_fast8_t chIndex = this.tCFG.chOutputColourFormat - ARM_QOI_DEC_FORMAT_CHN_B;
                     tResult = __arm_qoi_decode_stride_channel(
                             ptThis,
-                            (uint8_t *)pTarget,
+                            (uint8_t *)nTargetAddress,
                             iTargetStride,
                             chIndex,
                             &tCurrentLocation,
@@ -843,6 +875,9 @@ entry_skip_left:
                 }
                 break;
         }
+
+        nTargetAddress += tTargetStrideInByte;
+
 
         if (ARM_2D_ERR_NONE != tResult) {
             return tResult;

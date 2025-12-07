@@ -254,7 +254,15 @@ extern
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
                             void *pTarget,
-                            arm_2d_region_t *ptTargetRegion);
+                            arm_2d_region_t *ptTargetRegion,
+                            size_t tTargetStrideInByte);
+
+extern
+ARM_NONNULL(1,3)
+arm_2d_location_t *arm_qoi_decoder_get_context_location(
+                                            arm_qoi_dec_t *ptThis, 
+                                            arm_qoi_dec_ctx_t *ptContext,
+                                            arm_2d_location_t *ptLocationOut);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

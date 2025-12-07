@@ -161,7 +161,7 @@ const arm_qoi_loader_io_t ARM_QOI_IO_BINARY_LOADER = {
 
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
-                                    arm_qoi_loader_cfg_t *ptCFG)
+                                  arm_qoi_loader_cfg_t *ptCFG)
 {
     if (NULL == ptThis || NULL == ptCFG) {
         return ARM_2D_ERR_INVALID_PARAM;
@@ -193,8 +193,16 @@ arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
                 this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_GRAY8;
                 this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
                 break;
+            case ARM_2D_COLOUR_MASK_A8:
+                this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_MASK_ONLY;
+                this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
+                break;
             case ARM_2D_COLOUR_RGB565:
                 this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_RGB565;
+                this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
+                break;
+            case ARM_2D_COLOUR_CCCN888:
+                this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_CCCN888;
                 this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
                 break;
             case ARM_2D_COLOUR_BGRA8888:
@@ -619,7 +627,10 @@ void __arm_qoi_decode_fully(arm_qoi_loader_t *ptThis,
         this.ImageBuffer.tRegion = *ptRegion;
 
         /* decoding */
-        if (ARM_2D_ERR_NONE != __arm_2d_qoi_decode(ptThis, ptRegion, false)) {
+        if (ARM_2D_ERR_NONE != arm_qoi_decode(  &this.Decoder.tQOIDec, 
+                                                pchBuffer, 
+                                                ptRegion,
+                                                iStrideInByte)) {
 
             this.ImageBuffer.pchBuffer = NULL;
             this.iTargetStrideInByte = 0;
@@ -687,7 +698,10 @@ void __arm_qoi_decode_partial(arm_qoi_loader_t *ptThis,
         this.ImageBuffer.tRegion = *ptRegion;
 
         /* decoding */
-        if (ARM_2D_ERR_NONE != __arm_2d_qoi_decode(ptThis, ptRegion, true)) {
+        if (ARM_2D_ERR_NONE != arm_qoi_decode(  &this.Decoder.tQOIDec, 
+                                                pchBuffer, 
+                                                ptRegion,
+                                                iStrideInByte)) {
 
             this.ImageBuffer.pchBuffer = NULL;
             this.iTargetStrideInByte = 0;
@@ -1239,7 +1253,8 @@ void __arm_qoi_save_context_to(   arm_qoi_loader_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptContext);
 
-    //zjd_save(&this.Decoder.tQOIDec, &ptContext->tSnapshot);
+    arm_qoi_dec_save_context(&this.Decoder.tQOIDec, &ptContext->tSnapshot);
+
     ptContext->tLocation.iX = iX;
     ptContext->tLocation.iY = iY;
 }
