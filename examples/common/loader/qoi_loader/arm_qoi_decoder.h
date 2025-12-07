@@ -156,10 +156,10 @@ typedef union __arm_qoi_op_diff_t {
 typedef union __arm_qoi_op_luma_t {
     __arm_qoi_op_t tHead;       
     struct {
-        int8_t s6DG         : 6;    //!< green diff
-        int8_t              : 2;    //!< 0b10
-        int8_t s4DBmDG      : 4;    //!< db - dg
-        int8_t s4DRmDG      : 4;    //!< dr - dg
+        uint8_t u6DG         : 6;    //!< green diff
+        uint8_t              : 2;    //!< 0b10
+        uint8_t u4DBmDG      : 4;    //!< db - dg
+        uint8_t u4DRmDG      : 4;    //!< dr - dg
     };
 } __arm_qoi_op_luma_t;
 

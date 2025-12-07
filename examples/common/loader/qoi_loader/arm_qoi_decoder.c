@@ -390,9 +390,9 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
                 __arm_qoi_op_diff_t tOPDiff = {
                     .tHead.chID = tChunk.chID
                 };
-                tPixel.tColour.chBlue += (uint8_t)tOPDiff.u2DB - 2;
-                tPixel.tColour.chGreen += (uint8_t)tOPDiff.u2DG - 2;
-                tPixel.tColour.chRed += (uint8_t)tOPDiff.u2DR - 2;
+                tPixel.tColour.chBlue += (int8_t)tOPDiff.u2DB - 2;
+                tPixel.tColour.chGreen += (int8_t)tOPDiff.u2DG - 2;
+                tPixel.tColour.chRed += (int8_t)tOPDiff.u2DR - 2;
             }
             break;
         case ARM_QOI_OP_LUMA: {
@@ -405,11 +405,11 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
                     return false;
                 }
 
-                int8_t chDG = tOPLuma.s6DG;
+                int8_t chDG = (int8_t)tOPLuma.u6DG - 32;
 
                 tPixel.tColour.chGreen += chDG;
-                tPixel.tColour.chBlue += ((int8_t)tOPLuma.s4DBmDG + chDG);
-                tPixel.tColour.chRed += ((int8_t)tOPLuma.s4DRmDG + chDG);
+                tPixel.tColour.chBlue += ((int8_t)tOPLuma.u4DBmDG - 8 + chDG);
+                tPixel.tColour.chRed += ((int8_t)tOPLuma.u4DRmDG - 8 + chDG);
             }
             break;
         case ARM_QOI_OP_RUN: {
