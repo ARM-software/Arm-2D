@@ -21,6 +21,8 @@
 #define __USER_SCENE_QOI_IMPLEMENT__
 #include "arm_2d_scene_qoi.h"
 
+#include "arm_2d_example_controls.h"
+
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
  && defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
 
@@ -145,6 +147,11 @@ static void __on_scene_qoi_frame_start(arm_2d_scene_t *ptScene)
     user_scene_qoi_t *ptThis = (user_scene_qoi_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    this.iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
+                            / ptScene->ptPlayer->Benchmark.wAverage), 
+                            999);
+
+
     arm_qoi_loader_on_frame_start(&this.tQOIBackground);
 
 }
@@ -207,6 +214,40 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_handler)
                     break;
             }
         }
+        /* draw 3 digits numbers */
+        do {
+            /* 3 digits */
+            arm_2d_size_t tTextSize = arm_lcd_get_string_line_box("000", &ARM_2D_FONT_A4_DIGITS_ONLY);
+            tTextSize.iHeight += 16;    /* for "km/h */
+
+            arm_2d_align_centre(__top_canvas,  tTextSize) {
+                
+                arm_2d_layout(__centre_region, DEFAULT, true) {
+                
+                    arm_lcd_text_set_target_framebuffer(ptTile);
+                    /* print speed */
+                    __item_line_vertical(tTextSize.iWidth, tTextSize.iHeight - 16) {
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY);
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour( GLCD_COLOR_CYAN, GLCD_COLOR_BLACK);
+                        arm_lcd_text_set_opacity(255 - 64);
+                        arm_lcd_printf("%03d", (int)this.iNumber);
+                        arm_lcd_text_set_opacity(255);
+                    }
+                    
+                    /* print "FPS" */
+                    __item_line_vertical(tTextSize.iWidth,16) {
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour( GLCD_COLOR_DARK_GREY, GLCD_COLOR_BLACK);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_BOTTOM_CENTRE, "FPS");
+                    }
+
+                    arm_lcd_text_set_target_framebuffer(NULL);
+                }
+            }
+            
+        } while(0);
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -214,7 +255,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-        arm_lcd_puts("Scene QOI Loader");
+        arm_lcd_puts("Scene QOI Loader (FULL SCREEN FLUSH)");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }

@@ -91,6 +91,7 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+    int16_t iNumber;
 
     arm_qoi_loader_t tQOIBackground;
     union {
