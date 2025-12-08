@@ -274,6 +274,61 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
 
     tSize = MIN(hwLeftToRead, tSize);
     
+    /* read memory */
+    memcpy( pchBuffer, 
+            &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
+            tSize);
+
+    /* update buffer */
+    this.ptWorking->hwHead += tSize;
+
+    return tSize;
+}
+
+
+ARM_NONNULL(1,2) 
+__STATIC_INLINE
+size_t __arm_qoi_dec_io_try_to_read_word(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
+{
+    //assert(NULL != ptThis);
+    //assert(NULL != pchBuffer);
+    //assert(0 != tSize);
+    //assert(NULL != this.tCFG.IO.fnRead);
+    size_t tSize = 4;
+
+    if (0 == this.ptWorking->hwSize) {
+
+        /* no buffer */
+        size_t tSize = this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, 4);
+        this.ptWorking->tPosition += tSize;
+        return tSize;
+    }
+
+    size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
+
+    if (0 == hwLeftToRead) {
+
+        /* calculate new postion */
+        size_t tNewPosition = this.ptWorking->tPosition + this.ptWorking->hwTail;
+
+        /* nothing to read */
+        this.ptWorking->hwTail = 
+            this.tCFG.IO.fnRead(this.tCFG.pTarget, 
+                                this.tCFG.pchWorkingMemory, 
+                                this.ptWorking->hwSize);
+        this.ptWorking->hwHead = 0;
+
+        if (0 == this.ptWorking->hwTail) {
+            /* failed to fill the buffer, try next time */
+            return 0;
+        }
+
+        this.ptWorking->tPosition = tNewPosition;
+        hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
+    }
+
+    tSize = MIN(hwLeftToRead, 4);
+    
     if (4 == tSize) {
         /* provide sufficient information: 
          * 1. word-aligned target address
@@ -356,11 +411,10 @@ bool __arm_qoi_read_data(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize
 
     do {
         size_t tActualRead = __arm_qoi_dec_io_read(ptThis, pchBuffer, tSize);
-        if (0 == tActualRead) {
-            this.chErrorCode = ARM_2D_ERR_IO_ERROR;
+        if (tSize == tActualRead) {
+            return true;
+        } else if (0 == tActualRead) {
             return false;
-        } else if (tSize == tActualRead) {
-            break;
         }
 
         tSize -= tActualRead;
@@ -368,6 +422,27 @@ bool __arm_qoi_read_data(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize
     } while(tSize);
 
     return true;
+}
+
+ARM_NONNULL(1,2) 
+__STATIC_INLINE
+bool __arm_qoi_read_word(arm_qoi_dec_t *ptThis, uint32_t *pwBuffer)
+{
+    //assert(NULL != ptThis);
+    //assert(NULL != pchBuffer);
+    //assert(0 != tSize);
+
+    size_t tActualRead = __arm_qoi_dec_io_try_to_read_word(ptThis, (uint8_t *)pwBuffer);
+    if (4 == tActualRead) {
+        return true;
+    } else if (0 == tActualRead) {
+        return false;
+    }
+
+    return __arm_qoi_read_data( ptThis, 
+                                ((uint8_t *)pwBuffer) + tActualRead,
+                                4 - tActualRead);
+
 }
 
 __STATIC_INLINE
@@ -397,7 +472,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
     if (ARM_QOI_OP_ID_RGBA == tChunk.chID) {
     
         /* swap blue and red */
-        if (!__arm_qoi_read_data(ptThis, (uint8_t *)&tPixel, 4)) {
+        if (!__arm_qoi_read_word(ptThis, &tPixel.wValue)) {
             /* data is not available */
             return false;
         }
