@@ -1075,6 +1075,8 @@ arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
         goto entry_skip_headroom;
     } else if (x < tTargetRegion.tLocation.iX && y == tTargetRegion.tLocation.iY) {
         goto entry_skip_left;
+    } else if (x == tTargetRegion.tLocation.iX && y == tTargetRegion.tLocation.iY) {
+        goto entry_decode;
     } else {
         /* we have to reset working context */
         arm_2d_err_t tErr = 
@@ -1115,7 +1117,8 @@ entry_skip_left:
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
         }
-
+    
+entry_decode:
         if (bFirstLine) {
             /* report reach the top left corner */
             ARM_2D_INVOKE_RT_VOID(this.tCFG.IO.fnReport, 
