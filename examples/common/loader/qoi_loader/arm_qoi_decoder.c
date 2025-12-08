@@ -273,11 +273,25 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
     }
 
     tSize = MIN(hwLeftToRead, tSize);
-
-    /* read memory */
-    memcpy( pchBuffer, 
-            &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
-            tSize);
+    
+    if (4 == tSize) {
+        /* provide sufficient information: 
+         * 1. word-aligned target address
+         * 2. 4 bytes to copy
+         * 3. byte aligned source address
+         *
+         * The compiler might generate non-aligned word LDR STR pair in some
+         * architucrue, i.e. Armv7-M etc.
+         */
+        memcpy( (uint32_t *)pchBuffer, 
+                &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
+                4);
+    } else {
+        /* read memory */
+        memcpy( pchBuffer, 
+                &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
+                tSize);
+    }
 
     /* update buffer */
     this.ptWorking->hwHead += tSize;
