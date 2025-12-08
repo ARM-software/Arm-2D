@@ -64,6 +64,15 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef ARM_2D_SCENE_METER_USE_QOI
+#   define ARM_2D_SCENE_METER_USE_QOI       0
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   undef ARM_2D_SCENE_METER_USE_QOI
+#   define ARM_2D_SCENE_METER_USE_QOI       0
+#endif
+
 #ifndef ARM_2D_SCENE_METER_USE_JPG
 #   define ARM_2D_SCENE_METER_USE_JPG       0
 #endif
@@ -72,10 +81,11 @@ extern "C" {
 #   define ARM_2D_SCENE_METER_USE_ZJPGD     1
 #endif
 
-#if !defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
+#if !defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader) || ARM_2D_SCENE_METER_USE_QOI
 #   undef  ARM_2D_SCENE_METER_USE_JPG
 #   define ARM_2D_SCENE_METER_USE_JPG       0
 #endif
+
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -111,7 +121,13 @@ ARM_PRIVATE(
 
     meter_pointer_t tMeterPointer;
 
-#if ARM_2D_SCENE_METER_USE_JPG
+#if ARM_2D_SCENE_METER_USE_QOI
+    arm_qoi_loader_t tQOIBackground;
+    union {
+        arm_qoi_io_file_loader_t tFile;
+        arm_qoi_io_binary_loader_t tBinary;
+    } LoaderIO;
+#elif ARM_2D_SCENE_METER_USE_JPG
 #   if ARM_2D_SCENE_METER_USE_ZJPGD
     arm_zjpgd_loader_t tJPGBackground;
     union {
@@ -126,6 +142,7 @@ ARM_PRIVATE(
     } LoaderIO;
 #   endif
 #endif
+
 
 )
     /* place your public member here */
