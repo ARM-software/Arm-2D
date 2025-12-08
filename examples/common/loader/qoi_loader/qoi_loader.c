@@ -450,8 +450,7 @@ bool __arm_qoi_decode_prepare(arm_qoi_loader_t *ptThis)
             .hwSize = __WORKING_MEMORY_SIZE__,
             .chOutputColourFormat = this.Decoder.u3QOIOutputColourFormat,
             .bInvertColour = this.tCFG.bInvertColour,
-            .bPreBlendBGColour = bPreBlendBGColour,
-            .tBackgroundColour = this.tCFG.tBackgroundColour,
+            .bBlendWithBG = bPreBlendBGColour,
             
             .IO = {
                 .fnRead     = &__arm_qoi_loader_io_read,
@@ -903,6 +902,73 @@ intptr_t __arm_qoi_vres_asset_loader( uintptr_t pTarget,
         pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
     } else {
         return (intptr_t)NULL;
+    }
+
+    if (arm_qoi_decoder_is_pre_blend_with_background(&this.Decoder.tQOIDec)) {
+        switch(nBitsPerPixel) {
+            case 1:
+                if (this.tCFG.tBackgroundColour.chColour & 0x01) {
+                    memset( pBuffer,  0xFF, tBufferSize);
+                } else {
+                    memset( pBuffer,  0x00, tBufferSize);
+                }
+                break;
+            case 2: {
+                    uint8_t chColour = 0;
+                    switch (this.tCFG.tBackgroundColour.chColour & 0x3) {
+                        case 0:
+                            break;
+                        case 1:
+                            chColour = 0x55;
+                            break;
+                        case 2:
+                            chColour = 0xAA;
+                            break;
+                        case 3:
+                            chColour = 0xFF;
+                            break;
+                    }
+                    memset( pBuffer,  chColour, tBufferSize);
+                }
+                break;
+            case 4:
+                memset( pBuffer, 
+                        (   (this.tCFG.tBackgroundColour.chColour & 0xF)
+                        |   ((this.tCFG.tBackgroundColour.chColour & 0xF) << 4)),
+                        tBufferSize);
+            case 8:
+                memset(pBuffer, this.tCFG.tBackgroundColour.chColour, tBufferSize);
+                break;
+            case 16: {
+                    uint16_t *phwSource = (uint16_t *)pBuffer;
+                    size_t tPixels = ptRegion->tSize.iWidth * ptRegion->tSize.iHeight;
+                    do {
+                        *phwSource++ = this.tCFG.tBackgroundColour.hwColour;
+                    } while(--tPixels);
+                }
+                break;
+            case 24: {
+                    uint8_t *pchSource = (uint8_t *)pBuffer;
+                    size_t tPixels = ptRegion->tSize.iWidth * ptRegion->tSize.iHeight;
+                    do {
+                        *pchSource++ = this.tCFG.tBackgroundColour.chChannels[0];
+                        *pchSource++ = this.tCFG.tBackgroundColour.chChannels[1];
+                        *pchSource++ = this.tCFG.tBackgroundColour.chChannels[2];
+                    } while(--tPixels);
+                }
+                break;
+            case 32: {
+                    uint32_t *pwSource = (uint32_t *)pBuffer;
+                    size_t tPixels = ptRegion->tSize.iWidth * ptRegion->tSize.iHeight;
+                    do {
+                        *pwSource++ = this.tCFG.tBackgroundColour.wColour;
+                    } while(--tPixels);
+                }
+                break;
+            default:
+                assert(false);
+                break;
+        }
     }
 
     /* load content into the buffer */

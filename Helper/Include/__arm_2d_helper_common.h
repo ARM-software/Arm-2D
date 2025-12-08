@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        07. Dec 2025
- * $Revision:    V.1.8.11
+ * $Date:        08. Dec 2025
+ * $Revision:    V.1.8.12
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3437,6 +3437,7 @@ typedef union COLOUR_TYPE_T {
     uint16_t hwColour;
     uint32_t wColour;
     COLOUR_INT tColour;
+    uint8_t chChannels[4];
 } COLOUR_TYPE_T;
 
 typedef struct __arm_2d_layout_debug_t {

@@ -114,8 +114,6 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     /* set previous pixel as {0, 0, 0, 0xFF} */
     ptContext->tPrevious.wValue = 0xFF000000;
 
-    
-
     if (bUpdateHeader) {
         uint32_t wWidth = __rev(tQOIHeader.wWidth);
         uint32_t wHeight = __rev(tQOIHeader.wHeight);
@@ -130,7 +128,7 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     }
 
     if (3 == tQOIHeader.chChannels) {
-        this.tCFG.bPreBlendBGColour = false;
+        this.tCFG.bBlendWithBG = false;
     }
 
     return ARM_2D_ERR_NONE;
@@ -335,24 +333,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
 
     if (ARM_QOI_OP_ID_RGBA == tChunk.chID) {
     
-    #if 0
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chRed, 1)) {
-            /* data is not available */
-            return false;
-        }
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chGreen, 1)) {
-            /* data is not available */
-            return false;
-        }
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chBlue, 1)) {
-            /* data is not available */
-            return false;
-        }
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chAlpha, 1)) {
-            /* data is not available */
-            return false;
-        }
-    #else /* swap blue and red */
+        /* swap blue and red */
         if (!__arm_qoi_read_data(ptThis, (uint8_t *)&tPixel, 4)) {
             /* data is not available */
             return false;
@@ -362,24 +343,8 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
         uint32_t wValue = __rev16(tPixel.wValue);
         tPixel.wValue = __ror(wValue, 24);
 
-    #endif
-
     } else if (ARM_QOI_OP_ID_RGB == tChunk.chID) {
 
-    #if 0
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chRed, 1)) {
-            /* data is not available */
-            return false;
-        }
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chGreen, 1)) {
-            /* data is not available */
-            return false;
-        }
-        if (!__arm_qoi_read_data(ptThis, &tPixel.tColour.chBlue, 1)) {
-            /* data is not available */
-            return false;
-        }
-    #else
         if (!__arm_qoi_read_data(ptThis, (uint8_t *)&tPixel, 3)) {
             /* data is not available */
             return false;
@@ -387,7 +352,6 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
         /* swap Red and Blue */
         uint32_t wValue = __rev16(tPixel.wValue);
         tPixel.wValue = __ror(wValue, 24);
-    #endif
 
     } else switch (tChunk.u2OP) {
         case ARM_QOI_OP_INDEX: {
@@ -562,7 +526,6 @@ static
 arm_2d_err_t __arm_qoi_decode_stride_gray8_with_background(arm_qoi_dec_t *ptThis, 
                                             uint8_t *pchTarget,
                                             size_t tLength,
-                                            uint8_t chBackground,
                                             arm_2d_location_t *ptLocation,
                                             bool bShowReference)
 {
@@ -593,7 +556,8 @@ arm_2d_err_t __arm_qoi_decode_stride_gray8_with_background(arm_qoi_dec_t *ptThis
             hwOpa += (hwOpa == 255);
             uint16_t hwTrans = 256 - hwOpa;
 
-            *pchTarget++ = (hwPixel * hwOpa + (uint16_t)chBackground * hwTrans) >> 8;
+            *pchTarget = (hwPixel * hwOpa + (uint16_t)*pchTarget * hwTrans) >> 8;
+            pchTarget++;
 
         } while(--tLength);
     } else {
@@ -615,7 +579,9 @@ arm_2d_err_t __arm_qoi_decode_stride_gray8_with_background(arm_qoi_dec_t *ptThis
             hwOpa += (hwOpa == 255);
             uint16_t hwTrans = 256 - hwOpa;
 
-            *pchTarget++ = (hwPixel * hwOpa + (uint16_t)chBackground * hwTrans) >> 8;
+            *pchTarget = (hwPixel * hwOpa + (uint16_t)*pchTarget * hwTrans) >> 8;
+            pchTarget++;
+
             ptLocation->iX++;
 
         } while(--tLength);
@@ -677,7 +643,6 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
                                             arm_qoi_dec_t *ptThis, 
                                             uint16_t *phwTarget,
                                             size_t tLength,
-                                            uint16_t hwBackground,
                                             arm_2d_location_t *ptLocation,
                                             bool bShowReference)
 {
@@ -702,7 +667,7 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
             uint16_t hwTrans = 256 - hwOpa;
 
             __arm_2d_color_fast_rgb_t tColour;
-            __arm_2d_rgb565_unpack(hwBackground, &tColour);
+            __arm_2d_rgb565_unpack(*phwTarget, &tColour);
 
             tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
             tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
@@ -725,7 +690,7 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
             uint16_t hwTrans = 256 - hwOpa;
 
             __arm_2d_color_fast_rgb_t tColour;
-            __arm_2d_rgb565_unpack(hwBackground, &tColour);
+            __arm_2d_rgb565_unpack(*phwTarget, &tColour);
 
             tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
             tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
@@ -792,7 +757,6 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
                                             arm_qoi_dec_t *ptThis, 
                                             uint32_t *pwTarget,
                                             size_t tLength,
-                                            uint32_t wBackground,
                                             arm_2d_location_t *ptLocation,
                                             bool bShowReference)
 {
@@ -817,7 +781,7 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
             uint16_t hwTrans = 256 - hwOpa;
 
             __arm_2d_color_fast_rgb_t tColour;
-            __arm_2d_ccca8888_unpack(wBackground, &tColour);
+            __arm_2d_ccca8888_unpack(*pwTarget, &tColour);
 
             tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
             tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
@@ -841,7 +805,7 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
             uint16_t hwTrans = 256 - hwOpa;
 
             __arm_2d_color_fast_rgb_t tColour;
-            __arm_2d_ccca8888_unpack(wBackground, &tColour);
+            __arm_2d_ccca8888_unpack(*pwTarget, &tColour);
 
             tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
             tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
@@ -899,6 +863,14 @@ size_t arm_qoi_decoder_get_context_pixel_number(arm_qoi_dec_ctx_t *ptContext)
     assert(NULL != ptContext);
 
     return ptContext->tPixelDecoded;
+}
+
+ARM_NONNULL(1)
+bool arm_qoi_decoder_is_pre_blend_with_background(arm_qoi_dec_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.tCFG.bBlendWithBG;
 }
 
 ARM_NONNULL(1,2)
@@ -1015,12 +987,11 @@ entry_skip_left:
                                                     bReferenceY);
                 break;
             case ARM_QOI_DEC_FORMAT_CCCN888:
-                if (this.tCFG.bPreBlendBGColour) {
+                if (this.tCFG.bBlendWithBG) {
                     tResult = __arm_qoi_decode_stride_cccn888_with_background(
                                 ptThis, 
                                 (uint32_t *)nTargetAddress, 
                                 iTargetStride,
-                                this.tCFG.tBackgroundColour.wColour,
                                 &tCurrentLocation,
                                 bReferenceY);
                 } else {
@@ -1033,12 +1004,11 @@ entry_skip_left:
                 }
                 break;
             case ARM_QOI_DEC_FORMAT_RGB565:
-                if (this.tCFG.bPreBlendBGColour) {
+                if (this.tCFG.bBlendWithBG) {
                     tResult = __arm_qoi_decode_stride_rgb565_with_background(
                                 ptThis, 
                                 (uint16_t *)nTargetAddress, 
                                 iTargetStride,
-                                this.tCFG.tBackgroundColour.hwColour,
                                 &tCurrentLocation,
                                 bReferenceY);
                 } else {
@@ -1051,12 +1021,11 @@ entry_skip_left:
                 }
                 break;
             case ARM_QOI_DEC_FORMAT_GRAY8:
-                if (this.tCFG.bPreBlendBGColour) {
+                if (this.tCFG.bBlendWithBG) {
                     tResult = __arm_qoi_decode_stride_gray8_with_background(
                                 ptThis, 
                                 (uint8_t *)nTargetAddress, 
                                 iTargetStride,
-                                this.tCFG.tBackgroundColour.chColour,
                                 &tCurrentLocation,
                                 bReferenceY);
                 } else {

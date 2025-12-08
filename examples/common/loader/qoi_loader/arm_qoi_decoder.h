@@ -212,16 +212,14 @@ typedef struct arm_qoi_cfg_t {
     uint8_t *pchWorkingMemory;
     uint16_t hwSize;
     uint8_t chOutputColourFormat;
-    uint8_t bPreBlendBGColour   : 1;        //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
-    uint8_t bInvertColour       : 1;
+    uint8_t bBlendWithBG    : 1;            //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
+    uint8_t bInvertColour   : 1;
 
     struct {
         __arm_qoi_io_seek_t     *fnSeek;
         __arm_qoi_io_read_t     *fnRead;
         __arm_qoi_ctx_report_t  *fnReport;
     } IO;
-
-    COLOUR_TYPE_T tBackgroundColour;        //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
 } arm_qoi_cfg_t;
 
 struct arm_qoi_dec_t{
@@ -271,6 +269,10 @@ arm_2d_location_t *arm_qoi_decoder_get_context_location(
 extern
 ARM_NONNULL(1)
 size_t arm_qoi_decoder_get_context_pixel_number(arm_qoi_dec_ctx_t *ptContext);
+
+extern
+ARM_NONNULL(1)
+bool arm_qoi_decoder_is_pre_blend_with_background(arm_qoi_dec_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
