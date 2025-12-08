@@ -483,20 +483,16 @@
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec and loading font files using FreeType etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />
-            <file category="header"      name="examples/common/loader/tjpgd_loader/tjpgd_loader.h" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"       attr="config" version="1.1.0"/>
 
-            <file category="header"      name="examples/common/loader/zjpgd_loader/zjpgd_loader.h" />
             <file category="sourceC"     name="examples/common/loader/zjpgd_loader/zjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/zjpgd_loader/zjpgd/zjpgd.c" />
             <file category="header"      name="examples/common/loader/zjpgd_loader/arm_zjpgd_cfg.h"       attr="config" version="1.0.0"/>
 
-            <file category="header"      name="examples/common/loader/qoi_loader/qoi_loader.h" />
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_loader.c" />
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_decoder/arm_qoi_decoder.c" />
-            <file category="header"      name="examples/common/loader/qoi_loader/qoi_decoder/arm_qoi_decoder.h" />
             <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.0.0"/>
 
             <file category="include"     name="examples/common/loader/freetype_loader/freetype/include" />

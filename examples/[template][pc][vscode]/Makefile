@@ -63,7 +63,6 @@ CC_INC  += ../../examples/common/loader/zjpgd_loader
 CC_INC  += ../../examples/common/loader/freetype_loader
 CC_INC  += ../../examples/common/loader/freetype_loader/freetype/include
 CC_INC  += ../../examples/common/loader/qoi_loader
-CC_INC  += ../../examples/common/loader/qoi_loader/qoi_decoder
 CC_INC  += ../../examples/common/scenes/fitness
 CC_INC  += ../../examples/common/scenes/meter
 CC_INC  += ../../examples/common/scenes/watch

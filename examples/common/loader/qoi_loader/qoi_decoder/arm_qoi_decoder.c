@@ -92,8 +92,10 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     /* sign */
     ptContext->ptQOIDec = ptThis;
 
+#if ARM_QOI_IO_BUFF_SIZE > 0
     size_t tBufferSize = pnAddress - (uintptr_t)this.tCFG.pchWorkingMemory;
     ptContext->hwSize = MIN(__UINT16_MAX__, tBufferSize);
+#endif
 
     struct __arm_qoi_header tQOIHeader;
 
@@ -220,6 +222,7 @@ arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis,
         return ARM_2D_ERR_IO_ERROR;
     }
 
+#if ARM_QOI_IO_BUFF_SIZE > 0
     if (this.ptWorking->hwSize > 0) {
         /* refill the buffer */
         if (this.ptWorking->hwTail
@@ -229,6 +232,7 @@ arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis,
             return ARM_2D_ERR_IO_ERROR;
         }
     }
+#endif
 
     return ARM_2D_ERR_NONE;
 }
@@ -242,12 +246,14 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
     //assert(0 != tSize);
     //assert(NULL != this.tCFG.IO.fnRead);
 
-    if (0 == this.ptWorking->hwSize) {
+#if 0 == ARM_QOI_IO_BUFF_SIZE 
+    //if (0 == this.ptWorking->hwSize) {
         /* no buffer */
         tSize = this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, tSize);
         this.ptWorking->tPosition += tSize;
         return tSize;
-    }
+    //}
+#else
 
     size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
 
@@ -283,6 +289,7 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
     this.ptWorking->hwHead += tSize;
 
     return tSize;
+#endif
 }
 
 
@@ -295,15 +302,15 @@ size_t __arm_qoi_dec_io_try_to_read_word(arm_qoi_dec_t *ptThis, uint8_t *pchBuff
     //assert(0 != tSize);
     //assert(NULL != this.tCFG.IO.fnRead);
     size_t tSize = 4;
-
-    if (0 == this.ptWorking->hwSize) {
+#if 0 == ARM_QOI_IO_BUFF_SIZE 
+    //if (0 == this.ptWorking->hwSize) {
 
         /* no buffer */
-        size_t tSize = this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, 4);
+        tSize = this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, 4);
         this.ptWorking->tPosition += tSize;
         return tSize;
-    }
-
+    //}
+#else
     size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
 
     if (0 == hwLeftToRead) {
@@ -352,6 +359,7 @@ size_t __arm_qoi_dec_io_try_to_read_word(arm_qoi_dec_t *ptThis, uint8_t *pchBuff
     this.ptWorking->hwHead += tSize;
 
     return tSize;
+#endif
 }
 
 ARM_NONNULL(1,2) 
@@ -363,7 +371,8 @@ bool __arm_qoi_dec_io_read_byte(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
     //assert(0 != tSize);
     //assert(NULL != this.tCFG.IO.fnRead);
 
-    if (0 == this.ptWorking->hwSize) {
+#if 0 == ARM_QOI_IO_BUFF_SIZE 
+    //if (0 == this.ptWorking->hwSize) {
         /* no buffer */
         if (this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, 1)) {
             this.ptWorking->tPosition++;
@@ -371,8 +380,8 @@ bool __arm_qoi_dec_io_read_byte(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
         } else {
             return false;
         }
-    }
-
+    //}
+#else
     size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
 
     if (0 == hwLeftToRead) {
@@ -398,6 +407,7 @@ bool __arm_qoi_dec_io_read_byte(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
     *pchBuffer = this.tCFG.pchWorkingMemory[this.ptWorking->hwHead++];
 
     return true;
+#endif
 }
 
 

@@ -185,9 +185,11 @@ ARM_PRIVATE(
     size_t tPixelDecoded;
     size_t tPosition;
 
+#if ARM_QOI_IO_BUFF_SIZE > 0
     uint16_t hwTail;
     uint16_t hwHead;
     uint16_t hwSize;
+#endif
 
     uint8_t chRunCount;
 )
