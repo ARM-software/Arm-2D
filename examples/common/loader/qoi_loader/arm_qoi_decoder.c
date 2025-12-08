@@ -22,6 +22,7 @@
 #include "__arm_2d_impl.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 
 #if defined(__clang__)
