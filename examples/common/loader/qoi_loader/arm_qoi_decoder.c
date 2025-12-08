@@ -285,6 +285,52 @@ size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t t
     return tSize;
 }
 
+ARM_NONNULL(1,2) 
+__STATIC_INLINE
+bool __arm_qoi_dec_io_read_byte(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
+{
+    //assert(NULL != ptThis);
+    //assert(NULL != pchBuffer);
+    //assert(0 != tSize);
+    //assert(NULL != this.tCFG.IO.fnRead);
+
+    if (0 == this.ptWorking->hwSize) {
+        /* no buffer */
+        if (this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, 1)) {
+            this.ptWorking->tPosition++;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
+
+    if (0 == hwLeftToRead) {
+
+        /* calculate new postion */
+        size_t tNewPosition = this.ptWorking->tPosition + this.ptWorking->hwTail;
+
+        /* nothing to read */
+        this.ptWorking->hwTail = 
+            this.tCFG.IO.fnRead(this.tCFG.pTarget, 
+                                this.tCFG.pchWorkingMemory, 
+                                this.ptWorking->hwSize);
+        this.ptWorking->hwHead = 0;
+
+        if (0 == this.ptWorking->hwTail) {
+            /* failed to fill the buffer, try next time */
+            return 0;
+        }
+
+        this.ptWorking->tPosition = tNewPosition;
+    }
+
+    *pchBuffer = this.tCFG.pchWorkingMemory[this.ptWorking->hwHead++];
+
+    return true;
+}
+
 
 ARM_NONNULL(1,2) 
 __STATIC_INLINE
@@ -326,7 +372,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
     }
 
     __arm_qoi_op_t tChunk;
-    if (!__arm_qoi_read_data(ptThis, (uint8_t *)&tChunk, 1)) {
+    if (!__arm_qoi_dec_io_read_byte(ptThis, (uint8_t *)&tChunk)) {
         /* data is not available */
         return false;
     }
@@ -378,7 +424,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
                     .tHead.chID = tChunk.chID
                 };
                 /* load params */
-                if (!__arm_qoi_read_data(ptThis, ((uint8_t *)&tOPLuma) + 1, 1)) {
+                if (!__arm_qoi_dec_io_read_byte(ptThis, ((uint8_t *)&tOPLuma) + 1)) {
                     /* data is not available */
                     return false;
                 }
