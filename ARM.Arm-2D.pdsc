@@ -475,7 +475,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="4.2.0" condition="Arm-2D-Loaders">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.0.0" condition="Arm-2D-Loaders">
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec and loading font files using FreeType etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />
@@ -488,6 +488,11 @@
             <file category="sourceC"     name="examples/common/loader/zjpgd_loader/zjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/zjpgd_loader/zjpgd/zjpgd.c" />
             <file category="header"      name="examples/common/loader/zjpgd_loader/arm_zjpgd_cfg.h"       attr="config" version="1.0.0"/>
+
+            <file category="header"      name="examples/common/loader/qoi_loader/qoi_loader.h" />
+            <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_loader.c" />
+            <file category="sourceC"     name="examples/common/loader/qoi_loader/arm_qoi_decoder.c" />
+            <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.0.0"/>
 
             <file category="include"     name="examples/common/loader/freetype_loader/freetype/include" />
             <file category="header"      name="examples/common/loader/freetype_loader/freetype_loader.h" />
@@ -509,6 +514,7 @@
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Extra_Loaders
     #define RTE_Acceleration_Arm_2D_Extra_JPEG_Loader
+    #define RTE_Acceleration_Arm_2D_Extra_QOI_Loader
     #define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
     #define RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader
     #define RTE_Acceleration_Arm_2D_Extra_FreeType_Loader
