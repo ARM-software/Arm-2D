@@ -1328,111 +1328,28 @@ arm_2d_err_t  __arm_2d_qoi_decode (
 
     if (bUseContex && this.Decoder.bContextInitialized) {
 
-    #if 0
-        do {
-
-            if (    (this.Decoder.tDrawRegion.tLocation.iY >= this.tContext[QOI_CONTEXT_PREVIOUS_START].tLocation.iY)
-               &&   (this.Decoder.tDrawRegion.tLocation.iX >= this.tContext[QOI_CONTEXT_PREVIOUS_START].tLocation.iX)) {
-
-                arm_2d_location_t tTempLocation;
-                arm_qoi_decoder_get_context_location(   ptQOIDec, 
-                                                        NULL, 
-                                                        &tTempLocation);
-
-                if (this.Decoder.tDrawRegion.tLocation.iY >= tTempLocation.iY) {
-                    ARM_2D_LOG_INFO(
-                        CONTROLS, 
-                        1, 
-                        "QOIec", 
-                        "Check the current location: x=%d, y=%d...",
-                        tTempLocation.iX,
-                        tTempLocation.iY
-                    );
-
-                    if (__arm_2d_qoi_is_context_before_the_target_region(
-                                &tTempLocation,
-                                &this.Decoder.tDrawRegion.tLocation)) {
-
-                        ARM_2D_LOG_INFO(
-                            CONTROLS, 
-                            2, 
-                            "QOIec", 
-                            "The current location is right before the target location!"
-                        );
-
-                        /* next position */
-                        break;
-                    }
-                }
-
-                if (this.Decoder.tDrawRegion.tLocation.iX >= this.tContext[QOI_CONTEXT_PREVIOUS_TOP_RIGHT].tLocation.iX) {
-                    __CHECK_CONTEXT(QOI_CONTEXT_PREVIOUS_TOP_RIGHT);
-                }
-
-                __CHECK_CONTEXT(QOI_CONTEXT_PREVIOUS_START);
-                
-            }
-
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                1, 
-                "QOIec", 
-                "Check reference points..."
-            );
-
-            /* scan reference points */
-            arm_qoi_context_t *ptReference = this.Reference.ptList;
-            bool bFindReferencePoint = false;
-
-            while(NULL != ptReference) {
-
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    2, 
-                    "QOIec", 
-                    "Reference Point: x=%d, y=%d...",
-                    ptReference->tLocation.iX,
-                    ptReference->tLocation.iY
-                );
-
-                if (__arm_2d_qoi_is_context_before_the_target_region(
-                                        &ptReference->tLocation,
-                                        &this.Decoder.tDrawRegion.tLocation)) {
-                    ARM_2D_LOG_INFO(
-                        CONTROLS, 
-                        3, 
-                        "QOIec", 
-                        "The reference point is right before the target location!"
-                    );
-                    
-                    /* find the reference point */
-                    arm_qoi_dec_resume_context(ptQOIDec, &ptReference->tSnapshot);
-                    bFindReferencePoint = true;
-                    break;
-                }
-
-                ptReference = ptReference->ptNext;
-            }
-            if (bFindReferencePoint) {
-                break;
-            }
-
-            __CHECK_CONTEXT(QOI_CONTEXT_PREVIOUS_FRAME_START);
-
-            ARM_2D_LOG_INFO(
-                CONTROLS, 
-                1, 
-                "QOIec", 
-                "Failed to find any context...Reset to the start."
-            );
-
-        } while(0);
-    #else
         do {
             size_t tMIN = __SIZE_MAX__;
             arm_qoi_context_t *ptStartPoint = NULL;
             size_t tTargetPixelNumber = this.Decoder.tDrawRegion.tLocation.iY * ptQOIDec->tSize.iWidth
                                     + this.Decoder.tDrawRegion.tLocation.iX;
+            size_t tCurrentDelta;
+            do  {
+                size_t tPixelNumber = arm_qoi_decoder_get_context_pixel_number(
+                                        arm_qoi_decoder_get_current_context(ptQOIDec));
+
+                tCurrentDelta = tTargetPixelNumber - tPixelNumber;
+            } while(0);
+            if (0 == tCurrentDelta) {
+                /* use current */
+                ARM_2D_LOG_INFO(
+                    CONTROLS, 
+                    1, 
+                    "QOIec", 
+                    "Current location is right before the target region!"
+                );
+                break;
+            }
             
             arm_foreach(this.tContext) {
                 size_t tPixelNumber = 
@@ -1490,12 +1407,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
 label_find_the_start_point:
             if (NULL != ptStartPoint) {
 
-                
-                size_t tPixelNumber = arm_qoi_decoder_get_context_pixel_number(
-                                        arm_qoi_decoder_get_current_context(ptQOIDec));
-
-                size_t tDelta = tTargetPixelNumber - tPixelNumber;
-                if (tPixelNumber <= tTargetPixelNumber && tDelta < tMIN) {
+                if (tCurrentDelta < tMIN) {
                     arm_2d_location_t tTempLocation;
                     arm_qoi_decoder_get_context_location(   ptQOIDec, 
                                                             NULL, 
@@ -1506,7 +1418,7 @@ label_find_the_start_point:
                         1, 
                         "QOIec", 
                         "Current location is good : distance %d, x=%d, y=%d...",
-                        tDelta,
+                        tCurrentDelta,
                         tTempLocation.iX,
                         tTempLocation.iY
                     );
@@ -1525,8 +1437,6 @@ label_find_the_start_point:
                 }
             }
         } while(0);
-
-    #endif
 
         ARM_2D_LOG_INFO(
             CONTROLS, 
