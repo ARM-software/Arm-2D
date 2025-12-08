@@ -109,10 +109,6 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
 #if ARM_2D_SCENE_HISTOGRAM_USE_QOI
     arm_qoi_loader_on_load(&this.tQOIBackground);
 
-    this.bIsDirtyRegionOptimizationEnabled = !!
-        arm_2d_helper_pfb_disable_dirty_region_optimization(
-            &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
-
 #elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
@@ -126,6 +122,9 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
             &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
 
 #endif
+
+//    arm_2d_helper_pfb_policy(&ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+//                             ARM_2D_PFB_SCAN_POLICY_VERTICAL_FIRST);
 }
 
 static void __after_scene_histogram_switching(arm_2d_scene_t *ptScene)
@@ -229,7 +228,7 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG || ARM_2D_SCENE_HISTOGRAM_USE_QOI
+#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG && !ARM_2D_SCENE_HISTOGRAM_USE_QOI
     if (this.bIsDirtyRegionOptimizationEnabled) {
         arm_2d_helper_pfb_enable_dirty_region_optimization(
                 &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
@@ -237,6 +236,9 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
                 0);
     }
 #endif
+
+//    arm_2d_helper_pfb_policy(&ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t,
+//                             ARM_2D_PFB_SCAN_POLICY_NORMAL);
 }
 
 static
@@ -297,7 +299,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
                                 &__bottom_centre_region,
                                 255);
             
-            #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+            #if ARM_2D_SCENE_HISTOGRAM_USE_JPG || ARM_2D_SCENE_HISTOGRAM_USE_QOI
                 /* update dirty region */
                 arm_2d_helper_dirty_region_update_item( 
                     &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
@@ -439,11 +441,11 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
 
             .Colour = {
-                .wFrom =  __RGB32(0, 0, 0), //__RGB32(0, 0xFF, 0),
-                .wTo =    __RGB32(0xFF, 0xFF, 0xFF), //__RGB32(0xFF, 0, 0), 
+                .wFrom =  __RGB32(0, 0xFF, 0),
+                .wTo =    __RGB32(0xFF, 0, 0), 
             },
 
-        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
+        #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG && !ARM_2D_SCENE_HISTOGRAM_USE_QOI
             .ptParent = &this.use_as__arm_2d_scene_t,
         #endif
             .evtOnGetBinValue = {
@@ -494,6 +496,27 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         };
 
         arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
+
+        arm_2d_align_centre(tScreen, this.tQOIBackground.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tReferencePoint;
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+                arm_2d_align_bottom_centre(tScreen, 100, 24) {
+                    tReferencePoint = __bottom_centre_region.tLocation;
+                    tReferencePoint.iY -= 16;
+                }
+
+            #else
+                tReferencePoint.iX = 0;
+                tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+            #endif
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+                arm_qoi_loader_add_reference_point( &this.tQOIBackground, 
+                                                    __centre_region.tLocation,
+                                                    tReferencePoint);
+            #endif
+        }
     } while(0);
 #elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
