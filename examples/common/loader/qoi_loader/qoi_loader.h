@@ -134,14 +134,24 @@ typedef struct arm_qoi_loader_io_t {
 
 } arm_qoi_loader_io_t;
 
+enum {
+    ARM_QOI_MASK_CHN_ALPHA,
+    ARM_QOI_MASK_CHN_BLUE,
+    ARM_QOI_MASK_CHN_GREEN,
+    ARM_QOI_MASK_CHN_RED,
+};
+
 typedef struct arm_qoi_loader_cfg_t {
 
-    uint8_t bUseHeapForVRES                 : 1;
-    uint8_t u2ScratchMemType                : 2;
-    uint8_t u2WorkMode                      : 2;
-    uint8_t bInvertColour                   : 1;            //!< only available for gray8 and a8 mask*/
-    uint8_t bForceDisablePreBlendwithBG     : 1;            //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
-    uint8_t                                 : 1;
+    uint16_t bUseHeapForVRES                 : 1;
+    uint16_t bInvertColour                   : 1;           //!< only available for gray8 and a8 mask*/
+    uint16_t bForceDisablePreBlendwithBG     : 1;           //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888
+    uint16_t                                 : 1;
+
+    uint16_t u2ScratchMemType                : 2;
+    uint16_t u2WorkMode                      : 2;
+    uint16_t u2ChannelIndex                  : 2;           //!< ARM_QOI_MASK_CHN_xxxx
+    uint16_t                                 : 6;
 
     arm_2d_color_info_t tColourInfo;
     COLOUR_TYPE_T tBackgroundColour;                        //!< this option is only valid when the output colour format is gray8, rgb565 or cccn888

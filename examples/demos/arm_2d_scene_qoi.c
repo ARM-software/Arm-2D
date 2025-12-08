@@ -191,7 +191,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_handler)
                                     ptTile, 
                                     &__centre_region, 
                                     &this.tQOIBackground.vres.tTile,
-                                    (__arm_2d_color_t){ GLCD_COLOR_GREEN});
+                                    (__arm_2d_color_t){ GLCD_COLOR_NIXIE_TUBE});
                     break;
                 case ARM_2D_COLOUR_CCCA8888:
                     arm_2d_tile_copy_with_opacity(  
@@ -278,9 +278,10 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
     /* initialize Qoiec loader */
     do {
     #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "./record.qoi");
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "./radar_background.qoi");
     #else
         extern const uint8_t c_qoiMeterPanel[20394];
+        extern const uint8_t c_qoiRadarBackground[45557];
 
         arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiMeterPanel, sizeof(c_qoiMeterPanel));
     #endif
@@ -288,7 +289,11 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
             //.bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-            //.tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            //.u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
             //.bInvertColour = true,
             //.bForceDisablePreBlendwithBG = true,
             .tBackgroundColour.wColour = GLCD_COLOR_WHITE,

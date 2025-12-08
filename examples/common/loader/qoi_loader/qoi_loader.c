@@ -191,7 +191,13 @@ arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
                 this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
                 break;
             case ARM_2D_COLOUR_MASK_A8:
-                this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_MASK_ONLY;
+                if (ARM_QOI_MASK_CHN_ALPHA == this.tCFG.u2ChannelIndex) {
+                    this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_MASK_ONLY;
+                } else {
+                    this.Decoder.u3QOIOutputColourFormat = ARM_QOI_DEC_FORMAT_CHN_B 
+                                                         + this.tCFG.u2ChannelIndex 
+                                                         - ARM_QOI_MASK_CHN_BLUE;
+                }
                 this.vres.tTile.tColourInfo.chScheme = this.tCFG.tColourInfo.chScheme;
                 break;
             case ARM_2D_COLOUR_RGB565:
