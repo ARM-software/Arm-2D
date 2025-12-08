@@ -357,9 +357,11 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
             /* data is not available */
             return false;
         }
-        uint8_t chTemp = tPixel.tColour.chBlue;
-        tPixel.tColour.chBlue = tPixel.tColour.chRed;
-        tPixel.tColour.chRed = chTemp;
+
+        /* swap Red and Blue */
+        uint32_t wValue = __rev16(tPixel.wValue);
+        tPixel.wValue = __ror(wValue, 24);
+
     #endif
 
     } else if (ARM_QOI_OP_ID_RGB == tChunk.chID) {
@@ -382,9 +384,9 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
             /* data is not available */
             return false;
         }
-        uint8_t chTemp = tPixel.tColour.chBlue;
-        tPixel.tColour.chBlue = tPixel.tColour.chRed;
-        tPixel.tColour.chRed = chTemp;
+        /* swap Red and Blue */
+        uint32_t wValue = __rev16(tPixel.wValue);
+        tPixel.wValue = __ror(wValue, 24);
     #endif
 
     } else switch (tChunk.u2OP) {
