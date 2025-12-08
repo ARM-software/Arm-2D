@@ -299,6 +299,8 @@ bool __arm_qoi_read_data(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize
         if (0 == tActualRead) {
             this.chErrorCode = ARM_2D_ERR_IO_ERROR;
             return false;
+        } else if (tSize == tActualRead) {
+            break;
         }
 
         tSize -= tActualRead;
