@@ -399,7 +399,7 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
                 if (NULL != ptCandiate) {
                     __arm_qoi_context_add_to_list(&this.Reference.ptList, 
                                                     ptCandiate, 
-                                                    this.Decoder.tBlockRegion.tSize,
+                                                    (arm_2d_size_t){16, 16},
                                                     true);
                 }
             }
@@ -608,19 +608,6 @@ void __arm_qoi_decode_partial(arm_qoi_loader_t *ptThis,
         this.iTargetStrideInByte = iStrideInByte;
         this.ImageBuffer.tRegion = *ptRegion;
 
-    #if 0
-        /* decoding */
-        if (ARM_2D_ERR_NONE != arm_qoi_decode(  &this.Decoder.tQOIDec, 
-                                                pchBuffer, 
-                                                ptRegion,
-                                                iStrideInByte)) {
-
-            this.ImageBuffer.pchBuffer = NULL;
-            this.iTargetStrideInByte = 0;
-            this.bErrorDetected = true;
-            break;    
-        }
-    #else
         /* decoding */
         if (ARM_2D_ERR_NONE != __arm_2d_qoi_decode( ptThis, 
                                                     ptRegion,
@@ -631,7 +618,6 @@ void __arm_qoi_decode_partial(arm_qoi_loader_t *ptThis,
             this.bErrorDetected = true;
             break;    
         }
-    #endif
 
     } while(0);
 
@@ -1447,6 +1433,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
             arm_qoi_context_t *ptStartPoint = NULL;
             size_t tTargetPixelNumber = this.Decoder.tDrawRegion.tLocation.iY * ptQOIDec->tSize.iWidth
                                     + this.Decoder.tDrawRegion.tLocation.iX;
+            
             arm_foreach(this.tContext) {
                 size_t tPixelNumber = 
                     arm_qoi_decoder_get_context_pixel_number(&(_->tSnapshot));
@@ -1455,6 +1442,17 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                 if (tPixelNumber <= tTargetPixelNumber && tDelta < tMIN) {
                     ptStartPoint = _;
                     tMIN = tDelta;
+
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        1, 
+                        "QOIec", 
+                        "Saved Context Looks Good: distance %d, x=%d, y=%d...",
+                        tDelta,
+                        ptStartPoint->tLocation.iX,
+                        ptStartPoint->tLocation.iY
+                    );
+
                     if (0 == tMIN) {
                         goto label_find_the_start_point;
                     }
@@ -1470,6 +1468,17 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                 if (tPixelNumber <= tTargetPixelNumber && tDelta < tMIN) {
                     ptStartPoint = ptReference;
                     tMIN = tDelta;
+
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        1, 
+                        "QOIec", 
+                        "User Added Reference point Looks Good: distance %d, x=%d, y=%d...",
+                        tDelta,
+                        ptStartPoint->tLocation.iX,
+                        ptStartPoint->tLocation.iY
+                    );
+
                     if (0 == tMIN) {
                         goto label_find_the_start_point;
                     }
@@ -1480,15 +1489,40 @@ arm_2d_err_t  __arm_2d_qoi_decode (
 
 label_find_the_start_point:
             if (NULL != ptStartPoint) {
-                ARM_2D_LOG_INFO(
-                    CONTROLS, 
-                    1, 
-                    "QOIec", 
-                    "Find reference point: x=%d, y=%d...",
-                    ptStartPoint->tLocation.iX,
-                    ptStartPoint->tLocation.iY
-                );
-                arm_qoi_dec_resume_context(ptQOIDec, &ptStartPoint->tSnapshot);
+
+                
+                size_t tPixelNumber = arm_qoi_decoder_get_context_pixel_number(
+                                        arm_qoi_decoder_get_current_context(ptQOIDec));
+
+                size_t tDelta = tTargetPixelNumber - tPixelNumber;
+                if (tPixelNumber <= tTargetPixelNumber && tDelta < tMIN) {
+                    arm_2d_location_t tTempLocation;
+                    arm_qoi_decoder_get_context_location(   ptQOIDec, 
+                                                            NULL, 
+                                                            &tTempLocation);
+                    /* use current */
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        1, 
+                        "QOIec", 
+                        "Current location is good : distance %d, x=%d, y=%d...",
+                        tDelta,
+                        tTempLocation.iX,
+                        tTempLocation.iY
+                    );
+                    break;
+                } else {
+
+                    ARM_2D_LOG_INFO(
+                        CONTROLS, 
+                        1, 
+                        "QOIec", 
+                        "Find a context at point: x=%d, y=%d...",
+                        ptStartPoint->tLocation.iX,
+                        ptStartPoint->tLocation.iY
+                    );
+                    arm_qoi_dec_resume_context(ptQOIDec, &ptStartPoint->tSnapshot);
+                }
             }
         } while(0);
 

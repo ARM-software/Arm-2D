@@ -1021,6 +1021,13 @@ bool arm_qoi_decoder_is_pre_blend_with_background(arm_qoi_dec_t *ptThis)
     return this.tCFG.bBlendWithBG;
 }
 
+ARM_NONNULL(1)
+arm_qoi_dec_ctx_t * arm_qoi_decoder_get_current_context(arm_qoi_dec_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.ptWorking;
+}
+
 ARM_NONNULL(1,2)
 arm_2d_err_t arm_qoi_decode(arm_qoi_dec_t *ptThis,
                             void *pTarget,

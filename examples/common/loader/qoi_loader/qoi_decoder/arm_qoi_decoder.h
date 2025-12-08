@@ -274,6 +274,10 @@ size_t arm_qoi_decoder_get_context_pixel_number(arm_qoi_dec_ctx_t *ptContext);
 
 extern
 ARM_NONNULL(1)
+arm_qoi_dec_ctx_t * arm_qoi_decoder_get_current_context(arm_qoi_dec_t *ptThis);
+
+extern
+ARM_NONNULL(1)
 bool arm_qoi_decoder_is_pre_blend_with_background(arm_qoi_dec_t *ptThis);
 
 #if defined(__clang__)

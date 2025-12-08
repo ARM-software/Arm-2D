@@ -184,7 +184,6 @@ ARM_PRIVATE(
         arm_qoi_dec_t tQOIDec;
         void *pWorkMemory;
 
-        arm_2d_region_t tBlockRegion;
         arm_2d_region_t tDrawRegion;
 
         uint8_t u3QOIOutputColourFormat : 3;

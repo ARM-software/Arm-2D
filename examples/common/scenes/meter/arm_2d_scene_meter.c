@@ -541,7 +541,7 @@ do {
 
         arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
 
-#if 0
+#if 1
         /* add reference point */
     #define REFERENCE_POINT_NUMBER      5
         arm_2d_location_t tReferencePoint;
