@@ -66,11 +66,11 @@
 #define arm_exit_irq_safe    continue
 
 
-/**
-  \brief   Reverse byte order (16 bit)
-  \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
-  \param [in]    wValue  the two half words to reverse
-  \return               Reversed value
+/*!
+ * \brief   Reverse byte order (16 bit)
+ * \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
+ * \param [in] wValue  the two half words to reverse
+ *  \return uint32_t Reversed value
  */
 __STATIC_FORCEINLINE uint32_t __rev16(uint32_t wValue)
 {
@@ -80,11 +80,11 @@ __STATIC_FORCEINLINE uint32_t __rev16(uint32_t wValue)
     return (wHigh >> 8) | (wLow << 8);
 }
 
-/**
-  \brief   Reverse byte order (32 bit)
-  \details Reverses the byte order within word. For example, 0x12345678 becomes 0x78563412.
-  \param [in]    wValue  the word to reverse
-  \return               Reversed value
+/*!
+ * \brief   Reverse byte order (32 bit)
+ * \details Reverses the byte order within word. For example, 0x12345678 becomes 0x78563412.
+ * \param [in] wValue  the word to reverse
+ * \return uint32_t Reversed value
  */
 __STATIC_FORCEINLINE uint32_t __rev(uint32_t x)
 {
@@ -92,6 +92,18 @@ __STATIC_FORCEINLINE uint32_t __rev(uint32_t x)
            ((x >>  8) & 0x0000FF00U) |
            ((x <<  8) & 0x00FF0000U) |
            ((x << 24) & 0xFF000000U);
+}
+
+/*!
+ * \brief   rotate left (32 bit)
+ * \param[in] x the word to rotate
+ * \param[in] n number of bits
+ * \return uint32_t rotated value
+ */
+__STATIC_FORCEINLINE uint32_t __ror(uint32_t x, uint32_t n)
+{
+    n &= 0x1F;
+    return (x >> n) | (x << (32 - n));
 }
 
 
