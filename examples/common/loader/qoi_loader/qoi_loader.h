@@ -22,7 +22,7 @@
 /*============================ INCLUDES ======================================*/
 #include "arm_2d.h"
 #include <stdio.h>
-#include "arm_qoi_decoder.h"
+#include "./qoi_decoder/arm_qoi_decoder.h"
 
 #ifdef   __cplusplus
 extern "C" {
