@@ -145,6 +145,8 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
     arm_tjpgd_loader_on_load(&this.tJPGBackground);
 #   endif
 #endif
+
+    arm_2d_scene_player_hide_navigation_layer(ptScene->ptPlayer);
 }
 
 static void __after_scene_meter_switching(arm_2d_scene_t *ptScene)
@@ -278,6 +280,7 @@ static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    arm_2d_scene_player_show_navigation_layer(ptScene->ptPlayer);
 }
 
 static
@@ -459,7 +462,7 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
             //.fnOnBGStart    = &__on_scene_meter_background_start,
             //.fnOnBGComplete = &__on_scene_meter_background_complete,
             .fnOnFrameStart = &__on_scene_meter_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_meter_switching_out,
+            .fnBeforeSwitchOut = &__before_scene_meter_switching_out,
             .fnOnFrameCPL   = &__on_scene_meter_frame_complete,
             .fnDepose       = &__on_scene_meter_depose,
 
