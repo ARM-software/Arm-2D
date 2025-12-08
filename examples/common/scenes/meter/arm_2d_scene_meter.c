@@ -146,7 +146,7 @@ static void __on_scene_meter_load(arm_2d_scene_t *ptScene)
 #   endif
 #endif
 
-    arm_2d_scene_player_hide_navigation_layer(ptScene->ptPlayer);
+    //arm_2d_scene_player_hide_navigation_layer(ptScene->ptPlayer);
 }
 
 static void __after_scene_meter_switching(arm_2d_scene_t *ptScene)
@@ -280,7 +280,7 @@ static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
     user_scene_meter_t *ptThis = (user_scene_meter_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_2d_scene_player_show_navigation_layer(ptScene->ptPlayer);
+    //arm_2d_scene_player_show_navigation_layer(ptScene->ptPlayer);
 }
 
 static
