@@ -168,6 +168,11 @@
             <description>The dependency of the demo TJpgDec Loader</description>
             <require Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" />
         </condition>
+
+        <condition id="Arm-2D-Demo-QOI-Loader">
+            <description>The dependency of the demo QOI Loader</description>
+            <require Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" />
+        </condition>
         
         <condition id="Arm-2D-Benchmark-Generic">
             <description>The Dependency Requirement for running arm-2d generic bemchmark</description>
@@ -1058,7 +1063,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Loading Lossless image with QOI" Cversion="1.0.0" condition="Arm-2D-Demo-TJpgDec-Loader">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Loading Lossless image with QOI" Cversion="1.0.0" condition="Arm-2D-Demo-QOI-Loader">
           <description>A demo for loading lossless compression images (*.QOI) </description>
           <files>
             <file category="sourceC"     name="examples/demos/arm_2d_scene_qoi.c" attr="config" version="1.0.0" />
