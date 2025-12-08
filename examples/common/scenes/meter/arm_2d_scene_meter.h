@@ -86,6 +86,9 @@ extern "C" {
 #   define ARM_2D_SCENE_METER_USE_JPG       0
 #endif
 
+#ifndef ARM_2D_SCENE_METER_SHOW_FPS
+#   define ARM_2D_SCENE_METER_SHOW_FPS      0
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -112,7 +115,7 @@ struct user_scene_meter_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[1];
 
     int16_t iNumber;
     int16_t iTargetNumber;

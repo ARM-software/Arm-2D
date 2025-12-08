@@ -225,8 +225,8 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         /* generate a new position every 2000 sec */
-        if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[1])) {
-            this.lTimestamp[1] = 0;
+        if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[0])) {
+            this.lTimestamp[0] = 0;
             srand(arm_2d_helper_get_system_timestamp());
             this.iTargetNumber = rand() % 240;
         }
@@ -235,7 +235,14 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
     } while(0);
 
     do {
+    #if ARM_2D_SCENE_METER_SHOW_FPS
+        int16_t iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
+                              / ptScene->ptPlayer->Benchmark.wAverage), 
+                              999);
+    #else
         int16_t iNumber = meter_pointer_get_current_value(&this.tMeterPointer);
+    #endif
+
         bool bNumberUnchanged = (this.iNumber == iNumber);
 
         this.iNumber = iNumber;
@@ -244,7 +251,6 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
                                             bNumberUnchanged); 
 
     } while(0);
-
     
 }
 
@@ -265,12 +271,6 @@ static void __on_scene_meter_frame_complete(arm_2d_scene_t *ptScene)
 #   endif
 #endif
 
-#if 0
-    /* switch to next scene after 15s */
-    if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
 static void __before_scene_meter_switching_out(arm_2d_scene_t *ptScene)
@@ -346,14 +346,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
                         arm_lcd_text_set_opacity(255);
                     }
                     
-                    /* print "km/h" */
+                    /* print "FPS" */
                     __item_line_vertical(tTextSize.iWidth,16) {
-                        arm_2d_align_centre(__item_region, 4*6, 8) {
-                            arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
-                            arm_lcd_text_set_draw_region(&__centre_region);
-                            arm_lcd_text_set_colour( GLCD_COLOR_DARK_GREY, GLCD_COLOR_BLACK);
-                            arm_lcd_printf("km/h");
-                        }
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour( GLCD_COLOR_DARK_GREY, GLCD_COLOR_BLACK);
+                    #if ARM_2D_SCENE_METER_SHOW_FPS
+                        arm_lcd_printf_label(ARM_2D_ALIGN_BOTTOM_CENTRE, "FPS");
+                    #else
+                        arm_lcd_printf_label(ARM_2D_ALIGN_BOTTOM_CENTRE, "km/s");
+                    #endif
                     }
 
                     arm_lcd_text_set_target_framebuffer(NULL);
