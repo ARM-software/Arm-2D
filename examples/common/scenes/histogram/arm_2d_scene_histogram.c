@@ -106,7 +106,14 @@ static void __on_scene_histogram_load(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+    arm_qoi_loader_on_load(&this.tQOIBackground);
+
+    this.bIsDirtyRegionOptimizationEnabled = !!
+        arm_2d_helper_pfb_disable_dirty_region_optimization(
+            &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
+
+#elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 
 #if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
     arm_zjpgd_loader_on_load(&this.tJPGBackground);
@@ -133,7 +140,9 @@ static void __on_scene_histogram_depose(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+    arm_qoi_loader_depose(&this.tQOIBackground);
+#elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
     arm_zjpgd_loader_depose(&this.tJPGBackground);
 #   else
@@ -179,7 +188,9 @@ static void __on_scene_histogram_frame_start(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+    arm_qoi_loader_on_frame_start(&this.tQOIBackground);
+#elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
     arm_zjpgd_loader_on_frame_start(&this.tJPGBackground);
 #   else
@@ -202,19 +213,14 @@ static void __on_scene_histogram_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+    arm_qoi_loader_on_frame_complete(&this.tQOIBackground);
+#elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
     arm_zjpgd_loader_on_frame_complete(&this.tJPGBackground);
 #   else
     arm_tjpgd_loader_on_frame_complete(&this.tJPGBackground);
 #endif
-#endif
-
-#if 0
-    /* switch to next scene after 10s */
-    if (arm_2d_helper_is_time_out(10000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
 #endif
 }
 
@@ -223,7 +229,7 @@ static void __before_scene_histogram_switching_out(arm_2d_scene_t *ptScene)
     user_scene_histogram_t *ptThis = (user_scene_histogram_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#if !ARM_2D_SCENE_HISTOGRAM_USE_JPG || ARM_2D_SCENE_HISTOGRAM_USE_QOI
     if (this.bIsDirtyRegionOptimizationEnabled) {
         arm_2d_helper_pfb_enable_dirty_region_optimization(
                 &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
@@ -248,8 +254,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
     
-#if 1
-    #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
+    #if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+        arm_2d_align_centre(__top_canvas, 
+                            this.tQOIBackground.vres.tTile.tRegion.tSize) {
+
+            arm_2d_tile_copy_only(&this.tQOIBackground.vres.tTile,
+                                ptTile,
+                                &__centre_region);
+        }
+    #elif !ARM_2D_SCENE_HISTOGRAM_USE_JPG
         arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
             arm_2d_tile_copy_only(
                 &c_tileHelium,
@@ -268,7 +281,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
 
         }
     #endif
-#endif
+
         
         arm_2d_align_centre(__top_canvas, 240, 200) {
     #if 1
@@ -303,7 +316,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
-    #if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+    #if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+        arm_lcd_puts("Histogram with QOI");
+    #elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
     #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
         arm_lcd_puts("Histogram with ZJPGD");
     #   else
@@ -424,8 +439,8 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
 
             .Colour = {
-                .wFrom =  __RGB32(0, 0xFF, 0),
-                .wTo =    __RGB32(0xFF, 0, 0), 
+                .wFrom =  __RGB32(0, 0, 0), //__RGB32(0, 0xFF, 0),
+                .wTo =    __RGB32(0xFF, 0xFF, 0xFF), //__RGB32(0xFF, 0, 0), 
             },
 
         #if !ARM_2D_SCENE_HISTOGRAM_USE_JPG
@@ -441,18 +456,57 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
     } while(0);
 
 
-    /* initialize TJpgDec loader */
-#if ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+    /* initialize QOI loader */
+    do {
+    #if ARM_2D_DEMO_QOI_USE_FILE
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/background_320x240.qoi");
+    #else
+        extern const uint8_t c_qoiMeterPanel[20394];
+        extern const uint8_t c_qoiRadarBackground[45557];
+        extern const uint8_t c_qoiBackgroundSmall[114698];
+
+        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiBackgroundSmall, sizeof(c_qoiBackgroundSmall));
+    #endif
+        arm_qoi_loader_cfg_t tCFG = {
+            //.bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            //.u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+        #if ARM_2D_DEMO_QOI_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
+    } while(0);
+#elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
     do {
     #if ARM_2D_DEMO_ZJPGD_USE_FILE
-        arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+        arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/background_320x240.jpg");
     #else
         extern const uint8_t c_chHeliumJPG[23656];
         extern const uint8_t c_chHelium75JPG[10685];
         extern const uint8_t c_chHelium30JPG[5411];
+        extern const uint8_t c_jpgBackgroundSmall[12489];
 
-        arm_zjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chHelium75JPG, sizeof(c_chHelium75JPG));
+        arm_zjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_jpgBackgroundSmall, sizeof(c_jpgBackgroundSmall));
     #endif
         arm_zjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -496,15 +550,17 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         
     } while(0);
 #   else
+     /* initialize TJpgDec loader */
     do {
     #if ARM_2D_DEMO_TJPGD_USE_FILE
-        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/background_320x240.jpg");
     #else
         extern const uint8_t c_chHeliumJPG[23656];
         extern const uint8_t c_chHelium75JPG[10685];
         extern const uint8_t c_chHelium30JPG[5411];
+        extern const uint8_t c_jpgBackgroundSmall[12489];
 
-        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chHelium75JPG, sizeof(c_chHelium75JPG));
+        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_jpgBackgroundSmall, sizeof(c_jpgBackgroundSmall));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,

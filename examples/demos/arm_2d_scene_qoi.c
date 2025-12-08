@@ -316,7 +316,7 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
 
     /* ------------   initialize members of user_scene_qoi_t begin ---------------*/
 
-    /* initialize Qoiec loader */
+    /* initialize QOI loader */
     do {
     #if ARM_2D_DEMO_QOI_USE_FILE
         arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
