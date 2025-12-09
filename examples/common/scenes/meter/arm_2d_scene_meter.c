@@ -92,6 +92,14 @@
 
 //#define c_tilePointerMask           <your pointer tile mask name>
 
+#if ARM_2D_SCENE_METER_USE_QOI
+#   define METER_PANEL          this.tQOIBackground.vres.tTile
+#elif ARM_2D_SCENE_METER_USE_JPG
+#   define METER_PANEL          this.tJPGBackground.vres.tTile
+#else
+#   define METER_PANEL          c_tileMeterPanel
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -296,25 +304,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_meter_handler)
         
         /* following code is just a demo, you can remove them */
 
-    #if ARM_2D_SCENE_METER_USE_QOI
-        arm_2d_align_centre(__canvas, this.tQOIBackground.vres.tTile.tRegion.tSize) {
-            arm_2d_tile_copy_only(  &this.tQOIBackground.vres.tTile,
-                                    ptTile,
-                                    &__centre_region);
+    #if ARM_2D_SCENE_METER_USE_QOI || ARM_2D_SCENE_METER_USE_JPG
+        arm_2d_align_centre(__canvas, METER_PANEL.tRegion.tSize) {
 
-        }
-    #elif ARM_2D_SCENE_METER_USE_JPG
-        arm_2d_align_centre(__canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
-
-            arm_2d_tile_copy_only(  &this.tJPGBackground.vres.tTile,
+            arm_2d_tile_copy_only(  &METER_PANEL,
                                     ptTile,
                                     &__centre_region);
 
         }
     #else
-        arm_2d_align_centre(__canvas, c_tileMeterPanel.tRegion.tSize) {
+        arm_2d_align_centre(__canvas, METER_PANEL.tRegion.tSize) {
 
-            arm_2d_tile_copy_with_src_mask_only(    &c_tileMeterPanel,
+            arm_2d_tile_copy_with_src_mask_only(    &METER_PANEL,
                                                     &c_tileMeterPanelMask,
                                                     ptTile,
                                                     &__centre_region);
@@ -546,29 +547,13 @@ do {
 
         arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
 
-#if 1
+
         /* add reference point */
     #define REFERENCE_POINT_NUMBER      5
         arm_2d_location_t tReferencePoint;
 
         arm_2d_align_centre(tScreen, this.tQOIBackground.vres.tTile.tRegion.tSize) {
             arm_2d_location_t tBackgroundLocation = __centre_region.tLocation;
-
-            arm_2d_align_centre(tScreen, 240, 240) {
-
-                tReferencePoint = __centre_region.tLocation;
-
-                int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
-                for (int n = 1; n < REFERENCE_POINT_NUMBER; n++) {
-
-                    tReferencePoint.iY = __centre_region.tLocation.iY + n * nDelta;
-
-                    arm_qoi_loader_add_reference_point( &this.tQOIBackground, 
-                                                          tBackgroundLocation,
-                                                          tReferencePoint);
-                }
-            }
-
 
         /* add reference point for navigation layer */
         #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
@@ -588,6 +573,21 @@ do {
                                                 tBackgroundLocation,
                                                 tReferencePoint);
         #endif
+
+            arm_2d_align_centre(tScreen, 240, 240) {
+
+                tReferencePoint = __centre_region.tLocation;
+
+                int16_t nDelta = __centre_region.tSize.iHeight / REFERENCE_POINT_NUMBER;
+                for (int n = 1; n < REFERENCE_POINT_NUMBER; n++) {
+
+                    tReferencePoint.iY = __centre_region.tLocation.iY + n * nDelta;
+
+                    arm_qoi_loader_add_reference_point( &this.tQOIBackground, 
+                                                          tBackgroundLocation,
+                                                          tReferencePoint);
+                }
+            }
         }
 #endif
 
