@@ -589,7 +589,6 @@ do {
                 }
             }
         }
-#endif
 
     } while(0);
 #elif ARM_2D_SCENE_METER_USE_JPG
