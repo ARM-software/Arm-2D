@@ -70,19 +70,27 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
-#   define c_tileHelium             c_tileHeliumGRAY8
+#   define c_tileBackgroundSmall    c_tileBackgroundSmallGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
-#   define c_tileHelium             c_tileHeliumRGB565
+#   define c_tileBackgroundSmall    c_tileBackgroundSmallRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
-#   define c_tileHelium             c_tileHeliumCCCN888
+#   define c_tileBackgroundSmall    c_tileBackgroundSmallCCCN888
 #else
 #   error Unsupported colour depth!
+#endif
+
+#if ARM_2D_SCENE_HISTOGRAM_USE_QOI
+#   define BACKGROUND   this.tQOIBackground.vres.tTile
+#elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
+#   define BACKGROUND   this.tJPGBackground.vres.tTile
+#else
+#   define BACKGROUND   c_tileBackgroundSmall
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -96,7 +104,7 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
-extern const arm_2d_tile_t c_tileHelium;
+extern const arm_2d_tile_t c_tileBackgroundSmall;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -256,35 +264,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_histogram_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
     
-    #if ARM_2D_SCENE_HISTOGRAM_USE_QOI
-        arm_2d_align_centre(__top_canvas, 
-                            this.tQOIBackground.vres.tTile.tRegion.tSize) {
-
-            arm_2d_tile_copy_only(&this.tQOIBackground.vres.tTile,
-                                ptTile,
-                                &__centre_region);
-        }
-    #elif !ARM_2D_SCENE_HISTOGRAM_USE_JPG
-        arm_2d_align_centre(__top_canvas, c_tileHelium.tRegion.tSize) {
+        arm_2d_align_centre(__top_canvas, BACKGROUND.tRegion.tSize) {
             arm_2d_tile_copy_only(
-                &c_tileHelium,
+                &BACKGROUND,
                 ptTile, 
                 &__centre_region
             );
 
             ARM_2D_OP_WAIT_ASYNC();
         }
-    #else
-        arm_2d_align_centre(__top_canvas, this.tJPGBackground.vres.tTile.tRegion.tSize) {
 
-            arm_2d_tile_copy_only(&this.tJPGBackground.vres.tTile,
-                                ptTile,
-                                &__centre_region);
-
-        }
-    #endif
-
-        
         arm_2d_align_centre(__top_canvas, 240, 200) {
     #if 1
             draw_round_corner_box(  ptTile, 
