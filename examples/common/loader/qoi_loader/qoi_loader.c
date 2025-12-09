@@ -222,7 +222,7 @@ arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
     this.vres.tTile.tInfo.bHasEnforcedColour = true;
 
     uint8_t chCurrentColourSize = (((ARM_2D_COLOUR & ARM_2D_COLOUR_SZ_msk)) >> ARM_2D_COLOUR_SZ_pos);
-    if ( (this.vres.tTile.tColourInfo.u3ColourSZ >= chCurrentColourSize)
+    if ( (this.vres.tTile.tColourInfo.u3ColourSZ > chCurrentColourSize)
       && (this.vres.tTile.tColourInfo.u3ColourSZ < ARM_2D_COLOUR_SZ_24BIT)) {
         this.tCFG.bUseHeapForVRES = true;
     }
