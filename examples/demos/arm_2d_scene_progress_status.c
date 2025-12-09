@@ -208,14 +208,9 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
     int32_t iResult;
     if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[0])) {
         this.iProgress[0] = -1;
+        this.iProgress[1] = 0;
     } else {
         this.iProgress[0] = (uint16_t)iResult;
-    }
-
-    if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[2])) {
-        this.iProgress[1] = 0;
-        this.lTimestamp[2] = 0;
-    } else {
         this.iProgress[1] = (uint16_t)iResult;
     }
 
