@@ -29,7 +29,10 @@
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
-#include "arm_2d_example_loaders.h"
+
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   include "arm_2d_example_loaders.h"
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -64,7 +67,7 @@ extern "C" {
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_USE_QOI
-#   define ARM_2D_DEMO_RADAR_USE_QOI    0
+#   define ARM_2D_DEMO_RADAR_USE_QOI    1
 #endif
 
 /* OOC header, please DO NOT modify  */

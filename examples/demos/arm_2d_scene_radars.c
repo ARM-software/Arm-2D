@@ -696,7 +696,64 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
     /* ------------   initialize members of user_scene_radars_t begin ---------------*/
 
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    /* initialize QOI loader */
+    do {
+    #if ARM_2D_DEMO_QOI_USE_FILE
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
+    #else
+        extern const uint8_t c_qoiMeterPanel[20394];
+        extern const uint8_t c_qoiRadarBackground[45557];
 
+        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiRadarBackground, sizeof(c_qoiRadarBackground));
+    #endif
+        arm_qoi_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            .u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+        #if ARM_2D_DEMO_QOI_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
+    
+        arm_2d_align_centre(__top_canvas, this.tQOIBackground.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tReferencePoint;
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+                arm_2d_align_bottom_centre(__top_canvas, 100, 24) {
+                    tReferencePoint = __bottom_centre_region.tLocation;
+                    tReferencePoint.iY -= 16;
+                }
+            #else
+                tReferencePoint.iX = 0;
+                tReferencePoint.iY = ((__top_canvas.tSize.iHeight + 7) / 8 - 2) * 8;
+            #endif
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+                arm_qoi_loader_add_reference_point( &this.tQOIBackground, 
+                                                    __centre_region.tLocation,
+                                                    tReferencePoint);
+            #endif
+        }
+    } while(0);
 
     // initialize second pointer
     do {
@@ -793,44 +850,6 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         foldable_panel_init(&this.tScreen, &tCFG);
     } while(0);
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
-    /* initialize QOI loader */
-    do {
-    #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
-    #else
-        extern const uint8_t c_qoiMeterPanel[20394];
-        extern const uint8_t c_qoiRadarBackground[45557];
-
-        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiRadarBackground, sizeof(c_qoiRadarBackground));
-    #endif
-        arm_qoi_loader_cfg_t tCFG = {
-            .bUseHeapForVRES = true,
-            .ptScene = (arm_2d_scene_t *)ptThis,
-            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-
-            /* you can only extract specific colour channel and use it as A8 mask */
-            .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
-            .u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
-
-            //.bInvertColour = true,
-            //.bForceDisablePreBlendwithBG = true,
-            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
-        #if ARM_2D_DEMO_QOI_USE_FILE
-            .ImageIO = {
-                .ptIO = &ARM_QOI_IO_FILE_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
-            },
-        #else
-            .ImageIO = {
-                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
-            },
-        #endif
-        };
-
-        arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
-    } while(0);
 #endif
 
     /* ------------   initialize members of user_scene_radars_t end   ---------------*/
