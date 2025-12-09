@@ -30,6 +30,10 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   include "arm_2d_example_loaders.h"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -59,6 +63,16 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef ARM_2D_SCENE_KNOB_USE_QOI
+#   define ARM_2D_SCENE_KNOB_USE_QOI    1
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   undef ARM_2D_SCENE_KNOB_USE_QOI
+#   define ARM_2D_SCENE_KNOB_USE_QOI    0
+#endif
+
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -84,7 +98,7 @@ struct user_scene_knob_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[1];
     bool bUserAllocated;
 
     int16_t iTargetSetting;
@@ -98,6 +112,14 @@ ARM_PRIVATE(
     };
 
     arm_2d_op_fill_cl_msk_opa_trans_t tCoverRotateOP;
+
+#if ARM_2D_SCENE_KNOB_USE_QOI
+    arm_qoi_loader_t tQOICover;
+    union {
+        arm_qoi_io_file_loader_t tFile;
+        arm_qoi_io_binary_loader_t tBinary;
+    } LoaderIO;
+#endif
 
 )
     /* place your public member here */

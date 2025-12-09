@@ -73,6 +73,12 @@
 #   error Unsupported colour depth!
 #endif
 
+#if ARM_2D_SCENE_KNOB_USE_QOI
+#   define RADIAL_LINE_COVER_MASK   this.tQOICover.vres.tTile
+#else
+#   define RADIAL_LINE_COVER_MASK   c_tileRadialLineCoverMask
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -176,6 +182,10 @@ static void __on_scene_knob_load(arm_2d_scene_t *ptScene)
     progress_wheel_on_load(&this.tWheel);
     meter_pointer_on_load(&this.tPointer);
 
+#if ARM_2D_SCENE_KNOB_USE_QOI
+    arm_qoi_loader_on_load(&this.tQOICover);
+#endif
+
 }
 
 static void __after_scene_knob_switching(arm_2d_scene_t *ptScene)
@@ -194,6 +204,10 @@ static void __on_scene_knob_depose(arm_2d_scene_t *ptScene)
     
     progress_wheel_depose(&this.tWheel);
     meter_pointer_depose(&this.tPointer);
+
+#if ARM_2D_SCENE_KNOB_USE_QOI
+    arm_qoi_loader_depose(&this.tQOICover);
+#endif
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -235,8 +249,8 @@ static void __on_scene_knob_frame_start(arm_2d_scene_t *ptScene)
 
     do {
         /* generate a new position every 2000 sec */
-        if (arm_2d_helper_is_time_out(2000,  &this.lTimestamp[1])) {
-            this.lTimestamp[1] = 0;
+        if (arm_2d_helper_is_time_out(2000,  &this.lTimestamp[0])) {
+            this.lTimestamp[0] = 0;
             srand(arm_2d_helper_get_system_timestamp());
             this.iTargetSetting = rand() % 1000;
         }
@@ -271,6 +285,9 @@ static void __on_scene_knob_frame_start(arm_2d_scene_t *ptScene)
 
     progress_wheel_on_frame_start(&this.tWheel);
 
+#if ARM_2D_SCENE_KNOB_USE_QOI
+    arm_qoi_loader_on_frame_start(&this.tQOICover);
+#endif
 }
 
 static void __on_scene_knob_frame_complete(arm_2d_scene_t *ptScene)
@@ -280,11 +297,8 @@ static void __on_scene_knob_frame_complete(arm_2d_scene_t *ptScene)
 
     meter_pointer_on_frame_complete(&this.tPointer);
 
-#if 0
-    /* switch to next scene after 15s */
-    if (arm_2d_helper_is_time_out(15000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
+#if ARM_2D_SCENE_KNOB_USE_QOI
+    arm_qoi_loader_on_frame_complete(&this.tQOICover);
 #endif
 }
 
@@ -366,10 +380,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
             switch (c_tKnobStartPosition) {
                 default:
                 case KNOB_START_POINT_BOTTOM:
-                    arm_2d_fill_colour_with_a4_mask(
+                    arm_2d_fill_colour_with_mask(
                                         ptTile, 
                                         &__centre_region, 
-                                        &c_tileRadialLineCoverA4Mask, 
+                                        &RADIAL_LINE_COVER_MASK, 
                                         (__arm_2d_color_t){GLCD_COLOR_BLACK});
                     break;
 
@@ -377,19 +391,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
                     arm_2d_fill_colour_with_mask_and_y_mirror(  
                                         ptTile, 
                                         &__centre_region, 
-                                        &c_tileRadialLineCoverMask, 
+                                        &RADIAL_LINE_COVER_MASK, 
                                         (__arm_2d_color_t){GLCD_COLOR_BLACK});
                     break;
                 case KNOB_START_POINT_RIGHT:
                 case KNOB_START_POINT_LEFT: {
                     arm_2d_location_t tCoverCentre = {
-                        c_tileRadialLineCoverMask.tRegion.tSize.iWidth >> 1,
-                        c_tileRadialLineCoverMask.tRegion.tSize.iHeight >> 1,
+                        RADIAL_LINE_COVER_MASK.tRegion.tSize.iWidth >> 1,
+                        RADIAL_LINE_COVER_MASK.tRegion.tSize.iHeight >> 1,
                     };
 
                     arm_2dp_fill_colour_with_mask_opacity_and_transform(
                         &this.tCoverRotateOP,
-                        &c_tileRadialLineCoverMask,
+                        &RADIAL_LINE_COVER_MASK,
                         ptTile,
                         NULL,
                         tCoverCentre,
@@ -617,6 +631,66 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
        ||   c_tKnobStartPosition == KNOB_START_POINT_RIGHT) {
         ARM_2D_OP_INIT(this.tCoverRotateOP);
     }
+
+#if ARM_2D_SCENE_KNOB_USE_QOI
+    /* initialize QOI loader */
+    do {
+    #if ARM_2D_DEMO_QOI_USE_FILE
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radial_line_cover.qoi");
+    #else
+        extern const uint8_t c_qoiRadialLineCover[34151];
+
+        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiRadialLineCover, sizeof(c_qoiRadialLineCover));
+    #endif
+        arm_qoi_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            //.u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+        #if ARM_2D_DEMO_QOI_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_qoi_loader_init(&this.tQOICover, &tCFG);
+
+        arm_2d_align_centre(tScreen, this.tQOICover.vres.tTile.tRegion.tSize) {
+            arm_2d_location_t tReferencePoint;
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
+                arm_2d_align_bottom_centre(tScreen, 100, 24) {
+                    tReferencePoint = __bottom_centre_region.tLocation;
+                    tReferencePoint.iY -= 16;
+                }
+
+            #else
+                tReferencePoint.iX = 0;
+                tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
+            #endif
+
+            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
+                arm_qoi_loader_add_reference_point( &this.tQOICover, 
+                                                    __centre_region.tLocation,
+                                                    tReferencePoint);
+            #endif
+        }
+    } while(0);
+#endif 
 
     /* ------------   initialize members of user_scene_knob_t end   ---------------*/
 
