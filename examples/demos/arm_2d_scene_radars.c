@@ -75,6 +75,12 @@
 
 #define LAST_STAND_DEFENCE_RADIUS   40
 
+#if ARM_2D_DEMO_RADAR_USE_QOI
+#   define RADAR_BACKGROUND     this.tQOIBackground.vres.tTile
+#else
+#   define RADAR_BACKGROUND     c_tileRadarBackgroundGRAY8
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -172,6 +178,10 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
     }
 
     foldable_panel_on_load(&this.tScreen);
+
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    arm_qoi_loader_on_load(&this.tQOIBackground);
+#endif
 }
 
 static void __after_scene_radars_switching(arm_2d_scene_t *ptScene)
@@ -198,6 +208,10 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
     }
 
     foldable_panel_depose(&this.tScreen);
+
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    arm_qoi_loader_depose(&this.tQOIBackground);
+#endif
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -303,7 +317,9 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 1.0f);
     foldable_panel_on_frame_start(&this.tScreen);
 
-
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    arm_qoi_loader_on_frame_start(&this.tQOIBackground);
+#endif
 }
 
 static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
@@ -318,6 +334,10 @@ static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
     }
 
     foldable_panel_on_frame_complete(&this.tScreen);
+
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    arm_qoi_loader_on_frame_complete(&this.tQOIBackground);
+#endif
 }
 
 static void __before_scene_radars_switching_out(arm_2d_scene_t *ptScene)
@@ -341,12 +361,12 @@ IMPL_PFB_ON_DRAW(__draw_simple_radar)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, c_tileRadarBackgroundGRAY8.tRegion.tSize ) {
+        arm_2d_align_centre(__top_canvas, RADAR_BACKGROUND.tRegion.tSize ) {
             
             arm_2d_fill_colour_with_mask_and_opacity(
                     ptTile, 
                     &__centre_region,
-                    &c_tileRadarBackgroundGRAY8,
+                    &RADAR_BACKGROUND,
                     (__arm_2d_color_t) {ARM_2D_DEMO_RADAR_COLOUR},
                     128-32);
 
@@ -409,12 +429,12 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_mono_scan_sector_pattern)
         
         /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, c_tileRadarBackgroundGRAY8.tRegion.tSize ) {
+        arm_2d_align_centre(__top_canvas, RADAR_BACKGROUND.tRegion.tSize ) {
 
             arm_2d_fill_colour_with_mask_and_opacity(
                     ptTile, 
                     &__centre_region,
-                    &c_tileRadarBackgroundGRAY8,
+                    &RADAR_BACKGROUND,
                     (__arm_2d_color_t) {ARM_2D_DEMO_RADAR_COLOUR},
                     64);
 
@@ -476,7 +496,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
     /*-----------------------draw the scene begin-----------------------*/
         
         arm_2d_align_centre(__top_canvas, 
-                            c_tileRadarBackgroundGRAY8.tRegion.tSize) {
+                            RADAR_BACKGROUND.tRegion.tSize) {
             arm_2d_tile_t *ptPanel = foldable_panel_show(
                                         &this.tScreen,
                                         ptTile, 
@@ -705,7 +725,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
                 .tColourToFill = ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR,
             },
             .Target = {
-                .ptMask = &c_tileRadarBackgroundGRAY8,
+                .ptMask = &RADAR_BACKGROUND,
             },
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
@@ -730,7 +750,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
     /* initialize bogeys */
     do {
-        int16_t iRadius = c_tileRadarBackgroundGRAY8.tRegion.tSize.iWidth >> 1;
+        int16_t iRadius = RADAR_BACKGROUND.tRegion.tSize.iWidth >> 1;
         dynamic_nebula_cfg_t tCFG = {
             .fSpeed = 0.02f,
             .iRadius = iRadius,
@@ -773,7 +793,45 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         foldable_panel_init(&this.tScreen, &tCFG);
     } while(0);
 
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    /* initialize QOI loader */
+    do {
+    #if ARM_2D_DEMO_QOI_USE_FILE
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
+    #else
+        extern const uint8_t c_qoiMeterPanel[20394];
+        extern const uint8_t c_qoiRadarBackground[45557];
 
+        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiRadarBackground, sizeof(c_qoiRadarBackground));
+    #endif
+        arm_qoi_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            .u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+        #if ARM_2D_DEMO_QOI_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_qoi_loader_init(&this.tQOIBackground, &tCFG);
+    } while(0);
+#endif
 
     /* ------------   initialize members of user_scene_radars_t end   ---------------*/
 

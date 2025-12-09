@@ -29,6 +29,7 @@
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
+#include "arm_2d_example_loaders.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -62,6 +63,10 @@ extern "C" {
 #   define ARM_2D_DEMO_RADAR_BOGEY_COLOUR           ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
 #endif
 
+#ifndef ARM_2D_DEMO_RADAR_USE_QOI
+#   define ARM_2D_DEMO_RADAR_USE_QOI    0
+#endif
+
 /* OOC header, please DO NOT modify  */
 #ifdef __USER_SCENE_RADARS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
@@ -71,6 +76,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   undef ARM_2D_DEMO_RADAR_USE_QOI
+#   define ARM_2D_DEMO_RADAR_USE_QOI    0
+#endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -127,6 +136,13 @@ ARM_PRIVATE(
 
     foldable_panel_t    tScreen;
 
+#if ARM_2D_DEMO_RADAR_USE_QOI
+    arm_qoi_loader_t tQOIBackground;
+    union {
+        arm_qoi_io_file_loader_t tFile;
+        arm_qoi_io_binary_loader_t tBinary;
+    } LoaderIO;
+#endif
 )
     /* place your public member here */
     
