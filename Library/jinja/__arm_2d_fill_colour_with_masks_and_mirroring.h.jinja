@@ -142,10 +142,11 @@ extern "C" {
                                     __SRC_MSK_ADDR, /*   source mask address */ \
                                     __DES_MSK_ADDR, /*   target mask address */ \
                                     __COLOUR,       /*   colour */              \
-                                    __MODE)         /*   mode */                \
+                                    ...)         /*   mode */                \
 ({                                                                              \
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
-    switch ((__MODE) & ARM_2D_CP_MODE_XY_MIRROR) {                              \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+            &   ARM_2D_CP_MODE_XY_MIRROR) {                                     \
         case ARM_2D_CP_MODE_NO_MIRROR:                                          \
             tResult = arm_2d_{{colour_name | lower}}_fill_colour_with_masks_only(                \
                             (__TARGET_ADDR),                                    \
@@ -189,10 +190,11 @@ extern "C" {
                                     __DES_MSK_ADDR, /*   target mask address */ \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY,      /*   opacity */             \
-                                    __MODE)         /*   mode */                \
+                                    ...)         /*   mode */                \
 ({                                                                              \
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
-    switch ((__MODE) & ARM_2D_CP_MODE_XY_MIRROR) {                              \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+            &   ARM_2D_CP_MODE_XY_MIRROR) {                                     \
         case ARM_2D_CP_MODE_NO_MIRROR:                                          \
             tResult = arm_2d_{{colour_name | lower}}_fill_colour_with_masks_and_opacity_only(    \
                             (__TARGET_ADDR),                                    \
