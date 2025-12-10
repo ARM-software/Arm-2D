@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_masks_and_mirroring.c
  * Description:  APIs for colour-filling-with-masks-and-mirroring
  *
- * $Date:        26. Nov 2025
- * $Revision:    V.1.1.0
+ * $Date:        10. Dec 2025
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -152,6 +152,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_only(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.chColour = tColour.tValue;
 
@@ -305,6 +306,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_opacity_only(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -475,6 +477,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_x_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.chColour = tColour.tValue;
 
@@ -628,6 +631,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_x_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -798,6 +802,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_y_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.chColour = tColour.tValue;
 
@@ -951,6 +956,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_y_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1121,6 +1127,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_and_xy_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.chColour = tColour.tValue;
 
@@ -1274,6 +1281,7 @@ arm_fsm_rt_t arm_2dp_gray8_fill_colour_with_masks_xy_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.chColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1444,6 +1452,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_only(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.hwColour = tColour.tValue;
 
@@ -1597,6 +1606,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_opacity_only(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -1767,6 +1777,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_x_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.hwColour = tColour.tValue;
 
@@ -1920,6 +1931,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_x_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2090,6 +2102,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_y_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.hwColour = tColour.tValue;
 
@@ -2243,6 +2256,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_y_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2413,6 +2427,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_and_xy_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.hwColour = tColour.tValue;
 
@@ -2566,6 +2581,7 @@ arm_fsm_rt_t arm_2dp_rgb565_fill_colour_with_masks_xy_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.hwColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -2736,6 +2752,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_only(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.wColour = tColour.tValue;
 
@@ -2889,6 +2906,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_opacity_only(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_COPY;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -3059,6 +3077,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_x_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.wColour = tColour.tValue;
 
@@ -3212,6 +3231,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_x_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_X_MIRROR;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -3382,6 +3402,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_y_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.wColour = tColour.tValue;
 
@@ -3535,6 +3556,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_y_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_Y_MIRROR;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;
@@ -3705,6 +3727,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_and_xy_mirror(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.wColour = tColour.tValue;
 
@@ -3858,6 +3881,7 @@ arm_fsm_rt_t arm_2dp_cccn888_fill_colour_with_masks_xy_mirror_and_opacity(
     this.Target.ptRegion = ptRegion;
     this.Source.ptTile = ptSourceMask;
     this.Mask.ptTargetSide = ptTargetMask;
+    this.Mask.ptSourceSide = NULL;
     this.wMode = ARM_2D_CP_MODE_XY_MIRROR;
     this.wColour = tColour.tValue;
     this.chOpacity = chOpacity;

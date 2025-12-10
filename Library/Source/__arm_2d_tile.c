@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        02. Dec 2025
- * $Revision:    V.1.8.2
+ * $Date:        10. Dec 2025
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -317,7 +317,6 @@ int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
 }
 
 
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
@@ -325,7 +324,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             arm_2d_tile_t **ppFirstDerivedChild,
                                             bool bQuitWhenFindFirstDerivedChild)
 {
-    assert(NULL != ptTile);
+    if (NULL == ptTile) {
+        return NULL;
+    }
 
     arm_2d_region_t tValidRegion = ptTile->tRegion;
 
@@ -442,13 +443,14 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
     return ptTile;
 }
 
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root_only(
                                         const arm_2d_tile_t *ptTile,
                                         const arm_2d_tile_t **ppVirtualScreen,
                                         bool bQuitWhenFindVirtualScreen)
 {
-    assert(NULL != ptTile);
+    if (NULL == ptTile) {
+        return NULL;
+    }
 
     if (NULL != ppVirtualScreen) {
         *ppVirtualScreen = NULL;        /* initialise */
@@ -519,7 +521,6 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root_only(
 }
 
 
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                         const arm_2d_tile_t *ptTile,
                                         arm_2d_region_t *ptValidRegion,
@@ -527,7 +528,9 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
                                         const arm_2d_tile_t **ppVirtualScreen,
                                         bool bQuitWhenFindVirtualScreen)
 {
-    assert(NULL != ptTile);
+    if (NULL == ptTile) {
+        return NULL;
+    }
 
     arm_2d_region_t tValidRegion = ptTile->tRegion;
 
@@ -664,7 +667,6 @@ const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root(
     return ptTile;
 }
 
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset,
@@ -698,7 +700,6 @@ const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
   |                                                                        |
   +------------------------------------------------------------------------+
  */
-ARM_NONNULL(1)
 const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset)

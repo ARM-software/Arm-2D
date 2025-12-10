@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        02. Dec 2025
- * $Revision:    V.1.8.2
+ * $Date:        10. Dec 2025
+ * $Revision:    V.1.8.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1722,7 +1722,6 @@ int_fast8_t arm_2d_is_region_inside_target(const arm_2d_region_t *ptRegion,
   \endcode
  */
 extern
-ARM_NONNULL(1)
 const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset);
@@ -1739,14 +1738,12 @@ const arm_2d_tile_t *arm_2d_tile_get_root(  const arm_2d_tile_t *ptTile,
  *              when bQuitWhenFindVirtualScreen is true
  */
 extern
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_virtual_screen_or_root_only(
                                         const arm_2d_tile_t *ptTile,
                                         const arm_2d_tile_t **ppVirtualScreen,
                                         bool bQuitWhenFindVirtualScreen);
 
 extern
-ARM_NONNULL(1)
 /*!
  * \brief get the root tile (and/or the virtual screen tile)
  * 
