@@ -1249,7 +1249,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity)(
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, railPred);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
