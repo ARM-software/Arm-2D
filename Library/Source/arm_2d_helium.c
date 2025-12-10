@@ -21,8 +21,8 @@
  * Title:        arm-2d_helium.c
  * Description:  Acceleration extensions using Helium.
  *
- * $Date:        18. Nov 2025
- * $Revision:    V.1.7.1
+ * $Date:        10. Dec 2025
+ * $Revision:    V.1.8.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -2013,6 +2013,9 @@ void __arm_2d_helium_rgb565_blend_with_src_chn_mask(
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_mask_and_mirroring_helium.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_fill_colour_with_masks_and_mirroring_helium.c"
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_filter_iir_blur_helium.c"
