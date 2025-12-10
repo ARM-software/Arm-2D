@@ -526,7 +526,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.11.2" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.11.3" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -762,11 +762,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="2.3.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cversion="2.4.0" condition="Arm-2D-Demos">
           <description>A demo for progress indication and gif </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_progress_status.c" attr="config" version="2.3.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_progress_status.h" attr="config" version="2.3.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_progress_status.c" attr="config" version="2.4.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_progress_status.h" attr="config" version="2.4.0" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Progress_Status

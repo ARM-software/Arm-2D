@@ -131,6 +131,17 @@ arm_2d_region_t  progress_bar_round_show2(
                                 int16_t iProgress,
                                 uint8_t chOpacity);
 
+extern
+ARM_NONNULL(1, 2)
+arm_2d_region_t  progress_bar_round_show3(   
+                                progress_bar_round_t *ptThis,
+                                const arm_2d_tile_t *ptTile, 
+                                const arm_2d_region_t *ptRegion,
+                                COLOUR_INT tBackgroundColour,
+                                COLOUR_INT tBarColour,
+                                int16_t iProgress,
+                                uint8_t chOpacity);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

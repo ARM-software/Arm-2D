@@ -136,6 +136,7 @@ static void __on_scene_progress_status_load(arm_2d_scene_t *ptScene)
     
     progress_bar_round_on_load(&this.tProgressBarRound);
     progress_bar_round_on_load(&this.tProgressBarRound2);
+    progress_bar_round_on_load(&this.tProgressBarRound3);
 
 #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
     arm_qoi_loader_on_load(&this.tQOIWifiSignal);
@@ -154,6 +155,7 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
 
     progress_bar_round_depose(&this.tProgressBarRound);
     progress_bar_round_depose(&this.tProgressBarRound2);
+    progress_bar_round_depose(&this.tProgressBarRound3);
 
 #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
     arm_qoi_loader_depose(&this.tQOIWifiSignal);
@@ -216,6 +218,7 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
 
     progress_bar_round_on_frame_start(&this.tProgressBarRound);
     progress_bar_round_on_frame_start(&this.tProgressBarRound2);
+    progress_bar_round_on_frame_start(&this.tProgressBarRound3);
 
 #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
     arm_qoi_loader_on_frame_start(&this.tQOIWifiSignal);
@@ -229,6 +232,7 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
 
     progress_bar_round_on_frame_complete(&this.tProgressBarRound);
     progress_bar_round_on_frame_complete(&this.tProgressBarRound2);
+    progress_bar_round_on_frame_complete(&this.tProgressBarRound3);
 
 #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
     arm_qoi_loader_on_frame_complete(&this.tQOIWifiSignal);
@@ -268,9 +272,9 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
         arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm.use_as__arm_2d_tile_t.tRegion.tSize;
 
         arm_2d_dock_vertical(__canvas, 
-                            150 + tWiFiLogoSize.iHeight) {
+                            180 + tWiFiLogoSize.iHeight) {
     #else
-        arm_2d_dock_vertical(__canvas, 150) {
+        arm_2d_dock_vertical(__canvas, 180) {
     #endif
             arm_2d_layout(__vertical_region) {
             #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
@@ -345,6 +349,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                 __item_line_dock_vertical(30) {
                     arm_2d_container(ptTile, __progress_bar, &__item_region) {
                         progress_bar_round_show2(&this.tProgressBarRound2, 
+                                                &__progress_bar,
+                                                NULL,
+                                                GLCD_COLOR_GRAY(32), 
+                                                __RGB(0x94, 0xd2, 0x52), 
+                                                this.iProgress[1], 
+                                                255);
+                    }
+                }
+
+                __item_line_dock_vertical(30) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_round_show3(&this.tProgressBarRound3, 
                                                 &__progress_bar,
                                                 NULL,
                                                 GLCD_COLOR_GRAY(32), 
@@ -447,6 +463,17 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
         progress_bar_round_init(&this.tProgressBarRound2, &tCFG);
     } while(0);
 
+    do {
+        progress_bar_round_cfg_t tCFG = {
+            .ptScene = &ptThis->use_as__arm_2d_scene_t,
+            .ValueRange = {
+                .iMin = 0,
+                .iMax = 1000,
+            },
+        };
+
+        progress_bar_round_init(&this.tProgressBarRound3, &tCFG);
+    } while(0);
 #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
     /* initialize QOI loader */
     do {

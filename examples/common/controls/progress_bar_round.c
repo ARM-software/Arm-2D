@@ -308,7 +308,6 @@ arm_2d_region_t progress_bar_round_show(   progress_bar_round_t *ptThis,
     return tDrawRegion;
 }
 
-
 ARM_NONNULL(1, 2)
 arm_2d_region_t progress_bar_round_show2(   progress_bar_round_t *ptThis,
                                 const arm_2d_tile_t *ptTarget, 
@@ -386,13 +385,12 @@ arm_2d_region_t progress_bar_round_show2(   progress_bar_round_t *ptThis,
                         chOpacity);
                 }
 
-                
                 int16_t iBarLength 
                         = reinterpret_s16_q16(
                             mul_n_q16(  this.q16Ratio, 
                                         this.iProgress - this.tCFG.ValueRange.iMin));
 
-                if (this.iProgress == this.tCFG.ValueRange.iMax) {
+                if (this.iProgress >= this.tCFG.ValueRange.iMax) {
                     iBarLength = iProgressBarLength;
                 }
 
@@ -441,7 +439,6 @@ arm_2d_region_t progress_bar_round_show2(   progress_bar_round_t *ptThis,
 
                 }
                 
-
                 if (0 == iBarLength || this.bFullyRedraw) {
                     this.bFullyRedraw = false;
                     arm_2d_helper_dirty_region_update_item( 
@@ -450,9 +447,6 @@ arm_2d_region_t progress_bar_round_show2(   progress_bar_round_t *ptThis,
                         NULL,
                         &__progress_bar_canvas);
                 }
-
-
-                
             }
         }
 
@@ -462,6 +456,199 @@ arm_2d_region_t progress_bar_round_show2(   progress_bar_round_t *ptThis,
     
     return tDrawRegion;
 }
+
+ARM_NONNULL(1, 2)
+arm_2d_region_t progress_bar_round_show3(   progress_bar_round_t *ptThis,
+                                const arm_2d_tile_t *ptTarget, 
+                                const arm_2d_region_t *ptRegion,
+                                COLOUR_INT tBackgroundColour,
+                                COLOUR_INT tBarColour,
+                                int16_t iProgress,
+                                uint8_t chOpacity)
+{
+    arm_2d_region_t tDrawRegion = {0};
+
+    if (-1 == (intptr_t)ptTarget) {
+        ptTarget = arm_2d_get_default_frame_buffer();
+    }
+
+    assert(NULL!= ptThis);
+    assert(NULL != this.tCFG.ptCircleMask);
+
+    bool bIsNewFrame = arm_2d_target_tile_is_new_frame(ptTarget);
+
+    if (bIsNewFrame) {
+
+        iProgress = MIN(this.tCFG.ValueRange.iMax, iProgress);
+        iProgress = MAX(this.tCFG.ValueRange.iMin, iProgress);
+
+        arm_2d_helper_dirty_region_item_suspend_update( 
+                                                &this.tDirtyRegionItem,
+                                                (iProgress == this.iProgress));
+
+
+        this.iProgress = iProgress;
+
+    }
+
+    arm_2d_safe_canvas_open(ptTarget, __control_canvas, ptRegion) {
+
+        arm_2d_size_t tBarSize = {
+            .iWidth = __control_canvas.tSize.iWidth,
+            .iHeight = this.tCFG.ptCircleMask->tRegion.tSize.iHeight,
+        };
+        if (NULL == ptRegion) {
+            tBarSize.iWidth = tBarSize.iWidth * 3 >> 3; //!< 3/8 Width
+        }
+
+        arm_2d_align_centre_open(__control_canvas, tBarSize) {
+            tDrawRegion = __centre_region;
+            arm_2d_container(ptTarget, __progress_bar, &__centre_region) {
+        
+                int16_t iProgressBarLength = __progress_bar_canvas.tSize.iWidth;
+
+                if (bIsNewFrame) {
+
+                    int16_t iFullLength = this.tCFG.ValueRange.iMax - this.tCFG.ValueRange.iMin;
+                    this.q16Ratio 
+                        = div_n_q16(reinterpret_q16_s16(iProgressBarLength),
+                                    iFullLength);
+                }
+
+                /* calculate the bar length */
+                int16_t iBarLength 
+                        = reinterpret_s16_q16(
+                            mul_n_q16(  this.q16Ratio, 
+                                        this.iProgress - this.tCFG.ValueRange.iMin));
+
+                if (this.iProgress >= this.tCFG.ValueRange.iMax) {
+                    iBarLength = iProgressBarLength;
+                }
+
+                /* draw background */
+                draw_round_corner_box(  &__progress_bar, 
+                                        NULL, 
+                                        tBackgroundColour, 
+                                        chOpacity,
+                                        true,
+                                        this.tCFG.ptCircleMask);
+                
+                
+                int16_t iCircleLength = this.tCFG.ptCircleMask->tRegion.tSize.iWidth;
+                if (iBarLength < iCircleLength) {
+
+                    arm_2d_region_t tLeftEnd = {
+                        .tLocation = __progress_bar_canvas.tLocation,
+                        .tSize = this.tCFG.ptCircleMask->tRegion.tSize,
+                    };
+
+                    arm_2d_container(&__progress_bar, __left_end, &tLeftEnd) {
+
+                        arm_2d_region_t tDrawLeftEndRegion = {
+                            .tLocation = {
+                                .iX = __left_end_canvas.tLocation.iX
+                                    - iCircleLength
+                                    + iBarLength,
+                                .iY = __left_end_canvas.tLocation.iY,
+                            },
+                            .tSize = __left_end_canvas.tSize,
+                        };
+                        arm_2d_fill_colour_with_masks_and_opacity(
+                            &__left_end,
+                            &tDrawLeftEndRegion,
+                            this.tCFG.ptCircleMask,
+                            this.tCFG.ptCircleMask,
+                            (__arm_2d_color_t){tBarColour}, 
+                            chOpacity
+                        );
+
+                        /* tracking the right semicircle to update the dirty region */
+                        arm_2d_helper_dirty_region_update_item( 
+                                &this.tDirtyRegionItem,
+                                &__left_end,
+                                NULL,
+                                &tDrawLeftEndRegion);
+                    }
+                    return tDrawRegion;
+                }
+
+                int16_t iHalfCircleLength = iCircleLength >> 1;
+
+                iBarLength -= iCircleLength;
+
+                arm_2d_dock_left(__progress_bar_canvas, iHalfCircleLength) {
+
+                    arm_2d_fill_colour_with_mask_and_opacity(
+                        &__progress_bar,
+                        &__left_region,
+                        this.tCFG.ptCircleMask,
+                        (__arm_2d_color_t){tBarColour}, 
+                        chOpacity);
+                }
+
+                arm_2d_dock_vertical(__progress_bar_canvas, 
+                                    this.tCFG.ptCircleMask->tRegion.tSize.iHeight, 
+                                    iHalfCircleLength) {
+
+                    /* draw the stride */
+                    arm_2d_dock_left(__vertical_region, iBarLength) {
+
+                        arm_2d_fill_colour_with_opacity(&__progress_bar, 
+                            &__left_region, 
+                            (__arm_2d_color_t){tBarColour}, 
+                            chOpacity );
+                    }
+                }
+
+                /* draw the right semicircle */
+                arm_2d_dock_left(__progress_bar_canvas, iBarLength + iHalfCircleLength * 2) {
+
+                    arm_2d_dock_right(__left_region, iHalfCircleLength) {
+                        arm_2d_tile_t tRightCircileMask = 
+                                        impl_child_tile(
+                                            *this.tCFG.ptCircleMask, 
+                                            iHalfCircleLength, 
+                                            0, 
+                                            iHalfCircleLength, 
+                                            this.tCFG.ptCircleMask->tRegion.tSize.iHeight);
+    
+                        arm_2d_fill_colour_with_mask_and_opacity(
+                            &__progress_bar,
+                            &__right_region,
+                            &tRightCircileMask,
+                            (__arm_2d_color_t){tBarColour}, 
+                            chOpacity);
+                        
+                        if (!this.bFullyRedraw) {
+                            /* tracking the right semicircle to update the dirty region */
+                            arm_2d_helper_dirty_region_update_item( 
+                                    &this.tDirtyRegionItem,
+                                    &__progress_bar,
+                                    &__left_region,
+                                    &__right_region);
+                        }
+                    }
+
+                }
+                
+                if (0 == iBarLength || this.bFullyRedraw) {
+                    this.bFullyRedraw = false;
+                    arm_2d_helper_dirty_region_update_item( 
+                        &this.tDirtyRegionItem,
+                        &__progress_bar,
+                        NULL,
+                        &__progress_bar_canvas);
+                }
+            }
+        }
+
+    }
+
+    ARM_2D_OP_WAIT_ASYNC();
+    
+    return tDrawRegion;
+}
+
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

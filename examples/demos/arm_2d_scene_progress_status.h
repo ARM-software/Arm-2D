@@ -106,6 +106,7 @@ ARM_PRIVATE(
 
     progress_bar_round_t tProgressBarRound;
     progress_bar_round_t tProgressBarRound2;
+    progress_bar_round_t tProgressBarRound3;
 
     bool bUserAllocated;
     int16_t iProgress[2];
