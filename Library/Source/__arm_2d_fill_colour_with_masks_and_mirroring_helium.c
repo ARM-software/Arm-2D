@@ -85,8 +85,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_only)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -97,7 +97,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_only)(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -125,7 +125,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_only)(
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pchTarget += (iTargetStride);
         pchTargetMask += iTargetMaskStride;
     }
@@ -135,8 +135,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_and_opacity_only)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -148,7 +148,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_and_opacity_onl
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -178,7 +178,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_and_opacity_onl
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pchTarget += (iTargetStride);
         pchTargetMask += iTargetMaskStride;
     }
@@ -188,8 +188,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_x_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -200,7 +200,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_x_mirror)(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -231,7 +231,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_x_mirror)(
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pchTarget += (iTargetStride);
         pchTargetMask += iTargetMaskStride;
     }
@@ -241,8 +241,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_x_mirror_and_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -254,7 +254,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_x_mirror_and_o
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -286,7 +286,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_x_mirror_and_o
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pchTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -296,8 +296,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_y_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -306,11 +306,11 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_y_mirror)(
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -339,7 +339,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_y_mirror)(
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pchTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -349,8 +349,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_y_mirror_and_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -360,11 +360,11 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_y_mirror_and_o
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -394,7 +394,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_y_mirror_and_o
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pchTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -404,8 +404,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_xy_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -414,11 +414,11 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_xy_mirror)
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -449,7 +449,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_and_xy_mirror)
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pchTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -459,8 +459,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_xy_mirror_and_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -470,11 +470,11 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_xy_mirror_and_
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint8_t        *pchTargetLine = pchTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -506,7 +506,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_xy_mirror_and_
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pchTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -520,8 +520,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_only)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -535,7 +535,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_only)(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -564,7 +564,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_only)(
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -574,8 +574,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_and_opacity_only)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -591,7 +591,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_and_opacity_on
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -621,7 +621,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_and_opacity_on
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -633,8 +633,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_x_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -648,7 +648,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_x_mirror)
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -679,7 +679,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_x_mirror)
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -689,8 +689,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_x_mirror_and_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -705,7 +705,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_x_mirror_and_
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -737,7 +737,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_x_mirror_and_
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -747,8 +747,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_y_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -756,14 +756,14 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_y_mirror)
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -792,7 +792,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_y_mirror)
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -802,8 +802,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_y_mirror_and_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -812,14 +812,14 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_y_mirror_and_
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -849,7 +849,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_y_mirror_and_
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -860,8 +860,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_xy_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -869,14 +869,14 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_xy_mirror
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -907,7 +907,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_and_xy_mirror
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -917,8 +917,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -927,7 +927,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     __arm_2d_color_fast_rgb_t ColorRGB;
     __arm_2d_rgb565_unpack(hwColour, &ColorRGB);
@@ -935,7 +935,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint16_t *phwTargetLine = phwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -967,7 +967,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and
             blkCnt -= 8;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         phwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -980,8 +980,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_only)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1000,7 +1000,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_only)(
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint32_t *pwTargetLine = pwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -1033,7 +1033,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_only)(
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1044,8 +1044,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_only)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1063,7 +1063,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_o
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t *pchMask = pchAlpha;
+        uint8_t *pchMask = pchSourceMask;
         uint32_t *pwTargetLine = pwTarget;
         uint8_t *pchTargetMaskLine = pchTargetMask;
 
@@ -1097,7 +1097,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_o
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1108,8 +1108,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_x_mirror)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1127,7 +1127,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_x_mirror
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint32_t       *pwTargetLine = pwTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -1161,7 +1161,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_x_mirror
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1172,8 +1172,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1192,7 +1192,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint32_t       *pwTargetLine = pwTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -1228,7 +1228,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha += iAlphaStride;
+        pchSourceMask += iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1238,8 +1238,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_y_mirror)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1251,13 +1251,13 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_y_mirror
     uint16x8_t vwColour;
     uint32_t wColourArr[2] = {wColour, wColour};
     vwColour = vldrbq_u16((uint8_t*)wColourArr);
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     uint16x8_t      offset = { 0, 0, 0, 0, 1, 1, 1, 1 };
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint32_t       *pwTargetLine = pwTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -1291,7 +1291,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_y_mirror
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1301,8 +1301,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1315,13 +1315,13 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and
     uint16x8_t vwColour;
     uint32_t wColourArr[2] = {wColour, wColour};
     vwColour = vldrbq_u16((uint8_t*)wColourArr);
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     uint16x8_t      offset = { 0, 0, 0, 0, 1, 1, 1, 1 };
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint32_t       *pwTargetLine = pwTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -1356,7 +1356,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1366,8 +1366,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_xy_mirror)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1379,14 +1379,14 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_xy_mirro
     uint16x8_t vwColour;
     uint32_t wColourArr[2] = {wColour, wColour};
     vwColour = vldrbq_u16((uint8_t*)wColourArr);
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     uint16x8_t      offset = { 1, 1, 1, 1, 0, 0, 0, 0 };
     uint16x8_t      offset_normal = { 0, 0, 0, 0, 1, 1, 1, 1 };
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint32_t       *pwTargetLine = pwTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -1420,7 +1420,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_and_xy_mirro
             blkCnt -= 2;
         }  while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
@@ -1430,8 +1430,8 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_and_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
-                            uint8_t *__RESTRICT pchAlpha,
-                            int16_t iAlphaStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
                             uint8_t *__RESTRICT pchTargetMask,
                             int16_t iTargetMaskStride,
                             arm_2d_size_t *__RESTRICT ptCopySize,
@@ -1444,14 +1444,14 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_an
     uint16x8_t vwColour;
     uint32_t wColourArr[2] = {wColour, wColour};
     vwColour = vldrbq_u16((uint8_t*)wColourArr);
-    pchAlpha += iAlphaStride * (iHeight - 1);
+    pchSourceMask += iSourceMaskStride * (iHeight - 1);
 
     uint16x8_t      offset = { 1, 1, 1, 1, 0, 0, 0, 0 };
     uint16x8_t      offset_normal = { 0, 0, 0, 0, 1, 1, 1, 1 };
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
-        uint8_t        *pchMask = pchAlpha;
+        uint8_t        *pchMask = pchSourceMask;
         uint32_t       *pwTargetLine = pwTarget;
         uint8_t        *pchTargetMaskLine = pchTargetMask;
 
@@ -1486,7 +1486,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_an
             blkCnt -= 2;
         } while (blkCnt > 0);
 
-        pchAlpha -= iAlphaStride;
+        pchSourceMask -= iSourceMaskStride;
         pwTarget += iTargetStride;
         pchTargetMask += iTargetMaskStride;
     }
