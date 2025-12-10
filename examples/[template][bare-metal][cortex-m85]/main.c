@@ -269,6 +269,11 @@ void scene_ruler_loader(void)
     arm_2d_scene_ruler_init(&DISP0_ADAPTER);
 }
 
+void scene_shaped_panel_loader(void) 
+{
+    arm_2d_scene_shaped_panel_init(&DISP0_ADAPTER);
+}
+
 void scene_hollow_out_list_loader(void) 
 {
     arm_2d_scene_hollow_out_list_init(&DISP0_ADAPTER);
@@ -553,7 +558,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_flight_attitude_instrument_loader,
+        scene_shaped_panel_loader,
+        //scene_flight_attitude_instrument_loader,
         //scene_transform_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader

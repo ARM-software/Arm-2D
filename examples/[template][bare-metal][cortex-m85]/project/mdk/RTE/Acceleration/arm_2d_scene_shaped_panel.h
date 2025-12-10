@@ -16,21 +16,19 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_PROGRESS_STATUS_H__
-#define __ARM_2D_SCENE_PROGRESS_STATUS_H__
+#ifndef __ARM_2D_SCENE_SHAPED_PANEL_H__
+#define __ARM_2D_SCENE_SHAPED_PANEL_H__
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
-#include "arm_2d_helper_scene.h"
+#include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
-
-#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader) 
-#   include "arm_2d_example_loaders.h"
-#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -43,7 +41,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wpadded"
 #elif __IS_COMPILER_ARM_COMPILER_5__
-#   pragma diag_suppress 64,177
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat="
@@ -51,73 +48,50 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
-
-
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_PROGRESS_STATUS_IMPLEMENT__
-#   undef __USER_SCENE_PROGRESS_STATUS_IMPLEMENT__
+#ifdef __USER_SCENE_SHAPED_PANEL_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
+#ifdef __USER_SCENE_SHAPED_PANEL_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
 #include "arm_2d_utils.h"
-
-#ifndef PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
-#   define PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION     1
-#endif
-
-#ifndef ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
-#   define ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI          1
-#endif
-
-#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader) || !PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
-#   undef  ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
-#   define ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI          0
-#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene1 and add it to a user specified scene player
- * \param[in] __DISP_ADAPTER_PTR the target display adatper (i.e. scene player)
+ * \brief initalize scene_shaped_panel and add it to a user specified scene player
+ * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_progress_status_t will be allocated from HEAP and freed on
+ *            user_scene_shaped_panel_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_progress_status_t* the user_scene_progress_status_t instance
+ * \return user_scene_shaped_panel_t* the user_scene_shaped_panel_t instance
  */
-#define arm_2d_scene_progress_status_init(__DISP_ADAPTER_PTR, ...)                    \
-            __arm_2d_scene_progress_status_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
+#define arm_2d_scene_shaped_panel_init(__DISP_ADAPTER_PTR, ...)                    \
+            __arm_2d_scene_shaped_panel_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene 1
+ * \brief a user class for scene shaped_panel
  */
-typedef struct user_scene_progress_status_t user_scene_progress_status_t;
+typedef struct user_scene_shaped_panel_t user_scene_shaped_panel_t;
 
-struct user_scene_progress_status_t {
+struct user_scene_shaped_panel_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[2];
-    
-    arm_2d_helper_dirty_region_item_t tDirtyRegionItems[4];
+    uint8_t bUserAllocated;
+    uint8_t chTestIndex;
 
-    progress_bar_round_t tProgressBarRound;
-    progress_bar_round_t tProgressBarRound2;
-    progress_bar_round_t tProgressBarRound3;
+    arm_2d_location_t tOffset;
 
-    bool bUserAllocated;
-    int16_t iProgress[2];
+    spin_zoom_widget_t tTransform;
 
-#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
-    arm_qoi_loader_t tQOIWifiSignal;
-    union {
-        arm_qoi_io_file_loader_t tFile;
-        arm_qoi_io_binary_loader_t tBinary;
-    } LoaderIO;
-#endif
 )
     /* place your public member here */
     
@@ -128,14 +102,17 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_progress_status_t *ptScene);
+user_scene_shaped_panel_t *__arm_2d_scene_shaped_panel_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_shaped_panel_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic pop
 #endif
+
+#undef __USER_SCENE_SHAPED_PANEL_IMPLEMENT__
+#undef __USER_SCENE_SHAPED_PANEL_INHERIT__
 
 #ifdef   __cplusplus
 }

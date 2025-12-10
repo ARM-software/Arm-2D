@@ -1204,24 +1204,6 @@ arm_2d_err_t arm_qoi_loader_add_reference_point_on_virtual_screen(
 }
 
 
-
-ARM_NONNULL(1)
-__STATIC_FORCEINLINE
-bool __arm_2d_qoi_is_context_before_the_target_region(  arm_2d_location_t *ptContextLocation, 
-                                                        arm_2d_location_t *ptTargetLocation)
-{
-
-    if (ptContextLocation->iY < ptTargetLocation->iY) {
-        return true;
-    } else if (ptContextLocation->iY > ptTargetLocation->iY) {
-        return false;
-    } else if (ptContextLocation->iX <= ptTargetLocation->iX) {
-        return true;
-    }
-    
-    return false;
-}
-
 ARM_NONNULL(1,2)
 static
 void __arm_qoi_save_context_to( arm_qoi_loader_t *ptThis, 

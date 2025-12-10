@@ -1241,7 +1241,8 @@ entry_decode:
 
     __arm_qoi_decoder_get_current_location(ptThis, &tCurrentLocation);
 
-    if (this.ptWorking->tPixelDecoded >= this.tSize.iHeight * this.tSize.iWidth) {
+    if (    this.ptWorking->tPixelDecoded 
+       >=   (size_t)this.tSize.iHeight * (size_t)this.tSize.iWidth) {
         ARM_2D_INVOKE_RT_VOID(
             this.tCFG.IO.fnReport, 
             ARM_2D_PARAM(   this.tCFG.pTarget, 
