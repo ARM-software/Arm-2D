@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        07 Dec 2025
- * $Revision:    V.1.9.2
+ * $Date:        10 Dec 2025
+ * $Revision:    V.1.9.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -305,8 +305,14 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK: {
                 arm_2d_op_src_msk_t *ptThis = (arm_2d_op_src_msk_t *)ptOP;
                 __depose_virtual_resource(this.Source.ptTile);
-                __depose_virtual_resource(this.Mask.ptSourceSide);
-                __depose_virtual_resource(this.Mask.ptTargetSide);
+
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSrcMask) {
+                    __depose_virtual_resource(this.Mask.ptSourceSide);
+                }
+
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasDesMask) {
+                    __depose_virtual_resource(this.Mask.ptTargetSide);
+                }
             }
             break;
 
@@ -333,8 +339,12 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK: {
                 arm_2d_op_src_orig_msk_t *ptThis = (arm_2d_op_src_orig_msk_t *)ptOP;
                 __depose_virtual_resource(this.Origin.ptTile);
-                __depose_virtual_resource(this.Mask.ptOriginSide);
-                __depose_virtual_resource(this.Mask.ptTargetSide);
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSrcMask) {
+                    __depose_virtual_resource(this.Mask.ptOriginSide);
+                }
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasDesMask) {
+                    __depose_virtual_resource(this.Mask.ptTargetSide);
+                }
             }
             break;
     }
