@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_mask_and_mirroring_helium.c
  * Description:  APIs for colour-filling-with-mask-and-mirroring
  *
- * $Date:        16. May 2024
- * $Revision:    V.1.0.0
+ * $Date:        10. Dec 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -82,7 +82,8 @@ extern "C" {
  * Target Colour: GRAY8
  */
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_x_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_x_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -113,23 +114,24 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_x_mi
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha += iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -160,28 +162,24 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha += iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 #endif
 
 
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_x_mirror_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -214,24 +212,25 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_x_mi
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha += iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_x_mirror_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -264,29 +263,23 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha += iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 #endif
 
-/*
- * Target Colour: GRAY8
- */
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_y_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_y_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -317,23 +310,24 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_y_mi
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             pchMask += 8;
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -366,29 +360,25 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             vStride4Offs = vidupq_wb_u16(&incr, 4);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 #endif
 
 
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_y_mirror_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -419,26 +409,26 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_y_mi
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             pchMask += 8;
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_y_mirror_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -473,31 +463,23 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             vStride4Offs = vidupq_wb_u16(&incr, 4);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 #endif
 
-/*
- * Target Colour: GRAY8
- */
-
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_xy_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_xy_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -530,24 +512,25 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_xy_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -580,29 +563,25 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 #endif
 
 
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_xy_mirror_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -637,23 +616,24 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_mask_xy_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_mask_xy_mirror_opacity)(
                             uint8_t *__RESTRICT pchTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -688,17 +668,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
 
             uint16x8_t      vtrgt = vldrbq_z_u16(pchTargetLine, tailPred);
 
-            vstrbq_p_u16(pchTargetLine,
-                __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   pchTargetLine,
+                            __arm_2d_blend_gray8(vtrgt, chColour, vHwAlpha),
+                            tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             pchTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        pchTarget += (iTargetStride);
+        pchTarget += iTargetStride;
     }
 }
 #endif
@@ -707,12 +687,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_channel_m
  * Target Colour: RGB565
  */
 
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -738,32 +714,33 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_m
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t  vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha += iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -789,35 +766,32 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha += iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 #endif
 
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_mirror_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -845,7 +819,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_m
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -853,25 +827,26 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_x_m
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha += iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_x_mirror_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -899,7 +874,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -907,30 +882,26 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha += iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 #endif
 
-/*
- * Target Colour: RGB565
- */
 
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -955,32 +926,33 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_m
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_u16(pchMask);
+            uint16x8_t      vHwAlpha = vldrbq_z_u16(pchMask, tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             pchMask += 8;
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_y_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1008,32 +980,32 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16((uint8_t*)pchMask, vStride4Offs);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16((uint8_t*)pchMask, vStride4Offs, tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
-
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             vStride4Offs = vidupq_wb_u16(&incr, 4);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        }  while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 #endif
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_mirror_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -1059,7 +1031,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_m
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_u16(pchMask);
+            uint16x8_t      vHwAlpha = vldrbq_z_u16(pchMask, tailPred);
+
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1067,19 +1040,19 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_y_m
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             pchMask += 8;
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 
@@ -1114,7 +1087,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16((uint8_t*)pchMask, vStride4Offs);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16((uint8_t*)pchMask, vStride4Offs, tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1122,20 +1095,19 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
-
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             vStride4Offs = vidupq_wb_u16(&incr, 4);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 #endif
@@ -1144,7 +1116,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
  * Target Colour: RGB565
  */
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -1170,32 +1143,33 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1222,34 +1196,32 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 #endif
 
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_mirror_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -1277,7 +1249,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, railPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1285,25 +1257,26 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_mask_xy_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 1);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_mask_xy_mirror_opacity)(
                             uint16_t *__RESTRICT phwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1331,7 +1304,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
         do {
             mve_pred16_t    tailPred = vctp16q(blkCnt);
 
-            uint16x8_t      vHwAlpha = vldrbq_gather_offset_u16(pchMask, mskIdxWrp);
+            uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1339,19 +1312,19 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vtrgt = vld1q(phwTargetLine);
+            uint16x8_t      vtrgt = vld1q_z(phwTargetLine, tailPred);
 
             vst1q_p(phwTargetLine,
-                __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
-                tailPred);
+                    __arm_2d_blend_rgb565(vtrgt, &ColorRGB, vHwAlpha),
+                    tailPred);
 
             mskIdxWrp = vddupq_wb_u16(&incr, 4);
             phwTargetLine += 8;
             blkCnt -= 8;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
-        phwTarget += (iTargetStride);
+        phwTarget += iTargetStride;
     }
 }
 #endif
@@ -1359,10 +1332,6 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_channel_
 /*
  * Target Colour: CCCN888
  */
-
-
-
-
 
 
 __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_mirror)(
@@ -1396,7 +1365,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1404,17 +1373,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - 2;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha += iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -1422,7 +1391,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1453,35 +1423,29 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
-
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
             vHwAlpha = vpselq(vdupq_n_u16(256),vHwAlpha, vcmpeqq_n_u16(vHwAlpha, 255));
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - (2*4);
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha += iAlphaStride;
         pwTarget += iTargetStride;
     }
 }
 #endif
-
-
-
-
-
 
 
 __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_mirror_opacity)(
@@ -1516,7 +1480,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
+
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1524,17 +1489,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - 2;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha += iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -1542,7 +1507,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_x_
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_x_mirror_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1574,7 +1540,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
+
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1582,30 +1549,22 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - (2*4);
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha += iAlphaStride;
         pwTarget += iTargetStride;
     }
 }
 #endif
-
-/*
- * Target Colour: CCCN888
- */
-
-
-
-
 
 
 __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_mirror)(
@@ -1640,7 +1599,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f & tailPred);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1648,17 +1607,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             pchMask += 2;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -1666,7 +1625,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1698,7 +1658,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f & tailPred);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1706,17 +1666,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             pchMask += (2*4);
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -1724,12 +1684,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
 #endif
 
 
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_mirror_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -1762,7 +1718,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f & tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1770,17 +1726,16 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
-
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
             pchMask += 2;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -1788,7 +1743,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_y_
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_y_mirror_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -1821,7 +1777,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f & tailPred);
+
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1829,33 +1786,25 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             pchMask += (2*4);
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
 }
 #endif
 
-/*
- * Target Colour: CCCN888
- */
-
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -1887,7 +1836,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1895,17 +1844,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - 2;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -1945,7 +1894,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
 
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -1953,30 +1902,25 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - 8;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
 }
 #endif
 
-
-
-
-
-
-
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy_mirror_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint8_t *__RESTRICT pchAlpha,
@@ -2009,7 +1953,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 
@@ -2018,17 +1962,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - 2;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pchAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
@@ -2036,7 +1980,8 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_mask_xy
 
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 
-__OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity)(
+__OVERRIDE_WEAK 
+void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel_mask_xy_mirror_opacity)(
                             uint32_t *__RESTRICT pwTarget,
                             int16_t iTargetStride,
                             uint32_t *__RESTRICT pwAlpha,
@@ -2069,7 +2014,7 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
                replicate alpha, but alpha location = 0 (zeroing) so that transparency = 0x100
                and leaves target 0 unchanged
              */
-            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f);
+            uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
             vHwAlpha = vmulq_n_u16(vHwAlpha, hwOpacity) >> 8;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
@@ -2077,17 +2022,17 @@ __OVERRIDE_WEAK void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_channel
 #endif
             vHwAlpha=  256 - vHwAlpha;
 
-            uint16x8_t      vTrg = vldrbq_u16((uint8_t*)pwTargetLine);
+            uint16x8_t      vTrg = vldrbq_z_u16((uint8_t*)pwTargetLine, tailPred);
 
-            vstrbq_p_u16((uint8_t*)pwTargetLine,
-                __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
-                tailPred);
+            vstrbq_p_u16(   (uint8_t*)pwTargetLine,
+                            __arm_2d_blend_cccn888(vTrg, vwColour, vHwAlpha),
+                            tailPred);
 
             offsetCur = offsetCur - 8;
             pwTargetLine += 2;
             blkCnt -= 2;
-        }
-        while (blkCnt > 0);
+        } while (blkCnt > 0);
+
         pwAlpha -= iAlphaStride;
         pwTarget += iTargetStride;
     }
