@@ -274,10 +274,14 @@ extern "C" {
 
 #define MATRIX_LETTER_TRAIN_USE_BLUR            1
 #define ARM_2D_SCENE_METER_USE_JPG              1
-#define ARM_2D_SCENE_HISTOGRAM_USE_JPG          1
+#define ARM_2D_SCENE_HISTOGRAM_USE_JPG          0
+#define ARM_2D_SCENE_HISTOGRAM_USE_QOI          1
 #define VT_SCALING_RATIO                        1
 #define ARM_2D_DEMO_USE_CRT_SCREEN              1
 #define ARM_2D_DEMO_JPGD_USE_FILE               0
+#define ARM_2D_SCENE_METER_USE_QOI              1
+#define ARM_2D_SCENE_METER_SHOW_FPS             0
+
 
 //#define ARM_2D_DEMO_RADAR_COLOUR              GLCD_COLOR_NIXIE_TUBE
 //#define ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR    GLCD_COLOR_GREEN

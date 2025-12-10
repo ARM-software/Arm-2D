@@ -250,14 +250,14 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                    2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
 // <i> Use malloc and free in the virtual resource helper service. When disabled, a static buffer in the size of current display adapter PFB will be used. 
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__      0
+#   define __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__       0
 #endif
 
 // <o>The Anti-Noise-Scanning block Width
