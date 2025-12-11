@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        07. Dec 2025
- * $Revision:    V.1.3.3
+ * $Date:        11. Dec 2025
+ * $Revision:    V.1.4.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -960,12 +960,13 @@ typedef union __arm_2d_op_info_t {
         arm_2d_color_info_t Colour;                                             //!< the colour used in thie operation
         union {
             struct {
-                uint8_t bHasSource              : 1;                            //!< whether this operation contains source tile
-                uint8_t bHasTarget              : 1;                            //!< whether this operation contains target tile
-                uint8_t bHasSrcMask             : 1;                            //!< whether this operation has Mask layer for source tile
-                uint8_t bHasDesMask             : 1;                            //!< whether this operation has Mask layer for target tile
-                uint8_t bHasOrigin              : 1;                            //!< whether the Source has an origin tile
-                uint8_t                         : 2;
+                uint8_t bHasSource              : 1;                            //!< whether this OP contains a source tile
+                uint8_t bHasTarget              : 1;                            //!< whether this OP contains a target tile
+                uint8_t bHasSourceMask          : 1;                            //!< whether this OP has a mask layer for the source tile
+                uint8_t bHasTargetMask          : 1;                            //!< whether this OP has a mask layer for the target tile
+                uint8_t bHasOrigin              : 1;                            //!< whether this OP has an origin tile
+                uint8_t bHasExtraSource         : 1;                            //!< whether this OP has an extra source tile
+                uint8_t bHasExtraSourceMask     : 1;                            //!< whether this OP has an mask layer for the extra source tile
                 uint8_t bAllowEnforcedColour    : 1;                            //!< whether this operation allow enforced colours in tiles
             };
             uint8_t chValue;                                                    //!< feature value
@@ -974,6 +975,7 @@ typedef union __arm_2d_op_info_t {
         uint8_t chInClassOffset;                                                //!< some operation uses this as the offset of the key member in the class
         uint8_t chOpIndex;                                                      //!< __ARM_2D_OP_IDX_XXXXXX
 
+    #if 0
         union {
             struct {
                 uint8_t CopyLike;                                               //!< A copy-like interface contains the target tile, the source tile and the copy size
@@ -987,6 +989,7 @@ typedef union __arm_2d_op_info_t {
                 uint8_t TileProcessLike;                                        //!< A simple interface contains only the target tile
             };
         }LowLevelInterfaceIndex;                                                //!< Low level interface index
+    #endif
 
         union {
             const __arm_2d_low_level_io_t *IO[2];                               //!< array of IOs

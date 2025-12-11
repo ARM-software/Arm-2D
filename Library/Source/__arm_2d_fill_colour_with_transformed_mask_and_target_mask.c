@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_transformed_mask_and_target_mask.c
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
- * $Date:        20 Nov 2025
- * $Revision:    v1.1.0
+ * $Date:        11 Dec 2025
+ * $Revision:    v1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -493,7 +493,7 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8 = {
         .Param = {
             .bHasSource             = true,
             .bHasTarget             = true,
-            .bHasDesMask            = true,
+            .bHasTargetMask            = true,
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
@@ -932,7 +932,7 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8 = {
         .Param = {
             .bHasSource             = true,
             .bHasTarget             = true,
-            .bHasDesMask            = true,
+            .bHasTargetMask            = true,
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
@@ -1355,7 +1355,7 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565 = {
         .Param = {
             .bHasSource             = true,
             .bHasTarget             = true,
-            .bHasDesMask            = true,
+            .bHasTargetMask            = true,
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
@@ -1794,7 +1794,7 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565 = {
         .Param = {
             .bHasSource             = true,
             .bHasTarget             = true,
-            .bHasDesMask            = true,
+            .bHasTargetMask            = true,
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
@@ -2217,7 +2217,7 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888 = {
         .Param = {
             .bHasSource             = true,
             .bHasTarget             = true,
-            .bHasDesMask            = true,
+            .bHasTargetMask            = true,
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
@@ -2656,7 +2656,7 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888 = {
         .Param = {
             .bHasSource             = true,
             .bHasTarget             = true,
-            .bHasDesMask            = true,
+            .bHasTargetMask            = true,
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },

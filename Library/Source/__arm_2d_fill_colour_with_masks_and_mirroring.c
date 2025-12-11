@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_masks_and_mirroring.c
  * Description:  APIs for colour-filling-with-masks-and-mirroring
  *
- * $Date:        10. Dec 2025
- * $Revision:    V.1.1.1
+ * $Date:        11. Dec 2025
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -98,7 +98,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_ONLY_GRAY8 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_ONLY,
@@ -251,7 +251,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY_GRAY8
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY,
@@ -423,7 +423,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_GRAY8 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR,
@@ -576,7 +576,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY_G
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY,
@@ -748,7 +748,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_GRAY8 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR,
@@ -901,7 +901,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY_G
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY,
@@ -1073,7 +1073,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_GRAY8 = 
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR,
@@ -1226,7 +1226,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY_
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY,
@@ -1398,7 +1398,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_ONLY_RGB565 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_ONLY,
@@ -1551,7 +1551,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY_RGB56
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY,
@@ -1723,7 +1723,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_RGB565 = 
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR,
@@ -1876,7 +1876,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY_R
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY,
@@ -2048,7 +2048,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_RGB565 = 
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR,
@@ -2201,7 +2201,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY_R
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY,
@@ -2373,7 +2373,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_RGB565 =
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR,
@@ -2526,7 +2526,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY_
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY,
@@ -2698,7 +2698,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_ONLY_CCCN888 = {
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_ONLY,
@@ -2851,7 +2851,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY_CCCN8
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY,
@@ -3023,7 +3023,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_CCCN888 =
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR,
@@ -3176,7 +3176,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY_C
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY,
@@ -3348,7 +3348,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_CCCN888 =
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR,
@@ -3501,7 +3501,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY_C
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY,
@@ -3673,7 +3673,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_CCCN888 
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR,
@@ -3826,7 +3826,7 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY_
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasDesMask    = true,
+            .bHasTargetMask    = true,
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex      = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY,

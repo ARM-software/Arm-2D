@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_copy_with_source_mask_and_opacity.c
  * Description:  APIs for tile copy with source mask and opacity only
  *
- * $Date:        30. July 2025
- * $Revision:    V.1.1.0
+ * $Date:        11. Dec 2025
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -649,8 +649,8 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_GRAY
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasSrcMask    = true,
-            .bHasDesMask    = false,
+            .bHasSourceMask    = true,
+            .bHasTargetMask    = false,
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
             .bAllowEnforcedColour = true,
 #endif
@@ -1229,8 +1229,8 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_RGB5
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasSrcMask    = true,
-            .bHasDesMask    = false,
+            .bHasSourceMask    = true,
+            .bHasTargetMask    = false,
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
             .bAllowEnforcedColour = true,
 #endif
@@ -1809,8 +1809,8 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_AND_OPACITY_ONLY_CCCN
         .Param = {
             .bHasSource     = true,
             .bHasTarget     = true,
-            .bHasSrcMask    = true,
-            .bHasDesMask    = false,
+            .bHasSourceMask    = true,
+            .bHasTargetMask    = false,
 #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
             .bAllowEnforcedColour = true,
 #endif

@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        14 Nov 2025
- * $Revision:    V.2.7.1
+ * $Date:        11 Dec 2025
+ * $Revision:    V.2.7.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -3068,7 +3068,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_GRAY8 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
-            .bHasSrcMask            = true,
+            .bHasSourceMask            = true,
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,
         .chInClassOffset    = offsetof(arm_2d_op_trans_msk_t, tTransform),
@@ -3089,7 +3089,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_RGB565 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
-            .bHasSrcMask            = true,
+            .bHasSourceMask            = true,
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,
         .chInClassOffset    = offsetof(arm_2d_op_trans_msk_t, tTransform),
@@ -3111,7 +3111,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_CCCN888 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
-            .bHasSrcMask            = true,
+            .bHasSourceMask            = true,
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,
         .chInClassOffset    = offsetof(arm_2d_op_trans_msk_t, tTransform),
@@ -3133,7 +3133,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_GRAY8 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
-            .bHasSrcMask            = true,
+            .bHasSourceMask            = true,
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_msk_opa_t, tTransform),
@@ -3154,7 +3154,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_RGB565 = {
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
-            .bHasSrcMask            = true,
+            .bHasSourceMask            = true,
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_msk_opa_t, tTransform),
@@ -3176,7 +3176,7 @@ const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_CCCN888 = 
             .bHasSource             = true,
             .bHasOrigin             = true,
             .bHasTarget             = true,
-            .bHasSrcMask            = true,
+            .bHasSourceMask            = true,
         },
         .chOpIndex          = __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_trans_msk_opa_t, tTransform),

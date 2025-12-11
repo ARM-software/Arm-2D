@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        10 Dec 2025
- * $Revision:    V.1.9.3
+ * $Date:        11 Dec 2025
+ * $Revision:    V.1.9.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -306,11 +306,11 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
                 arm_2d_op_src_msk_t *ptThis = (arm_2d_op_src_msk_t *)ptOP;
                 __depose_virtual_resource(this.Source.ptTile);
 
-                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSrcMask) {
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSourceMask) {
                     __depose_virtual_resource(this.Mask.ptSourceSide);
                 }
 
-                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasDesMask) {
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasTargetMask) {
                     __depose_virtual_resource(this.Mask.ptTargetSide);
                 }
             }
@@ -340,11 +340,11 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
                 arm_2d_op_src_orig_msk_t *ptThis = (arm_2d_op_src_orig_msk_t *)ptOP;
                 __depose_virtual_resource(this.Origin.ptTile);
 
-                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSrcMask) {
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSourceMask) {
                     __depose_virtual_resource(this.Mask.ptOriginSide);
                 }
                 
-                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasDesMask) {
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasTargetMask) {
                     __depose_virtual_resource(this.Mask.ptTargetSide);
                 }
             }
@@ -749,7 +749,7 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
 
     const arm_2d_tile_t *ptTargetMask = NULL;
 
-    if (OP_CORE.ptOp->Info.Param.bHasDesMask || OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+    if (OP_CORE.ptOp->Info.Param.bHasTargetMask || OP_CORE.ptOp->Info.Param.bHasSourceMask) {
 
         arm_2d_op_msk_t *ptOP = (arm_2d_op_msk_t *)ptThis;
         
@@ -796,12 +796,12 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
             arm_2d_region_t tNewTargetMaskRegion = tTargetMaskParam.tValidRegion; //ptTargetMask->tRegion;
 
             /*
-             * NOTE: When bHasSrcMask is true, the target mask can be applied to the
-             *       target region we specified, otherwise (when bHasDesMask is true),  
+             * NOTE: When bHasSourceMask is true, the target mask can be applied to the
+             *       target region we specified, otherwise (when bHasTargetMask is true),  
              *       the target mask will be applied to the target tile starting from 
              *       the (0,0) and clipped with the target region
              */
-            if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+            if (OP_CORE.ptOp->Info.Param.bHasTargetMask) {
                 // when the target mask is not 1-vertical line mask
                 if (tTargetMaskParam.tValidRegion.tSize.iWidth != 1 ) {
                     tTempRegion.tLocation.iX 
@@ -1003,7 +1003,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     
     
     if (!OP_CORE.ptOp->Info.Param.bHasOrigin) {                                 //!< no origin 
-        if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+        if (OP_CORE.ptOp->Info.Param.bHasSourceMask) {
         #if 0
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;  
 
@@ -1048,7 +1048,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
             tSourceMaskParam.tValidRegion.tSize = tActualSize;
         }
         
-        if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+        if (OP_CORE.ptOp->Info.Param.bHasTargetMask) {
 
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;
             
@@ -1131,7 +1131,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         }
 
     } else {                                                                    //!< has origin
-        if (OP_CORE.ptOp->Info.Param.bHasSrcMask) {
+        if (OP_CORE.ptOp->Info.Param.bHasSourceMask) {
         #if 1  
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;  
 
@@ -1182,7 +1182,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         #endif
         }
         
-        if (OP_CORE.ptOp->Info.Param.bHasDesMask) {
+        if (OP_CORE.ptOp->Info.Param.bHasTargetMask) {
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;
             
             ptTargetMask = arm_2d_tile_get_root( ptOP->Mask.ptTargetSide, 
@@ -1279,8 +1279,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
         if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
             /*! \brief masks are not supported in fill with origin mode */
-            assert(!OP_CORE.ptOp->Info.Param.bHasSrcMask);
-            assert(!OP_CORE.ptOp->Info.Param.bHasDesMask);
+            assert(!OP_CORE.ptOp->Info.Param.bHasSourceMask);
+            assert(!OP_CORE.ptOp->Info.Param.bHasTargetMask);
             
             //! handle mirroring
             do {
@@ -1291,7 +1291,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                             &tOriginTileParam.tValidRegion.tSize,
                                             wMode);
 
-                if (    OP_CORE.ptOp->Info.Param.bHasSrcMask
+                if (    OP_CORE.ptOp->Info.Param.bHasSourceMask
                    &&   (NULL != ptSourceMask)) {
 
                     /* trim source mask valid region */
@@ -1337,7 +1337,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                             &tSourceTileParam.tValidRegion.tSize,
                                             wMode);
 
-                if (    OP_CORE.ptOp->Info.Param.bHasSrcMask
+                if (    OP_CORE.ptOp->Info.Param.bHasSourceMask
                    &&   (NULL != ptSourceMask)) {
                    
                    /* trim source mask valid region */
@@ -1385,8 +1385,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
-            if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
-               ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){
+            if (    (OP_CORE.ptOp->Info.Param.bHasSourceMask)
+               ||   (OP_CORE.ptOp->Info.Param.bHasTargetMask)){
                
                 tResult = __arm_2d_issue_sub_task_fill_with_mask( 
                             ptThis, 
@@ -1413,7 +1413,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                             &tOriginTileParam.tValidRegion.tSize,
                                             wMode);
                                                             
-                if (    OP_CORE.ptOp->Info.Param.bHasSrcMask
+                if (    OP_CORE.ptOp->Info.Param.bHasSourceMask
                    &&   (NULL != ptSourceMask)) {
 
                     /* trim source mask valid region */
@@ -1462,8 +1462,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
-            if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
-               ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){
+            if (    (OP_CORE.ptOp->Info.Param.bHasSourceMask)
+               ||   (OP_CORE.ptOp->Info.Param.bHasTargetMask)){
                 tResult = __arm_2d_issue_sub_task_copy_origin_masks( 
                             ptThis, 
                             &tSourceTileParam,
@@ -1491,7 +1491,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                         &tSourceTileParam.tValidRegion.tSize,
                                         wMode);
                                                             
-                if (    OP_CORE.ptOp->Info.Param.bHasSrcMask
+                if (    OP_CORE.ptOp->Info.Param.bHasSourceMask
                    &&   (NULL != ptSourceMask)) {
                    
                    /* trim source mask valid region */
@@ -1551,8 +1551,8 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 }
             }
 
-            if (    (OP_CORE.ptOp->Info.Param.bHasSrcMask)
-               ||   (OP_CORE.ptOp->Info.Param.bHasDesMask)){
+            if (    (OP_CORE.ptOp->Info.Param.bHasSourceMask)
+               ||   (OP_CORE.ptOp->Info.Param.bHasTargetMask)){
                 tResult = __arm_2d_issue_sub_task_copy_with_mask( 
                             ptThis, 
                             &tSourceTileParam,
@@ -1625,7 +1625,7 @@ arm_fsm_rt_t __tile_clipped_pave(
         }
 
         /* only process normal case */
-        if  (   OP_CORE.ptOp->Info.Param.bHasSrcMask 
+        if  (   OP_CORE.ptOp->Info.Param.bHasSourceMask 
             &&  !OP_CORE.ptOp->Info.Param.bHasOrigin) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
 
@@ -1689,7 +1689,7 @@ static arm_fsm_rt_t __tile_non_negtive_location_pave(
         }
 
         arm_2d_tile_t *ptSourceMaskTile = NULL;
-        if  (   OP_CORE.ptOp->Info.Param.bHasSrcMask 
+        if  (   OP_CORE.ptOp->Info.Param.bHasSourceMask 
             &&  !OP_CORE.ptOp->Info.Param.bHasOrigin) {
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis; 
             ptSourceMaskTile = (arm_2d_tile_t *)ptOP->Mask.ptSourceSide;
