@@ -317,6 +317,8 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             break;
 
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN:{
                 arm_2d_op_src_orig_t *ptThis = (arm_2d_op_src_orig_t *)ptOP;
@@ -324,6 +326,16 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             }
             break;
 
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK:
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
@@ -346,6 +358,34 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
                 
                 if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasTargetMask) {
                     __depose_virtual_resource(this.Mask.ptTargetSide);
+                }
+            }
+            break;
+        
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK: {
+                arm_2d_op_src_orig_extra_t *ptThis = (arm_2d_op_src_orig_extra_t *)ptOP;
+                __depose_virtual_resource(this.Origin.ptTile);
+
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasExtraSource) {
+                    __depose_virtual_resource(this.ExtraSource.ptTile);
+                }
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasExtraSourceMask) {
+                    __depose_virtual_resource(this.ExtraSource.ptMask);
                 }
             }
             break;

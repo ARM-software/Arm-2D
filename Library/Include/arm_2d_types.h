@@ -946,19 +946,23 @@ typedef struct arm_2d_evt_t {
     void                    *pTarget;                                           //!< user attached target
 } arm_2d_evt_t;
 
-#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)                      //!< opcode has source tile info
-#define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)                      //!< opcode has target tile info
-#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)                      //!< opcode has source mask info
-#define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)                      //!< opcode has target mask info
-#define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)                      //!< opcode has original tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)                      //!< opcode has the source tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)                      //!< opcode has the target tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)                      //!< opcode has the source mask info
+#define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)                      //!< opcode has the target mask info
+#define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)                      //!< opcode has the original tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE       _BV(5)                      //!< opcode has the extra source tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK  _BV(6)                      //!< opcode has the extra source mask tile info
 
 /*! a bitmask for INFO_PARAM_HAS_xxxx bitfields */
-#define ARM_2D_OP_INFO_PARAM_TILES_MASK             (                           \
-            ARM_2D_OP_INFO_PARAM_HAS_SOURCE         |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_TARGET         |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK    |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK    |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_ORIGIN         )
+#define ARM_2D_OP_INFO_PARAM_TILES_MASK                     \
+            (   ARM_2D_OP_INFO_PARAM_HAS_SOURCE             \
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET             \
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        \
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        \
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             \
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE       \
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK  )
 
 
 //! \brief an incomplete defintion which is only used for defining pointers
