@@ -320,12 +320,14 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN:
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
-            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN:{
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN:
+        #if 0
+            {
                 arm_2d_op_src_orig_t *ptThis = (arm_2d_op_src_orig_t *)ptOP;
                 __depose_virtual_resource(this.Origin.ptTile);
             }
             break;
-
+        #endif
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK:
@@ -348,7 +350,9 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
             |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK
-            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK: {
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK: 
+        #if 0
+            {
                 arm_2d_op_src_orig_msk_t *ptThis = (arm_2d_op_src_orig_msk_t *)ptOP;
                 __depose_virtual_resource(this.Origin.ptTile);
 
@@ -361,7 +365,8 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
                 }
             }
             break;
-        
+        #endif
+
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE:
@@ -378,8 +383,16 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK: {
-                arm_2d_op_src_orig_extra_t *ptThis = (arm_2d_op_src_orig_extra_t *)ptOP;
+                arm_2d_op_src_orig_msk_extra_t *ptThis = (arm_2d_op_src_orig_msk_extra_t *)ptOP;
                 __depose_virtual_resource(this.Origin.ptTile);
+
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasSourceMask) {
+                    __depose_virtual_resource(this.Mask.ptOriginSide);
+                }
+                
+                if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasTargetMask) {
+                    __depose_virtual_resource(this.Mask.ptTargetSide);
+                }
 
                 if (this.use_as__arm_2d_op_core_t.ptOp->Info.Param.bHasExtraSource) {
                     __depose_virtual_resource(this.ExtraSource.ptTile);
@@ -901,6 +914,101 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
     return tResult;
 }
 
+ARM_NONNULL(1,2,3,4,5)
+static
+arm_2d_tile_t *__arm_2d_adjust_tile_with_reference_tile(const arm_2d_tile_t *ptReference,
+                                                        arm_2d_tile_t *ptTile,
+                                                        arm_2d_tile_t *ptNewChildTileOut,
+                                                        __arm_2d_tile_param_t *ptTileParam,
+                                                        uint_fast8_t *pchTargetMaskPixelLenInBit,
+                                                        bool bSupportHorizontalLineMask)
+{
+    assert(NULL != pchTargetMaskPixelLenInBit);
+    assert(NULL != ptTileParam);
+    assert(NULL != ptNewChildTileOut);
+    assert(NULL != ptTile);
+    assert(NULL != ptReference);
+
+    ptTile = arm_2d_tile_get_root(  ptTile, 
+                                    &ptTileParam->tValidRegion, 
+                                    NULL);
+    
+    if (NULL != ptTile) {
+        //uint_fast8_t chTargetMaskPixelLenInBit = 8;
+        
+        do {
+            /* generate a canvas for the target tile */
+            arm_2d_region_t tTempRegion= {
+                .tSize = ptReference->tRegion.tSize,
+            };
+            
+            /* calculate the offset and adjustment from the target*/
+            do {
+                /* turn the tTempRegion into an absolute region */
+                arm_2d_tile_get_absolute_location(  ptReference,
+                                                    &tTempRegion.tLocation);
+                
+                /* calculate the x offset */
+                tTempRegion.tLocation.iX 
+                    = ptTileParam->tValidRegion.tLocation.iX 
+                    - tTempRegion.tLocation.iX;
+
+                /* calculate the width adjustment */
+                tTempRegion.tSize.iWidth
+                    = ptTileParam->tValidRegion.tSize.iWidth 
+                    - tTempRegion.tSize.iWidth;
+            } while(0);
+        
+            /* NOTE: The new target mask region has to use the target mask validation 
+                * region as the starting reference
+                */
+            arm_2d_region_t tNewTargetMaskRegion = ptTileParam->tValidRegion;
+        
+            /* apply the offset and adjustment to the target mask */
+            do {
+                /* apply the x offset and width adjustment to the target mask */
+                tNewTargetMaskRegion.tLocation.iX += tTempRegion.tLocation.iX;
+                tNewTargetMaskRegion.tSize.iWidth += tTempRegion.tSize.iWidth;
+
+                // when the target mask is not 1-horizontal line mask
+                if (ptTile->tRegion.tSize.iHeight != 1 || !bSupportHorizontalLineMask) {
+
+                    /* calculate the y offset */
+                    tTempRegion.tLocation.iY 
+                        = ptTileParam->tValidRegion.tLocation.iY 
+                        - tTempRegion.tLocation.iY;
+                
+                    /* calculate the height adjustment */
+                    tTempRegion.tSize.iHeight
+                        = ptTileParam->tValidRegion.tSize.iHeight 
+                        - tTempRegion.tSize.iHeight;
+
+                    /* apply the y offset and height adjustment to the target mask */
+                    tNewTargetMaskRegion.tLocation.iY += tTempRegion.tLocation.iY;
+                    tNewTargetMaskRegion.tSize.iHeight += tTempRegion.tSize.iHeight;
+                }
+            } while(0);
+        
+            ptTile = arm_2d_tile_generate_child( 
+                                    ptTile,
+                                    &tNewTargetMaskRegion,
+                                    ptNewChildTileOut,
+                                    false);
+                                    
+        } while(0);
+        
+        
+        ptTile = __arm_2d_tile_region_caculator( 
+                        ptTile, 
+                        ptTileParam,
+                        pchTargetMaskPixelLenInBit,
+                        true,
+                        0,
+                        true); 
+    }
+
+    return ptTile;
+}
 
 static void __arm_2d_source_side_tile_mirror_preprocess(
                                         const arm_2d_tile_t *ptTile,
@@ -1206,6 +1314,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         if (OP_CORE.ptOp->Info.Param.bHasTargetMask) {
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;
             
+        #if 0
             /* NOTE: preprocess the target mask, just in case it is a child tile.
              *       If it is a child tile, the following adjustment should be 
              *       applied based on tTargetMaskParam.tValidRegion.
@@ -1287,6 +1396,17 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 0,
                                 true); 
             }
+        #else
+            uint_fast8_t chTargetMaskPixelLenInBit = 8;
+            ptTargetMask = __arm_2d_adjust_tile_with_reference_tile(
+                                ptThis->Target.ptTile,
+                                ptOP->Mask.ptTargetSide,
+                                &tTargetMask,
+                                &tTargetMaskParam,
+                                &chTargetMaskPixelLenInBit, 
+                                true);
+
+        #endif
         }
     }
 
