@@ -1202,6 +1202,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
             arm_2d_op_src_msk_t *ptOP = (arm_2d_op_src_msk_t *)ptThis;
             
+        #if 0
             ptTargetMask = arm_2d_tile_get_root(ptOP->Mask.ptTargetSide, 
                                                 &tTargetMaskParam.tValidRegion, 
                                                 NULL);
@@ -1277,6 +1278,17 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 true); 
 
             }
+        #else
+            uint_fast8_t chTargetMaskPixelLenInBit = 8;
+            ptTargetMask = __arm_2d_adjust_tile_with_reference_tile(
+                                ptThis->Target.ptTile,
+                                ptOP->Mask.ptTargetSide,
+                                &tTargetMask,
+                                &tTargetMaskParam,
+                                &tTargetTileParam,
+                                &chTargetMaskPixelLenInBit, 
+                                true);
+        #endif
 
         }
 
