@@ -62,12 +62,22 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
+
+/*============================ MACROS ========================================*/
+
+/*!
+ * \addtogroup Deprecated
+ * @{
+ */
+#define bHasSrcMask     bHasSourceMask
+#define bHasDesMask     bHasTargetMask
+
+/*! @} */
+
 /*!
  * \addtogroup gKernel 1 Kernel
  * @{
  */
-
-/*============================ MACROS ========================================*/
 
 /* A patch for GCC support */
 #if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__ && __ARM_2D_HAS_HELIUM__
@@ -137,6 +147,8 @@ extern "C" {
 #define __INT32_MAX__   INT32_MAX
 
 #endif
+
+
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
