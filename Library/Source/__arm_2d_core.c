@@ -1616,7 +1616,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     } else {                                                                    //!< normal tile copy operation
 
         if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
-            //! handle mirroring
+            //! handle origin mirroring
             do {
                 __arm_2d_source_side_tile_mirror_preprocess(
                                             ptOrigin,
@@ -1645,6 +1645,35 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 }
             } while(0);
 
+            //! handle extra source mirroring
+            if (NULL != ptExtraSource && OP_CORE.ptOp->Info.Param.bHasExtraSource) {
+                __arm_2d_source_side_tile_mirror_preprocess(
+                                            ptExtraSource,
+                                            &tExtraSourceTileParam,
+                                            chExtraSourcePixelLenInBit,
+                                            &tExtraSourceTileParam.tValidRegion.tSize,
+                                            wMode);
+                                                            
+                if (    OP_CORE.ptOp->Info.Param.bHasExtraSourceMask
+                   &&   (NULL != ptExtraSourceMask)) {
+
+                    /* trim extra source mask valid region */
+                    tExtraSourceMaskParam.tValidRegion.tSize.iWidth = 
+                        MIN(tExtraSourceMaskParam.tValidRegion.tSize.iWidth, 
+                            tExtraSourceTileParam.tValidRegion.tSize.iWidth);
+                    tExtraSourceMaskParam.tValidRegion.tSize.iHeight = 
+                        MIN(tExtraSourceMaskParam.tValidRegion.tSize.iHeight, 
+                            tExtraSourceTileParam.tValidRegion.tSize.iHeight);
+
+                    __arm_2d_source_side_tile_mirror_preprocess(
+                                        ptExtraSourceMask,
+                                        &tExtraSourceMaskParam,
+                                        chExtraSourceMaskPixelLenInBit,
+                                        &tExtraSourceMaskParam.tValidRegion.tSize,
+                                        wMode);
+                }
+            } while(0);
+
             /* trim target mask valid region */
             if (NULL != ptTargetMask) {
                 tTargetMaskParam.tValidRegion.tSize.iWidth = 
@@ -1653,16 +1682,6 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 tTargetMaskParam.tValidRegion.tSize.iHeight = 
                     MIN(tTargetMaskParam.tValidRegion.tSize.iHeight, 
                         tTargetTileParam.tValidRegion.tSize.iHeight);
-            }
-
-            /* trim extra source mask valid region */
-            if (NULL != ptExtraSourceMask && NULL != ptExtraSource) {
-                tExtraSourceMaskParam.tValidRegion.tSize.iWidth = 
-                    MIN(tExtraSourceMaskParam.tValidRegion.tSize.iWidth, 
-                        tExtraSourceTileParam.tValidRegion.tSize.iWidth);
-                tExtraSourceMaskParam.tValidRegion.tSize.iHeight = 
-                    MIN(tExtraSourceMaskParam.tValidRegion.tSize.iHeight, 
-                        tExtraSourceTileParam.tValidRegion.tSize.iHeight);
             }
 
             /* load virtual resource if any */
@@ -1679,6 +1698,16 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 }
 
                 tErr = __load_virtual_resource(ptTargetMask, &tTargetMaskParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+
+                tErr = __load_virtual_resource(ptExtraSource, &tExtraSourceTileParam);
+                if (tErr != ARM_2D_ERR_NONE) {
+                    return (arm_fsm_rt_t)tErr;
+                }
+
+                tErr = __load_virtual_resource(ptExtraSourceMask, &tExtraSourceMaskParam);
                 if (tErr != ARM_2D_ERR_NONE) {
                     return (arm_fsm_rt_t)tErr;
                 }
