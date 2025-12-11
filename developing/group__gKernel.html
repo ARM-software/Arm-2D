@@ -240,6 +240,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structarm__2d__op__src__orig__msk__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__msk__t">arm_2d_op_src_orig_msk_t</a></td></tr>
 <tr class="memdesc:structarm__2d__op__src__orig__msk__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the base class for operations with a target tile, a dummy tile, a reference to the original source tile and masks  <a href="group__gKernel.html#structarm__2d__op__src__orig__msk__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__op__src__orig__msk__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__op__src__orig__extra__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t">arm_2d_op_src_orig_extra_t</a></td></tr>
+<tr class="memdesc:structarm__2d__op__src__orig__extra__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">the base class for operations with a target tile, a dummy tile, a reference to the original source tile, an extra source tile and a corresponding mask tile  <a href="group__gKernel.html#structarm__2d__op__src__orig__extra__t">More...</a><br /></td></tr>
+<tr class="separator:structarm__2d__op__src__orig__extra__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__rot__linear__regr__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__rot__linear__regr__t">arm_2d_rot_linear_regr_t</a></td></tr>
 <tr class="memdesc:structarm__2d__rot__linear__regr__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">a type for parameters of linear interpolation (in fixed point)  <a href="group__gKernel.html#structarm__2d__rot__linear__regr__t">More...</a><br /></td></tr>
 <tr class="separator:structarm__2d__rot__linear__regr__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -366,6 +369,14 @@ Data Structures</h2></td></tr>
 <tr class="separator:structarm__2d__op__src__orig__msk__t_8Origin"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structarm__2d__op__src__orig__msk__t_8Mask"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Mask">arm_2d_op_src_orig_msk_t.Mask</a></td></tr>
 <tr class="separator:structarm__2d__op__src__orig__msk__t_8Mask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__op__src__orig__extra__t_8Target"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Target">arm_2d_op_src_orig_extra_t.Target</a></td></tr>
+<tr class="separator:structarm__2d__op__src__orig__extra__t_8Target"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__op__src__orig__extra__t_8Source"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Source">arm_2d_op_src_orig_extra_t.Source</a></td></tr>
+<tr class="separator:structarm__2d__op__src__orig__extra__t_8Source"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__op__src__orig__extra__t_8Origin"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Origin">arm_2d_op_src_orig_extra_t.Origin</a></td></tr>
+<tr class="separator:structarm__2d__op__src__orig__extra__t_8Origin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structarm__2d__op__src__orig__extra__t_8ExtraSource"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8ExtraSource">arm_2d_op_src_orig_extra_t.ExtraSource</a></td></tr>
+<tr class="separator:structarm__2d__op__src__orig__extra__t_8ExtraSource"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -859,20 +870,26 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf019de20bddf451404fcda5170a09fb4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf019de20bddf451404fcda5170a09fb4">ARM_2D_M_CHANNEL_8in32</a></td></tr>
 <tr class="separator:gaf019de20bddf451404fcda5170a09fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf4d64252a01f52b7f98447caddedd228"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf4d64252a01f52b7f98447caddedd228">ARM_2D_OP_INFO_PARAM_HAS_SOURCE</a>&#160;&#160;&#160;_BV(0)</td></tr>
-<tr class="memdesc:gaf4d64252a01f52b7f98447caddedd228"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has source tile info  <a href="group__gKernel.html#gaf4d64252a01f52b7f98447caddedd228">More...</a><br /></td></tr>
+<tr class="memdesc:gaf4d64252a01f52b7f98447caddedd228"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the source tile info  <a href="group__gKernel.html#gaf4d64252a01f52b7f98447caddedd228">More...</a><br /></td></tr>
 <tr class="separator:gaf4d64252a01f52b7f98447caddedd228"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga58e1483f5219fa8b051311b15fa90f3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga58e1483f5219fa8b051311b15fa90f3f">ARM_2D_OP_INFO_PARAM_HAS_TARGET</a>&#160;&#160;&#160;_BV(1)</td></tr>
-<tr class="memdesc:ga58e1483f5219fa8b051311b15fa90f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has target tile info  <a href="group__gKernel.html#ga58e1483f5219fa8b051311b15fa90f3f">More...</a><br /></td></tr>
+<tr class="memdesc:ga58e1483f5219fa8b051311b15fa90f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the target tile info  <a href="group__gKernel.html#ga58e1483f5219fa8b051311b15fa90f3f">More...</a><br /></td></tr>
 <tr class="separator:ga58e1483f5219fa8b051311b15fa90f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf7baaf71850f83faeaf242da6da0b301"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301">ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK</a>&#160;&#160;&#160;_BV(2)</td></tr>
-<tr class="memdesc:gaf7baaf71850f83faeaf242da6da0b301"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has source mask info  <a href="group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301">More...</a><br /></td></tr>
+<tr class="memdesc:gaf7baaf71850f83faeaf242da6da0b301"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the source mask info  <a href="group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301">More...</a><br /></td></tr>
 <tr class="separator:gaf7baaf71850f83faeaf242da6da0b301"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7c26c656a4dd352e1a9607c9319f1007"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007">ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK</a>&#160;&#160;&#160;_BV(3)</td></tr>
-<tr class="memdesc:ga7c26c656a4dd352e1a9607c9319f1007"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has target mask info  <a href="group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007">More...</a><br /></td></tr>
+<tr class="memdesc:ga7c26c656a4dd352e1a9607c9319f1007"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the target mask info  <a href="group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007">More...</a><br /></td></tr>
 <tr class="separator:ga7c26c656a4dd352e1a9607c9319f1007"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0593a5fcaddee75b1a3ce23c4c94f5df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df">ARM_2D_OP_INFO_PARAM_HAS_ORIGIN</a>&#160;&#160;&#160;_BV(4)</td></tr>
-<tr class="memdesc:ga0593a5fcaddee75b1a3ce23c4c94f5df"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has original tile info  <a href="group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df">More...</a><br /></td></tr>
+<tr class="memdesc:ga0593a5fcaddee75b1a3ce23c4c94f5df"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the original tile info  <a href="group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df">More...</a><br /></td></tr>
 <tr class="separator:ga0593a5fcaddee75b1a3ce23c4c94f5df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5db58184ddfc8913567fee095cd9dd46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga5db58184ddfc8913567fee095cd9dd46">ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE</a>&#160;&#160;&#160;_BV(5)</td></tr>
+<tr class="memdesc:ga5db58184ddfc8913567fee095cd9dd46"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the extra source tile info  <a href="group__gKernel.html#ga5db58184ddfc8913567fee095cd9dd46">More...</a><br /></td></tr>
+<tr class="separator:ga5db58184ddfc8913567fee095cd9dd46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga123b77736d81ecf9056a9d01674306dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga123b77736d81ecf9056a9d01674306dd">ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK</a>&#160;&#160;&#160;_BV(6)</td></tr>
+<tr class="memdesc:ga123b77736d81ecf9056a9d01674306dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">opcode has the extra source mask tile info  <a href="group__gKernel.html#ga123b77736d81ecf9056a9d01674306dd">More...</a><br /></td></tr>
+<tr class="separator:ga123b77736d81ecf9056a9d01674306dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f7f6f18fe4ab77f89c674b0a8be9f3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#ga5f7f6f18fe4ab77f89c674b0a8be9f3a">ARM_2D_OP_INFO_PARAM_TILES_MASK</a></td></tr>
 <tr class="separator:ga5f7f6f18fe4ab77f89c674b0a8be9f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaab013a91e0bb930476d0e4ace60db7e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gKernel.html#gaab013a91e0bb930476d0e4ace60db7e8">__ARM_2D_OP_STATUS_BUSY_msk</a>&#160;&#160;&#160;(1 &lt;&lt; 4)</td></tr>
@@ -2812,6 +2829,61 @@ Mask</td>
 
 </div>
 </div>
+<a name="structarm__2d__op__src__orig__extra__t" id="structarm__2d__op__src__orig__extra__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__op__src__orig__extra__t">&#9670;&#160;</a></span>arm_2d_op_src_orig_extra_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_op_src_orig_extra_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p >the base class for operations with a target tile, a dummy tile, a reference to the original source tile, an extra source tile and a corresponding mask tile </p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t" title="the base class for operations with a target tile, a dummy tile, a reference to the original source ti...">arm_2d_op_src_orig_extra_t</a> inherits from <a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__t" title="the base class for operations with a target tile, a dummy tile and a reference to the original source...">arm_2d_op_src_orig_t</a> </dd></dl>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ae9aa7edfe0fb00dc266eff5a2a7eabfd" name="ae9aa7edfe0fb00dc266eff5a2a7eabfd"></a></td>
+<td class="fieldname">
+arm_2d_op_core_t</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a9e0c3e5d9862c32cb1f87f89259216f0" name="a9e0c3e5d9862c32cb1f87f89259216f0"></a>struct <a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Target">arm_2d_op_src_orig_extra_t.Target</a></td>
+<td class="fieldname">
+Target</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af9afa61e567db17abb722d4181d2f2c6" name="af9afa61e567db17abb722d4181d2f2c6"></a>struct <a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Source">arm_2d_op_src_orig_extra_t.Source</a></td>
+<td class="fieldname">
+Source</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a5bdf087b5fb00616dc71537c030ed8a4" name="a5bdf087b5fb00616dc71537c030ed8a4"></a>uint32_t</td>
+<td class="fieldname">
+wMode</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a6cd2fc869ffba8a47aa55a5ce0bd1ce5" name="a6cd2fc869ffba8a47aa55a5ce0bd1ce5"></a>struct <a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Origin">arm_2d_op_src_orig_extra_t.Origin</a></td>
+<td class="fieldname">
+Origin</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0e7a1d977c0f6c64e055a70a38abac68" name="a0e7a1d977c0f6c64e055a70a38abac68"></a>struct <a class="el" href="group__gKernel.html#structarm__2d__op__src__orig__extra__t_8ExtraSource">arm_2d_op_src_orig_extra_t.ExtraSource</a></td>
+<td class="fieldname">
+ExtraSource</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <a name="structarm__2d__rot__linear__regr__t" id="structarm__2d__rot__linear__regr__t"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__rot__linear__regr__t">&#9670;&#160;</a></span>arm_2d_rot_linear_regr_t</h2>
 
@@ -4728,6 +4800,116 @@ origin side mask </td></tr>
 ptTargetSide</td>
 <td class="fielddoc">
 target side mask </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__op__src__orig__extra__t_8Target" id="structarm__2d__op__src__orig__extra__t_8Target"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__op__src__orig__extra__t_8Target">&#9670;&#160;</a></span>arm_2d_op_src_orig_extra_t.Target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_op_src_orig_extra_t.Target</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a64a5acb6f6d68bcc4b933310d44c480b" name="a64a5acb6f6d68bcc4b933310d44c480b"></a>const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *</td>
+<td class="fieldname">
+ptTile</td>
+<td class="fielddoc">
+target tile </td></tr>
+<tr><td class="fieldtype">
+<a id="a0cb326a2a86a2a0e46a3b1226fb97c65" name="a0cb326a2a86a2a0e46a3b1226fb97c65"></a>const <a class="el" href="group__gKernel.html#structarm__2d__region__t">arm_2d_region_t</a> *</td>
+<td class="fieldname">
+ptRegion</td>
+<td class="fielddoc">
+target region </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__op__src__orig__extra__t_8Source" id="structarm__2d__op__src__orig__extra__t_8Source"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__op__src__orig__extra__t_8Source">&#9670;&#160;</a></span>arm_2d_op_src_orig_extra_t.Source</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_op_src_orig_extra_t.Source</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a64a5acb6f6d68bcc4b933310d44c480b" name="a64a5acb6f6d68bcc4b933310d44c480b"></a>const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *</td>
+<td class="fieldname">
+ptTile</td>
+<td class="fielddoc">
+the dummy source tile </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__op__src__orig__extra__t_8Origin" id="structarm__2d__op__src__orig__extra__t_8Origin"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__op__src__orig__extra__t_8Origin">&#9670;&#160;</a></span>arm_2d_op_src_orig_extra_t.Origin</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_op_src_orig_extra_t.Origin</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a64a5acb6f6d68bcc4b933310d44c480b" name="a64a5acb6f6d68bcc4b933310d44c480b"></a>const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *</td>
+<td class="fieldname">
+ptTile</td>
+<td class="fielddoc">
+the origin tile </td></tr>
+<tr><td class="fieldtype">
+<a id="a39295faf4a194862db89fae27f4b4860" name="a39295faf4a194862db89fae27f4b4860"></a><a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a></td>
+<td class="fieldname">
+tDummySource</td>
+<td class="fielddoc">
+the buffer for the source </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structarm__2d__op__src__orig__extra__t_8ExtraSource" id="structarm__2d__op__src__orig__extra__t_8ExtraSource"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structarm__2d__op__src__orig__extra__t_8ExtraSource">&#9670;&#160;</a></span>arm_2d_op_src_orig_extra_t.ExtraSource</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct arm_2d_op_src_orig_extra_t.ExtraSource</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a64a5acb6f6d68bcc4b933310d44c480b" name="a64a5acb6f6d68bcc4b933310d44c480b"></a>const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *</td>
+<td class="fieldname">
+ptTile</td>
+<td class="fielddoc">
+the extra source tile </td></tr>
+<tr><td class="fieldtype">
+<a id="a1c519591b006f4356ef9b2854d41c0a4" name="a1c519591b006f4356ef9b2854d41c0a4"></a>const <a class="el" href="group__gKernel.html#structarm__2d__tile__t">arm_2d_tile_t</a> *</td>
+<td class="fieldname">
+ptMask</td>
+<td class="fielddoc">
+the mask for the extra source tile </td></tr>
 </table>
 
 </div>
@@ -9128,7 +9310,7 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
       </table>
 </div><div class="memdoc">
 
-<p>opcode has source tile info </p>
+<p>opcode has the source tile info </p>
 
 </div>
 </div>
@@ -9144,7 +9326,7 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
       </table>
 </div><div class="memdoc">
 
-<p>opcode has target tile info </p>
+<p>opcode has the target tile info </p>
 
 </div>
 </div>
@@ -9160,7 +9342,7 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
       </table>
 </div><div class="memdoc">
 
-<p>opcode has source mask info </p>
+<p>opcode has the source mask info </p>
 
 </div>
 </div>
@@ -9176,7 +9358,7 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
       </table>
 </div><div class="memdoc">
 
-<p>opcode has target mask info </p>
+<p>opcode has the target mask info </p>
 
 </div>
 </div>
@@ -9192,7 +9374,39 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
       </table>
 </div><div class="memdoc">
 
-<p>opcode has original tile info </p>
+<p>opcode has the original tile info </p>
+
+</div>
+</div>
+<a id="ga5db58184ddfc8913567fee095cd9dd46" name="ga5db58184ddfc8913567fee095cd9dd46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5db58184ddfc8913567fee095cd9dd46">&#9670;&#160;</a></span>ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE&#160;&#160;&#160;_BV(5)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>opcode has the extra source tile info </p>
+
+</div>
+</div>
+<a id="ga123b77736d81ecf9056a9d01674306dd" name="ga123b77736d81ecf9056a9d01674306dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga123b77736d81ecf9056a9d01674306dd">&#9670;&#160;</a></span>ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK&#160;&#160;&#160;_BV(6)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>opcode has the extra source mask tile info </p>
 
 </div>
 </div>
@@ -9207,12 +9421,13 @@ prototype 2 <a class="el" href="group__gKernel.html#gab5199659d3ca1a57fe0d0b9929
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">            (                           \</div>
-<div class="line">            <a class="code hl_define" href="group__gKernel.html#gaf4d64252a01f52b7f98447caddedd228" title="opcode has source tile info">ARM_2D_OP_INFO_PARAM_HAS_SOURCE</a>         |                           \</div>
-<div class="line">            <a class="code hl_define" href="group__gKernel.html#ga58e1483f5219fa8b051311b15fa90f3f" title="opcode has target tile info">ARM_2D_OP_INFO_PARAM_HAS_TARGET</a>         |                           \</div>
-<div class="line">            <a class="code hl_define" href="group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301" title="opcode has source mask info">ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK</a>    |                           \</div>
-<div class="line">            <a class="code hl_define" href="group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007" title="opcode has target mask info">ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK</a>    |                           \</div>
-<div class="line">            <a class="code hl_define" href="group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df" title="opcode has original tile info">ARM_2D_OP_INFO_PARAM_HAS_ORIGIN</a>         )</div>
+<b>Value:</b><div class="fragment"><div class="line">            (   <a class="code hl_define" href="group__gKernel.html#gaf4d64252a01f52b7f98447caddedd228" title="opcode has the source tile info">ARM_2D_OP_INFO_PARAM_HAS_SOURCE</a>             \</div>
+<div class="line">            |   <a class="code hl_define" href="group__gKernel.html#ga58e1483f5219fa8b051311b15fa90f3f" title="opcode has the target tile info">ARM_2D_OP_INFO_PARAM_HAS_TARGET</a>             \</div>
+<div class="line">            |   <a class="code hl_define" href="group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301" title="opcode has the source mask info">ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK</a>        \</div>
+<div class="line">            |   <a class="code hl_define" href="group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007" title="opcode has the target mask info">ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK</a>        \</div>
+<div class="line">            |   <a class="code hl_define" href="group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df" title="opcode has the original tile info">ARM_2D_OP_INFO_PARAM_HAS_ORIGIN</a>             \</div>
+<div class="line">            |   <a class="code hl_define" href="group__gKernel.html#ga5db58184ddfc8913567fee095cd9dd46" title="opcode has the extra source tile info">ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE</a>       \</div>
+<div class="line">            |   <a class="code hl_define" href="group__gKernel.html#ga123b77736d81ecf9056a9d01674306dd" title="opcode has the extra source mask tile info">ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK</a>  )</div>
 </div><!-- fragment --><p >a bitmask for INFO_PARAM_HAS_xxxx bitfields </p>
 
 </div>

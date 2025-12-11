@@ -93,6 +93,7 @@ var group__gKernel =
     ] ],
     [ "arm_2d_op_src_orig_t", "group__gKernel.html#structarm__2d__op__src__orig__t", null ],
     [ "arm_2d_op_src_orig_msk_t", "group__gKernel.html#structarm__2d__op__src__orig__msk__t", null ],
+    [ "arm_2d_op_src_orig_extra_t", "group__gKernel.html#structarm__2d__op__src__orig__extra__t", null ],
     [ "arm_2d_rot_linear_regr_t", "group__gKernel.html#structarm__2d__rot__linear__regr__t", null ],
     [ "arm_2d_runtime_feature_t", "group__gKernel.html#structarm__2d__runtime__feature__t", [
       [ "TREAT_OUT_OF_RANGE_AS_COMPLETE", "group__gKernel.html#ae03a394dafc3dbbc3bca364bc21c902c", null ],
@@ -263,6 +264,21 @@ var group__gKernel =
       [ "ptOriginSide", "group__gKernel.html#a9f82291558b0618554a69191e259b352", null ],
       [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
     ] ],
+    [ "arm_2d_op_src_orig_extra_t.Target", "group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Target", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_extra_t.Source", "group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Source", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_extra_t.Origin", "group__gKernel.html#structarm__2d__op__src__orig__extra__t_8Origin", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "tDummySource", "group__gKernel.html#a39295faf4a194862db89fae27f4b4860", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_extra_t.ExtraSource", "group__gKernel.html#structarm__2d__op__src__orig__extra__t_8ExtraSource", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "ptMask", "group__gKernel.html#a1c519591b006f4356ef9b2854d41c0a4", null ]
+    ] ],
     [ "__implement_ex", "group__gKernel.html#ga77671429a789a7f89280c090dcf70bf9", null ],
     [ "__inherit_ex", "group__gKernel.html#gaf54863e6804f35f453be141558109325", null ],
     [ "__implement", "group__gKernel.html#gaea7c45a1482899cfc2596d08eb2770a0", null ],
@@ -424,6 +440,8 @@ var group__gKernel =
     [ "ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK", "group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301", null ],
     [ "ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK", "group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007", null ],
     [ "ARM_2D_OP_INFO_PARAM_HAS_ORIGIN", "group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df", null ],
+    [ "ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE", "group__gKernel.html#ga5db58184ddfc8913567fee095cd9dd46", null ],
+    [ "ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK", "group__gKernel.html#ga123b77736d81ecf9056a9d01674306dd", null ],
     [ "ARM_2D_OP_INFO_PARAM_TILES_MASK", "group__gKernel.html#ga5f7f6f18fe4ab77f89c674b0a8be9f3a", null ],
     [ "__ARM_2D_OP_STATUS_BUSY_msk", "group__gKernel.html#gaab013a91e0bb930476d0e4ace60db7e8", null ],
     [ "__ARM_2D_OP_STATUS_IO_ERROR_msk", "group__gKernel.html#ga8a63d991855534acc4752ad0c8635201", null ],
