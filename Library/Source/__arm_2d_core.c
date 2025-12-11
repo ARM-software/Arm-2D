@@ -1655,6 +1655,16 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                         tTargetTileParam.tValidRegion.tSize.iHeight);
             }
 
+            /* trim extra source mask valid region */
+            if (NULL != ptExtraSourceMask && NULL != ptExtraSource) {
+                tExtraSourceMaskParam.tValidRegion.tSize.iWidth = 
+                    MIN(tExtraSourceMaskParam.tValidRegion.tSize.iWidth, 
+                        tExtraSourceTileParam.tValidRegion.tSize.iWidth);
+                tExtraSourceMaskParam.tValidRegion.tSize.iHeight = 
+                    MIN(tExtraSourceMaskParam.tValidRegion.tSize.iHeight, 
+                        tExtraSourceTileParam.tValidRegion.tSize.iHeight);
+            }
+
             /* load virtual resource if any */
             do {
                 arm_2d_err_t tErr = 
