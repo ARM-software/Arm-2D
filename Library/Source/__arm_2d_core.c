@@ -1172,9 +1172,15 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
     } else {                                                                    //!< has origin
         if (OP_CORE.ptOp->Info.Param.bHasSourceMask) {
-        #if 1  
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;  
 
+            /* 
+             * For the case that a OP has origin, since the origin
+             * will not be trimmed with the region reference from
+             * the target tile, it is also not necessary to trim
+             * the source mask with the region reference from the
+             * target tile.
+             */
             ptSourceMask = arm_2d_tile_get_root( ptOP->Mask.ptOriginSide, 
                                                 &tSourceMaskParam.tValidRegion, 
                                                 NULL);
@@ -1195,31 +1201,6 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 wMode,
                                 false); 
             }
-        #else   
-            /* 
-             * please DO NOT use the following part of the code
-             * we leave it here to avoid confusion.
-             * For the case that a OP has origin, since the origin
-             * will not be trimmed with the region reference from
-             * the target tile, it is also not necessary to trim
-             * the source mask with the region reference from the
-             * target tile.
-             */
-            ptSourceMask = arm_2d_tile_generate_child( 
-                                            ptSourceMask,
-                                            //&tOriginTileParam.tValidRegion,
-                                            &tSourceMaskParam.tValidRegion,
-                                            &tSourceMask,
-                                            false);
-
-            ptSourceMask = __arm_2d_tile_region_caculator( 
-                                ptSourceMask, 
-                                &tSourceMaskParam,
-                                &chSourceMaskPixelLenInBit,
-                                true,
-                                wMode,
-                                false); 
-        #endif
         }
         
         if (OP_CORE.ptOp->Info.Param.bHasTargetMask) {
