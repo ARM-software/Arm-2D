@@ -22,7 +22,7 @@
  * Description:  The pixel-pipeline
  *
  * $Date:        11 Dec 2025
- * $Revision:    V.1.9.4
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1099,7 +1099,9 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     uint_fast8_t chTargetPixelLenInBit = _BV(OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     uint_fast8_t chSourcePixelLenInBit = chTargetPixelLenInBit;
     uint_fast8_t chOriginPixelLenInBit = chTargetPixelLenInBit;
+    uint_fast8_t chExtraSourcePixelLenInBit = chTargetPixelLenInBit;
     uint_fast8_t chSourceMaskPixelLenInBit = 8;
+    uint_fast8_t chExtraSourceMaskPixelLenInBit = 8;
     
     
     __arm_2d_tile_param_t tSourceTileParam;
@@ -1107,8 +1109,16 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     __arm_2d_tile_param_t tTargetTileParam;
     __arm_2d_tile_param_t tTargetMaskParam;
     __arm_2d_tile_param_t tOriginTileParam;
+    __arm_2d_tile_param_t tExtraSourceTileParam;
+    __arm_2d_tile_param_t tExtraSourceMaskParam;
+
     arm_2d_tile_t tSourceMask;
     arm_2d_tile_t tTargetMask;
+    arm_2d_tile_t tExtraSource;
+    arm_2d_tile_t tExtraSourceMask;
+
+    const arm_2d_tile_t *ptExtraSource = NULL;
+    const arm_2d_tile_t *ptExtraSourceMask = NULL;
     
     //const arm_2d_tile_t *ptTargetMask = NULL;
     //const arm_2d_tile_t *ptSourceMask = NULL;
@@ -1423,6 +1433,33 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
         #endif
         }
+
+        if (OP_CORE.ptOp->Info.Param.bHasExtraSource) {
+            arm_2d_op_src_orig_msk_extra_t *ptOP = (arm_2d_op_src_orig_msk_extra_t *)ptThis;
+
+            ptExtraSource = __arm_2d_adjust_tile_with_reference_tile(
+                                ptThis->Target.ptTile,
+                                ptOP->ExtraSource.ptTile,
+                                &tExtraSource,
+                                &tExtraSourceTileParam,
+                                &tTargetTileParam,
+                                &chExtraSourcePixelLenInBit, 
+                                true);
+        }
+
+        if (OP_CORE.ptOp->Info.Param.bHasExtraSourceMask) {
+            arm_2d_op_src_orig_msk_extra_t *ptOP = (arm_2d_op_src_orig_msk_extra_t *)ptThis;
+
+            ptExtraSourceMask = __arm_2d_adjust_tile_with_reference_tile(
+                                ptThis->Target.ptTile,
+                                ptOP->ExtraSource.ptMask,
+                                &tExtraSourceMask,
+                                &tExtraSourceMaskParam,
+                                &tTargetTileParam,
+                                &chExtraSourceMaskPixelLenInBit, 
+                                true);
+        }
+
     }
 
 
@@ -1432,6 +1469,19 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         .iHeight = MIN( tSourceTileParam.tValidRegion.tSize.iHeight, 
                         tTargetTileParam.tValidRegion.tSize.iHeight),
     };
+
+    if (OP_CORE.ptOp->Info.Param.bHasExtraSource) {
+
+        /* NOTE: the User API should validate the extra source tile and the 
+         *       corresponding mask tile to ensure the mask is big enough to
+         *       cover the source tile, so here we only use the extra source
+         *       tile source to calculate the tAcutalSourceSize.
+         */
+        tActualSourceSize.iWidth = MIN( tActualSourceSize.iWidth, 
+                                        tExtraSourceTileParam.tValidRegion.tSize.iWidth);
+        tActualSourceSize.iHeight = MIN(tActualSourceSize.iHeight, 
+                                        tExtraSourceTileParam.tValidRegion.tSize.iHeight);
+    }
 
     /* trim source valid region */
     tSourceTileParam.tValidRegion.tSize = tActualSourceSize;
