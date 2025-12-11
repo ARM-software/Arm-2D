@@ -1249,6 +1249,36 @@ typedef struct arm_2d_op_src_orig_msk_t {
     } Mask;
 } arm_2d_op_src_orig_msk_t;
 
+/*!
+ * \brief the base class for operations with a target tile, 
+ *        a dummy tile, a reference to the original source tile,
+ *        an extra source tile and a corresponding mask tile
+ * \note arm_2d_op_src_orig_extra_t inherits from arm_2d_op_src_orig_t
+ */
+typedef struct arm_2d_op_src_orig_extra_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< the dummy source tile
+    } Source;
+    uint32_t wMode;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< the origin tile
+        arm_2d_tile_t           tDummySource;           //!< the buffer for the source
+    } Origin;
+
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< the extra source tile
+        const arm_2d_tile_t     *ptMask;                //!< the mask for the extra source tile
+    } ExtraSource;
+
+} arm_2d_op_src_orig_extra_t;
 
 /*----------------------------------------------------------------------------*
  * Fast Rotation linear regression structure
