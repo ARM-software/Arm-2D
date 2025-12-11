@@ -1225,6 +1225,10 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         if (OP_CORE.ptOp->Info.Param.bHasTargetMask) {
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;
             
+            /* NOTE: preprocess the target mask, just in case it is a child tile.
+             *       If it is a child tile, the following adjustment should be 
+             *       applied based on tTargetMaskParam.tValidRegion.
+             */
             ptTargetMask = arm_2d_tile_get_root( ptOP->Mask.ptTargetSide, 
                                                 &tTargetMaskParam.tValidRegion, 
                                                 NULL);
@@ -1233,12 +1237,14 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                 uint_fast8_t chTargetMaskPixelLenInBit = 8;
                 
                 do {
+                    /* generate a canvas for the target tile */
                     arm_2d_region_t tTempRegion= {
                         .tSize = ptThis->Target.ptTile->tRegion.tSize,
                     };
                     
                     /* calculate the offset and adjustment from the target*/
                     do {
+                        /* turn the tTempRegion into an absolute region */
                         arm_2d_tile_get_absolute_location(  ptThis->Target.ptTile,
                                                             &tTempRegion.tLocation);
                         
@@ -2024,8 +2030,6 @@ __arm_2d_op_frontend_region_process_with_src(arm_2d_op_core_t *ptOP)
                 }
             }
 
-
-
             /*! draw the partial column */
             /*
             HOW IT WORKS:
@@ -2073,7 +2077,6 @@ __arm_2d_op_frontend_region_process_with_src(arm_2d_op_core_t *ptOP)
                     return tResult;
                 }
             }
-
 
             /*! draw the normal non-negitive part */
             /*
