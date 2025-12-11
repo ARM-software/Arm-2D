@@ -914,17 +914,19 @@ arm_fsm_rt_t __arm_2d_tile_process( arm_2d_op_t *ptThis,
     return tResult;
 }
 
-ARM_NONNULL(1,2,3,4,5)
+ARM_NONNULL(1,2,3,4,5,6)
 static
 arm_2d_tile_t *__arm_2d_adjust_tile_with_reference_tile(const arm_2d_tile_t *ptReference,
                                                         arm_2d_tile_t *ptTile,
                                                         arm_2d_tile_t *ptNewChildTileOut,
                                                         __arm_2d_tile_param_t *ptTileParam,
+                                                        __arm_2d_tile_param_t *ptReferenceTileParam,
                                                         uint_fast8_t *pchTargetMaskPixelLenInBit,
                                                         bool bSupportHorizontalLineMask)
 {
     assert(NULL != pchTargetMaskPixelLenInBit);
     assert(NULL != ptTileParam);
+    assert(NULL != ptReferenceTileParam);
     assert(NULL != ptNewChildTileOut);
     assert(NULL != ptTile);
     assert(NULL != ptReference);
@@ -950,12 +952,12 @@ arm_2d_tile_t *__arm_2d_adjust_tile_with_reference_tile(const arm_2d_tile_t *ptR
                 
                 /* calculate the x offset */
                 tTempRegion.tLocation.iX 
-                    = ptTileParam->tValidRegion.tLocation.iX 
+                    = ptReferenceTileParam->tValidRegion.tLocation.iX 
                     - tTempRegion.tLocation.iX;
 
                 /* calculate the width adjustment */
                 tTempRegion.tSize.iWidth
-                    = ptTileParam->tValidRegion.tSize.iWidth 
+                    = ptReferenceTileParam->tValidRegion.tSize.iWidth 
                     - tTempRegion.tSize.iWidth;
             } while(0);
         
@@ -975,12 +977,12 @@ arm_2d_tile_t *__arm_2d_adjust_tile_with_reference_tile(const arm_2d_tile_t *ptR
 
                     /* calculate the y offset */
                     tTempRegion.tLocation.iY 
-                        = ptTileParam->tValidRegion.tLocation.iY 
+                        = ptReferenceTileParam->tValidRegion.tLocation.iY 
                         - tTempRegion.tLocation.iY;
                 
                     /* calculate the height adjustment */
                     tTempRegion.tSize.iHeight
-                        = ptTileParam->tValidRegion.tSize.iHeight 
+                        = ptReferenceTileParam->tValidRegion.tSize.iHeight 
                         - tTempRegion.tSize.iHeight;
 
                     /* apply the y offset and height adjustment to the target mask */
@@ -1403,6 +1405,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                 ptOP->Mask.ptTargetSide,
                                 &tTargetMask,
                                 &tTargetMaskParam,
+                                &tTargetTileParam,
                                 &chTargetMaskPixelLenInBit, 
                                 true);
 
