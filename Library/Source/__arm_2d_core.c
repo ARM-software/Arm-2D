@@ -1864,7 +1864,8 @@ arm_fsm_rt_t __arm_2d_op_frontend_control( arm_2d_op_core_t *ptOP)
 }
 
 static
-arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptOP)
+arm_fsm_rt_t 
+__arm_2d_op_frontend_region_process_with_src(arm_2d_op_core_t *ptOP)
 {
     ARM_2D_IMPL(arm_2d_op_src_t, ptOP)
 
@@ -1874,7 +1875,9 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
     arm_2d_region_t tTargetCanvas = {0};
     const arm_2d_tile_t *ptTarget = NULL;
 
-    if (!__arm_2d_op_ensure_resource(ptOP, 4)) {
+    uint_fast8_t chResourceRequested = this.wMode & ARM_2D_CP_MODE_FILL ? 4 : 1;
+
+    if (!__arm_2d_op_ensure_resource(ptOP, chResourceRequested)) {
         //! insufficient resources, ask users to try again
         return arm_fsm_rt_wait_for_res;
     }
@@ -1912,8 +1915,6 @@ arm_fsm_rt_t __arm_2d_op_frontend_region_process_with_src( arm_2d_op_core_t *ptO
         //}
 
     } while(false);
-
-
 
     if ( this.wMode & ARM_2D_CP_MODE_FILL) {
         /* quickly ignore non visiable area, only for FILL mode */
@@ -2171,7 +2172,7 @@ arm_fsm_rt_t __arm_2d_op_frontend_op_decoder(arm_2d_op_core_t *ptThis)
                 //|   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK
                 //|   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK
                 )) {
-                
+    
     case (   ARM_2D_OP_INFO_PARAM_HAS_SOURCE 
          |   ARM_2D_OP_INFO_PARAM_HAS_TARGET):
         __arm_2d_op_use_default_frame_buffer(ptThis);

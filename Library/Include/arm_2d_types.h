@@ -1269,7 +1269,7 @@ typedef struct arm_2d_op_src_orig_extra_t {
     struct {
         const arm_2d_tile_t     *ptTile;                //!< the dummy source tile
     } Source;
-    uint32_t wMode;
+    uint32_t wMode;                                     /* it must be ZERO */
 
     /* derived part */
     struct {
