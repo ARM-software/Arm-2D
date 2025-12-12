@@ -900,7 +900,7 @@ arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize)
         
         arm_2d_port_free_semaphore(arm_2d_op_get_semaphore(ptOP));
         
-        arm_2d_op_attach_semaphore(ptOP, NULL);
+        arm_2d_op_attach_semaphore(ptOP, (uintptr_t)NULL);
     
     } while(0);
 
