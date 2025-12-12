@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        02 Dec 2025
- * $Revision:    V.1.8.0
+ * $Date:        12 Dec 2025
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -609,6 +609,13 @@ typedef struct __arm_2d_param_copy_orig_msk_t {
     
 } __arm_2d_param_copy_orig_msk_t;
 
+typedef struct __arm_2d_param_copy_orig_msk_extra_t {
+    implement(__arm_2d_param_copy_orig_msk_t);
+
+    __arm_2d_tile_param_t tExtraSource;
+    __arm_2d_tile_param_t tExtraSourceMask;
+} __arm_2d_param_copy_orig_msk_extra_t;
+
 typedef struct __arm_2d_param_fill_t {
     __arm_2d_tile_param_t tSource;
     __arm_2d_tile_param_t tTarget;
@@ -640,17 +647,18 @@ ARM_PRIVATE(
     uint16_t                            : 16;
     
     union {
-        __arm_2d_tile_param_t           tTileProcess;
-        __arm_2d_param_target_msk_t     tTileMaskProcess;
+        __arm_2d_tile_param_t                   tTileProcess;
+        __arm_2d_param_target_msk_t             tTileMaskProcess;
 
-        __arm_2d_param_copy_t           tCopy;
-        __arm_2d_param_copy_msk_t       tCopyMask;
-        __arm_2d_param_copy_orig_t      tCopyOrig;                              //!< for transform
-        __arm_2d_param_copy_orig_msk_t  tCopyOrigMask;                          //!< for transform with masks
+        __arm_2d_param_copy_t                   tCopy;
+        __arm_2d_param_copy_msk_t               tCopyMask;
+        __arm_2d_param_copy_orig_t              tCopyOrig;                      //!< for transform
+        __arm_2d_param_copy_orig_msk_t          tCopyOrigMask;                  //!< for transform with masks
+        __arm_2d_param_copy_orig_msk_extra_t    tCopyOrigMaskExtra;             //!< for transform with masks and extra masks
         
-        __arm_2d_param_fill_t           tFill;
-        __arm_2d_param_fill_msk_t       tFillMask;
-        __arm_2d_param_fill_orig_t      tFillOrig;
+        __arm_2d_param_fill_t                   tFill;
+        __arm_2d_param_fill_msk_t               tFillMask;
+        __arm_2d_param_fill_orig_t              tFillOrig;
     }Param;
 )};
 

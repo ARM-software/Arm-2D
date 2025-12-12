@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        11 Dec 2025
- * $Revision:    V.2.0.0
+ * $Date:        12 Dec 2025
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -673,6 +673,67 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
         ptTask->Param.tCopyOrigMask.tDesMask = *ptTargetMask;
     }
 
+
+    /* call default software implementation */
+    ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
+
+    __arm_2d_sub_task_depose((arm_2d_op_core_t *)ptThis);
+    return tResult;
+}
+
+__WEAK
+arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks_and_extra(
+                                        arm_2d_op_cp_t *ptThis,
+                                        __arm_2d_tile_param_t *ptSource,
+                                        __arm_2d_tile_param_t *ptOrigin,
+                                        __arm_2d_tile_param_t *ptOriginMask,
+                                        __arm_2d_tile_param_t *ptTarget,
+                                        __arm_2d_tile_param_t *ptTargetMask,
+                                        __arm_2d_tile_param_t *ptExtraSource,
+                                        __arm_2d_tile_param_t *ptExtraSourceMask,
+                                        arm_2d_size_t * __RESTRICT ptCopySize)
+{
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
+    __arm_2d_sub_task_t *ptTask = &(__arm_2d_sub_task_t){
+        .ptOP = (arm_2d_op_core_t *)ptThis,
+        .Param.tCopyOrigMaskExtra = {
+            .use_as____arm_2d_param_copy_orig_msk_t = {
+                .use_as____arm_2d_param_copy_orig_t = {
+                    .use_as____arm_2d_param_copy_t = {
+                        .tSource        = *ptSource,
+                        .tTarget        = *ptTarget,
+                        .tCopySize      = *ptCopySize,
+                    },
+                    
+                    .tOrigin        = *ptOrigin,
+                },
+            },
+        },
+    };
+
+    if (NULL == ptOriginMask){
+        ptTask->Param.tCopyOrigMask.tOrigMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMask.tOrigMask = *ptOriginMask;
+    }
+    
+    if (NULL == ptTargetMask){
+        ptTask->Param.tCopyOrigMask.tDesMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMask.tDesMask = *ptTargetMask;
+    }
+
+    if (NULL == ptExtraSource){
+        ptTask->Param.tCopyOrigMaskExtra.tExtraSource.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMaskExtra.tExtraSource = *ptExtraSource;
+    }
+
+    if (NULL == ptExtraSourceMask){
+        ptTask->Param.tCopyOrigMaskExtra.tExtraSourceMask.bInvalid = true;
+    } else {
+        ptTask->Param.tCopyOrigMaskExtra.tExtraSourceMask = *ptExtraSourceMask;
+    }
 
     /* call default software implementation */
     ARM_2D_RUN_DEFAULT(0,__arm_2d_io_func_t );
@@ -1462,7 +1523,6 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
     }
 
-
     arm_2d_size_t tActualSourceSize = {
         .iWidth = MIN(  tSourceTileParam.tValidRegion.tSize.iWidth, 
                         tTargetTileParam.tValidRegion.tSize.iWidth),
@@ -1692,28 +1752,50 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                     return (arm_fsm_rt_t)tErr;
                 }
                 
-                tErr = __load_virtual_resource(ptSourceMask, &tSourceMaskParam);
+                tErr = __load_virtual_resource( ptSourceMask, 
+                                                &tSourceMaskParam);
                 if (tErr != ARM_2D_ERR_NONE) {
                     return (arm_fsm_rt_t)tErr;
                 }
 
-                tErr = __load_virtual_resource(ptTargetMask, &tTargetMaskParam);
+                tErr = __load_virtual_resource( ptTargetMask, 
+                                                &tTargetMaskParam);
                 if (tErr != ARM_2D_ERR_NONE) {
                     return (arm_fsm_rt_t)tErr;
                 }
 
-                tErr = __load_virtual_resource(ptExtraSource, &tExtraSourceTileParam);
+                tErr = __load_virtual_resource( ptExtraSource, 
+                                                &tExtraSourceTileParam);
                 if (tErr != ARM_2D_ERR_NONE) {
                     return (arm_fsm_rt_t)tErr;
                 }
 
-                tErr = __load_virtual_resource(ptExtraSourceMask, &tExtraSourceMaskParam);
+                tErr = __load_virtual_resource( ptExtraSourceMask, 
+                                                &tExtraSourceMaskParam);
                 if (tErr != ARM_2D_ERR_NONE) {
                     return (arm_fsm_rt_t)tErr;
                 }
             } while(0);
 
-            if (    (OP_CORE.ptOp->Info.Param.bHasSourceMask)
+            if (    (OP_CORE.ptOp->Info.Param.bHasExtraSource)
+               ||   (OP_CORE.ptOp->Info.Param.bHasExtraSourceMask)) {
+                /* NOTE: You must at least have one of the ptExtraSource or 
+                 * ptExtraSourceMask. 
+                 */
+                assert(!(NULL == ptExtraSource && NULL == ptExtraSourceMask));
+
+                tResult = __arm_2d_issue_sub_task_copy_origin_masks_and_extra( 
+                            ptThis, 
+                            &tSourceTileParam,
+                            &tOriginTileParam,
+                            ((NULL != ptSourceMask) ? &tSourceMaskParam : NULL),
+                            &tTargetTileParam,
+                            ((NULL != ptTargetMask) ? &tTargetMaskParam : NULL),
+                            ((NULL != ptExtraSource) ? &tExtraSourceTileParam : NULL),
+                            ((NULL != ptExtraSourceMask) ? &tExtraSourceMaskParam : NULL),
+                            &tActualSourceSize);
+
+            } else if (    (OP_CORE.ptOp->Info.Param.bHasSourceMask)
                ||   (OP_CORE.ptOp->Info.Param.bHasTargetMask)){
                 tResult = __arm_2d_issue_sub_task_copy_origin_masks( 
                             ptThis, 
