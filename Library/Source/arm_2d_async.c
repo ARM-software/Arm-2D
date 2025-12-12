@@ -21,8 +21,8 @@
  * Title:        arm-2d_async.c
  * Description:  Pixel pipeline extensions for support hardware acceleration.
  *
- * $Date:        05. April 2023
- * $Revision:    V.1.0.4
+ * $Date:        12. Dec 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -269,7 +269,7 @@ arm_fsm_rt_t __arm_2d_call_default_io(  __arm_2d_sub_task_t *ptTask,
             }
              
             if (    (chAccPreference == ARM_2D_PREF_ACC_HW_ONLY)  
-                &&  (ARM_2D_ERR_NOT_SUPPORT == tResult)) {                
+                &&  (ARM_2D_ERR_NOT_SUPPORT == (arm_2d_err_t)tResult)) {                
                 //! the hardware acceleration isn't avaialble
                 break;
             }
@@ -470,7 +470,7 @@ arm_fsm_rt_t __arm_2d_backend_task(arm_2d_task_t *ptThis)
             __ARM_2D_BACKEND_TASK_RESET_FSM();
             
             //! unsupported operation
-            if (ARM_2D_ERR_INVALID_OP == this.tResult){
+            if (ARM_2D_ERR_INVALID_OP == (arm_2d_err_t)this.tResult){
                 return this.tResult;
             }
             
@@ -917,20 +917,20 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
     assert(NULL != ptTask);         
 
     (*ptTask) = (__arm_2d_sub_task_t) {
-                    .ptOP = &(ptThis->use_as__arm_2d_op_core_t),
-                    .chLowLeveIOIndex = 0,
-                    .Param.tCopyOrigMask = {
-                        .use_as____arm_2d_param_copy_orig_t = {
-                            .use_as____arm_2d_param_copy_t = {
-                                .tSource        = *ptSource,
-                                .tTarget        = *ptTarget,
-                                .tCopySize      = *ptCopySize,
-                            },
-                            
-                            .tOrigin        = *ptOrigin,
-                        },
+            .ptOP = &(ptThis->use_as__arm_2d_op_core_t),
+            .chLowLeveIOIndex = 0,
+            .Param.tCopyOrigMask = {
+                .use_as____arm_2d_param_copy_orig_t = {
+                    .use_as____arm_2d_param_copy_t = {
+                        .tSource        = *ptSource,
+                        .tTarget        = *ptTarget,
+                        .tCopySize      = *ptCopySize,
                     },
-                };
+                    
+                    .tOrigin        = *ptOrigin,
+                },
+            },
+        };
                 
     if (NULL == ptOriginMask){
         ptTask->Param.tCopyOrigMask.tOrigMask.bInvalid = true;
@@ -944,6 +944,92 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks(
         ptTask->Param.tCopyOrigMask.tDesMask = *ptTargetMask;
     }
     
+    OP_CORE.Status.u4SubTaskCount++;
+    
+    __arm_2d_sub_task_add(ptTask);
+
+    return arm_fsm_rt_async;
+}
+
+__OVERRIDE_WEAK
+arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks_and_extra(
+                                        arm_2d_op_cp_t *ptThis,
+                                        __arm_2d_tile_param_t *ptSource,
+                                        __arm_2d_tile_param_t *ptOrigin,
+                                        __arm_2d_tile_param_t *ptOriginMask,
+                                        __arm_2d_tile_param_t *ptTarget,
+                                        __arm_2d_tile_param_t *ptTargetMask,
+                                        __arm_2d_tile_param_t *ptExtraSource,
+                                        __arm_2d_tile_param_t *ptExtraSourceMask,
+                                        arm_2d_size_t * __RESTRICT ptCopySize)
+{
+    __arm_2d_sub_task_t *ptTask = __arm_2d_sub_task_new();
+    assert(NULL != ptTask);         
+
+    (*ptTask) = (__arm_2d_sub_task_t) {
+        .ptOP = &(ptThis->use_as__arm_2d_op_core_t),
+        .chLowLeveIOIndex = 0,
+        .Param.tCopyOrigMaskExtra = {
+            .use_as____arm_2d_param_copy_orig_msk_t = {
+                .use_as____arm_2d_param_copy_orig_t = {
+                    .use_as____arm_2d_param_copy_t = {
+                        .tSource        = *ptSource,
+                        .tTarget        = *ptTarget,
+                        .tCopySize      = *ptCopySize,
+                    },
+                    
+                    .tOrigin        = *ptOrigin,
+                },
+            },
+        },
+    };
+
+    if (NULL == ptOriginMask){
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tOrigMask.bInvalid = true;
+    } else {
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tOrigMask = *ptOriginMask;
+    }
+    
+    if (NULL == ptTargetMask){
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tDesMask.bInvalid = true;
+    } else {
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tDesMask = *ptTargetMask;
+    }
+
+    if (NULL == ptExtraSource){
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSource
+                    .bInvalid = true;
+    } else {
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSource = *ptExtraSource;
+    }
+
+    if (NULL == ptExtraSourceMask){
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSourceMask
+                    .bInvalid = true;
+    } else {
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSourceMask = *ptExtraSourceMask;
+    }
+
     OP_CORE.Status.u4SubTaskCount++;
     
     __arm_2d_sub_task_add(ptTask);

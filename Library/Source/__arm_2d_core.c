@@ -712,27 +712,51 @@ arm_fsm_rt_t __arm_2d_issue_sub_task_copy_origin_masks_and_extra(
     };
 
     if (NULL == ptOriginMask){
-        ptTask->Param.tCopyOrigMask.tOrigMask.bInvalid = true;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tOrigMask
+                        .bInvalid = true;
     } else {
-        ptTask->Param.tCopyOrigMask.tOrigMask = *ptOriginMask;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tOrigMask = *ptOriginMask;
     }
     
     if (NULL == ptTargetMask){
-        ptTask->Param.tCopyOrigMask.tDesMask.bInvalid = true;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tDesMask
+                        .bInvalid = true;
     } else {
-        ptTask->Param.tCopyOrigMask.tDesMask = *ptTargetMask;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t
+                    .tDesMask = *ptTargetMask;
     }
 
     if (NULL == ptExtraSource){
-        ptTask->Param.tCopyOrigMaskExtra.tExtraSource.bInvalid = true;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSource
+                    .bInvalid = true;
     } else {
-        ptTask->Param.tCopyOrigMaskExtra.tExtraSource = *ptExtraSource;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSource = *ptExtraSource;
     }
 
     if (NULL == ptExtraSourceMask){
-        ptTask->Param.tCopyOrigMaskExtra.tExtraSourceMask.bInvalid = true;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSourceMask
+                    .bInvalid = true;
     } else {
-        ptTask->Param.tCopyOrigMaskExtra.tExtraSourceMask = *ptExtraSourceMask;
+        ptTask->Param
+            .tCopyOrigMaskExtra
+                .tExtraSourceMask = *ptExtraSourceMask;
     }
 
     /* call default software implementation */
