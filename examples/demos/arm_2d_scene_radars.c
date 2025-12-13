@@ -754,6 +754,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             #endif
         }
     } while(0);
+#endif
 
     // initialize second pointer
     do {
@@ -849,8 +850,6 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         };
         foldable_panel_init(&this.tScreen, &tCFG);
     } while(0);
-
-#endif
 
     /* ------------   initialize members of user_scene_radars_t end   ---------------*/
 
