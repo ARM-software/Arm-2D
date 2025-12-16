@@ -22,7 +22,7 @@
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v1.2.0
+ * $Revision:    v1.3.0
  *
  * Target Processor:  Cortex-M cores
  *

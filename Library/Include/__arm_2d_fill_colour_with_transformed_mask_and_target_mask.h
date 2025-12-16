@@ -23,7 +23,7 @@
  *               -mask-target-mask-and-opacity
  * 
  * $Date:        16 Dec 2025
- * $Revision:    v1.2.0
+ * $Revision:    v1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -58,65 +58,6 @@ extern "C" {
  */
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
-
-#define arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask(\
-                                        __CB_ADDR,                              \
-                                        __MASK_ADDR,                            \
-                                        __DES_TILE_ADDR,                        \
-                                        __DES_MASK_ADDR,                        \
-                                        __DES_REGION_ADDR,                      \
-                                        __CENTRE,                               \
-                                        __ANGLE,                                \
-                                        __SCALE_X,                              \
-                                        __SCALE_Y,                              \
-                                        __MSK_COLOUR,                           \
-                                        __OPACITY,...)                          \
-        ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask_prepare(\
-                                        (__CB_ADDR),                            \
-                                        (__MASK_ADDR),                          \
-                                        (__DES_MASK_ADDR),                      \
-                                        (__CENTRE),                             \
-                                        (float)(__ANGLE),                       \
-                                        (float)(__SCALE_X),                     \
-                                        (float)(__SCALE_Y),                     \
-                                        (__MSK_COLOUR),                         \
-                                        (__OPACITY));                           \
-        };                                                                      \
-        arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
-                            (__DES_TILE_ADDR),                                  \
-                            (__DES_REGION_ADDR),                                \
-                            (NULL,##__VA_ARGS__));                              \
-        })
-
-#define arm_2d_gray8_fill_colour_with_transformed_mask_and_target_mask(\
-                                        __CB_ADDR,                              \
-                                        __MASK_ADDR,                            \
-                                        __DES_TILE_ADDR,                        \
-                                        __DES_MASK_ADDR,                        \
-                                        __DES_REGION_ADDR,                      \
-                                        __CENTRE,                               \
-                                        __ANGLE,                                \
-                                        __SCALE_X,                              \
-                                        __SCALE_Y,                              \
-                                        __MSK_COLOUR,                           \
-                                        __OPACITY,...)                          \
-    ({                                                                          \
-        arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask_prepare(\
-                                        (__CB_ADDR),                            \
-                                        (__MASK_ADDR),                          \
-                                        (__DES_MASK_ADDR),                      \
-                                        (__CENTRE),                             \
-                                        (float)(__ANGLE),                       \
-                                        (float)(__SCALE_X),                     \
-                                        (float)(__SCALE_Y),                     \
-                                        (__MSK_COLOUR),                         \
-                                        (__OPACITY));                           \
-        arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
-                            (__DES_TILE_ADDR),                                  \
-                            (__DES_REGION_ADDR),                                \
-                            (NULL,##__VA_ARGS__));                              \
-    })
 
 #define arm_2dp_gray8_fill_colour_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
@@ -177,7 +118,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask(\
+#define arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask(        \
                                         __CB_ADDR,                              \
                                         __MASK_ADDR,                            \
                                         __DES_TILE_ADDR,                        \
@@ -188,9 +129,9 @@ extern "C" {
                                         __SCALE_X,                              \
                                         __SCALE_Y,                              \
                                         __MSK_COLOUR,                           \
-                                        __OPACITY,...)                          \
+                                        ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__DES_MASK_ADDR),                      \
@@ -198,8 +139,7 @@ extern "C" {
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
                                         (float)(__SCALE_Y),                     \
-                                        (__MSK_COLOUR),                         \
-                                        (__OPACITY));                           \
+                                        (__MSK_COLOUR));                        \
         };                                                                      \
         arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
                             (__DES_TILE_ADDR),                                  \
@@ -207,7 +147,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_fill_colour_with_transformed_mask_and_target_mask(\
+#define arm_2d_gray8_fill_colour_with_transformed_mask_and_target_mask(         \
                                         __CB_ADDR,                              \
                                         __MASK_ADDR,                            \
                                         __DES_TILE_ADDR,                        \
@@ -218,9 +158,9 @@ extern "C" {
                                         __SCALE_X,                              \
                                         __SCALE_Y,                              \
                                         __MSK_COLOUR,                           \
-                                        __OPACITY,...)                          \
+                                        ...)                                    \
     ({                                                                          \
-        arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__DES_MASK_ADDR),                      \
@@ -228,8 +168,7 @@ extern "C" {
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
                                         (float)(__SCALE_Y),                     \
-                                        (__MSK_COLOUR),                         \
-                                        (__OPACITY));                           \
+                                        (__MSK_COLOUR));                        \
         arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
                             (__DES_TILE_ADDR),                                  \
                             (__DES_REGION_ADDR),                                \
@@ -295,7 +234,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask(\
+#define arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask(       \
                                         __CB_ADDR,                              \
                                         __MASK_ADDR,                            \
                                         __DES_TILE_ADDR,                        \
@@ -306,9 +245,9 @@ extern "C" {
                                         __SCALE_X,                              \
                                         __SCALE_Y,                              \
                                         __MSK_COLOUR,                           \
-                                        __OPACITY,...)                          \
+                                        ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__DES_MASK_ADDR),                      \
@@ -316,8 +255,7 @@ extern "C" {
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
                                         (float)(__SCALE_Y),                     \
-                                        (__MSK_COLOUR),                         \
-                                        (__OPACITY));                           \
+                                        (__MSK_COLOUR));                        \
         };                                                                      \
         arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
                             (__DES_TILE_ADDR),                                  \
@@ -325,7 +263,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_cccn888_fill_colour_with_transformed_mask_and_target_mask(\
+#define arm_2d_rgb565_fill_colour_with_transformed_mask_and_target_mask(        \
                                         __CB_ADDR,                              \
                                         __MASK_ADDR,                            \
                                         __DES_TILE_ADDR,                        \
@@ -336,9 +274,9 @@ extern "C" {
                                         __SCALE_X,                              \
                                         __SCALE_Y,                              \
                                         __MSK_COLOUR,                           \
-                                        __OPACITY,...)                          \
+                                        ...)                                    \
     ({                                                                          \
-        arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__DES_MASK_ADDR),                      \
@@ -346,8 +284,7 @@ extern "C" {
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
                                         (float)(__SCALE_Y),                     \
-                                        (__MSK_COLOUR),                         \
-                                        (__OPACITY));                           \
+                                        (__MSK_COLOUR));                        \
         arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
                             (__DES_TILE_ADDR),                                  \
                             (__DES_REGION_ADDR),                                \
@@ -407,6 +344,63 @@ extern "C" {
                                         (float)(__SCALE_Y),                     \
                                         (__MSK_COLOUR),                         \
                                         (__OPACITY));                           \
+        arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+    })
+
+#define arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask(      \
+                                        __CB_ADDR,                              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_MASK_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE_X,                              \
+                                        __SCALE_Y,                              \
+                                        __MSK_COLOUR,                           \
+                                        ...)                                    \
+        ({ if (bIsNewFrame) {                                                   \
+        arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask_prepare(\
+                                        (__CB_ADDR),                            \
+                                        (__MASK_ADDR),                          \
+                                        (__DES_MASK_ADDR),                      \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE_X),                     \
+                                        (float)(__SCALE_Y),                     \
+                                        (__MSK_COLOUR));                        \
+        };                                                                      \
+        arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
+                            (__DES_TILE_ADDR),                                  \
+                            (__DES_REGION_ADDR),                                \
+                            (NULL,##__VA_ARGS__));                              \
+        })
+
+#define arm_2d_cccn888_fill_colour_with_transformed_mask_and_target_mask(       \
+                                        __CB_ADDR,                              \
+                                        __MASK_ADDR,                            \
+                                        __DES_TILE_ADDR,                        \
+                                        __DES_MASK_ADDR,                        \
+                                        __DES_REGION_ADDR,                      \
+                                        __CENTRE,                               \
+                                        __ANGLE,                                \
+                                        __SCALE_X,                              \
+                                        __SCALE_Y,                              \
+                                        __MSK_COLOUR,                           \
+                                        ...)                                    \
+    ({                                                                          \
+        arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask_prepare(\
+                                        (__CB_ADDR),                            \
+                                        (__MASK_ADDR),                          \
+                                        (__DES_MASK_ADDR),                      \
+                                        (__CENTRE),                             \
+                                        (float)(__ANGLE),                       \
+                                        (float)(__SCALE_X),                     \
+                                        (float)(__SCALE_Y),                     \
+                                        (__MSK_COLOUR));                        \
         arm_2dp_tile_transform_xy((arm_2d_op_trans_t *)(__CB_ADDR),             \
                             (__DES_TILE_ADDR),                                  \
                             (__DES_REGION_ADDR),                                \

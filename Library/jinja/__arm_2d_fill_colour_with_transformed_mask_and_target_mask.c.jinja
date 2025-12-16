@@ -22,7 +22,7 @@
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v1.2.0
+ * $Revision:    v1.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -91,13 +91,13 @@ extern "C" {
     ] 
 %}
 
-{%- for has_opacity in [
+{%- for variants_name in [
     ('and_target_mask'),
     ('target_mask_and_opacity' ),
     ] 
 %}
 
-{% if has_opacity == 'target_mask_and_opacity' %}
+{% if variants_name == 'target_mask_and_opacity' %}
 /*---------------------------------------------------------------------------*
  * Colour Filling with Transformed Mask, Target Mask and Opacity             *
  *---------------------------------------------------------------------------*/
@@ -112,7 +112,7 @@ extern "C" {
  */
 
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_prepare(
+arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{variants_name}}_prepare(
                                         arm_2d_op_fill_cl_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_tile_t *ptTargetMask,
@@ -121,7 +121,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opa
                                         float fScaleX,
                                         float fScaleY,
                                         {{colour_int}} {{colour_int_prefix}}FillColour
-                                    {%- if has_opacity == 'target_mask_and_opacity' -%}    
+                                    {%- if variants_name == 'target_mask_and_opacity' -%}    
                                         ,
                                         uint_fast8_t chOpacity
                                     {%- endif -%}
@@ -156,7 +156,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opa
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{has_opacity | upper}}_{{colour_name | upper}};
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{variants_name | upper}}_{{colour_name | upper}};
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
@@ -169,7 +169,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opa
     this.tTransform.fScaleY = fScaleY;
     this.tTransform.tCenter = tCentre;
     this.tTransform.Mask.{{colour_int_prefix}}Colour = {{colour_int_prefix}}FillColour;
-{%- if has_opacity == 'target_mask_and_opacity' %}
+{%- if variants_name == 'target_mask_and_opacity' %}
     this.chOpacity = chOpacity;
 {%- endif %}
 
@@ -182,7 +182,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_fill_colour_with_transformed_mask_{{has_opa
  */
 
 __STATIC_INLINE
-void __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process_point( 
+void __{{colour_name}}_fill_colour_with_transformed_mask_{{variants_name}}_process_point( 
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
                                             uint8_t *pchOrigin,
@@ -190,7 +190,7 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process
                                             {{colour_int}} *p{{colour_int_prefix}}Target,
                                             uint8_t *pchTargetMask,
                                             {{colour_int}} {{colour_int_prefix}}MaskColour
-                                        {%- if has_opacity == 'target_mask_and_opacity' -%}
+                                        {%- if variants_name == 'target_mask_and_opacity' -%}
                                             ,
                                             uint_fast16_t hwOpacity
                                         {%- endif -%}
@@ -264,7 +264,7 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
     if (wTotalAlpha) {
-    {%- if has_opacity == 'target_mask_and_opacity' %}
+    {%- if variants_name == 'target_mask_and_opacity' %}
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
     {%- else %}
@@ -294,7 +294,7 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process
     }
 #endif
 
-{% if has_opacity == 'target_mask_and_opacity' %}
+{% if variants_name == 'target_mask_and_opacity' %}
     wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 {%- endif %}
@@ -310,10 +310,10 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process
 
 
 __WEAK
-void __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{has_opacity}}(
+void __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{variants_name}}(
                                     __arm_2d_param_copy_orig_msk_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo
-                                {%- if has_opacity == 'target_mask_and_opacity' -%}
+                                {%- if variants_name == 'target_mask_and_opacity' -%}
                                     ,
                                     uint_fast16_t chOpacity
                                 {%- endif -%}
@@ -363,7 +363,7 @@ void __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{has_op
                                             .tOrigin
                                                 .tValidRegion;
 
-{%- if has_opacity == 'target_mask_and_opacity' -%}
+{%- if variants_name == 'target_mask_and_opacity' -%}
     chOpacity += (chOpacity == 255);
 {%- endif %}
 
@@ -445,7 +445,7 @@ void __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{has_op
                 continue;
             }
 
-            __{{colour_name}}_fill_colour_with_transformed_mask_{{has_opacity}}_process_point (
+            __{{colour_name}}_fill_colour_with_transformed_mask_{{variants_name}}_process_point (
                             &tPointFast,
                             ptOriginValidRegion,
                             pchOrigin,
@@ -453,7 +453,7 @@ void __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{has_op
                             p{{colour_int_prefix}}TargetLine++,
                             pchTargetMask,
                             {{colour_int_prefix}}MaskColour
-                        {%- if has_opacity == 'target_mask_and_opacity' -%}
+                        {%- if variants_name == 'target_mask_and_opacity' -%}
                             ,
                             chOpacity
                         {%- endif -%}
@@ -471,7 +471,7 @@ void __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{has_op
  * The backend entry
  */
 arm_fsm_rt_t 
-__arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{has_opacity}}(
+__arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{variants_name}}(
     __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_fill_cl_trans_msk_des_msk_opa_t, ptTask->ptOP);
@@ -516,7 +516,7 @@ __arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{has_opacity}}
     } else 
 #endif
     {
-    {%- if has_opacity == 'target_mask_and_opacity' %}
+    {%- if variants_name == 'target_mask_and_opacity' %}
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
             __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_and_target_mask(   
@@ -526,10 +526,10 @@ __arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{has_opacity}}
     #endif
     {%- endif %}
         {
-            __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{has_opacity}}(   
+            __arm_2d_impl_{{colour_name}}_colour_filling_with_transformed_mask_{{variants_name}}(   
                 &(ptTask->Param.tCopyOrigMask),
                 &this.tTransform
-            {%- if has_opacity == 'target_mask_and_opacity' -%}
+            {%- if variants_name == 'target_mask_and_opacity' -%}
                 ,
                 this.chOpacity
             {%- endif -%}
@@ -545,14 +545,14 @@ __arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{has_opacity}}
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{has_opacity | upper}}_{{colour_name | upper}},
-    __arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{has_opacity}});   /* Default SW Implementation */
+    __ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{variants_name | upper}}_{{colour_name | upper}},
+    __arm_2d_{{colour_name}}_sw_colour_filling_with_transformed_mask_{{variants_name}});   /* Default SW Implementation */
 
 /*
  * OPCODE
  */
 const __arm_2d_op_info_t 
-ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{has_opacity | upper}}_{{colour_name | upper}} = {
+ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{variants_name | upper}}_{{colour_name | upper}} = {
     .Info = {
         .Colour = {
             .chScheme               = ARM_2D_COLOUR_{{colour_name | upper}},
@@ -564,11 +564,11 @@ ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{has_opacity | upper}}_{{colour_nam
             .bHasOrigin             = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{has_opacity | upper}},
+        .chOpIndex = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{variants_name | upper}},
         .chInClassOffset    = offsetof(arm_2d_op_fill_cl_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{has_opacity | upper}}_{{colour_name | upper}}),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_FILL_COLOUR_WITH_TRANSFORMED_MASK_{{variants_name | upper}}_{{colour_name | upper}}),
             .ptFillLike = NULL,
         },
     },
