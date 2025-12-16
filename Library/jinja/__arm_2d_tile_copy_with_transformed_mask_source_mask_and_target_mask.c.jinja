@@ -645,6 +645,7 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name}}(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
 {%- if has_target_mask %}
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 

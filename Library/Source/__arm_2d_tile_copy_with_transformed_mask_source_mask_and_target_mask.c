@@ -420,6 +420,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -829,6 +830,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -1269,6 +1271,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_target_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -1719,6 +1722,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -2164,6 +2168,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_source_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -2612,6 +2617,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -3091,6 +3097,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -3580,6 +3587,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_op
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -4009,6 +4017,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -4418,6 +4427,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -4858,6 +4868,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_target_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -5308,6 +5319,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -5753,6 +5765,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_source_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -6201,6 +6214,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -6680,6 +6694,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -7169,6 +7184,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_o
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -7598,6 +7614,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -8007,6 +8024,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -8447,6 +8465,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_target_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -8897,6 +8916,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -9342,6 +9362,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_source_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -9790,6 +9811,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -10269,6 +10291,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
@@ -10758,6 +10781,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_
                             .tOrigin
                                 .nOffset;
     arm_2d_err_t tErr;
+    ARM_2D_UNUSED(tErr);
     tErr = __arm_mask_validate(NULL, 
                                             NULL, 
                                             this.Target.ptTile, 
