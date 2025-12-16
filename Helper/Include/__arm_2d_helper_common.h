@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        08. Dec 2025
- * $Revision:    V.1.8.12
+ * $Date:        16. Dec 2025
+ * $Revision:    V.1.9.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -227,8 +227,12 @@ extern "C" {
                 arm_2d_gray8_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_gray8_tile_copy_with_src_mask
-#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_target_mask  \
-                arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask
+#   define arm_2dp_tile_copy_with_transformed_mask_and_opacity                  \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
                 arm_2dp_gray8_tile_transform_only
 #   define arm_2d_tile_scaling_only                                             \
@@ -488,8 +492,12 @@ extern "C" {
                 arm_2d_rgb565_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_rgb565_tile_copy_with_src_mask
-#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_target_mask  \
-                arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask
+#   define arm_2dp_tile_copy_with_transformed_mask_and_opacity                  \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
                 arm_2dp_rgb565_tile_transform_only
 #   define arm_2d_tile_scaling_only                                             \
@@ -749,8 +757,12 @@ extern "C" {
                 arm_2d_cccn888_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_cccn888_tile_copy_with_src_mask
-#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_target_mask  \
-                arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask
+#   define arm_2dp_tile_copy_with_transformed_mask_and_opacity                  \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
                 arm_2dp_cccn888_tile_transform_only
 #   define arm_2d_tile_scaling_only                                             \
