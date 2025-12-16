@@ -5347,7 +5347,7 @@ arm_2d_region_t *arm_2d_calculate_reference_target_region_after_transform(
 /*========================= POST INCLUDES ====================================*/
 #include "__arm_2d_tile_2xssaa_transform.h"
 #include "__arm_2d_fill_colour_with_transformed_mask_and_target_mask.h"
-#include "__arm_2d_tile_copy_with_source_mask_transformed_mask_and_target_mask.h"
+#include "__arm_2d_tile_copy_with_transformed_mask_source_mask_and_target_mask.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

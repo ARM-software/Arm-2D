@@ -18,7 +18,7 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_tile_copy_with_source_mask_transformed_mask_and_target_mask.h
+ * Title:        __arm_2d_tile_copy_with_transformed_mask_source_mask_and_target_mask.h
  * Description:  The header file of APIs for tile-copy-with-source-mask-transformed-
  *               -mask-and-target-mask
  * 
@@ -67,7 +67,7 @@ extern "C" {
 %}
 
 
-#define arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_opacity(\
+#define arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -80,7 +80,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_opacity_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -97,7 +97,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_opacity(\
+#define arm_2d_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -110,7 +110,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_opacity_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -127,7 +127,7 @@ extern "C" {
     })
 
 
-#define arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_target_mask(\
+#define arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -141,7 +141,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -158,7 +158,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_target_mask(\
+#define arm_2d_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -172,7 +172,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
     ({                                                                          \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -189,7 +189,7 @@ extern "C" {
     })
 
 
-#define arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_target_mask_and_opacity(\
+#define arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -203,7 +203,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_target_mask_and_opacity_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -221,7 +221,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_target_mask_and_opacity(\
+#define arm_2d_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -235,7 +235,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_target_mask_and_opacity_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -311,6 +311,7 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
     ] 
 %}
 {%- for has_opacity in [
+    (''),
     ('_and_opacity'),
     ('_and_target_mask'),
     ('_target_mask_and_opacity' ),
@@ -341,11 +342,11 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
  */
 extern
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_prepare(
+arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_{{has_opacity}}_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSourceMask,
-                                        const arm_2d_tile_t *ptTransMask,
                                     {%- if has_opacity == '_target_mask_and_opacity' or  has_opacity == '_and_target_mask' %}
                                         const arm_2d_tile_t *ptTargetMask,
                                     {%- endif %}

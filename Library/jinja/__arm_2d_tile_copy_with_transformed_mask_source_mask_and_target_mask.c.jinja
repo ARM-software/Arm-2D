@@ -18,7 +18,7 @@
 
  /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_tile_copy_with_source_mask_transformed_mask_and_target_mask.c
+ * Title:        __arm_2d_tile_copy_with_transformed_mask_source_mask_and_target_mask.c
  * Description:  APIs for tile-copy-with-source-mask-transformed_mask_and_target_mask
  *
  * $Date:        16 Dec 2025
@@ -112,11 +112,11 @@ extern "C" {
  */
 
 ARM_NONNULL(2,3,4,5)
-arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_prepare(
+arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask_source_mask{{has_opacity}}_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
+                                        const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSourceMask,
-                                        const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptTargetMask,
                                         const arm_2d_point_float_t tCentre,
                                         float fAngle,
@@ -169,7 +169,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK{{has_opacity | upper}}_{{colour_name | upper}};
+    OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK{{has_opacity | upper}}_{{colour_name | upper}};
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptTransMask;
@@ -198,7 +198,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask
  */
 
 __STATIC_INLINE
-void __{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_process_point( 
+void __{{colour_name}}_tile_copy_with_transformed_mask_source_mask{{has_opacity}}_process_point( 
                                             arm_2d_point_fx_t  *ptFxPoint,
                                             arm_2d_region_t *ptOrigValidRegion,
                                             uint8_t *pchOrigin,
@@ -345,7 +345,7 @@ void __{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}
 
 
 __WEAK
-void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}(
+void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask_source_mask{{has_opacity}}(
                                     __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo
                                 {%- if has_opacity == '_target_mask_and_opacity' -%}
@@ -480,7 +480,7 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{
                 continue;
             }
 
-            __{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_process_point (
+            __{{colour_name}}_tile_copy_with_transformed_mask_source_mask{{has_opacity}}_process_point (
                             &tPointFast,
                             ptOriginValidRegion,
                             pchOrigin,
@@ -509,7 +509,7 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{
  * The backend entry
  */
 arm_fsm_rt_t 
-__arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask{{has_opacity}}(
+__arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask_source_mask{{has_opacity}}(
     __arm_2d_sub_task_t *ptTask)
 {
     ARM_2D_IMPL(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, ptTask->ptOP);
@@ -577,14 +577,14 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask{{has_opa
     {%- if has_opacity == '_target_mask_and_opacity' %}
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
-            __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_target_mask(   
+            __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_target_mask(   
                 &(ptTask->Param.tCopyOrigMaskExtra),
                 &this.tTransform);
         } else 
     #endif
     {%- endif %}
         {
-            __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}(   
+            __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask_source_mask{{has_opacity}}(   
                 &(ptTask->Param.tCopyOrigMaskExtra),
                 &this.tTransform
             {%- if has_opacity == '_target_mask_and_opacity' -%}
@@ -603,14 +603,14 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask{{has_opa
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK{{has_opacity | upper}}_{{colour_name | upper}},
-    __arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask{{has_opacity}});   /* Default SW Implementation */
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK{{has_opacity | upper}}_{{colour_name | upper}},
+    __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask_source_mask{{has_opacity}});   /* Default SW Implementation */
 
 /*
  * OPCODE
  */
 const __arm_2d_op_info_t 
-ARM_2D_OP_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK{{has_opacity | upper}}_{{colour_name | upper}} = {
+ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK{{has_opacity | upper}}_{{colour_name | upper}} = {
     .Info = {
         .Colour = {
             .chScheme               = ARM_2D_COLOUR_{{colour_name | upper}},
@@ -624,11 +624,11 @@ ARM_2D_OP_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK{{has_opacity | upper}}_{{c
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK{{has_opacity | upper}},
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK{{has_opacity | upper}},
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK{{has_opacity | upper}}_{{colour_name | upper}}),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK{{has_opacity | upper}}_{{colour_name | upper}}),
             .ptFillLike = NULL,
         },
     },

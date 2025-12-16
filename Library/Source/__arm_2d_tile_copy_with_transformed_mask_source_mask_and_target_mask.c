@@ -535,7 +535,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8,
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8,
     __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask);   /* Default SW Implementation */
 
 /*
@@ -556,11 +556,11 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8 = {
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK,
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK,
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8),
             .ptFillLike = NULL,
         },
     },
@@ -1034,7 +1034,7 @@ __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_op
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8,
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GRAY8,
     __arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity);   /* Default SW Implementation */
 
 /*
@@ -1055,11 +1055,11 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GR
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GRAY8),
             .ptFillLike = NULL,
         },
     },
@@ -1516,7 +1516,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565,
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565,
     __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask);   /* Default SW Implementation */
 
 /*
@@ -1537,11 +1537,11 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565 = {
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK,
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK,
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565),
             .ptFillLike = NULL,
         },
     },
@@ -2015,7 +2015,7 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_o
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565,
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RGB565,
     __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity);   /* Default SW Implementation */
 
 /*
@@ -2036,11 +2036,11 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RG
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RGB565),
             .ptFillLike = NULL,
         },
     },
@@ -2497,7 +2497,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888,
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888,
     __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask);   /* Default SW Implementation */
 
 /*
@@ -2518,11 +2518,11 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888 = 
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK,
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK,
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888),
             .ptFillLike = NULL,
         },
     },
@@ -2996,7 +2996,7 @@ __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_
  */
 __WEAK
 def_low_lv_io(  
-    __ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888,
+    __ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_CCCN888,
     __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity);   /* Default SW Implementation */
 
 /*
@@ -3017,11 +3017,11 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_CC
             .bHasExtraSourceMask    = true,
             .bAllowEnforcedColour   = true,
         },
-        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
+        .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY,
         .chInClassOffset    = offsetof(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, tTransform),
         
         .LowLevelIO = {
-            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_SOURCE_MASK_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888),
+            .ptCopyLike = ref_low_lv_io(__ARM_2D_IO_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_CCCN888),
             .ptFillLike = NULL,
         },
     },
