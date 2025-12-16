@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.9
+ * $Revision:    v0.10.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -191,6 +191,25 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_n
 {%- endif %}
 
     ARM_2D_IMPL(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, ptOP);
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+    arm_2d_tile_t *ptSourceRoot = arm_2d_tile_get_root(ptSource, NULL, NULL);
+    if (NULL == ptSourceRoot) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+    if (ptSourceRoot->tInfo.bHasEnforcedColour) {
+        switch (ptSourceRoot->tInfo.tColourInfo.chScheme) {
+            case ARM_2D_COLOUR_{{colour_name | upper}}:
+            case ARM_2D_COLOUR_CCCA8888:
+                /* code */
+                break;
+            
+            default:
+                return ARM_2D_ERR_NOT_SUPPORT;
+                //break;
+        }
+    }
+#endif
 
 {%- if has_source_mask %}
     //! valid source mask tile
@@ -628,6 +647,363 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
     }
 }
 
+/* 
+ * default low level implementation for implicit ccca8888 conversion
+ */
+
+__STATIC_INLINE
+void __ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_name}}_process_point( 
+                                            arm_2d_point_fx_t  *ptFxPoint,
+                                            arm_2d_region_t *ptOrigValidRegion,
+                                            uint8_t *pchOrigin,
+                                            int16_t iOrigStride,
+                                            {{colour_int}} *p{{colour_int_prefix}}Target,
+                                        {%- if has_target_mask %}
+                                            uint8_t *pchTargetMask,
+                                        {%- endif %}
+                                        {%- if has_source_mask %}
+                                            uint8_t *pchExtraSourceMask,
+                                        {%- endif %}
+                                            uint32_t *pwExtraSource
+                                        {%- if has_opacity -%}
+                                            ,
+                                            uint_fast16_t hwOpacity
+                                        {%- endif -%}
+                                        )
+{
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+
+    arm_2d_location_t  tPoint = {
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
+    };
+
+    uint16_t hwAlphaX = (ptFxPoint->q16X >> 8) & 0xFF;
+    uint16_t hwAlphaY = (ptFxPoint->q16Y >> 8) & 0xFF;
+
+    uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    uint8_t chPixelAlpha0 = *pchAlphaSample++;
+    uint8_t chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    uint8_t chPixelAlpha3 = *pchAlphaSample--;
+    uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
+
+    uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
+    uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
+    uint16_t hwAlpha3 = hwAlphaX * hwAlphaY >> 8;
+    uint16_t hwAlpha0 = 256 - hwAlpha1 - hwAlpha2 - hwAlpha3;
+
+    uint32_t wTotalAlpha = 0;
+
+    wTotalAlpha += (chPixelAlpha0 == 255) * ((uint32_t)hwAlpha0 << 8) 
+                + (!(chPixelAlpha0 == 255) * chPixelAlpha0 * hwAlpha0);
+    
+    wTotalAlpha += (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
+                + (!(chPixelAlpha1 == 255) * chPixelAlpha1 * hwAlpha1);
+
+    wTotalAlpha += (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
+                + (!(chPixelAlpha2 == 255) * chPixelAlpha2 * hwAlpha2);
+
+    wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
+                + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
+
+    if (wTotalAlpha) {
+    {%- if has_opacity %}
+        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
+                         + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
+    {%- else %}
+        uint16_t hwAlpha = wTotalAlpha >> 8;
+    {%- endif %}
+
+        uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
+
+    {%- if has_source_mask %}
+        /* apply extra source mask */
+        chTargetAlpha = *pchExtraSourceMask;
+        hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+    {%- endif %}
+
+    {%- if has_target_mask %}
+        /* apply target mask */
+        chTargetAlpha = *pchTargetMask;
+        hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+    {%- endif %}
+
+        hwAlpha = 256 - hwAlpha;
+
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}} (
+            pwExtraSource, 
+            p{{colour_int_prefix}}Target, 
+            hwAlpha);
+    }
+
+#else
+    
+    arm_2d_location_t  tPoint = {
+        .iX = reinterpret_s16_q16(ptFxPoint->q16X),
+        .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
+    };
+
+    uint16_t hwAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == hwAlpha) {
+        return ;
+    }
+#endif
+{%- if has_opacity %}
+    hwAlpha =  (hwAlpha == 255) * hwOpacity
+                + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
+{%- endif %}
+
+    uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
+{%- if has_source_mask %}
+    /* apply extra source mask */
+    chTargetAlpha = *pchExtraSourceMask;
+    hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+            + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+{%- endif %}
+
+{%- if has_target_mask %}
+    /* apply target mask */
+    chTargetAlpha = *pchTargetMask;
+    hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+            + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+{%- endif %}
+
+    hwAlpha = 256 - hwAlpha;
+
+        /* blend the pixel */
+    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}} (
+        pwExtraSource, 
+        p{{colour_int_prefix}}Target, 
+        hwAlpha);
+#endif
+}
+
+
+__WEAK
+void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_name}}(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo
+                                {%- if has_opacity -%}
+                                    ,
+                                    uint_fast16_t chOpacity
+                                {%- endif -%}
+                                )
+{
+    __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .use_as____arm_2d_param_copy_t;
+    
+    int_fast16_t    iHeight = ptParamCopy->tCopySize.iHeight;
+    int_fast16_t    iWidth = ptParamCopy->tCopySize.iWidth;
+    int_fast16_t    iTargetStride = ptParamCopy->tTarget.iStride;
+    {{colour_int}}  *p{{colour_int_prefix}}TargetBase = ptParamCopy->tTarget.pBuffer;
+
+    uint8_t         *pchOrigin = (uint8_t *)
+                                    ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .pBuffer;
+
+    int_fast16_t    iOrigStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .iStride;
+    
+{%- if has_target_mask %}
+    uint8_t         *pchTargetMaskBase = (uint8_t *)
+                                            ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .pBuffer;
+    int_fast16_t    iTargetMaskStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .iStride;
+{%- endif %}
+
+    uint32_t        *pwExtraSourceBase = (uint32_t *)ptParam->tExtraSource.pBuffer;
+    int_fast16_t    iExtraSourceStride = ptParam->tExtraSource.iStride;
+
+{%- if has_source_mask %}
+    uint8_t         *pchExtraSourceMaskBase = ptParam->tExtraSourceMask.pBuffer;
+    int_fast16_t    iExtraSourceMaskStride = ptParam->tExtraSourceMask.iStride;
+{%- endif %}
+
+    float               fAngle = -ptInfo->fAngle;
+    arm_2d_location_t   tOffset = ptParamCopy->tSource.tValidRegion.tLocation;
+    
+    arm_2d_region_t *ptOriginValidRegion = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .tOrigin
+                                                    .tValidRegion;
+
+{%- if has_opacity %}
+    chOpacity += (chOpacity == 255);
+{%- endif %}
+
+    q31_t               invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
+
+    /* get regression parameters over 1st and last column */
+    __arm_2d_transform_regression(
+        &ptParamCopy->tCopySize,
+        &SrcPt,
+        fAngle,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
+        &tOffset,
+        &(ptInfo->tCenter),
+        regrCoefs);
+
+    /* slopes between 1st and last cols */
+    int32_t         slopeY, slopeX;
+
+    slopeY =
+        MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX =
+        MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    for (int_fast16_t y = 0; y < iHeight; y++) {
+        /* 1st column estimates */
+        int32_t         colFirstY =
+            __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t         colFirstX =
+            __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+
+        {{colour_int}} *p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}TargetBase;
+        uint32_t *pwExtraSourceLine = pwExtraSourceBase;
+    {%- if has_source_mask %}
+        uint8_t *pchExtraSourceMaskLine = pchExtraSourceMaskBase;
+    {%- endif %}
+    {%- if has_target_mask %}
+        uint8_t *pchTargetMaskLine = pchTargetMaskBase;
+    {%- endif %}
+        
+        for (int_fast16_t x = 0; x < iWidth; x++) {
+
+        {%- if has_target_mask %}
+            uint8_t *pchTargetMask = pchTargetMaskLine++;
+        {%- endif %}
+        {%- if has_source_mask %}
+            uint8_t *pchExtraSourceMask = pchExtraSourceMaskLine++;
+        {%- endif %}
+
+            if (false 
+            {%- if has_target_mask %}
+                ||  (*pchTargetMask == 0)
+            {%- endif %}
+            {%- if has_source_mask %}
+                ||  (*pchExtraSourceMask == 0)
+            {%- endif %}
+            ) {
+                *pwExtraSourceLine++;
+                p{{colour_int_prefix}}TargetLine++;
+                continue;
+            }
+
+            arm_2d_point_fx_t tPointFast;
+
+            tPointFast.q16X = __QDADD(colFirstX, slopeX * x);
+            tPointFast.q16Y = __QDADD(colFirstY, slopeY * x);
+
+        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_CALIB_IN_TRANSFORM__)
+            if (tPointFast.q16X > 0) {
+                tPointFast.q16X += __CALIBFX;
+            } else {
+                tPointFast.q16X -= __CALIBFX;
+            }
+            if (tPointFast.q16Y > 0) {
+                tPointFast.q16Y += __CALIBFX;
+            } else {
+                tPointFast.q16Y -= __CALIBFX;
+            }
+        #endif
+
+            arm_2d_location_t tOriginLocation = {
+                .iX = reinterpret_s16_q16(tPointFast.q16X) 
+                    - ptOriginValidRegion->tLocation.iX,
+                .iY = reinterpret_s16_q16(tPointFast.q16Y)
+                    - ptOriginValidRegion->tLocation.iY,
+            };
+
+            if (    (tOriginLocation.iX < 0)
+                ||  (tOriginLocation.iY < 0)
+                ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
+                ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
+                p{{colour_int_prefix}}TargetLine++;
+                continue;
+            }
+
+            __ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_name}}_process_point (
+                            &tPointFast,
+                            ptOriginValidRegion,
+                            pchOrigin,
+                            iOrigStride,
+                            p{{colour_int_prefix}}TargetLine++,
+                        {%- if has_target_mask %}
+                            pchTargetMask,
+                        {%- endif %}
+                        {%- if has_source_mask %}
+                            pchExtraSourceMask,
+                        {%- endif %}
+                            pwExtraSourceLine++
+                        {%- if has_opacity -%}
+                            ,
+                            chOpacity
+                        {%- endif -%}
+                        );
+        }
+
+        p{{colour_int_prefix}}TargetBase           += iTargetStride;
+    {%- if has_target_mask %}
+        pchTargetMaskBase       += iTargetMaskStride;
+    {%- endif %}
+        pwExtraSourceBase       += iExtraSourceStride;
+    {%- if has_source_mask %}
+        pchExtraSourceMaskBase  += iExtraSourceMaskStride;
+    {%- endif %}
+    }
+}
 
 
 /*
@@ -640,9 +1016,18 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name}}(
     ARM_2D_IMPL(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, ptTask->ptOP);
     assert(ARM_2D_COLOUR_{{colour_name | upper}} == OP_CORE.ptOp->Info.Colour.chScheme);
 
+{%- if has_opacity %}
     if (0 == this.chOpacity) {
         return arm_fsm_rt_cpl;
     }
+
+#if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
+    else if (255 == this.chOpacity) {
+        return __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name_no_opa}}(   
+                ptTask);
+    }
+#endif
+{%- endif %}
 
     ARM_TYPE_CONVERT(ptTask->Param
                         .tCopyOrigMaskExtra
@@ -704,15 +1089,20 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name}}(
     } else 
 #endif
     {
-    {%- if has_opacity %}
-    #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
-        if (255 == this.chOpacity) {
-            __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_name_no_opa}}(   
+    #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+        arm_2d_tile_t *ptExtraSourceRoot = arm_2d_tile_get_root(this.ExtraSource.ptTile, NULL, NULL);
+        assert(NULL != ptExtraSourceRoot);
+        if (ARM_2D_COLOUR_CCCA8888 == ptExtraSourceRoot->tInfo.tColourInfo.chScheme) {
+            __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_name}}(   
                 &(ptTask->Param.tCopyOrigMaskExtra),
-                &this.tTransform);
+                &this.tTransform
+            {%- if has_opacity -%}
+                ,
+                this.chOpacity
+            {%- endif -%}
+            );
         } else 
     #endif
-    {%- endif %}
         {
             __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}(   
                 &(ptTask->Param.tCopyOrigMaskExtra),
