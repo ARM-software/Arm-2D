@@ -689,25 +689,27 @@ ARM_PRIVATE(
     arm_2d_tile_t           *ptDefaultFrameBuffer;
     
     union {
-        arm_2d_op_t                         tBasic;
-        arm_2d_op_fill_cl_t                 tFillColour;
-        arm_2d_op_fill_cl_msk_t             tFillColourMask;
-        arm_2d_op_fill_cl_opc_t             tFillColourOpacity;
-        arm_2d_op_src_t                     tWithSource;
+        arm_2d_op_t                                         tBasic;
+        arm_2d_op_fill_cl_t                                 tFillColour;
+        arm_2d_op_fill_cl_msk_t                             tFillColourMask;
+        arm_2d_op_fill_cl_opc_t                             tFillColourOpacity;
+        arm_2d_op_src_t                                     tWithSource;
         
-        arm_2d_op_alpha_t                   tAlpha;
-        arm_2d_op_alpha_cl_key_t            tAlphaColourKeying;
-        arm_2d_op_fill_cl_msk_opc_t   tAlphaFillColourMaskOpacity;
-        arm_2d_op_cp_msk_t                  tCopyMasks;
+        arm_2d_op_alpha_t                                   tAlpha;
+        arm_2d_op_alpha_cl_key_t                            tAlphaColourKeying;
+        arm_2d_op_fill_cl_msk_opc_t                         tAlphaFillColourMaskOpacity;
+        arm_2d_op_cp_msk_t                                  tCopyMasks;
         
-        arm_2d_op_drw_patn_t                tDrawPattern;
-        arm_2d_op_trans_t                   tTransform;
-        arm_2d_op_trans_opa_t               tTransformOpacity;
-        arm_2d_op_trans_msk_opa_t           tTransformMaskOpacity;
+        arm_2d_op_drw_patn_t                                tDrawPattern;
+        arm_2d_op_trans_t                                   tTransform;
+        arm_2d_op_trans_opa_t                               tTransformOpacity;
+        arm_2d_op_trans_msk_opa_t                           tTransformMaskOpacity;
+        arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t   tTileCopySourceMaskTransformMaskTargetMaskOpacity;
         
-        arm_2d_op_msk_t                     tBasicMask;
-        arm_2d_op_src_msk_t                 tSourceMask;
-        arm_2d_op_src_orig_msk_t            tSourceOrigMask;
+        arm_2d_op_msk_t                                     tBasicMask;
+        arm_2d_op_src_msk_t                                 tSourceMask;
+        arm_2d_op_src_orig_msk_t                            tSourceOrigMask;
+        
     } DefaultOP;
 )};
 
