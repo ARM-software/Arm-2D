@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_transformed_mask_and_target_mask.c
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
- * $Date:        11 Dec 2025
- * $Revision:    v1.1.1
+ * $Date:        16 Dec 2025
+ * $Revision:    v1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -133,7 +133,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask_pre
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8;
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
@@ -995,7 +995,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask_pr
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565;
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
@@ -1857,7 +1857,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask_p
         return ARM_2D_ERR_BUSY;
     }
 
-    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888;
+    OP_CORE.ptOp = &ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888;
 
     this.Source.ptTile = &this.Origin.tDummySource;
     this.Origin.ptTile = ptMask;
