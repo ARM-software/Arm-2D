@@ -67,8 +67,7 @@ extern "C" {
 #   define ARM_2D_DEMO_BLINK_USE_QOI    1
 #endif
 
-#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)                          \
- || !__ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
 #   undef ARM_2D_DEMO_BLINK_USE_QOI
 #   define ARM_2D_DEMO_BLINK_USE_QOI        0
 #endif
