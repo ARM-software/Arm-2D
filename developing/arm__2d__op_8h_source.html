@@ -136,7 +136,7 @@ $(document).ready(function(){initNavTree('arm__2d__op_8h_source.html',''); initR
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *               interface header files </span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Date:        16 Dec 2025</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * $Revision:    V.1.15.0</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * $Revision:    V.1.16.0</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -1095,31 +1095,49 @@ $(document).ready(function(){initNavTree('arm__2d__op_8h_source.html',''); initR
 <div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_CCCN888;</div>
 <div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span> </div>
 <div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8;</div>
+<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8;</div>
 <div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span> </div>
 <div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565;</div>
+<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565;</div>
 <div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span> </div>
 <div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888;</div>
+<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888;</div>
 <div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span> </div>
 <div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GRAY8;</div>
+<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8;</div>
 <div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span> </div>
 <div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RGB565;</div>
+<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565;</div>
 <div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span> </div>
 <div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span><span class="keyword">extern</span></div>
-<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_CCCN888;</div>
-<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span><span class="comment">/*============================ PROTOTYPES ====================================*/</span></div>
-<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span> </div>
-<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span> </div>
-<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>}</div>
-<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888;</div>
+<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span> </div>
+<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8;</div>
+<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span> </div>
+<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565;</div>
 <div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span> </div>
-<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span> </div>
-<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888;</div>
+<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span> </div>
+<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GRAY8;</div>
+<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span> </div>
+<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RGB565;</div>
+<div class="line"><a id="l01016" name="l01016"></a><span class="lineno"> 1016</span> </div>
+<div class="line"><a id="l01017" name="l01017"></a><span class="lineno"> 1017</span><span class="keyword">extern</span></div>
+<div class="line"><a id="l01018" name="l01018"></a><span class="lineno"> 1018</span><span class="keyword">const</span> <a class="code hl_union" href="group__gKernel.html#union____arm__2d__op__info__t" title="A descriptive header for 2D operations.">__arm_2d_op_info_t</a> ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_CCCN888;</div>
+<div class="line"><a id="l01019" name="l01019"></a><span class="lineno"> 1019</span><span class="comment">/*============================ PROTOTYPES ====================================*/</span></div>
+<div class="line"><a id="l01020" name="l01020"></a><span class="lineno"> 1020</span> </div>
+<div class="line"><a id="l01021" name="l01021"></a><span class="lineno"> 1021</span> </div>
+<div class="line"><a id="l01022" name="l01022"></a><span class="lineno"> 1022</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span>}</div>
+<div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span> </div>
+<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span> </div>
+<div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
