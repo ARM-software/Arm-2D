@@ -83,6 +83,38 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour_with_target_mask(
                                             uint8_t chOpacity);
 
 static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_and_source_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity);
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_source_mask_and_target_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity);
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_and_target_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity);
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity);
+
+static
 arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_with_mask( 
                                             spin_zoom_widget_t *ptThis, 
                                             const arm_2d_tile_t *ptTile,
@@ -115,6 +147,22 @@ spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR = {
 
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK = {
     .fnTransform = &__spin_zoom_widget_transform_mode_fill_colour_with_target_mask,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_source_mask_and_target_mask,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_and_source_mask,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_and_target_mask,
+};
+
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK = {
+    .fnTransform = &__spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask,
 };
 
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_MASK = {
@@ -423,6 +471,186 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour_with_target_mask(
 
     return arm_fsm_rt_cpl;
 
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_source_mask_and_target_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+
+    arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
+    if (!this.tCFG.bUseFloatPointInCentre) {
+        tCentre.fX = this.tCFG.Source.tCentre.iX;
+        tCentre.fY = this.tCFG.Source.tCentre.iY;
+    }
+
+    arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+            &this.OPCODE.tTileCopyWithTransformedMask,
+            this.tCFG.Extra.ptTile,
+            this.tCFG.Extra.ptMask,
+            this.tCFG.Source.ptMask,
+            ptTile,
+            this.tCFG.Target.ptMask,
+            ptRegion,
+            tCentre,
+            ARM_2D_ANGLE(this.tHelper.fAngle),
+            this.tHelper.fScaleX,
+            this.tHelper.fScaleY,
+            this.tCFG.Source.tColourToFill,
+            chOpacity,
+            ptPivot);
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_and_target_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+
+    arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
+    if (!this.tCFG.bUseFloatPointInCentre) {
+        tCentre.fX = this.tCFG.Source.tCentre.iX;
+        tCentre.fY = this.tCFG.Source.tCentre.iY;
+    }
+
+    arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity(
+            &this.OPCODE.tTileCopyWithTransformedMask,
+            this.tCFG.Extra.ptTile,
+            this.tCFG.Source.ptMask,
+            ptTile,
+            this.tCFG.Target.ptMask,
+            ptRegion,
+            tCentre,
+            ARM_2D_ANGLE(this.tHelper.fAngle),
+            this.tHelper.fScaleX,
+            this.tHelper.fScaleY,
+            this.tCFG.Source.tColourToFill,
+            chOpacity,
+            ptPivot);
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask_and_source_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+
+    arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
+    if (!this.tCFG.bUseFloatPointInCentre) {
+        tCentre.fX = this.tCFG.Source.tCentre.iX;
+        tCentre.fY = this.tCFG.Source.tCentre.iY;
+    }
+
+    arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity(
+            &this.OPCODE.tTileCopyWithTransformedMask,
+            this.tCFG.Extra.ptTile,
+            this.tCFG.Extra.ptMask,
+            this.tCFG.Source.ptMask,
+            ptTile,
+            ptRegion,
+            tCentre,
+            ARM_2D_ANGLE(this.tHelper.fAngle),
+            this.tHelper.fScaleX,
+            this.tHelper.fScaleY,
+            this.tCFG.Source.tColourToFill,
+            chOpacity,
+            ptPivot);
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
+}
+
+static
+arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_mask( 
+                                            spin_zoom_widget_t *ptThis, 
+                                            const arm_2d_tile_t *ptTile,
+                                            const arm_2d_region_t *ptRegion,
+                                            const arm_2d_point_float_t *ptPivot,
+                                            uint8_t chOpacity)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptTile);
+
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+
+    arm_2d_point_float_t tCentre = this.tCFG.Source.tCentreFloat;
+    if (!this.tCFG.bUseFloatPointInCentre) {
+        tCentre.fX = this.tCFG.Source.tCentre.iX;
+        tCentre.fY = this.tCFG.Source.tCentre.iY;
+    }
+
+    arm_2dp_tile_copy_with_transformed_mask_and_opacity(
+            &this.OPCODE.tTileCopyWithTransformedMask,
+            this.tCFG.Extra.ptTile,
+            this.tCFG.Source.ptMask,
+            ptTile,
+            ptRegion,
+            tCentre,
+            ARM_2D_ANGLE(this.tHelper.fAngle),
+            this.tHelper.fScaleX,
+            this.tHelper.fScaleY,
+            this.tCFG.Source.tColourToFill,
+            chOpacity,
+            ptPivot);
+
+    if (NULL != this.tCFG.ptScene) {
+        arm_2d_helper_dirty_region_transform_update(&this.tHelper,
+                                                    ptRegion,
+                                                    bIsNewFrame);
+    }
+
+    ARM_2D_OP_WAIT_ASYNC(&this.OPCODE);
+
+    return arm_fsm_rt_cpl;
 }
 
 static

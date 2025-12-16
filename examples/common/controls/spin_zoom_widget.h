@@ -106,6 +106,11 @@ typedef struct spin_zoom_widget_cfg_t {
         const arm_2d_tile_t     *ptMask;
     } Target;
 
+    struct {
+        const arm_2d_tile_t     *ptTile;
+        const arm_2d_tile_t     *ptMask;
+    } Extra;
+
     spin_zoom_widget_mode_t *ptTransformMode;
 
     struct {
@@ -140,10 +145,11 @@ struct spin_zoom_widget_t {
 
 ARM_PRIVATE(
     union {
-        arm_2d_op_fill_cl_msk_opa_trans_t           tFillColourTransform;
-        arm_2d_op_fill_cl_trans_msk_des_msk_opa_t   tFillColourTransformTargetMask;
-        arm_2d_op_trans_msk_opa_t                   tTileTransform;
-        arm_2d_op_trans_opa_t                       tTile;
+        arm_2d_op_fill_cl_msk_opa_trans_t                   tFillColourTransform;
+        arm_2d_op_fill_cl_trans_msk_des_msk_opa_t           tFillColourTransformTargetMask;
+        arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t   tTileCopyWithTransformedMask;
+        arm_2d_op_trans_msk_opa_t                           tTileTransform;
+        arm_2d_op_trans_opa_t                               tTile;
     } OPCODE;
 
     struct {
@@ -162,20 +168,59 @@ ARM_PROTECTED(
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
+/*!
+ * \brief colour filling with a transformed mask
+ */
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR;
 
+/*!
+ * \brief colour filling with a transformed mask and a target mask
+ */
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK;
 
+/*!
+ * \brief tile-transformation with a source mask
+ */
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_MASK;
 
+/*!
+ * \brief tile-transformation
+ */
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_ONLY;
 
+/*!
+ * \brief tile-transformation with colour keying
+ */
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING;
+
+/*!
+ * \brief tile-copy with a transformed mask, a source mask and a target mask
+ */
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK;
+
+/*!
+ * \brief tile-copy with a transformed mask and a source mask
+ */
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK;
+
+/*!
+ * \brief tile-copy with a transformed mask and a target mask
+ */
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK;
+
+/*!
+ * \brief tile-copy with a transformed mask
+ */
+extern
+spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK;
 
 /*============================ PROTOTYPES ====================================*/
 
