@@ -22,7 +22,7 @@
  * Description:  APIs for tile-copy-with-source-mask-transformed_mask_and_target_mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.5.0
+ * $Revision:    v0.9.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -165,7 +165,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
-    if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+    if (!ARM_2D_OP_WAIT_ASYNC(ptThis)) {
         return ARM_2D_ERR_BUSY;
     }
 
@@ -205,7 +205,8 @@ void __{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity
                                             int16_t iOrigStride,
                                             {{colour_int}} *p{{colour_int_prefix}}Target,
                                             uint8_t *pchTargetMask,
-                                            {{colour_int}} {{colour_int_prefix}}MaskColour
+                                            {{colour_int}} *p{{colour_int_prefix}}ExtraSource,
+                                            uint8_t *pchExtraSourceMask
                                         {%- if has_opacity == 'target_mask_and_opacity' -%}
                                             ,
                                             uint_fast16_t hwOpacity
@@ -287,12 +288,21 @@ void __{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity
         uint16_t hwAlpha = wTotalAlpha >> 8;
     {%- endif %}
 
-        /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
+        /* apply extra source mask */
+        uint8_t chTargetAlpha = *pchExtraSourceMask;
+        hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+
+        /* apply target mask */
+        chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
         
-        __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( &{{colour_int_prefix}}MaskColour, p{{colour_int_prefix}}Target, hwAlpha);
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( 
+            p{{colour_int_prefix}}ExtraSource, 
+            p{{colour_int_prefix}}Target, 
+            hwAlpha);
     }
 
 #else
@@ -302,32 +312,41 @@ void __{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity
         .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint32_t wPixelAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
+    uint16_t hwAlpha = pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
 #if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
-    if (0 == wPixelAlpha) {
+    if (0 == hwAlpha) {
         return ;
     }
 #endif
 
 {% if has_opacity == 'target_mask_and_opacity' %}
-    wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
-                + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
+    hwAlpha =  (hwAlpha == 255) * hwOpacity
+                + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 {%- endif %}
 
-    uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+    /* apply extra source mask */
+    uint8_t chTargetAlpha = *pchExtraSourceMask;
+    hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+            + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( &{{colour_int_prefix}}MaskColour, p{{colour_int_prefix}}Target, wPixelAlpha);
+    /* apply target mask */
+    chTargetAlpha = *pchTargetMask;
+    hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
+            + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
+    /* blend the pixel */
+    __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( 
+        p{{colour_int_prefix}}ExtraSource, 
+        p{{colour_int_prefix}}Target, 
+        hwAlpha);
 #endif
 }
 
 
 __WEAK
 void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}(
-                                    __arm_2d_param_copy_orig_msk_t *ptParam,
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                     __arm_2d_transform_info_t *ptInfo
                                 {%- if has_opacity == 'target_mask_and_opacity' -%}
                                     ,
@@ -335,51 +354,49 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{
                                 {%- endif -%}
                                 )
 {
-    int_fast16_t    iHeight = ptParam->use_as____arm_2d_param_copy_orig_t
-                                .use_as____arm_2d_param_copy_t
-                                    .tCopySize
-                                        .iHeight;
-    int_fast16_t    iWidth = ptParam->use_as____arm_2d_param_copy_orig_t
-                                .use_as____arm_2d_param_copy_t
-                                    .tCopySize
-                                        .iWidth;
-    int_fast16_t    iTargetStride = ptParam->use_as____arm_2d_param_copy_orig_t
-                                .use_as____arm_2d_param_copy_t
-                                    .tTarget
-                                        .iStride;
-    {{colour_int}}        *p{{colour_int_prefix}}TargetBase = ptParam->use_as____arm_2d_param_copy_orig_t
-                                        .use_as____arm_2d_param_copy_t
-                                            .tTarget
-                                                .pBuffer;
+    __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .use_as____arm_2d_param_copy_t;
+    
+    int_fast16_t    iHeight = ptParamCopy->tCopySize.iHeight;
+    int_fast16_t    iWidth = ptParamCopy->tCopySize.iWidth;
+    int_fast16_t    iTargetStride = ptParamCopy->tTarget.iStride;
+    {{colour_int}}  *p{{colour_int_prefix}}TargetBase = ptParamCopy->tTarget.pBuffer;
 
-    uint8_t         *pchOrigin = (uint8_t *)ptParam
-                                        ->use_as____arm_2d_param_copy_orig_t
+    uint8_t         *pchOrigin = (uint8_t *)
+                                    ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
                                             .tOrigin
                                                 .pBuffer;
 
-    int_fast16_t    iOrigStride = ptParam
-                                    ->use_as____arm_2d_param_copy_orig_t
-                                        .tOrigin
-                                            .iStride;
+    int_fast16_t    iOrigStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .iStride;
     
-    uint8_t         *pchTargetMaskBase = (uint8_t *)ptParam->tDesMask.pBuffer;
-    int_fast16_t    iTargetMaskStride = ptParam->tDesMask.iStride;
+    uint8_t         *pchTargetMaskBase = (uint8_t *)
+                                            ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .pBuffer;
+    int_fast16_t    iTargetMaskStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .iStride;
                                         
-    {{colour_int}}            {{colour_int_prefix}}MaskColour = ptInfo->Mask.{{colour_int_prefix}}Colour;
-    float               fAngle = -ptInfo->fAngle;
-    arm_2d_location_t   tOffset = ptParam
-                                    ->use_as____arm_2d_param_copy_orig_t
-                                        .use_as____arm_2d_param_copy_t
-                                            .tSource
-                                                .tValidRegion
-                                                    .tLocation;
-    
-    arm_2d_region_t *ptOriginValidRegion = &ptParam
-                                        ->use_as____arm_2d_param_copy_orig_t
-                                            .tOrigin
-                                                .tValidRegion;
+    {{colour_int}}        *p{{colour_int_prefix}}ExtraSourceBase = ({{colour_int}} *)ptParam->tExtraSource.pBuffer;
+    int_fast16_t    iExtraSourceStride = ptParam->tExtraSource.iStride;
 
-{%- if has_opacity == 'target_mask_and_opacity' -%}
+    uint8_t         *pchExtraSourceMaskBase = ptParam->tExtraSourceMask.pBuffer;
+    int_fast16_t    iExtraSourceMaskStride = ptParam->tExtraSourceMask.iStride;
+
+    float               fAngle = -ptInfo->fAngle;
+    arm_2d_location_t   tOffset = ptParamCopy->tSource.tValidRegion.tLocation;
+    
+    arm_2d_region_t *ptOriginValidRegion = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .tOrigin
+                                                    .tValidRegion;
+
+{%- if has_opacity == 'target_mask_and_opacity' %}
     chOpacity += (chOpacity == 255);
 {%- endif %}
 
@@ -389,10 +406,7 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{
 
     /* get regression parameters over 1st and last column */
     __arm_2d_transform_regression(
-        &ptParam
-            ->use_as____arm_2d_param_copy_orig_t
-                .use_as____arm_2d_param_copy_t
-                    .tCopySize,
+        &ptParamCopy->tCopySize,
         &SrcPt,
         fAngle,
         ptInfo->fScaleX,
@@ -418,12 +432,17 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{
 
 
         {{colour_int}} *p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}TargetBase;
+        {{colour_int}} *p{{colour_int_prefix}}ExtraSourceLine = p{{colour_int_prefix}}ExtraSourceBase;
+        uint8_t *pchExtraSourceMaskLine = pchExtraSourceMaskBase;
         uint8_t *pchTargetMaskLine = pchTargetMaskBase;
-
+        
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
             uint8_t *pchTargetMask = pchTargetMaskLine++;
-            if (*pchTargetMask == 0) {
+            uint8_t *pchExtraSourceMask = pchExtraSourceMaskLine++;
+
+            if (*pchTargetMask == 0 || *pchExtraSourceMask == 0) {
+                *p{{colour_int_prefix}}ExtraSourceLine++;
                 p{{colour_int_prefix}}TargetLine++;
                 continue;
             }
@@ -468,7 +487,8 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{
                             iOrigStride,
                             p{{colour_int_prefix}}TargetLine++,
                             pchTargetMask,
-                            {{colour_int_prefix}}MaskColour
+                            p{{colour_int_prefix}}ExtraSourceLine++,
+                            pchExtraSourceMask
                         {%- if has_opacity == 'target_mask_and_opacity' -%}
                             ,
                             chOpacity
@@ -476,8 +496,10 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{
                         );
         }
 
-        p{{colour_int_prefix}}TargetBase       += iTargetStride;
-        pchTargetMaskBase   += iTargetMaskStride;
+        p{{colour_int_prefix}}TargetBase           += iTargetStride;
+        pchTargetMaskBase       += iTargetMaskStride;
+        p{{colour_int_prefix}}ExtraSourceBase      += iExtraSourceStride;
+        pchExtraSourceMaskBase  += iExtraSourceMaskStride;
     }
 }
 
@@ -498,17 +520,23 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask_{{has_op
     }
 
     ARM_TYPE_CONVERT(ptTask->Param
-                        .tCopyOrigMask
-                            .use_as____arm_2d_param_copy_orig_t
-                                .tOrigin
-                                    .pBuffer, intptr_t)
+                        .tCopyOrigMaskExtra
+                            .use_as____arm_2d_param_copy_orig_msk_t
+                                .use_as____arm_2d_param_copy_orig_t
+                                    .tOrigin
+                                        .pBuffer, intptr_t)
         -= ptTask->Param
-                .tCopyOrigMask
-                    .use_as____arm_2d_param_copy_orig_t
-                        .tOrigin
-                            .nOffset;
+                .tCopyOrigMaskExtra
+                    .use_as____arm_2d_param_copy_orig_msk_t
+                        .use_as____arm_2d_param_copy_orig_t
+                            .tOrigin
+                                .nOffset;
 
-    arm_2d_err_t tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.Mask.ptTargetSide, 0 );
+    arm_2d_err_t tErr = __arm_mask_validate(NULL, 
+                                            NULL, 
+                                            this.Target.ptTile, 
+                                            this.Mask.ptTargetSide, 
+                                            0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
@@ -516,24 +544,30 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask_{{has_op
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
-    tErr = __arm_mask_validate(NULL, NULL, this.Target.ptTile, this.ExtraSource.ptMask, 0 );
+    tErr = __arm_mask_validate( NULL, 
+                                NULL, 
+                                this.Target.ptTile, 
+                                this.ExtraSource.ptMask, 
+                                0 );
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
     
+    __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
+        = &ptTask->Param
+            .tCopyOrigMaskExtra
+                .use_as____arm_2d_param_copy_orig_msk_t;
+
 #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
     bool bIsMaskChannel8In32 = (ARM_2D_CHANNEL_8in32
-            ==  ptTask->Param.tCopyOrigMask
-                                .use_as____arm_2d_param_copy_orig_t
-                                    .tOrigin.tColour
-                                        .chScheme);
+            ==  ptParamCopyOrigMask->use_as____arm_2d_param_copy_orig_t
+                    .tOrigin
+                        .tColour
+                            .chScheme);
     
-    bIsMaskChannel8In32 = bIsMaskChannel8In32 &&
-        (ARM_2D_CHANNEL_8in32 ==  ptTask->Param.tCopyOrigMask
-                                                    .tDesMask
-                                                        .tColour
-                                                            .chScheme);
-
+    bIsMaskChannel8In32 =   bIsMaskChannel8In32 
+                        &&  (   ARM_2D_CHANNEL_8in32 
+                            ==  ptParamCopyOrigMask->tDesMask.tColour.chScheme);
 
     if (bIsMaskChannel8In32) {
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
@@ -544,14 +578,14 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_source_mask_transformed_mask_{{has_op
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
             __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_and_target_mask(   
-                &(ptTask->Param.tCopyOrigMask),
+                &(ptTask->Param.tCopyOrigMaskExtra),
                 &this.tTransform);
         } else 
     #endif
     {%- endif %}
         {
             __arm_2d_impl_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}(   
-                &(ptTask->Param.tCopyOrigMask),
+                &(ptTask->Param.tCopyOrigMaskExtra),
                 &this.tTransform
             {%- if has_opacity == 'target_mask_and_opacity' -%}
                 ,
