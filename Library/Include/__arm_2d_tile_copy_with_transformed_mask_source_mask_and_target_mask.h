@@ -24,7 +24,7 @@
  *               -source-mask-and-target-mask
  * 
  * $Date:        16 Dec 2025
- * $Revision:    v0.10.1
+ * $Revision:    v0.10.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -62,8 +62,8 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask(                \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -74,8 +74,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(        \
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -89,8 +89,8 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask(                 \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -101,8 +101,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(        \
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -115,8 +115,8 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity(    \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -127,8 +127,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -143,8 +143,8 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_and_opacity(     \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -155,8 +155,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -170,9 +170,9 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -183,9 +183,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -199,9 +199,9 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_and_source_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -212,9 +212,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -227,9 +227,9 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -240,9 +240,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -257,9 +257,9 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -270,9 +270,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -286,8 +286,8 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -299,8 +299,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -315,8 +315,8 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_and_target_mask(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -328,8 +328,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -344,8 +344,8 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -357,8 +357,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -374,8 +374,8 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -387,8 +387,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -403,9 +403,9 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -417,9 +417,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -434,9 +434,9 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -448,9 +448,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -465,9 +465,9 @@ extern "C" {
 
 #define arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -479,9 +479,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -497,9 +497,9 @@ extern "C" {
 
 #define arm_2d_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -511,9 +511,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -528,8 +528,8 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask(                \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -540,8 +540,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(        \
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -555,8 +555,8 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask(                 \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -567,8 +567,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(        \
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -581,8 +581,8 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity(    \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -593,8 +593,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -609,8 +609,8 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_and_opacity(     \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -621,8 +621,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -636,9 +636,9 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -649,9 +649,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -665,9 +665,9 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_and_source_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -678,9 +678,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -693,9 +693,9 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -706,9 +706,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -723,9 +723,9 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -736,9 +736,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -752,8 +752,8 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -765,8 +765,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -781,8 +781,8 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_and_target_mask(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -794,8 +794,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -810,8 +810,8 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -823,8 +823,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -840,8 +840,8 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -853,8 +853,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -869,9 +869,9 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -883,9 +883,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -900,9 +900,9 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -914,9 +914,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -931,9 +931,9 @@ extern "C" {
 
 #define arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -945,9 +945,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -963,9 +963,9 @@ extern "C" {
 
 #define arm_2d_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -977,9 +977,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -994,8 +994,8 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask(                \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1006,8 +1006,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(        \
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1021,8 +1021,8 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask(                 \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1033,8 +1033,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(        \
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1047,8 +1047,8 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity(    \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1059,8 +1059,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1075,8 +1075,8 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_and_opacity(     \
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1087,8 +1087,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1102,9 +1102,9 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1115,9 +1115,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1131,9 +1131,9 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_and_source_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1144,9 +1144,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1159,9 +1159,9 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1172,9 +1172,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1189,9 +1189,9 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
                                         __CENTRE,                               \
@@ -1202,9 +1202,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
                                         (float)(__SCALE_X),                     \
@@ -1218,8 +1218,8 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1231,8 +1231,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1247,8 +1247,8 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_and_target_mask(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1260,8 +1260,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1276,8 +1276,8 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1289,8 +1289,8 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1306,8 +1306,8 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
-                                        __SRC_TILE_ADDR,                        \
                                         __TRANS_MASK_ADDR,                      \
+                                        __SRC_TILE_ADDR,                        \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1319,8 +1319,8 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
-                                        (__SRC_TILE_ADDR),                      \
                                         (__TRANS_MASK_ADDR),                    \
+                                        (__SRC_TILE_ADDR),                      \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1335,9 +1335,9 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1349,9 +1349,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1366,9 +1366,9 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1380,9 +1380,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1397,9 +1397,9 @@ extern "C" {
 
 #define arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1411,9 +1411,9 @@ extern "C" {
         ({ if (bIsNewFrame) {                                                   \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \
@@ -1429,9 +1429,9 @@ extern "C" {
 
 #define arm_2d_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(\
                                         __CB_ADDR,                              \
+                                        __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
-                                        __TRANS_MASK_ADDR,                      \
                                         __DES_TILE_ADDR,                        \
                                         __DES_MASK_ADDR,                        \
                                         __DES_REGION_ADDR,                      \
@@ -1443,9 +1443,9 @@ extern "C" {
     ({                                                                          \
         arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(\
                                         (__CB_ADDR),                            \
+                                        (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
-                                        (__TRANS_MASK_ADDR),                    \
                                         (__DES_MASK_ADDR),                      \
                                         (__CENTRE),                             \
                                         (float)(__ANGLE),                       \

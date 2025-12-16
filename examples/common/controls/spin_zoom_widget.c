@@ -494,9 +494,9 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_
 
     arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
             &this.OPCODE.tTileCopyWithTransformedMask,
+            this.tCFG.Source.ptMask,
             this.tCFG.Extra.ptTile,
             this.tCFG.Extra.ptMask,
-            this.tCFG.Source.ptMask,
             ptTile,
             this.tCFG.Target.ptMask,
             ptRegion,
@@ -504,7 +504,6 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_
             ARM_2D_ANGLE(this.tHelper.fAngle),
             this.tHelper.fScaleX,
             this.tHelper.fScaleY,
-            this.tCFG.Source.tColourToFill,
             chOpacity,
             ptPivot);
 
@@ -540,8 +539,8 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_
 
     arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity(
             &this.OPCODE.tTileCopyWithTransformedMask,
-            this.tCFG.Extra.ptTile,
             this.tCFG.Source.ptMask,
+            this.tCFG.Extra.ptTile,
             ptTile,
             this.tCFG.Target.ptMask,
             ptRegion,
@@ -549,7 +548,6 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_
             ARM_2D_ANGLE(this.tHelper.fAngle),
             this.tHelper.fScaleX,
             this.tHelper.fScaleY,
-            this.tCFG.Source.tColourToFill,
             chOpacity,
             ptPivot);
 
@@ -585,16 +583,15 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_
 
     arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity(
             &this.OPCODE.tTileCopyWithTransformedMask,
+            this.tCFG.Source.ptMask,
             this.tCFG.Extra.ptTile,
             this.tCFG.Extra.ptMask,
-            this.tCFG.Source.ptMask,
             ptTile,
             ptRegion,
             tCentre,
             ARM_2D_ANGLE(this.tHelper.fAngle),
             this.tHelper.fScaleX,
             this.tHelper.fScaleY,
-            this.tCFG.Source.tColourToFill,
             chOpacity,
             ptPivot);
 
@@ -630,15 +627,14 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_extra_tile_copy_with_transformed_
 
     arm_2dp_tile_copy_with_transformed_mask_and_opacity(
             &this.OPCODE.tTileCopyWithTransformedMask,
-            this.tCFG.Extra.ptTile,
             this.tCFG.Source.ptMask,
+            this.tCFG.Extra.ptTile,
             ptTile,
             ptRegion,
             tCentre,
             ARM_2D_ANGLE(this.tHelper.fAngle),
             this.tHelper.fScaleX,
             this.tHelper.fScaleY,
-            this.tCFG.Source.tColourToFill,
             chOpacity,
             ptPivot);
 
