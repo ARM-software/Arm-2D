@@ -61,14 +61,17 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileEyeball            c_tileEyeballGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileEyeball            c_tileEyeballRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileEyeball            c_tileEyeballCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -87,6 +90,8 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileLeftEyeMask;
 extern const arm_2d_tile_t c_tileEyeballMask;
+extern const arm_2d_tile_t c_tileEyeballCCCA8888;
+extern const arm_2d_tile_t c_tileEyeball;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -540,7 +545,7 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
                     .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
                 },
             },
-            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK,
+            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK,
             .Source = {
                 .ptMask = &c_tileLeftEyeMask,
                 .tCentre = (arm_2d_location_t){
@@ -550,7 +555,10 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
                 },
                 .tColourToFill = GLCD_COLOR_RED,
             },
-            .Target.ptMask = &c_tileEyeballMask,
+            .Extra = {
+                .ptTile = &c_tileEyeball,
+                .ptMask = &c_tileEyeballMask,
+            },
 
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
