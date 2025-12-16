@@ -30,6 +30,10 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   include "arm_2d_example_loaders.h"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -59,6 +63,15 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef ARM_2D_DEMO_BLINK_USE_QOI
+#   define ARM_2D_DEMO_BLINK_USE_QOI    1
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)                          \
+ || !__ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+#   undef ARM_2D_DEMO_BLINK_USE_QOI
+#   define ARM_2D_DEMO_BLINK_USE_QOI        0
+#endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -115,6 +128,13 @@ ARM_PRIVATE(
         spin_zoom_widget_t tEyeBall;
     } Eye;
 
+#if ARM_2D_DEMO_BLINK_USE_QOI
+    arm_qoi_loader_t tQOIEyeball;
+    union {
+        arm_qoi_io_file_loader_t tFile;
+        arm_qoi_io_binary_loader_t tBinary;
+    } LoaderIO;
+#endif
 )
     /* place your public member here */
     
