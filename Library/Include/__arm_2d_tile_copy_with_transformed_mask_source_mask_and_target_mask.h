@@ -18,12 +18,13 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        __arm_2d_tile_copy_with_transformed_mask_source_mask_and_target_mask.h
- * Description:  The header file of APIs for tile-copy-with-source-mask-transformed-
- *               -mask-and-target-mask
+ * Title:        __arm_2d_tile_copy_with_transformed_mask_source_mask_and
+ *               _target_mask.h
+ * Description:  The header file of APIs for tile-copy-with-transformed-mask-
+ *               -source-mask-and-target-mask
  * 
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.3
+ * $Revision:    v0.9.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -679,8 +680,9 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__prepare(
+
+ARM_NONNULL(2,3,4)
+arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -692,7 +694,7 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__prepare(
 
 /*!
  * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ *        (to be transformed), a target mask and a given opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] tCentre the pivot in the source tile
@@ -703,8 +705,9 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__prepare(
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__and_opacity_prepare(
+
+ARM_NONNULL(2,3,4)
+arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -728,8 +731,9 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__and_opac
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__and_target_mask_prepare(
+
+ARM_NONNULL(2,3,4,5)
+arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -754,8 +758,9 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__and_targ
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__target_mask_and_opacity_prepare(
+
+ARM_NONNULL(2,3,4,5)
+arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -779,8 +784,9 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask__target_m
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__prepare(
+
+ARM_NONNULL(2,3,4)
+arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -792,7 +798,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__prepare
 
 /*!
  * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ *        (to be transformed), a target mask and a given opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] tCentre the pivot in the source tile
@@ -803,8 +809,9 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__prepare
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__and_opacity_prepare(
+
+ARM_NONNULL(2,3,4)
+arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -828,8 +835,9 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__and_opa
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__and_target_mask_prepare(
+
+ARM_NONNULL(2,3,4,5)
+arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -854,8 +862,9 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__and_tar
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__target_mask_and_opacity_prepare(
+
+ARM_NONNULL(2,3,4,5)
+arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -879,8 +888,9 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask__target_
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__prepare(
+
+ARM_NONNULL(2,3,4)
+arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -892,7 +902,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__prepar
 
 /*!
  * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ *        (to be transformed), a target mask and a given opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] tCentre the pivot in the source tile
@@ -903,8 +913,9 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__prepar
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__and_opacity_prepare(
+
+ARM_NONNULL(2,3,4)
+arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -928,8 +939,9 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__and_op
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__and_target_mask_prepare(
+
+ARM_NONNULL(2,3,4,5)
+arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
@@ -954,8 +966,9 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__and_ta
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask__target_mask_and_opacity_prepare(
+
+ARM_NONNULL(2,3,4,5)
+arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
