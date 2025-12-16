@@ -82,6 +82,12 @@
 #undef this
 #define this (*ptThis)
 
+#if ARM_2D_DEMO_BLINK_USE_QOI
+#   define EYEBALL      this.tQOIEyeball.vres.tTile
+#else
+#   define EYEBALL      c_tileEyeballMask
+#endif
+
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -414,14 +420,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
                                 &tPivot, 
                                 255);
 
-        arm_2d_align_centre_open(__top_canvas, c_tileEyeballMask.tRegion.tSize) {
+        arm_2d_align_centre_open(__top_canvas, EYEBALL.tRegion.tSize) {
 
             arm_2d_region_t tEyeBallRegion = {
                 .tLocation = {
                     .iX =  __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX,
                     .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,
                 },
-                .tSize = c_tileEyeballMask.tRegion.tSize,
+                .tSize = EYEBALL.tRegion.tSize,
             };
 
             __arm_2d_hint_optimize_for_pfb__(tEyeBallRegion) {
@@ -564,7 +570,7 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
         arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiEyeball, sizeof(c_qoiEyeball));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
-            .bUseHeapForVRES = true,
+            //.bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
 
