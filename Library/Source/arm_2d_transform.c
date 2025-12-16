@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        11 Dec 2025
- * $Revision:    V.2.7.2
+ * $Date:        16 Dec 2025
+ * $Revision:    V.2.8.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -3261,6 +3261,9 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY
 
 #define __ARM_2D_COMPILATION_UNIT
 #include "__arm_2d_fill_colour_with_transformed_mask_and_target_mask.c"
+
+#define __ARM_2D_COMPILATION_UNIT
+#include "__arm_2d_tile_copy_with_source_mask_transformed_mask_and_target_mask.c"
 
 
 #ifdef   __cplusplus
