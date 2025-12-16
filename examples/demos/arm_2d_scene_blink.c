@@ -76,6 +76,8 @@
 #   error Unsupported colour depth!
 #endif
 
+#define EYE_SIZE_RATIO              2.0f
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -300,7 +302,11 @@ ARM_PT_BEGIN(this.ForcusGenerator.chPT)
         chRolling = rand() & 0xFF;
         if (chRolling <= this.ForcusGenerator.chRatio) {
 
-            arm_2d_size_t tSize = c_tileLeftEyeMask.tRegion.tSize;
+            arm_2d_size_t tSize = {
+                .iWidth = (int16_t)((float)c_tileLeftEyeMask.tRegion.tSize.iWidth * EYE_SIZE_RATIO),
+                .iHeight = (int16_t)((float)c_tileLeftEyeMask.tRegion.tSize.iHeight * EYE_SIZE_RATIO),
+            };
+
             tSize.iHeight -= tSize.iHeight >> 2;
             tSize.iWidth -= tSize.iWidth >> 2;
 
@@ -352,12 +358,12 @@ static void __on_scene_blink_frame_start(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_frame_start_xy( &this.Eye.tSocket, 
                                         0, 
-                                        1.0f,
-                                        (float)this.Blink.iEyelidOffset / 100.0f);
+                                        EYE_SIZE_RATIO,
+                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);
     spin_zoom_widget_on_frame_start_xy( &this.Eye.tEyeBall, 
                                         0, 
-                                        1.0f,
-                                        (float)this.Blink.iEyelidOffset / 100.0f);
+                                        EYE_SIZE_RATIO,
+                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);
 
 #if ARM_2D_DEMO_BLINK_USE_QOI
     arm_qoi_loader_on_frame_start(&this.tQOIEyeball);
