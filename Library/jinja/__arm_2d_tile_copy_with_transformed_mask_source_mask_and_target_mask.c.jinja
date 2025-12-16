@@ -93,29 +93,51 @@ extern "C" {
     ] 
 %}
 
-{%- for variants_name, has_opacity, has_source_mask, has_target_mask in [
-    ('_and_source_mask',                        false,  true, false),
-    ('_source_mask_and_opacity',                true,   true, false),
-    ('_source_mask_and_target_mask',            false,  true, true ),
-    ('_source_mask_target_mask_and_opacity',    true,   true, true ),
+{%- for variants_name, variants_name_no_opa, has_opacity, has_source_mask, has_target_mask in [
+    ('',                                        '',                             false,  false, false),
+    ('_and_opacity',                            '',                             true,   false, false),
+    ('_and_target_mask',                        '_and_target_mask',             false,  false, true ),
+    ('_target_mask_and_opacity',                '_and_target_mask',             true,   false, true ),
+
+    ('_and_source_mask',                        '_and_source_mask',             false,  true, false),
+    ('_source_mask_and_opacity',                '_and_source_mask',             true,   true, false),
+    ('_source_mask_and_target_mask',            '_source_mask_and_target_mask', false,  true, true ),
+    ('_source_mask_target_mask_and_opacity',    '_source_mask_and_target_mask', true,   true, true ),
     ] 
 %}
 
-{% if variants_name == '_target_mask_and_opacity' %}
+
+{% if variants_name == '_source_mask_target_mask_and_opacity' %}
 /*---------------------------------------------------------------------------*
  * Tile Copy with Transformed Mask, Source Mask, Target Mask and Opacity     *
  *---------------------------------------------------------------------------*/
-{%- elif variants_name == '_and_target_mask' %}
+{%- elif variants_name == '_source_mask_and_target_mask' %}
 /*---------------------------------------------------------------------------*
- * Tile Copy with Transformed Mask, Source Mask and Target Mask              *
+ * Tile Copy with Transformed Mask, Source Mask, and Target Mask             *
  *---------------------------------------------------------------------------*/
-{%- elif variants_name == '_and_opacity' %}
+{%- elif variants_name == '_source_mask_and_opacity' %}
 /*---------------------------------------------------------------------------*
  * Tile Copy with Transformed Mask, Source Mask and Opacity                  *
  *---------------------------------------------------------------------------*/
-{%- elif variants_name == '' %}
+{%- elif variants_name == '_and_source_mask' %}
 /*---------------------------------------------------------------------------*
  * Tile Copy with Transformed Mask and Source Mask                           *
+ *---------------------------------------------------------------------------*/
+{% elif variants_name == '_target_mask_and_opacity' %}
+/*---------------------------------------------------------------------------*
+ * Tile Copy with Transformed Mask, Target Mask and Opacity                  *
+ *---------------------------------------------------------------------------*/
+{%- elif variants_name == '_and_target_mask' %}
+/*---------------------------------------------------------------------------*
+ * Tile Copy with Transformed Mask and Target Mask                           *
+ *---------------------------------------------------------------------------*/
+{%- elif variants_name == '_and_opacity' %}
+/*---------------------------------------------------------------------------*
+ * Tile Copy with Transformed Mask and Opacity                               *
+ *---------------------------------------------------------------------------*/
+{%- elif variants_name == '' %}
+/*---------------------------------------------------------------------------*
+ * Tile Copy with Transformed Mask                                           *
  *---------------------------------------------------------------------------*/
 {%- endif %}
 
@@ -130,12 +152,22 @@ ARM_NONNULL(2,3,4,5)
 ARM_NONNULL(2,3,4)
 {%- elif variants_name == '_and_source_mask' %}
 ARM_NONNULL(2,3,4)
+{% elif variants_name == '_target_mask_and_opacity' %}
+ARM_NONNULL(2,3,4)
+{%- elif variants_name == '_and_target_mask' %}
+ARM_NONNULL(2,3,4)
+{%- elif variants_name == '_and_opacity' %}
+ARM_NONNULL(2,3)
+{%- elif variants_name == '' %}
+ARM_NONNULL(2,3)
 {%- endif %}
 arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
                                         const arm_2d_tile_t *ptSource,
+                                    {%- if has_source_mask %}
                                         const arm_2d_tile_t *ptSourceMask,
+                                    {%- endif %}
                                     {%- if has_target_mask %}
                                         const arm_2d_tile_t *ptTargetMask,
                                     {%- endif %}
@@ -150,7 +182,9 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_n
                                     )
 {
     assert(NULL != ptSource);
+{%- if has_source_mask %}
     assert(NULL != ptSourceMask);
+{%- endif %}
     assert(NULL != ptTransMask);
 {%- if has_target_mask %}
     assert(NULL != ptTargetMask);
@@ -158,6 +192,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_n
 
     ARM_2D_IMPL(arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t, ptOP);
 
+{%- if has_source_mask %}
     //! valid source mask tile
     if (!__arm_2d_valid_mask(ptSourceMask,  __ARM_2D_MASK_ALLOW_A8 
 //#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -167,8 +202,9 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_n
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+{%- endif %}
 
-    //! valid alpha mask tile
+    //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
 //#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
 //                                    |   __ARM_2D_MASK_ALLOW_8in32
@@ -212,7 +248,11 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_n
     this.tTransform.tCenter = tCentre;
 
     this.ExtraSource.ptTile = ptSource;
+{%- if has_source_mask %}
     this.ExtraSource.ptMask = ptSourceMask;
+{%- else %}
+    this.ExtraSource.ptMask = NULL;
+{%- endif %}
 
 {%- if has_opacity %}
     this.chOpacity = chOpacity;
@@ -236,8 +276,10 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
                                         {%- if has_target_mask %}
                                             uint8_t *pchTargetMask,
                                         {%- endif %}
-                                            {{colour_int}} *p{{colour_int_prefix}}ExtraSource,
-                                            uint8_t *pchExtraSourceMask
+                                        {%- if has_source_mask %}
+                                            uint8_t *pchExtraSourceMask,
+                                        {%- endif %}
+                                            {{colour_int}} *p{{colour_int_prefix}}ExtraSource
                                         {%- if has_opacity -%}
                                             ,
                                             uint_fast16_t hwOpacity
@@ -319,10 +361,14 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
         uint16_t hwAlpha = wTotalAlpha >> 8;
     {%- endif %}
 
+        uint8_t chTargetAlpha;
+
+    {%- if has_source_mask %}
         /* apply extra source mask */
-        uint8_t chTargetAlpha = *pchExtraSourceMask;
+        chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+    {%- endif %}
 
     {%- if has_target_mask %}
         /* apply target mask */
@@ -358,10 +404,13 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 {%- endif %}
 
+    uint8_t chTargetAlpha;
+{%- if has_source_mask %}
     /* apply extra source mask */
-    uint8_t chTargetAlpha = *pchExtraSourceMask;
+    chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
+{%- endif %}
 
 {%- if has_target_mask %}
     /* apply target mask */
@@ -422,8 +471,10 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
     {{colour_int}}        *p{{colour_int_prefix}}ExtraSourceBase = ({{colour_int}} *)ptParam->tExtraSource.pBuffer;
     int_fast16_t    iExtraSourceStride = ptParam->tExtraSource.iStride;
 
+{%- if has_source_mask %}
     uint8_t         *pchExtraSourceMaskBase = ptParam->tExtraSourceMask.pBuffer;
     int_fast16_t    iExtraSourceMaskStride = ptParam->tExtraSourceMask.iStride;
+{%- endif %}
 
     float               fAngle = -ptInfo->fAngle;
     arm_2d_location_t   tOffset = ptParamCopy->tSource.tValidRegion.tLocation;
@@ -470,7 +521,9 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
 
         {{colour_int}} *p{{colour_int_prefix}}TargetLine = p{{colour_int_prefix}}TargetBase;
         {{colour_int}} *p{{colour_int_prefix}}ExtraSourceLine = p{{colour_int_prefix}}ExtraSourceBase;
+    {%- if has_source_mask %}
         uint8_t *pchExtraSourceMaskLine = pchExtraSourceMaskBase;
+    {%- endif %}
     {%- if has_target_mask %}
         uint8_t *pchTargetMaskLine = pchTargetMaskBase;
     {%- endif %}
@@ -480,15 +533,18 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
         {%- if has_target_mask %}
             uint8_t *pchTargetMask = pchTargetMaskLine++;
         {%- endif %}
-
+        {%- if has_source_mask %}
             uint8_t *pchExtraSourceMask = pchExtraSourceMaskLine++;
+        {%- endif %}
 
-            if (
+            if (false 
             {%- if has_target_mask %}
-                *pchTargetMask == 0 || 
+                ||  (*pchTargetMask == 0)
             {%- endif %}
-
-                *pchExtraSourceMask == 0) {
+            {%- if has_source_mask %}
+                ||  (*pchExtraSourceMask == 0)
+            {%- endif %}
+            ) {
                 *p{{colour_int_prefix}}ExtraSourceLine++;
                 p{{colour_int_prefix}}TargetLine++;
                 continue;
@@ -536,8 +592,10 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
                         {%- if has_target_mask %}
                             pchTargetMask,
                         {%- endif %}
-                            p{{colour_int_prefix}}ExtraSourceLine++,
-                            pchExtraSourceMask
+                        {%- if has_source_mask %}
+                            pchExtraSourceMask,
+                        {%- endif %}
+                            p{{colour_int_prefix}}ExtraSourceLine++
                         {%- if has_opacity -%}
                             ,
                             chOpacity
@@ -550,7 +608,9 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
         pchTargetMaskBase       += iTargetMaskStride;
     {%- endif %}
         p{{colour_int_prefix}}ExtraSourceBase      += iExtraSourceStride;
+    {%- if has_source_mask %}
         pchExtraSourceMaskBase  += iExtraSourceMaskStride;
+    {%- endif %}
     }
 }
 
@@ -594,6 +654,7 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name}}(
     }
 {%- endif %}
 
+{%- if has_source_mask %}
     /* NOTE: Since the size of the extra mask is no less than the size of the extra source 
      *       (this is ensured by the pipeline), we can just valid the extra mask here.
      */
@@ -605,6 +666,7 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name}}(
     if (tErr != ARM_2D_ERR_NONE) {
         return (arm_fsm_rt_t)tErr;
     }
+{%- endif %}
     
     __arm_2d_param_copy_orig_msk_t *ptParamCopyOrigMask 
         = &ptTask->Param
@@ -630,7 +692,7 @@ __arm_2d_{{colour_name}}_sw_tile_copy_with_transformed_mask{{variants_name}}(
     {%- if has_opacity %}
     #if __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
         if (255 == this.chOpacity) {
-            __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask_source_mask_and_target_mask(   
+            __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_name_no_opa}}(   
                 &(ptTask->Param.tCopyOrigMaskExtra),
                 &this.tTransform);
         } else 
@@ -676,7 +738,9 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK{{variants_name | upper}}_{{colour_name
         {%- endif %}
             .bHasOrigin             = true,
             .bHasExtraSource        = true,
+        {%- if has_source_mask %}
             .bHasExtraSourceMask    = true,
+        {%- endif %}
             .bAllowEnforcedColour   = true,
         },
         .chOpIndex = __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK{{variants_name | upper}},

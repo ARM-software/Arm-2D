@@ -547,6 +547,9 @@ enum {
     __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK,
     __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY,
 
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK,
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
+
     __ARM_2D_OP_IDX_FILTER_IIR_BLUR,
     __ARM_2D_OP_IDX_FILTER_REVERSE_COLOUR,
 
@@ -2023,6 +2026,36 @@ __arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
 extern
 arm_fsm_rt_t 
 __arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
     __arm_2d_sub_task_t *ptTask);
 
 extern

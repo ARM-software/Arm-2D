@@ -23,7 +23,7 @@
  *               interface header files 
  *
  * $Date:        16 Dec 2025
- * $Revision:    V.1.15.0
+ * $Revision:    V.1.16.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -980,6 +980,24 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_A
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8;

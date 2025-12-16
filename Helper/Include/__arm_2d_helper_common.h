@@ -231,6 +231,8 @@ extern "C" {
                 arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity
 #   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
                 arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity  \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity
 #   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
                 arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
@@ -496,6 +498,8 @@ extern "C" {
                 arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity
 #   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
                 arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity  \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity
 #   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
                 arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
@@ -761,6 +765,8 @@ extern "C" {
                 arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity
 #   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
                 arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity  \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity
 #   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
                 arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
