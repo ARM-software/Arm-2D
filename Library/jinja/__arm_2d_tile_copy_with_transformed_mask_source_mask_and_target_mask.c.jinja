@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.7
+ * $Revision:    v0.9.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -399,8 +399,7 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
         return ;
     }
 #endif
-
-{% if has_opacity %}
+{%- if has_opacity %}
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 {%- endif %}
@@ -581,6 +580,7 @@ void __arm_2d_impl_{{colour_name}}_tile_copy_with_transformed_mask{{variants_nam
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *p{{colour_int_prefix}}ExtraSourceLine++;
                 p{{colour_int_prefix}}TargetLine++;
                 continue;
             }

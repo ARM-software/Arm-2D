@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.7
+ * $Revision:    v0.9.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -252,8 +252,6 @@ void __gray8_tile_copy_with_transformed_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
@@ -374,6 +372,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -656,8 +655,6 @@ void __gray8_tile_copy_with_transformed_mask_and_opacity_process_point(
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -783,6 +780,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_and_opacity(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -1087,8 +1085,6 @@ void __gray8_tile_copy_with_transformed_mask_and_target_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
@@ -1223,6 +1219,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_and_target_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -1532,8 +1529,6 @@ void __gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_process_poi
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -1673,6 +1668,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -1989,8 +1985,6 @@ void __gray8_tile_copy_with_transformed_mask_and_source_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
@@ -2120,6 +2114,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_and_source_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -2432,8 +2427,6 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_process_poi
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -2568,6 +2561,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -2902,8 +2896,6 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_process
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
@@ -3047,6 +3039,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_and_target_
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -3386,8 +3379,6 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -3536,6 +3527,7 @@ void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_target_mask
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pchExtraSourceLine++;
                 pchTargetLine++;
                 continue;
             }
@@ -3849,8 +3841,6 @@ void __rgb565_tile_copy_with_transformed_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
@@ -3971,6 +3961,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -4253,8 +4244,6 @@ void __rgb565_tile_copy_with_transformed_mask_and_opacity_process_point(
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -4380,6 +4369,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_and_opacity(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -4684,8 +4674,6 @@ void __rgb565_tile_copy_with_transformed_mask_and_target_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
@@ -4820,6 +4808,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_and_target_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -5129,8 +5118,6 @@ void __rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_process_po
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -5270,6 +5257,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacit
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -5586,8 +5574,6 @@ void __rgb565_tile_copy_with_transformed_mask_and_source_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
@@ -5717,6 +5703,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_and_source_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -6029,8 +6016,6 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_process_po
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -6165,6 +6150,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacit
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -6499,8 +6485,6 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_proces
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
@@ -6644,6 +6628,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_and_target
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -6983,8 +6968,6 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacit
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -7133,6 +7116,7 @@ void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mas
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *phwExtraSourceLine++;
                 phwTargetLine++;
                 continue;
             }
@@ -7446,8 +7430,6 @@ void __cccn888_tile_copy_with_transformed_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
@@ -7568,6 +7550,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -7850,8 +7833,6 @@ void __cccn888_tile_copy_with_transformed_mask_and_opacity_process_point(
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -7977,6 +7958,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_opacity(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -8281,8 +8263,6 @@ void __cccn888_tile_copy_with_transformed_mask_and_target_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
@@ -8417,6 +8397,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_target_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -8726,8 +8707,6 @@ void __cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_process_p
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -8867,6 +8846,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_target_mask_and_opaci
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -9183,8 +9163,6 @@ void __cccn888_tile_copy_with_transformed_mask_and_source_mask_process_point(
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
@@ -9314,6 +9292,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_source_mask(
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -9626,8 +9605,6 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_process_p
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -9762,6 +9739,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_and_opaci
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -10096,8 +10074,6 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_proce
     }
 #endif
 
-
-
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
@@ -10241,6 +10217,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_and_targe
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
@@ -10580,8 +10557,6 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opaci
         return ;
     }
 #endif
-
-
     hwAlpha =  (hwAlpha == 255) * hwOpacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
@@ -10730,6 +10705,7 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_target_ma
                 ||  (tOriginLocation.iY < 0)
                 ||  (tOriginLocation.iX >= (ptOriginValidRegion->tSize.iWidth - 1))
                 ||  (tOriginLocation.iY >= (ptOriginValidRegion->tSize.iHeight - 1))) {
+                *pwExtraSourceLine++;
                 pwTargetLine++;
                 continue;
             }
