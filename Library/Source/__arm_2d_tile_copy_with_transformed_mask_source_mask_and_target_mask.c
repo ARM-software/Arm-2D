@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.6
+ * $Revision:    v0.9.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -228,6 +228,7 @@ void __gray8_tile_copy_with_transformed_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
         /* blend the pixel */
         __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
@@ -254,6 +255,7 @@ void __gray8_tile_copy_with_transformed_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 
     /* blend the pixel */
     __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
@@ -631,6 +633,7 @@ void __gray8_tile_copy_with_transformed_mask_and_opacity_process_point(
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
         /* blend the pixel */
         __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
@@ -659,6 +662,7 @@ void __gray8_tile_copy_with_transformed_mask_and_opacity_process_point(
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 
     /* blend the pixel */
     __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
@@ -1055,6 +1059,7 @@ void __gray8_tile_copy_with_transformed_mask_and_target_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply target mask */
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -1085,6 +1090,7 @@ void __gray8_tile_copy_with_transformed_mask_and_target_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -1499,6 +1505,7 @@ void __gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_process_poi
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply target mask */
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -1531,6 +1538,7 @@ void __gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_process_poi
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -1953,6 +1961,7 @@ void __gray8_tile_copy_with_transformed_mask_and_source_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -1983,6 +1992,7 @@ void __gray8_tile_copy_with_transformed_mask_and_source_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -2395,6 +2405,7 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_process_poi
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -2427,6 +2438,7 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_process_poi
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -2858,6 +2870,7 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_process
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -2892,6 +2905,7 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_process
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -3341,6 +3355,7 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -3377,6 +3392,7 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -3809,6 +3825,7 @@ void __rgb565_tile_copy_with_transformed_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
         /* blend the pixel */
         __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
@@ -3835,6 +3852,7 @@ void __rgb565_tile_copy_with_transformed_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 
     /* blend the pixel */
     __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
@@ -4212,6 +4230,7 @@ void __rgb565_tile_copy_with_transformed_mask_and_opacity_process_point(
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
         /* blend the pixel */
         __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
@@ -4240,6 +4259,7 @@ void __rgb565_tile_copy_with_transformed_mask_and_opacity_process_point(
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 
     /* blend the pixel */
     __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
@@ -4636,6 +4656,7 @@ void __rgb565_tile_copy_with_transformed_mask_and_target_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply target mask */
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -4666,6 +4687,7 @@ void __rgb565_tile_copy_with_transformed_mask_and_target_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -5080,6 +5102,7 @@ void __rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_process_po
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply target mask */
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -5112,6 +5135,7 @@ void __rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_process_po
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -5534,6 +5558,7 @@ void __rgb565_tile_copy_with_transformed_mask_and_source_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -5564,6 +5589,7 @@ void __rgb565_tile_copy_with_transformed_mask_and_source_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -5976,6 +6002,7 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_process_po
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -6008,6 +6035,7 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_process_po
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -6439,6 +6467,7 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_proces
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -6473,6 +6502,7 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_proces
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -6922,6 +6952,7 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacit
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -6958,6 +6989,7 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacit
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -7390,6 +7422,7 @@ void __cccn888_tile_copy_with_transformed_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
         /* blend the pixel */
         __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
@@ -7416,6 +7449,7 @@ void __cccn888_tile_copy_with_transformed_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 
     /* blend the pixel */
     __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
@@ -7793,6 +7827,7 @@ void __cccn888_tile_copy_with_transformed_mask_and_opacity_process_point(
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
         /* blend the pixel */
         __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
@@ -7821,6 +7856,7 @@ void __cccn888_tile_copy_with_transformed_mask_and_opacity_process_point(
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 
     /* blend the pixel */
     __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
@@ -8217,6 +8253,7 @@ void __cccn888_tile_copy_with_transformed_mask_and_target_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply target mask */
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -8247,6 +8284,7 @@ void __cccn888_tile_copy_with_transformed_mask_and_target_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -8661,6 +8699,7 @@ void __cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_process_p
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply target mask */
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -8693,6 +8732,7 @@ void __cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_process_p
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply target mask */
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -9115,6 +9155,7 @@ void __cccn888_tile_copy_with_transformed_mask_and_source_mask_process_point(
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -9145,6 +9186,7 @@ void __cccn888_tile_copy_with_transformed_mask_and_source_mask_process_point(
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -9557,6 +9599,7 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_process_p
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -9589,6 +9632,7 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_process_p
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -10020,6 +10064,7 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_proce
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -10054,6 +10099,7 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_proce
 
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -10503,6 +10549,7 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opaci
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
         /* apply extra source mask */
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
@@ -10539,6 +10586,7 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opaci
                 + !(hwAlpha == 255) * (hwAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha

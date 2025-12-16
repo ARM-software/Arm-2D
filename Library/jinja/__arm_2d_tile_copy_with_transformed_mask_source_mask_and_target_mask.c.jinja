@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.6
+ * $Revision:    v0.9.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -362,6 +362,7 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
     {%- endif %}
 
         uint8_t chTargetAlpha;
+        ARM_2D_UNUSED(chTargetAlpha);
 
     {%- if has_source_mask %}
         /* apply extra source mask */
@@ -405,6 +406,7 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
 {%- endif %}
 
     uint8_t chTargetAlpha;
+    ARM_2D_UNUSED(chTargetAlpha);
 {%- if has_source_mask %}
     /* apply extra source mask */
     chTargetAlpha = *pchExtraSourceMask;
