@@ -281,7 +281,7 @@ extern "C" {
 #define ARM_2D_DEMO_JPGD_USE_FILE               0
 #define ARM_2D_SCENE_METER_USE_QOI              1
 #define ARM_2D_SCENE_METER_SHOW_FPS             0
-#define ARM_2D_DEMO_RADAR_USE_QOI               0
+#define ARM_2D_DEMO_RADAR_USE_QOI               1
 
 
 //#define ARM_2D_DEMO_RADAR_COLOUR              GLCD_COLOR_NIXIE_TUBE
