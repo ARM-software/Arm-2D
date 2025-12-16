@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.4
+ * $Revision:    v0.9.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -144,7 +144,7 @@ extern "C" {
 /*
  * the Frontend API
  */
-{% if variants_name == '_source_mask_target_mask_and_opacity' %}
+{%- if variants_name == '_source_mask_target_mask_and_opacity' %}
 ARM_NONNULL(2,3,4,5)
 {%- elif variants_name == '_source_mask_and_target_mask' %}
 ARM_NONNULL(2,3,4,5)
@@ -152,7 +152,7 @@ ARM_NONNULL(2,3,4,5)
 ARM_NONNULL(2,3,4)
 {%- elif variants_name == '_and_source_mask' %}
 ARM_NONNULL(2,3,4)
-{% elif variants_name == '_target_mask_and_opacity' %}
+{%- elif variants_name == '_target_mask_and_opacity' %}
 ARM_NONNULL(2,3,4)
 {%- elif variants_name == '_and_target_mask' %}
 ARM_NONNULL(2,3,4)

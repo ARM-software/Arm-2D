@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.4
+ * $Revision:    v0.9.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -95,7 +95,6 @@ extern "C" {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -495,7 +494,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -912,7 +910,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1353,7 +1350,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1812,9 +1808,7 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
-
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -2252,7 +2246,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -2708,7 +2701,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -3188,7 +3180,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -3685,7 +3676,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GR
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -4085,7 +4075,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -4502,7 +4491,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -4943,7 +4931,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -5402,9 +5389,7 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
-
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -5842,7 +5827,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -6298,7 +6282,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -6778,7 +6761,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -7275,7 +7257,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RG
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -7675,7 +7656,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_CCCN888 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -8092,7 +8072,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -8533,7 +8512,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -8992,9 +8970,7 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
-
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -9432,7 +9408,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK_CCCN888 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -9888,7 +9863,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_CCCN888 = {
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -10368,7 +10342,6 @@ ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888 = 
 /*
  * the Frontend API
  */
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,

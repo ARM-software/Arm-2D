@@ -24,7 +24,7 @@
  *               -source-mask-and-target-mask
  * 
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.5
+ * $Revision:    v0.9.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1161,8 +1161,7 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
 /*============================ PROTOTYPES ====================================*/
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1173,7 +1172,7 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1184,8 +1183,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1197,7 +1196,7 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1209,8 +1208,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        a target mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1222,7 +1221,7 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1234,8 +1233,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepa
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        a target mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1248,7 +1247,7 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepa
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1261,8 +1260,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opaci
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        a source mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1274,7 +1273,6 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opaci
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1287,8 +1285,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepa
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        a source mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1301,7 +1299,6 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepa
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1315,8 +1312,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opaci
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        a source mask and a target mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1329,7 +1326,6 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opaci
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1343,8 +1339,8 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_targe
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a gray8 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a gray8 tile copy with a mask (to be transformed)
+ *        a source mask, a target mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1358,7 +1354,6 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_targe
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1373,8 +1368,7 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_ma
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1385,7 +1379,7 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_ma
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1396,8 +1390,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1409,7 +1403,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1421,8 +1415,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        a target mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1434,7 +1428,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1446,8 +1440,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask_prep
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        a target mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1460,7 +1454,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask_prep
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1473,8 +1467,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opac
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        a source mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1486,7 +1480,6 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opac
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1499,8 +1492,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prep
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        a source mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1513,7 +1506,6 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prep
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1527,8 +1519,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opac
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        a source mask and a target mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1541,7 +1533,6 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opac
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1555,8 +1546,8 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_targ
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a rgb565 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a rgb565 tile copy with a mask (to be transformed)
+ *        a source mask, a target mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1570,7 +1561,6 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_targ
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1585,8 +1575,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_m
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1597,7 +1586,7 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_m
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1608,8 +1597,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1621,7 +1610,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1633,8 +1622,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        a target mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1646,7 +1635,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1658,8 +1647,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask_pre
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        a target mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1672,7 +1661,7 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask_pre
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
+ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptTransMask,
@@ -1685,8 +1674,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opa
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        a source mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1698,7 +1687,6 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opa
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1711,8 +1699,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_pre
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        a source mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1725,7 +1713,6 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_pre
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1739,8 +1726,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opa
                                         uint_fast8_t chOpacity);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed) and a target mask.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        a source mask and a target mask.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1753,7 +1740,6 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opa
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
@@ -1767,8 +1753,8 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_tar
                                         float fScaleY);
 
 /*!
- * \brief Prepare for a cccn888 tile copy with a source mask, a mask
- *        (to be transformed), a target mask and a given opacity.
+ * \brief Prepare for a cccn888 tile copy with a mask (to be transformed)
+ *        a source mask, a target mask and an opacity.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptTransMask the mask to be transformed
  * \param[in] ptSource the source tile
@@ -1782,7 +1768,6 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_tar
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
-
 ARM_NONNULL(2,3,4,5)
 arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
