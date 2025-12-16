@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.8
+ * $Revision:    v0.9.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1842,6 +1842,18 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask_prepa
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
+
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
 //#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2282,6 +2294,18 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opaci
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -2740,6 +2764,18 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_targe
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -3222,6 +3258,18 @@ arm_2d_err_t arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_ma
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -5439,6 +5487,18 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prep
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
+
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
 //#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -5879,6 +5939,18 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opac
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -6337,6 +6409,18 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_targ
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -6819,6 +6903,18 @@ arm_2d_err_t arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_m
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -9036,6 +9132,18 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask_pre
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
+
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
 //#if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -9476,6 +9584,18 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opa
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -9934,6 +10054,18 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_tar
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 
@@ -10416,6 +10548,18 @@ arm_2d_err_t arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 
     //! valid mask to be transformed tile
     if (!__arm_2d_valid_mask(ptTransMask,   __ARM_2D_MASK_ALLOW_A8 

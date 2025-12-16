@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.8
+ * $Revision:    v0.9.9
  *
  * Target Processor:  Cortex-M cores
  *
@@ -202,6 +202,18 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_transformed_mask{{variants_n
         this.bInvalid = true;
         return ARM_2D_ERR_INVALID_PARAM;
     }
+
+    do {
+        /*! \note the extra mask tile should be bigger than or equals to the  
+         *!       extra source tile.
+         */
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_width_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+        if (ARM_2D_CMP_SMALLER == arm_2d_tile_height_compare(ptSourceMask, ptSource, true)) {
+            return ARM_2D_ERR_INVALID_PARAM;
+        }
+    } while(0);
 {%- endif %}
 
     //! valid mask to be transformed tile
