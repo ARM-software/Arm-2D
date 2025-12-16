@@ -11392,17 +11392,20 @@ void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_source_mask(
 extern
 void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(
                                     __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                    __arm_2d_transform_info_t *ptInfo);
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
 
 extern
 void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(
                                     __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                    __arm_2d_transform_info_t *ptInfo);
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
 
 extern
 void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity(
                                     __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                    __arm_2d_transform_info_t *ptInfo);
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
 
 extern
 void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask(
