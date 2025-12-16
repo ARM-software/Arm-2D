@@ -24,7 +24,7 @@
  *               -source-mask-and-target-mask
  * 
  * $Date:        16 Dec 2025
- * $Revision:    v0.10.2
+ * $Revision:    v1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -60,7 +60,7 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2dp_gray8_tile_copy_with_transformed_mask(                \
+#define arm_2dp_gray8_tile_copy_with_transformed_mask(                          \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -72,7 +72,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(        \
+        arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(                  \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -87,7 +87,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_gray8_tile_copy_with_transformed_mask(                 \
+#define arm_2d_gray8_tile_copy_with_transformed_mask(                           \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -99,7 +99,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
     ({                                                                          \
-        arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(        \
+        arm_2dp_gray8_tile_copy_with_transformed_mask_prepare(                  \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -113,7 +113,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity(    \
+#define arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity(              \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -125,7 +125,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(\
+        arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(      \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -141,7 +141,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_gray8_tile_copy_with_transformed_mask_and_opacity(     \
+#define arm_2d_gray8_tile_copy_with_transformed_mask_and_opacity(               \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -153,7 +153,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(\
+        arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity_prepare(      \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -168,7 +168,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask(\
+#define arm_2dp_gray8_tile_copy_with_transformed_mask_and_source_mask(          \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -197,7 +197,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_gray8_tile_copy_with_transformed_mask_and_source_mask(\
+#define arm_2d_gray8_tile_copy_with_transformed_mask_and_source_mask(           \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -225,7 +225,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(\
+#define arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(  \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -255,7 +255,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(\
+#define arm_2d_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(   \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -284,7 +284,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask(\
+#define arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask(          \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -297,7 +297,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(  \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -313,7 +313,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_gray8_tile_copy_with_transformed_mask_and_target_mask(\
+#define arm_2d_gray8_tile_copy_with_transformed_mask_and_target_mask(           \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -326,7 +326,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
     ({                                                                          \
-        arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(\
+        arm_2dp_gray8_tile_copy_with_transformed_mask_and_target_mask_prepare(  \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -342,7 +342,7 @@ extern "C" {
     })
 
 
-#define arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(\
+#define arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(  \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -372,7 +372,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(\
+#define arm_2d_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(   \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -526,7 +526,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_rgb565_tile_copy_with_transformed_mask(                \
+#define arm_2dp_rgb565_tile_copy_with_transformed_mask(                         \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -538,7 +538,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(        \
+        arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(                 \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -553,7 +553,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_tile_copy_with_transformed_mask(                 \
+#define arm_2d_rgb565_tile_copy_with_transformed_mask(                          \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -565,7 +565,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
     ({                                                                          \
-        arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(        \
+        arm_2dp_rgb565_tile_copy_with_transformed_mask_prepare(                 \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -579,7 +579,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity(    \
+#define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity(             \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -591,7 +591,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(\
+        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(     \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -607,7 +607,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_tile_copy_with_transformed_mask_and_opacity(     \
+#define arm_2d_rgb565_tile_copy_with_transformed_mask_and_opacity(              \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -619,7 +619,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(\
+        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity_prepare(     \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -634,7 +634,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask(\
+#define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask(         \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -647,7 +647,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(\
+        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare( \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -663,7 +663,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_tile_copy_with_transformed_mask_and_source_mask(\
+#define arm_2d_rgb565_tile_copy_with_transformed_mask_and_source_mask(          \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -676,7 +676,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
     ({                                                                          \
-        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare(\
+        arm_2dp_rgb565_tile_copy_with_transformed_mask_and_source_mask_prepare( \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -691,7 +691,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(\
+#define arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity( \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -721,7 +721,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(\
+#define arm_2d_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(  \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -750,7 +750,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask(\
+#define arm_2dp_rgb565_tile_copy_with_transformed_mask_and_target_mask(         \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -779,7 +779,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_tile_copy_with_transformed_mask_and_target_mask(\
+#define arm_2d_rgb565_tile_copy_with_transformed_mask_and_target_mask(          \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -808,7 +808,7 @@ extern "C" {
     })
 
 
-#define arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity(\
+#define arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity( \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -838,7 +838,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity(\
+#define arm_2d_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity(  \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -992,7 +992,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_cccn888_tile_copy_with_transformed_mask(                \
+#define arm_2dp_cccn888_tile_copy_with_transformed_mask(                        \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1004,7 +1004,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(        \
+        arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(                \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -1019,7 +1019,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_cccn888_tile_copy_with_transformed_mask(                 \
+#define arm_2d_cccn888_tile_copy_with_transformed_mask(                         \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1031,7 +1031,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         ...)                                    \
     ({                                                                          \
-        arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(        \
+        arm_2dp_cccn888_tile_copy_with_transformed_mask_prepare(                \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -1045,7 +1045,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity(    \
+#define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity(            \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1057,7 +1057,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(\
+        arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(    \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -1073,7 +1073,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_cccn888_tile_copy_with_transformed_mask_and_opacity(     \
+#define arm_2d_cccn888_tile_copy_with_transformed_mask_and_opacity(             \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1085,7 +1085,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(\
+        arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity_prepare(    \
                                         (__CB_ADDR),                            \
                                         (__TRANS_MASK_ADDR),                    \
                                         (__SRC_TILE_ADDR),                      \
@@ -1100,7 +1100,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask(\
+#define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_source_mask(        \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1129,7 +1129,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_cccn888_tile_copy_with_transformed_mask_and_source_mask(\
+#define arm_2d_cccn888_tile_copy_with_transformed_mask_and_source_mask(         \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1187,7 +1187,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity(\
+#define arm_2d_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity( \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1216,7 +1216,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
     })
 
-#define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask(\
+#define arm_2dp_cccn888_tile_copy_with_transformed_mask_and_target_mask(        \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \
@@ -1245,7 +1245,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_cccn888_tile_copy_with_transformed_mask_and_target_mask(\
+#define arm_2d_cccn888_tile_copy_with_transformed_mask_and_target_mask(         \
                                         __CB_ADDR,                              \
                                         __TRANS_MASK_ADDR,                      \
                                         __SRC_TILE_ADDR,                        \

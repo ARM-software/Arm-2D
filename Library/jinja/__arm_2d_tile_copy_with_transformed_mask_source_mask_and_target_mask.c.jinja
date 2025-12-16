@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v0.10.0
+ * $Revision:    v1.0.0
  *
  * Target Processor:  Cortex-M cores
  *
