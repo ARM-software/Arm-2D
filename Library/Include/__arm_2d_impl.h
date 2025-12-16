@@ -22,7 +22,7 @@
  * Description:  header files for internal users or professional developers
  *
  * $Date:        16 Dec 2025
- * $Revision:    V.2.1.0
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1963,6 +1963,36 @@ __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_target_mask(
 extern
 arm_fsm_rt_t 
 __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_opacity(
     __arm_2d_sub_task_t *ptTask);
 
 extern

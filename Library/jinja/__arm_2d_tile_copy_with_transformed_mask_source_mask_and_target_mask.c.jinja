@@ -93,11 +93,11 @@ extern "C" {
     ] 
 %}
 
-{%- for variants_name, has_opacity, has_target_mask in [
-    ('_and_source_mask',                        false,  false),
-    ('_source_mask_and_opacity',                true,   false),
-    ('_source_mask_and_target_mask',            false,  true ),
-    ('_source_mask_target_mask_and_opacity',    true,   true ),
+{%- for variants_name, has_opacity, has_source_mask, has_target_mask in [
+    ('_and_source_mask',                        false,  true, false),
+    ('_source_mask_and_opacity',                true,   true, false),
+    ('_source_mask_and_target_mask',            false,  true, true ),
+    ('_source_mask_target_mask_and_opacity',    true,   true, true ),
     ] 
 %}
 
