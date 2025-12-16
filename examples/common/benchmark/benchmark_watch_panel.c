@@ -68,7 +68,7 @@
 #   define c_tileGear01             c_tileGear01CCCA8888
 #   define c_tileGear02             c_tileGear02CCCA8888
 #   define c_tilePointerSec         c_tilePointerSecCCCA8888
-#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
+#   define c_tileBackground         c_tileBackgroundSmallCCCN888
 #   define c_tileWatchPanel         c_tileWatchPanelCCCA8888
 #   define c_tileStar               c_tileStarCCCA8888
 
