@@ -23,7 +23,7 @@
  *               -mask-and-target-mask
  * 
  * $Date:        16 Dec 2025
- * $Revision:    v0.9.1
+ * $Revision:    v0.9.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -67,12 +67,12 @@ extern "C" {
 %}
 
 {%- for has_opacity in [
-    ('and_target_mask'),
-    ('target_mask_and_opacity' ),
+    ('_and_target_mask'),
+    ('_target_mask_and_opacity' ),
     ] 
 %}
 
-#define arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}(\
+#define arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -86,7 +86,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -104,7 +104,7 @@ extern "C" {
                             (NULL,##__VA_ARGS__));                              \
         })
 
-#define arm_2d_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}(\
+#define arm_2d_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}(\
                                         __CB_ADDR,                              \
                                         __SRC_TILE_ADDR,                        \
                                         __SRC_MSK_ADDR,                         \
@@ -118,7 +118,7 @@ extern "C" {
                                         __SCALE_Y,                              \
                                         __OPACITY,...)                          \
     ({                                                                          \
-        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}_prepare(\
+        arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_prepare(\
                                         (__CB_ADDR),                            \
                                         (__SRC_TILE_ADDR),                      \
                                         (__SRC_MSK_ADDR),                       \
@@ -195,14 +195,14 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
     ] 
 %}
 {%- for has_opacity in [
-    ('and_target_mask'),
-    ('target_mask_and_opacity' ),
+    ('_and_target_mask'),
+    ('_target_mask_and_opacity' ),
     ] 
 %}
 
 /*!
  * \brief Prepare for a {{colour_name}} tile copy with a source mask, a mask 
-{%- if has_opacity == 'target_mask_and_opacity' %}
+{%- if has_opacity == '_target_mask_and_opacity' %}
  *        (to be transformed), a target mask and a given opacity.
 {%- else %}
  *        (to be transformed) and a target mask.
@@ -216,14 +216,14 @@ typedef struct arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t {
  * \param[in] fScaleY the scaling factor for X axis
  * \param[in] hwFillColour the colour to fill
 
-{%- if has_opacity == 'target_mask_and_opacity' %}
+{%- if has_opacity == '_target_mask_and_opacity' %}
  * \param[in] chOpacity the opacity
 {%- endif %}
  * \return arm_2d_err_t the result of the preparing process
  */
 extern
 ARM_NONNULL(2,3)
-arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask_{{has_opacity}}_prepare(
+arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask{{has_opacity}}_prepare(
                                         arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptSourceMask,
@@ -233,7 +233,7 @@ arm_2d_err_t arm_2dp_{{colour_name}}_tile_copy_with_source_mask_transformed_mask
                                         float fAngle,
                                         float fScaleX,
                                         float fScaleY
-                                    {%- if has_opacity == 'target_mask_and_opacity' -%}
+                                    {%- if has_opacity == '_target_mask_and_opacity' -%}
                                         ,
                                         uint_fast8_t chOpacity
                                     {%- endif -%}
