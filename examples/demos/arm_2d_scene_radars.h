@@ -55,23 +55,27 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 #ifndef ARM_2D_DEMO_RADAR_COLOUR
-#   define ARM_2D_DEMO_RADAR_COLOUR                 GLCD_COLOR_NIXIE_TUBE
+#   define ARM_2D_DEMO_RADAR_COLOUR                     GLCD_COLOR_NIXIE_TUBE
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
-#   define ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR     GLCD_COLOR_RED
+#   define ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR         GLCD_COLOR_RED
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_BOGEY_COLOUR
-#   define ARM_2D_DEMO_RADAR_BOGEY_COLOUR           ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
+#   define ARM_2D_DEMO_RADAR_BOGEY_COLOUR               ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_USE_QOI
-#   define ARM_2D_DEMO_RADAR_USE_QOI                1
+#   define ARM_2D_DEMO_RADAR_USE_QOI                    1
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
-#   define ARM_2D_DEMO_RADAR_SHOW_ANIMATION         0
+#   define ARM_2D_DEMO_RADAR_SHOW_ANIMATION             0
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND     1
 #endif
 
 /* OOC header, please DO NOT modify  */
@@ -85,12 +89,14 @@ extern "C" {
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
 #   undef ARM_2D_DEMO_RADAR_USE_QOI
-#   define ARM_2D_DEMO_RADAR_USE_QOI    0
+#   define ARM_2D_DEMO_RADAR_USE_QOI                    0
 #endif
 
 #if !ARM_2D_DEMO_RADAR_USE_QOI
 #   undef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
-#   define  ARM_2D_DEMO_RADAR_SHOW_ANIMATION    0
+#   define  ARM_2D_DEMO_RADAR_SHOW_ANIMATION            0
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND     0
 #endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -109,7 +115,9 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 enum {
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
     QOI_BACKGROUND,
+#endif
 #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     QOI_FILM_TOP_LEFT,
     QOI_FILM_BOTTOM_RIGHT,
@@ -167,7 +175,7 @@ ARM_PRIVATE(
 
     foldable_panel_t    tScreen;
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND || ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     struct {
         arm_qoi_loader_t tLoader;
         union {

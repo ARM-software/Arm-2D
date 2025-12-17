@@ -75,12 +75,15 @@
 
 #define LAST_STAND_DEFENCE_RADIUS   40
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
-#   define RADAR_BACKGROUND     this.tQOI[QOI_BACKGROUND].tLoader.vres.tTile    
-#   define FILM_TOP_LEFT        this.tFilm[FILM_IDX_TOP_LEFT].tHelper.use_as__arm_2d_tile_t
-#   define FILM_BOTTOM_RIGHT    this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.use_as__arm_2d_tile_t
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
+#   define RADAR_BACKGROUND     this.tQOI[QOI_BACKGROUND].tLoader.vres.tTile   
 #else
 #   define RADAR_BACKGROUND     c_tileRadarBackgroundGRAY8
+#endif
+
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION  
+#   define FILM_TOP_LEFT        this.tFilm[FILM_IDX_TOP_LEFT].tHelper.use_as__arm_2d_tile_t
+#   define FILM_BOTTOM_RIGHT    this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.use_as__arm_2d_tile_t
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
@@ -193,7 +196,7 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
 
     foldable_panel_on_load(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND || ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_load(&_->tLoader);
     }
@@ -236,7 +239,7 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
 
     foldable_panel_depose(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND || ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_depose(&_->tLoader);
     }
@@ -376,7 +379,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     }
 #endif
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND || ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_start(&_->tLoader);
     }
@@ -396,7 +399,7 @@ static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
 
     foldable_panel_on_frame_complete(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND || ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_complete(&_->tLoader);
     }
@@ -875,65 +878,66 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     /* ------------   initialize members of user_scene_radars_t begin ---------------*/
 
 #if ARM_2D_DEMO_RADAR_USE_QOI
+
+
     /* initialize QOI loader */
     do {
-    #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
-    #else
-        extern const uint8_t c_qoiMeterPanel[20394];
-        extern const uint8_t c_qoiRadarBackground[45557];
 
-        arm_qoi_io_binary_loader_init(  &this.tQOI[QOI_BACKGROUND].LoaderIO.tBinary, 
-                                        c_qoiRadarBackground, 
-                                        sizeof(c_qoiRadarBackground));
-    #endif
-        arm_qoi_loader_cfg_t tCFG = {
-            //.bUseHeapForVRES = true,
-            .ptScene = (arm_2d_scene_t *)ptThis,
-            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
-
-            /* you can only extract specific colour channel and use it as A8 mask */
-            .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
-            .u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
-
-            //.bInvertColour = true,
-            //.bForceDisablePreBlendwithBG = true,
-            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+    #if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
+        do {
         #if ARM_2D_DEMO_QOI_USE_FILE
-            .ImageIO = {
-                .ptIO = &ARM_QOI_IO_FILE_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
-            },
+            arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
         #else
-            .ImageIO = {
-                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                .pTarget = (uintptr_t)&this.tQOI[QOI_BACKGROUND].LoaderIO.tBinary,
-            },
+            extern const uint8_t c_qoiMeterPanel[20394];
+            extern const uint8_t c_qoiRadarBackground[45557];
+
+            arm_qoi_io_binary_loader_init(  &this.tQOI[QOI_BACKGROUND].LoaderIO.tBinary, 
+                                            c_qoiRadarBackground, 
+                                            sizeof(c_qoiRadarBackground));
         #endif
-        };
+            arm_qoi_loader_cfg_t tCFG = {
+                //.bUseHeapForVRES = true,
+                .ptScene = (arm_2d_scene_t *)ptThis,
+                .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
 
-        arm_qoi_loader_init(&this.tQOI[QOI_BACKGROUND].tLoader, &tCFG);
-    #if 0
-        arm_2d_align_centre(__top_canvas, this.tQOI[QOI_BACKGROUND].tLoader.vres.tTile.tRegion.tSize) {
-            arm_2d_location_t tReferencePoint;
+                /* you can only extract specific colour channel and use it as A8 mask */
+                .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+                .u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
 
-            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
-                arm_2d_align_bottom_centre(__top_canvas, 100, 24) {
-                    tReferencePoint = __bottom_centre_region.tLocation;
-                    tReferencePoint.iY -= 16;
-                }
+                //.bInvertColour = true,
+                //.bForceDisablePreBlendwithBG = true,
+                .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+            #if ARM_2D_DEMO_QOI_USE_FILE
+                .ImageIO = {
+                    .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                },
             #else
-                tReferencePoint.iX = 0;
-                tReferencePoint.iY = ((__top_canvas.tSize.iHeight + 7) / 8 - 2) * 8;
+                .ImageIO = {
+                    .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                    .pTarget = (uintptr_t)&this.tQOI[QOI_BACKGROUND].LoaderIO.tBinary,
+                },
             #endif
+            };
 
-            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
-                arm_qoi_loader_add_reference_point( &this.tQOI[QOI_BACKGROUND].tLoader, 
-                                                    __centre_region.tLocation,
-                                                    tReferencePoint);
-            #endif
-        }
+            arm_qoi_loader_init(&this.tQOI[QOI_BACKGROUND].tLoader, &tCFG);
+            
+            /* add reference point on the image */
+            arm_2d_canvas(&this.tQOI[QOI_BACKGROUND].tLoader.vres.tTile, __background_plane) {
+                int16_t iYDelta = __background_plane.tSize.iHeight >> 2;
+                arm_2d_location_t tReferencePointOnImage = __background_plane.tLocation;
+
+                int_fast8_t n = 4;
+                do {
+                    tReferencePointOnImage.iY += iYDelta - 1;
+
+                    arm_qoi_loader_add_reference_point(&this.tQOI[QOI_BACKGROUND].tLoader,
+                                                    tReferencePointOnImage);
+                } while(--n);
+            }
+        } while(0);
     #endif
+
     #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
         do {
         #if ARM_2D_DEMO_QOI_USE_FILE
