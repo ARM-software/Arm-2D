@@ -74,10 +74,6 @@ extern "C" {
 #   define ARM_2D_DEMO_RADAR_SHOW_ANIMATION             0
 #endif
 
-#ifndef ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
-#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND     1
-#endif
-
 /* OOC header, please DO NOT modify  */
 #ifdef __USER_SCENE_RADARS_IMPLEMENT__
 #   define __ARM_2D_IMPL__
@@ -95,8 +91,6 @@ extern "C" {
 #if !ARM_2D_DEMO_RADAR_USE_QOI
 #   undef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
 #   define  ARM_2D_DEMO_RADAR_SHOW_ANIMATION            0
-#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
-#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND     0
 #endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -115,13 +109,8 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 enum {
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND
-    QOI_BACKGROUND,
-#endif
-#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     QOI_FILM_TOP_LEFT,
     QOI_FILM_BOTTOM_RIGHT,
-#endif
     __QOI_COUNT,
 };
 
@@ -175,7 +164,7 @@ ARM_PRIVATE(
 
     foldable_panel_t    tScreen;
 
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_BACKGROUND || ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     struct {
         arm_qoi_loader_t tLoader;
         union {
@@ -183,9 +172,7 @@ ARM_PRIVATE(
             arm_qoi_io_binary_loader_t tBinary;
         } LoaderIO;
     }tQOI[__QOI_COUNT];
-#endif
 
-#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     struct {
         arm_2d_helper_film_t    tHelper;
         spin_zoom_widget_t      tSector;
