@@ -70,22 +70,22 @@ extern "C" {
                                                             (__REF_PT))
 
 /*!
- * \brief add reference point for a given QOIec Loader. 
+ * \brief add reference point for a given QOI Loader. 
  * 
  * \note prototype 1:
  *      arm_qoi_loader_add_reference_point(
- *                                      <QOIec Loader pointer>,
+ *                                      <QOI Loader pointer>,
  *                                      <Reference Point in the target image>);
  * 
  * \note prototype 2:
  *      arm_qoi_loader_add_reference_point(
- *                                      <QOIec Loader pointer>,
+ *                                      <QOI Loader pointer>,
  *                                      <Image Location on a canvas>
  *                                      <Reference Point on the same canvas>);
  *
  * \note prototype 3:
  *      arm_qoi_loader_add_reference_point(
- *                                      <QOIec Loader pointer>,
+ *                                      <QOI Loader pointer>,
  *                                      <The target tile pointer>
  *                                      <Image Location on the target tile>
  *                                      <Reference Point on the virtual screen>);

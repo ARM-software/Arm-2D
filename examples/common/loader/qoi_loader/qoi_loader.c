@@ -346,7 +346,7 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
                     3, 
-                    "QOIec", 
+                    "QOI", 
                     "Encounter a new frame, Save context to slot [QOI_CONTEXT_PREVIOUS_FRAME_START], x = %d, y = %d",
                     tLocation.iX,
                     tLocation.iY
@@ -359,7 +359,7 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
             ARM_2D_LOG_INFO(
                 CONTROLS, 
                 3, 
-                "QOIec", 
+                "QOI", 
                 "Save context to slot [QOI_CONTEXT_PREVIOUS_START], x = %d, y = %d",
                 tLocation.iX,
                 tLocation.iY
@@ -370,7 +370,7 @@ void __arm_qoi_loader_ctx_report_evt_handler(   uintptr_t pTarget,
             ARM_2D_LOG_INFO(
                 CONTROLS, 
                 3, 
-                "QOIec", 
+                "QOI", 
                 "Save context to slot [QOI_CONTEXT_PREVIOUS_TOP_RIGHT], x = %d, y = %d",
                 tLocation.iX,
                 tLocation.iY
@@ -1219,7 +1219,7 @@ void __arm_qoi_save_context_to( arm_qoi_loader_t *ptThis,
 }
 
 /*----------------------------------------------------------------------------*
- * QOIec Extension                                                          *
+ * QOI Extension                                                          *
  *----------------------------------------------------------------------------*/
 
 static
@@ -1271,7 +1271,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
         ARM_2D_LOG_INFO(
             CONTROLS, 
             0, 
-            "QOIec",
+            "QOI",
             "\r\nQOIec Decoding...\r\n"
             "==============================================================\r\n"
             "Interested Region: x=%d, y=%d, width=%d, height=%d",
@@ -1286,7 +1286,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
             ARM_2D_LOG_INFO(
                 CONTROLS, 
                 1, 
-                "QOIec", 
+                "QOI", 
                 "[SKIP] The interested region is outside of the image: width=%d, height=%d.",
                 this.Decoder.tDrawRegion.tSize.iWidth,
                 this.Decoder.tDrawRegion.tSize.iHeight
@@ -1299,7 +1299,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
         ARM_2D_LOG_INFO(
             CONTROLS, 
             1, 
-            "QOIec", 
+            "QOI", 
             "Decoding Region: x=%d, y=%d, width=%d, height=%d",
             this.Decoder.tDrawRegion.tLocation.iX,
             this.Decoder.tDrawRegion.tLocation.iY,
@@ -1327,7 +1327,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                 ARM_2D_LOG_INFO(
                     CONTROLS, 
                     1, 
-                    "QOIec", 
+                    "QOI", 
                     "Current location is right before the target region!"
                 );
                 break;
@@ -1345,7 +1345,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                     ARM_2D_LOG_INFO(
                         CONTROLS, 
                         1, 
-                        "QOIec", 
+                        "QOI", 
                         "Saved Context Looks Good: distance %d, x=%d, y=%d...",
                         tDelta,
                         ptStartPoint->tLocation.iX,
@@ -1371,7 +1371,7 @@ arm_2d_err_t  __arm_2d_qoi_decode (
                     ARM_2D_LOG_INFO(
                         CONTROLS, 
                         1, 
-                        "QOIec", 
+                        "QOI", 
                         "User Added Reference point Looks Good: distance %d, x=%d, y=%d...",
                         tDelta,
                         ptStartPoint->tLocation.iX,
@@ -1398,7 +1398,7 @@ label_find_the_start_point:
                     ARM_2D_LOG_INFO(
                         CONTROLS, 
                         1, 
-                        "QOIec", 
+                        "QOI", 
                         "Current location is good : distance %d, x=%d, y=%d...",
                         tCurrentDelta,
                         tTempLocation.iX,
@@ -1410,7 +1410,7 @@ label_find_the_start_point:
                     ARM_2D_LOG_INFO(
                         CONTROLS, 
                         1, 
-                        "QOIec", 
+                        "QOI", 
                         "Find a context at point: x=%d, y=%d...",
                         ptStartPoint->tLocation.iX,
                         ptStartPoint->tLocation.iY
@@ -1423,7 +1423,7 @@ label_find_the_start_point:
         ARM_2D_LOG_INFO(
             CONTROLS, 
             1, 
-            "QOIec", 
+            "QOI", 
             "Decoding...\r\n"
             "---------------------------------------------"
         );
@@ -1439,7 +1439,7 @@ label_find_the_start_point:
     ARM_2D_LOG_INFO(
         CONTROLS, 
         1, 
-        "QOIec", 
+        "QOI", 
         "End of Decoding...\r\n"
         "==============================================================\r\n"
     );
