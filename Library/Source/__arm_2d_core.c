@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        12 Dec 2025
- * $Revision:    V.2.1.0
+ * $Date:        17 Dec 2025
+ * $Revision:    V.2.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -367,6 +367,7 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             break;
         #endif
 
+        /* target, origin, extra source */
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE:
@@ -374,6 +375,19 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE:
+
+        /* target, origin, extra source, target mask */
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK:
+
+        /* target, origin, extra source, extra source mask*/
         case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
@@ -382,7 +396,20 @@ void __arm_2d_sub_task_depose(arm_2d_op_core_t *ptOP)
             |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
             |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
             |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
-            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK: {
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK:
+
+        /* target, origin, extra source, extra source mask, target mask*/
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK:
+        case    ARM_2D_OP_INFO_PARAM_HAS_TARGET
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK: {
                 arm_2d_op_src_orig_msk_extra_t *ptThis = (arm_2d_op_src_orig_msk_extra_t *)ptOP;
                 __depose_virtual_resource(this.Origin.ptTile);
 
