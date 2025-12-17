@@ -67,7 +67,11 @@ extern "C" {
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_USE_QOI
-#   define ARM_2D_DEMO_RADAR_USE_QOI    1
+#   define ARM_2D_DEMO_RADAR_USE_QOI                1
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#   define ARM_2D_DEMO_RADAR_SHOW_ANIMATION         0
 #endif
 
 /* OOC header, please DO NOT modify  */
@@ -82,6 +86,11 @@ extern "C" {
 #if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
 #   undef ARM_2D_DEMO_RADAR_USE_QOI
 #   define ARM_2D_DEMO_RADAR_USE_QOI    0
+#endif
+
+#if !ARM_2D_DEMO_RADAR_USE_QOI
+#   undef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#   define  ARM_2D_DEMO_RADAR_SHOW_ANIMATION    0
 #endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -98,6 +107,21 @@ extern "C" {
             __arm_2d_scene_radars_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+enum {
+    QOI_BACKGROUND,
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+    QOI_FILM_TOP_LEFT,
+    QOI_FILM_BOTTOM_RIGHT,
+#endif
+    __QOI_COUNT,
+};
+
+enum {
+    FILM_IDX_TOP_LEFT,
+    FILM_IDX_BOTTOM_RIGHT,
+    __FILM_COUNT,
+};
 
 typedef struct __radar_bogey_t {
     implement(dynamic_nebula_particle_t);
@@ -127,7 +151,11 @@ struct user_scene_radars_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+    int64_t lTimestamp[3];
+#else
     int64_t lTimestamp[2];
+#endif
     bool bUserAllocated;
     uint8_t chPT;
     uint8_t chRadarIndex;
@@ -140,12 +168,22 @@ ARM_PRIVATE(
     foldable_panel_t    tScreen;
 
 #if ARM_2D_DEMO_RADAR_USE_QOI
-    arm_qoi_loader_t tQOIBackground;
-    union {
-        arm_qoi_io_file_loader_t tFile;
-        arm_qoi_io_binary_loader_t tBinary;
-    } LoaderIO;
+    struct {
+        arm_qoi_loader_t tLoader;
+        union {
+            arm_qoi_io_file_loader_t tFile;
+            arm_qoi_io_binary_loader_t tBinary;
+        } LoaderIO;
+    }tQOI[__QOI_COUNT];
 #endif
+
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+    struct {
+        arm_2d_helper_film_t    tHelper;
+        spin_zoom_widget_t      tSector;
+    } tFilm[__FILM_COUNT];
+#endif
+
 )
     /* place your public member here */
     
