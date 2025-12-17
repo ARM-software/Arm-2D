@@ -237,7 +237,7 @@ const arm_qoi_loader_io_t ARM_QOI_IO_BINARY_LOADER;
 /*============================ PROTOTYPES ====================================*/
 extern
 ARM_NONNULL(1)
-arm_2d_err_t arm_qoi_loader_init( arm_qoi_loader_t *ptThis,
+arm_2d_err_t arm_qoi_loader_init(   arm_qoi_loader_t *ptThis,
                                     arm_qoi_loader_cfg_t *ptCFG);
 
 extern
