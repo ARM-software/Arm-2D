@@ -76,7 +76,7 @@
 #   error Unsupported colour depth!
 #endif
 
-#define EYE_SIZE_RATIO              2.0f
+#define EYE_SIZE_RATIO              1.00f
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
@@ -574,9 +574,11 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
 
+    #if 0 /* please do NOT use this feature unless you have sufficient heap (>0x8000) */
         #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
             .tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
         #endif
+    #endif
 
             //.bInvertColour = true,
             //.bForceDisablePreBlendwithBG = true,
