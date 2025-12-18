@@ -368,12 +368,13 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     do {
         int32_t nResult;
         if (arm_2d_helper_time_liner_slider(0, 
-                                        9, 
+                                        this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwFrameNum, 
                                         ( this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwPeriodPerFrame 
                                         * this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwFrameNum),
                                         &nResult, 
                                         &this.lTimestamp[2])) {
             this.lTimestamp[2] = 0;
+            nResult = 0;
         }
         arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper, nResult);
 
@@ -382,12 +383,13 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     do {
         int32_t nResult;
         if (arm_2d_helper_time_liner_slider(0, 
-                                        9, 
+                                        this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwFrameNum, 
                                         ( this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwPeriodPerFrame 
                                         * this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwFrameNum),
                                         &nResult, 
                                         &this.lTimestamp[3])) {
             this.lTimestamp[3] = 0;
+            nResult = 0;
         }
         arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, nResult);
 
