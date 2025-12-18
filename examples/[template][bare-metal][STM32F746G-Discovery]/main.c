@@ -572,8 +572,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        //scene_radars_loader,
-        scene_flight_attitude_instrument_loader,
+        scene_radars_loader,
+        //scene_flight_attitude_instrument_loader,
         //scene_watch_face_01_loader,
         //scene_balls_loader,
         //scene_matrix_loader,

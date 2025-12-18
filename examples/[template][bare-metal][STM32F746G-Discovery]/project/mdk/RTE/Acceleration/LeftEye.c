@@ -1,5 +1,5 @@
 
-/* Generated on Fri Nov 14 18:56:32 2025 from -i */
+/* Generated on Wed Dec 17 11:10:06 2025 from -i */
 /* Re-sized : True */
 /* Rotated : 0.0 deg */
 
@@ -6736,6 +6736,9 @@ const arm_2d_tile_t c_tileLeftEyeMask2 = {
     .nAddress = ((intptr_t)c_bmpLeftEyeCCCA8888) + 3,
 };
 
+
+
+
 extern const arm_2d_tile_t c_tileLeftEyeMask;
 
 ARM_SECTION("arm2d.tile.c_tileLeftEyeMask")
@@ -6750,7 +6753,7 @@ const arm_2d_tile_t c_tileLeftEyeMask = {
         .bIsRoot = true,
         .bHasEnforcedColour = true,
         .tColourInfo = {
-            .chScheme = ARM_2D_COLOUR_8BIT,
+            .chScheme = ARM_2D_COLOUR_MASK_A8,
         },
     },
     .pchBuffer = (uint8_t *)c_bmpLeftEyeAlpha,

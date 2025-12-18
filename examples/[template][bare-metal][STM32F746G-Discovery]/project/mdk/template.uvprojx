@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>6</Optim>
+            <Optim>5</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -466,11 +466,6 @@
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_animate_background.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_knob.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\knob\arm_2d_scene_knob.c</FilePath>
@@ -491,29 +486,29 @@
               <FilePath>..\..\..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_wedge_pattern.c</FileName>
+              <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_wedge_pattern.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_asset_radial_line_pattern.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_radial_line_pattern.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_knob_circle_quater.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_asset_radial_line_cover.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_radial_line_cover.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
+              <FileName>arm_2d_asset_radial_line_pattern.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_knob_circle_quater.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_pattern.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
+              <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_MeterPanel.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1175,11 +1170,6 @@
               <FilePath>..\..\..\common\scenes\bubble_charging\arm_2d_scene_bubble_charging.h</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_scene_animate_background.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_scene_animate_background.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_knob.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\scenes\knob\arm_2d_scene_knob.c</FilePath>
@@ -1200,29 +1190,29 @@
               <FilePath>..\..\..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_wedge_pattern.c</FileName>
+              <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_wedge_pattern.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_asset_radial_line_pattern.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_radial_line_pattern.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_knob_circle_quater.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_asset_radial_line_cover.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_radial_line_cover.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
+              <FileName>arm_2d_asset_radial_line_pattern.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_knob_circle_quater.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_pattern.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
+              <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\arm_2d_asset_MeterPanel.c</FilePath>
+              <FilePath>..\..\..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1524,7 +1514,7 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Blink">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -1629,14 +1619,14 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Progress and Status">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Radars">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.3.0" condition="Arm-2D-Demos">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -1727,7 +1717,7 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.0.1" condition="Arm-2D-Displayer-Adapter" maxInstances="8" ymlID="Acceleration:Arm-2D Helper:Display Adapter">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -1951,9 +1941,9 @@
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\Eyeball.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\Eyeball.c" version="2.1.0">
         <instance index="0">RTE\Acceleration\Eyeball.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -1966,9 +1956,9 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\LeftEye.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\LeftEye.c" version="2.4.0">
         <instance index="0">RTE\Acceleration\LeftEye.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2038,18 +2028,18 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="4.0.1">
+      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="4.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.0.1" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="4.0.1">
+      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="4.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.0.1" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2200,18 +2190,18 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_blink.c" version="1.1.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_blink.c" version="2.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_blink.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_blink.h" version="1.1.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_blink.h" version="2.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_blink.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2560,36 +2550,36 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_progress_status.c" version="2.2.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_progress_status.c" version="2.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_progress_status.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_progress_status.h" version="2.2.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_progress_status.h" version="2.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_progress_status.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_radars.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_radars.c" version="3.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_radars.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_radars.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_radars.h" version="3.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_radars.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2760,7 +2750,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2769,7 +2759,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2778,7 +2768,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2787,7 +2777,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.6" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2796,7 +2786,16 @@
       </file>
       <file attr="config" category="header" name="examples\common\loader\freetype_loader\arm_freetype_cfg.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_freetype_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="4.2.0" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\common\loader\qoi_loader\arm_qoi_cfg.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_qoi_cfg.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2805,7 +2804,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\loader\tjpgd_loader\arm_tjpgd_cfg.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_tjpgd_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="4.2.0" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2814,7 +2813,34 @@
       </file>
       <file attr="config" category="header" name="examples\common\loader\zjpgd_loader\arm_zjpgd_cfg.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_zjpgd_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="4.2.0" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\doge_dance.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\doge_dance.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\film_mask.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\film_mask.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\girl_dance.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\girl_dance.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="STM32F746G-Discovery"/>
@@ -2849,13 +2875,10 @@
         </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\radar_background.c" version="1.0.0">
-        <instance index="0">RTE\Acceleration\radar_background.c</instance>
+        <instance index="0" removed="1">RTE\Acceleration\radar_background.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\roll_scale_marker.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\roll_scale_marker.c</instance>
@@ -2867,22 +2890,16 @@
         </targetInfos>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\rounded_square.c" version="1.0.0">
-        <instance index="0">RTE\Acceleration\rounded_square.c</instance>
+        <instance index="0" removed="1">RTE\Acceleration\rounded_square.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\solid_circle_small.c" version="1.0.0">
-        <instance index="0">RTE\Acceleration\solid_circle_small.c</instance>
+        <instance index="0" removed="1">RTE\Acceleration\solid_circle_small.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\solid_line.c" version="1.0.0">
         <instance index="0">RTE\Acceleration\solid_line.c</instance>

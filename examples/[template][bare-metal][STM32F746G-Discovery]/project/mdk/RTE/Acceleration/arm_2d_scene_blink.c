@@ -61,21 +61,32 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileEyeball            c_tileEyeballGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileEyeball            c_tileEyeballRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileEyeball            c_tileEyeballCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
 
+#define EYE_SIZE_RATIO              1.00f
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
+
+#if ARM_2D_DEMO_BLINK_USE_QOI
+#   define EYEBALL      this.tQOIEyeball.vres.tTile
+#else
+#   define EYEBALL      c_tileEyeballMask
+#endif
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -87,6 +98,8 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 extern const arm_2d_tile_t c_tileLeftEyeMask;
 extern const arm_2d_tile_t c_tileEyeballMask;
+extern const arm_2d_tile_t c_tileEyeballCCCA8888;
+extern const arm_2d_tile_t c_tileEyeball;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
@@ -124,6 +137,10 @@ static void __on_scene_blink_load(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_load(&this.Eye.tSocket);
     spin_zoom_widget_on_load(&this.Eye.tEyeBall);
+
+#if ARM_2D_DEMO_BLINK_USE_QOI
+    arm_qoi_loader_on_load(&this.tQOIEyeball);
+#endif
 }
 
 static void __after_scene_blink_switching(arm_2d_scene_t *ptScene)
@@ -142,6 +159,9 @@ static void __on_scene_blink_depose(arm_2d_scene_t *ptScene)
     spin_zoom_widget_depose(&this.Eye.tSocket);
     spin_zoom_widget_depose(&this.Eye.tEyeBall);
 
+#if ARM_2D_DEMO_BLINK_USE_QOI
+    arm_qoi_loader_depose(&this.tQOIEyeball);
+#endif
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -288,7 +308,11 @@ ARM_PT_BEGIN(this.ForcusGenerator.chPT)
         chRolling = rand() & 0xFF;
         if (chRolling <= this.ForcusGenerator.chRatio) {
 
-            arm_2d_size_t tSize = c_tileLeftEyeMask.tRegion.tSize;
+            arm_2d_size_t tSize = {
+                .iWidth = (int16_t)((float)c_tileLeftEyeMask.tRegion.tSize.iWidth * EYE_SIZE_RATIO),
+                .iHeight = (int16_t)((float)c_tileLeftEyeMask.tRegion.tSize.iHeight * EYE_SIZE_RATIO),
+            };
+
             tSize.iHeight -= tSize.iHeight >> 2;
             tSize.iWidth -= tSize.iWidth >> 2;
 
@@ -334,18 +358,22 @@ static void __on_scene_blink_frame_start(arm_2d_scene_t *ptScene)
 
     srand(arm_2d_helper_get_system_timestamp());
 
-    //__blink_action(ptThis);
+    __blink_action(ptThis);
     __forcus_generator(ptThis);
     __eyeball_move(ptThis);
 
     spin_zoom_widget_on_frame_start_xy( &this.Eye.tSocket, 
                                         0, 
-                                        1.0f,
-                                        (float)this.Blink.iEyelidOffset / 100.0f);
+                                        EYE_SIZE_RATIO,
+                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);
     spin_zoom_widget_on_frame_start_xy( &this.Eye.tEyeBall, 
                                         0, 
-                                        1.0f,
-                                        (float)this.Blink.iEyelidOffset / 100.0f);
+                                        EYE_SIZE_RATIO,
+                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);
+
+#if ARM_2D_DEMO_BLINK_USE_QOI
+    arm_qoi_loader_on_frame_start(&this.tQOIEyeball);
+#endif
 }
 
 static void __on_scene_blink_frame_complete(arm_2d_scene_t *ptScene)
@@ -355,6 +383,10 @@ static void __on_scene_blink_frame_complete(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_frame_complete(&this.Eye.tSocket);
     spin_zoom_widget_on_frame_complete(&this.Eye.tEyeBall);
+
+#if ARM_2D_DEMO_BLINK_USE_QOI
+    arm_qoi_loader_on_frame_complete(&this.tQOIEyeball);
+#endif
 }
 
 static void __before_scene_blink_switching_out(arm_2d_scene_t *ptScene)
@@ -388,14 +420,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
                                 &tPivot, 
                                 255);
 
-        arm_2d_align_centre_open(__top_canvas, c_tileEyeballMask.tRegion.tSize) {
+        arm_2d_align_centre_open(__top_canvas, EYEBALL.tRegion.tSize) {
 
             arm_2d_region_t tEyeBallRegion = {
                 .tLocation = {
                     .iX =  __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX,
                     .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,
                 },
-                .tSize = c_tileEyeballMask.tRegion.tSize,
+                .tSize = EYEBALL.tRegion.tSize,
             };
 
             __arm_2d_hint_optimize_for_pfb__(tEyeBallRegion) {
@@ -413,7 +445,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
+    #if ARM_2D_DEMO_BLINK_USE_QOI
+        arm_lcd_puts("Scene blink with QOI");
+    #else
         arm_lcd_puts("Scene blink");
+    #endif
 
     /*-----------------------draw the scene end  -----------------------*/
     }
@@ -523,9 +559,49 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
         spin_zoom_widget_init(&this.Eye.tSocket, &tCFG);
     } while(0);
 
+#if ARM_2D_DEMO_BLINK_USE_QOI
+    /* initialize QOI loader */
+    do {
+    #if ARM_2D_DEMO_QOI_USE_FILE
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Eyeball.qoi");
+    #else
+        extern const uint8_t c_qoiEyeball[16840];
+
+        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiEyeball, sizeof(c_qoiEyeball));
+    #endif
+        arm_qoi_loader_cfg_t tCFG = {
+            //.bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+    #if 0 /* please do NOT use this feature unless you have sufficient heap (>0x8000) */
+        #if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__
+            .tColourInfo.chScheme = ARM_2D_COLOUR_CCCA8888,
+        #endif
+    #endif
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+        #if ARM_2D_DEMO_QOI_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_qoi_loader_init(&this.tQOIEyeball, &tCFG);
+    } while(0);
+#endif
+
     /* initialize Eyeball */
     do {
-
         spin_zoom_widget_cfg_t tCFG = {
             .Indicator = {
                 .LowerLimit = {
@@ -540,7 +616,11 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
                     .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
                 },
             },
-            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK,
+        #if ARM_2D_DEMO_BLINK_USE_QOI
+            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK,
+        #else
+            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK,
+        #endif
             .Source = {
                 .ptMask = &c_tileLeftEyeMask,
                 .tCentre = (arm_2d_location_t){
@@ -550,7 +630,14 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
                 },
                 .tColourToFill = GLCD_COLOR_RED,
             },
-            .Target.ptMask = &c_tileEyeballMask,
+            .Extra = {
+            #if ARM_2D_DEMO_BLINK_USE_QOI
+                .ptTile = &this.tQOIEyeball.vres.tTile,
+            #else
+                .ptTile = &c_tileEyeball,
+                .ptMask = &c_tileEyeballMask,
+            #endif
+            },
 
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
@@ -569,6 +656,7 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
         this.ForcusGenerator.chPT = 0;
         this.ForcusGenerator.chRatio = 64;
     } while(0);
+
     /* ------------   initialize members of user_scene_blink_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 

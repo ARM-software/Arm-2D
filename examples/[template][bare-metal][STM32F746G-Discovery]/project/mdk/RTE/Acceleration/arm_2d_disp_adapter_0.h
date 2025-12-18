@@ -157,7 +157,7 @@ extern "C" {
 // <i> Configure the default navigation layer of this display adapter. 
 // <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
-#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                     1
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                     0
 #endif
 
 // <o>Number of iterations <0-2000>
@@ -250,7 +250,7 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   0
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
