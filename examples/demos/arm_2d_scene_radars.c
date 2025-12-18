@@ -364,18 +364,34 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     arm_foreach(this.tFilm) {
         spin_zoom_widget_on_frame_start(&_->tSector, nResult, 1.5f);
     }
+    
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 
+                                        9, 
+                                        ( this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwPeriodPerFrame 
+                                        * this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwFrameNum),
+                                        &nResult, 
+                                        &this.lTimestamp[2])) {
+            this.lTimestamp[2] = 0;
+        }
+        arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper, nResult);
 
-    if (arm_2d_helper_is_time_out( 
-            this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwPeriodPerFrame, 
-            &this.lTimestamp[2] )) {
-        arm_2d_helper_film_next_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper);
-    }
+    } while(0);
 
-    if (arm_2d_helper_is_time_out( 
-            this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwPeriodPerFrame, 
-            &this.lTimestamp[3] )) {
-        arm_2d_helper_film_next_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper);
-    }
+    do {
+        int32_t nResult;
+        if (arm_2d_helper_time_liner_slider(0, 
+                                        9, 
+                                        ( this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwPeriodPerFrame 
+                                        * this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwFrameNum),
+                                        &nResult, 
+                                        &this.lTimestamp[3])) {
+            this.lTimestamp[3] = 0;
+        }
+        arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, nResult);
+
+    } while(0);
 
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_start(&_->tLoader);
@@ -688,6 +704,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_radars_handler)
             }
 
         }
+
+    #if 0 /* for debug */
+        arm_2d_align_mid_left(__top_canvas, FILM_TOP_LEFT.tRegion.tSize) {
+            arm_2d_tile_copy(   &FILM_TOP_LEFT,
+                                ptTile,
+                                &__mid_left_region);
+        }
+
+        arm_2d_align_mid_right(__top_canvas, FILM_BOTTOM_RIGHT.tRegion.tSize) {
+            arm_2d_tile_copy(   &FILM_BOTTOM_RIGHT,
+                                ptTile,
+                                &__mid_right_region);
+        }
+    #endif
 
     /*-----------------------draw the scene end  -----------------------*/
     }
