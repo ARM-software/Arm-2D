@@ -702,6 +702,8 @@ void __draw_bogey_handler(  void *pObj,
     assert(NULL != pObj);
     assert(NULL != ptDN);
 
+    ARM_2D_UNUSED(chOpacity);
+
     user_scene_radars_t *ptThis = (user_scene_radars_t *)pObj;
     __radar_bogey_t *ptBogey = (__radar_bogey_t *) ptDN->ptCurrent;
 
