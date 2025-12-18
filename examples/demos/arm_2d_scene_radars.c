@@ -330,7 +330,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
 
     int32_t nResult; 
     bool bIsNewScan = false;
-    if (arm_2d_helper_time_liner_slider(0, 3600, 8000ul, &nResult, &this.lTimestamp[0])) {
+    if (arm_2d_helper_time_liner_slider(0, 3600, 10000ul, &nResult, &this.lTimestamp[0])) {
         this.lTimestamp[0] = 0;
         bIsNewScan = true;
         nResult = 0;
@@ -369,6 +369,11 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
             this.tFilm[FILM_IDX_TOP_LEFT].tHelper.hwPeriodPerFrame, 
             &this.lTimestamp[2] )) {
         arm_2d_helper_film_next_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper);
+    }
+
+    if (arm_2d_helper_is_time_out( 
+            this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.hwPeriodPerFrame, 
+            &this.lTimestamp[3] )) {
         arm_2d_helper_film_next_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper);
     }
 
@@ -862,7 +867,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             .fnOnFrameCPL   = &__on_scene_radars_frame_complete,
             .fnDepose       = &__on_scene_radars_depose,
 
-            .bUseDirtyRegionHelper = true,
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -920,7 +925,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
                             100, 
                             1, 
                             10, 
-                            66);
+                            84);
 
             /* set to the last frame */
             arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper, -1);

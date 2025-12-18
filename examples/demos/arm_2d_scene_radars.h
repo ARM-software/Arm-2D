@@ -149,7 +149,7 @@ struct user_scene_radars_t {
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
 #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
-    int64_t lTimestamp[3];
+    int64_t lTimestamp[4];
 #else
     int64_t lTimestamp[2];
 #endif
