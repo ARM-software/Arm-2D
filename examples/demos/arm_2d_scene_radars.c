@@ -88,6 +88,8 @@
 #   define FILM_BOTTOM_RIGHT    this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.use_as__arm_2d_tile_t
 #endif
 
+#define ARM_2D_DEMO_RADAR_DEBUG     0
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -206,7 +208,7 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
     }
 #endif
 
-#if 1// for debug
+#if ARM_2D_DEMO_RADAR_DEBUG// for debug
 
     foldable_panel_unfold(&this.tScreen);
 
@@ -364,7 +366,9 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
         }
     }
 
-    //__scene_radars_actions(ptScene);
+#if !ARM_2D_DEMO_RADAR_DEBUG
+    __scene_radars_actions(ptScene);
+#endif
 
     spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 1.0f);
 
