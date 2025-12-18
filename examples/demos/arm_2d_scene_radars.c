@@ -392,7 +392,6 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
             nResult = 0;
         }
         arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, nResult);
-
     } while(0);
 
     arm_foreach(this.tQOI) {
