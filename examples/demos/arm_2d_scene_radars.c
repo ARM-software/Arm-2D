@@ -61,14 +61,20 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileGirlDance          c_tileGirlDanceGRAY8
+#   define c_tileDogeDance          c_tileDogeDanceGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileGirlDance          c_tileGirlDanceRGB565
+#   define c_tileDogeDance          c_tileDogeDanceRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileGirlDance          c_tileGirlDanceCCCN8888
+#   define c_tileDogeDance          c_tileDogeDanceCCCN8888
 #else
 #   error Unsupported colour depth!
 #endif
@@ -115,6 +121,8 @@ extern const arm_2d_tile_t c_tileTinyCrossMask;
 extern const arm_2d_tile_t c_tileRadarBackgroundGRAY8;
 
 extern const arm_2d_tile_t c_tileFilmMaskMask;
+extern const arm_2d_tile_t c_tileGirlDance;
+extern const arm_2d_tile_t c_tileDogeDance;
 
 extern
 const
@@ -192,13 +200,13 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
 
     foldable_panel_on_load(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_load(&_->tLoader);
     }
 #endif
 
-#if 0// for debug
+#if 1// for debug
 
     foldable_panel_unfold(&this.tScreen);
 
@@ -235,11 +243,13 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
 
     foldable_panel_depose(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_depose(&_->tLoader);
     }
+#endif
 
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tFilm) {
         spin_zoom_widget_depose(&_->tSector);
     }
@@ -354,7 +364,7 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
         }
     }
 
-    __scene_radars_actions(ptScene);
+    //__scene_radars_actions(ptScene);
 
     spin_zoom_widget_on_frame_start(&this.tScanSector, nResult, 1.0f);
 
@@ -393,7 +403,9 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
         }
         arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, nResult);
     } while(0);
+#endif
 
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_start(&_->tLoader);
     }
@@ -413,11 +425,12 @@ static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
 
     foldable_panel_on_frame_complete(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_complete(&_->tLoader);
     }
-
+#endif
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tFilm) {
         spin_zoom_widget_on_frame_complete(&_->tSector);
     }
@@ -905,7 +918,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
     /* ------------   initialize members of user_scene_radars_t begin ---------------*/
 
-#if ARM_2D_DEMO_RADAR_USE_QOI
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
 
 
     /* initialize QOI loader */
@@ -1012,6 +1025,31 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, -1);
         } while(0);
     #endif
+    } while(0);
+#else
+    do {
+        this.tFilm[FILM_IDX_TOP_LEFT].tHelper = (arm_2d_helper_film_t)
+            impl_film(  c_tileGirlDance, 
+                        100, 
+                        100, 
+                        1, 
+                        10, 
+                        84);
+
+        /* set to the last frame */
+        arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper, -1);
+
+
+        this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper = (arm_2d_helper_film_t)
+            impl_film(  c_tileDogeDance, 
+                        100, 
+                        100, 
+                        1, 
+                        13, 
+                        66);
+
+        /* set to the last frame */
+        arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, -1);
     } while(0);
 #endif
 

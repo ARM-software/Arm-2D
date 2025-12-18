@@ -66,12 +66,12 @@ extern "C" {
 #   define ARM_2D_DEMO_RADAR_BOGEY_COLOUR               ARM_2D_DEMO_RADAR_SCAN_SECTOR_COLOUR
 #endif
 
-#ifndef ARM_2D_DEMO_RADAR_USE_QOI
-#   define ARM_2D_DEMO_RADAR_USE_QOI                    1
-#endif
-
 #ifndef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
 #   define ARM_2D_DEMO_RADAR_SHOW_ANIMATION             0
+#endif
+
+#ifndef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      1
 #endif
 
 /* OOC header, please DO NOT modify  */
@@ -84,14 +84,16 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
-#   undef ARM_2D_DEMO_RADAR_USE_QOI
-#   define ARM_2D_DEMO_RADAR_USE_QOI                    0
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
 #endif
 
-#if !ARM_2D_DEMO_RADAR_USE_QOI
-#   undef ARM_2D_DEMO_RADAR_SHOW_ANIMATION
-#   define  ARM_2D_DEMO_RADAR_SHOW_ANIMATION            0
+#if !ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
 #endif
+
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -164,7 +166,7 @@ ARM_PRIVATE(
 
     foldable_panel_t    tScreen;
 
-#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     struct {
         arm_qoi_loader_t tLoader;
         union {
@@ -172,7 +174,9 @@ ARM_PRIVATE(
             arm_qoi_io_binary_loader_t tBinary;
         } LoaderIO;
     }tQOI[__QOI_COUNT];
+#endif
 
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     struct {
         arm_2d_helper_film_t    tHelper;
         spin_zoom_widget_t      tSector;
