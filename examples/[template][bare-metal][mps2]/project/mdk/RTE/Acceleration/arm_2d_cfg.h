@@ -180,16 +180,15 @@ extern "C" {
 #   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         1
 #endif
 
-// <q> Optimize the scaler version of transform operations for pointer-like resources
+// <q> Optimize the transform operations for pointer-like resources
 // <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
-// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
+// <i> This feature has no meaning when the anti-alias transform is disabled.
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
 #endif
 
-// <q> Optimize the scaler version of transform operations for hollow out masks
+// <q> Optimize the transform operations for hollow out masks
 // <i> This feature is disabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. If your application uses a lot of hollow out masks, it might help.
-// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__         0
 #endif
@@ -199,6 +198,12 @@ extern "C" {
 // <i> If you see some visual elements are imcomplete, you can choose those layout assistants with "_open" as posfix in corresonding area. For example, arm_2d_align_centre() can be changed to arm_2d_align_centre_open().
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__              0
+#endif
+
+// <q> Force to disable Anti-Alias in Fill-colour-with-transformed-mask-and-opacity.
+// <i> This feature is disabled by default. You can disable it to improve performance as long as the rendering is good enough.
+#ifndef __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+#   define __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__   0
 #endif
 
 // </h>

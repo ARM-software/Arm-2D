@@ -358,19 +358,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_matrix_handler)
                     ptTrain) {
 
             if (arm_2d_helper_pfb_is_region_active(ptTile, &ptTrain->tRegion, true)) {
-                arm_2d_size_t tCharSize = {0};
+                //arm_2d_size_t tCharSize = {0};
                 uint8_t chMaxOpacity = 255;
                 switch (ptTrain->u2Stage) {
                     case STAGE_MID:
                         /* use default font */
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8); 
-                        tCharSize = ARM_2D_FONT_6x8.use_as__arm_2d_font_t.tCharSize;
+                        //tCharSize = ARM_2D_FONT_6x8.use_as__arm_2d_font_t.tCharSize;
                         chMaxOpacity = 128;
                         break;
                     
                     case STAGE_NEAR:
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A1);
-                        tCharSize = ARM_2D_FONT_LiberationSansRegular14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
+                        //tCharSize = ARM_2D_FONT_LiberationSansRegular14_A1.use_as__arm_2d_user_font_t.use_as__arm_2d_font_t.tCharSize;
                         break;
                     default:
                         assert(false);      /* this should not happen */

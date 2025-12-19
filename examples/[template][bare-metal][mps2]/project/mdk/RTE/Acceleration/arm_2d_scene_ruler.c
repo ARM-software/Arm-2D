@@ -537,7 +537,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
                     .iWidth = 76,
                     .iHeight = 54,
                 },
-
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
                 .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
 
                 .bUseDirtyRegion = false,
