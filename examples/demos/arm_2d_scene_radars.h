@@ -71,7 +71,12 @@ extern "C" {
 #endif
 
 #ifndef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
-#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      1
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
+#endif
+
+#if !defined(ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION)                           \
+ && !ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      1
 #endif
 
 /* OOC header, please DO NOT modify  */
@@ -89,6 +94,18 @@ extern "C" {
 #endif
 
 #if !ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader)
+#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
+#endif
+
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
 #   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
 #   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
 #endif
@@ -109,12 +126,6 @@ extern "C" {
             __arm_2d_scene_radars_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
-
-enum {
-    QOI_FILM_TOP_LEFT,
-    QOI_FILM_BOTTOM_RIGHT,
-    __QOI_COUNT,
-};
 
 enum {
     FILM_IDX_TOP_LEFT,
@@ -166,14 +177,22 @@ ARM_PRIVATE(
 
     foldable_panel_t    tScreen;
 
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+    struct {
+        arm_zjpgd_loader_t tLoader;
+        union {
+            arm_zjpgd_io_file_loader_t tFile;
+            arm_zjpgd_io_binary_loader_t tBinary;
+        } LoaderIO;
+    }tJPG[__FILM_COUNT];
+#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     struct {
         arm_qoi_loader_t tLoader;
         union {
             arm_qoi_io_file_loader_t tFile;
             arm_qoi_io_binary_loader_t tBinary;
         } LoaderIO;
-    }tQOI[__QOI_COUNT];
+    }tQOI[__FILM_COUNT];
 #endif
 
 #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION

@@ -216,14 +216,14 @@ extern "C" {
 // <i> The width of your screen for running benchmark
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__                                     480
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     240
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen for running benchmark
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    481
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
 #endif
 
 // <o>Number of iterations <1-2000>
@@ -272,16 +272,20 @@ extern "C" {
 
 // <<< end of configuration section >>>
 
-#define MATRIX_LETTER_TRAIN_USE_BLUR            1
-#define ARM_2D_SCENE_METER_USE_JPG              1
-#define ARM_2D_SCENE_HISTOGRAM_USE_JPG          0
-#define ARM_2D_SCENE_HISTOGRAM_USE_QOI          1
-#define VT_SCALING_RATIO                        1
-#define ARM_2D_DEMO_USE_CRT_SCREEN              1
-#define ARM_2D_DEMO_JPGD_USE_FILE               0
-#define ARM_2D_SCENE_METER_USE_QOI              1
-#define ARM_2D_SCENE_METER_SHOW_FPS             0
-#define ARM_2D_DEMO_RADAR_USE_QOI               1
+#define MATRIX_LETTER_TRAIN_USE_BLUR                1
+#define ARM_2D_SCENE_METER_USE_JPG                  1
+#define ARM_2D_SCENE_HISTOGRAM_USE_JPG              0
+#define ARM_2D_SCENE_HISTOGRAM_USE_QOI              1
+#define VT_SCALING_RATIO                            2
+#define ARM_2D_DEMO_USE_CRT_SCREEN                  1
+#define ARM_2D_DEMO_JPGD_USE_FILE                   0
+#define ARM_2D_SCENE_METER_USE_QOI                  1
+#define ARM_2D_SCENE_METER_SHOW_FPS                 0
+
+#define ARM_2D_DEMO_RADAR_SHOW_ANIMATION            1
+//#define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION     1
+//#define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION     0
+
 
 
 //#define ARM_2D_DEMO_RADAR_COLOUR              GLCD_COLOR_NIXIE_TUBE

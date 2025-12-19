@@ -88,7 +88,7 @@
 #   define FILM_BOTTOM_RIGHT    this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.use_as__arm_2d_tile_t
 #endif
 
-#define ARM_2D_DEMO_RADAR_DEBUG     0
+#define ARM_2D_DEMO_RADAR_DEBUG     1
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
@@ -201,8 +201,11 @@ static void __on_scene_radars_load(arm_2d_scene_t *ptScene)
     }
 
     foldable_panel_on_load(&this.tScreen);
-
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+    arm_foreach(this.tJPG) {
+        arm_zjpgd_loader_on_load(&_->tLoader);
+    }
+#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_load(&_->tLoader);
     }
@@ -245,7 +248,11 @@ static void __on_scene_radars_depose(arm_2d_scene_t *ptScene)
 
     foldable_panel_depose(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+    arm_foreach(this.tJPG) {
+        arm_zjpgd_loader_depose(&_->tLoader);
+    }
+#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_depose(&_->tLoader);
     }
@@ -409,7 +416,11 @@ static void __on_scene_radars_frame_start(arm_2d_scene_t *ptScene)
     } while(0);
 #endif
 
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+    arm_foreach(this.tJPG) {
+        arm_zjpgd_loader_on_frame_start(&_->tLoader);
+    }
+#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_start(&_->tLoader);
     }
@@ -429,17 +440,21 @@ static void __on_scene_radars_frame_complete(arm_2d_scene_t *ptScene)
 
     foldable_panel_on_frame_complete(&this.tScreen);
 
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+    arm_foreach(this.tJPG) {
+        arm_zjpgd_loader_on_frame_complete(&_->tLoader);
+    }
+#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     arm_foreach(this.tQOI) {
         arm_qoi_loader_on_frame_complete(&_->tLoader);
     }
 #endif
+
 #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     arm_foreach(this.tFilm) {
         spin_zoom_widget_on_frame_complete(&_->tSector);
     }
 #endif
-
 
 }
 
@@ -659,9 +674,19 @@ IMPL_PFB_ON_DRAW(__draw_radar_with_animation)
                                         (arm_2d_corner_opacity_t)
                                             {128, 128, 128, 128});
 
+        #if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+            arm_2d_size_t tLabelSize = arm_lcd_printf_to_buffer(
+                (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4, 
+                "JPEG Animation");
+        #elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+            arm_2d_size_t tLabelSize = arm_lcd_printf_to_buffer(
+                (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4, 
+                "QOI Animation");
+        #else
             arm_2d_size_t tLabelSize = arm_lcd_printf_to_buffer(
                 (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4, 
                 "Animation");
+        #endif
 
             arm_2d_align_centre(__centre_region, tLabelSize) {
 
@@ -922,7 +947,100 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
     /* ------------   initialize members of user_scene_radars_t begin ---------------*/
 
-#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+
+
+    /* initialize TJpgD loader */
+    do {
+
+    #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+        do {
+        #if ARM_2D_DEMO_JPGD_USE_FILE
+            arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/girl_dance.jpg");
+        #else
+            extern const uint8_t c_jpgGirlDance75[31693];
+
+            arm_zjpgd_io_binary_loader_init(&this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tBinary, 
+                                            c_jpgGirlDance75, 
+                                            sizeof(c_jpgGirlDance75));
+        #endif
+            arm_zjpgd_loader_cfg_t tCFG = {
+                //.bUseHeapForVRES = true,
+                .ptScene = (arm_2d_scene_t *)ptThis,
+                .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+                //.bInvertColour = true,
+            #if ARM_2D_DEMO_JPGD_USE_FILE
+                .ImageIO = {
+                    .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
+                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                },
+            #else
+                .ImageIO = {
+                    .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                    .pTarget = (uintptr_t)&this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tBinary,
+                },
+            #endif
+            };
+
+            arm_zjpgd_loader_init(&this.tJPG[FILM_IDX_TOP_LEFT].tLoader, &tCFG);
+            
+            this.tFilm[FILM_IDX_TOP_LEFT].tHelper = (arm_2d_helper_film_t)
+                impl_film(  this.tJPG[FILM_IDX_TOP_LEFT].tLoader.vres.tTile, 
+                            100, 
+                            100, 
+                            1, 
+                            10, 
+                            84);
+
+            /* set to the last frame */
+            arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_TOP_LEFT].tHelper, -1);
+        } while(0);
+    
+        do {
+        #if ARM_2D_DEMO_JPGD_USE_FILE
+            arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/girl_dance.jpg");
+        #else
+            extern const uint8_t c_jpgDogeDance75[23015];
+
+            arm_zjpgd_io_binary_loader_init(  &this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary, 
+                                            c_jpgDogeDance75, 
+                                            sizeof(c_jpgDogeDance75));
+        #endif
+            arm_zjpgd_loader_cfg_t tCFG = {
+                //.bUseHeapForVRES = true,
+                .ptScene = (arm_2d_scene_t *)ptThis,
+                .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            #if ARM_2D_DEMO_JPGD_USE_FILE
+                .ImageIO = {
+                    .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
+                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                },
+            #else
+                .ImageIO = {
+                    .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                    .pTarget = (uintptr_t)&this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary,
+                },
+            #endif
+            };
+
+            arm_zjpgd_loader_init(&this.tJPG[FILM_IDX_BOTTOM_RIGHT].tLoader, &tCFG);
+            
+            this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper = (arm_2d_helper_film_t)
+                impl_film(  this.tJPG[FILM_IDX_BOTTOM_RIGHT].tLoader.vres.tTile, 
+                            100, 
+                            100, 
+                            1, 
+                            13, 
+                            66);
+
+            /* set to the last frame */
+            arm_2d_helper_film_set_frame(&this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper, -1);
+        } while(0);
+    #endif
+    } while(0);
+#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
 
 
     /* initialize QOI loader */
@@ -936,7 +1054,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             extern
             const uint8_t c_qoiGirlDance[190659];
 
-            arm_qoi_io_binary_loader_init(  &this.tQOI[QOI_FILM_TOP_LEFT].LoaderIO.tBinary, 
+            arm_qoi_io_binary_loader_init(  &this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tBinary, 
                                             c_qoiGirlDance, 
                                             sizeof(c_qoiGirlDance));
         #endif
@@ -960,15 +1078,15 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             #else
                 .ImageIO = {
                     .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                    .pTarget = (uintptr_t)&this.tQOI[QOI_FILM_TOP_LEFT].LoaderIO.tBinary,
+                    .pTarget = (uintptr_t)&this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tBinary,
                 },
             #endif
             };
 
-            arm_qoi_loader_init(&this.tQOI[QOI_FILM_TOP_LEFT].tLoader, &tCFG);
+            arm_qoi_loader_init(&this.tQOI[FILM_IDX_TOP_LEFT].tLoader, &tCFG);
             
             this.tFilm[FILM_IDX_TOP_LEFT].tHelper = (arm_2d_helper_film_t)
-                impl_film(  this.tQOI[QOI_FILM_TOP_LEFT].tLoader.vres.tTile, 
+                impl_film(  this.tQOI[FILM_IDX_TOP_LEFT].tLoader.vres.tTile, 
                             100, 
                             100, 
                             1, 
@@ -986,7 +1104,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             extern
             const uint8_t c_qoiDogeDance[126958];
 
-            arm_qoi_io_binary_loader_init(  &this.tQOI[QOI_FILM_BOTTOM_RIGHT].LoaderIO.tBinary, 
+            arm_qoi_io_binary_loader_init(  &this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary, 
                                             c_qoiDogeDance, 
                                             sizeof(c_qoiDogeDance));
         #endif
@@ -1010,15 +1128,15 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             #else
                 .ImageIO = {
                     .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                    .pTarget = (uintptr_t)&this.tQOI[QOI_FILM_BOTTOM_RIGHT].LoaderIO.tBinary,
+                    .pTarget = (uintptr_t)&this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary,
                 },
             #endif
             };
 
-            arm_qoi_loader_init(&this.tQOI[QOI_FILM_BOTTOM_RIGHT].tLoader, &tCFG);
+            arm_qoi_loader_init(&this.tQOI[FILM_IDX_BOTTOM_RIGHT].tLoader, &tCFG);
             
             this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper = (arm_2d_helper_film_t)
-                impl_film(  this.tQOI[QOI_FILM_BOTTOM_RIGHT].tLoader.vres.tTile, 
+                impl_film(  this.tQOI[FILM_IDX_BOTTOM_RIGHT].tLoader.vres.tTile, 
                             100, 
                             100, 
                             1, 
