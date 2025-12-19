@@ -180,9 +180,9 @@ extern "C" {
 #   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         1
 #endif
 
-// <q> Optimize the scaler version of transform operations for pointer-like resources
+// <q> Optimize the transform operations for pointer-like resources
 // <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
-// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
+// <i> This feature has no meaning when the anti-alias transform is disabled.
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
 #endif
