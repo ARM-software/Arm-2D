@@ -24,6 +24,8 @@
 
 #include "./spinning_wheel.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -231,3 +233,5 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
+
+#endif /* defined(RTE_Acceleration_Arm_2D_Transform) */

@@ -33,6 +33,7 @@ extern "C" {
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
 extern
 void spinning_wheel_init(void);
 
@@ -43,6 +44,11 @@ extern
 void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget, 
                             COLOUR_INT Colour, 
                             bool bIsNewFrame);
+#else
+#   define spinning_wheel_init(...)
+#   define spinning_wheel_show(...)
+#   define spinning_wheel2_show(...)
+#endif
 
 #ifdef   __cplusplus
 }
