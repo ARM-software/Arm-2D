@@ -88,7 +88,7 @@
 #   define FILM_BOTTOM_RIGHT    this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.use_as__arm_2d_tile_t
 #endif
 
-#define ARM_2D_DEMO_RADAR_DEBUG     1
+#define ARM_2D_DEMO_RADAR_DEBUG     0
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
