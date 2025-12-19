@@ -21,8 +21,8 @@
  * Title:        __arm_2d_core.c
  * Description:  The pixel-pipeline
  *
- * $Date:        17 Dec 2025
- * $Revision:    V.2.2.0
+ * $Date:        19 Dec 2025
+ * $Revision:    V.2.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -1210,24 +1210,36 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_NOT_SUPPORT;
     uint_fast8_t chTargetPixelLenInBit = _BV(OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     uint_fast8_t chSourcePixelLenInBit = chTargetPixelLenInBit;
-    uint_fast8_t chOriginPixelLenInBit = chTargetPixelLenInBit;
-    uint_fast8_t chExtraSourcePixelLenInBit = chTargetPixelLenInBit;
+    uint_fast8_t chOriginPixelLenInBit = chTargetPixelLenInBit;         
+    uint_fast8_t chExtraSourcePixelLenInBit = chTargetPixelLenInBit;    
     uint_fast8_t chSourceMaskPixelLenInBit = 8;
     uint_fast8_t chExtraSourceMaskPixelLenInBit = 8;
-    
+
+    ARM_2D_UNUSED(chOriginPixelLenInBit);
+    ARM_2D_UNUSED(chExtraSourcePixelLenInBit);
+    ARM_2D_UNUSED(chExtraSourceMaskPixelLenInBit);
     
     __arm_2d_tile_param_t tSourceTileParam;
     __arm_2d_tile_param_t tSourceMaskParam;
     __arm_2d_tile_param_t tTargetTileParam;
     __arm_2d_tile_param_t tTargetMaskParam;
-    __arm_2d_tile_param_t tOriginTileParam;
+    __arm_2d_tile_param_t tOriginTileParam; 
     __arm_2d_tile_param_t tExtraSourceTileParam;
     __arm_2d_tile_param_t tExtraSourceMaskParam;
+
+    ARM_2D_UNUSED(tOriginTileParam);
+    ARM_2D_UNUSED(tExtraSourceTileParam);
+    ARM_2D_UNUSED(tExtraSourceMaskParam);
+
 
     arm_2d_tile_t tSourceMask;
     arm_2d_tile_t tTargetMask;
     arm_2d_tile_t tExtraSource;
     arm_2d_tile_t tExtraSourceMask;
+
+    ARM_2D_UNUSED(tExtraSource);
+    ARM_2D_UNUSED(tExtraSourceMask);
+
 
     const arm_2d_tile_t *ptExtraSource = NULL;
     const arm_2d_tile_t *ptExtraSourceMask = NULL;
@@ -1235,6 +1247,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
     //const arm_2d_tile_t *ptTargetMask = NULL;
     //const arm_2d_tile_t *ptSourceMask = NULL;
     
+#if !__ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__
     const arm_2d_tile_t *ptOrigin = NULL;
     
     if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
@@ -1252,6 +1265,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
             return (arm_fsm_rt_t)ARM_2D_ERR_OUT_OF_REGION;
         }
     }
+#endif
 
     ptSource = __arm_2d_tile_region_caculator( 
                                 ptSource, 
@@ -1414,7 +1428,9 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
         }
 
-    } else {                                                                    //!< has origin
+    } 
+#if !__ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__
+    else {                                                                    //!< has origin
         if (OP_CORE.ptOp->Info.Param.bHasSourceMask) {
             arm_2d_op_src_orig_msk_t *ptOP = (arm_2d_op_src_orig_msk_t *)ptThis;  
 
@@ -1573,6 +1589,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         }
 
     }
+#endif
 
     arm_2d_size_t tActualSourceSize = {
         .iWidth = MIN(  tSourceTileParam.tValidRegion.tSize.iWidth, 
@@ -1600,6 +1617,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
 
     if (wMode & ARM_2D_CP_MODE_FILL) {                                          //!< tiling (tile fill) operation
 
+    #if !__ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__
         if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
             /*! \brief masks are not supported in fill with origin mode */
             assert(!OP_CORE.ptOp->Info.Param.bHasSourceMask);
@@ -1649,7 +1667,9 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                                     &tSourceTileParam,
                                                     &tOriginTileParam,
                                                     &tTargetTileParam);
-        } else {
+        } else 
+    #endif
+        {
 
             //! handle mirroring
             do {
@@ -1726,6 +1746,7 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
         }
     } else {                                                                    //!< normal tile copy operation
 
+    #if !__ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__
         if (OP_CORE.ptOp->Info.Param.bHasOrigin) {
             //! handle origin mirroring
             do {
@@ -1864,7 +1885,9 @@ arm_fsm_rt_t __arm_2d_region_calculator(    arm_2d_op_cp_t *ptThis,
                                                         &tTargetTileParam,
                                                         &tActualSourceSize);
             }
-        } else {
+        } else 
+    #endif
+        {
 
             //! handle mirroring
             do {
@@ -2505,6 +2528,12 @@ arm_fsm_rt_t __arm_2d_op_frontend_op_decoder(arm_2d_op_core_t *ptThis)
 {
     arm_fsm_rt_t tResult;
     
+#if __ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__
+    if (this.ptOp->Info.Param.chValue & ARM_2D_OP_INFO_PARAM_HAS_ORIGIN) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_NOT_AVAILABLE;
+    }
+#endif
+
     //! decode operation
     switch (this.ptOp->Info.Param.chValue & 
                 (   ARM_2D_OP_INFO_PARAM_HAS_SOURCE 

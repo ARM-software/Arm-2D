@@ -22,8 +22,8 @@
  * Description:  Public header file to indicate features avaialble for this
  *               arm-2d library variant.
  *
- * $Date:        24. April 2025
- * $Revision:    V.1.2.0
+ * $Date:        19. Dec 2025
+ * $Revision:    V.1.3.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -258,6 +258,14 @@ extern "C" {
 #       define  __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT__              \
             __ARM_2D_CFG_UNSAFE_NO_SATURATION_IN_FIXED_POINT_FOR_PERFROMANCE__
 #endif
+#endif
+
+#ifndef __ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__
+#   if !defined(RTE_Acceleration_Arm_2D_Transform)
+#       define __ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__       1
+#   else
+#       define __ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__       0
+#   endif
 #endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
