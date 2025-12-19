@@ -73,10 +73,19 @@ extern
 const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderMask;
 
 extern
+const arm_2d_tile_t c_tileBatteryGasGaugeGradeBoarderA4Mask;
+
+extern
 const arm_2d_tile_t c_tileBatteryGasGaugeBlockMask;
 
 extern
+const arm_2d_tile_t c_tileBatteryGasGaugeBlockA4Mask;
+
+extern
 const arm_2d_tile_t c_tileSinWaveMask;
+
+extern
+const arm_2d_tile_t c_tileSinWaveA4Mask;
 
 extern 
 const arm_2d_tile_t c_tileGlassReflectionWLineMask;
@@ -203,7 +212,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
         /* draw gas gauge grade*/
         do {
             arm_2d_size_t tInnerSize 
-                = c_tileBatteryGasGaugeGradeBoarderMask.tRegion.tSize;
+                = c_tileBatteryGasGaugeGradeBoarderA4Mask.tRegion.tSize;
             tInnerSize.iHeight = 80;
             uint16_t  hwLevel = 1000;
             bool bDrawTheTopBar = true;
@@ -229,10 +238,10 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
                         chOpacity = MIN(this.chBoarderOpacity, chOpacity);
                     }
                     
-                    arm_2d_fill_colour_with_mask_and_opacity(
+                    arm_2d_fill_colour_with_a4_mask_and_opacity(
                                             &__battery,
                                             &__centre_region,
-                                            &c_tileBatteryGasGaugeGradeBoarderMask,
+                                            &c_tileBatteryGasGaugeGradeBoarderA4Mask,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
                                             chOpacity);
                     
@@ -246,7 +255,7 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
         /* draw gas gauge block*/
         do {
             arm_2d_size_t tInnerSize 
-                = c_tileBatteryGasGaugeBlockMask.tRegion.tSize;
+                = c_tileBatteryGasGaugeBlockA4Mask.tRegion.tSize;
             tInnerSize.iHeight = 80;
             uint16_t  hwLevel = 1000;
             arm_2d_align_centre( __battery_canvas, tInnerSize) {
@@ -264,10 +273,10 @@ void battery_gasgauge_nixie_tube_show(  battery_nixie_tube_t *ptThis,
 
                     __centre_region.tLocation.iY += 4;
                     
-                    arm_2d_fill_colour_with_mask_and_opacity(
+                    arm_2d_fill_colour_with_a4_mask_and_opacity(
                                             &__battery,
                                             &__centre_region,
-                                            &c_tileBatteryGasGaugeBlockMask,
+                                            &c_tileBatteryGasGaugeBlockA4Mask,
                                             (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE},
                                             chOpacity);
                     
@@ -335,7 +344,7 @@ void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
                 tWaveRegion.tSize = ptSinWave->tRegion.tSize;
                 
                 while(tWaveRegion.tLocation.iX < tWaterLevelRegion.tLocation.iX + tWaterLevelRegion.tSize.iWidth) {
-                    arm_2d_fill_colour_with_mask_and_opacity(
+                    arm_2d_fill_colour_with_a4_mask_and_opacity(
                             &__inner_container,
                             &tWaveRegion,
                             ptSinWave,
@@ -359,7 +368,7 @@ void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
                 tWaveRegion.tSize = ptSinWave->tRegion.tSize;
                 
                 while(tWaveRegion.tLocation.iX < tWaterLevelRegion.tLocation.iX + tWaterLevelRegion.tSize.iWidth) {
-                    arm_2d_fill_colour_with_mask_and_opacity(
+                    arm_2d_fill_colour_with_a4_mask_and_opacity(
                             &__inner_container,
                             &tWaveRegion,
                             ptSinWave,
@@ -400,7 +409,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
 
         if (arm_2d_helper_is_time_out(10, &this.lTimeStamp[1])) {
 
-            if (this.iWaveOffset++ >= c_tileSinWaveMask.tRegion.tSize.iWidth) {
+            if (this.iWaveOffset++ >= c_tileSinWaveA4Mask.tRegion.tSize.iWidth) {
                 this.iWaveOffset = 0;
             }
         }
@@ -535,7 +544,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                                     .chTop = 16,
                                     .chBottom = 10},
                                 tColour,
-                                &c_tileSinWaveMask);
+                                &c_tileSinWaveA4Mask);
 
             arm_2d_container(&__battery, __inner_container, &__centre_region,
                              //8,9,16,10
