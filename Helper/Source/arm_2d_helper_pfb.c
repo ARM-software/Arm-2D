@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        16. Nov 2025
- * $Revision:    V.2.4.4
+ * $Date:        19. Dec 2025
+ * $Revision:    V.2.4.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -5075,13 +5075,16 @@ void arm_2d_helper_dirty_region_transform_update(
     const arm_2d_region_t *ptRegion = NULL;
     arm_2d_region_t tReferenceRegion = {0};
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
     if (NULL != this.SourceReference.ptPoints && this.SourceReference.chCount > 0) {
         ptRegion = arm_2d_calculate_reference_target_region_after_transform(
                                                     (arm_2d_op_trans_t *)this.ptTransformOP, 
                                                     &tReferenceRegion,
                                                     this.SourceReference.ptPoints,
                                                     this.SourceReference.chCount);
-    } else {
+    } else 
+#endif
+    {
         ptRegion = (this.ptTransformOP->Target.ptRegion);
     }
 
