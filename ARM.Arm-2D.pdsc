@@ -267,7 +267,7 @@
             <file category="sourceC"     name="Library/Source/arm_2d_conversion.c" />
             <file category="sourceC"     name="Library/Source/arm_2d_helium.c"                  condition="Helium" />
             <file category="doc"         name="documentation/index.html"/>
-            <file category="preIncludeGlobal"    name="Library/Include/template/arm_2d_cfg.h"   attr="config" version="1.5.12" />
+            <file category="preIncludeGlobal"    name="Library/Include/template/arm_2d_cfg.h"   attr="config" version="1.5.13" />
             <file category="utility"     name="tools/img2c.py"                                  attr="config" version="1.2.5"/>
             <file category="utility"     name="tools/ttf2c.py"                                  attr="config" version="2.3.1"/>
             <file category="other"       name="tools/README.md" />
@@ -524,7 +524,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.12.0" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.12.1" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -909,11 +909,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cversion="3.5.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cversion="3.5.1" condition="Arm-2D-Demos">
           <description>An example for showing different styles of radar panels. </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_radars.c" attr="config" version="3.5.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_radars.h" attr="config" version="3.5.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_radars.c" attr="config" version="3.5.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_radars.h" attr="config" version="3.5.1" />
 
             <file category="sourceC"     name="examples/demos/girl_dance.c" attr="config" version="3.0.0" />
             <file category="sourceC"     name="examples/demos/film_mask.c"  attr="config" version="1.0.0" />

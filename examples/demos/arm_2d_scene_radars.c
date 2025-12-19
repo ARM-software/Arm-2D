@@ -1148,7 +1148,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
         } while(0);
     #endif
     } while(0);
-#else
+#elif ARM_2D_DEMO_RADAR_SHOW_ANIMATION
     do {
         this.tFilm[FILM_IDX_TOP_LEFT].tHelper = (arm_2d_helper_film_t)
             impl_film(  c_tileGirlDance, 
