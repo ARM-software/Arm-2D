@@ -464,6 +464,7 @@ var group__gKernel =
     [ "__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__", "group__gKernel.html#ga24fb614359d977d784afbc821992f1c8", null ],
     [ "__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__", "group__gKernel.html#gaa832111ac7c0cde008384bf6ff5f1fd8", null ],
     [ "__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__", "group__gKernel.html#gaf7ee22ee8caba96056e63a8cd544031d", null ],
+    [ "__ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__", "group__gKernel.html#gafb5c6204bbc679082d75b07143101c1a", null ],
     [ "ARM_2D_VERSION_MAJOR", "group__gKernel.html#gaa1a520634c974866fb98044c63143532", null ],
     [ "ARM_2D_VERSION_MINOR", "group__gKernel.html#ga17fea46439a9f655a68d9b186838163e", null ],
     [ "ARM_2D_VERSION_PATCH", "group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e", null ],
