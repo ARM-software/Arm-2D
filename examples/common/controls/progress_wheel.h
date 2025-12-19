@@ -103,6 +103,8 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+
 extern
 ARM_NONNULL(1)
 void progress_wheel_init( progress_wheel_t *ptThis,
@@ -135,6 +137,18 @@ extern
 ARM_NONNULL(1)
 void progress_wheel_depose(progress_wheel_t *ptThis);
 
+#else
+
+#define progress_wheel_init(...)
+#define progress_wheel_set_diameter(...)
+#define progress_wheel_on_frame_start(...)
+#define progress_wheel_show(...)
+#define progress_wheel_on_load(...)
+#define progress_wheel_depose(...)
+
+#endif  /* defined(RTE_Acceleration_Arm_2D_Transform) */
+
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
@@ -145,4 +159,4 @@ void progress_wheel_depose(progress_wheel_t *ptThis);
 
 
 
-#endif
+#endif  /* __PROGRESS_WHEEL_H__ */

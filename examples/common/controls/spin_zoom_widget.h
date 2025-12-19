@@ -48,6 +48,7 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ > 199901L
 #define spin_zoom_widget_show(  __THIS_PTR,                                     \
                                 __TARGET_TILE_PTR,                              \
@@ -70,6 +71,9 @@ extern "C" {
 
 #else
 #   define spin_zoom_widget_show    spin_zoom_widget_show_with_normal_pivot
+#endif
+#else
+#   define spin_zoom_widget_show(...)
 #endif
 /*============================ TYPES =========================================*/
 
@@ -168,6 +172,8 @@ ARM_PROTECTED(
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
+
+#if defined(RTE_Acceleration_Arm_2D_Transform)
 /*!
  * \brief colour filling with a transformed mask
  */
@@ -221,9 +227,35 @@ spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND
  */
 extern
 spin_zoom_widget_mode_t SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK;
+#else
+extern
+spin_zoom_widget_mode_t __SPIN_ZOOM_MODE_NULL;
+
+#define SPIN_ZOOM_MODE_FILL_COLOUR                              __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_FILL_COLOUR_WITH_TARGET_MASK             __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_TILE_WITH_MASK                           __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_TILE_ONLY                                __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_TILE_WITH_COLOUR_KEYING                  __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK\
+                                                                __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK            \
+                                                                __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK            \
+                                                                __SPIN_ZOOM_MODE_NULL
+
+#define SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK    __SPIN_ZOOM_MODE_NULL
+#endif
 
 /*============================ PROTOTYPES ====================================*/
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
 extern
 ARM_NONNULL(1)
 void spin_zoom_widget_init( spin_zoom_widget_t *ptThis,
@@ -307,6 +339,25 @@ void spin_zoom_widget_set_source_f32(   spin_zoom_widget_t *ptThis,
                                         const arm_2d_tile_t *ptSource,
                                         const arm_2d_tile_t *ptMask,
                                         arm_2d_point_float_t tCentre);
+#else
+
+#   define spin_zoom_widget_init(...)
+#   define spin_zoom_widget_depose(...)
+#   define spin_zoom_widget_on_load(...);
+#   define spin_zoom_widget_on_frame_start(...)
+#   define spin_zoom_widget_on_frame_start_xy(...)
+#   define spin_zoom_widget_on_frame_start_f32(...)
+#   define spin_zoom_widget_on_frame_start_xy_f32(...)
+#   define spin_zoom_widget_get_current_angle(...)          (0.0f)
+#   define spin_zoom_widget_on_frame_complete(...)
+#   define spin_zoom_widget_update_transform_mode(...)
+#   define spin_zoom_widget_show_with_normal_pivot(...)
+#   define spin_zoom_widget_show_with_fp_pivot(...)
+#   define spin_zoom_widget_set_colour(...)
+#   define spin_zoom_widget_set_source(...)
+#   define spin_zoom_widget_set_source_f32(...)
+
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

@@ -27,6 +27,8 @@
 
 #include "./progress_wheel.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -1150,3 +1152,5 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
+
+#endif /* defined(RTE_Acceleration_Arm_2D_Transform) */

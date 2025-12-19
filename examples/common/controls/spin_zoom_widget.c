@@ -27,6 +27,8 @@
 #include <assert.h>
 #include <string.h>
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -825,3 +827,9 @@ arm_fsm_rt_t __spin_zoom_widget_transform_mode_tile_colour_keying(
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
+
+#else
+
+spin_zoom_widget_mode_t __SPIN_ZOOM_MODE_NULL = {0};
+
+#endif /* defined(RTE_Acceleration_Arm_2D_Transform) */

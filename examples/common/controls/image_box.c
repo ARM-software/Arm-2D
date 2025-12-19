@@ -110,6 +110,9 @@ void image_box_init(image_box_t *ptThis,
         }
     } while(0);
 
+#if !defined(RTE_Acceleration_Arm_2D_Transform)
+    this.tCFG.__bNoScaling = true;
+#endif
     /* initialize op */
     ARM_2D_OP_INIT(this.OPCODE);
 }
@@ -193,11 +196,13 @@ void image_box_show(image_box_t *ptThis,
                     this.tCFG.fYRatio = this.tCFG.fXRatio;
                 }
 
+            #if defined(RTE_Acceleration_Arm_2D_Transform)
                 if (fabs(fXRatio - 1.0f) <= 0.01 && fabs(fYRatio - 1.0f) <= 0.01) {
                     this.tCFG.__bNoScaling = true;
                 } else {
                     this.tCFG.__bNoScaling = false;
                 }
+            #endif
             }
         }
 
@@ -205,6 +210,7 @@ void image_box_show(image_box_t *ptThis,
         if (NULL != this.tCFG.ptilePhoto) {
             do {
                 if (this.tCFG.__bShowGrayScale) {
+                    
                     if (this.tCFG.__bNoScaling) {
                         arm_2d_fill_colour_with_mask_and_opacity(  
                                                 &__image_box,
@@ -212,7 +218,9 @@ void image_box_show(image_box_t *ptThis,
                                                 this.tCFG.ptilePhoto,
                                                 (__arm_2d_color_t){this.tCFG.tScreenColour.tColour},
                                                 chOpacity);
+                    #if defined(RTE_Acceleration_Arm_2D_Transform)
                     } else {
+                    
                         arm_2d_point_float_t tCentre = {
                             .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
                             .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
@@ -229,6 +237,7 @@ void image_box_show(image_box_t *ptThis,
                                             this.tCFG.tScreenColour.tColour,
                                             chOpacity);
                         ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tFillColourTransform);
+                    #endif
                     }
 
                 } else if (NULL == this.tCFG.ptilePhotoMask) {
@@ -245,6 +254,7 @@ void image_box_show(image_box_t *ptThis,
                                                     &__image_box_canvas,
                                                     chOpacity);
                         }
+                #if defined(RTE_Acceleration_Arm_2D_Transform)
                     } else {
                         arm_2d_point_float_t tCentre = {
                             .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
@@ -262,6 +272,7 @@ void image_box_show(image_box_t *ptThis,
                                             chOpacity);
 
                         ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tTileTransOpa);
+                #endif
                     }
 
                     
@@ -273,6 +284,7 @@ void image_box_show(image_box_t *ptThis,
                                                 &__image_box,
                                                 &__image_box_canvas,
                                                 chOpacity);
+                #if defined(RTE_Acceleration_Arm_2D_Transform)
                     } else {
                         arm_2d_point_float_t tCentre = {
                             .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
@@ -291,6 +303,7 @@ void image_box_show(image_box_t *ptThis,
                                             chOpacity);
 
                         ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tTileTransSrcMaskOpa);
+                #endif
                     }
                 }
             } while(0);
@@ -302,6 +315,7 @@ void image_box_show(image_box_t *ptThis,
                                         this.tCFG.ptilePhotoMask,
                                         (__arm_2d_color_t){this.tCFG.tScreenColour.tColour},
                                         chOpacity);
+        #if defined(RTE_Acceleration_Arm_2D_Transform)
             } else {
                 arm_2d_point_float_t tCentre = {
                         .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
@@ -321,7 +335,9 @@ void image_box_show(image_box_t *ptThis,
                                     chOpacity);
 
                 ARM_2D_OP_WAIT_ASYNC(&this.OPCODE.tFillColourTransform);
+        #endif
             }
+
         }
     }
 
