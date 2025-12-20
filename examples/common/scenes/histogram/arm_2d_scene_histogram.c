@@ -565,14 +565,14 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
      /* initialize TJpgDec loader */
     do {
     #if ARM_2D_DEMO_TJPGD_USE_FILE
-        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/background_320x240.jpg");
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/background_320x240.jpg");
     #else
         extern const uint8_t c_chHeliumJPG[23656];
         extern const uint8_t c_chHelium75JPG[10685];
         extern const uint8_t c_chHelium30JPG[5411];
         extern const uint8_t c_jpgBackgroundSmall[12489];
 
-        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_jpgBackgroundSmall, sizeof(c_jpgBackgroundSmall));
+        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_jpgBackgroundSmall, sizeof(c_jpgBackgroundSmall));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,

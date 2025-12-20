@@ -347,11 +347,11 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
     /* initialize TJpgDec loader */
     do {
     #if ARM_2D_DEMO_JPGD_USE_FILE
-        arm_tjpgd_io_file_loader_init(&this.LoaderIO.tFile, "Rickrolling75.jpg");
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "Rickrolling75.jpg");
     #else
         extern const uint8_t c_chRickRolling75[104704];
 
-        arm_tjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chRickRolling75, sizeof(c_chRickRolling75));
+        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_chRickRolling75, sizeof(c_chRickRolling75));
     #endif
 
         arm_tjpgd_loader_cfg_t tCFG = {

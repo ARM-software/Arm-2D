@@ -96,8 +96,8 @@ ARM_PRIVATE(
 
     arm_tjpgd_loader_t tAnimation;
     union {
-        arm_tjpgd_io_file_loader_t tFile;
-        arm_tjpgd_io_binary_loader_t tBinary;
+        arm_loader_io_file_t tFile;
+        arm_loader_io_binary_t tBinary;
     } LoaderIO;
 
     arm_2d_helper_film_t tFilm;

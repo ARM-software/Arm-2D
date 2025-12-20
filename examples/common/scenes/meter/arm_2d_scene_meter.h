@@ -140,8 +140,8 @@ ARM_PRIVATE(
 #   else
     arm_tjpgd_loader_t tJPGBackground;
     union {
-        arm_tjpgd_io_file_loader_t tFile;
-        arm_tjpgd_io_binary_loader_t tBinary;
+        arm_loader_io_file_t tFile;
+        arm_loader_io_binary_t tBinary;
     } LoaderIO;
 #   endif
 #endif
