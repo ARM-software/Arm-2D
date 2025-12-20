@@ -19,8 +19,6 @@
 /*============================ INCLUDES ======================================*/
 #define __QOI_LOADER_IMPLEMENT__
 
-#include "./arm_2d_example_controls.h"
-#include "./__common.h"
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
 #include "qoi_loader.h"

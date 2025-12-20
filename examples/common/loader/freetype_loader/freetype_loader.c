@@ -19,7 +19,6 @@
 /*============================ INCLUDES ======================================*/
 #define __FREETYPE_LOADER_IMPLEMENT__
 
-#include "./__common.h"
 #include "arm_2d.h"
 #include "arm_2d_helper.h"
 #include "freetype_loader.h"
