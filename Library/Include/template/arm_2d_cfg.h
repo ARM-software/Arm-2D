@@ -175,9 +175,9 @@ extern "C" {
 
 // <q> When opacity is 255, call the non-opacity version of API implicitily
 // <i> This option is used to improve the performance and reduce the application complexity in API selection. Disable this feature allows linker to remove unused APIs further.
-// <i> This option is enabled by default
+// <i> This option is disabled by default
 #ifndef __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
-#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         1
+#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__      0
 #endif
 
 // <q> Optimize the transform operations for pointer-like resources
