@@ -477,10 +477,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.0.2" condition="Arm-2D-Loaders">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.1.0" condition="Arm-2D-Loaders">
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec and loading font files using FreeType etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />
+            <file category="sourceC"     name="examples/common/loader/__arm_2d_loader_common.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"       attr="config" version="1.1.0"/>
