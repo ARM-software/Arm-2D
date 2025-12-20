@@ -181,16 +181,16 @@ ARM_PRIVATE(
     struct {
         arm_zjpgd_loader_t tLoader;
         union {
-            arm_zjpgd_io_file_loader_t tFile;
-            arm_zjpgd_io_binary_loader_t tBinary;
+            arm_loader_io_file_t tFile;
+            arm_loader_io_binary_t tBinary;
         } LoaderIO;
     }tJPG[__FILM_COUNT];
 #elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
     struct {
         arm_qoi_loader_t tLoader;
         union {
-            arm_qoi_io_file_loader_t tFile;
-            arm_qoi_io_binary_loader_t tBinary;
+            arm_loader_io_file_t tFile;
+            arm_loader_io_binary_t tBinary;
         } LoaderIO;
     }tQOI[__FILM_COUNT];
 #endif

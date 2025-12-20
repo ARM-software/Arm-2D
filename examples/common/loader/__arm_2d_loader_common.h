@@ -76,6 +76,16 @@ const arm_loader_io_t ARM_LOADER_IO_BINARY;
 
 /*============================ PROTOTYPES ====================================*/
 
+extern 
+ARM_NONNULL(1, 2)
+arm_2d_err_t arm_loader_io_file_init(   arm_loader_io_file_t *ptThis, 
+                                        const char *pchFilePath);
+
+extern
+ARM_NONNULL(1, 2)
+arm_2d_err_t arm_loader_io_binary_init( arm_loader_io_binary_t *ptThis, 
+                                        const uint8_t *pchBinary,
+                                        size_t tSize);
 #ifdef   __cplusplus
 }
 #endif

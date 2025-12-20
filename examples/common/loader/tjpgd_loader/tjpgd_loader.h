@@ -24,6 +24,8 @@
 #include <stdio.h>
 #include "./tjpgd/tjpgd.h"
 
+#include "../__arm_2d_loader_common.h"
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -35,8 +37,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-/*============================ MACROS ========================================*/
-
 /* OOC header, please DO NOT modify  */
 #ifdef __TJPGD_LOADER_IMPLEMENT__
 #   undef   __TJPGD_LOADER_IMPLEMENT__
@@ -46,7 +46,21 @@ extern "C" {
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
+
 /*============================ MACROS ========================================*/
+
+/* deprecated */
+#define arm_tjpgd_loader_io_t     arm_loader_io_t
+
+#define arm_tjpgd_io_file_loader_t    arm_loader_io_file_t
+#define arm_tjpgd_io_binary_loader_t  arm_loader_io_binary_t
+
+#define ARM_TJPGD_IO_FILE_LOADER      ARM_LOADER_IO_FILE
+#define ARM_TJPGD_IO_BINARY_LOADER    ARM_LOADER_IO_BINARY
+
+#define arm_tjpgd_io_file_loader_init     arm_loader_io_file_init
+#define arm_tjpgd_io_binary_loader_init   arm_loader_io_binary_init
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #define __arm_tjpgd_loader_add_reference_point1(__TJPGD_LD_PTR,                 \
                                                 __REF_PT)                       \
@@ -150,17 +164,6 @@ typedef enum {
 
 } arm_tjpgd_loader_work_mode_t;
 
-typedef struct arm_tjpgd_loader_t arm_tjpgd_loader_t;
-
-typedef struct arm_tjpgd_loader_io_t {
-
-    bool   (*fnOpen)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
-    void   (*fnClose)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader);
-    bool   (*fnSeek)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, int32_t offset, int32_t whence);
-    size_t (*fnRead)(uintptr_t pTarget, arm_tjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
-
-} arm_tjpgd_loader_io_t;
-
 typedef struct arm_tjpgd_loader_cfg_t {
     
     //arm_2d_size_t       tSize;
@@ -171,7 +174,7 @@ typedef struct arm_tjpgd_loader_cfg_t {
     uint8_t                     : 5;
 
     struct {
-        const arm_tjpgd_loader_io_t *ptIO;
+        const arm_loader_io_t *ptIO;
         uintptr_t pTarget;
     } ImageIO;
 
@@ -181,8 +184,7 @@ typedef struct arm_tjpgd_loader_cfg_t {
 /*!
  * \brief a user class for user defined control
  */
-
-struct arm_tjpgd_loader_t {
+typedef struct arm_tjpgd_loader_t {
     inherit_ex(arm_2d_vres_t, vres);
 
 ARM_PRIVATE(
@@ -226,31 +228,9 @@ ARM_PRIVATE(
     int16_t iTargetStrideInByte;
 
 )
-};
-
-typedef struct arm_tjpgd_io_file_loader_t {
-ARM_PRIVATE(
-    const char *pchFilePath;
-    FILE *phFile; 
-)
-} arm_tjpgd_io_file_loader_t;
-
-typedef struct arm_tjpgd_io_binary_loader_t {
-ARM_PRIVATE(
-    size_t tPostion;
-    uint8_t *pchBinary;
-    size_t tSize;
-)
-} arm_tjpgd_io_binary_loader_t;
+} arm_tjpgd_loader_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
-
-extern 
-const arm_tjpgd_loader_io_t ARM_TJPGD_IO_FILE_LOADER;
-
-extern 
-const arm_tjpgd_loader_io_t ARM_TJPGD_IO_BINARY_LOADER;
-
 /*============================ PROTOTYPES ====================================*/
 extern
 ARM_NONNULL(1)
@@ -292,17 +272,6 @@ arm_2d_err_t arm_tjpgd_loader_add_reference_point_on_virtual_screen(
                             arm_2d_tile_t *ptTile,
                             arm_2d_location_t tImageLocationOnTile,
                             arm_2d_location_t tReferencePointOnVirtualScreen);
-
-extern
-ARM_NONNULL(1, 2)
-arm_2d_err_t arm_tjpgd_io_file_loader_init(arm_tjpgd_io_file_loader_t *ptThis, 
-                                           const char *pchFilePath);
-
-extern
-ARM_NONNULL(1, 2)
-arm_2d_err_t arm_tjpgd_io_binary_loader_init(arm_tjpgd_io_binary_loader_t *ptThis, 
-                                             const uint8_t *pchBinary,
-                                             size_t tSize);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

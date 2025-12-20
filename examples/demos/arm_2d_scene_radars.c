@@ -88,7 +88,9 @@
 #   define FILM_BOTTOM_RIGHT    this.tFilm[FILM_IDX_BOTTOM_RIGHT].tHelper.use_as__arm_2d_tile_t
 #endif
 
-#define ARM_2D_DEMO_RADAR_DEBUG     0
+#ifndef ARM_2D_DEMO_RADAR_DEBUG
+#   define ARM_2D_DEMO_RADAR_DEBUG     0
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
@@ -956,11 +958,12 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
         do {
         #if ARM_2D_DEMO_JPGD_USE_FILE
-            arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/girl_dance.jpg");
+            arm_loader_io_file_init(  &this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tFile, 
+                                            "../common/asset/girl_dance.jpg");
         #else
             extern const uint8_t c_jpgGirlDance75[31693];
 
-            arm_zjpgd_io_binary_loader_init(&this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tBinary, 
+            arm_loader_io_binary_init(&this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tBinary, 
                                             c_jpgGirlDance75, 
                                             sizeof(c_jpgGirlDance75));
         #endif
@@ -972,12 +975,12 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
                 //.bInvertColour = true,
             #if ARM_2D_DEMO_JPGD_USE_FILE
                 .ImageIO = {
-                    .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
-                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                    .ptIO = &ARM_LOADER_IO_FILE,
+                    .pTarget = (uintptr_t)&this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tFile,
                 },
             #else
                 .ImageIO = {
-                    .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                    .ptIO = &ARM_LOADER_IO_BINARY,
                     .pTarget = (uintptr_t)&this.tJPG[FILM_IDX_TOP_LEFT].LoaderIO.tBinary,
                 },
             #endif
@@ -999,11 +1002,12 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     
         do {
         #if ARM_2D_DEMO_JPGD_USE_FILE
-            arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/girl_dance.jpg");
+            arm_loader_io_file_init(  &this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tFile, 
+                                            "../common/asset/doge_dance.jpg");
         #else
             extern const uint8_t c_jpgDogeDance75[23015];
 
-            arm_zjpgd_io_binary_loader_init(  &this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary, 
+            arm_loader_io_binary_init(&this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary, 
                                             c_jpgDogeDance75, 
                                             sizeof(c_jpgDogeDance75));
         #endif
@@ -1014,12 +1018,12 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
             #if ARM_2D_DEMO_JPGD_USE_FILE
                 .ImageIO = {
-                    .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
-                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                    .ptIO = &ARM_LOADER_IO_FILE,
+                    .pTarget = (uintptr_t)&this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tFile,
                 },
             #else
                 .ImageIO = {
-                    .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                    .ptIO = &ARM_LOADER_IO_BINARY,
                     .pTarget = (uintptr_t)&this.tJPG[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary,
                 },
             #endif
@@ -1049,12 +1053,13 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
         do {
         #if ARM_2D_DEMO_QOI_USE_FILE
-            arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/girl_dance.qoi");
+            arm_loader_io_file_init(&this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tFile, 
+                                    "../common/asset/girl_dance.qoi");
         #else
             extern
             const uint8_t c_qoiGirlDance[190659];
 
-            arm_qoi_io_binary_loader_init(  &this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tBinary, 
+            arm_loader_io_binary_init(  &this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tBinary, 
                                             c_qoiGirlDance, 
                                             sizeof(c_qoiGirlDance));
         #endif
@@ -1072,12 +1077,12 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
                 .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
             #if ARM_2D_DEMO_QOI_USE_FILE
                 .ImageIO = {
-                    .ptIO = &ARM_QOI_IO_FILE_LOADER,
-                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                    .ptIO = &ARM_LOADER_IO_FILE,
+                    .pTarget = (uintptr_t)&this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tFile,
                 },
             #else
                 .ImageIO = {
-                    .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                    .ptIO = &ARM_LOADER_IO_BINARY,
                     .pTarget = (uintptr_t)&this.tQOI[FILM_IDX_TOP_LEFT].LoaderIO.tBinary,
                 },
             #endif
@@ -1099,12 +1104,13 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
     
         do {
         #if ARM_2D_DEMO_QOI_USE_FILE
-            arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/girl_dance.qoi");
+            arm_loader_io_file_init(&this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tFile, 
+                                    "../common/asset/doge_dance.qoi");
         #else
             extern
             const uint8_t c_qoiDogeDance[126958];
 
-            arm_qoi_io_binary_loader_init(  &this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary, 
+            arm_loader_io_binary_init(  &this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary, 
                                             c_qoiDogeDance, 
                                             sizeof(c_qoiDogeDance));
         #endif
@@ -1122,12 +1128,12 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
                 .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
             #if ARM_2D_DEMO_QOI_USE_FILE
                 .ImageIO = {
-                    .ptIO = &ARM_QOI_IO_FILE_LOADER,
-                    .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+                    .ptIO = &ARM_LOADER_IO_FILE,
+                    .pTarget = (uintptr_t)&this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tFile,
                 },
             #else
                 .ImageIO = {
-                    .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                    .ptIO = &ARM_LOADER_IO_BINARY,
                     .pTarget = (uintptr_t)&this.tQOI[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tBinary,
                 },
             #endif

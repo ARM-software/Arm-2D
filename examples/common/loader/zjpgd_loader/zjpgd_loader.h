@@ -24,6 +24,8 @@
 #include <stdio.h>
 #include "./zjpgd/zjpgd.h"
 
+#include "../__arm_2d_loader_common.h"
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -47,6 +49,19 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
+
+/* deprecated */
+#define arm_zjpgd_loader_io_t     arm_loader_io_t
+
+#define arm_zjpgd_io_file_loader_t    arm_loader_io_file_t
+#define arm_zjpgd_io_binary_loader_t  arm_loader_io_binary_t
+
+#define ARM_ZJPGD_IO_FILE_LOADER      ARM_LOADER_IO_FILE
+#define ARM_ZJPGD_IO_BINARY_LOADER    ARM_LOADER_IO_BINARY
+
+#define arm_zjpgd_io_file_loader_init     arm_loader_io_file_init
+#define arm_zjpgd_io_binary_loader_init   arm_loader_io_binary_init
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #define __arm_zjpgd_loader_add_reference_point1(__ZJPGD_LD_PTR,                 \
                                                 __REF_PT)                       \
@@ -124,15 +139,6 @@ typedef enum {
 
 typedef struct arm_zjpgd_loader_t arm_zjpgd_loader_t;
 
-typedef struct arm_zjpgd_loader_io_t {
-
-    bool   (*fnOpen)(uintptr_t pTarget, arm_zjpgd_loader_t *ptLoader);
-    void   (*fnClose)(uintptr_t pTarget, arm_zjpgd_loader_t *ptLoader);
-    bool   (*fnSeek)(uintptr_t pTarget, arm_zjpgd_loader_t *ptLoader, int32_t offset, int32_t whence);
-    size_t (*fnRead)(uintptr_t pTarget, arm_zjpgd_loader_t *ptLoader, uint8_t *pchBuffer, size_t tSize);
-
-} arm_zjpgd_loader_io_t;
-
 typedef struct arm_zjpgd_loader_cfg_t {
     
     //arm_2d_size_t       tSize;
@@ -146,7 +152,7 @@ typedef struct arm_zjpgd_loader_cfg_t {
     arm_2d_color_info_t tColourInfo;
 
     struct {
-        const arm_zjpgd_loader_io_t *ptIO;
+        const arm_loader_io_t *ptIO;
         uintptr_t pTarget;
     } ImageIO;
 
@@ -200,29 +206,7 @@ ARM_PRIVATE(
 )
 };
 
-typedef struct arm_zjpgd_io_file_loader_t {
-ARM_PRIVATE(
-    const char *pchFilePath;
-    FILE *phFile; 
-)
-} arm_zjpgd_io_file_loader_t;
-
-typedef struct arm_zjpgd_io_binary_loader_t {
-ARM_PRIVATE(
-    size_t tPostion;
-    uint8_t *pchBinary;
-    size_t tSize;
-)
-} arm_zjpgd_io_binary_loader_t;
-
 /*============================ GLOBAL VARIABLES ==============================*/
-
-extern 
-const arm_zjpgd_loader_io_t ARM_ZJPGD_IO_FILE_LOADER;
-
-extern 
-const arm_zjpgd_loader_io_t ARM_ZJPGD_IO_BINARY_LOADER;
-
 /*============================ PROTOTYPES ====================================*/
 extern
 ARM_NONNULL(1)
@@ -264,17 +248,6 @@ arm_2d_err_t arm_zjpgd_loader_add_reference_point_on_virtual_screen(
                             arm_2d_tile_t *ptTile,
                             arm_2d_location_t tImageLocationOnTile,
                             arm_2d_location_t tReferencePointOnVirtualScreen);
-
-extern
-ARM_NONNULL(1, 2)
-arm_2d_err_t arm_zjpgd_io_file_loader_init(arm_zjpgd_io_file_loader_t *ptThis, 
-                                           const char *pchFilePath);
-
-extern
-ARM_NONNULL(1, 2)
-arm_2d_err_t arm_zjpgd_io_binary_loader_init(arm_zjpgd_io_binary_loader_t *ptThis, 
-                                             const uint8_t *pchBinary,
-                                             size_t tSize);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

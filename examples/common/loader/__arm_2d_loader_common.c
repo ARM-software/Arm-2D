@@ -187,8 +187,6 @@ size_t __arm_loader_io_fread(   uintptr_t pTarget,
 }
 
 
-
-extern
 ARM_NONNULL(1, 2)
 arm_2d_err_t arm_loader_io_binary_init( arm_loader_io_binary_t *ptThis, 
                                         const uint8_t *pchBinary,
