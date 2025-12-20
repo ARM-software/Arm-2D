@@ -61,10 +61,15 @@ ARM_PRIVATE(
 typedef struct arm_loader_io_binary_t {
 ARM_PRIVATE(
     size_t tPostion;
-    uint8_t *pchBinary;
+    union {
+        uint8_t *pchBinary;
+        uintptr_t nAddress;
+    };
     size_t tSize;
 )
 } arm_loader_io_binary_t;
+
+typedef arm_loader_io_binary_t arm_loader_io_rom_t;
 
 /*============================ GLOBAL VARIABLES ==============================*/
 
@@ -73,6 +78,9 @@ const arm_loader_io_t ARM_LOADER_IO_FILE;
 
 extern 
 const arm_loader_io_t ARM_LOADER_IO_BINARY;
+
+extern 
+const arm_loader_io_t ARM_LOADER_IO_ROM;
 
 /*============================ PROTOTYPES ====================================*/
 
@@ -86,6 +94,12 @@ ARM_NONNULL(1, 2)
 arm_2d_err_t arm_loader_io_binary_init( arm_loader_io_binary_t *ptThis, 
                                         const uint8_t *pchBinary,
                                         size_t tSize);
+
+extern
+ARM_NONNULL(1)
+arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_binary_t *ptThis, 
+                                     uintptr_t nAddress,
+                                     size_t tSize);
 #ifdef   __cplusplus
 }
 #endif

@@ -80,6 +80,12 @@ size_t __arm_loader_io_binary_read( uintptr_t pTarget,
                                     uint8_t *pchBuffer, 
                                     size_t tSize);
 
+static
+size_t __arm_loader_io_rom_read(uintptr_t pTarget, 
+                                void *ptLoader, 
+                                uint8_t *pchBuffer, 
+                                size_t tSize);
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const arm_loader_io_t ARM_LOADER_IO_FILE = {
@@ -94,6 +100,13 @@ const arm_loader_io_t ARM_LOADER_IO_BINARY= {
     .fnClose =  &__arm_loader_io_binary_close,
     .fnSeek =   &__arm_loader_io_binary_seek,
     .fnRead =   &__arm_loader_io_binary_read,
+};
+
+const arm_loader_io_t ARM_LOADER_IO_ROM = {
+    .fnOpen =   &__arm_loader_io_binary_open,
+    .fnClose =  &__arm_loader_io_binary_close,
+    .fnSeek =   &__arm_loader_io_binary_seek,
+    .fnRead =   &__arm_loader_io_rom_read,
 };
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -203,13 +216,28 @@ arm_2d_err_t arm_loader_io_binary_init( arm_loader_io_binary_t *ptThis,
     return ARM_2D_ERR_NONE;
 }
 
+ARM_NONNULL(1)
+arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_binary_t *ptThis, 
+                                     uintptr_t nAddress,
+                                     size_t tSize)
+{
+    if (NULL == ptThis || 0 == tSize) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    memset(ptThis, 0, sizeof(arm_loader_io_binary_t));
+    this.nAddress = nAddress;
+    this.tSize = tSize;
+
+    return ARM_2D_ERR_NONE;
+}
+
 static
 bool __arm_loader_io_binary_open(uintptr_t pTarget, void *ptLoader)
 {
     arm_loader_io_binary_t *ptThis = (arm_loader_io_binary_t *)pTarget;
     ARM_2D_UNUSED(ptLoader);
     assert(NULL != ptThis);
-    assert(NULL != this.pchBinary);
     assert(this.tSize > 0);
 
     this.tPostion = 0;
@@ -232,7 +260,6 @@ bool __arm_loader_io_binary_seek(uintptr_t pTarget, void *ptLoader, int32_t offs
     arm_loader_io_binary_t *ptThis = (arm_loader_io_binary_t *)pTarget;
     ARM_2D_UNUSED(ptLoader);
     assert(NULL != ptThis);
-    assert(NULL != this.pchBinary);
     assert(this.tSize > 0);
 
     switch (whence) {
@@ -292,6 +319,44 @@ size_t __arm_loader_io_binary_read(uintptr_t pTarget, void *ptLoader, uint8_t *p
     iSizeToRead = MIN(iSizeToRead, tSize);
 
     memcpy(pchBuffer, this.pchBinary + this.tPostion, iSizeToRead);
+
+    this.tPostion += iSizeToRead;
+
+    return iSizeToRead;
+}
+
+__WEAK 
+size_t __arm_loader_io_rom_memcpy(uintptr_t pObj, uint8_t *pchBuffer, uintptr_t nAddress, size_t tSize)
+{
+    ARM_2D_UNUSED(pObj);
+
+    memcpy(pchBuffer, (uint8_t *)nAddress, tSize);
+
+    return tSize;
+} 
+
+static
+size_t __arm_loader_io_rom_read(uintptr_t pTarget, void *ptLoader, uint8_t *pchBuffer, size_t tSize)
+{
+    arm_loader_io_binary_t *ptThis = (arm_loader_io_binary_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+    assert(this.tSize > 0);
+
+    if (NULL == pchBuffer || 0 == tSize) {
+        return 0;
+    }
+
+    if (this.tPostion >= this.tSize) {
+        return 0;
+    }
+    size_t iSizeToRead = this.tSize - this.tPostion;
+    iSizeToRead = MIN(iSizeToRead, tSize);
+
+    iSizeToRead = __arm_loader_io_rom_memcpy(   pTarget, 
+                                                pchBuffer, 
+                                                this.nAddress + this.tPostion, 
+                                                iSizeToRead);
 
     this.tPostion += iSizeToRead;
 
