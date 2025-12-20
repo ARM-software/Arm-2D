@@ -101,8 +101,8 @@ ARM_PRIVATE(
 #if ARM_2D_DEMO_USE_ZJPGD
     arm_zjpgd_loader_t tAnimation;
     union {
-        arm_zjpgd_io_file_loader_t tFile;
-        arm_zjpgd_io_binary_loader_t tBinary;
+        arm_loader_io_file_t tFile;
+        arm_loader_io_binary_t tBinary;
     } LoaderIO;
 #else
     arm_tjpgd_loader_t tAnimation;

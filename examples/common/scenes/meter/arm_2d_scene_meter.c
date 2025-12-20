@@ -595,14 +595,14 @@ do {
 #   if ARM_2D_SCENE_METER_USE_ZJPGD
     do {
     #if ARM_2D_DEMO_ZJPGD_USE_FILE
-        arm_zjpgd_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/Helium.jpg");
     #else
         extern
         const uint8_t c_chMeterPanel80jpg[12517];
         extern
         const uint8_t c_chBackground2jpg[64228];
 
-        arm_zjpgd_io_binary_loader_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
+        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
     #endif
         arm_zjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -610,12 +610,12 @@ do {
             .u2WorkMode = ARM_ZJPGD_MODE_PARTIAL_DECODED,
         #if ARM_2D_DEMO_ZJPGD_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_ZJPGD_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_ZJPGD_IO_BINARY_LOADER,
+                .ptIO = &ARM_LOADER_IO_BINARY,
                 .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
             },
         #endif
@@ -686,12 +686,12 @@ do {
             .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED,
         #if ARM_2D_DEMO_TJPGD_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_TJPGD_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_TJPGD_IO_BINARY_LOADER,
+                .ptIO = &ARM_LOADER_IO_BINARY,
                 .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
             },
         #endif

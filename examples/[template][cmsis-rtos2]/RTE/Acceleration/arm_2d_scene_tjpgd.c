@@ -276,12 +276,12 @@ user_scene_tjpgd_t *__arm_2d_scene_tjpgd_init(   arm_2d_scene_player_t *ptDispAd
             .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED,
         #if ARM_2D_DEMO_TJPGD_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_TJPGD_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_TJPGD_IO_BINARY_LOADER,
+                .ptIO = &ARM_LOADER_IO_BINARY,
                 .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
             },
         #endif
