@@ -95,6 +95,16 @@ arm_2d_err_t arm_loader_io_binary_init( arm_loader_io_binary_t *ptThis,
                                         const uint8_t *pchBinary,
                                         size_t tSize);
 
+/*
+ * \note You can implement the following function to load external memory
+ *
+ *  __OVERRIDE_WEAK
+ *  size_t __arm_loader_io_rom_memcpy(uintptr_t pObj, uint8_t *pchBuffer, uintptr_t nAddress, size_t tSize)
+ *  {
+ *      ...
+ *      return tSize;
+ *  }
+ */
 extern
 ARM_NONNULL(1)
 arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_binary_t *ptThis, 
