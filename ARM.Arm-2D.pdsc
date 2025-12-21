@@ -619,6 +619,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_RadarBackground.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_MeterPanel.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_QuarterSector.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_ThreeQuarterRing.c" />
             <!--
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_radial_line_cover.c" />
