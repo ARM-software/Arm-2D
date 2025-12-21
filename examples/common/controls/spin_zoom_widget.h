@@ -90,6 +90,27 @@ typedef const struct spin_zoom_widget_mode_t {
 
 } spin_zoom_widget_mode_t;
 
+typedef struct __spin_zoom_widget_indication_t {
+    struct {
+        float fAngleInDegree;
+        int32_t nValue;
+    } LowerLimit;
+
+    struct {
+        float fAngleInDegree;
+        int32_t nValue;
+    } UpperLimit;
+
+    struct {
+        float fAngle;
+        union {
+            float fScale;
+            float fScaleX;
+        };
+        float fScaleY;
+    } Step;
+} __spin_zoom_widget_indication_t;
+
 typedef struct spin_zoom_widget_cfg_t {
     arm_2d_scene_t *ptScene;
 
@@ -117,26 +138,7 @@ typedef struct spin_zoom_widget_cfg_t {
 
     spin_zoom_widget_mode_t *ptTransformMode;
 
-    struct {
-        struct {
-            float fAngleInDegree;
-            int32_t nValue;
-        } LowerLimit;
-
-        struct {
-            float fAngleInDegree;
-            int32_t nValue;
-        } UpperLimit;
-
-        struct {
-            float fAngle;
-            union {
-                float fScale;
-                float fScaleX;
-            };
-            float fScaleY;
-        } Step;
-    } Indicator;
+    __spin_zoom_widget_indication_t Indicator;
 
     uint32_t bUseFloatPointInCentre : 1;
     uint32_t                        : 31;
