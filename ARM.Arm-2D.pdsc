@@ -525,7 +525,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.12.1" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.12.2" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -618,6 +618,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_RoundedSquare.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_RadarBackground.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_MeterPanel.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_QuarterSector.c" />
             <!--
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_radial_line_cover.c" />
