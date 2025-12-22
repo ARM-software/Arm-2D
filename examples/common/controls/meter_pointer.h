@@ -128,10 +128,22 @@ bool meter_pointer_on_frame_start(  meter_pointer_t *ptThis,
 
 extern
 ARM_NONNULL(1)
+bool meter_pointer_on_frame_start_xy(  meter_pointer_t *ptThis, 
+                                    int32_t nTargetValue,
+                                    float fScaleX,
+                                    float fScaleY);
+extern
+ARM_NONNULL(1)
 bool meter_pointer_on_frame_start_f32(  meter_pointer_t *ptThis, 
                                         float fTargetValue,
                                         float fScale);
 
+extern
+ARM_NONNULL(1)
+bool meter_pointer_on_frame_start_xy_f32(   meter_pointer_t *ptThis, 
+                                            float fTargetValue,
+                                            float fScaleX,
+                                            float fScaleY);
 extern
 ARM_NONNULL(1)
 void meter_pointer_on_frame_complete( meter_pointer_t *ptThis);
