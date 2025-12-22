@@ -928,6 +928,19 @@
           </RTE_Components_h>
         </component>
 
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ring Indicator" Cversion="0.9.0" condition="Arm-2D-Demos">
+          <description>An example for a ring indicator with a complex foreground. </description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_ring_indicator.c" attr="config" version="0.9.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_ring_indicator.h" attr="config" version="0.9.0" />
+
+            <file category="sourceC"     name="examples/demos/ring_indicator.c" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_Ring_Indicator
+          </RTE_Components_h>
+        </component>
+
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cversion="2.4.0" condition="Arm-2D-Demos">
           <description>An blinking eye. </description>
           <files>
