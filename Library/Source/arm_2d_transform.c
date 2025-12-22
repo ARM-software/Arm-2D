@@ -599,8 +599,8 @@ static void __arm_2d_transform_preprocess_target(
         }
     #else
         if (NULL == ptTargetCentre) {
-            ptTransform->Target.tPivot.fX = (float)tTargetRegion.tSize.iWidth / 2.0f;
-            ptTransform->Target.tPivot.fY = (float)tTargetRegion.tSize.iHeight / 2.0f;
+            ptTransform->Target.tPivot.fX = (float)(tTargetRegion.tSize.iWidth - 1) / 2.0f;
+            ptTransform->Target.tPivot.fY = (float)(tTargetRegion.tSize.iHeight - 1) / 2.0f;
         } else {
             ptTransform->Target.tPivot = *ptTargetCentre;
         }
