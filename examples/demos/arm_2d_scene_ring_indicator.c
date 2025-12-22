@@ -214,7 +214,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
 
-
         arm_2d_align_centre(__top_canvas, 
                             ring_indication_get_size(&this.tIndicator)) {
 
@@ -224,6 +223,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                     &BACKGROUND_RING_MASK, 
                                     (__arm_2d_color_t){ GLCD_COLOR_GRAY(255-32)});
 
+            ARM_2D_OP_WAIT_ASYNC();
+
             ring_indication_show(   &this.tIndicator, 
                                     ptTile, 
                                     &__centre_region,
@@ -231,11 +232,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
 
         }
 
-
-
-
         /* draw text at the top-left corner */
-
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);
@@ -317,7 +314,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
     #else
         extern const uint8_t c_qoiThreeQuarterRing[8252];
 
-        arm_qoi_io_binary_loader_init(  &this.QOI[QOI_IDX_BACKGROUND_RING].LoaderIO, 
+        arm_qoi_io_binary_loader_init(  &this.QOI[QOI_IDX_BACKGROUND_RING].LoaderIO.tBinary, 
                                         c_qoiThreeQuarterRing, 
                                         sizeof(c_qoiThreeQuarterRing));
     #endif
@@ -356,7 +353,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
     #else
         extern const uint8_t c_qoiRingIndicator[32948];
 
-        arm_qoi_io_binary_loader_init(  &this.QOI[QOI_IDX_FOREGROUND].LoaderIO, 
+        arm_qoi_io_binary_loader_init(  &this.QOI[QOI_IDX_FOREGROUND].LoaderIO.tBinary, 
                                         c_qoiRingIndicator, 
                                         sizeof(c_qoiRingIndicator));
     #endif
