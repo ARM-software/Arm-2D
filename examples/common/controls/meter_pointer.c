@@ -158,8 +158,6 @@ void meter_pointer_on_load( meter_pointer_t *ptThis)
     spin_zoom_widget_on_load(&this.use_as__spin_zoom_widget_t);
 }
 
-#include <stdio.h>
-
 ARM_NONNULL(1)
 bool meter_pointer_on_frame_start(  meter_pointer_t *ptThis, 
                                     int32_t nTargetValue,
@@ -171,11 +169,11 @@ bool meter_pointer_on_frame_start(  meter_pointer_t *ptThis,
                                                 (float)nTargetValue, 
                                                 &this.fCurrentValue);
 
-    spin_zoom_widget_on_frame_start_f32(&this.use_as__spin_zoom_widget_t,
-                                        this.fCurrentValue,
-                                        fScale);
+    spin_zoom_widget_on_frame_start_f32(
+        &this.use_as__spin_zoom_widget_t,
+        this.fCurrentValue,
+        fScale);
     
-
     return bFinished;
 }
 
@@ -190,9 +188,10 @@ bool meter_pointer_on_frame_start_f32(  meter_pointer_t *ptThis,
                                                 fTargetValue, 
                                                 &this.fCurrentValue);
 
-    spin_zoom_widget_on_frame_start_f32(&this.use_as__spin_zoom_widget_t,
-                                        this.fCurrentValue,
-                                        fScale);
+    spin_zoom_widget_on_frame_start_f32(
+        &this.use_as__spin_zoom_widget_t,
+        this.fCurrentValue,
+        fScale);
     
 
     return bFinished;

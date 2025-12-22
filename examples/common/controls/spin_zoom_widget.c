@@ -269,6 +269,23 @@ void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue
     spin_zoom_widget_on_frame_start_xy(ptThis, nValue, fScale, fScale);
 }
 
+static
+float __spin_zoom_valid_angle(spin_zoom_widget_t *ptThis, float fValue)
+{
+    float fLowLimit = this.tCFG.Indicator
+                                .LowerLimit
+                                    .nValue;
+
+    float fUpperLimit = this.tCFG.Indicator
+                                .UpperLimit
+                                    .nValue;
+    
+    fValue = MAX(fValue, fLowLimit);
+    fValue = MIN(fValue, fUpperLimit);
+
+    return fValue;
+}
+
 ARM_NONNULL(1)
 void spin_zoom_widget_on_frame_start_xy_f32(spin_zoom_widget_t *ptThis, 
                                             float fValue, 
@@ -277,6 +294,8 @@ void spin_zoom_widget_on_frame_start_xy_f32(spin_zoom_widget_t *ptThis,
 {
     assert(NULL != ptThis);
     
+    fValue = __spin_zoom_valid_angle(ptThis, fValue);
+
     float fDelta = fValue - (float)this.tCFG.Indicator.LowerLimit.nValue;
     float fDegreeDistance = this.tCFG.Indicator.UpperLimit.fAngleInDegree
                           - this.tCFG.Indicator.LowerLimit.fAngleInDegree;
