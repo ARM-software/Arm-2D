@@ -760,12 +760,13 @@ void text_box_show( text_box_t *ptThis,
         arm_2d_region_t tPFBScanRegion;
         do {
             arm_2d_region_t tValidRegion;
-            if (!__arm_2d_tile_get_virtual_screen_or_root(  
-                                                    &__text_box,
+            const arm_2d_tile_t *ptVirtualScreen = __arm_2d_tile_get_virtual_screen_or_root(  
+                                                    (const arm_2d_tile_t *)&__text_box,
                                                     &tValidRegion, 
                                                     &tPFBScanRegion.tLocation,
                                                     NULL,
-                                                    false)) {
+                                                    false);
+            if (NULL == ptVirtualScreen && !bIsNewFrame) {
                 return ;
             }
 

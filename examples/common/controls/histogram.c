@@ -256,6 +256,7 @@ void histogram_show(histogram_t *ptThis,
                     uint8_t chOpacity)
 {
     assert(NULL!= ptThis);
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     arm_2d_container(ptTile, __histogram, ptRegion) {
 
@@ -278,14 +279,17 @@ void histogram_show(histogram_t *ptThis,
             arm_2d_region_t tPFBScanRegion = {0};
             do {
                 arm_2d_region_t tValidRegion;
-                if (__arm_2d_tile_get_virtual_screen_or_root(  
-                                                        &__panel,
+                const arm_2d_tile_t *ptVirtualScreen = __arm_2d_tile_get_virtual_screen_or_root(  
+                                                        (const arm_2d_tile_t *)&__panel,
                                                         &tValidRegion, 
                                                         &tPFBScanRegion.tLocation,
                                                         NULL,
-                                                        false)) {
-                    tPFBScanRegion.tSize = tValidRegion.tSize;
+                                                        false);
+                if (NULL == ptVirtualScreen && !bIsNewFrame) {
+                    return ;
                 }
+
+                tPFBScanRegion.tSize = tValidRegion.tSize;
             } while(0);
 
 

@@ -147,8 +147,6 @@ typedef struct spin_zoom_widget_cfg_t {
 
 struct spin_zoom_widget_t {
 
-    
-
 ARM_PRIVATE(
     union {
         arm_2d_op_fill_cl_msk_opa_trans_t                   tFillColourTransform;
@@ -160,6 +158,7 @@ ARM_PRIVATE(
 
     struct {
         spin_zoom_widget_mode_t *ptTransformMode;
+        float fAngleOffset;
     } Request;
 )
 
@@ -302,6 +301,11 @@ float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis);
 extern
 ARM_NONNULL(1)
 void spin_zoom_widget_on_frame_complete( spin_zoom_widget_t *ptThis);
+
+ARM_NONNULL(1)
+void spin_zoom_widget_set_angle_offset(
+                                    spin_zoom_widget_t *ptThis, 
+                                    float fAngleOffset);
 
 extern
 ARM_NONNULL(1,2)

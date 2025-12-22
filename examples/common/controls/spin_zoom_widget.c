@@ -248,7 +248,8 @@ void spin_zoom_widget_on_frame_start_xy(spin_zoom_widget_t *ptThis,
                            - this.tCFG.Indicator.LowerLimit.nValue;
     
     float fAngle = (((float)nDelta / (float)nValueDistance) * fDegreeDistance)
-                 + this.tCFG.Indicator.LowerLimit.fAngleInDegree;
+                 + this.tCFG.Indicator.LowerLimit.fAngleInDegree
+                 + this.Request.fAngleOffset;
 
     /* update helper with new values*/
     arm_2d_helper_dirty_region_transform_update_value(&this.tHelper, fAngle, fScaleX, fScaleY);
@@ -283,7 +284,8 @@ void spin_zoom_widget_on_frame_start_xy_f32(spin_zoom_widget_t *ptThis,
                            - this.tCFG.Indicator.LowerLimit.nValue;
     
     float fAngle = ((fDelta / (float)nValueDistance) * fDegreeDistance)
-                 + this.tCFG.Indicator.LowerLimit.fAngleInDegree;
+                 + this.tCFG.Indicator.LowerLimit.fAngleInDegree
+                 + this.Request.fAngleOffset;
 
     /* update helper with new values*/
     arm_2d_helper_dirty_region_transform_update_value(&this.tHelper, fAngle, fScaleX, fScaleY);
@@ -320,6 +322,17 @@ void spin_zoom_widget_update_transform_mode(
 
     this.Request.ptTransformMode = ptTransformMode;
 }
+
+ARM_NONNULL(1)
+void spin_zoom_widget_set_angle_offset(
+                                    spin_zoom_widget_t *ptThis, 
+                                    float fAngleOffset)
+{
+    assert(NULL != ptThis);
+
+    this.Request.fAngleOffset = fAngleOffset;
+}
+
 
 ARM_NONNULL(1,2)
 void spin_zoom_widget_show_with_normal_pivot(   spin_zoom_widget_t *ptThis,
@@ -426,7 +439,7 @@ ARM_NONNULL(1)
 float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis)
 {
     assert(NULL != ptThis);
-    return this.tHelper.fAngle;
+    return this.tHelper.fAngle - this.Request.fAngleOffset;
 }
 
 static

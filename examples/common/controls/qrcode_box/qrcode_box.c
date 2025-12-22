@@ -217,6 +217,8 @@ void qrcode_box_show(   qrcode_box_t *ptThis,
         ptTile = arm_2d_get_default_frame_buffer();
     }
 
+    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+
     assert(NULL!= ptThis);
 
     arm_2d_safe_canvas_open(ptTile, __qrcode_panel, ptRegion) {
@@ -238,12 +240,13 @@ void qrcode_box_show(   qrcode_box_t *ptThis,
                 arm_2d_region_t tPFBScanRegion;
                 do {
                     arm_2d_region_t tValidRegion;
-                    if (!__arm_2d_tile_get_virtual_screen_or_root(  
-                                                            &__qrcode_canvas,
+                    const arm_2d_tile_t *ptVirtualScreen = __arm_2d_tile_get_virtual_screen_or_root(  
+                                                            ptTile,
                                                             &tValidRegion, 
                                                             &tPFBScanRegion.tLocation,
                                                             NULL,
-                                                            false)) {
+                                                            false);
+                    if (NULL == ptVirtualScreen && !bIsNewFrame) {
                         return ;
                     }
 
