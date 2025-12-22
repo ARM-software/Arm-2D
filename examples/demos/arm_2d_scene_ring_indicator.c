@@ -215,7 +215,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
     /*-----------------------draw the scene begin-----------------------*/
 
 
-        arm_2d_align_centre(__top_canvas, ring_indication_get_size(&this.tIndicator)) {
+        arm_2d_align_centre(__top_canvas, 
+                            ring_indication_get_size(&this.tIndicator)) {
 
             arm_2d_fill_colour_with_mask(   
                                     ptTile,
@@ -223,17 +224,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                     &BACKGROUND_RING_MASK, 
                                     (__arm_2d_color_t){ GLCD_COLOR_GRAY(255-32)});
 
+            ring_indication_show(   &this.tIndicator, 
+                                    ptTile, 
+                                    &__centre_region,
+                                    bIsNewFrame);
+
         }
 
 
-        //arm_2d_align_centre(__top_canvas, ring_indication_get_size(&this.tIndicator)) {
 
-            ring_indication_show(   &this.tIndicator, 
-                                    ptTile, 
-                                    NULL,
-                                    bIsNewFrame);
-
-        //}
 
         /* draw text at the top-left corner */
 
@@ -392,7 +391,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
         ring_indication_cfg_t tCFG = {
             .tIndication = {
                 .LowerLimit = {
-                    .fAngleInDegree = 135.0f,
+                    .fAngleInDegree = 134.0f,
                     .nValue = 0,
                 },
                 .UpperLimit = {
