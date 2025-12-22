@@ -108,7 +108,7 @@
             ___MFSMM_API_FUNC(__NAME, __API_MFSMM_COLOUR, __API_MFSMM_MIRROR_TYPE)
 
 
-ARM_NONNULL(2,3)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t __MFSMM_API_FUNC(tile_fill_with_src_mask)(
                                         __API_MFSMM_OP_TYPE *ptOP,
                                         const arm_2d_tile_t *ptSource,

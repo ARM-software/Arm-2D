@@ -4909,7 +4909,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_src_mask_and_xy_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_only(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -4927,7 +4927,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_only(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_only(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -4945,7 +4945,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_only(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_only(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -4968,7 +4968,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_only(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_and_x_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -4986,7 +4986,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_and_x_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_and_x_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5004,7 +5004,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_and_x_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_and_x_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5027,7 +5027,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_and_x_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_and_y_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5045,7 +5045,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_and_y_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_and_y_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5063,7 +5063,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_and_y_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_and_y_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5086,7 +5086,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_and_y_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_and_xy_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5104,7 +5104,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_copy_with_des_mask_and_xy_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_and_xy_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5122,7 +5122,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_copy_with_des_mask_and_xy_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_and_xy_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5144,7 +5144,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_des_mask_and_xy_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_only(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5162,7 +5162,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_only(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_only(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5180,7 +5180,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_only(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_only(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5203,7 +5203,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_only(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_and_x_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5221,7 +5221,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_and_x_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_and_x_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5239,7 +5239,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_and_x_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_x_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5262,7 +5262,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_x_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_and_y_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5280,7 +5280,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_and_y_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_and_y_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5298,7 +5298,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_and_y_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_y_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5321,7 +5321,7 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_y_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_and_xy_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5339,7 +5339,7 @@ arm_fsm_rt_t arm_2dp_gray8_tile_fill_with_des_mask_and_xy_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_and_xy_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
@@ -5357,7 +5357,7 @@ arm_fsm_rt_t arm_2dp_rgb565_tile_fill_with_des_mask_and_xy_mirror(
  * \return arm_fsm_rt_t the operation result
  */
 extern
-ARM_NONNULL(2,3,4,5)
+ARM_NONNULL(2,3,4)
 arm_fsm_rt_t arm_2dp_cccn888_tile_fill_with_des_mask_and_xy_mirror(
                                         arm_2d_op_cp_msk_t *ptOP,
                                         const arm_2d_tile_t *ptSource,
