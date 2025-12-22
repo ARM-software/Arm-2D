@@ -46,6 +46,7 @@
 #include "./crt_screen.h"
 #include "./image_box.h"
 #include "./foldable_panel.h"
+#include "./ring_indication.h"
 
 #ifdef   __cplusplus
 extern "C" {
