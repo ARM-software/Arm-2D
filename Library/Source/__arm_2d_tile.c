@@ -21,8 +21,8 @@
  * Title:        arm-2d_tile.c
  * Description:  Basic Tile operations
  *
- * $Date:        10. Dec 2025
- * $Revision:    V.1.8.3
+ * $Date:        22. Dec 2025
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -989,6 +989,29 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
                                         ptOutput, 
                                         bClipRegion, 
                                         false);
+}
+
+ARM_NONNULL(1,2,3,4)
+arm_2d_tile_t *arm_2d_tile_create_peephole(const arm_2d_tile_t *ptTile, 
+                                           arm_2d_region_t *ptRegion,
+                                           arm_2d_tile_t *ptPeepholeOut,
+                                           arm_2d_tile_t *ptTempOut)
+{
+    assert(NULL != ptTile);
+    assert(NULL != ptRegion);
+    assert(NULL != ptPeepholeOut);
+    assert(NULL != ptTempOut);
+
+    ptTempOut = arm_2d_tile_generate_child(ptTile, ptRegion, ptTempOut, false);
+    arm_2d_region_t tRegion = {
+        .tSize = ptTile->tRegion.tSize,
+        .tLocation = {
+            .iX = -ptRegion->tLocation.iX,
+            .iY = -ptRegion->tLocation.iY,
+        },
+    };
+
+    return arm_2d_tile_generate_child(ptTempOut, &tRegion, ptPeepholeOut, false);
 }
 
 ARM_NONNULL(1)

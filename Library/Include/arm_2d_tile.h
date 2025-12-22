@@ -21,8 +21,8 @@
  * Title:        arm_2d_tile.h
  * Description:  Public header file to contain the basic tile operations
  *
- * $Date:        10. Dec 2025
- * $Revision:    V.1.8.3
+ * $Date:        22. Dec 2025
+ * $Revision:    V.1.8.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1828,6 +1828,12 @@ arm_2d_tile_t *arm_2d_tile_generate_child(
                                         arm_2d_tile_t *ptOutput,
                                         bool bClipRegion);
 
+extern
+ARM_NONNULL(1,2,3,4)
+arm_2d_tile_t *arm_2d_tile_create_peephole(const arm_2d_tile_t *ptTile, 
+                                           arm_2d_region_t *ptRegion,
+                                           arm_2d_tile_t *ptPeepholeOut,
+                                           arm_2d_tile_t *ptTempOut);
 /*!
  * \brief get the absolute location on a specified target tile
  * 
