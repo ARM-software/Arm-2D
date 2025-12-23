@@ -13769,9 +13769,6 @@ const arm_2d_tile_t c_tileThreeQuarterRingA2Mask = {
     .pchBuffer = (uint8_t *)c_bmpThreeQuarterRingA2Alpha,
 };
 
-
-
-
 extern const arm_2d_tile_t c_tileThreeQuarterRingA4Mask;
 
 ARM_SECTION("arm2d.tile.c_tileThreeQuarterRingA4Mask")

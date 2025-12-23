@@ -31,7 +31,9 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
-#include "arm_2d_example_loaders.h"
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   include "arm_2d_example_loaders.h"
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -61,6 +63,15 @@ extern "C" {
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
+
+#ifndef ARM_2D_DEMO_RING_INDICATOR_USE_QOI
+#   define ARM_2D_DEMO_RING_INDICATOR_USE_QOI   0
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   undef ARM_2D_DEMO_RING_INDICATOR_USE_QOI
+#   define ARM_2D_DEMO_RING_INDICATOR_USE_QOI   0
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -98,6 +109,7 @@ ARM_PRIVATE(
     bool bUserAllocated;
     uint16_t iTargetNumber;
 
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
     struct {
         arm_qoi_loader_t tHelper;
         union {
@@ -105,6 +117,7 @@ ARM_PRIVATE(
             arm_qoi_io_binary_loader_t tBinary;
         } LoaderIO;
     } QOI[__QOI_IDX_COUNT];
+#endif
 
     ring_indication_t tIndicator;
 )

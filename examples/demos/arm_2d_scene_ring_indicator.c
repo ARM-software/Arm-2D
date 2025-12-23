@@ -61,22 +61,32 @@
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileRingIndicator      c_tileRingIndicatorGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileRingIndicator      c_tileRingIndicatorRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
 #   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileRingIndicator      c_tileRingIndicatorCCCA8888
 #else
 #   error Unsupported colour depth!
 #endif
 
-#define BACKGROUND_RING_MASK        \
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
+#   define BACKGROUND_RING_MASK        \
                         this.QOI[QOI_IDX_BACKGROUND_RING].tHelper.vres.tTile
 
-#define INDICATION_IMAGE    this.QOI[QOI_IDX_FOREGROUND].tHelper.vres.tTile
+#   define INDICATION_IMAGE    this.QOI[QOI_IDX_FOREGROUND].tHelper.vres.tTile
+#   define INDICATION_IMAGE_MASK    (*(arm_2d_tile_t *)(NULL))
+#else
+#   define BACKGROUND_RING_MASK     c_tileThreeQuarterRingA4Mask
+#   define INDICATION_IMAGE         c_tileRingIndicator
+#   define INDICATION_IMAGE_MASK    c_tileRingIndicatorMask
+#endif
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
@@ -89,6 +99,10 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+extern const arm_2d_tile_t c_tileThreeQuarterRingA4Mask;
+extern const arm_2d_tile_t c_tileRingIndicator;
+extern const arm_2d_tile_t c_tileRingIndicatorMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -98,12 +112,13 @@ static void __on_scene_ring_indicator_load(arm_2d_scene_t *ptScene)
     user_scene_ring_indicator_t *ptThis = (user_scene_ring_indicator_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
     arm_foreach(this.QOI) {
         arm_qoi_loader_on_load(&_->tHelper);
     }
+#endif
 
     ring_indication_on_load(&this.tIndicator);
-
 }
 
 static void __after_scene_ring_indicator_switching(arm_2d_scene_t *ptScene)
@@ -119,13 +134,13 @@ static void __on_scene_ring_indicator_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
-
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
     arm_foreach(this.QOI) {
         arm_qoi_loader_depose(&_->tHelper);
     }
+#endif
 
     ring_indication_depose(&this.tIndicator);
-
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -178,9 +193,11 @@ static void __on_scene_ring_indicator_frame_start(arm_2d_scene_t *ptScene)
         ring_indication_on_frame_start(&this.tIndicator, this.iTargetNumber);
     } while(0);
 
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
     arm_foreach(this.QOI) {
         arm_qoi_loader_on_frame_start(&_->tHelper);
     }
+#endif
 }
 
 static void __on_scene_ring_indicator_frame_complete(arm_2d_scene_t *ptScene)
@@ -188,9 +205,11 @@ static void __on_scene_ring_indicator_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_ring_indicator_t *ptThis = (user_scene_ring_indicator_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
     arm_foreach(this.QOI) {
         arm_qoi_loader_on_frame_complete(&_->tHelper);
     }
+#endif
 
     ring_indication_on_frame_complete(&this.tIndicator);
 }
@@ -217,12 +236,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
         arm_2d_align_centre(__top_canvas, 
                             ring_indication_get_size(&this.tIndicator)) {
 
+        #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
             arm_2d_fill_colour_with_mask(   
                                     ptTile,
                                     &__centre_region,
                                     &BACKGROUND_RING_MASK, 
                                     (__arm_2d_color_t){ GLCD_COLOR_GRAY(255-32)});
-
+        #else
+            arm_2d_fill_colour_with_a4_mask(   
+                                    ptTile,
+                                    &__centre_region,
+                                    &BACKGROUND_RING_MASK, 
+                                    (__arm_2d_color_t){ GLCD_COLOR_GRAY(255-32)});
+        #endif
             ARM_2D_OP_WAIT_ASYNC();
 
             ring_indication_show(   &this.tIndicator, 
@@ -306,6 +332,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
 
     /* ------------   initialize members of user_scene_ring_indicator_t begin ---------------*/
 
+#if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
     /* initialize QOI loader */
     do {
     #if ARM_2D_DEMO_QOI_USE_FILE
@@ -380,6 +407,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
 
         arm_qoi_loader_init(&this.QOI[QOI_IDX_FOREGROUND].tHelper, &tCFG);
     } while(0);
+#endif
 
     /* initialize scan sector of the indicator*/
     do {
@@ -399,7 +427,14 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
                     .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
                 },
             },
+        
+        #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI                      \
+         || (   (__GLCD_CFG_COLOUR_DEPTH__ == 32)                   \
+            &&  __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__)
             .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK,
+        #else
+            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK,
+        #endif
             .QuarterSector = {
                 .fAngleOffset = 0.0f,
                 .ptMask = &c_tileQuaterSectorMask,
@@ -410,6 +445,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
             },
             .Foreground = {
                 .ptTile = &INDICATION_IMAGE,
+                .ptMask = &INDICATION_IMAGE_MASK,
             },
 
             .tPISliderCFG = {
