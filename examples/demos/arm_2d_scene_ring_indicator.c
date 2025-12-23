@@ -237,17 +237,19 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                             ring_indication_get_size(&this.tIndicator)) {
 
         #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
-            arm_2d_fill_colour_with_mask(   
+            arm_2d_fill_colour_with_mask_and_opacity(   
                                     ptTile,
                                     &__centre_region,
                                     &BACKGROUND_RING_MASK, 
-                                    (__arm_2d_color_t){ GLCD_COLOR_GRAY(255-32)});
+                                    (__arm_2d_color_t){ GLCD_COLOR_LIGHT_GREY},
+                                    64);
         #else
-            arm_2d_fill_colour_with_a4_mask(   
+            arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                     ptTile,
                                     &__centre_region,
                                     &BACKGROUND_RING_MASK, 
-                                    (__arm_2d_color_t){ GLCD_COLOR_GRAY(255-32)});
+                                    (__arm_2d_color_t){ GLCD_COLOR_LIGHT_GREY},
+                                    64);
         #endif
             ARM_2D_OP_WAIT_ASYNC();
 
@@ -307,7 +309,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_BLACK}, 
+            .tCanvas = {GLCD_COLOR_WHITE}, 
 
             /* Please uncommon the callbacks if you need them
              */
@@ -356,7 +358,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
 
             //.bInvertColour = true,
             //.bForceDisablePreBlendwithBG = true,
-            //.tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+            //.tBackgroundColour.wColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_QOI_IO_FILE_LOADER,
@@ -391,7 +393,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
 
             //.bInvertColour = true,
             //.bForceDisablePreBlendwithBG = true,
-            .tBackgroundColour.wColour = GLCD_COLOR_BLACK,
+            .tBackgroundColour.wColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_QOI_IO_FILE_LOADER,
