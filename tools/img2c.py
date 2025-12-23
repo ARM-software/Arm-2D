@@ -39,8 +39,6 @@ hdr="""
 /* Re-sized : {2} */
 /* Rotated : {3} deg */
 
-
-
 #include "arm_2d.h"
 
 #if defined(__clang__)
@@ -151,7 +149,6 @@ const arm_2d_tile_t c_tile{0}CCCA8888 = {{
 
 tailAlpha="""
 
-
 extern const arm_2d_tile_t c_tile{0}Mask;
 
 ARM_SECTION(\"arm2d.tile.c_tile{0}Mask\")
@@ -174,7 +171,6 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 """
 
 tail1BitAlpha="""
-
 
 extern const arm_2d_tile_t c_tile{0}A1Mask;
 
@@ -200,7 +196,6 @@ const arm_2d_tile_t c_tile{0}A1Mask = {{
 
 tail2BitAlpha="""
 
-
 extern const arm_2d_tile_t c_tile{0}A2Mask;
 
 ARM_SECTION(\"arm2d.tile.c_tile{0}A2Mask\")
@@ -223,7 +218,6 @@ const arm_2d_tile_t c_tile{0}A2Mask = {{
 """
 
 tail4BitAlpha="""
-
 
 extern const arm_2d_tile_t c_tile{0}A4Mask;
 
@@ -248,7 +242,6 @@ const arm_2d_tile_t c_tile{0}A4Mask = {{
 
 
 tailAlpha2="""
-
 
 extern const arm_2d_tile_t c_tile{0}Mask2;
 
