@@ -236,6 +236,11 @@ void scene_shaped_panel_loader(void)
     arm_2d_scene_shaped_panel_init(&DISP0_ADAPTER);
 }
 
+void scene_ring_indicator_loader(void) 
+{
+    arm_2d_scene_ring_indicator_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -444,6 +449,9 @@ static demo_scene_t const c_SceneLoaders[] = {
         15000,
         scene_meter_loader,
     },
+    {   15000,
+        scene_ring_indicator_loader,
+    },
     {
         30000,
         scene_watch_face_01_loader,
@@ -587,8 +595,12 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        //scene_qoi_loader,
-        scene_flight_attitude_instrument_loader,
+        scene_ring_indicator_loader,
+        //scene_fitness_loader,
+        //scene_gas_gauge_loader
+        //scene_shaped_panel_loader,
+        //scene_radars_loader,
+        //scene_flight_attitude_instrument_loader,
         //scene_blink_loader,
         //scene_rickrolling_loader,
         //scene_histogram_loader,
