@@ -25,8 +25,7 @@
 #   include "RTE_Components.h"
 #endif
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
- && defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -65,7 +64,7 @@ extern "C" {
 #include "arm_2d_utils.h"
 
 #ifndef ARM_2D_DEMO_RING_INDICATOR_USE_QOI
-#   define ARM_2D_DEMO_RING_INDICATOR_USE_QOI   0
+#   define ARM_2D_DEMO_RING_INDICATOR_USE_QOI   1
 #endif
 
 #if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)

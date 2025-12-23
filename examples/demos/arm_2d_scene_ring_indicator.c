@@ -266,7 +266,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
         arm_lcd_text_set_draw_region(NULL);
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
+    #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
         arm_lcd_puts("Scene Ring Indicator with QOI");
+    #else
+        arm_lcd_puts("Scene Ring Indicator");
+    #endif
 
     /*-----------------------draw the scene end  -----------------------*/
     }
