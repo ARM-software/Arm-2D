@@ -1097,7 +1097,7 @@
             <file category="header"      name="examples/demos/arm_2d_scene_rickrolling.h" attr="config" version="2.2.1" />
 
             <file category="sourceC"     name="examples/demos/rick_rolling_jpg_75.c" />
-            <file category="other"       name="examples/demos/Rickrolling75.jpg"          attr="config" version="1.0.2" />
+            <file category="other"       name="examples/common/asset/Rickrolling75.jpg"   attr="config" version="1.0.2" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_RickRolling
