@@ -119,6 +119,7 @@ ARM_PRIVATE(
 #endif
 
     ring_indication_t tIndicator;
+    spin_zoom_widget_t tPointer;
 )
     /* place your public member here */
     

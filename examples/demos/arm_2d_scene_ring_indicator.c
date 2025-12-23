@@ -103,6 +103,9 @@ extern const arm_2d_tile_t c_tileThreeQuarterRingA4Mask;
 extern const arm_2d_tile_t c_tileRingIndicator;
 extern const arm_2d_tile_t c_tileRingIndicatorMask;
 
+extern const arm_2d_tile_t c_tileWhiteDotMiddleMask;
+extern const arm_2d_tile_t c_tileWhiteDotMask;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
@@ -119,6 +122,8 @@ static void __on_scene_ring_indicator_load(arm_2d_scene_t *ptScene)
 #endif
 
     ring_indication_on_load(&this.tIndicator);
+    spin_zoom_widget_on_load(&this.tPointer);
+
 }
 
 static void __after_scene_ring_indicator_switching(arm_2d_scene_t *ptScene)
@@ -141,6 +146,7 @@ static void __on_scene_ring_indicator_depose(arm_2d_scene_t *ptScene)
 #endif
 
     ring_indication_depose(&this.tIndicator);
+    spin_zoom_widget_depose(&this.tPointer);
     /*---------------------- insert your depose code end  --------------------*/
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -191,6 +197,10 @@ static void __on_scene_ring_indicator_frame_start(arm_2d_scene_t *ptScene)
         }
 
         ring_indication_on_frame_start(&this.tIndicator, this.iTargetNumber);
+
+        spin_zoom_widget_on_frame_start(&this.tPointer, 
+                                        ring_indication_get_current_value(&this.tIndicator), 
+                                        1.0f);
     } while(0);
 
 #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
@@ -212,6 +222,7 @@ static void __on_scene_ring_indicator_frame_complete(arm_2d_scene_t *ptScene)
 #endif
 
     ring_indication_on_frame_complete(&this.tIndicator);
+    spin_zoom_widget_on_frame_complete(&this.tPointer);
 }
 
 static void __before_scene_ring_indicator_switching_out(arm_2d_scene_t *ptScene)
@@ -259,6 +270,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                     bIsNewFrame);
 
         }
+
+        spin_zoom_widget_show(&this.tPointer, ptTile, NULL, NULL, 255);
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -466,6 +479,40 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
         ring_indication_init(&this.tIndicator, &tCFG);
 
         this.iTargetNumber = 0;
+    } while(0);
+
+    do {
+        spin_zoom_widget_cfg_t tCFG = {
+            .Indicator = {
+                .LowerLimit = {
+                    .fAngleInDegree = 134.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 45.0f + 360.0f,
+                    .nValue = 1000,
+                },
+                .Step = {
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
+                },
+            },
+            .ptTransformMode = &SPIN_ZOOM_MODE_FILL_COLOUR,
+
+            .Source = {
+                .ptMask = &c_tileWhiteDotMiddleMask,
+                .tCentreFloat = {
+                    .fX = (float)c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth 
+                        - (float)INDICATION_IMAGE.tRegion.tSize.iWidth / 2.0f
+                        - 4,
+                    .fY = (float)(c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight - 1) / 2.0f,
+                },
+                .tColourToFill = GLCD_COLOR_NIXIE_TUBE,
+            },
+            .bUseFloatPointInCentre = true,
+
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+        spin_zoom_widget_init(&this.tPointer, &tCFG);
     } while(0);
     /* ------------   initialize members of user_scene_ring_indicator_t end   ---------------*/
 
