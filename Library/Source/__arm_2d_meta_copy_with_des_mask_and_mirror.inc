@@ -195,8 +195,8 @@ arm_fsm_rt_t __MCDMM_SW_FUNC(tile_copy_with_des_mask)( __arm_2d_sub_task_t *ptTa
     #endif
     
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tDesMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tCopyMask.tDesMask.tColour.u3ColourSZ);
               
         if (ptTask->Param.tCopyMask.tDesMask.tValidRegion.tSize.iHeight > 1) {
             __MCDMM_IMPL_FUNC(des_msk_copy)(

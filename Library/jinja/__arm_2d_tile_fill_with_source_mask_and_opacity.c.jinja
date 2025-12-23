@@ -699,8 +699,8 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_tile_fill_with_source_mask_and_
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.u3ColourSZ);
 
         __arm_2d_impl_{{colour_name | lower}}_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask

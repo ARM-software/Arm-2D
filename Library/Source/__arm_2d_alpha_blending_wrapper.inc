@@ -288,8 +288,8 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTask)
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.u3ColourSZ);
         
         if (wMode & (ARM_2D_CP_MODE_Y_MIRROR | ARM_2D_CP_MODE_X_MIRROR)) {
             __ABW_LL_FUNC(src_msk_copy_mirror)(
@@ -403,8 +403,8 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_des_mask)( __arm_2d_sub_task_t *ptTask)
     #endif
     
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tDesMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tCopyMask.tDesMask.tColour.u3ColourSZ);
               
         if (wMode & (ARM_2D_CP_MODE_Y_MIRROR | ARM_2D_CP_MODE_X_MIRROR)) {
 
@@ -744,10 +744,10 @@ arm_fsm_rt_t __ABW_FUNC(tile_copy_with_masks)( __arm_2d_sub_task_t *ptTask)
     #endif
     
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme);
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tDesMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.u3ColourSZ);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tCopyMask.tDesMask.tColour.u3ColourSZ);
               
         if (wMode & (ARM_2D_CP_MODE_Y_MIRROR | ARM_2D_CP_MODE_X_MIRROR)) {
             if (ptTask->Param.tCopyMask.tDesMask.tValidRegion.tSize.iHeight > 1) {
@@ -945,8 +945,8 @@ arm_fsm_rt_t __ABW_FUNC(tile_fill_with_src_mask)( __arm_2d_sub_task_t *ptTask)
     #endif
     
     } else {
-        assert(     ARM_2D_COLOUR_8BIT
-               ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT
+               ==   ptTask->Param.tFillMask.tSrcMask.tColour.u3ColourSZ);
                
         if (wMode & (ARM_2D_CP_MODE_Y_MIRROR | ARM_2D_CP_MODE_X_MIRROR)) {
 
@@ -1077,8 +1077,8 @@ arm_fsm_rt_t __ABW_FUNC(tile_fill_with_des_mask)( __arm_2d_sub_task_t *ptTask)
     #endif
     
     } else {
-        assert(     ARM_2D_COLOUR_8BIT
-               ==   ptTask->Param.tFillMask.tDesMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT
+               ==   ptTask->Param.tFillMask.tDesMask.tColour.u3ColourSZ);
                
         if (wMode & (ARM_2D_CP_MODE_Y_MIRROR | ARM_2D_CP_MODE_X_MIRROR)) {
 

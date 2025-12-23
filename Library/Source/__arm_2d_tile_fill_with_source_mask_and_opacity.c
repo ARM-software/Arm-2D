@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_source_mask_and_opacity.c
  * Description:  APIs for tile fill with source mask and opacity only
  *
- * $Date:        11. Dec 2025
- * $Revision:    V.1.2.1
+ * $Date:        23. Dec 2025
+ * $Revision:    V.1.2.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -692,8 +692,8 @@ arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_source_mask_and_opacity_only( __ar
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.u3ColourSZ);
 
         __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask
@@ -1357,8 +1357,8 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_source_mask_and_opacity_only( __a
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.u3ColourSZ);
 
         __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask
@@ -2022,8 +2022,8 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_source_mask_and_opacity_only( __
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tFillMask.tSrcMask.tColour.u3ColourSZ);
 
         __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
             ptTask->Param.tFillMask

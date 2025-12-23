@@ -343,8 +343,8 @@ arm_fsm_rt_t __MFSMM_SW_FUNC(tile_fill_with_src_mask)( __arm_2d_sub_task_t *ptTa
         #endif
         
         } else {
-            assert(     ARM_2D_COLOUR_8BIT
-                ==   ptTask->Param.tFillMask.tSrcMask.tColour.chScheme);
+            assert(     ARM_2D_COLOUR_SZ_8BIT
+                ==   ptTask->Param.tFillMask.tSrcMask.tColour.u3ColourSZ);
 
             __MFSMM_IMPL_FUNC(src_msk_fill)(   
                 ptTask->Param.tFillMask

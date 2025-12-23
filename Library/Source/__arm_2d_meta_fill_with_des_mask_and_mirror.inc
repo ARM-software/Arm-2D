@@ -206,8 +206,8 @@ arm_fsm_rt_t __MFDMM_SW_FUNC(tile_fill_with_des_mask)( __arm_2d_sub_task_t *ptTa
     #endif
     
     } else {
-        assert(     ARM_2D_COLOUR_8BIT
-               ==   ptTask->Param.tFillMask.tDesMask.tColour.chScheme);
+        assert(     ARM_2D_COLOUR_SZ_8BIT
+               ==   ptTask->Param.tFillMask.tDesMask.tColour.u3ColourSZ);
 
         if (ptTask->Param.tFillMask.tDesMask.tValidRegion.tSize.iHeight > 1) {
             __MFDMM_IMPL_FUNC(des_msk_fill)(   

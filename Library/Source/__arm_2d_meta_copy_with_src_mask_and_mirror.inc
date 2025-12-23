@@ -337,9 +337,9 @@ arm_fsm_rt_t __MCSMM_SW_FUNC(tile_copy_with_src_mask)( __arm_2d_sub_task_t *ptTa
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        assert(     ARM_2D_COLOUR_8BIT 
-              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.chScheme);
-
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
+              ==    ptTask->Param.tCopyMask.tSrcMask.tColour.u3ColourSZ);
+            
             __MCSMM_IMPL_FUNC(src_msk_copy)(
                 ptTask->Param.tCopyMask
                     .use_as____arm_2d_param_copy_t.tSource.pBuffer,
