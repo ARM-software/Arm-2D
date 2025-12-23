@@ -296,6 +296,10 @@ void spin_zoom_widget_on_frame_start_xy_f32(spin_zoom_widget_t *ptThis,
 
 extern
 ARM_NONNULL(1)
+float spin_zoom_valid_value(spin_zoom_widget_t *ptThis, float fValue);
+
+extern
+ARM_NONNULL(1)
 float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis);
 
 extern

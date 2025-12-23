@@ -50,7 +50,6 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
-
 typedef struct ring_indication_cfg_t {
     arm_2d_scene_t *ptScene;
     __spin_zoom_widget_indication_t tIndication;
@@ -123,7 +122,13 @@ void ring_indication_on_load( ring_indication_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void ring_indication_on_frame_start( ring_indication_t *ptThis, int32_t nValue);
+bool ring_indication_on_frame_start(ring_indication_t *ptThis, 
+                                    int32_t nValue);
+
+extern
+ARM_NONNULL(1)
+bool ring_indication_on_frame_start_f32(ring_indication_t *ptThis, 
+                                        float fTargetValue);
 
 extern
 ARM_NONNULL(1)
@@ -139,6 +144,22 @@ void ring_indication_show( ring_indication_t *ptThis,
 extern 
 ARM_NONNULL(1)
 arm_2d_size_t ring_indication_get_size(ring_indication_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int32_t ring_indication_get_current_value(ring_indication_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int32_t ring_indication_set_current_value(ring_indication_t *ptThis, int32_t nValue);
+
+extern
+ARM_NONNULL(1)
+float ring_indication_get_current_value_f32(ring_indication_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+float ring_indication_set_current_value_f32(ring_indication_t *ptThis, float fValue);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

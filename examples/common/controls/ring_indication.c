@@ -167,10 +167,21 @@ void ring_indication_on_load( ring_indication_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void ring_indication_on_frame_start( ring_indication_t *ptThis, int32_t nValue)
+bool ring_indication_on_frame_start( ring_indication_t *ptThis, int32_t nValue)
 {
     assert(NULL != ptThis);
-    meter_pointer_on_frame_start(&this.tSector, nValue, this.fSectorScale);
+    return meter_pointer_on_frame_start(&this.tSector, 
+                                        nValue, 
+                                        this.fSectorScale);
+}
+
+ARM_NONNULL(1)
+bool ring_indication_on_frame_start_f32(ring_indication_t *ptThis, 
+                                        float fTargetValue)
+{
+    return meter_pointer_on_frame_start_f32(&this.tSector, 
+                                            fTargetValue, 
+                                            this.fSectorScale);
 }
 
 ARM_NONNULL(1)
@@ -593,6 +604,36 @@ void ring_indication_show(  ring_indication_t *ptThis,
     }
 
     ARM_2D_OP_WAIT_ASYNC();
+}
+
+ARM_NONNULL(1)
+int32_t ring_indication_get_current_value(ring_indication_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return meter_pointer_get_current_value(&this.tSector);
+}
+
+ARM_NONNULL(1)
+int32_t ring_indication_set_current_value(ring_indication_t *ptThis, int32_t nValue)
+{
+    assert(NULL != ptThis);
+    return meter_pointer_set_current_value(&this.tSector, nValue);
+}
+
+ARM_NONNULL(1)
+float ring_indication_get_current_value_f32(ring_indication_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return meter_pointer_get_current_value_f32(&this.tSector);
+}
+
+ARM_NONNULL(1)
+float ring_indication_set_current_value_f32(ring_indication_t *ptThis, float fValue)
+{
+    assert(NULL != ptThis);
+    return meter_pointer_set_current_value_f32(&this.tSector, fValue);
 }
 
 #if defined(__clang__)

@@ -269,30 +269,21 @@ void meter_pointer_set_colour(  meter_pointer_t *ptThis,
 }
 
 ARM_NONNULL(1)
-int32_t meter_pointer_get_current_value(meter_pointer_t *ptThis)
-{
-    assert(NULL != ptThis);
-
-    return (int32_t)this.fCurrentValue;
-}
-
-ARM_NONNULL(1)
-int32_t meter_pointer_set_current_value(meter_pointer_t *ptThis, int32_t nValue)
-{
-    assert(NULL != ptThis);
-
-    this.fCurrentValue = (float)nValue;
-    arm_2d_helper_pi_slider_set_current(&this.tPISlider, nValue);
-
-    return (int32_t)this.fCurrentValue;
-}
-
-ARM_NONNULL(1)
 float meter_pointer_get_current_value_f32(meter_pointer_t *ptThis)
 {
     assert(NULL != ptThis);
 
-    return this.fCurrentValue;
+    return spin_zoom_valid_value(
+                            &this.use_as__spin_zoom_widget_t,
+                            this.fCurrentValue);
+}
+
+ARM_NONNULL(1)
+int32_t meter_pointer_get_current_value(meter_pointer_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return (int32_t)meter_pointer_get_current_value_f32(ptThis);
 }
 
 ARM_NONNULL(1)
@@ -300,10 +291,20 @@ float meter_pointer_set_current_value_f32(meter_pointer_t *ptThis, float fValue)
 {
     assert(NULL != ptThis);
 
-    this.fCurrentValue = fValue;
-    arm_2d_helper_pi_slider_set_current_f32(&this.tPISlider, fValue);
+    this.fCurrentValue = spin_zoom_valid_value(
+                            &this.use_as__spin_zoom_widget_t,
+                            fValue);
+    arm_2d_helper_pi_slider_set_current_f32(&this.tPISlider, this.fCurrentValue);
 
     return this.fCurrentValue;
+}
+
+ARM_NONNULL(1)
+int32_t meter_pointer_set_current_value(meter_pointer_t *ptThis, int32_t nValue)
+{
+    assert(NULL != ptThis);
+
+    return (int32_t)meter_pointer_set_current_value_f32(ptThis, (float)nValue);
 }
 
 #if defined(__clang__)
