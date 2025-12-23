@@ -241,7 +241,7 @@ void qrcode_box_show(   qrcode_box_t *ptThis,
                 do {
                     arm_2d_region_t tValidRegion;
                     const arm_2d_tile_t *ptVirtualScreen = __arm_2d_tile_get_virtual_screen_or_root(  
-                                                            ptTile,
+                                                            &__qrcode_canvas,
                                                             &tValidRegion, 
                                                             &tPFBScanRegion.tLocation,
                                                             NULL,
