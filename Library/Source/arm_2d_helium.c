@@ -303,20 +303,79 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
 }
 
 __STATIC_FORCEINLINE
-uint16x8_t __arm_2d_scale_alpha_mask_n_opa(uint16x8_t opa, uint16x8_t vSrcMask,
-                                             uint_fast16_t hwOpacity)
+uint16x8_t __arm_2d_scale_alpha_mask_n_opa( uint16x8_t vPixelAlpha, uint16x8_t vMask,
+                                            uint_fast16_t hwOpacity)
 {
-    opa = vpselq(vdupq_n_u16(256), opa, vcmpeqq_n_u16(opa, 255));
-    opa = vmulq(opa, (vmulq(vSrcMask, hwOpacity) >> 8)) >> 8;
-    return opa;
+    /* vPixelAlpha: 0~256 */
+    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+    /* vSrcMask: 0~255 */
+    /* hwOpacity: 0~256 */
+    vPixelAlpha = vmulq(vPixelAlpha, (vmulq(vMask, hwOpacity) >> 8)) >> 8;
+    return vPixelAlpha;
 }
 
 __STATIC_FORCEINLINE
-uint16x8_t __arm_2d_scale_alpha_mask(uint16x8_t opa, uint16x8_t vSrcMask)
+uint16x8_t __arm_2d_scale_alpha_mask_opa(uint16x8_t vPixelAlpha, uint16x8_t vMask,
+                                         uint16x8_t vOpacity)
 {
-    opa = vpselq(vdupq_n_u16(256), opa, vcmpeqq_n_u16(opa, 255));
-    opa = vmulq(opa, vSrcMask) >> 8;
-    return opa;
+    
+    /* vPixelAlpha: 0~256 */
+    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+    /* vSrcMask: 0~255 */
+    /* vOpacity: 0~256 */
+    vPixelAlpha = vmulq(vPixelAlpha, (vmulq(vMask, vOpacity) >> 8)) >> 8;
+    return vPixelAlpha;
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_masks(uint16x8_t vPixelAlpha, uint16x8_t vSrcMask,
+                                      uint16x8_t vDesMask)
+{
+    /* vPixelAlpha: 0~256 */
+    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+    /* vDesMask：0 ~ 256 */
+    vDesMask = vpselq(vdupq_n_u16(256), vDesMask, vcmpeqq_n_u16(vDesMask, 255));
+
+    /* vSrcMask: 0~255 */
+    vPixelAlpha = vmulq(vPixelAlpha, 
+                        (vmulq(vSrcMask, vDesMask) >> 8))   
+                >> 8;
+    return vPixelAlpha;
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_masks_n_opa(uint16x8_t vPixelAlpha,     /* vPixelAlpha: 0~256 */
+                                            uint16x8_t vSrcMask,        /* vSrcMask: 0~255 */
+                                            uint16x8_t vDesMask,        /* vDesMask：0 ~ 256 */
+                                            uint16_t hwOpacity)         /* hwOpacity: 0 ~ 256 */
+{                       
+    /* vPixelAlpha: 0~256 */
+    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+    /* vDesMask：0 ~ 256 */
+    vDesMask = vpselq(vdupq_n_u16(256), vDesMask, vcmpeqq_n_u16(vDesMask, 255));
+
+    /* vSrcMask: 0~255 */
+    vPixelAlpha = vmulq(vPixelAlpha, 
+                        (vmulq(vSrcMask, vDesMask) >> 8))   
+                >> 8;
+
+    /* hwOpacity: 0~256 */
+    vPixelAlpha = vmulq(vPixelAlpha, hwOpacity) >> 8;
+
+    return vPixelAlpha;
+}
+
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_mask(uint16x8_t vPixelAlpha, uint16x8_t vSrcMask)
+{
+    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+    vPixelAlpha = vmulq(vPixelAlpha, vSrcMask) >> 8;
+    return vPixelAlpha;
 }
 
 /*---------------------------------------------------------------------------*
