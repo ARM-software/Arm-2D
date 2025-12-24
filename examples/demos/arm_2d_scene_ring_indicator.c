@@ -502,9 +502,9 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
     } while(0);
 
     do {
-        int16_t iPointerRadius = (float)c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth 
-                               - (float)INDICATION_IMAGE.tRegion.tSize.iWidth / 2.0f
-                               - 4;
+        int16_t iRadius = (float)c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth 
+                        - (float)INDICATION_IMAGE.tRegion.tSize.iWidth / 2.0f
+                        - 4;
 
         spin_zoom_widget_cfg_t tCFG = {
             .Indicator = {
@@ -525,7 +525,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
             .Source = {
                 .ptMask = &c_tileWhiteDotMiddleMask,
                 .tCentreFloat = {
-                    .fX = iPointerRadius,
+                    .fX = iRadius,
                     .fY = (float)(c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight - 1) / 2.0f,
                 },
                 .tColourToFill = GLCD_COLOR_NIXIE_TUBE,
@@ -548,14 +548,14 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
         s_tReferencePoints[3].iX = -30;
         s_tReferencePoints[3].iY = c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight - 1;
 
-
         /*
          * NOTE: Reference Point
          *
-         *           0     +-----1
-         *           +-----+ DOT |
-         *           3     +-----2
+         *              0     +-----1
+         *   +------...-+-----+ DOT |
+         * pivot        3     +-----2
          * 
+         *   |<--- radius --->|
          */
 
     } while(0);
