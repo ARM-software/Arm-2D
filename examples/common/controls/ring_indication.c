@@ -323,7 +323,7 @@ void ring_indication_show(  ring_indication_t *ptThis,
 
     arm_2d_container(ptTile, __visible_window, ptRegion) {
 
-        arm_2d_align_centre(__visible_window_canvas, 
+        arm_2d_align_centre_open(__visible_window_canvas, 
                             this.iDiameter,
                             this.iDiameter) {
 
