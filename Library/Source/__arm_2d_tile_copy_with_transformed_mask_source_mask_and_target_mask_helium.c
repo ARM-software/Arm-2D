@@ -98,12 +98,15 @@ void __MVE_WRAPPER(
                                         arm_2d_region_t * ptOrigValidRegion,
                                         uint16_t * phwOrigin,
                                         int16_t iOrigStride,
-                                        uint16_t * pTarget,
+                                        uint16_t * phwTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint8_t *pchExtraSourceMask,
+                                        uint16_t *phwExtraSource,
                                         uint_fast16_t hwOpacity, 
                                         uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
-    uint16x8_t      vTarget = vld1q(pTarget);
+    uint16x8_t      vTarget = vld1q(phwTarget);
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
     uint16x8_t      vAvgR, vAvgG, vAvgB;
@@ -144,7 +147,7 @@ void __MVE_WRAPPER(
     /* select between target pixel, averaged pixed */
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
 
-    vst1q_p(pTarget, vTarget, predTail);
+    vst1q_p(phwTarget, vTarget, predTail);
 }
 
 __STATIC_INLINE
@@ -154,10 +157,13 @@ void __MVE_WRAPPER(
                                         arm_2d_region_t * ptOrigValidRegion,
                                         uint16_t * phwOrigin,
                                         int16_t iOrigStride,
-                                        uint16_t * pTarget,
+                                        uint16_t * phwTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint8_t *pchExtraSourceMask,
+                                        uint16_t *phwExtraSource,
                                         uint_fast16_t hwOpacity)
 {
-    uint16x8_t      vTarget = vld1q(pTarget);
+    uint16x8_t      vTarget = vld1q(phwTarget);
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
     uint16x8_t      vAvgR, vAvgG, vAvgB;
@@ -194,7 +200,7 @@ void __MVE_WRAPPER(
     __ARM_2D_BLEND_RGB565_TARGET_RGBVEC(
                 (uint16_t) hwOpacity, vTarget, vAvgR, vAvgG, vAvgB, vBlended);
 
-    vst1q(pTarget, vBlended);
+    vst1q(phwTarget, vBlended);
 }
 
 __STATIC_INLINE
@@ -204,12 +210,15 @@ void __MVE_WRAPPER(
                                         arm_2d_region_t * ptOrigValidRegion,
                                         uint16_t * phwOrigin,
                                         int16_t iOrigStride,
-                                        uint16_t * pTarget,
+                                        uint16_t * phwTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint8_t *pchExtraSourceMask,
+                                        uint16_t *phwExtraSource,
                                         uint_fast16_t hwOpacity, 
                                         uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
-    uint16x8_t      vTarget = vld1q(pTarget);
+    uint16x8_t      vTarget = vld1q(phwTarget);
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
     uint16x8_t      vAvgR, vAvgG, vAvgB;
@@ -249,7 +258,7 @@ void __MVE_WRAPPER(
     /* select between target pixel, averaged pixed */
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
 
-    vst1q_p(pTarget, vTarget, predTail);
+    vst1q_p(phwTarget, vTarget, predTail);
 }
 
 __STATIC_INLINE
@@ -259,10 +268,13 @@ void __MVE_WRAPPER(
                                         arm_2d_region_t * ptOrigValidRegion,
                                         uint16_t * phwOrigin,
                                         int16_t iOrigStride,
-                                        uint16_t * pTarget,
+                                        uint16_t * phwTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint8_t *pchExtraSourceMask,
+                                        uint16_t *phwExtraSource,
                                         uint_fast16_t hwOpacity)
 {
-    uint16x8_t      vTarget = vld1q(pTarget);
+    uint16x8_t      vTarget = vld1q(phwTarget);
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
     uint16x8_t      vAvgR, vAvgG, vAvgB;
@@ -299,7 +311,7 @@ void __MVE_WRAPPER(
     __ARM_2D_BLEND_RGB565_TARGET_RGBVEC(
                 (uint16_t) hwOpacity, vTarget, vAvgR, vAvgG, vAvgB, vBlended);
 
-    vst1q(pTarget, vBlended);
+    vst1q(phwTarget, vBlended);
 }
 
 
