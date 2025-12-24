@@ -106,6 +106,12 @@ extern const arm_2d_tile_t c_tileRingIndicatorMask;
 extern const arm_2d_tile_t c_tileWhiteDotMiddleMask;
 extern const arm_2d_tile_t c_tileWhiteDotMask;
 
+extern const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_ALARM_CLOCK_64_A4;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 ARM_NOINIT
@@ -199,7 +205,7 @@ static void __on_scene_ring_indicator_frame_start(arm_2d_scene_t *ptScene)
 
     #if 1
         /* generate a new position every 2000 sec */
-        if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[0])) {
+        if (arm_2d_helper_is_time_out(4000,  &this.lTimestamp[0])) {
             this.lTimestamp[0] = 0;
             srand(arm_2d_helper_get_system_timestamp());
             this.iTargetNumber = rand() % 1000;
@@ -213,7 +219,16 @@ static void __on_scene_ring_indicator_frame_start(arm_2d_scene_t *ptScene)
 
     #endif
 
-        ring_indication_on_frame_start(&this.tIndicator, this.iTargetNumber);
+        if (ring_indication_on_frame_start(&this.tIndicator, this.iTargetNumber)) {
+            /* finish moving */
+            arm_2d_helper_dirty_region_item_suspend_update(
+                &ptScene->tDirtyRegionHelper.tDefaultItem,
+                true);
+        } else {
+            arm_2d_helper_dirty_region_item_suspend_update(
+                &ptScene->tDirtyRegionHelper.tDefaultItem,
+                false);
+        }
 
         int32_t nCurrentValue = ring_indication_get_current_value(&this.tIndicator);
         spin_zoom_widget_on_frame_start(&this.tPointer, nCurrentValue, 1.0f);
@@ -317,6 +332,55 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                 ptTile, 
                                 NULL,
                                 bIsNewFrame);
+
+
+        /* draw 3 digits numbers */
+        do {
+            /* 3 digits */
+            arm_2d_size_t tTextSize 
+                = arm_lcd_printf_to_buffer(
+                    (const arm_2d_font_t *)&ARM_2D_FONT_ALARM_CLOCK_64_A4, 
+                    "%03d", 
+                    (int)ring_indication_get_current_value(&this.tIndicator));
+
+            tTextSize.iHeight += 16;    /* for "km/h */
+
+            arm_2d_align_centre(__top_canvas,  tTextSize) {
+                
+                arm_2d_layout(__centre_region) {
+                
+                    arm_lcd_text_set_target_framebuffer(ptTile);
+                    /* print speed */
+                    __item_line_vertical(tTextSize.iWidth, tTextSize.iHeight - 16) {
+
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour( GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_BLACK);
+                        arm_lcd_text_set_opacity(255 - 64);
+
+                        arm_lcd_text_reset_display_region_tracking();
+                        arm_lcd_printf_buffer(0);
+                        arm_2d_helper_dirty_region_update_item(
+                            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                            ptTile,
+                            &__item_region,
+                            arm_lcd_text_get_last_display_region());
+
+                        arm_lcd_text_set_opacity(255);
+                    }
+                    
+                    /* print "FPS" */
+                    __item_line_vertical(tTextSize.iWidth,16) {
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_6x8);
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour( GLCD_COLOR_DARK_GREY, GLCD_COLOR_BLACK);
+                        arm_lcd_printf_label(ARM_2D_ALIGN_BOTTOM_CENTRE, "Setting");
+                    }
+
+                    arm_lcd_text_set_target_framebuffer(NULL);
+                }
+            }
+            
+        } while(0);
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
