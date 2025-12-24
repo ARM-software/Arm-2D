@@ -237,6 +237,162 @@ void __MVE_WRAPPER(
 }
 
 
+__OVERRIDE_WEAK
+void __MVE_WRAPPER(
+    __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity)(
+                                            __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                            __arm_2d_transform_info_t *ptInfo,
+                                            uint_fast16_t hwOpacity)
+
+{
+    __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .use_as____arm_2d_param_copy_t;
+    
+    int_fast16_t    iHeight = ptParamCopy->tCopySize.iHeight;
+    int_fast16_t    iWidth = ptParamCopy->tCopySize.iWidth;
+    int_fast16_t    iTargetStride = ptParamCopy->tTarget.iStride;
+    uint16_t        *phwTargetBase = ptParamCopy->tTarget.pBuffer;
+
+    uint8_t         *pchOrigin = (uint8_t *)
+                                    ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .pBuffer;
+
+    int_fast16_t    iOrigStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .iStride;
+    uint8_t         *pchTargetMaskBase = (uint8_t *)
+                                            ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .pBuffer;
+    int_fast16_t    iTargetMaskStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .iStride;
+
+    uint16_t        *phwExtraSourceBase = (uint16_t *)ptParam->tExtraSource.pBuffer;
+    int_fast16_t    iExtraSourceStride = ptParam->tExtraSource.iStride;
+    uint8_t         *pchExtraSourceMaskBase = ptParam->tExtraSourceMask.pBuffer;
+    int_fast16_t    iExtraSourceMaskStride = ptParam->tExtraSourceMask.iStride;
+
+    float               fAngle = -ptInfo->fAngle;
+    arm_2d_location_t   tOffset = ptParamCopy->tSource.tValidRegion.tLocation;
+    
+    arm_2d_region_t *ptOriginValidRegion = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .tOrigin
+                                                    .tValidRegion;
+    hwOpacity += (hwOpacity == 255);
+
+    q31_t  invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
+
+    /* get regression parameters over 1st and last column */
+
+    __arm_2d_transform_regression(
+        &ptParamCopy->tCopySize,
+        &SrcPt,
+        fAngle,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
+        &tOffset,
+        &(ptInfo->tCenter),
+        iOrigStride,
+        regrCoefs);
+
+    /* slopes between 1st and last columns */
+    int32_t         slopeY, slopeX;
+
+    slopeY = MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX = MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    int32_t         nrmSlopeX = 17 - __CLZ(ABS(slopeX));
+    int32_t         nrmSlopeY = 17 - __CLZ(ABS(slopeY));
+
+    slopeX = ARSHIFT(slopeX, nrmSlopeX);
+    slopeY = ARSHIFT(slopeY, nrmSlopeY);
+
+    for (int32_t y = 0; y < iHeight; y++) {
+
+        /* 1st column estimates */
+        int32_t         colFirstY =
+            __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t         colFirstX =
+            __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+        /* Q6 conversion */
+        colFirstX = colFirstX >> 10;
+        colFirstY = colFirstY >> 10;
+
+        int32_t nbVecElts = iWidth;
+        int16x8_t vX = (int16x8_t)vidupq_n_u16(0, 1);
+        uint16_t *phwTargetLine = phwTargetBase;
+        uint8_t *pchTargetMaskLine = pchTargetMaskBase;
+        uint16_t *phwExtraSourceLine = phwExtraSourceBase;
+        uint8_t *pchExtraSourceMaskLine = pchExtraSourceMaskBase;
+
+        /* Q9.6 coversion */
+        vX = SET_Q6INT(vX);
+
+        while (nbVecElts > 0) {
+
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
+
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                                            ptOriginValidRegion,
+                                                            &tPointTemp);
+            p &= vctp16q(nbVecElts);
+
+            if (0xFFFF == p) {
+                __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
+                    &tPointV,
+                    ptOriginValidRegion,
+                    pchOrigin, iOrigStride,
+                    phwTargetLine,
+                    pchTargetMaskLine,
+                    pchExtraSourceMaskLine,
+                    phwExtraSourceLine,
+                    hwOpacity);
+            } else if (0 != p) {
+                __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
+                    &tPointV,
+                    ptOriginValidRegion,
+                    pchOrigin, iOrigStride,
+                    phwTargetLine,
+                    pchTargetMaskLine,
+                    pchExtraSourceMaskLine,
+                    phwExtraSourceLine,
+                    hwOpacity,
+                    nbVecElts);
+            }
+
+            phwTargetLine += 8;
+            pchTargetMaskLine += 8;
+            phwExtraSourceLine += 8;
+            pchExtraSourceMaskLine += 8;
+
+            vX += SET_Q6INT(8);
+            nbVecElts -= 8;
+        }
+
+        phwTargetBase           += iTargetStride;
+        pchTargetMaskBase       += iTargetMaskStride;
+        phwExtraSourceBase      += iExtraSourceStride;
+        pchExtraSourceMaskBase  += iExtraSourceMaskStride;
+    }
+}
+
 
 #ifdef __cplusplus
 }
