@@ -64,6 +64,9 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+static
+uint8_t __ring_indication_get_quadrant(float fAngle);
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
@@ -78,6 +81,8 @@ void ring_indication_init( ring_indication_t *ptThis,
     assert(NULL != ptCFG->Foreground.ptTile);
 
     memset(ptThis, 0, sizeof(ring_indication_t));
+
+    this.ptUserDirtyRegionItem = ptCFG->ptUserDirtyRegionItem;
 
     meter_pointer_cfg_t tCFG = {
         .tSpinZoom = {
@@ -101,6 +106,11 @@ void ring_indication_init( ring_indication_t *ptThis,
         .tPISliderCFG = ptCFG->tPISliderCFG,
 
     };
+
+    /* use external dirty region */
+    if (NULL != this.ptUserDirtyRegionItem) {
+        tCFG.tSpinZoom.ptScene = NULL;
+    }
 
     tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree 
         = fmodf(tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree, 360.0f);
@@ -164,6 +174,13 @@ void ring_indication_on_load( ring_indication_t *ptThis)
     assert(NULL != ptThis);
 
     meter_pointer_on_load(&this.tSector);
+
+    if (NULL != this.ptUserDirtyRegionItem) {
+        /* force to use minimal enclosure */
+        arm_2d_helper_dirty_region_item_force_to_use_minimal_enclosure(
+            this.ptUserDirtyRegionItem,
+            true);
+    }
 }
 
 
@@ -172,9 +189,12 @@ ARM_NONNULL(1)
 bool ring_indication_on_frame_start_f32(ring_indication_t *ptThis, 
                                         float fTargetValue)
 {
-    return meter_pointer_on_frame_start_f32(&this.tSector, 
+    bool bFinished = 
+        meter_pointer_on_frame_start_f32(   &this.tSector, 
                                             fTargetValue, 
                                             this.fSectorScale);
+
+    return bFinished;
 }
 
 ARM_NONNULL(1)
@@ -190,7 +210,7 @@ void ring_indication_on_frame_complete( ring_indication_t *ptThis)
     assert(NULL != ptThis);
     meter_pointer_on_frame_complete(&this.tSector);
 
-    this.fLastAngle = spin_zoom_widget_get_current_angle(
+    this.fLastAngle = spin_zoom_widget_get_actual_angle(
                         &this.tSector.use_as__spin_zoom_widget_t);
 }
 
@@ -264,6 +284,29 @@ void __ring_indication_draw_quadrant(   ring_indication_t *ptThis,
     }
 }
 
+static
+uint8_t __ring_indication_get_quadrant(float fAngle)
+{
+    fAngle = fmodf(fAngle, 360.0f);
+
+    uint_fast8_t chQuadrant;
+
+    if (fAngle >= 270.0f) {
+        /* Y- X+ */
+        chQuadrant = 3;
+    } else if (fAngle >= 180.0f) {
+        /* Y- X- */
+        chQuadrant = 2;
+    } else if (fAngle >=90.0f) {
+        /* Y+ X- */
+        chQuadrant = 1;
+    } else {
+        /* Y+ X+ */
+        chQuadrant = 0;
+    }
+
+    return chQuadrant;
+}
 
 ARM_NONNULL(1)
 void ring_indication_show(  ring_indication_t *ptThis,
@@ -298,27 +341,10 @@ void ring_indication_show(  ring_indication_t *ptThis,
                             .iHeight = this.iDiameter >> 1,
                         };
 
-                        float fCurrentAngle 
-                            = spin_zoom_widget_get_current_angle(
-                                &this.tSector.use_as__spin_zoom_widget_t);
-
-                        fCurrentAngle = fmodf(fCurrentAngle, 360.0f);
-
-                        uint_fast8_t chQuadrantIndex;
-
-                        if (fCurrentAngle >= 270.0f) {
-                            /* Y- X+ */
-                            chQuadrantIndex = 3;
-                        } else if (fCurrentAngle >= 180.0f) {
-                            /* Y- X- */
-                            chQuadrantIndex = 2;
-                        } else if (fCurrentAngle >=90.0f) {
-                            /* Y+ X- */
-                            chQuadrantIndex = 1;
-                        } else {
-                            /* Y+ X+ */
-                            chQuadrantIndex = 0;
-                        }
+                        uint_fast8_t chQuadrantIndex 
+                            = __ring_indication_get_quadrant(
+                                spin_zoom_widget_get_current_angle(
+                                    &this.tSector.use_as__spin_zoom_widget_t));
 
                         bool bIsSectorDrawn = false;
 
@@ -600,6 +626,129 @@ void ring_indication_show(  ring_indication_t *ptThis,
                                 }
                                 break;
                         }
+
+                        do {
+                            /* update user dirty region item with extra areas */
+                            if (NULL != this.ptUserDirtyRegionItem && bIsNewFrame) {
+
+                                float fCurrentAngle = spin_zoom_widget_get_actual_angle(
+                                                &this.tSector.use_as__spin_zoom_widget_t);
+
+                                uint8_t chCurrentQuadrant = __ring_indication_get_quadrant(fCurrentAngle);
+                                uint8_t chLastQuadrant = __ring_indication_get_quadrant(this.fLastAngle);
+
+                                if (chCurrentQuadrant == chLastQuadrant) {
+
+                                    if (this.bNeedAddExtraRegion) {
+                                        this.bNeedAddExtraRegion = false;
+
+                                        /* clear extra area*/
+                                        arm_2d_helper_dirty_region_item_set_extra_region(
+                                                this.ptUserDirtyRegionItem,
+                                                &__ring_indicator_panel,
+                                                NULL,
+                                                NULL);
+                                    }
+                                    break;
+                                }
+                                arm_2d_region_t tExtraRegion = {
+                                    .tSize = {1,1},
+                                };
+
+                                bool bFirstRegion = true;
+                                arm_2d_region_t tFinalExtraRegion = {
+                                    .tSize = {1,1},
+                                };
+
+                                static
+                                const arm_2d_location_t c_chQuadrantEndPointTable[2][4] = {
+                                    /* clockwise table */
+                                    [0] = {
+                                        { 0,  1},
+                                        {-1,  0},
+                                        { 0, -1},
+                                        { 1,  0},
+                                    },
+
+                                    /* anti-clockwise table */
+                                    [1] = {
+                                        { 1,  0},
+                                        { 0,  1},
+                                        {-1,  0},
+                                        { 0, -1},
+                                    },
+                                };
+
+                                int16_t iRadius = (this.iDiameter >> 1) + 1;
+
+                                if (fCurrentAngle > this.fLastAngle) {
+
+                                    if (chCurrentQuadrant < chLastQuadrant) {
+                                        chCurrentQuadrant += 4;
+                                    }
+
+                                    /* clockwise rotation */
+                                    while(chLastQuadrant < chCurrentQuadrant) {
+                                        
+                                        tExtraRegion.tLocation = c_chQuadrantEndPointTable[0][chLastQuadrant & 0x03];
+
+                                        tExtraRegion.tLocation.iX *= iRadius;
+                                        tExtraRegion.tLocation.iY *= iRadius;
+
+                                        tExtraRegion.tLocation.iX += (int16_t)tPivot.fX;
+                                        tExtraRegion.tLocation.iY += (int16_t)tPivot.fY;
+
+                                        if (!bFirstRegion) {
+                                            arm_2d_region_get_minimal_enclosure(&tExtraRegion, 
+                                                                                &tFinalExtraRegion,
+                                                                                &tFinalExtraRegion);
+                                        } else {
+                                            tFinalExtraRegion = tExtraRegion;
+                                            bFirstRegion = false;
+                                        }
+
+                                        chLastQuadrant++;
+                                    }
+
+                                } else if (fCurrentAngle < this.fLastAngle) {
+                                    /* anti-clockwise rotation */
+
+                                    if (chCurrentQuadrant > chLastQuadrant) {
+                                        chLastQuadrant += 4;
+                                    }
+
+                                    while(chLastQuadrant > chCurrentQuadrant) {
+                                        
+                                        tExtraRegion.tLocation = c_chQuadrantEndPointTable[1][chLastQuadrant & 0x03];
+
+                                        tExtraRegion.tLocation.iX *= iRadius;
+                                        tExtraRegion.tLocation.iY *= iRadius;
+
+                                        tExtraRegion.tLocation.iX += (int16_t)tPivot.fX;
+                                        tExtraRegion.tLocation.iY += (int16_t)tPivot.fY;
+
+                                        if (!bFirstRegion) {
+                                            arm_2d_region_get_minimal_enclosure(&tExtraRegion, 
+                                                                                &tFinalExtraRegion,
+                                                                                &tFinalExtraRegion);
+                                        } else {
+                                            tFinalExtraRegion = tExtraRegion;
+                                            bFirstRegion = false;
+                                        }
+                                        
+                                        chLastQuadrant--;
+                                    }
+                                }
+
+                                this.bNeedAddExtraRegion = true;
+
+                                arm_2d_helper_dirty_region_item_set_extra_region(
+                                            this.ptUserDirtyRegionItem,
+                                            &__ring_indicator_panel,
+                                            NULL,
+                                            &tFinalExtraRegion);
+                            }
+                        } while(0);
                     }
                 }
             }

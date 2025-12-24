@@ -4937,11 +4937,11 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
             }
             break;
         case DIRTY_REGION_HELPER_UPDATE_NEW_REGION:
-            __arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
-                                                NULL, 
-                                                &this.ptCurrent->tNewRegion,
-                                                DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
-                                                true);
+            __arm_2d_dynamic_dirty_region_update(   &this.tDirtyRegion,
+                                                    NULL, 
+                                                    &this.ptCurrent->tNewRegion,
+                                                    DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
+                                                    true);
             this.ptCurrent = this.ptCurrent->ptNext;                            /* move to next */
 
             break;

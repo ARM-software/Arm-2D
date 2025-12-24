@@ -126,8 +126,8 @@ static void __on_scene_ring_indicator_load(arm_2d_scene_t *ptScene)
     }
 #endif
 
-    ring_indication_on_load(&this.tIndicator);
     spin_zoom_widget_on_load(&this.tPointer);
+    ring_indication_on_load(&this.tIndicator);
 
     this.tPointer.tHelper.SourceReference.ptPoints = s_tReferencePoints;
     this.tPointer.tHelper.SourceReference.chCount = dimof(s_tReferencePoints);
@@ -197,12 +197,21 @@ static void __on_scene_ring_indicator_frame_start(arm_2d_scene_t *ptScene)
 
     do {
 
+    #if 1
         /* generate a new position every 2000 sec */
         if (arm_2d_helper_is_time_out(3000,  &this.lTimestamp[0])) {
             this.lTimestamp[0] = 0;
             srand(arm_2d_helper_get_system_timestamp());
             this.iTargetNumber = rand() % 1000;
         }
+    #else
+        int32_t nResult;
+        /* simulate a full battery charging/discharge cycle */
+        arm_2d_helper_time_cos_slider(0, 1000, 3000, 0, &nResult, &this.lTimestamp[0]);
+
+        this.iTargetNumber = nResult;
+
+    #endif
 
         ring_indication_on_frame_start(&this.tIndicator, this.iTargetNumber);
 
@@ -280,10 +289,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                     (__arm_2d_color_t){ GLCD_COLOR_LIGHT_GREY},
                                     64);
         #endif
+
             ARM_2D_OP_WAIT_ASYNC();
-
-
-
         }
 
         ring_indication_show(   &this.tIndicator, 
@@ -448,59 +455,6 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
     } while(0);
 #endif
 
-    /* initialize scan sector of the indicator*/
-    do {
-        extern const arm_2d_tile_t c_tileQuaterSectorMask;
-
-        ring_indication_cfg_t tCFG = {
-            .tIndication = {
-                .LowerLimit = {
-                    .fAngleInDegree = 134.0f,
-                    .nValue = 0,
-                },
-                .UpperLimit = {
-                    .fAngleInDegree = 45.0f,
-                    .nValue = 1000,
-                },
-                .Step = {
-                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
-                },
-            },
-        
-        #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI                      \
-         || (   (__GLCD_CFG_COLOUR_DEPTH__ == 32)                   \
-            &&  __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__)
-            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK,
-        #else
-            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK,
-        #endif
-            .QuarterSector = {
-                .fAngleOffset = 0.0f,
-                .ptMask = &c_tileQuaterSectorMask,
-                .tCentre = {
-                    .fX = 0.5f,
-                    .fY = (float)c_tileQuaterSectorMask.tRegion.tSize.iHeight - (2.0f + 0.5f),
-                },
-            },
-            .Foreground = {
-                .ptTile = &INDICATION_IMAGE,
-                .ptMask = &INDICATION_IMAGE_MASK,
-            },
-
-            .tPISliderCFG = {
-                .fProportion = 0.0300f,
-                .fIntegration = 0.0020f,
-                .nInterval = 10,
-            },
-
-            //.ptScene = (arm_2d_scene_t *)ptThis,
-        };
-
-        ring_indication_init(&this.tIndicator, &tCFG);
-
-        this.iTargetNumber = 0;
-    } while(0);
-
     do {
         int16_t iRadius = (float)c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth 
                         - (float)INDICATION_IMAGE.tRegion.tSize.iWidth / 2.0f
@@ -559,6 +513,63 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
          */
 
     } while(0);
+    
+    /* initialize scan sector of the indicator*/
+    do {
+        extern const arm_2d_tile_t c_tileQuaterSectorMask;
+
+        ring_indication_cfg_t tCFG = {
+            .tIndication = {
+                .LowerLimit = {
+                    .fAngleInDegree = 134.0f,
+                    .nValue = 0,
+                },
+                .UpperLimit = {
+                    .fAngleInDegree = 45.0f,
+                    .nValue = 1000,
+                },
+                .Step = {
+                    .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
+                },
+            },
+        
+        #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI                      \
+         || (   (__GLCD_CFG_COLOUR_DEPTH__ == 32)                   \
+            &&  __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__)
+            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK,
+        #else
+            .ptTransformMode = &SPIN_ZOOM_MODE_EXTRA_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK,
+        #endif
+            .QuarterSector = {
+                .fAngleOffset = 0.0f,
+                .ptMask = &c_tileQuaterSectorMask,
+                .tCentre = {
+                    .fX = 0.5f,
+                    .fY = (float)c_tileQuaterSectorMask.tRegion.tSize.iHeight - (2.0f + 0.5f),
+                },
+            },
+            .Foreground = {
+                .ptTile = &INDICATION_IMAGE,
+                .ptMask = &INDICATION_IMAGE_MASK,
+            },
+
+            .tPISliderCFG = {
+                .fProportion = 0.0300f,
+                .fIntegration = 0.0020f,
+                .nInterval = 10,
+            },
+
+            /* use external dirty region item */
+            .ptUserDirtyRegionItem = &this.tPointer.tHelper.tItem,
+
+            .ptScene = (arm_2d_scene_t *)ptThis,
+        };
+
+        ring_indication_init(&this.tIndicator, &tCFG);
+
+        this.iTargetNumber = 0;
+    } while(0);
+
     /* ------------   initialize members of user_scene_ring_indicator_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 

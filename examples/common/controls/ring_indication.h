@@ -73,6 +73,8 @@ typedef struct ring_indication_cfg_t {
 
     arm_2d_helper_pi_slider_cfg_t tPISliderCFG;
 
+    arm_2d_helper_dirty_region_item_t *ptUserDirtyRegionItem;
+
 } ring_indication_cfg_t;
 
 enum {
@@ -98,9 +100,11 @@ ARM_PRIVATE(
     float fLastAngle;
 
     int16_t iDiameter;
-    uint16_t u2StartFrom    : 2;
+    uint16_t u2StartFrom                            : 2;
+    uint16_t bNeedAddExtraRegion                    : 1;
 
     arm_2d_scene_t *ptScene;
+    arm_2d_helper_dirty_region_item_t *ptUserDirtyRegionItem;
 )
 } ring_indication_t;
 
