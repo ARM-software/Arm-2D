@@ -260,6 +260,26 @@ static void __before_scene_ring_indicator_switching_out(arm_2d_scene_t *ptScene)
 }
 
 static
+RING_INDICATION_USER_DRAW(__user_draw_pointer)
+{
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(ptPivot);
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    spin_zoom_widget_t *ptHelper = (spin_zoom_widget_t *)pTarget;
+
+    assert(NULL != ptHelper);
+
+    /* draw circle */
+    spin_zoom_widget_show(  ptHelper, 
+                            ptTile, 
+                            NULL, 
+                            ptPivot, 
+                            255);
+}
+
+static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
 {
     ARM_2D_PARAM(pTarget);
@@ -297,8 +317,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                 ptTile, 
                                 NULL,
                                 bIsNewFrame);
-
-        spin_zoom_widget_show(&this.tPointer, ptTile, NULL, NULL, 255);
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -561,6 +579,12 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
 
             /* use external dirty region item */
             .ptUserDirtyRegionItem = &this.tPointer.tHelper.tItem,
+
+            /* add a user defined draw handler to draw the pointer */
+            .evtUserDraw = {
+                .fnHandler = &__user_draw_pointer,
+                .pTarget = &this.tPointer,
+            },
 
             .ptScene = (arm_2d_scene_t *)ptThis,
         };

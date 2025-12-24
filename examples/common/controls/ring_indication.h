@@ -35,7 +35,6 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wpadded"
 #endif
 
-/*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
 #ifdef __RING_INDICATION_IMPLEMENT__
@@ -48,7 +47,31 @@ extern "C" {
 #include "arm_2d_utils.h"
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
+
+#define RING_INDICATION_USER_DRAW(__FUNCTION_NAME)                              \
+        void __FUNCTION_NAME(   void *pTarget,                                  \
+                                ring_indication_t *ptRingIndicator,             \
+                                const arm_2d_tile_t *ptTile,                    \
+                                arm_2d_point_float_t *ptPivot,                  \
+                                bool bIsNewFrame)
+
 /*============================ TYPES =========================================*/
+
+typedef struct ring_indication_t ring_indication_t;
+
+typedef void ring_indication_user_draw_evt_handler_t(void *pTarget, 
+                                                     ring_indication_t *ptRingIndicator,
+                                                     const arm_2d_tile_t *ptTile,
+                                                     arm_2d_point_float_t *ptPivot,
+                                                     bool bIsNewFrame);
+
+typedef struct ring_indication_user_draw_evt_t {
+    ring_indication_user_draw_evt_handler_t *fnHandler;
+    union {
+        void *pTarget;
+        uintptr_t nTarget;
+    };
+} ring_indication_user_draw_evt_t;
 
 typedef struct ring_indication_cfg_t {
     arm_2d_scene_t *ptScene;
@@ -75,6 +98,8 @@ typedef struct ring_indication_cfg_t {
 
     arm_2d_helper_dirty_region_item_t *ptUserDirtyRegionItem;
 
+    ring_indication_user_draw_evt_t evtUserDraw;
+
 } ring_indication_cfg_t;
 
 enum {
@@ -84,7 +109,9 @@ enum {
     RING_INDICATOR_START_FROM_X_PLUS,
 };
 
-typedef struct ring_indication_t {
+
+
+struct ring_indication_t {
 ARM_PRIVATE(
     meter_pointer_t tSector;
     struct {
@@ -105,8 +132,10 @@ ARM_PRIVATE(
 
     arm_2d_scene_t *ptScene;
     arm_2d_helper_dirty_region_item_t *ptUserDirtyRegionItem;
+
+    ring_indication_user_draw_evt_t evtUserDraw;
 )
-} ring_indication_t;
+};
 
 
 /*============================ GLOBAL VARIABLES ==============================*/

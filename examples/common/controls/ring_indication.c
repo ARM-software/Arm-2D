@@ -146,6 +146,8 @@ void ring_indication_init( ring_indication_t *ptThis,
     } else {
         this.u2StartFrom = RING_INDICATOR_START_FROM_X_PLUS;
     }
+
+    this.evtUserDraw = ptCFG->evtUserDraw;
 }
 
 ARM_NONNULL(1)
@@ -749,9 +751,29 @@ void ring_indication_show(  ring_indication_t *ptThis,
                                             &tFinalExtraRegion);
                             }
                         } while(0);
+
                     }
                 }
             }
+        
+
+            /* call user draw event handler */
+            do {
+                arm_2d_point_float_t tPivot = {
+                    .fX = (float)__centre_region.tLocation.iX 
+                        + (__centre_region.tSize.iWidth - 1) / 2.0f,
+                    .fY = (float)__centre_region.tLocation.iY 
+                        + (__centre_region.tSize.iHeight - 1) / 2.0f,
+                };
+
+                /* call user draw event handler */
+                ARM_2D_INVOKE_RT_VOID(this.evtUserDraw.fnHandler, 
+                    ARM_2D_PARAM(   this.evtUserDraw.pTarget, 
+                                    ptThis, 
+                                    &__visible_window,
+                                    &tPivot,
+                                    bIsNewFrame));
+            } while(0);
         }
     }
 
