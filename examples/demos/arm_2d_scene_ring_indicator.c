@@ -334,8 +334,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
                                 bIsNewFrame);
 
 
+        arm_lcd_text_force_char_use_same_width(true);
         /* draw 3 digits numbers */
         do {
+            
             /* 3 digits */
             arm_2d_size_t tTextSize 
                 = arm_lcd_printf_to_buffer(
@@ -381,6 +383,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
             }
             
         } while(0);
+        arm_lcd_text_force_char_use_same_width(false);
 
         /* draw text at the top-left corner */
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -550,7 +553,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
                 },
                 .UpperLimit = {
                     .fAngleInDegree = 45.0f + 360.0f,
-                    .nValue = 1000,
+                    .nValue = 999,
                 },
                 .Step = {
                     .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
@@ -608,7 +611,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
                 },
                 .UpperLimit = {
                     .fAngleInDegree = 45.0f,
-                    .nValue = 1000,
+                    .nValue = 999,
                 },
                 .Step = {
                     .fAngle = 0.0f,  //! 0.0f means very smooth, 1.0f looks like mech watches, 6.0f looks like wall clocks
