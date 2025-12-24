@@ -468,6 +468,13 @@ float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis)
     return this.tHelper.fAngle - this.Request.fAngleOffset;
 }
 
+ARM_NONNULL(1)
+float spin_zoom_widget_get_actual_angle(spin_zoom_widget_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.tHelper.fAngle;
+}
+
 static
 arm_fsm_rt_t __spin_zoom_widget_transform_mode_fill_colour_with_target_mask( 
                                             spin_zoom_widget_t *ptThis, 

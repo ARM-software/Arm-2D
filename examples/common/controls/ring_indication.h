@@ -95,6 +95,7 @@ ARM_PRIVATE(
     } Background;
 
     float fSectorScale;
+    float fLastAngle;
 
     int16_t iDiameter;
     uint16_t u2StartFrom    : 2;

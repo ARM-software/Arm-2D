@@ -298,9 +298,19 @@ extern
 ARM_NONNULL(1)
 float spin_zoom_valid_value(spin_zoom_widget_t *ptThis, float fValue);
 
+/*!
+ * \brief get the (nominal) angle (without the user configured offset)
+ */
 extern
 ARM_NONNULL(1)
 float spin_zoom_widget_get_current_angle(spin_zoom_widget_t *ptThis);
+
+/*!
+ * \brief get the actual angle
+ */
+extern
+ARM_NONNULL(1)
+float spin_zoom_widget_get_actual_angle(spin_zoom_widget_t *ptThis);
 
 extern
 ARM_NONNULL(1)

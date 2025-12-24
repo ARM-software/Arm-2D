@@ -166,14 +166,7 @@ void ring_indication_on_load( ring_indication_t *ptThis)
     meter_pointer_on_load(&this.tSector);
 }
 
-ARM_NONNULL(1)
-bool ring_indication_on_frame_start( ring_indication_t *ptThis, int32_t nValue)
-{
-    assert(NULL != ptThis);
-    return meter_pointer_on_frame_start(&this.tSector, 
-                                        nValue, 
-                                        this.fSectorScale);
-}
+
 
 ARM_NONNULL(1)
 bool ring_indication_on_frame_start_f32(ring_indication_t *ptThis, 
@@ -185,10 +178,20 @@ bool ring_indication_on_frame_start_f32(ring_indication_t *ptThis,
 }
 
 ARM_NONNULL(1)
+bool ring_indication_on_frame_start( ring_indication_t *ptThis, int32_t nValue)
+{
+    assert(NULL != ptThis);
+    return ring_indication_on_frame_start_f32(ptThis, (float)nValue);
+}
+
+ARM_NONNULL(1)
 void ring_indication_on_frame_complete( ring_indication_t *ptThis)
 {
     assert(NULL != ptThis);
     meter_pointer_on_frame_complete(&this.tSector);
+
+    this.fLastAngle = spin_zoom_widget_get_current_angle(
+                        &this.tSector.use_as__spin_zoom_widget_t);
 }
 
 __attribute__((noinline))

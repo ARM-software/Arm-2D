@@ -108,6 +108,11 @@ extern const arm_2d_tile_t c_tileWhiteDotMask;
 
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
+ARM_NOINIT
+static
+arm_2d_location_t s_tReferencePoints[4];
+
+
 /*============================ IMPLEMENTATION ================================*/
 
 static void __on_scene_ring_indicator_load(arm_2d_scene_t *ptScene)
@@ -123,6 +128,9 @@ static void __on_scene_ring_indicator_load(arm_2d_scene_t *ptScene)
 
     ring_indication_on_load(&this.tIndicator);
     spin_zoom_widget_on_load(&this.tPointer);
+
+    this.tPointer.tHelper.SourceReference.ptPoints = s_tReferencePoints;
+    this.tPointer.tHelper.SourceReference.chCount = dimof(s_tReferencePoints);
 
 }
 
@@ -198,9 +206,19 @@ static void __on_scene_ring_indicator_frame_start(arm_2d_scene_t *ptScene)
 
         ring_indication_on_frame_start(&this.tIndicator, this.iTargetNumber);
 
-        spin_zoom_widget_on_frame_start(&this.tPointer, 
-                                        ring_indication_get_current_value(&this.tIndicator), 
-                                        1.0f);
+        int32_t nCurrentValue = ring_indication_get_current_value(&this.tIndicator);
+        spin_zoom_widget_on_frame_start(&this.tPointer, nCurrentValue, 1.0f);
+
+    #if 0
+        spin_zoom_widget_set_colour(&this.tPointer,
+                                    arm_2d_pixel_from_brga8888( 
+                                            __arm_2d_helper_colour_slider(
+                                                __RGB32(0x00, 0xFF, 0x00),
+                                                __RGB32(0xFF, 0xFF, 0x00),
+                                                1000,
+                                                nCurrentValue)));
+    #endif
+
     } while(0);
 
 #if ARM_2D_DEMO_RING_INDICATOR_USE_QOI
@@ -264,12 +282,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ring_indicator_handler)
         #endif
             ARM_2D_OP_WAIT_ASYNC();
 
-            ring_indication_show(   &this.tIndicator, 
-                                    ptTile, 
-                                    &__centre_region,
-                                    bIsNewFrame);
+
 
         }
+
+        ring_indication_show(   &this.tIndicator, 
+                                ptTile, 
+                                NULL,
+                                bIsNewFrame);
 
         spin_zoom_widget_show(&this.tPointer, ptTile, NULL, NULL, 255);
 
@@ -473,7 +493,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
                 .nInterval = 10,
             },
 
-            .ptScene = (arm_2d_scene_t *)ptThis,
+            //.ptScene = (arm_2d_scene_t *)ptThis,
         };
 
         ring_indication_init(&this.tIndicator, &tCFG);
@@ -482,6 +502,10 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
     } while(0);
 
     do {
+        int16_t iPointerRadius = (float)c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth 
+                               - (float)INDICATION_IMAGE.tRegion.tSize.iWidth / 2.0f
+                               - 4;
+
         spin_zoom_widget_cfg_t tCFG = {
             .Indicator = {
                 .LowerLimit = {
@@ -501,9 +525,7 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
             .Source = {
                 .ptMask = &c_tileWhiteDotMiddleMask,
                 .tCentreFloat = {
-                    .fX = (float)c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth 
-                        - (float)INDICATION_IMAGE.tRegion.tSize.iWidth / 2.0f
-                        - 4,
+                    .fX = iPointerRadius,
                     .fY = (float)(c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight - 1) / 2.0f,
                 },
                 .tColourToFill = GLCD_COLOR_NIXIE_TUBE,
@@ -513,6 +535,29 @@ user_scene_ring_indicator_t *__arm_2d_scene_ring_indicator_init(
             .ptScene = (arm_2d_scene_t *)ptThis,
         };
         spin_zoom_widget_init(&this.tPointer, &tCFG);
+
+        s_tReferencePoints[0].iX = -30;
+        s_tReferencePoints[0].iY = 0;
+
+        s_tReferencePoints[1].iX = c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth - 1;
+        s_tReferencePoints[1].iY = 0;
+
+        s_tReferencePoints[2].iX = c_tileWhiteDotMiddleMask.tRegion.tSize.iWidth - 1;
+        s_tReferencePoints[2].iY = c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight - 1;
+
+        s_tReferencePoints[3].iX = -30;
+        s_tReferencePoints[3].iY = c_tileWhiteDotMiddleMask.tRegion.tSize.iHeight - 1;
+
+
+        /*
+         * NOTE: Reference Point
+         *
+         *           0     +-----1
+         *           +-----+ DOT |
+         *           3     +-----2
+         * 
+         */
+
     } while(0);
     /* ------------   initialize members of user_scene_ring_indicator_t end   ---------------*/
 
