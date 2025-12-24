@@ -24,7 +24,7 @@
  *               -target-mask
  *
  * $Date:        16 Dec 2025
- * $Revision:    v1.0.0
+ * $Revision:    v1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -66,6 +66,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wswitch-enum"
 #   pragma clang diagnostic ignored "-Wswitch"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
+#   pragma clang diagnostic ignored "-Wunused-variable"
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_suppress 174,177,188,68,513,144
 #endif
