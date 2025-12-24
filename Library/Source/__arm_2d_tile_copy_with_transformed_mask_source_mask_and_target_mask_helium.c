@@ -143,9 +143,14 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
-                                                    vldrbq_z_u16(pchTargetMask, predTail), 
-                                                    hwOpacity);
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(  
+                                    vHwPixelAlpha, 
+                                    vldrbq_z_u16(pchExtraSourceMask, predTail));
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  
+                                    vHwPixelAlpha, 
+                                    vldrbq_z_u16(pchTargetMask, predTail), 
+                                    hwOpacity);
 
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
@@ -154,7 +159,9 @@ void __MVE_WRAPPER(
 
     __arm_2d_rgb565_unpack(*phwExtraSource, &tSrcPix);
 
-    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, &tSrcPix, vhwTransparency);
+    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(   vTarget, 
+                                                                &tSrcPix, 
+                                                                vhwTransparency);
 
     /* select between target pixel, averaged pixed */
     vTarget = vpselq_u16(vBlended, vTarget, predGlb);
@@ -212,6 +219,8 @@ void __MVE_WRAPPER(
         return ;
     }
 #endif
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(  vHwPixelAlpha, 
+                                                vldrbq_u16(pchExtraSourceMask));
 
     vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
                                                     vldrbq_u16(pchTargetMask), 
