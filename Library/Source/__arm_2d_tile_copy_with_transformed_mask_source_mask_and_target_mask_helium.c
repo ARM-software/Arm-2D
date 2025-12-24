@@ -152,7 +152,7 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    uint16x8_t  vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    vHwPixelAlpha = vdupq_n_u16(256) - vHwPixelAlpha;
     uint16x8_t  vSource = vldrhq_z_u16(phwExtraSource, predTail);
 
     vst1q_p(phwTarget, 
@@ -220,7 +220,7 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    uint16x8_t  vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    vHwPixelAlpha = vdupq_n_u16(256) - vHwPixelAlpha;
     uint16x8_t  vSource = vldrhq_u16(phwExtraSource);
 
     vst1q(phwTarget, 
@@ -349,7 +349,8 @@ void __MVE_WRAPPER(
                 __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
-                    pchOrigin, iOrigStride,
+                    pchOrigin, 
+                    iOrigStride,
                     phwTargetLine,
                     pchTargetMaskLine,
                     pchExtraSourceMaskLine,
@@ -359,7 +360,8 @@ void __MVE_WRAPPER(
                 __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
-                    pchOrigin, iOrigStride,
+                    pchOrigin, 
+                    iOrigStride,
                     phwTargetLine,
                     pchTargetMaskLine,
                     pchExtraSourceMaskLine,
