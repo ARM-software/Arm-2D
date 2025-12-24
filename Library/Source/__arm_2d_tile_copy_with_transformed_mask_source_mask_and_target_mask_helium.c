@@ -313,7 +313,7 @@ void __MVE_WRAPPER(
                                         uint16_t *phwTarget,
                                         uint8_t *pchTargetMask,
                                         uint8_t *pchExtraSourceMask,
-                                        uint16_t *pwExtraSource,
+                                        uint32_t *pwExtraSource,
                                         uint_fast16_t hwOpacity)
 {
     uint16x8_t      vTarget = vld1q_u16(phwTarget);
@@ -569,7 +569,7 @@ void __MVE_WRAPPER(
                                                 .tDesMask
                                                     .iStride;
 
-    uint32_t        *pwExtraSourceBase = (uint16_t *)ptParam->tExtraSource.pBuffer;
+    uint32_t        *pwExtraSourceBase = (uint32_t *)ptParam->tExtraSource.pBuffer;
     int_fast16_t    iExtraSourceStride = ptParam->tExtraSource.iStride;
     uint8_t         *pchExtraSourceMaskBase = ptParam->tExtraSourceMask.pBuffer;
     int_fast16_t    iExtraSourceMaskStride = ptParam->tExtraSourceMask.iStride;
