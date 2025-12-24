@@ -288,7 +288,33 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    vHwPixelAlpha = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
+    __arm_2d_unpack_ccca8888_from_mem_z(pwExtraSource, 
+                                        &vSourceR,
+                                        &vSourceG,
+                                        &vSourceB, 
+                                        &vSourceA,
+                                        predTail);
+
+    /* mix vSourceA and vHwPixelAlpha */
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
+    uint16x8_t vTrans = vdupq_n_u16(256) - vHwPixelAlpha;
+
+    uint16x8_t vTargetR, vTargetG, vTargetB;
+    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+    vSourceR = vqaddq(vrmulhq(vSourceR, vHwPixelAlpha), vrmulhq(vTargetR, vTrans));
+    //vSourceR = vminq(vSourceR, vdupq_n_u16(255));
+    vSourceG = vqaddq(vrmulhq(vSourceG, vHwPixelAlpha), vrmulhq(vTargetG, vTrans));
+    //vSourceG = vminq(vSourceG, vdupq_n_u16(255));
+    vSourceB = vqaddq(vrmulhq(vSourceB, vHwPixelAlpha), vrmulhq(vTargetB, vTrans));
+    //vSourceB = vminq(vSourceB, vdupq_n_u16(255));
+
+    vst1q_p(phwTarget, 
+            vpselq_u16( __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB), 
+                        vTarget, 
+                        predGlb), 
+            predTail);
 
 #if 0
     uint16x8_t  vSource = vldrhq_z_u16(pwExtraSource, predTail);
@@ -360,16 +386,31 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    vHwPixelAlpha = vdupq_n_u16(256) - vHwPixelAlpha;
+    
+    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
+    __arm_2d_unpack_ccca8888_from_mem(  pwExtraSource, 
+                                        &vSourceR,
+                                        &vSourceG,
+                                        &vSourceB, 
+                                        &vSourceA);
 
+    /* mix vSourceA and vHwPixelAlpha */
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
+    uint16x8_t vTrans = vdupq_n_u16(256) - vHwPixelAlpha;
 
+    uint16x8_t vTargetR, vTargetG, vTargetB;
+    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
 
-#if 0
-    uint16x8_t  vSource = vldrhq_u16(pwExtraSource);
+    vSourceR = vqaddq(vrmulhq(vSourceR, vHwPixelAlpha), vrmulhq(vTargetR, vTrans));
+    //vSourceR = vminq(vSourceR, vdupq_n_u16(255));
+    vSourceG = vqaddq(vrmulhq(vSourceG, vHwPixelAlpha), vrmulhq(vTargetG, vTrans));
+    //vSourceG = vminq(vSourceG, vdupq_n_u16(255));
+    vSourceB = vqaddq(vrmulhq(vSourceB, vHwPixelAlpha), vrmulhq(vTargetB, vTrans));
+    //vSourceB = vminq(vSourceB, vdupq_n_u16(255));
 
-    vst1q(phwTarget, 
-          __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha));
-#endif
+    vst1q(  phwTarget, 
+            __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB));
+
 }
 
 

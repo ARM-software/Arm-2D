@@ -307,6 +307,30 @@ void __arm_2d_unpack_ccca8888_from_mem( const uint8_t * pMem,
 }
 
 /**
+  @brief         return 4 vector of 16-bit channels (8-bit widened) taken from a memory reference
+  @param[in]     pMem           pointer to packed 8-bit channel
+  @param[out]    R              vector of 16-bit widened R channel
+  @param[out]    G              vector of 16-bit widened G channel
+  @param[out]    B              vector of 16-bit widened B channel
+  @param[out]    A              vector of 16-bit widened A channel
+ */
+__STATIC_FORCEINLINE
+void __arm_2d_unpack_ccca8888_from_mem_z(   const uint8_t * pMem, 
+                                            uint16x8_t * R,
+                                            uint16x8_t * G, 
+                                            uint16x8_t * B,
+                                            uint16x8_t * A,
+                                            mve_pred16_t p)
+{
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+
+    *B = vldrbq_gather_offset_z_u16(pMem, sg, p);
+    *G = vldrbq_gather_offset_z_u16(pMem + 1, sg, p);
+    *R = vldrbq_gather_offset_z_u16(pMem + 2, sg, p);
+    *A = vldrbq_gather_offset_z_u16(pMem + 3, sg, p);
+}
+
+/**
   @brief         interleave 3 x 16-bit widened vectors into 8-bit memory reference
                  (4th channel untouched)
   @param[in]     pMem           pointer to packed 8-bit channel
@@ -323,6 +347,18 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
     vstrbq_scatter_offset_u16(pMem + 1, sg, vminq(G, vdupq_n_u16(255)));
     vstrbq_scatter_offset_u16(pMem + 2, sg, vminq(R, vdupq_n_u16(255)));
     //vstrbq_scatter_offset_u16(pMem + 3, sg, vdupq_n_u16(0));
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_mask(   uint16x8_t vPixelAlpha, /* will become 0 ~ 256 */
+                                        uint16x8_t vMask)       /* input range 0 ~ 255 */
+{
+    /* vPixelAlpha: 0~256 */
+    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
+
+    /* vSrcMask: 0~255 */
+    vPixelAlpha = vmulq(vPixelAlpha, vMask) >> 8;
+    return vPixelAlpha;
 }
 
 __STATIC_FORCEINLINE
