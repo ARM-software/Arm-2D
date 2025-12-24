@@ -137,10 +137,12 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    __arm_2d_scale_alpha_masks_n_opa(   vHwPixelAlpha, 
-                                        vldrbq_z_u16(pchExtraSourceMask, predTail),
-                                        vldrbq_z_u16(pchTargetMask, predTail),
-                                        hwOpacity);
+    vHwPixelAlpha = 
+        __arm_2d_scale_alpha_masks_n_opa(   
+                                    vHwPixelAlpha, 
+                                    vldrbq_z_u16(pchExtraSourceMask, predTail),
+                                    vldrbq_z_u16(pchTargetMask, predTail),
+                                    hwOpacity);
 
 
 #if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
@@ -150,20 +152,15 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
-    uint16x8_t      vBlended;
-    __arm_2d_color_fast_rgb_t tSrcPix;
+    uint16x8_t  vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t  vSource = vldrhq_z_u16(phwExtraSource, predTail);
 
-    __arm_2d_rgb565_unpack(*phwExtraSource, &tSrcPix);
+    vst1q_p(phwTarget, 
+            vpselq_u16( __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha), 
+                        vTarget, 
+                        predGlb), 
+            predTail);
 
-    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(   vTarget, 
-                                                                &tSrcPix, 
-                                                                vhwTransparency);
-
-    /* select between target pixel, averaged pixed */
-    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
-
-    vst1q_p(phwTarget, vTarget, predTail);
 }
 
 __STATIC_INLINE
@@ -223,17 +220,11 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
-    uint16x8_t      vBlended;
-    __arm_2d_color_fast_rgb_t tSrcPix;
+    uint16x8_t  vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t  vSource = vldrhq_u16(phwExtraSource);
 
-    __arm_2d_rgb565_unpack(*phwExtraSource, &tSrcPix);
-
-    vBlended = __arm_2d_rgb565_blending_single_vec_with_scal(vTarget, 
-                                                             &tSrcPix, 
-                                                             vhwTransparency);
-
-    vst1q(phwTarget, vBlended);
+    vst1q(phwTarget, 
+          __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha));
 }
 
 
