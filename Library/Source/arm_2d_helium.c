@@ -284,6 +284,29 @@ void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem, uint16x8_t * R, uint1
 }
 
 /**
+  @brief         return 4 vector of 16-bit channels (8-bit widened) taken from a memory reference
+  @param[in]     pMem           pointer to packed 8-bit channel
+  @param[out]    R              vector of 16-bit widened R channel
+  @param[out]    G              vector of 16-bit widened G channel
+  @param[out]    B              vector of 16-bit widened B channel
+  @param[out]    A              vector of 16-bit widened A channel
+ */
+__STATIC_FORCEINLINE
+void __arm_2d_unpack_ccca8888_from_mem( const uint8_t * pMem, 
+                                        uint16x8_t * R,
+                                        uint16x8_t * G, 
+                                        uint16x8_t * B,
+                                        uint16x8_t * A)
+{
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+
+    *B = vldrbq_gather_offset_u16(pMem, sg);
+    *G = vldrbq_gather_offset_u16(pMem + 1, sg);
+    *R = vldrbq_gather_offset_u16(pMem + 2, sg);
+    *A = vldrbq_gather_offset_u16(pMem + 3, sg);
+}
+
+/**
   @brief         interleave 3 x 16-bit widened vectors into 8-bit memory reference
                  (4th channel untouched)
   @param[in]     pMem           pointer to packed 8-bit channel

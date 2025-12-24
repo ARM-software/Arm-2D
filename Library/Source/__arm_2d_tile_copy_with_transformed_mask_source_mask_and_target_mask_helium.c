@@ -86,7 +86,6 @@ extern "C"
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-
 /*----------------------------------------------------------------------------*
  * RGB565                                                                     *
  *----------------------------------------------------------------------------*/
@@ -226,6 +225,154 @@ void __MVE_WRAPPER(
     vst1q(phwTarget, 
           __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha));
 }
+
+
+__STATIC_INLINE
+void __MVE_WRAPPER( 
+    __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity_process_point )
+                                                    (ARM_2D_POINT_VEC * ptPoint,
+                                                     arm_2d_region_t * ptOrigValidRegion,
+                                                     uint8_t * pchOrigin,
+                                                     int16_t iOrigStride,
+                                                     uint16_t *phwTarget,
+                                                     uint8_t *pchTargetMask,
+                                                     uint8_t *pchExtraSourceMask,
+                                                     uint32_t *pwExtraSource,
+                                                     uint_fast16_t hwOpacity, 
+                                                     uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    uint16x8_t      vTarget = vld1q_z_u16(phwTarget, predTail);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    mve_pred16_t    predGlb = 0;
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA(ptPoint, vXi, vYi, pchOrigin,
+                                               ptOrigValidRegion, iOrigStride,
+                                               predTail, predGlb, vAvgPixel);
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                             iOrigStride, predTail,
+                                             vHwPixelAlpha, predGlb);
+    }
+#endif
+
+    vHwPixelAlpha = 
+        __arm_2d_scale_alpha_masks_n_opa(   
+                                    vHwPixelAlpha, 
+                                    vldrbq_z_u16(pchExtraSourceMask, predTail),
+                                    vldrbq_z_u16(pchTargetMask, predTail),
+                                    hwOpacity);
+
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_m_n_u16(vHwPixelAlpha, 0, predTail)) {
+        return ;
+    }
+#endif
+
+    /* blending */
+    vHwPixelAlpha = vdupq_n_u16(256) - vHwPixelAlpha;
+
+#if 0
+    uint16x8_t  vSource = vldrhq_z_u16(pwExtraSource, predTail);
+
+
+    vst1q_p(phwTarget, 
+            vpselq_u16( __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha), 
+                        vTarget, 
+                        predGlb), 
+            predTail);
+#endif
+
+}
+
+__STATIC_INLINE
+void __MVE_WRAPPER( 
+    __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src )(
+                                        ARM_2D_POINT_VEC * ptPoint,
+                                        arm_2d_region_t * ptOrigValidRegion,
+                                        uint8_t *pchOrigin,
+                                        int16_t iOrigStride,
+                                        uint16_t *phwTarget,
+                                        uint8_t *pchTargetMask,
+                                        uint8_t *pchExtraSourceMask,
+                                        uint16_t *pwExtraSource,
+                                        uint_fast16_t hwOpacity)
+{
+    uint16x8_t      vTarget = vld1q_u16(phwTarget);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA_INSIDE_SRC(  
+                                                ptPoint, vXi, vYi, pchOrigin,
+                                                ptOrigValidRegion, iOrigStride,
+                                                vAvgPixel);
+
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_INSIDE_SRC(
+                                        vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                        iOrigStride,
+                                        vHwPixelAlpha);
+    }
+#endif
+    vHwPixelAlpha = 
+        __arm_2d_scale_alpha_masks_n_opa(   vHwPixelAlpha, 
+                                            vldrbq_u16(pchExtraSourceMask),
+                                            vldrbq_u16(pchTargetMask),
+                                            hwOpacity);
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_n_u16(vHwPixelAlpha, 0)) {
+        return ;
+    }
+#endif
+
+    /* blending */
+    vHwPixelAlpha = vdupq_n_u16(256) - vHwPixelAlpha;
+
+
+
+#if 0
+    uint16x8_t  vSource = vldrhq_u16(pwExtraSource);
+
+    vst1q(phwTarget, 
+          __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha));
+#endif
+}
+
+
 
 
 __OVERRIDE_WEAK
@@ -385,6 +532,167 @@ void __MVE_WRAPPER(
         pchExtraSourceMaskBase  += iExtraSourceMaskStride;
     }
 }
+
+
+__OVERRIDE_WEAK
+void __MVE_WRAPPER(
+    __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity)(
+                                            __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                            __arm_2d_transform_info_t *ptInfo,
+                                            uint_fast16_t hwOpacity)
+
+{
+    __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .use_as____arm_2d_param_copy_t;
+    
+    int_fast16_t    iHeight = ptParamCopy->tCopySize.iHeight;
+    int_fast16_t    iWidth = ptParamCopy->tCopySize.iWidth;
+    int_fast16_t    iTargetStride = ptParamCopy->tTarget.iStride;
+    uint16_t        *phwTargetBase = ptParamCopy->tTarget.pBuffer;
+
+    uint8_t         *pchOrigin = (uint8_t *)
+                                    ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .pBuffer;
+
+    int_fast16_t    iOrigStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                        .use_as____arm_2d_param_copy_orig_t
+                                            .tOrigin
+                                                .iStride;
+    uint8_t         *pchTargetMaskBase = (uint8_t *)
+                                            ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .pBuffer;
+    int_fast16_t    iTargetMaskStride = ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                                .tDesMask
+                                                    .iStride;
+
+    uint32_t        *pwExtraSourceBase = (uint16_t *)ptParam->tExtraSource.pBuffer;
+    int_fast16_t    iExtraSourceStride = ptParam->tExtraSource.iStride;
+    uint8_t         *pchExtraSourceMaskBase = ptParam->tExtraSourceMask.pBuffer;
+    int_fast16_t    iExtraSourceMaskStride = ptParam->tExtraSourceMask.iStride;
+
+    float               fAngle = -ptInfo->fAngle;
+    arm_2d_location_t   tOffset = ptParamCopy->tSource.tValidRegion.tLocation;
+    
+    arm_2d_region_t *ptOriginValidRegion = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
+                                            .use_as____arm_2d_param_copy_orig_t
+                                                .tOrigin
+                                                    .tValidRegion;
+    hwOpacity += (hwOpacity == 255);
+
+    q31_t  invIWidth = iWidth > 1 ? 0x7fffffff / (iWidth - 1) : 0x7fffffff;
+    arm_2d_rot_linear_regr_t regrCoefs[2];
+    arm_2d_location_t   SrcPt = ptInfo->tDummySourceOffset;
+
+    /* get regression parameters over 1st and last column */
+
+    __arm_2d_transform_regression(
+        &ptParamCopy->tCopySize,
+        &SrcPt,
+        fAngle,
+        ptInfo->fScaleX,
+        ptInfo->fScaleY,
+        &tOffset,
+        &(ptInfo->tCenter),
+        iOrigStride,
+        regrCoefs);
+
+    /* slopes between 1st and last columns */
+    int32_t         slopeY, slopeX;
+
+    slopeY = MULTFX((regrCoefs[1].interceptY - regrCoefs[0].interceptY), invIWidth);
+    slopeX = MULTFX((regrCoefs[1].interceptX - regrCoefs[0].interceptX), invIWidth);
+
+    int32_t         nrmSlopeX = 17 - __CLZ(ABS(slopeX));
+    int32_t         nrmSlopeY = 17 - __CLZ(ABS(slopeY));
+
+    slopeX = ARSHIFT(slopeX, nrmSlopeX);
+    slopeY = ARSHIFT(slopeY, nrmSlopeY);
+
+    for (int32_t y = 0; y < iHeight; y++) {
+
+        /* 1st column estimates */
+        int32_t         colFirstY =
+            __QADD((regrCoefs[0].slopeY * y), regrCoefs[0].interceptY);
+        int32_t         colFirstX =
+            __QADD((regrCoefs[0].slopeX * y), regrCoefs[0].interceptX);
+
+        /* Q6 conversion */
+        colFirstX = colFirstX >> 10;
+        colFirstY = colFirstY >> 10;
+
+        int32_t nbVecElts = iWidth;
+        int16x8_t vX = (int16x8_t)vidupq_n_u16(0, 1);
+        uint16_t *phwTargetLine = phwTargetBase;
+        uint8_t *pchTargetMaskLine = pchTargetMaskBase;
+        uint32_t *pwExtraSourceLine = pwExtraSourceBase;
+        uint8_t *pchExtraSourceMaskLine = pchExtraSourceMaskBase;
+
+        /* Q9.6 coversion */
+        vX = SET_Q6INT(vX);
+
+        while (nbVecElts > 0) {
+
+            arm_2d_point_s16x8_t tPointV, tPointTemp;
+
+            tPointV.X = vqdmulhq_n_s16(vX, slopeX);
+            tPointV.X = vaddq_n_s16(vqrshlq_n_s16(tPointV.X, nrmSlopeX), colFirstX);
+
+            tPointV.Y = vqdmulhq_n_s16(vX, slopeY);
+            tPointV.Y = vaddq_n_s16(vqrshlq_n_s16(tPointV.Y, nrmSlopeY), colFirstY);
+
+            tPointTemp.X = tPointV.X >> 6;
+            tPointTemp.Y = tPointV.Y >> 6;
+            mve_pred16_t p = arm_2d_is_point_vec_inside_region_s16_safe(
+                                                            ptOriginValidRegion,
+                                                            &tPointTemp);
+            p &= vctp16q(nbVecElts);
+
+            if (0xFFFF == p) {
+                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
+                    &tPointV,
+                    ptOriginValidRegion,
+                    pchOrigin, 
+                    iOrigStride,
+                    phwTargetLine,
+                    pchTargetMaskLine,
+                    pchExtraSourceMaskLine,
+                    pwExtraSourceLine,
+                    hwOpacity);
+            } else if (0 != p) {
+                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
+                    &tPointV,
+                    ptOriginValidRegion,
+                    pchOrigin, 
+                    iOrigStride,
+                    phwTargetLine,
+                    pchTargetMaskLine,
+                    pchExtraSourceMaskLine,
+                    pwExtraSourceLine,
+                    hwOpacity,
+                    nbVecElts);
+            }
+
+            phwTargetLine += 8;
+            pchTargetMaskLine += 8;
+            pwExtraSourceLine += 8;
+            pchExtraSourceMaskLine += 8;
+
+            vX += SET_Q6INT(8);
+            nbVecElts -= 8;
+        }
+
+        phwTargetBase           += iTargetStride;
+        pchTargetMaskBase       += iTargetMaskStride;
+        pwExtraSourceBase       += iExtraSourceStride;
+        pchExtraSourceMaskBase  += iExtraSourceMaskStride;
+    }
+}
+
+
 
 
 #ifdef __cplusplus
