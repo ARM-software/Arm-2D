@@ -137,20 +137,22 @@ void __MVE_WRAPPER(
     }
 #endif
 
-#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
-    if (0 == vcmpneq_m_n_u16(vHwPixelAlpha, 0, predTail)) {
-        return ;
-    }
-#endif
+
 
     vHwPixelAlpha = __arm_2d_scale_alpha_mask(  
                                     vHwPixelAlpha, 
                                     vldrbq_z_u16(pchExtraSourceMask, predTail));
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  
                                     vHwPixelAlpha, 
                                     vldrbq_z_u16(pchTargetMask, predTail), 
                                     hwOpacity);
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_m_n_u16(vHwPixelAlpha, 0, predTail)) {
+        return ;
+    }
+#endif
 
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
@@ -214,17 +216,19 @@ void __MVE_WRAPPER(
     }
 #endif
 
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(  vHwPixelAlpha, 
+                                                vldrbq_u16(pchExtraSourceMask));
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
+                                                    vldrbq_u16(pchTargetMask), 
+                                                    hwOpacity);
+
 #if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     if (0 == vcmpneq_n_u16(vHwPixelAlpha, 0)) {
         return ;
     }
 #endif
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask(  vHwPixelAlpha, 
-                                                vldrbq_u16(pchExtraSourceMask));
-
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
-                                                    vldrbq_u16(pchTargetMask), 
-                                                    hwOpacity);
 
     /* blending */
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;

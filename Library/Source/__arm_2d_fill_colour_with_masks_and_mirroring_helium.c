@@ -159,7 +159,7 @@ void __MVE_WRAPPER(__arm_2d_impl_gray8_colour_filling_with_masks_and_opacity_onl
 
             uint16x8_t      vHwAlpha = vldrbq_z_u16(pchMask, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -267,7 +267,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_x_mirror_and_o
 
             uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -375,7 +375,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_y_mirror_and_o
 
             uint16x8_t      vHwAlpha = vldrbq_z_u16(pchMask, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -487,7 +487,7 @@ void __MVE_WRAPPER( __arm_2d_impl_gray8_colour_filling_with_masks_xy_mirror_and_
 
             uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -602,7 +602,7 @@ void __MVE_WRAPPER(__arm_2d_impl_rgb565_colour_filling_with_masks_and_opacity_on
 
             uint16x8_t      vHwAlpha = vldrbq_z_u16(pchMask, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -718,7 +718,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_x_mirror_and_
 
             uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -830,7 +830,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_y_mirror_and_
 
             uint16x8_t      vHwAlpha = vldrbq_z_u16(pchMask, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -948,7 +948,7 @@ void __MVE_WRAPPER( __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and
 
             uint16x8_t      vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, mskIdxWrp, tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_z_u16(pchTargetMaskLine, tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -1078,7 +1078,7 @@ void __MVE_WRAPPER(__arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_o
              */
             uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f & tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_gather_offset_z_u16(pchTargetMaskLine, offset, 0x3f3f & tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -1208,7 +1208,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and
              */
             uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_gather_offset_z_u16(pchTargetMaskLine, offset_normal, 0x3f3f & tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -1337,7 +1337,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and
              */
             uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offset, 0x3f3f & tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_gather_offset_z_u16(pchTargetMaskLine, offset, 0x3f3f & tailPred), 
                             vHwAlpha,
                             hwOpacity);
@@ -1467,7 +1467,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_an
              */
             uint16x8_t vHwAlpha = vldrbq_gather_offset_z_u16(pchMask, offsetCur, 0x3f3f & tailPred);
 
-            vHwAlpha = __arm_2d_scale_alpha_mask_opa(
+            vHwAlpha = __arm_2d_scale_alpha_mask_n_opa(
                             vldrbq_gather_offset_z_u16(pchTargetMaskLine, offset_normal, 0x3f3f & tailPred), 
                             vHwAlpha,
                             hwOpacity);

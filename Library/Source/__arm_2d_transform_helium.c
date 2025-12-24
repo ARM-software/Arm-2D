@@ -2326,7 +2326,7 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
                                                     vldrbq_z_u16(pchTargetMask, predTail), 
                                                     hwOpacity);
 
@@ -2386,7 +2386,7 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
                                                     vldrbq_u16(pchTargetMask), 
                                                     hwOpacity);
 
@@ -2710,7 +2710,7 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
                                                     vldrbq_z_u16(pchTargetMask, predTail), 
                                                     hwOpacity);
 
@@ -2779,7 +2779,7 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
                                                     vldrbq_u16(pchTargetMask), 
                                                     hwOpacity);
 
@@ -3173,7 +3173,7 @@ void __MVE_WRAPPER(
     }
 #endif
 
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
                                                     vldrbq_z_u16(pchTargetMask, predTail), 
                                                     hwOpacity);
 
@@ -3270,7 +3270,7 @@ void __MVE_WRAPPER(
         return ;
     }
 #endif
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask_opa(  vHwPixelAlpha, 
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask_n_opa(  vHwPixelAlpha, 
                                                     vldrbq_u16(pchTargetMask), 
                                                     hwOpacity);
 
