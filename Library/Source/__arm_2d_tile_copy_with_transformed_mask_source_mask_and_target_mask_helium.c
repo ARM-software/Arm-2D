@@ -8531,7 +8531,7 @@ void __MVE_WRAPPER(
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(
-    __arm_2d_impl_gray8_tile_copy_with_transformed_mask{{variants_name}})(
+    __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
@@ -8646,7 +8646,7 @@ void __MVE_WRAPPER(
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_gray8_tile_copy_with_transformed_mask{{variants_name}}_process_point_inside_src(
+                __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -8657,7 +8657,7 @@ void __MVE_WRAPPER(
                     pchExtraSourceLine,
                     hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_gray8_tile_copy_with_transformed_mask{{variants_name}}_process_point(
+                __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -8688,7 +8688,7 @@ void __MVE_WRAPPER(
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(
-    __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask{{variants_name}})(
+    __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
@@ -8803,7 +8803,7 @@ void __MVE_WRAPPER(
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask{{variants_name}}_process_point_inside_src(
+                __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -8814,7 +8814,7 @@ void __MVE_WRAPPER(
                     pwExtraSourceLine,
                     hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask{{variants_name}}_process_point(
+                __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -10891,7 +10891,7 @@ void __MVE_WRAPPER(
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(
-    __arm_2d_impl_rgb565_tile_copy_with_transformed_mask{{variants_name}})(
+    __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
@@ -11006,7 +11006,7 @@ void __MVE_WRAPPER(
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_rgb565_tile_copy_with_transformed_mask{{variants_name}}_process_point_inside_src(
+                __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -11017,7 +11017,7 @@ void __MVE_WRAPPER(
                     phwExtraSourceLine,
                     hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_rgb565_tile_copy_with_transformed_mask{{variants_name}}_process_point(
+                __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -11048,7 +11048,7 @@ void __MVE_WRAPPER(
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(
-    __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask{{variants_name}})(
+    __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
@@ -11163,7 +11163,7 @@ void __MVE_WRAPPER(
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask{{variants_name}}_process_point_inside_src(
+                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -11174,7 +11174,7 @@ void __MVE_WRAPPER(
                     pwExtraSourceLine,
                     hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask{{variants_name}}_process_point(
+                __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -13251,7 +13251,7 @@ void __MVE_WRAPPER(
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(
-    __arm_2d_impl_cccn888_tile_copy_with_transformed_mask{{variants_name}})(
+    __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
@@ -13366,7 +13366,7 @@ void __MVE_WRAPPER(
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_cccn888_tile_copy_with_transformed_mask{{variants_name}}_process_point_inside_src(
+                __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -13377,7 +13377,7 @@ void __MVE_WRAPPER(
                     pwExtraSourceLine,
                     hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_cccn888_tile_copy_with_transformed_mask{{variants_name}}_process_point(
+                __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -13408,7 +13408,7 @@ void __MVE_WRAPPER(
 
 __OVERRIDE_WEAK
 void __MVE_WRAPPER(
-    __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask{{variants_name}})(
+    __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
                                             __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
@@ -13523,7 +13523,7 @@ void __MVE_WRAPPER(
             p &= vctp16q(nbVecElts);
 
             if (0xFFFF == p) {
-                __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask{{variants_name}}_process_point_inside_src(
+                __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
@@ -13534,7 +13534,7 @@ void __MVE_WRAPPER(
                     pwExtraSourceLine,
                     hwOpacity);
             } else if (0 != p) {
-                __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask{{variants_name}}_process_point(
+                __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_mask_and_opacity_process_point(
                     &tPointV,
                     ptOriginValidRegion,
                     pchOrigin, 
