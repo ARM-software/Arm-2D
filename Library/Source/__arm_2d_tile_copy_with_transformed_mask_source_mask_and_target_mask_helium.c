@@ -303,29 +303,15 @@ void __MVE_WRAPPER(
     uint16x8_t vTargetR, vTargetG, vTargetB;
     __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
 
-    vSourceR = vqaddq(vrmulhq(vSourceR, vHwPixelAlpha), vrmulhq(vTargetR, vTrans));
-    //vSourceR = vminq(vSourceR, vdupq_n_u16(255));
-    vSourceG = vqaddq(vrmulhq(vSourceG, vHwPixelAlpha), vrmulhq(vTargetG, vTrans));
-    //vSourceG = vminq(vSourceG, vdupq_n_u16(255));
-    vSourceB = vqaddq(vrmulhq(vSourceB, vHwPixelAlpha), vrmulhq(vTargetB, vTrans));
-    //vSourceB = vminq(vSourceB, vdupq_n_u16(255));
+    vSourceR = (vSourceR * vHwPixelAlpha + vTargetR * vTrans) >> 8;
+    vSourceG = (vSourceG * vHwPixelAlpha + vTargetG * vTrans) >> 8;
+    vSourceB = (vSourceB * vHwPixelAlpha + vTargetB * vTrans) >> 8;
 
     vst1q_p(phwTarget, 
             vpselq_u16( __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB), 
                         vTarget, 
                         predGlb), 
             predTail);
-
-#if 0
-    uint16x8_t  vSource = vldrhq_z_u16(pwExtraSource, predTail);
-
-
-    vst1q_p(phwTarget, 
-            vpselq_u16( __arm_2d_vblend_rgb565(vTarget, vSource, vHwPixelAlpha), 
-                        vTarget, 
-                        predGlb), 
-            predTail);
-#endif
 
 }
 
@@ -401,12 +387,9 @@ void __MVE_WRAPPER(
     uint16x8_t vTargetR, vTargetG, vTargetB;
     __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
 
-    vSourceR = vqaddq(vrmulhq(vSourceR, vHwPixelAlpha), vrmulhq(vTargetR, vTrans));
-    //vSourceR = vminq(vSourceR, vdupq_n_u16(255));
-    vSourceG = vqaddq(vrmulhq(vSourceG, vHwPixelAlpha), vrmulhq(vTargetG, vTrans));
-    //vSourceG = vminq(vSourceG, vdupq_n_u16(255));
-    vSourceB = vqaddq(vrmulhq(vSourceB, vHwPixelAlpha), vrmulhq(vTargetB, vTrans));
-    //vSourceB = vminq(vSourceB, vdupq_n_u16(255));
+    vSourceR = (vSourceR * vHwPixelAlpha + vTargetR * vTrans) >> 8;
+    vSourceG = (vSourceG * vHwPixelAlpha + vTargetG * vTrans) >> 8;
+    vSourceB = (vSourceB * vHwPixelAlpha + vTargetB * vTrans) >> 8;
 
     vst1q(  phwTarget, 
             __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB));

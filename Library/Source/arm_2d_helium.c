@@ -292,14 +292,14 @@ void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem, uint16x8_t * R, uint1
   @param[out]    A              vector of 16-bit widened A channel
  */
 __STATIC_FORCEINLINE
-void __arm_2d_unpack_ccca8888_from_mem( const uint8_t * pMem, 
+void __arm_2d_unpack_ccca8888_from_mem( const uint32_t *pwPixel, 
                                         uint16x8_t * R,
                                         uint16x8_t * G, 
                                         uint16x8_t * B,
                                         uint16x8_t * A)
 {
     uint16x8_t      sg = vidupq_n_u16(0, 4);
-
+    const uint8_t * pMem = (uint8_t *)pwPixel;
     *B = vldrbq_gather_offset_u16(pMem, sg);
     *G = vldrbq_gather_offset_u16(pMem + 1, sg);
     *R = vldrbq_gather_offset_u16(pMem + 2, sg);
@@ -315,7 +315,7 @@ void __arm_2d_unpack_ccca8888_from_mem( const uint8_t * pMem,
   @param[out]    A              vector of 16-bit widened A channel
  */
 __STATIC_FORCEINLINE
-void __arm_2d_unpack_ccca8888_from_mem_z(   const uint8_t * pMem, 
+void __arm_2d_unpack_ccca8888_from_mem_z(   const uint32_t *pwPixel, 
                                             uint16x8_t * R,
                                             uint16x8_t * G, 
                                             uint16x8_t * B,
@@ -323,7 +323,7 @@ void __arm_2d_unpack_ccca8888_from_mem_z(   const uint8_t * pMem,
                                             mve_pred16_t p)
 {
     uint16x8_t      sg = vidupq_n_u16(0, 4);
-
+    const uint8_t * pMem = (uint8_t *)pwPixel;
     *B = vldrbq_gather_offset_z_u16(pMem, sg, p);
     *G = vldrbq_gather_offset_z_u16(pMem + 1, sg, p);
     *R = vldrbq_gather_offset_z_u16(pMem + 2, sg, p);
@@ -428,14 +428,6 @@ uint16x8_t __arm_2d_scale_alpha_masks_n_opa(uint16x8_t vPixelAlpha,     /* vPixe
     return vPixelAlpha;
 }
 
-
-__STATIC_FORCEINLINE
-uint16x8_t __arm_2d_scale_alpha_mask(uint16x8_t vPixelAlpha, uint16x8_t vSrcMask)
-{
-    vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
-    vPixelAlpha = vmulq(vPixelAlpha, vSrcMask) >> 8;
-    return vPixelAlpha;
-}
 
 /*---------------------------------------------------------------------------*
  * CCCA8888 pixel blend to GRAY8                                             *
