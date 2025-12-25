@@ -22,7 +22,7 @@
  * Description:  Acceleration extensions using Helium.
  *
  * $Date:        24. Dec 2025
- * $Revision:    V.1.9.0
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores with Helium
  *
@@ -2058,6 +2058,115 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
     vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 2, sg,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
 }
+
+__STATIC_INLINE
+void __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask_p(
+                                                    uint32_t * pwSource,
+                                                    uint32_t * pwTarget,
+                                                    uint16x8_t vHwPixelAlpha,
+                                                    mve_pred16_t predTail,
+                                                    mve_pred16_t predGlb)
+{
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    //mve_pred16_t    predGlb = 0;
+
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t      vBlendedR, vBlendedG, vBlendedB, vBlendedA;
+    /* get vectors of 8 x R, G, B pix */
+    __arm_2d_unpack_ccca888_from_mem_z( pwSource, 
+                                        &vBlendedR, 
+                                        &vBlendedG, 
+                                        &vBlendedB,
+                                        &vBlendedA,
+                                        predTail);
+
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+    /* get vectors of 8 x R, G, B pix */
+    __arm_2d_unpack_cccn888_from_mem_z( pwTarget, 
+                                        &vTargetR, 
+                                        &vTargetG, 
+                                        &vTargetB,
+                                        predTail);
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vBlendedA, vHwPixelAlpha);
+
+    /* merge vector with expanded Mask colour */
+    vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_u16(vHwPixelAlpha, vBlendedR));
+    vBlendedR = vBlendedR >> 8;
+
+    vBlendedG = vqaddq(vTargetG * vhwTransparency, vmulq_u16(vHwPixelAlpha, vBlendedG));
+    vBlendedG = vBlendedG >> 8;
+
+    vBlendedB = vqaddq(vTargetB * vhwTransparency, vmulq_u16(vHwPixelAlpha, vBlendedB));
+    vBlendedB = vBlendedB >> 8;
+
+    /* select between target pixel, averaged pixed */
+    vTargetR = vpselq_u16(vBlendedR, vTargetR, predGlb);
+    vTargetG = vpselq_u16(vBlendedG, vTargetG, predGlb);
+    vTargetB = vpselq_u16(vBlendedB, vTargetB, predGlb);
+
+    /* pack */
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget, sg,
+                                vminq(vTargetB, vdupq_n_u16(255)), predTail);
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 1, sg,
+                                vminq(vTargetG, vdupq_n_u16(255)), predTail);
+    vstrbq_scatter_offset_p_u16((uint8_t *) pwTarget + 2, sg,
+                                vminq(vTargetR, vdupq_n_u16(255)), predTail);
+}
+
+
+__STATIC_INLINE
+void __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask(
+                                                    uint32_t * pwSource,
+                                                    uint32_t * pwTarget,
+                                                    uint16x8_t vHwPixelAlpha)
+{
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    //mve_pred16_t    predGlb = 0;
+
+    uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+    uint16x8_t      vBlendedR, vBlendedG, vBlendedB, vBlendedA;
+    /* get vectors of 8 x R, G, B pix */
+    __arm_2d_unpack_ccca888_from_mem( pwSource, 
+                                        &vBlendedR, 
+                                        &vBlendedG, 
+                                        &vBlendedB,
+                                        &vBlendedA);
+
+    uint16x8_t      vTargetR, vTargetG, vTargetB;
+    /* get vectors of 8 x R, G, B pix */
+    __arm_2d_unpack_cccn888_from_mem( pwTarget, 
+                                        &vTargetR, 
+                                        &vTargetG, 
+                                        &vTargetB);
+
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vBlendedA, vHwPixelAlpha);
+
+    /* merge vector with expanded Mask colour */
+    vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_u16(vHwPixelAlpha, vBlendedR));
+    vBlendedR = vBlendedR >> 8;
+
+    vBlendedG = vqaddq(vTargetG * vhwTransparency, vmulq_u16(vHwPixelAlpha, vBlendedG));
+    vBlendedG = vBlendedG >> 8;
+
+    vBlendedB = vqaddq(vTargetB * vhwTransparency, vmulq_u16(vHwPixelAlpha, vBlendedB));
+    vBlendedB = vBlendedB >> 8;
+
+    /* pack */
+    uint16x8_t      sg = vidupq_n_u16(0, 4);
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget, sg,
+                                vminq(vBlendedB, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 1, sg,
+                                vminq(vBlendedG, vdupq_n_u16(255)));
+    vstrbq_scatter_offset_u16((uint8_t *) pwTarget + 2, sg,
+                                vminq(vBlendedR, vdupq_n_u16(255)));
+}
+
 
 /*---------------------------------------------------------------------------*
  * RGB565 pixel blend                                                        *

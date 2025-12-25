@@ -866,6 +866,153 @@ void __MVE_WRAPPER(
 
 }
 
+
+
+__STATIC_INLINE
+void __MVE_WRAPPER( 
+    __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_mask_and_opacity_process_point )(
+                                            ARM_2D_POINT_VEC * ptPoint,
+                                            arm_2d_region_t * ptOrigValidRegion,
+                                            uint8_t * pchOrigin,
+                                            int16_t iOrigStride,
+                                            uint32_t * pwTarget,
+                                            uint8_t *pchTargetMask,
+                                            uint8_t *pchExtraSourceMask,
+                                            uint32_t *pwExtraSource,
+                                            uint_fast16_t hwOpacity, 
+                                            uint32_t elts)
+{
+    mve_pred16_t    predTail = vctp16q(elts);
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+    mve_pred16_t    predGlb = 0;
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA(ptPoint, vXi, vYi, pchOrigin,
+                                               ptOrigValidRegion, iOrigStride,
+                                               predTail, predGlb, vAvgPixel);
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT(
+                                vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                iOrigStride, predTail, vHwPixelAlpha, predGlb);
+
+    }
+#endif
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_m_n_u16(vHwPixelAlpha, 0, predTail)) {
+        return ;
+    }
+#endif
+
+    vHwPixelAlpha = 
+        __arm_2d_scale_alpha_masks_n_opa(   
+                                    vHwPixelAlpha, 
+                                    vldrbq_z_u16(pchExtraSourceMask, predTail),
+                                    vldrbq_z_u16(pchTargetMask, predTail),
+                                    hwOpacity);
+
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_m_n_u16(vHwPixelAlpha, 0, predTail)) {
+        return ;
+    }
+#endif
+
+    __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask_p( 
+                                                    pwExtraSource,
+                                                    pwTarget,
+                                                    vHwPixelAlpha,
+                                                    predTail,
+                                                    predGlb);
+
+}
+
+__STATIC_INLINE
+void __MVE_WRAPPER( 
+    __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_mask_and_opacity_process_point_inside_src )(
+                                                    ARM_2D_POINT_VEC * ptPoint,
+                                                    arm_2d_region_t * ptOrigValidRegion,
+                                                    uint8_t *pchOrigin,
+                                                    int16_t iOrigStride,
+                                                    uint32_t *pwTarget,
+                                                    uint8_t *pchTargetMask,
+                                                    uint8_t *pchExtraSourceMask,
+                                                    uint32_t *pwExtraSource,
+                                                    uint_fast16_t hwOpacity)
+{
+    int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
+    int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
+    uint16x8_t      vHwPixelAlpha;
+    /* predicate accumulator */
+    /* tracks all predications conditions for selecting final */
+    /* averaged pixed / target pixel */
+
+#if     defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__)                            \
+    &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ == 1                                \
+    &&  !__ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+    {
+        /* accumulated pixel vectors */
+        PIX_VEC_TYP     vAvgPixel;
+
+        __ARM2D_AVG_NEIGHBR_GRAY8_PIX_WITH_OPA_INSIDE_SRC(  
+                                                ptPoint, vXi, vYi, pchOrigin,
+                                                ptOrigValidRegion, iOrigStride,
+                                                vAvgPixel);
+
+
+        vHwPixelAlpha = __ARM_2D_CONVERT_TO_PIX_TYP(vAvgPixel);
+
+    }
+#else
+    {
+        __ARM_2D_GRAY8_GET_PIXVEC_FROM_POINT_INSIDE_SRC(
+                                        vXi, vYi, pchOrigin, ptOrigValidRegion,
+                                        iOrigStride, vHwPixelAlpha);
+
+    }
+#endif
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_n_u16(vHwPixelAlpha, 0)) {
+        return ;
+    }
+#endif
+    vHwPixelAlpha = 
+        __arm_2d_scale_alpha_masks_n_opa(   
+                                    vHwPixelAlpha, 
+                                    vldrbq_u16(pchExtraSourceMask),
+                                    vldrbq_u16(pchTargetMask),
+                                    hwOpacity);
+
+
+#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
+    if (0 == vcmpneq_n_u16(vHwPixelAlpha, 0)) {
+        return ;
+    }
+#endif
+
+    __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask(   pwExtraSource,
+                                                                pwTarget,
+                                                                vHwPixelAlpha);
+
+}
+
+
+
 /*----------------------------------------------------------------------------*
  * backend API : RGB565                                                       *
  *----------------------------------------------------------------------------*/
