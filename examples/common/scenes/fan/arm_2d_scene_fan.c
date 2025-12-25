@@ -259,7 +259,7 @@ static void __on_scene_fan_frame_start(arm_2d_scene_t *ptScene)
     } while(0);
 
     this.fAngle += this.fCurrentSpeed;
-    this.fAngle = fmodf(this.fAngle, 120.0f);
+    this.fAngle = ARM_2D_FMODF(this.fAngle, 120.0f);
 
     text_list_on_frame_start(&this.tLevelList);
 

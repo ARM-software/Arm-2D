@@ -113,10 +113,10 @@ void ring_indication_init( ring_indication_t *ptThis,
     }
 
     tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree 
-        = fmodf(tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree, 360.0f);
+        = ARM_2D_FMODF(tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree, 360.0f);
     
     tCFG.tSpinZoom.Indicator.LowerLimit.fAngleInDegree 
-        = fmodf(tCFG.tSpinZoom.Indicator.LowerLimit.fAngleInDegree, 360.0f);
+        = ARM_2D_FMODF(tCFG.tSpinZoom.Indicator.LowerLimit.fAngleInDegree, 360.0f);
 
     if (tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree <= tCFG.tSpinZoom.Indicator.LowerLimit.fAngleInDegree) {
         tCFG.tSpinZoom.Indicator.UpperLimit.fAngleInDegree += 360.0f;
@@ -289,7 +289,7 @@ void __ring_indication_draw_quadrant(   ring_indication_t *ptThis,
 static
 uint8_t __ring_indication_get_quadrant(float fAngle)
 {
-    fAngle = fmodf(fAngle, 360.0f);
+    fAngle = ARM_2D_FMODF(fAngle, 360.0f);
 
     uint_fast8_t chQuadrant;
 

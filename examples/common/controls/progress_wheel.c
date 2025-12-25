@@ -221,7 +221,7 @@ void progress_wheel_on_frame_start(progress_wheel_t *ptThis)
 
     this.iProgress = this.iNewProgress;
     float fAngle = (float)this.iProgress / 10.0f + 90.0f * (float)this.tCFG.u2StartPosition;
-    fAngle = fmodf(fAngle, 360.0f);
+    fAngle = ARM_2D_FMODF(fAngle, 360.0f);
     this.fAngle = ARM_2D_ANGLE(fAngle);
 
     if (this.tCFG.bUseDirtyRegions) {
