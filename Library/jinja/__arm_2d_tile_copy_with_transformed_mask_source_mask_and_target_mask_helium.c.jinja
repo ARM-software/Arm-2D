@@ -1648,7 +1648,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_name}})(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,
+                                            __arm_2d_transform_info_t *ptInfo
                                         {%- if has_opacity -%}
                                             ,
                                             uint_fast16_t hwOpacity

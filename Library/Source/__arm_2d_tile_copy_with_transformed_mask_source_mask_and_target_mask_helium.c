@@ -6625,7 +6625,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -6901,7 +6901,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -7189,7 +7189,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_and_target_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -7489,7 +7489,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -7784,7 +7784,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_and_source_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -8074,7 +8074,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -8376,7 +8376,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_and_target_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -8690,7 +8690,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_gray8_with_transformed_mask{{variants_name}})(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -8985,7 +8985,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -9261,7 +9261,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -9549,7 +9549,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_target_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -9849,7 +9849,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -10144,7 +10144,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_source_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -10434,7 +10434,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -10736,7 +10736,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_and_target_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -11050,7 +11050,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_rgb565_with_transformed_mask{{variants_name}})(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -11345,7 +11345,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -11621,7 +11621,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -11909,7 +11909,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_target_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -12209,7 +12209,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_target_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -12504,7 +12504,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_source_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -12794,7 +12794,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_and_opacity)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
@@ -13096,7 +13096,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_and_target_mask)(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,)
+                                            __arm_2d_transform_info_t *ptInfo)
 
 {
     __arm_2d_param_copy_t *ptParamCopy = &ptParam->use_as____arm_2d_param_copy_orig_msk_t
@@ -13410,7 +13410,7 @@ __OVERRIDE_WEAK
 void __MVE_WRAPPER(
     __arm_2d_impl_ccca8888_tile_copy_to_cccn888_with_transformed_mask{{variants_name}})(
                                             __arm_2d_param_copy_orig_msk_extra_t *ptParam,
-                                            __arm_2d_transform_info_t *ptInfo,,
+                                            __arm_2d_transform_info_t *ptInfo,
                                             uint_fast16_t hwOpacity)
 
 {
