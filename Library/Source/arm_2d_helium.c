@@ -294,11 +294,11 @@ void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem,
   @param[in]     p              tail predition
  */
 __STATIC_FORCEINLINE
-void __arm_2d_unpack_cccn888_from_mem_z(   const uint32_t *pwPixel, 
-                                            uint16x8_t * R,
-                                            uint16x8_t * G, 
-                                            uint16x8_t * B,
-                                            mve_pred16_t p)
+void __arm_2d_unpack_cccn888_from_mem_z(const uint32_t *pwPixel, 
+                                        uint16x8_t * R,
+                                        uint16x8_t * G, 
+                                        uint16x8_t * B,
+                                        mve_pred16_t p)
 {
     uint16x8_t      sg = vidupq_n_u16(0, 4);
     const uint8_t * pMem = (uint8_t *)pwPixel;
@@ -2020,7 +2020,7 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_cccn888_from_mem_z( (const uint8_t *) pwSource, 
+    __arm_2d_unpack_cccn888_from_mem_z( pwSource, 
                                         &vBlendedR, 
                                         &vBlendedG, 
                                         &vBlendedB,
@@ -2028,7 +2028,7 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
 
     uint16x8_t      vTargetR, vTargetG, vTargetB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_cccn888_from_mem_z( (const uint8_t *) pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem_z( pwTarget, 
                                         &vTargetR, 
                                         &vTargetG, 
                                         &vTargetB,

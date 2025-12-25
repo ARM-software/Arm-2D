@@ -565,7 +565,7 @@ void __MVE_WRAPPER(
                                             uint32_t * pwTarget,
                                             uint8_t *pchTargetMask,
                                             uint8_t *pchExtraSourceMask,
-                                            uint16_t *pwExtraSource,
+                                            uint32_t *pwExtraSource,
                                             uint_fast16_t hwOpacity, 
                                             uint32_t elts)
 {
@@ -638,7 +638,7 @@ void __MVE_WRAPPER(
                                                     uint32_t *pwTarget,
                                                     uint8_t *pchTargetMask,
                                                     uint8_t *pchExtraSourceMask,
-                                                    uint16_t *pwExtraSource,
+                                                    uint32_t *pwExtraSource,
                                                     uint_fast16_t hwOpacity)
 {
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
