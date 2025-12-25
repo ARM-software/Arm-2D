@@ -2060,6 +2060,74 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
 }
 
+__STATIC_INLINE
+void __arm_2d_helium_ccca8888_blend_8pix_to_gray8_with_mask_p(
+                                                    uint32_t * pwSource,
+                                                    uint8_t * pchTarget,
+                                                    uint16x8_t vHwPixelAlpha,
+                                                    mve_pred16_t predTail,
+                                                    mve_pred16_t predGlb)
+{
+    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
+    __arm_2d_unpack_ccca8888_from_mem_z(pwSource, 
+                                        &vSourceR,
+                                        &vSourceG,
+                                        &vSourceB, 
+                                        &vSourceA,
+                                        predTail);
+    /* mix vSourceA and vHwPixelAlpha */
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
+
+    
+    /* uint16_t tGrayScale = (ptRGB->R * 77 + ptRGB->G * 151 + ptRGB->B * 28) >> 8; */
+    uint16x8_t vSource = (vSourceR * 77 + vSourceG * 151 + vSourceB * 28) >> 8;
+
+    /* blending */
+    uint16x8_t  vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+
+    uint16x8_t  vTarget = vldrbq_z_u16(pchTarget, predTail);
+    uint16x8_t  vBlended =
+        vrshrq_n_u16(   vqaddq( vHwPixelAlpha * vSource, 
+                                vTarget * vhwTransparency),
+                        8);
+
+    /* select between target pixel, averaged pixed */
+    vTarget = vpselq_u16(vBlended, vTarget, predGlb);
+
+    vstrbq_p_u16(pchTarget, vTarget, predTail);
+}
+
+__STATIC_INLINE
+void __arm_2d_helium_ccca8888_blend_8pix_to_gray8_with_mask(
+                                                    uint32_t * pwSource,
+                                                    uint8_t * pchTarget,
+                                                    uint16x8_t vHwPixelAlpha)
+{
+    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
+    __arm_2d_unpack_ccca8888_from_mem(  pwSource, 
+                                        &vSourceR,
+                                        &vSourceG,
+                                        &vSourceB, 
+                                        &vSourceA);
+    /* mix vSourceA and vHwPixelAlpha */
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
+
+    /* uint16_t tGrayScale = (ptRGB->R * 77 + ptRGB->G * 151 + ptRGB->B * 28) >> 8; */
+    uint16x8_t vSource = (vSourceR * 77 + vSourceG * 151 + vSourceB * 28) >> 8;
+
+    /* blending */
+    uint16x8_t  vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
+
+    uint16x8_t  vTarget = vldrbq_u16(pchTarget);
+    uint16x8_t  vBlended =
+        vrshrq_n_u16(   vqaddq( vHwPixelAlpha * vSource, 
+                                vTarget * vhwTransparency),
+                        8);
+
+    vstrbq_u16(pchTarget, vBlended);
+}
+
+
 
 __STATIC_INLINE
 void __arm_2d_helium_ccca8888_blend_8pix_to_rgb565_with_mask_p(
