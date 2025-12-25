@@ -91,7 +91,7 @@ void __arm_2d_helium_init(void)
 
 
 /*----------------------------------------------------------------------------*
- * Code Template for tile operations                                                             *
+ * Code Template for tile operations                                          *
  *----------------------------------------------------------------------------*/
 
 #define __API_COLOUR                c8bit
@@ -373,6 +373,14 @@ void __arm_2d_pack_rgb888_to_mem(uint8_t * pMem, uint16x8_t R, uint16x8_t G, uin
     vstrbq_scatter_offset_u16(pMem + 1, sg, vminq(G, vdupq_n_u16(255)));
     vstrbq_scatter_offset_u16(pMem + 2, sg, vminq(R, vdupq_n_u16(255)));
     //vstrbq_scatter_offset_u16(pMem + 3, sg, vdupq_n_u16(0));
+}
+
+__STATIC_FORCEINLINE
+uint16x8_t __arm_2d_scale_alpha_n_opa( uint16x8_t vPixelAlpha, uint_fast16_t hwOpacity)
+{
+    /* vPixelAlpha: 0~255 */
+    /* hwOpacity: 0~256 */
+    return vmulq(vPixelAlpha,  hwOpacity) >> 8;
 }
 
 __STATIC_FORCEINLINE
