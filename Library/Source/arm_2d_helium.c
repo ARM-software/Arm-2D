@@ -274,7 +274,7 @@ uint16x8_t __arm_2d_unpack_and_blend_cccn888(const uint8_t * pwTarget,
   @param[out]    B              vector of 16-bit widened B channel
  */
 __STATIC_FORCEINLINE
-void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem, 
+void __arm_2d_unpack_cccn888_from_mem(const uint8_t * pMem, 
                                      uint16x8_t * R, 
                                      uint16x8_t * G,
                                      uint16x8_t * B)
@@ -295,7 +295,7 @@ void __arm_2d_unpack_rgb888_from_mem(const uint8_t * pMem,
   @param[in]     p              tail predition
  */
 __STATIC_FORCEINLINE
-void __arm_2d_unpack_rgb888_from_mem_z( const uint8_t * pMem, 
+void __arm_2d_unpack_cccn888_from_mem_z( const uint8_t * pMem, 
                                         uint16x8_t * R,
                                         uint16x8_t * G, 
                                         uint16x8_t * B,
@@ -1894,7 +1894,7 @@ void __arm_2d_helium_cccn888_8pix_fill_colour_with_mask_p(  uint32_t wColour,
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
 
 
 
@@ -1934,7 +1934,7 @@ void __arm_2d_helium_cccn888_8pix_fill_colour_with_mask(uint32_t wColour,
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -1971,14 +1971,14 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask( uint32_t * pwSource,
     
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwSource, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwSource, 
                                     &vBlendedR, 
                                     &vBlendedG, 
                                     &vBlendedB);
 
     uint16x8_t      vTargetR, vTargetG, vTargetB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -2021,7 +2021,7 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
     uint16x8_t      vhwTransparency = vdupq_n_u16(256) - vHwPixelAlpha;
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem_z(  (const uint8_t *)pwSource, 
+    __arm_2d_unpack_cccn888_from_mem_z(  (const uint8_t *)pwSource, 
                                         &vBlendedR, 
                                         &vBlendedG, 
                                         &vBlendedB,
@@ -2029,7 +2029,7 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
 
     uint16x8_t      vTargetR, vTargetG, vTargetB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem_z(  (const uint8_t *)pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem_z(  (const uint8_t *)pwTarget, 
                                         &vTargetR, 
                                         &vTargetG, 
                                         &vTargetB,
@@ -2085,7 +2085,7 @@ void __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask_p(
 
     uint16x8_t      vTargetR, vTargetG, vTargetB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem_z(  (const uint8_t *)pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem_z(  (const uint8_t *)pwTarget, 
                                         &vTargetR, 
                                         &vTargetG, 
                                         &vTargetB,
@@ -2141,7 +2141,7 @@ void __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask(
 
     uint16x8_t      vTargetR, vTargetG, vTargetB;
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem(    (const uint8_t *)pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem(    (const uint8_t *)pwTarget, 
                                         &vTargetR, 
                                         &vTargetG, 
                                         &vTargetB);

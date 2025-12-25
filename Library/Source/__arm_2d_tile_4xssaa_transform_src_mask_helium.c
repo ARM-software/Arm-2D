@@ -1064,7 +1064,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask(arm_2d_point_s16x8_t
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4)); 
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
         
@@ -1099,7 +1099,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask(arm_2d_point_s16x8_t
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
         uint16x8_t vAlpha = vmulq_u16((vAreaBR >> 8), vPixelAlpha); 
@@ -1133,7 +1133,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask(arm_2d_point_s16x8_t
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4));
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
         uint16x8_t vAlpha = vmulq_u16((vAreaTL >> 8), vPixelAlpha); 
@@ -1167,7 +1167,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask(arm_2d_point_s16x8_t
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4)); 
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
         uint16x8_t vAlpha = vmulq_u16((vAreaTR >> 8), vPixelAlpha); 
@@ -1184,7 +1184,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask(arm_2d_point_s16x8_t
 
     uint16x8_t vTargetR, vTargetG, vTargetB;
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
 
     vAvgR = vqaddq(vAvgR, vrmulhq(vTargetR, vAvgTrans)); 
     vAvgR = vminq(vAvgR, vdupq_n_u16(255)); 
@@ -1372,7 +1372,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask_opa(arm_2d_point_s16
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4)); 
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
@@ -1407,7 +1407,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask_opa(arm_2d_point_s16
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4)); 
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
@@ -1443,7 +1443,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask_opa(arm_2d_point_s16
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4)); 
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
@@ -1477,7 +1477,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask_opa(arm_2d_point_s16
         maskOffs = 1 * tPointHi.X + tPointHi.Y * iOrigmaskStride; 
         maskVal = vldrbq_gather_offset_z_u32(pchOrigMask, maskOffs, predTailHigh & p); 
         vst1q(scratch32+12, maskVal); 
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B); 
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4)); 
         vPixelAlpha = (vPixelAlpha * hwOpacity) >> 8;
         vPixelAlpha = vpselq(vdupq_n_u16(256), vPixelAlpha, vcmpeqq_n_u16(vPixelAlpha, 255));
@@ -1496,7 +1496,7 @@ void __arm_2d_impl_cccn888_4xssaa_get_pixel_colour_src_mask_opa(arm_2d_point_s16
 
     uint16x8_t vTargetR, vTargetG, vTargetB;
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
 
     vAvgR = vqaddq(vAvgR, vrmulhq(vTargetR, vAvgTrans)); 
     vAvgR = vminq(vAvgR, vdupq_n_u16(255)); 

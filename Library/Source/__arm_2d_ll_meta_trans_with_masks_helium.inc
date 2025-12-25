@@ -707,7 +707,7 @@ void __MTWM_FUNC(transform_with_mask)(
         vst1q(scratch32+12, maskVal);                                                                     \
                                                                                                           \
         /* expand channels */                                                                             \
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B);                               \
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B);                               \
                                                                                                           \
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4));            \
                                                                                                           \
@@ -767,7 +767,7 @@ void __MTWM_FUNC(transform_with_mask)(
         vst1q(scratch32+12, maskVal);                                                                     \
                                                                                                           \
         /* expand channels */                                                                             \
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &R, &G, &B);                               \
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &R, &G, &B);                               \
                                                                                                           \
         vPixelAlpha = vldrbq_gather_offset_u16((uint8_t *) &scratch32[8], vidupq_n_u16(0, 4));            \
                                                                                                           \
@@ -1297,7 +1297,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask))(
     /* alpha blending */
     uint16x8_t      vTargetR, vTargetG, vTargetB;
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
 
 
     /* merge */
@@ -1394,7 +1394,7 @@ void __MVE_WRAPPER(ARM_CONNECT2(__arm_2d_impl_cccn888_, get_pixel_colour_mask_in
     /* alpha blending */
     uint16x8_t      vTargetR, vTargetG, vTargetB;
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, &vTargetR, &vTargetG, &vTargetB);
 
 
     /* merge */

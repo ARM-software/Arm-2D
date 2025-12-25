@@ -669,7 +669,7 @@ mve_pred16_t arm_2d_is_point_vec_inside_region_s32(const arm_2d_region_t * ptReg
         vst1q(scratch32, pointLo);                                                                         \
         vst1q(scratch32 + 4, pointHi);                                                                     \
                                                                                                            \
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
 
 #define __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_INSIDE_SRC(/* inputs */                                      \
                                                 vecX, vecY, pOrigin, ptOrigValidRegion, iOrigStride,       \
@@ -686,7 +686,7 @@ mve_pred16_t arm_2d_is_point_vec_inside_region_s32(const arm_2d_region_t * ptReg
         vst1q(scratch32, pointLo);                                                                         \
         vst1q(scratch32 + 4, pointHi);                                                                     \
                                                                                                            \
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
 
 #define __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_MASK_CLR(/* inputs */                                        \
                                                 vecX, vecY, pOrigin, ptOrigValidRegion, iOrigStride,       \
@@ -704,7 +704,7 @@ mve_pred16_t arm_2d_is_point_vec_inside_region_s32(const arm_2d_region_t * ptReg
         vst1q(scratch32, pointLo);                                                                         \
         vst1q(scratch32 + 4, pointHi);                                                                     \
                                                                                                            \
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
 
 #define __ARM_2D_RGB888_GET_RGBVEC_FROM_POINT_MASK_CLR_INSIDE_SRC(/* inputs */                             \
                                                 vecX, vecY, pOrigin, ptOrigValidRegion, iOrigStride,       \
@@ -723,7 +723,7 @@ mve_pred16_t arm_2d_is_point_vec_inside_region_s32(const arm_2d_region_t * ptReg
         vst1q(scratch32, pointLo);                                                                         \
         vst1q(scratch32 + 4, pointHi);                                                                     \
                                                                                                            \
-        __arm_2d_unpack_rgb888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
+        __arm_2d_unpack_cccn888_from_mem((uint8_t *) scratch32, &vPixValR, &vPixValG, &vPixValB);
 
 
 #if defined(__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__) &&  __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
@@ -2992,7 +2992,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity )(ARM_2D_POINT_
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
 
     /* merge vector with expanded Mask colour */
     vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8R));
@@ -3088,7 +3088,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_alpha_with_opacity_inside_src )(
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -3186,7 +3186,7 @@ void __MVE_WRAPPER(
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
 
     /* merge vector with expanded Mask colour */
     vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8R));
@@ -3283,7 +3283,7 @@ void __MVE_WRAPPER(
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -3382,7 +3382,7 @@ void __MVE_WRAPPER(
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, &vTargetR, &vTargetG, &vTargetB);
 
     /* merge vector with expanded Mask colour */
     vBlendedR = vqaddq(vTargetR * vhwTransparency, vmulq_n_u16(vHwPixelAlpha, tSrcPix.u8R));
@@ -3478,7 +3478,7 @@ void __MVE_WRAPPER(
     uint16x8_t      vBlendedR, vBlendedG, vBlendedB;
 
     /* get vectors of 8 x R, G, B pix */
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pwTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pwTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -4676,7 +4676,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_pixel_colour_with_alpha)(
     uint16_t        transp = 256 - hwOpacity;
     ARM_ALIGN(8)    uint32_t scratch32[32];
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -4763,7 +4763,7 @@ void __MVE_WRAPPER( __arm_2d_impl_cccn888_get_pixel_colour_with_alpha_inside_src
     uint16_t        transp = 256 - hwOpacity;
     ARM_ALIGN(8)    uint32_t scratch32[32];
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -4844,7 +4844,7 @@ void __MVE_WRAPPER(
     uint16_t        transp = 256 - hwOpacity;
     ARM_ALIGN(8)    uint32_t scratch32[32];
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
@@ -4928,7 +4928,7 @@ void __MVE_WRAPPER(
     uint16_t        transp = 256 - hwOpacity;
     ARM_ALIGN(8)    uint32_t scratch32[32];
 
-    __arm_2d_unpack_rgb888_from_mem((const uint8_t *) pTarget, 
+    __arm_2d_unpack_cccn888_from_mem((const uint8_t *) pTarget, 
                                     &vTargetR, 
                                     &vTargetG, 
                                     &vTargetB);
