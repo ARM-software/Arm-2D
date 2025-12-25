@@ -593,9 +593,13 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis,
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
 
-            __arm_2d_color_fast_rgb_t tColour;
-            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
-            *phwTarget++ = __arm_2d_rgb565_pack(&tColour) ;
+            arm_2d_color_rgb565_t tPixelRGB565 = {
+                .u5B = tPixel.tColour.chBlue,
+                .u6G = tPixel.tColour.chGreen,
+                .u5R = tPixel.tColour.chRed,
+            };
+
+            *phwTarget++ = tPixelRGB565.tValue;
 
         } while(--tLength);
     } else {
@@ -608,9 +612,14 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis,
                 return ARM_2D_ERR_NOT_AVAILABLE;
             }
 
-            __arm_2d_color_fast_rgb_t tColour;
-            __arm_2d_ccca8888_unpack(tPixel.wValue, &tColour);
-            *phwTarget++ = __arm_2d_rgb565_pack(&tColour) ;
+            arm_2d_color_rgb565_t tPixelRGB565 = {
+                .u5B = tPixel.tColour.chBlue,
+                .u6G = tPixel.tColour.chGreen,
+                .u5R = tPixel.tColour.chRed,
+            };
+
+            *phwTarget++ = tPixelRGB565.tValue;
+
             ptLocation->iX++;
         } while(--tLength);
     }
