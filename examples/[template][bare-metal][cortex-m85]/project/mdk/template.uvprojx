@@ -666,6 +666,12 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Blink">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Compass">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
@@ -678,7 +684,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Decoding JPG with TJpgDec">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
@@ -762,7 +768,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Showing Animation with TJpgDec">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
@@ -804,19 +810,19 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.11.3" condition="Arm-2D-Controls" ymlID="Acceleration:Arm-2D Extras:Controls">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.13.4" condition="Arm-2D-Controls" ymlID="Acceleration:Arm-2D Extras:Controls">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="3.0.1" condition="Arm-2D-Printf" ymlID="Acceleration:Arm-2D Extras:LCD ASCII Printf">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="3.0.2" condition="Arm-2D-Printf" ymlID="Acceleration:Arm-2D Extras:LCD ASCII Printf">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders" ymlID="Acceleration:Arm-2D Extras:Loaders">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.2.0" condition="Arm-2D-Loaders" ymlID="Acceleration:Arm-2D Extras:Loaders">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
@@ -828,7 +834,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D Helper:PFB">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.1" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D Helper:PFB">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
@@ -840,7 +846,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP" ymlID="Acceleration:Arm-2D:Core">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
@@ -929,11 +935,27 @@
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
+      <file attr="config" category="sourceC" name="examples\demos\Eyeball.c" version="2.1.0">
+        <instance index="0">RTE\Acceleration\Eyeball.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="sourceC" name="examples\common\controls\GLCD_Fonts.c" version="1.0.0">
         <instance index="0" removed="1">RTE\Acceleration\GLCD_Fonts.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\LeftEye.c" version="2.4.0">
+        <instance index="0">RTE\Acceleration\LeftEye.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
       </file>
       <file attr="config" category="other" name="tools\README.md" version="1.2.2">
         <instance index="0" removed="1">RTE\Acceleration\README.md</instance>
@@ -1122,6 +1144,22 @@
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_basics.h" version="2.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_basics.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Basics" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_blink.c" version="2.4.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_blink.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_blink.h" version="2.4.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_blink.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="V2M-MPS3-CM85"/>
