@@ -113,8 +113,8 @@ typedef struct {
     const arm_2d_tile_t *ptMask;
     float fAngle;
     float fAngleSpeed;
-    arm_2d_location_t tCentre;
-    arm_2d_location_t *ptTargetCentre;
+    arm_2d_point_float_t tCentre;
+    arm_2d_point_float_t *ptPivot;
     arm_2d_region_t *ptRegion;
     uint8_t chOpacity;
     bool    bUpdateAnglePerSec;
@@ -174,13 +174,16 @@ static floating_range_t s_ptFloatingBoxes[] = {
 static
 demo_gears_t s_tGears[] = {
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-    {
+    [0] = {
         .ptTile = &c_tileGear02,
         .fAngleSpeed = 3.0f,
+
+    #if 0 
         .tCentre = {
-            .iX = 20,
-            .iY = 20,
+            .fX = (float)(c_tileGear02.tRegion.tSize.iWidth - 1) / 2.0f,
+            .fY = (float)(c_tileGear02.tRegion.tSize.iHeight - 1) / 2.0f,
         },
+    #endif
 
         .ptRegion = (arm_2d_region_t []){ {
             .tSize = {
@@ -193,13 +196,15 @@ demo_gears_t s_tGears[] = {
     },
 
 
-    {
+    [1] = {
         .ptTile = &c_tileGear01,
         .fAngleSpeed = -0.5f,
+    #if 0
         .tCentre = {
-            .iX = 61,
-            .iY = 60,
+            .fX = (float)(c_tileGear01.tRegion.tSize.iWidth - 1) / 2.0f,
+            .fY = (float)(c_tileGear01.tRegion.tSize.iHeight - 1) / 2.0f,
         },
+    #endif
         .ptRegion = (arm_2d_region_t []){ {
             .tSize = {
                 .iWidth = 120,
@@ -210,7 +215,7 @@ demo_gears_t s_tGears[] = {
     },
 #endif
 
-    {
+    [2] = {
         //.ptTile = &c_tilePointerSec,
         .ptMask = &c_tilePointerSecMask,
     #if defined(__ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__)  \
@@ -219,10 +224,12 @@ demo_gears_t s_tGears[] = {
     #else
         .fAngleSpeed = 1.0f,
     #endif
+    #if 0
         .tCentre = {
-            .iX = 4,
-            .iY = 99,
+            .fX = (float)(c_tilePointerSecMask.tRegion.tSize.iWidth - 1) / 2.0f,
+            .fY = 99,
         },
+    #endif
         .ptRegion = (arm_2d_region_t []){ {
             .tSize = {
                 .iWidth = 198,
@@ -238,13 +245,33 @@ demo_gears_t s_tGears[] = {
 };
 
 
+
 static arm_2d_op_trans_msk_opa_t s_tStarOP;
 
 /*============================ IMPLEMENTATION ================================*/
 
+static void assets_table_init(void)
+{
+    s_tGears[0].tCentre = (arm_2d_point_float_t){
+        .fX = (float)(c_tileGear02.tRegion.tSize.iWidth - 1) / 2.0f,
+        .fY = (float)(c_tileGear02.tRegion.tSize.iHeight - 1) / 2.0f,
+    };
+
+    s_tGears[1].tCentre = (arm_2d_point_float_t){
+        .fX = (float)(c_tileGear01.tRegion.tSize.iWidth - 1) / 2.0f,
+        .fY = (float)(c_tileGear01.tRegion.tSize.iHeight - 1) / 2.0f,
+    };
+
+    s_tGears[2].tCentre = (arm_2d_point_float_t){
+        .fX = (float)(c_tilePointerSecMask.tRegion.tSize.iWidth - 1) / 2.0f,
+        .fY = 99,
+    };
+}
+
 void benchmark_watch_panel_init(arm_2d_region_t tScreen)
 {
     arm_extra_controls_init();
+    assets_table_init();
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     arm_foreach(arm_2d_layer_t, s_ptRefreshLayers) {
@@ -441,7 +468,7 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 
             if (NULL != ptItem->ptMask) {
                 if (NULL != ptItem->ptTile) {
-                    arm_2dp_tile_rotation_with_src_mask_and_opacity(
+                    arm_2dp_tile_transform_xy_with_src_mask_and_opacity(
                         &(ptItem->tOP),                                             //!< control block
                         ptItem->ptTile,                                             //!< source tile
                         ptItem->ptMask,                                             //!< source mask
@@ -449,10 +476,12 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                         ptItem->ptRegion,                                           //!< target region
                         ptItem->tCentre,                                            //!< pivot on source
                         ptItem->fAngle,                                             //!< rotation angle 
+                        1.0f,
+                        1.0f,
                         ptItem->chOpacity                                           //!< opacity
                     );
                 } else {
-                    arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                    arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                         (arm_2d_op_fill_cl_msk_opa_trans_t *)&(ptItem->tOP),        //!< control block
                         ptItem->ptMask,                                             //!< source mask
                         ptTile,                                                     //!< target tile
@@ -460,20 +489,24 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                         ptItem->tCentre,                                            //!< pivot on source
                         ptItem->fAngle,                                             //!< rotation angle
                         1.0f,
+                        1.0f,
                         GLCD_COLOR_RED,
                         ptItem->chOpacity                                           //!< opacity
                     );
                 }
             } else {
-                arm_2dp_tile_rotation_with_opacity( (arm_2d_op_trans_opa_t *)&(ptItem->tOP),
+                arm_2dp_tile_transform_xy_with_opacity( 
+                                                    (arm_2d_op_trans_opa_t *)&(ptItem->tOP),
                                                     ptItem->ptTile,                 //!< source tile
                                                     ptTile,                         //!< target tile
                                                     ptItem->ptRegion,               //!< target region
                                                     ptItem->tCentre,                //!< center point
                                                     ptItem->fAngle,                 //!< rotation angle
+                                                    1.0f,
+                                                    1.0f,
                                                     GLCD_COLOR_BLACK,               //!< masking colour
                                                     ptItem->chOpacity,              //!< Opacity
-                                                    ptItem->ptTargetCentre);
+                                                    ptItem->ptPivot);
             }
         }
 #else
