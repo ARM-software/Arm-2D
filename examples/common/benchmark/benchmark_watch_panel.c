@@ -372,7 +372,7 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
 {
 
     arm_2d_canvas(ptTile, __top_container) {
-#if 1
+
 
 #if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
         arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_BLACK);
@@ -509,25 +509,6 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                                                     ptItem->ptPivot);
             }
         }
-#else
-        (void)s_tGears;
-        arm_2d_fill_colour(ptTile, NULL, GLCD_COLOR_WHITE);
-        
-        const arm_2d_region_t c_tRightScreen = {
-            .tLocation = {
-                .iX = GLCD_WIDTH >> 1,
-            },
-            .tSize = {
-                .iWidth = GLCD_WIDTH >> 1,
-                .iHeight = GLCD_HEIGHT,
-            },
-        };
-        
-        static arm_2d_tile_t s_tTempTile;
-        arm_2d_tile_generate_child(ptTile, &c_tRightScreen, &s_tTempTile, false);
-        
-        spinning_wheel_show(&s_tTempTile, bIsNewFrame);
-#endif
 
         //! demo for transform
         do {
@@ -550,20 +531,14 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 }
             }
             
-            arm_2d_location_t tCentre = {
-                .iX = c_tileStar.tRegion.tSize.iWidth >> 1,
-                .iY = c_tileStar.tRegion.tSize.iHeight >> 1,
+            arm_2d_point_float_t tCentre = {
+                .fX = (c_tileStar.tRegion.tSize.iWidth - 1) / 2.0f,
+                .fY = (c_tileStar.tRegion.tSize.iHeight - 1) / 2.0f,
             };
 
+            const arm_2d_tile_t *ptSrcMask =  &c_tileStarMask;
             
-            const arm_2d_tile_t *ptSrcMask = 
-            #if __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ && !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
-                &c_tileStarMask2; //!< 8in32 channel mask
-            #else
-                &c_tileStarMask;    //!< normal 8bit mask
-            #endif
-            
-            arm_2dp_tile_transform_with_src_mask_and_opacity(
+            arm_2dp_tile_transform_xy_with_src_mask_and_opacity(
                 &s_tStarOP,         //!< control block
                 &c_tileStar,        //!< source tile
                 ptSrcMask,          //!< source mask
@@ -571,8 +546,9 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 NULL,               //!< target region
                 tCentre,            //!< pivot on source
                 s_fAngle,           //!< rotation angle 
-                s_fScale           //!< zoom scale 
-                ,s_chOpacity         //!< opacity
+                s_fScale,          //!< zoom scale 
+                s_fScale,
+                s_chOpacity         //!< opacity
             );
 
         } while(0); 
