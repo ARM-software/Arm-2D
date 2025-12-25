@@ -2060,6 +2060,72 @@ void __arm_2d_helium_cccn888_blend_8pix_with_mask_p(uint32_t * pwSource,
                                 vminq(vTargetR, vdupq_n_u16(255)), predTail);
 }
 
+
+__STATIC_INLINE
+void __arm_2d_helium_ccca8888_blend_8pix_to_rgb565_with_mask_p(
+                                                    uint32_t * pwSource,
+                                                    uint16_t * phwTarget,
+                                                    uint16x8_t vHwPixelAlpha,
+                                                    mve_pred16_t predTail,
+                                                    mve_pred16_t predGlb)
+{
+    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
+    __arm_2d_unpack_ccca8888_from_mem_z(pwSource, 
+                                        &vSourceR,
+                                        &vSourceG,
+                                        &vSourceB, 
+                                        &vSourceA,
+                                        predTail);
+
+    /* mix vSourceA and vHwPixelAlpha */
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
+    uint16x8_t vTrans = vdupq_n_u16(256) - vHwPixelAlpha;
+
+    uint16x8_t  vTarget = vld1q_z_u16(phwTarget, predTail);
+    uint16x8_t vTargetR, vTargetG, vTargetB;
+    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+    vSourceR = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceR, vTargetR * vTrans),8);
+    vSourceG = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceG, vTargetG * vTrans),8);
+    vSourceB = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceB, vTargetB * vTrans),8);
+
+    vst1q_p(phwTarget, 
+            vpselq_u16( __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB), 
+                        vTarget, 
+                        predGlb), 
+            predTail);
+}
+
+__STATIC_INLINE
+void __arm_2d_helium_ccca8888_blend_8pix_to_rgb565_with_mask(
+                                                    uint32_t * pwSource,
+                                                    uint16_t * phwTarget,
+                                                    uint16x8_t vHwPixelAlpha)
+{
+    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
+    __arm_2d_unpack_ccca8888_from_mem(  pwSource, 
+                                        &vSourceR,
+                                        &vSourceG,
+                                        &vSourceB, 
+                                        &vSourceA);
+
+    /* mix vSourceA and vHwPixelAlpha */
+    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
+    uint16x8_t vTrans = vdupq_n_u16(256) - vHwPixelAlpha;
+
+    uint16x8_t  vTarget = vld1q_u16(phwTarget);
+    uint16x8_t vTargetR, vTargetG, vTargetB;
+    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
+
+    vSourceR = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceR, vTargetR * vTrans),8);
+    vSourceG = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceG, vTargetG * vTrans),8);
+    vSourceB = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceB, vTargetB * vTrans),8);
+
+    vst1q(  phwTarget, 
+            __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB));
+}
+
+
 __STATIC_INLINE
 void __arm_2d_helium_ccca8888_blend_8pix_to_cccn888_with_mask_p(
                                                     uint32_t * pwSource,

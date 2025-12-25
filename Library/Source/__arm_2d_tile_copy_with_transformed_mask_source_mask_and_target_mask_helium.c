@@ -566,7 +566,7 @@ void __MVE_WRAPPER(
                                                      uint32_t elts)
 {
     mve_pred16_t    predTail = vctp16q(elts);
-    uint16x8_t      vTarget = vld1q_z_u16(phwTarget, predTail);
+
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
     uint16x8_t      vHwPixelAlpha;
@@ -612,30 +612,12 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
-    __arm_2d_unpack_ccca8888_from_mem_z(pwExtraSource, 
-                                        &vSourceR,
-                                        &vSourceG,
-                                        &vSourceB, 
-                                        &vSourceA,
-                                        predTail);
-
-    /* mix vSourceA and vHwPixelAlpha */
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
-    uint16x8_t vTrans = vdupq_n_u16(256) - vHwPixelAlpha;
-
-    uint16x8_t vTargetR, vTargetG, vTargetB;
-    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
-
-    vSourceR = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceR, vTargetR * vTrans),8);
-    vSourceG = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceG, vTargetG * vTrans),8);
-    vSourceB = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceB, vTargetB * vTrans),8);
-
-    vst1q_p(phwTarget, 
-            vpselq_u16( __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB), 
-                        vTarget, 
-                        predGlb), 
-            predTail);
+    __arm_2d_helium_ccca8888_blend_8pix_to_rgb565_with_mask_p(
+                                                            pwExtraSource,
+                                                            phwTarget, 
+                                                            vHwPixelAlpha,
+                                                            predTail,
+                                                            predGlb);
 
 }
 
@@ -652,7 +634,7 @@ void __MVE_WRAPPER(
                                         uint32_t *pwExtraSource,
                                         uint_fast16_t hwOpacity)
 {
-    uint16x8_t      vTarget = vld1q_u16(phwTarget);
+
     int16x8_t       vXi = __ARM_2D_GET_POINT_COORD(ptPoint->X);
     int16x8_t       vYi = __ARM_2D_GET_POINT_COORD(ptPoint->Y);
     uint16x8_t      vHwPixelAlpha;
@@ -696,27 +678,9 @@ void __MVE_WRAPPER(
 #endif
 
     /* blending */
-    
-    uint16x8_t vSourceR, vSourceG, vSourceB, vSourceA;
-    __arm_2d_unpack_ccca8888_from_mem(  pwExtraSource, 
-                                        &vSourceR,
-                                        &vSourceG,
-                                        &vSourceB, 
-                                        &vSourceA);
-
-    /* mix vSourceA and vHwPixelAlpha */
-    vHwPixelAlpha = __arm_2d_scale_alpha_mask(vSourceA, vHwPixelAlpha);
-    uint16x8_t vTrans = vdupq_n_u16(256) - vHwPixelAlpha;
-
-    uint16x8_t vTargetR, vTargetG, vTargetB;
-    __arm_2d_rgb565_unpack_single_vec(vTarget, &vTargetR, &vTargetG, &vTargetB);
-
-    vSourceR = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceR, vTargetR * vTrans),8);
-    vSourceG = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceG, vTargetG * vTrans),8);
-    vSourceB = vrshrq_n_u16(vqaddq(vHwPixelAlpha * vSourceB, vTargetB * vTrans),8);
-
-    vst1q(  phwTarget, 
-            __arm_2d_rgb565_pack_single_vec(vSourceR, vSourceG, vSourceB));
+    __arm_2d_helium_ccca8888_blend_8pix_to_rgb565_with_mask(pwExtraSource,
+                                                            phwTarget, 
+                                                            vHwPixelAlpha);
 
 }
 
