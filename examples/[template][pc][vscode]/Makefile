@@ -31,6 +31,7 @@ CC_SRC  += $(wildcard ../../examples/common/loader/qoi_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/qoi_loader/qoi_decoder/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
+CC_SRC  += $(wildcard ../../examples/demos/mask_generation/*.c)
 
 # customized freetype #
 CC_SRC  += $(wildcard ../../examples/common/loader/freetype_loader/*.c)
@@ -76,6 +77,7 @@ CC_INC  += ../../examples/common/scenes/animate_background
 CC_INC  += ../../examples/common/scenes/knob
 CC_INC  += ../../examples/demos
 CC_INC  += ../../examples/demos/monochrome
+CC_INC  += ../../examples/demos/mask_generation
 
 CC_DEF  := ARM_SECTION\(x\)=
 CC_DEF  += _RTE_

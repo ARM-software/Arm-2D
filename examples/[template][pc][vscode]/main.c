@@ -241,6 +241,11 @@ void scene_ring_indicator_loader(void)
     arm_2d_scene_ring_indicator_init(&DISP0_ADAPTER);
 }
 
+void scene_mask_generation_loader(void) 
+{
+    arm_2d_scene_mask_generation_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -389,7 +394,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 1
+#if 0
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -595,7 +600,10 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_ring_indicator_loader,
+        scene_mask_generation_loader,
+        //scene_virtual_resource_loader,
+        //scene_ring_indicator_loader,
+        //scene_radars_loader,
         //scene_fitness_loader,
         //scene_gas_gauge_loader
         //scene_shaped_panel_loader,

@@ -57,6 +57,9 @@
 #include "arm_2d_scene_shaped_panel.h"
 #include "arm_2d_scene_ring_indicator.h"
 
+
+#include "./mask_generation/arm_2d_scene_mask_generation.h"
+
 /* monochrome demos */
 #if defined(RTE_Acceleration_Arm_2D_Demos_Monochrome)
 #   include "arm_2d_scene_mono_loading.h"
