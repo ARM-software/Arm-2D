@@ -242,7 +242,6 @@ void __arm_2d_impl_rgb565_user_draw_circle(
         uint16_t *phwTargetLine = phwTarget;
         int16_t iYOffset = iY - this.tPivot.iY;
 
-
         bool bFindFirstInnerPoint = false;
         bool bDrawInner = false;
         uint16_t hwInnerPoints = 0;
@@ -250,7 +249,6 @@ void __arm_2d_impl_rgb565_user_draw_circle(
         int_fast16_t iX = ptValidRegionOnVirtualScreen->tLocation.iX;
 
         /* calculate the left most point */
-    #if 1
         if (ABS(iYOffset) < this.tParams.iRadius) {
 
             uint32_t wDistance2 = (uint32_t)this.tParams.iRadius * (uint32_t)this.tParams.iRadius
@@ -265,10 +263,7 @@ void __arm_2d_impl_rgb565_user_draw_circle(
                 iX = iLeftMostX;
                 phwTargetLine += iXAdvance;
             }
-
         } while(0);
-    #endif
-
 
         for (; iX < iXLimit; iX++) {
 
