@@ -114,16 +114,35 @@ if (ARM2D_TJPGD_LOADER)
 	target_sources(ARM2D PRIVATE 
             examples/common/opcodes/arm_2d_user_opcode_draw_circle.c
             examples/common/opcodes/arm_2d_user_opcode_draw_line.c
+            examples/common/loader/generic_loader/generic_loader.c
             examples/common/loader/tjpgd_loader/tjpgd_loader.c
             examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c
             examples/common/loader/zjpgd_loader/zjpgd_loader.c
             examples/common/loader/zjpgd_loader/zjpgd/zjpgd.c
+            examples/common/loader/qoi_loader/qoi_loader.c
+            examples/common/loader/qoi_loader/qoi_decoder/arm_qoi_decoder.c
+
+            examples/common/loader/freetype_loader/freetype_loader.c
+            examples/common/loader/freetype_loader/freetype/src/base/ftsystem.c
+            examples/common/loader/freetype_loader/freetype/src/base/ftinit.c
+            examples/common/loader/freetype_loader/freetype/src/base/ftbase.c
+            examples/common/loader/freetype_loader/freetype/src/base/ftdebug.c
+            examples/common/loader/freetype_loader/freetype/src/base/ftbitmap.c
+            examples/common/loader/freetype_loader/freetype/src/base/ftglyph.c
+            examples/common/loader/freetype_loader/freetype/src/sfnt/sfnt.c
+            examples/common/loader/freetype_loader/freetype/src/truetype/truetype.c
+            examples/common/loader/freetype_loader/freetype/src/smooth/smooth.c
+            examples/common/loader/freetype_loader/freetype/src/autofit/autofit.c
+            examples/common/loader/freetype_loader/freetype/src/cff/cff.c
+            examples/common/loader/freetype_loader/freetype/src/psaux/psaux.c
             )
     target_compile_options(ARM2D PUBLIC
             -DRTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
             -DRTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader
             -DRTE_Acceleration_Arm_2D_Extra_JPEG_Loader
             -DRTE_Acceleration_Arm_2D_Extra_Loader
+            -DRTE_Acceleration_Arm_2D_Extra_QOI_Loader
+            -DRTE_Acceleration_Arm_2D_Extra_FreeType_Loader
             )
 endif()
 
