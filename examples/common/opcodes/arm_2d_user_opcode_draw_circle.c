@@ -238,39 +238,59 @@ void __arm_2d_impl_rgb565_user_draw_circle(
         uint16_t *phwTargetLine = phwTarget;
         int16_t iYOffset = iY - this.tPivot.iY;
         iYOffset = ABS(iYOffset);
+        bool bFindFirstInnerPoint = false;
+        bool bDrawInner = false;
+        uint16_t hwInnerPoints = 0;
 
         for (int_fast16_t iX = ptValidRegionOnVirtualScreen->tLocation.iX; iX < iWidth; iX++) {
 
-            int16_t iXOffset = iX - this.tPivot.iX;
-            iXOffset = ABS(iXOffset);
-            
-            /* calculate the distance */
-            uint32_t wDistance2 = (uint32_t)iXOffset * (uint32_t)iXOffset + (uint32_t)iYOffset * (uint32_t)iYOffset;
-            
-            if (wDistance2 >= wRadiusBorder2) {
-                phwTargetLine++;
-                continue;
-            } else if (wDistance2 <= wRadius2) {
-                /* fill colour with opacity */
-                __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chOpacity);
-                continue;
-            } else if (!this.tParams.bAntiAlias) {
-                phwTargetLine++;
-                continue;
+            if (bFindFirstInnerPoint) {
+                /* draw inner points */
+                bDrawInner = true;
+                if (--hwInnerPoints) {
+                    __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chOpacity);
+                    continue;
+                } else {
+                    bFindFirstInnerPoint = false;
+                }
             }
-
-            /* anti alias */
-            float fDistance;
-            arm_sqrt_f32((float)wDistance2, &fDistance);
-            q16_t q16Fraction = reinterpret_q16_f32(fDistance);
-
-            /* get the residual */
-            q16Fraction -= q16Radius;
-
-            uint16_t hwOpacity = (q16Fraction & 0xFF00) >> 8;
-            uint8_t chPointOpacity = arm_2d_helper_alpha_mix(0xFF - hwOpacity, chOpacity);
             
-            __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chPointOpacity);
+            {
+                int16_t iXOffset = iX - this.tPivot.iX;
+                //iXOffset = ABS(iXOffset);
+                
+                /* calculate the distance */
+                uint32_t wDistance2 = (uint32_t)iXOffset * (uint32_t)iXOffset + (uint32_t)iYOffset * (uint32_t)iYOffset;
+                
+                if (wDistance2 >= wRadiusBorder2) {
+                    phwTargetLine++;
+                    continue;
+                } else if (wDistance2 <= wRadius2) {
+                    if (iXOffset < 0) {
+                        bFindFirstInnerPoint = true;
+                        hwInnerPoints = ABS(iXOffset) * 2;
+                    }
+                    /* fill colour with opacity */
+                    __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chOpacity);
+                    continue;
+                } else if (!this.tParams.bAntiAlias) {
+                    phwTargetLine++;
+                    continue;
+                }
+
+                /* anti alias */
+                float fDistance;
+                arm_sqrt_f32((float)wDistance2, &fDistance);
+                q16_t q16Fraction = reinterpret_q16_f32(fDistance);
+
+                /* get the residual */
+                q16Fraction -= q16Radius;
+
+                uint16_t hwOpacity = (q16Fraction & 0xFF00) >> 8;
+                uint8_t chPointOpacity = arm_2d_helper_alpha_mix(0xFF - hwOpacity, chOpacity);
+                
+                __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chPointOpacity);
+            }
         }
 
         phwTarget += iTargetStride;
