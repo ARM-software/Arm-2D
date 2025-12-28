@@ -72,12 +72,13 @@ ARM_NONNULL(1,2)
 void <control_name>_init( user_<control_name>_t *ptThis,
                           user_<control_name>_cfg_t *ptCFG)
 {
-    assert(NULL!= ptThis);
+    assert(NULL != ptThis);
+    assert(NULL != ptCFG);
     memset(ptThis, 0, sizeof(user_<control_name>_t));
 
-    if (NULL != ptCFG) {
+    //if (NULL != ptCFG) {
         this.tCFG = *ptCFG;
-    }
+    //}
 
 
 }
