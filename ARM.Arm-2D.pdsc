@@ -512,7 +512,7 @@
             <file category="header"      name="examples/common/loader/freetype_loader/arm_freetype_cfg.h" attr="config" version="1.0.0"/>
           </files>
           <RTE_Components_h>
-    #define RTE_Acceleration_Arm_2D_Extra_Loaders
+    #define RTE_Acceleration_Arm_2D_Extra_Loader
     #define RTE_Acceleration_Arm_2D_Extra_JPEG_Loader
     #define RTE_Acceleration_Arm_2D_Extra_QOI_Loader
     #define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
