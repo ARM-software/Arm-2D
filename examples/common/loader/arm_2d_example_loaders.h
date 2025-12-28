@@ -21,6 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 
+#include "./generic_loader/arm_2d_generic_loader.h"
 #include "./tjpgd_loader/tjpgd_loader.h"
 #include "./zjpgd_loader/zjpgd_loader.h"
 #include "./freetype_loader/freetype_loader.h"

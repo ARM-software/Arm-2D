@@ -22,6 +22,7 @@ CC_SRC  += $(wildcard ../../examples/common/scenes/bubble_charging/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/animate_background/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/knob/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/generic_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/tjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/*.c)
@@ -58,6 +59,7 @@ CC_INC  += ../../examples/common/controls
 CC_INC  += ../../examples/common/controls/qrcode_box
 CC_INC  += ../../examples/common/opcodes
 CC_INC  += ../../examples/common/loader
+CC_INC  += ../../examples/common/loader/generic_loader
 CC_INC  += ../../examples/common/loader/tjpgd_loader
 CC_INC  += ../../examples/common/loader/zjpgd_loader
 CC_INC  += ../../examples/common/loader/freetype_loader
@@ -146,9 +148,9 @@ ifeq ($(OS),Windows_NT)
 	LDFLAG  +=  -flto
 else
 	# For other platform, we are allowed to set the optimization level
-	CCFLAG  +=  -Ofast
-	CCFLAG  +=  -flto
-	LDFLAG  +=  -flto
+	CCFLAG  +=  -O0
+	#CCFLAG  +=  -flto
+	#LDFLAG  +=  -flto
 endif
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
