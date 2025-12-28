@@ -103,8 +103,6 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
     } else if ( (!ptCFG->bUseHeapForVRES)
              && (NULL == ptCFG->ptScene)) {
         return ARM_2D_ERR_MISSING_PARAM;
-    } else if (NULL == ptCFG->ImageIO.ptIO) {
-        return ARM_2D_ERR_MISSING_PARAM;
     }
 
     memset(ptThis, 0, sizeof(arm_generic_loader_t));
@@ -119,6 +117,8 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
 
     if (this.tCFG.tColourInfo.chScheme == 0) {
         this.vres.tTile.tColourInfo.chScheme = ARM_2D_COLOUR;
+    } else {
+        this.vres.tTile.tColourInfo.chScheme = ptCFG->tColourInfo.chScheme;
     }
     this.vres.tTile.tInfo.bHasEnforcedColour = true;
 
@@ -166,9 +166,11 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
         
         __arm_generic_decode_prepare(ptThis);
 
-        /* close low level IO */
-        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        if (NULL != this.tCFG.ImageIO.ptIO) {
+            /* close low level IO */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        }
 
         /* free scratch memory */
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -189,11 +191,15 @@ bool arm_generic_loader_io_seek(uintptr_t pTarget,
 {
     arm_generic_loader_t *ptThis = (arm_generic_loader_t *)pTarget;
 
-    return ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
-                ARM_2D_PARAM(   this.tCFG.ImageIO.pTarget, 
-                                ptThis, 
-                                offset, 
-                                whence));
+    if (NULL != this.tCFG.ImageIO.ptIO) {
+        return ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
+                    ARM_2D_PARAM(   this.tCFG.ImageIO.pTarget, 
+                                    ptThis, 
+                                    offset, 
+                                    whence));
+    }
+
+    return false;
 }
 
 size_t arm_generic_loader_io_read (   uintptr_t pTarget,       
@@ -205,8 +211,12 @@ size_t arm_generic_loader_io_read (   uintptr_t pTarget,
     size_t tResult = tLength;
     if (NULL != pchBuffer) {
 
-        tResult = ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnRead, 
-                    ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis, pchBuffer, tLength));
+        if (NULL != this.tCFG.ImageIO.ptIO) {
+            tResult = ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnRead, 
+                        ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis, pchBuffer, tLength));
+        } else {
+            tResult = 0;
+        }
     }
 
     return tResult;
@@ -236,11 +246,13 @@ bool __arm_generic_decode_prepare(arm_generic_loader_t *ptThis)
             }
         }     
 
-        /* open low level IO */
-        if (!ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnOpen,
-                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis))) {
-            this.bErrorDetected = true;
-            break;    
+        if (NULL != this.tCFG.ImageIO.ptIO) {
+            /* open low level IO */
+            if (!ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnOpen,
+                    ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis))) {
+                this.bErrorDetected = true;
+                break;    
+            }
         }
 
         if (ARM_2D_ERR_NONE != ARM_2D_INVOKE(this.tCFG.UserDecoder.fnDecoderInit, 
@@ -253,9 +265,11 @@ bool __arm_generic_decode_prepare(arm_generic_loader_t *ptThis)
 
     if (this.bErrorDetected) {
 
-        /* close low level IO */
-        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        if (NULL != this.tCFG.ImageIO.ptIO) {
+            /* close low level IO */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        }
 
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -311,9 +325,11 @@ void __arm_generic_decode_partial(  arm_generic_loader_t *ptThis,
 
     if (this.bErrorDetected) {
 
-        /* close low level IO */
-        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        if (NULL != this.tCFG.ImageIO.ptIO) {
+            /* close low level IO */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        }
 
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -356,9 +372,11 @@ void arm_generic_loader_on_load( arm_generic_loader_t *ptThis)
 
     if (this.bErrorDetected) {
 
-        /* close low level IO */
-        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        if (NULL != this.tCFG.ImageIO.ptIO) {
+            /* close low level IO */
+            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+        }
 
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -381,9 +399,11 @@ void arm_generic_loader_depose( arm_generic_loader_t *ptThis)
         return ;
     }
 
-    /* close low level IO */
-    ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-        ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+    if (NULL != this.tCFG.ImageIO.ptIO) {
+        /* close low level IO */
+        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
+            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
+    }
 
     this.ImageBuffer.pchBuffer = NULL;
 
@@ -743,7 +763,7 @@ arm_2d_err_t  __arm_2d_generic_decode (
                                         &this.Decoder.tDrawRegion,
                                         this.ImageBuffer.pchBuffer,
                                         this.hwTargetStrideInByte, 
-                                        this.u5BitsPerPixel);
+                                        this.u5BitsPerPixel + 1);
 
     ARM_2D_LOG_INFO(
         CONTROLS, 

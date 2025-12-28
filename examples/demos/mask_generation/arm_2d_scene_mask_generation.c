@@ -60,15 +60,16 @@
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
-#   define c_tileCMSISLogo          c_tileCMSISLogoGRAY8
+#   define c_tileHelium        c_tileHeliumGRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
-#   define c_tileCMSISLogo          c_tileCMSISLogoRGB565
+#   define c_tileHelium        c_tileHeliumRGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileCMSISLogo          c_tileCMSISLogoCCCA8888
+#   define c_tileHelium        c_tileHeliumCCCN888
+
 #else
 #   error Unsupported colour depth!
 #endif
@@ -84,6 +85,7 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+extern const arm_2d_tile_t c_tileHelium;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -118,6 +120,7 @@ static void __on_scene_mask_generation_load(arm_2d_scene_t *ptScene)
     user_scene_mask_generation_t *ptThis = (user_scene_mask_generation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    circle_mask_generator_on_load(&this.tCircleMaskGen);
 }
 
 static void __after_scene_mask_generation_switching(arm_2d_scene_t *ptScene)
@@ -134,6 +137,7 @@ static void __on_scene_mask_generation_depose(arm_2d_scene_t *ptScene)
 
     /*--------------------- insert your depose code begin --------------------*/
     
+    circle_mask_generator_depose(&this.tCircleMaskGen);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -171,12 +175,29 @@ static void __on_scene_mask_generation_frame_start(arm_2d_scene_t *ptScene)
     user_scene_mask_generation_t *ptThis = (user_scene_mask_generation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    int32_t nResult;
+    /* simulate a full battery charging/discharge cycle */
+    arm_2d_helper_time_cos_slider(  0, 
+                                    (this.iDiameter >> 1), 
+                                    3000, 
+                                    0, 
+                                    &nResult, 
+                                    &this.lTimestamp[0]);
+
+    
+    circle_mask_generator_set_radius(&this.tCircleMaskGen, nResult);
+
+
+    circle_mask_generator_on_frame_start(&this.tCircleMaskGen);
+
 }
 
 static void __on_scene_mask_generation_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_mask_generation_t *ptThis = (user_scene_mask_generation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    circle_mask_generator_on_frame_complete(&this.tCircleMaskGen);
 
 }
 
@@ -198,48 +219,34 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mask_generation_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
-        
-        /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
-                                    255);
-            
-            ARM_2D_OP_WAIT_ASYNC();
-            
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
-                                        (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
-                                    
+        arm_2d_align_centre_open(__top_canvas, c_tileHelium.tRegion.tSize) {
+
+
+            arm_2d_tile_copy_with_src_mask_only(&c_tileHelium, 
+                                                &this.tCircleMaskGen.tTile,
+                                                ptTile,
+                                                &__centre_region);
+
+
+            /* generate dirty region */
+            int16_t iCurrentRadius 
+                = circle_mask_generator_get_radius(&this.tCircleMaskGen)
+                + 1;
+            iCurrentRadius *= 2;
+            arm_2d_align_centre_open(__centre_region, iCurrentRadius, iCurrentRadius) {
+
+                arm_2d_helper_dirty_region_update_item(
+                    &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                    ptTile,
+                    NULL,
+                    &__centre_region
+                );
+
+            }
         }
 
 
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
-        }
-    #else
-        /* draw the cmsis logo using mask in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                ptTile, 
-                                                &__centre_region, 
-                                                &c_tileCMSISLogoA4Mask, 
-                                                (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
-        }
-    #endif
 
         /* draw text at the top-left corner */
 
@@ -319,13 +326,28 @@ user_scene_mask_generation_t *__arm_2d_scene_mask_generation_init(   arm_2d_scen
             .fnOnFrameCPL   = &__on_scene_mask_generation_frame_complete,
             .fnDepose       = &__on_scene_mask_generation_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
     /* ------------   initialize members of user_scene_mask_generation_t begin ---------------*/
 
+    /* initialize circle mask */
+    do {
+
+        this.iDiameter = MIN(c_tileHelium.tRegion.tSize.iWidth,
+                                c_tileHelium.tRegion.tSize.iHeight);
+
+        circle_mask_generator_cfg_t tCFG = {
+            .bAntiAlias = true,
+            .iRadius = this.iDiameter >> 1,
+            .tBoxSize = c_tileHelium.tRegion.tSize,
+            .ptScene = &this.use_as__arm_2d_scene_t,
+        };
+
+        circle_mask_generator_init(&this.tCircleMaskGen, &tCFG);
+    } while(0);
 
     /* ------------   initialize members of user_scene_mask_generation_t end   ---------------*/
 

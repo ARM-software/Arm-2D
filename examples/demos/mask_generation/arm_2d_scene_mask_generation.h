@@ -29,6 +29,7 @@
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
+#include "circle_mask_generator.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -86,6 +87,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
+    int16_t iDiameter;
+
+    circle_mask_generator_t tCircleMaskGen;
 
 )
     /* place your public member here */

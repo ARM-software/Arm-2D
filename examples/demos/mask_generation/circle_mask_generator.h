@@ -58,7 +58,15 @@ extern "C" {
 
 
 typedef struct circle_mask_generator_cfg_t {
+
+    arm_2d_size_t tBoxSize;    
+    arm_2d_location_t *ptPivot;
+    int16_t iRadius;
+    uint16_t bUseHeapForVRES        : 1;
+    uint16_t bAntiAlias             : 1;
+
     arm_2d_scene_t *ptScene;
+
 } circle_mask_generator_cfg_t;
 
 /*!
@@ -67,16 +75,16 @@ typedef struct circle_mask_generator_cfg_t {
 typedef struct circle_mask_generator_t circle_mask_generator_t;
 
 struct circle_mask_generator_t {
+    union {
+        arm_2d_tile_t tTile;
+        implement(arm_generic_loader_t);
+    };
 
 ARM_PRIVATE(
 
     circle_mask_generator_cfg_t tCFG;
-
-    /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
-    uint8_t chOpacity;
+    arm_2d_location_t tPivot;
 )
-    /* place your public member here */
     
 };
 
@@ -84,9 +92,10 @@ ARM_PRIVATE(
 /*============================ PROTOTYPES ====================================*/
 
 extern
-ARM_NONNULL(1)
-void circle_mask_generator_init( circle_mask_generator_t *ptThis,
-                          circle_mask_generator_cfg_t *ptCFG);
+ARM_NONNULL(1, 2)
+arm_2d_err_t circle_mask_generator_init(circle_mask_generator_t *ptThis,
+                                        circle_mask_generator_cfg_t *ptCFG);
+
 extern
 ARM_NONNULL(1)
 void circle_mask_generator_depose( circle_mask_generator_t *ptThis);
@@ -103,7 +112,14 @@ extern
 ARM_NONNULL(1)
 void circle_mask_generator_on_frame_complete( circle_mask_generator_t *ptThis);
 
+extern
+ARM_NONNULL(1)
+arm_2d_err_t circle_mask_generator_set_radius(  circle_mask_generator_t *ptThis, 
+                                                int16_t iRadius);
 
+extern
+ARM_NONNULL(1)
+int16_t circle_mask_generator_get_radius(  circle_mask_generator_t *ptThis);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
