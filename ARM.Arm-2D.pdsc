@@ -482,6 +482,10 @@
           <files>
             <file category="include"     name="examples/common/loader/" />
             <file category="sourceC"     name="examples/common/loader/__arm_2d_loader_common.c" />
+
+            <file category="sourceC"     name="examples/common/loader/generic_loader/arm_generic_loader.c" />
+            <file category="sourceC"     name="examples/common/loader/generic_loader/arm_generic_loader.c" />
+
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"       attr="config" version="1.1.0"/>
