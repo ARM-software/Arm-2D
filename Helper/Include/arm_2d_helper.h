@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        9. July 2025
- * $Revision:    V.2.4.1
+ * $Date:        29. Dec 2025
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -569,6 +569,18 @@ ARM_NONNULL(1)
 bool arm_2d_byte_fifo_peek( arm_2d_byte_fifo_t *ptThis, 
                             uint8_t *pchChar, 
                             bool bMovePointer);
+
+/*!
+ * \brief peek a number of bytes from a given fifo
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
+ * \return size_t the number of bytes actually read out
+ */
+extern
+ARM_NONNULL(1)
+size_t arm_2d_byte_fifo_peek_bytes( arm_2d_byte_fifo_t *ptThis, 
+                                    uint8_t *pchChar,
+                                    size_t tLength);
 
 /*!
  * \brief drop all peeked byte from a given fifo

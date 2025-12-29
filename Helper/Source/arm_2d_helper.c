@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        9. July 2025
- * $Revision:    V.2.4.1
+ * $Date:        29. Dec 2025
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1102,6 +1102,49 @@ bool arm_2d_byte_fifo_peek( arm_2d_byte_fifo_t *ptThis,
     }
 
     return bResult;
+}
+
+
+ARM_NONNULL(1)
+size_t arm_2d_byte_fifo_peek_bytes( arm_2d_byte_fifo_t *ptThis, 
+                                    uint8_t *pchChar,
+                                    size_t tLength)
+{
+    assert(NULL != ptThis);
+    size_t tActualRead = 0;
+    uint8_t chChar;
+
+    if (NULL == this.pchBuffer || 0 == tLength) {
+        return 0;
+    }
+
+    arm_irq_safe {
+        do {
+            
+            if ((this.tPeek.hwPointer == this.hwTail) 
+            &&  (this.tPeek.hwDataAvailable == 0)) {
+                /* Nothing left to peek */
+                break;
+            }
+
+            tActualRead = MIN(tLength, this.tPeek.hwDataAvailable);
+            size_t tMaxToReadUntilEnd = this.hwSize - this.tPeek.hwPointer;
+            tActualRead = MIN(tActualRead, tMaxToReadUntilEnd);
+
+            if (NULL != pchChar) {
+                memcpy(pchChar, &this.pchBuffer[this.tPeek.hwPointer], tActualRead);
+            }
+
+            this.tPeek.hwPointer += tActualRead;
+            if (this.tPeek.hwPointer >= this.hwSize) {
+                this.tPeek.hwPointer = 0;
+            }
+
+            this.tPeek.hwDataAvailable -= tActualRead;
+        } while(0);
+    }
+
+    return tActualRead;
 }
 
 ARM_NONNULL(1)
