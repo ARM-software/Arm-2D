@@ -118,7 +118,6 @@ ARM_PRIVATE(
 
     crt_screen_t tCRTScreen;
 
-    arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
     __space_badge_explosion_halo_t tHalos[16];
 
 #if SPACE_BADGE_SHOW_NEBULA

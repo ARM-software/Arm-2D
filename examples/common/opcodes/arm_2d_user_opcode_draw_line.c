@@ -207,33 +207,47 @@ arm_fsm_rt_t arm_2dp_rgb565_user_draw_line(
 
     ARM_2D_IMPL(arm_2d_user_draw_line_descriptor_t, ptOP);
 
-    switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
-        case ARM_2D_RT_FALSE:
-            
-            break;
-        case ARM_2D_RT_TRUE:
-            do {
-                if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
-                    return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
-                }
+    if (NULL == ptOP) {
+        arm_2d_err_t ret = arm_2dp_rgb565_user_draw_line_prepare(   ptThis, 
+                                                                    ptTarget, 
+                                                                    ptRegion, 
+                                                                    ptParams);
 
-                arm_2d_err_t ret = arm_2dp_rgb565_user_draw_line_prepare(   ptThis, 
-                                                                            ptTarget, 
-                                                                            ptRegion, 
-                                                                            ptParams);
+        if (ARM_2D_ERR_NONE != ret) {
+            return (arm_fsm_rt_t)ret;
+        }
 
-                if (ARM_2D_ERR_NONE != ret) {
-                    return (arm_fsm_rt_t)ret;
-                }
+        this.chOpacity = chOpacity;
+        this.hwColour = tColour.tValue;
+    } else {
+        switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
+            case ARM_2D_RT_FALSE:
+                
+                break;
+            case ARM_2D_RT_TRUE:
+                do {
+                    if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+                        return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
+                    }
 
-                this.chOpacity = chOpacity;
-                this.hwColour = tColour.tValue;
+                    arm_2d_err_t ret = arm_2dp_rgb565_user_draw_line_prepare(   ptThis, 
+                                                                                ptTarget, 
+                                                                                ptRegion, 
+                                                                                ptParams);
 
-            } while(0);
-            break;
-        case ARM_2D_ERR_INVALID_PARAM:
-        default:
-            return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+                    if (ARM_2D_ERR_NONE != ret) {
+                        return (arm_fsm_rt_t)ret;
+                    }
+
+                    this.chOpacity = chOpacity;
+                    this.hwColour = tColour.tValue;
+
+                } while(0);
+                break;
+            case ARM_2D_ERR_INVALID_PARAM:
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
     }
 
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {

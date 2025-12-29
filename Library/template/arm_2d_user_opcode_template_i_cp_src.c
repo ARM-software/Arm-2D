@@ -87,6 +87,22 @@ void __arm_2d_impl_cccn888_user_<user opcode template>(
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+static
+arm_2d_err_t arm_2dp_rgb565_user_<user opcode template>_prepare(
+                            arm_2d_user_<user opcode template>_descriptor_t *ptThis,
+                            const arm_2d_tile_t *ptTarget,
+                            const arm_2d_region_t *ptRegion,
+                            const arm_2d_user_<user opcode template>_api_params_t *ptParams)
+{
+    assert(NULL != ptThis);
+    assert(NULL != ptParams);
+
+    /* add some preparation work */
+
+    return ARM_2D_ERR_NONE;
+}
+
+
 /*
  * the Frontend API
  */
@@ -107,7 +123,54 @@ arm_fsm_rt_t arm_2dp_cccn888_user_<user opcode template>(
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(arm_2d_user_<user opcode template>_descriptor_t, ptOP);
-    
+
+
+    if (NULL == ptOP) {
+        arm_2d_err_t ret = arm_2dp_rgb565_user_<user opcode template>_prepare(  ptThis, 
+                                                                                ptTarget, 
+                                                                                ptRegion, 
+                                                                                ptParams);
+
+        if (ARM_2D_ERR_NONE != ret) {
+            return (arm_fsm_rt_t)ret;
+        }
+
+        /* update other parameters */
+        //this.chOpacity = chOpacity;
+        //this.tForeground.hwColour = tColour.tValue;
+    } else {
+        switch(arm_2d_target_tile_is_new_frame(ptTarget)) {
+            case ARM_2D_RT_FALSE:
+                
+                break;
+            case ARM_2D_RT_TRUE:
+                do {
+                    if (!arm_2d_op_wait_async((arm_2d_op_core_t *)ptThis)) {
+                        return (arm_fsm_rt_t)ARM_2D_ERR_BUSY;
+                    }
+
+                    arm_2d_err_t ret = arm_2dp_rgb565_user_<user opcode template>_prepare(   ptThis, 
+                                                                                ptTarget, 
+                                                                                ptRegion, 
+                                                                                ptParams);
+
+                    if (ARM_2D_ERR_NONE != ret) {
+                        return (arm_fsm_rt_t)ret;
+                    }
+
+                    /* update other parameters */
+                    //this.chOpacity = chOpacity;
+                    //this.tForeground.hwColour = tColour.tValue;
+
+                } while(0);
+                break;
+            case ARM_2D_ERR_INVALID_PARAM:
+            default:
+                return (arm_fsm_rt_t)ARM_2D_ERR_INVALID_PARAM;
+        }
+    }
+
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }

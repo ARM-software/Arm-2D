@@ -245,7 +245,7 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
             float fXDelta;
             arm_sqrt_f32((float)wDistance2, &fXDelta);
 
-            /* NOTE:here 4 is an magic number for improving the margin 
+            /* NOTE: Here 4 is a magic number for improving the margin 
              * smoothness, please do NOT change it
              */
             int16_t iLeftMostX = this.tPivot.iX - fXDelta - 4;  
