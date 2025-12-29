@@ -563,6 +563,15 @@ void arm_2d_byte_fifo_squeeze(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
 ARM_NONNULL(1)
 uint16_t arm_2d_byte_fifo_get_item_count(arm_2d_byte_fifo_t *ptThis);
 
+/*!
+ * \brief get the depth of the FIFO
+ * \param[in] ptThis the target FIFO control block
+ * \return uint16_t the byte count
+ */
+extern
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_capcity(arm_2d_byte_fifo_t *ptThis);
+
 /*
  * \brief move the peek pointer with a given offset and mode
  * \param[in] ptThis the target FIFO control block

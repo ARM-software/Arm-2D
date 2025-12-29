@@ -1046,6 +1046,13 @@ uint16_t arm_2d_byte_fifo_get_item_count(arm_2d_byte_fifo_t *ptThis)
 }
 
 ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_capcity(arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.hwSize;
+}
+
+ARM_NONNULL(1)
 bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
 {
     assert(NULL != ptThis);
@@ -1087,9 +1094,9 @@ bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
 }
 
 ARM_NONNULL(1)
-int16_t arm_2d_byte_fifo_peek_seek(arm_2d_byte_fifo_t *ptThis,
-                                int16_t iOffset,
-                                int32_t whence)
+int16_t arm_2d_byte_fifo_peek_seek( arm_2d_byte_fifo_t *ptThis,
+                                    int16_t iOffset,
+                                    int32_t whence)
 {
     assert(NULL != ptThis);
     int16_t iCurrentIndex = -1;

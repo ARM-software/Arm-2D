@@ -21,7 +21,7 @@
 
 /*============================ INCLUDES ======================================*/
 
-#include "arm_2d.h"
+#include "arm_2d_helper.h"
 #include <stdio.h>
 
 #ifdef   __cplusplus
@@ -71,6 +71,13 @@ ARM_PRIVATE(
 
 typedef arm_loader_io_binary_t arm_loader_io_rom_t;
 
+typedef struct arm_loader_io_window_t {
+ARM_PRIVATE(
+    arm_2d_byte_fifo_t tInputFIFO;
+    arm_2d_byte_fifo_t tWindow;
+)
+} arm_loader_io_window_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern 
@@ -81,6 +88,9 @@ const arm_loader_io_t ARM_LOADER_IO_BINARY;
 
 extern 
 const arm_loader_io_t ARM_LOADER_IO_ROM;
+
+extern 
+const arm_loader_io_t ARM_LOADER_IO_WINDOW;
 
 /*============================ PROTOTYPES ====================================*/
 
@@ -110,6 +120,33 @@ ARM_NONNULL(1)
 arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_binary_t *ptThis, 
                                      uintptr_t nAddress,
                                      size_t tSize);
+
+
+/*!
+ * \brief initialize a double-buffered window
+ * \param[in] ptThis the window object
+ * \param[in] pchBuffer the buffer for the window
+ * \param[in] hwSize the buffer size
+ * \param[in] hwWindowSize the window size
+ * \note the the buffer size (hwSize) should be at least 2x of the window size(hwWindowSize).
+ * \return the error code for this initialization.
+ */
+extern
+ARM_NONNULL(1)
+arm_2d_err_t arm_loader_io_window_init( arm_loader_io_window_t *ptThis, 
+                                        uint8_t *pchBuffer,
+                                        uint16_t hwSize,
+                                        uint16_t hwWindowSize);
+
+extern
+ARM_NONNULL(1)
+void arm_loader_io_window_on_frame_start(arm_loader_io_window_t *ptThis);
+
+extern
+ARM_NONNULL(1,2)
+void arm_loader_io_window_enqueue(  arm_loader_io_window_t *ptThis, 
+                                    void *pBuffer, 
+                                    size_t tSize);
 #ifdef   __cplusplus
 }
 #endif

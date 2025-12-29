@@ -17,6 +17,7 @@
  */
 
 /*============================ INCLUDES ======================================*/
+#define __ARM_2D_HELPER_INHERIT__
 #define __ARM_2D_LOADER_IO_IMPLEMENT__
 #include "./__arm_2d_loader_common.h"
 
@@ -86,6 +87,23 @@ size_t __arm_loader_io_rom_read(uintptr_t pTarget,
                                 uint8_t *pchBuffer, 
                                 size_t tSize);
 
+static
+bool __arm_loader_io_window_open(uintptr_t pTarget, void *ptLoader);
+
+static
+void __arm_loader_io_window_close(uintptr_t pTarget, void *ptLoader);
+
+static
+bool __arm_loader_io_window_seek(   uintptr_t pTarget, 
+                                    void *ptLoader, 
+                                    int32_t offset, 
+                                    int32_t whence);
+
+static
+size_t __arm_loader_io_window_read( uintptr_t pTarget, 
+                                    void *ptLoader, 
+                                    uint8_t *pchBuffer, 
+                                    size_t tSize);
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const arm_loader_io_t ARM_LOADER_IO_FILE = {
@@ -108,6 +126,14 @@ const arm_loader_io_t ARM_LOADER_IO_ROM = {
     .fnSeek =   &__arm_loader_io_binary_seek,
     .fnRead =   &__arm_loader_io_rom_read,
 };
+
+const arm_loader_io_t ARM_LOADER_IO_WINDOW = {
+    .fnOpen =   &__arm_loader_io_window_open,
+    .fnClose =  &__arm_loader_io_window_close,
+    .fnSeek =   &__arm_loader_io_window_seek,
+    .fnRead =   &__arm_loader_io_window_read,
+};
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
@@ -361,6 +387,133 @@ size_t __arm_loader_io_rom_read(uintptr_t pTarget, void *ptLoader, uint8_t *pchB
     this.tPostion += iSizeToRead;
 
     return iSizeToRead;
+}
+
+
+ARM_NONNULL(1)
+arm_2d_err_t arm_loader_io_window_init( arm_loader_io_window_t *ptThis, 
+                                        uint8_t *pchBuffer,
+                                        uint16_t hwSize,
+                                        uint16_t hwWindowSize)
+{
+    if (    NULL == ptThis 
+       ||   0 == hwSize 
+       ||   0 == hwWindowSize
+       ||   hwSize < (hwWindowSize * 2)) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    memset(ptThis, 0, sizeof(arm_loader_io_binary_t));
+    size_t tInputBufferSize = hwSize - hwWindowSize;
+
+    if (!arm_2d_byte_fifo_init(&this.tInputFIFO, pchBuffer, tInputBufferSize)) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    pchBuffer += tInputBufferSize;
+
+    if (!arm_2d_byte_fifo_init(&this.tWindow, pchBuffer, hwWindowSize)) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
+void arm_loader_io_window_on_frame_start(arm_loader_io_window_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    do {
+        uint8_t chByte;
+        if (!arm_2d_byte_fifo_dequeue(&this.tInputFIFO, &chByte)) {
+            break;
+        }
+
+        arm_2d_byte_fifo_squeeze(&this.tWindow, chByte);
+    } while(true);
+}
+
+ARM_NONNULL(1,2)
+void arm_loader_io_window_enqueue(  arm_loader_io_window_t *ptThis, 
+                                    void *pBuffer, 
+                                    size_t tSize)
+{
+    assert(NULL != ptThis);
+
+    if (NULL == pBuffer || 0 == tSize) {
+        return ;
+    }
+
+    uint8_t *pchSrc = (uint8_t *)pBuffer;
+    uint16_t hwFIFODepth = arm_2d_byte_fifo_get_capcity(&this.tInputFIFO);
+    if (tSize >= hwFIFODepth) {
+        arm_2d_byte_fifo_drop_all(&this.tInputFIFO);
+        tSize -= hwFIFODepth;
+        arm_irq_safe {
+            memcpy( this.tInputFIFO.pchBuffer, 
+                    pchSrc + tSize,
+                    hwFIFODepth);
+
+            this.tInputFIFO.hwTail = 0;
+            this.tInputFIFO.tHead.hwPointer = 0;
+            this.tInputFIFO.tHead.hwDataAvailable = hwFIFODepth;
+            this.tInputFIFO.tPeek.hwPointer = 0;
+            this.tInputFIFO.tPeek.hwDataAvailable = hwFIFODepth;
+        }
+        return ;
+    }
+
+    do {
+        arm_2d_byte_fifo_squeeze(&this.tInputFIFO, *pchSrc++);
+    } while(--tSize);
+}
+
+static
+bool __arm_loader_io_window_open(uintptr_t pTarget, void *ptLoader)
+{
+    arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    return true;
+}
+
+static
+void __arm_loader_io_window_close(uintptr_t pTarget, void *ptLoader)
+{
+    arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    ARM_2D_UNUSED(ptThis);
+
+}
+
+static
+bool __arm_loader_io_window_seek(uintptr_t pTarget, void *ptLoader, int32_t offset, int32_t whence)
+{
+    arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    if (arm_2d_byte_fifo_peek_seek(&this.tWindow, offset, whence) < 0) {
+        return false;
+    }
+
+    return true;
+}
+
+static
+size_t __arm_loader_io_window_read(uintptr_t pTarget, void *ptLoader, uint8_t *pchBuffer, size_t tSize)
+{
+    arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    if (NULL == pchBuffer || 0 == tSize) {
+        return 0;
+    }
+
+    return arm_2d_byte_fifo_peek_bytes(&this.tWindow, pchBuffer, tSize);
 }
 
 
