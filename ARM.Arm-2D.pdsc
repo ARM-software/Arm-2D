@@ -338,7 +338,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="3.1.1" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="3.1.2" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -357,8 +357,8 @@
             <file category="header"      name="examples/common/opcodes/__arm_2d_example_opcodes_common.h" />
             <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_line.c" attr="config" version="1.2.1" />
             <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_line.h" attr="config" version="1.2.1" />
-            <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_circle.c" attr="config" version="1.0.0" />
-            <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_circle.h" attr="config" version="1.0.0" />
+            <file category="sourceC"     name="examples/common/opcodes/arm_2d_user_opcode_draw_circle.c" attr="config" version="1.1.0" />
+            <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_circle.h" attr="config" version="1.1.0" />
 
             <!-- asset -->
             <file category="sourceC"     name="Helper/Source/arm_2d_asset_white_dot_small.c" />

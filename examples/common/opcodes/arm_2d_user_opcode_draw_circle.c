@@ -237,6 +237,10 @@ void __arm_2d_impl_rgb565_user_draw_circle(
     uint32_t wRadiusBorder2 = (uint32_t)(this.tParams.iRadius + 1) * (uint32_t)(this.tParams.iRadius + 1);
     q16_t q16Radius = reinterpret_q16_s16(this.tParams.iRadius);
 
+    q16_t q161MagicRatio 
+        = reinterpret_q16_s16( 
+            (int16_t)(wRadiusBorder2 - wRadius2));
+
     for (int_fast16_t iY = ptValidRegionOnVirtualScreen->tLocation.iY; iY < iYLimit; iY++) {
 
         uint16_t *phwTargetLine = phwTarget;
@@ -248,22 +252,28 @@ void __arm_2d_impl_rgb565_user_draw_circle(
 
         int_fast16_t iX = ptValidRegionOnVirtualScreen->tLocation.iX;
 
+    /* disable it for Cortex-M0/M0+ */
+    #if !(defined(__ARM_ARCH) && __ARM_ARCH_PROFILE == 'M' && (__ARM_ARCH_ISA_THUMB < 2))
         /* calculate the left most point */
         if (ABS(iYOffset) < this.tParams.iRadius) {
 
-            uint32_t wDistance2 = (uint32_t)this.tParams.iRadius * (uint32_t)this.tParams.iRadius
+            uint32_t wDistance2 = wRadius2
                                 - (uint32_t)iYOffset * (uint32_t)iYOffset;
             
             float fXDelta;
             arm_sqrt_f32((float)wDistance2, &fXDelta);
 
-            int16_t iLeftMostX = this.tPivot.iX - fXDelta - 1;
+            /* NOTE:here 4 is an magic number for improving the margin 
+             * smoothness, please do NOT change it
+             */
+            int16_t iLeftMostX = this.tPivot.iX - fXDelta - 4;
             int16_t iXAdvance = iLeftMostX - iX;
             if (iX < iLeftMostX && iLeftMostX < iXLimit) {
                 iX = iLeftMostX;
                 phwTargetLine += iXAdvance;
             }
         } while(0);
+    #endif
 
         for (; iX < iXLimit; iX++) {
 
@@ -305,15 +315,11 @@ void __arm_2d_impl_rgb565_user_draw_circle(
                     continue;
                 }
 
-                /* anti alias */
-                float fDistance;
-                arm_sqrt_f32((float)wDistance2, &fDistance);
-                q16_t q16Fraction = reinterpret_q16_f32(fDistance);
+                q16_t q16Delta = reinterpret_q16_s16(wDistance2 - wRadius2);
 
-                /* get the residual */
-                q16Fraction -= q16Radius;
+                q16Delta = div_q16(q16Delta, q161MagicRatio);
+                uint16_t hwOpacity = (q16Delta & 0xFF00) >> 8;
 
-                uint16_t hwOpacity = (q16Fraction & 0xFF00) >> 8;
                 uint8_t chPointOpacity = arm_2d_helper_alpha_mix(0xFF - hwOpacity, chOpacity);
                 
                 __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chPointOpacity);
