@@ -1274,6 +1274,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="memitem:gae315df9c1c2853c5cddae4f829a207c9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae315df9c1c2853c5cddae4f829a207c9">arm_2d_byte_fifo_get_item_count</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
 <tr class="memdesc:gae315df9c1c2853c5cddae4f829a207c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the number of bytes available in the FIFO.  <a href="group__gHelper.html#gae315df9c1c2853c5cddae4f829a207c9">More...</a><br /></td></tr>
 <tr class="separator:gae315df9c1c2853c5cddae4f829a207c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae088da98a4a858328dc2a15fb30c48b2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae088da98a4a858328dc2a15fb30c48b2">arm_2d_byte_fifo_get_capcity</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae088da98a4a858328dc2a15fb30c48b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the depth of the FIFO  <a href="group__gHelper.html#gae088da98a4a858328dc2a15fb30c48b2">More...</a><br /></td></tr>
+<tr class="separator:gae088da98a4a858328dc2a15fb30c48b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9782a0ada97952750c950fce1ff06cd"><td class="memItemLeft" align="right" valign="top"><a id="gab9782a0ada97952750c950fce1ff06cd" name="gab9782a0ada97952750c950fce1ff06cd"></a>
 int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_byte_fifo_peek_seek</b> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, int16_t iOffset, int32_t whence)</td></tr>
 <tr class="separator:gab9782a0ada97952750c950fce1ff06cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -14396,6 +14399,33 @@ false line buffer is full </dd></dl>
 </div><div class="memdoc">
 
 <p>get the number of bytes available in the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target FIFO control block </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint16_t the byte count </dd></dl>
+
+</div>
+</div>
+<a id="gae088da98a4a858328dc2a15fb30c48b2" name="gae088da98a4a858328dc2a15fb30c48b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae088da98a4a858328dc2a15fb30c48b2">&#9670;&#160;</a></span>arm_2d_byte_fifo_get_capcity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t arm_2d_byte_fifo_get_capcity </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the depth of the FIFO </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target FIFO control block </td></tr>
