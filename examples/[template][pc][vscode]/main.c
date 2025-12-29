@@ -246,6 +246,11 @@ void scene_mask_generation_loader(void)
     arm_2d_scene_mask_generation_init(&DISP0_ADAPTER);
 }
 
+void scene_waveform_loader(void) 
+{
+    arm_2d_scene_waveform_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -600,7 +605,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_mask_generation_loader,
+        scene_waveform_loader,
+        //scene_mask_generation_loader,
         //scene_virtual_resource_loader,
         //scene_ring_indicator_loader,
         //scene_radars_loader,

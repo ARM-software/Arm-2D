@@ -56,6 +56,7 @@
 #include "arm_2d_scene_flight_attitude_instrument.h"
 #include "arm_2d_scene_shaped_panel.h"
 #include "arm_2d_scene_ring_indicator.h"
+#include "arm_2d_scene_waveform.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Demos_Mask_Generator)
 #   include "arm_2d_scene_mask_generation.h"
