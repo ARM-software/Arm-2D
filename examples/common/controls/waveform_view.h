@@ -61,7 +61,7 @@ typedef struct waveform_view_cfg_t {
     arm_2d_size_t tSize;
 
     uint16_t bUseHeapForVRES        : 1;
-    uint16_t bAntiAlias             : 1;
+    uint16_t                        : 15;
 
     struct {
         const arm_loader_io_t *ptIO;

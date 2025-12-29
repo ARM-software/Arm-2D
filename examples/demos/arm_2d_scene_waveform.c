@@ -84,6 +84,14 @@ extern const arm_2d_tile_t c_tileCMSISLogo;
 extern const arm_2d_tile_t c_tileCMSISLogoMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA2Mask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
+
+extern
+const
+struct {
+    implement(arm_2d_user_font_t);
+    arm_2d_char_idx_t tUTF8Table;
+} ARM_2D_FONT_LiberationSansRegular14_A4;
+
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -118,6 +126,8 @@ static void __on_scene_waveform_load(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    waveform_view_on_load(&this.tWaveform);
+
 }
 
 static void __after_scene_waveform_switching(arm_2d_scene_t *ptScene)
@@ -133,7 +143,7 @@ static void __on_scene_waveform_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
-    
+    waveform_view_depose(&this.tWaveform);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -171,12 +181,16 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    waveform_view_on_frame_start(&this.tWaveform);
+
 }
 
 static void __on_scene_waveform_frame_complete(arm_2d_scene_t *ptScene)
 {
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+    waveform_view_on_frame_complete(&this.tWaveform);
 
 }
 
@@ -198,48 +212,59 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
 
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the scene begin-----------------------*/
-        
-        /* following code is just a demo, you can remove them */
 
-        arm_2d_align_centre(__top_canvas, 200, 100 ) {
-            draw_round_corner_box(  ptTile, 
-                                    &__centre_region, 
-                                    GLCD_COLOR_WHITE, 
-                                    255);
-            
-            ARM_2D_OP_WAIT_ASYNC();
-            
-            draw_round_corner_border(   ptTile, 
-                                        &__centre_region, 
-                                        GLCD_COLOR_BLACK, 
-                                        (arm_2d_border_opacity_t)
-                                            {32, 32, 255-64, 255-64},
-                                        (arm_2d_corner_opacity_t)
-                                            {0, 128, 128, 128});
-                                    
-        }
-
-
-    #if 0
-        /* draw the cmsis logo in the centre of the screen */
-        arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
-            arm_2d_tile_copy_with_src_mask( &c_tileCMSISLogo,
-                                            &c_tileCMSISLogoMask,
-                                            ptTile,
-                                            &__centre_region,
-                                            ARM_2D_CP_MODE_COPY);
-        }
-    #else
-        /* draw the cmsis logo using mask in the centre of the screen */
+        /* draw a background logo */
         arm_2d_align_centre(__top_canvas, c_tileCMSISLogo.tRegion.tSize) {
             arm_2d_fill_colour_with_a4_mask_and_opacity(   
                                                 ptTile, 
                                                 &__centre_region, 
                                                 &c_tileCMSISLogoA4Mask, 
                                                 (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                128);
+                                                64);
         }
-    #endif
+
+
+
+        arm_2d_align_centre(__top_canvas, 240, 240 ) {
+
+            arm_2d_dock(__centre_region, 10) {
+                arm_2d_layout(__dock_region, BOTTOM_UP) {
+
+                    __item_line_dock_vertical(this.tWaveform.tTile.tRegion.tSize.iHeight + 20) {
+
+                        draw_round_corner_box(  ptTile, 
+                                                &__item_region, 
+                                                GLCD_COLOR_DARK_GREY, 
+                                                32);
+
+                        arm_2d_align_centre(__item_region, this.tWaveform.tTile.tRegion.tSize) {
+
+                            /* draw waveform as a normal tile */
+                            arm_2d_tile_copy(   &this.tWaveform.tTile, 
+                                                ptTile, 
+                                                &__centre_region);
+                        }
+                    }
+
+                    __item_line_dock_vertical() {
+
+                        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+                        arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4);
+                        arm_lcd_text_set_draw_region(&__item_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_WHITE);
+                        arm_lcd_text_set_scale(1.3f);
+
+                        arm_lcd_printf_label(ARM_2D_ALIGN_LEFT, "+ Waveform Demo");
+
+                        arm_lcd_text_set_scale(0);
+
+                    }
+                }
+            }                       
+        }
+
+
+        
 
         /* draw text at the top-left corner */
 
@@ -326,6 +351,21 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
 
     /* ------------   initialize members of user_scene_waveform_t begin ---------------*/
 
+    do {
+        waveform_view_cfg_t tCFG = {
+            .tSize = {
+                .iWidth = 200,
+                .iHeight = 180,
+            },
+
+            .ImageIO = {
+                .ptIO = NULL,
+            },
+            .ptScene = &this.use_as__arm_2d_scene_t,
+        };
+
+        waveform_view_init(&this.tWaveform, &tCFG);
+    } while(0);
 
     /* ------------   initialize members of user_scene_waveform_t end   ---------------*/
 

@@ -87,6 +87,8 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
     bool bUserAllocated;
 
+    waveform_view_t tWaveform;
+
 )
     /* place your public member here */
     
