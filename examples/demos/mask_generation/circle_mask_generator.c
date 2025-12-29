@@ -22,7 +22,6 @@
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 
-
 #include <assert.h>
 #include <string.h>
 
@@ -89,8 +88,6 @@ arm_2d_err_t circle_mask_generator_init(circle_mask_generator_t *ptThis,
     //if (NULL != ptCFG) {
         this.tCFG = *ptCFG;
     //}
-
-
 
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
     do {

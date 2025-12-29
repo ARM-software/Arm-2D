@@ -47,6 +47,7 @@
 #include "./image_box.h"
 #include "./foldable_panel.h"
 #include "./ring_indication.h"
+#include "./waveform_view.h"
 
 #ifdef   __cplusplus
 extern "C" {
