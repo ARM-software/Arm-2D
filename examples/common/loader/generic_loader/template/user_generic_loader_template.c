@@ -200,11 +200,20 @@ arm_2d_err_t __<name>_draw(  arm_generic_loader_t *ptObj,
 
     for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
 
+        /* a simple demo of drawing based on the y coordinate */
+        if (iY & 0x01) {
+            /* move to next line */
+            pchBuffer += iTargetStrideInByte;
+            continue;
+        }
+
         uint8_t *pchPixelLine = pchBuffer;
 
         for (int_fast16_t iX = ptROI->tLocation.iX; iX < iXLimit; iX++) {
 
             /* use your code to replace the following demo code */
+
+            /* a simple demo of drawing based on the x coordinate */
             if (iX & 0x01) {
                 memset(pchPixelLine, 0xFF, chBytesPerPixel);
             } else {

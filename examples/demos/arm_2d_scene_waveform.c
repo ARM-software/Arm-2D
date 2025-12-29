@@ -223,13 +223,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
                                                 64);
         }
 
-
-
         arm_2d_align_centre(__top_canvas, 240, 240 ) {
 
             arm_2d_dock(__centre_region, 10) {
+
+                /* use the bottom-up layout */
                 arm_2d_layout(__dock_region, BOTTOM_UP) {
 
+                    /* waveform */
                     __item_line_dock_vertical(this.tWaveform.tTile.tRegion.tSize.iHeight + 20) {
 
                         draw_round_corner_box(  ptTile, 
@@ -246,6 +247,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
                         }
                     }
 
+                    /* title */
                     __item_line_dock_vertical() {
 
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
@@ -263,11 +265,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
             }                       
         }
 
-
-        
-
         /* draw text at the top-left corner */
-
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
         arm_lcd_text_set_draw_region(NULL);

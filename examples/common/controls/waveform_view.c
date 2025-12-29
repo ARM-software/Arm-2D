@@ -201,6 +201,12 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
     for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
 
+        if (iY & 0x01) {
+            /* move to next line */
+            pchBuffer += iTargetStrideInByte;
+            continue;
+        }
+        
         uint8_t *pchPixelLine = pchBuffer;
 
         for (int_fast16_t iX = ptROI->tLocation.iX; iX < iXLimit; iX++) {
