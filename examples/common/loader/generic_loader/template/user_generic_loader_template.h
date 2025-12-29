@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __<CONTROL_NAME>_H__
-#define __<CONTROL_NAME>_H__
+#ifndef __<NAME>_H__
+#define __<NAME>_H__
 
 /*============================ INCLUDES ======================================*/
 #if defined(_RTE_)
@@ -43,11 +43,11 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __<CONTROL_NAME>_IMPLEMENT__
-#   undef   __<CONTROL_NAME>_IMPLEMENT__
+#ifdef __<NAME>_IMPLEMENT__
+#   undef   __<NAME>_IMPLEMENT__
 #   define  __ARM_2D_IMPL__
-#elif defined(__<CONTROL_NAME>_INHERIT__)
-#   undef   __<CONTROL_NAME>_INHERIT__
+#elif defined(__<NAME>_INHERIT__)
+#   undef   __<NAME>_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -56,7 +56,7 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 
-typedef struct <control_name>_cfg_t {
+typedef struct <name>_cfg_t {
 
     arm_2d_size_t tSize;
 
@@ -69,14 +69,14 @@ typedef struct <control_name>_cfg_t {
     } ImageIO;
 
     arm_2d_scene_t *ptScene;
-} <control_name>_cfg_t;
+} <name>_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct <control_name>_t <control_name>_t;
+typedef struct <name>_t <name>_t;
 
-struct <control_name>_t {
+struct <name>_t {
 
     union {
         arm_2d_tile_t tTile;
@@ -84,7 +84,7 @@ struct <control_name>_t {
     };
 
 ARM_PRIVATE(
-    <control_name>_cfg_t tCFG;
+    <name>_cfg_t tCFG;
 )
     /* place your public member here */
     
@@ -95,23 +95,23 @@ ARM_PRIVATE(
 
 extern
 ARM_NONNULL(1, 2)
-arm_2d_err_t <control_name>_init(<control_name>_t *ptThis,
-                                <control_name>_cfg_t *ptCFG);
+arm_2d_err_t <name>_init(<name>_t *ptThis,
+                                <name>_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
-void <control_name>_depose( <control_name>_t *ptThis);
+void <name>_depose( <name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_load( <control_name>_t *ptThis);
+void <name>_on_load( <name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_frame_start( <control_name>_t *ptThis);
+void <name>_on_frame_start( <name>_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void <control_name>_on_frame_complete( <control_name>_t *ptThis);
+void <name>_on_frame_complete( <name>_t *ptThis);
 
 
 
@@ -122,6 +122,14 @@ void <control_name>_on_frame_complete( <control_name>_t *ptThis);
 #ifdef   __cplusplus
 }
 #endif
+
+#else
+
+#define <name>_init(...)                 ARM_2D_ERR_NOT_AVAILABLE
+#define <name>_depose(...)
+#define <name>_on_load(...)
+#define <name>_on_frame_start(...)
+#define <name>_on_frame_complete(...)
 
 #endif 
 

@@ -123,6 +123,14 @@ void waveform_view_on_frame_complete( waveform_view_t *ptThis);
 }
 #endif
 
+#else
+
+#define waveform_view_init(...)                 ARM_2D_ERR_NOT_AVAILABLE
+#define waveform_view_depose(...)
+#define waveform_view_on_load(...)
+#define waveform_view_on_frame_start(...)
+#define waveform_view_on_frame_complete(...)
+
 #endif 
 
 #endif

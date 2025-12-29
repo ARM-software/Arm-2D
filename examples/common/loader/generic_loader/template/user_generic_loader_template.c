@@ -18,8 +18,8 @@
 
 /*============================ INCLUDES ======================================*/
 #define __GENERIC_LOADER_INHERIT__
-#define __<CONTROL_NAME>_IMPLEMENT__
-#include "<control_name>.h"
+#define __<NAME>_IMPLEMENT__
+#include "<name>.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 
@@ -66,11 +66,11 @@
 /*============================ PROTOTYPES ====================================*/
 ARM_NONNULL(1)
 static
-arm_2d_err_t __<control_name>_decoder_init(arm_generic_loader_t *ptObj);
+arm_2d_err_t __<name>_decoder_init(arm_generic_loader_t *ptObj);
 
 ARM_NONNULL(1, 2, 3)
 static
-arm_2d_err_t __<control_name>_draw(  arm_generic_loader_t *ptObj,
+arm_2d_err_t __<name>_draw(  arm_generic_loader_t *ptObj,
                                     arm_2d_region_t *ptROI,
                                     uint8_t *pchBuffer,
                                     uint32_t iTargetStrideInByte,
@@ -80,12 +80,12 @@ arm_2d_err_t __<control_name>_draw(  arm_generic_loader_t *ptObj,
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1,2)
-arm_2d_err_t <control_name>_init(<control_name>_t *ptThis,
-                                <control_name>_cfg_t *ptCFG)
+arm_2d_err_t <name>_init(<name>_t *ptThis,
+                                <name>_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
-    memset(ptThis, 0, sizeof(<control_name>_t));
+    memset(ptThis, 0, sizeof(<name>_t));
 
     //if (NULL != ptCFG) {
         this.tCFG = *ptCFG;
@@ -110,8 +110,8 @@ arm_2d_err_t <control_name>_init(<control_name>_t *ptThis,
             },
 
             .UserDecoder = {
-                .fnDecoderInit = &__<control_name>_decoder_init,
-                .fnDecode = &__<control_name>_draw,
+                .fnDecoderInit = &__<name>_decoder_init,
+                .fnDecode = &__<name>_draw,
             },
 
             .ptScene = this.tCFG.ptScene,
@@ -138,7 +138,7 @@ arm_2d_err_t <control_name>_init(<control_name>_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void <control_name>_depose( <control_name>_t *ptThis)
+void <name>_depose( <name>_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -146,7 +146,7 @@ void <control_name>_depose( <control_name>_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void <control_name>_on_load( <control_name>_t *ptThis)
+void <name>_on_load( <name>_t *ptThis)
 {
     assert(NULL != ptThis);
     
@@ -154,7 +154,7 @@ void <control_name>_on_load( <control_name>_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void <control_name>_on_frame_start( <control_name>_t *ptThis)
+void <name>_on_frame_start( <name>_t *ptThis)
 {
     assert(NULL != ptThis);
     
@@ -162,7 +162,7 @@ void <control_name>_on_frame_start( <control_name>_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void <control_name>_on_frame_complete( <control_name>_t *ptThis)
+void <name>_on_frame_complete( <name>_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -171,11 +171,11 @@ void <control_name>_on_frame_complete( <control_name>_t *ptThis)
 
 ARM_NONNULL(1)
 static
-arm_2d_err_t __<control_name>_decoder_init(arm_generic_loader_t *ptObj)
+arm_2d_err_t __<name>_decoder_init(arm_generic_loader_t *ptObj)
 {
     assert(NULL != ptObj);
 
-    <control_name>_t *ptThis = (<control_name>_t *)ptObj;
+    <name>_t *ptThis = (<name>_t *)ptObj;
 
 
     return ARM_2D_ERR_NONE;
@@ -183,7 +183,7 @@ arm_2d_err_t __<control_name>_decoder_init(arm_generic_loader_t *ptObj)
 
 ARM_NONNULL(1, 2, 3)
 static
-arm_2d_err_t __<control_name>_draw(  arm_generic_loader_t *ptObj,
+arm_2d_err_t __<name>_draw(  arm_generic_loader_t *ptObj,
                                     arm_2d_region_t *ptROI,
                                     uint8_t *pchBuffer,
                                     uint32_t iTargetStrideInByte,
