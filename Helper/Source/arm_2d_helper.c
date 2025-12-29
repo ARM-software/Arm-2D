@@ -22,7 +22,7 @@
  * Description:  The source code for arm-2d helper utilities
  *
  * $Date:        29. Dec 2025
- * $Revision:    V.2.5.0
+ * $Revision:    V.2.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -33,6 +33,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <time.h>
+#include <stdio.h>
 
 #define __ARM_2D_HELPER_COMMON_IMPLEMENT__
 #define __ARM_2D_HELPER_IMPLEMENT__
@@ -1022,6 +1023,29 @@ bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
 }
 
 ARM_NONNULL(1)
+void arm_2d_byte_fifo_squeeze(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
+{
+    assert(NULL != ptThis);
+    if (NULL == this.pchBuffer) {
+        return ;
+    }
+
+    do {
+        if (arm_2d_byte_fifo_enqueue(ptThis, chChar)) {
+            break;
+        }
+        arm_2d_byte_fifo_dequeue(ptThis, NULL);
+    } while(true);
+}
+
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_item_count(arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.tHead.hwDataAvailable;
+}
+
+ARM_NONNULL(1)
 bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
 {
     assert(NULL != ptThis);
@@ -1060,6 +1084,68 @@ bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
     }
 
     return bResult;
+}
+
+ARM_NONNULL(1)
+int16_t arm_2d_byte_fifo_peek_seek(arm_2d_byte_fifo_t *ptThis,
+                                int16_t iOffset,
+                                int32_t whence)
+{
+    assert(NULL != ptThis);
+    int16_t iCurrentIndex = -1;
+
+    arm_irq_safe {
+        do {
+            if (NULL == this.pchBuffer) {
+                break;
+            }
+
+            int16_t iTotalAvailableByteLength = this.tHead.hwDataAvailable;
+            int16_t iPosition = iTotalAvailableByteLength - this.tPeek.hwDataAvailable;
+
+            switch (whence) {
+                case SEEK_SET:
+                    if (iOffset >= iTotalAvailableByteLength || iOffset < 0) {
+                        /* errno = EINVAL */
+                        goto label_exit;
+                    }
+                    iPosition = iOffset;
+                    break;
+                case SEEK_END:
+                    if (iOffset > 0 || ((-iOffset) > iTotalAvailableByteLength)) {
+                        /* errno = EINVAL */
+                        goto label_exit;
+                    }
+                    iPosition = iTotalAvailableByteLength + iOffset;
+                    break;
+                case SEEK_CUR:
+                    iPosition += iOffset;
+                    if (iPosition >= iTotalAvailableByteLength || iPosition < 0) {
+                        /* errno = EINVAL */
+                        goto label_exit;
+                    }
+                    break;
+            }
+
+            /* we get a new iPostion, now let's update the peek pointer */
+            uint16_t hwNewPeekPointer = this.tHead.hwPointer + iPosition;
+
+            do {
+                if (hwNewPeekPointer >= this.hwSize) {
+                    hwNewPeekPointer -= this.hwSize;
+                }
+            } while(true);
+
+            this.tPeek.hwPointer = hwNewPeekPointer;
+            this.tPeek.hwDataAvailable = iTotalAvailableByteLength - iPosition;
+
+            iCurrentIndex = iPosition;
+
+        } while(0);
+label_exit:
+    }
+
+    return iCurrentIndex;
 }
 
 ARM_NONNULL(1)

@@ -22,7 +22,7 @@
  * Description:  Public header file for the all helper services
  *
  * $Date:        29. Dec 2025
- * $Revision:    V.2.5.0
+ * $Revision:    V.2.5.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -546,6 +546,33 @@ extern
 ARM_NONNULL(1)
 bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
 
+/*!
+ * \brief enter a byte to the FIFO, if the FIFO is full, drop one from the FIFO
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] chChar the target byte
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_squeeze(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
+
+/*!
+ * \brief get the number of bytes available in the FIFO.
+ * \param[in] ptThis the target FIFO control block
+ * \return uint16_t the byte count
+ */
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_item_count(arm_2d_byte_fifo_t *ptThis);
+
+/*
+ * \brief move the peek pointer with a given offset and mode
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] iOffset the offset for a given mode
+ * \param[in] whence one of the seek mode: SEEK_SET, SEEK_END and SEEK_CUR
+ */
+ARM_NONNULL(1)
+int16_t arm_2d_byte_fifo_peek_seek( arm_2d_byte_fifo_t *ptThis,
+                                    int16_t iOffset,
+                                    int32_t whence);
 /*!
  * \brief read a byte from a given fifo
  * \param[in] ptThis the target FIFO control block
