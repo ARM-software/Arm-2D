@@ -485,6 +485,9 @@
 
             <file category="sourceC"     name="examples/common/loader/generic_loader/arm_2d_generic_loader.c" />
 
+            <file category="header"      name="examples/common/loader/generic_loader/template/user_generic_loader_template.h"   attr="template"  select="User Generic Loader Template" version="1.0.0"/>
+            <file category="sourceC"     name="examples/common/loader/generic_loader/template/user_generic_loader_template.c"   attr="template"  select="User Generic Loader Template" version="1.0.0"/>
+
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd_loader.c" />
             <file category="sourceC"     name="examples/common/loader/tjpgd_loader/tjpgd/tjpgd.c" />
             <file category="header"      name="examples/common/loader/tjpgd_loader/arm_tjpgd_cfg.h"       attr="config" version="1.1.0"/>

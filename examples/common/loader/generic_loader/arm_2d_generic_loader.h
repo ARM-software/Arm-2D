@@ -90,7 +90,7 @@ struct arm_generic_loader_t {
     inherit_ex(arm_2d_vres_t, vres);
     arm_generic_loader_cfg_t tCFG;
 
-ARM_PRIVATE(
+ARM_PROTECTED(
     
     struct {
         uint8_t *pchBuffer;
