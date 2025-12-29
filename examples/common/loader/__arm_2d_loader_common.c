@@ -424,6 +424,48 @@ void arm_loader_io_window_on_frame_start(arm_loader_io_window_t *ptThis)
 {
     assert(NULL != ptThis);
 
+    bool bFinished = false;
+    arm_irq_safe do {
+        uint16_t hwDataAvailable = arm_2d_byte_fifo_get_item_count(&this.tInputFIFO);
+        uint16_t hwWindowDepth = arm_2d_byte_fifo_get_capcity(&this.tWindow);
+
+        if (hwDataAvailable < hwWindowDepth) {
+            break;
+        }
+
+        /* move to the peek pointer */
+        arm_2d_byte_fifo_peek_seek( &this.tInputFIFO, 
+                                    hwDataAvailable - hwWindowDepth,
+                                    SEEK_SET);
+
+        /* copy the data to window buffer directly */
+        uint8_t *pchBuffer = this.tWindow.pchBuffer;
+        do {
+            size_t tAcutalRead = arm_2d_byte_fifo_peek_bytes(
+                                    &this.tInputFIFO,
+                                    pchBuffer,
+                                    hwWindowDepth);
+            hwWindowDepth -= tAcutalRead;
+            pchBuffer += tAcutalRead;
+        } while(hwWindowDepth);
+        
+        /* update the window info */
+        this.tWindow.hwTail = 0;
+        this.tWindow.tHead.hwPointer = 0;
+        this.tWindow.tHead.hwDataAvailable = this.tWindow.hwSize;
+        this.tWindow.tPeek.hwPointer = 0;
+        this.tWindow.tPeek.hwDataAvailable = this.tWindow.hwSize;
+
+        /* empty the input buffer */
+        arm_2d_byte_fifo_drop_all(&this.tInputFIFO);
+
+        bFinished = true;
+    } while(0);
+
+    if (bFinished) {
+        return ;
+    }
+
     do {
         uint8_t chByte;
         if (!arm_2d_byte_fifo_dequeue(&this.tInputFIFO, &chByte)) {
