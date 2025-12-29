@@ -189,9 +189,35 @@ arm_2d_err_t __<name>_draw(  arm_generic_loader_t *ptObj,
                                     uint32_t iTargetStrideInByte,
                                     uint_fast8_t chBitsPerPixel)
 {
+    assert(NULL != ptObj);
+    <name>_t *ptThis = (<name>_t *)ptObj;
+    ARM_2D_UNUSED(ptThis);
 
+    int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
+    int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
 
+    uint_fast8_t chBytesPerPixel = chBitsPerPixel >> 3;
 
+    for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
+
+        uint8_t *pchPixelLine = pchBuffer;
+
+        for (int_fast16_t iX = ptROI->tLocation.iX; iX < iXLimit; iX++) {
+
+            /* use your code to replace the following demo code */
+            if (iX & 0x01) {
+                memset(pchPixelLine, 0xFF, chBytesPerPixel);
+            } else {
+                memset(pchPixelLine, 0x00, chBytesPerPixel);
+            }
+
+            /* next pixel */
+            pchPixelLine += chBytesPerPixel;
+        }
+
+        /* move to next line */
+        pchBuffer += iTargetStrideInByte;
+    }
 
     return ARM_2D_ERR_NONE;
 }
