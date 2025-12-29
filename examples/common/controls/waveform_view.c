@@ -183,6 +183,7 @@ arm_2d_err_t __waveform_view_decoder_init(arm_generic_loader_t *ptObj)
     return ARM_2D_ERR_NONE;
 }
 
+
 ARM_NONNULL(1, 2, 3)
 static
 arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
@@ -192,32 +193,31 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                                     uint_fast8_t chBitsPerPixel)
 {
     assert(NULL != ptObj);
+    assert(16 == chBitsPerPixel);
+
     waveform_view_t *ptThis = (waveform_view_t *)ptObj;
 
     int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
     int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
 
-    uint_fast8_t chBytesPerPixel = chBitsPerPixel >> 3;
 
     for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
 
-        if (iY & 0x01) {
+        if ((iY & 0x0F)) {
             /* move to next line */
             pchBuffer += iTargetStrideInByte;
             continue;
         }
-        
-        uint8_t *pchPixelLine = pchBuffer;
+
+        uint16_t *phwPixelLine = (uint16_t *)pchBuffer;
 
         for (int_fast16_t iX = ptROI->tLocation.iX; iX < iXLimit; iX++) {
 
-            if (iX & 0x01) {
-                memset(pchPixelLine, 0xFF, chBytesPerPixel);
-            } else {
-                memset(pchPixelLine, 0x00, chBytesPerPixel);
+            if (!(iX & 0x0F)) {
+                *phwPixelLine = this.tCFG.tBrushColour.hwColour;
             }
 
-            pchPixelLine += chBytesPerPixel;
+            phwPixelLine++;
         }
 
         /* move to next line */

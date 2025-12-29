@@ -359,6 +359,8 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .ImageIO = {
                 .ptIO = NULL,
             },
+
+            .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
             .ptScene = &this.use_as__arm_2d_scene_t,
         };
 

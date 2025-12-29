@@ -61,7 +61,13 @@ typedef struct waveform_view_cfg_t {
     arm_2d_size_t tSize;
 
     uint16_t bUseHeapForVRES        : 1;
-    uint16_t                        : 15;
+    uint16_t bShowShadow            : 1;
+    uint16_t                        : 6;
+    uint16_t u5DotHeight            : 5;
+    uint16_t                        : 3;
+
+    COLOUR_TYPE_T tBrushColour;
+    COLOUR_TYPE_T tShawdowColour;
 
     struct {
         const arm_loader_io_t *ptIO;
