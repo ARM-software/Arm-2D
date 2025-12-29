@@ -1268,6 +1268,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="memitem:ga44e78d3e1990b1721c40fc6a93c78fcf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf">arm_2d_byte_fifo_enqueue</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t chChar)</td></tr>
 <tr class="memdesc:ga44e78d3e1990b1721c40fc6a93c78fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">write a byte to a given fifo  <a href="group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf">More...</a><br /></td></tr>
 <tr class="separator:ga44e78d3e1990b1721c40fc6a93c78fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39659f1502b567be1120836a358e84cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga39659f1502b567be1120836a358e84cb">arm_2d_byte_fifo_squeeze</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t chChar)</td></tr>
+<tr class="memdesc:ga39659f1502b567be1120836a358e84cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">enter a byte to the FIFO, if the FIFO is full, drop one from the FIFO  <a href="group__gHelper.html#ga39659f1502b567be1120836a358e84cb">More...</a><br /></td></tr>
+<tr class="separator:ga39659f1502b567be1120836a358e84cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae315df9c1c2853c5cddae4f829a207c9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gae315df9c1c2853c5cddae4f829a207c9">arm_2d_byte_fifo_get_item_count</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
+<tr class="memdesc:gae315df9c1c2853c5cddae4f829a207c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the number of bytes available in the FIFO.  <a href="group__gHelper.html#gae315df9c1c2853c5cddae4f829a207c9">More...</a><br /></td></tr>
+<tr class="separator:gae315df9c1c2853c5cddae4f829a207c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9782a0ada97952750c950fce1ff06cd"><td class="memItemLeft" align="right" valign="top"><a id="gab9782a0ada97952750c950fce1ff06cd" name="gab9782a0ada97952750c950fce1ff06cd"></a>
+int16_t&#160;</td><td class="memItemRight" valign="bottom"><b>arm_2d_byte_fifo_peek_seek</b> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, int16_t iOffset, int32_t whence)</td></tr>
+<tr class="separator:gab9782a0ada97952750c950fce1ff06cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa38f307b5921ee31122e1a6404444bc5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gaa38f307b5921ee31122e1a6404444bc5">arm_2d_byte_fifo_dequeue</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar)</td></tr>
 <tr class="memdesc:gaa38f307b5921ee31122e1a6404444bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">read a byte from a given fifo  <a href="group__gHelper.html#gaa38f307b5921ee31122e1a6404444bc5">More...</a><br /></td></tr>
 <tr class="separator:gaa38f307b5921ee31122e1a6404444bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -14330,6 +14339,70 @@ false line buffer is full </dd></dl>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga39659f1502b567be1120836a358e84cb" name="ga39659f1502b567be1120836a358e84cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39659f1502b567be1120836a358e84cb">&#9670;&#160;</a></span>arm_2d_byte_fifo_squeeze()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_2d_byte_fifo_squeeze </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>chChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>enter a byte to the FIFO, if the FIFO is full, drop one from the FIFO </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target FIFO control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chChar</td><td>the target byte </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gae315df9c1c2853c5cddae4f829a207c9" name="gae315df9c1c2853c5cddae4f829a207c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae315df9c1c2853c5cddae4f829a207c9">&#9670;&#160;</a></span>arm_2d_byte_fifo_get_item_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t arm_2d_byte_fifo_get_item_count </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the number of bytes available in the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target FIFO control block </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>uint16_t the byte count </dd></dl>
 
 </div>
 </div>
