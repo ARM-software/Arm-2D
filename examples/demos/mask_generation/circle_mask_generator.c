@@ -219,6 +219,10 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
     uint32_t wRadiusBorder2 = (uint32_t)(iRadius + 1) * (uint32_t)(iRadius + 1);
     q16_t q16Radius = reinterpret_q16_s16(iRadius);
 
+    q16_t q161MagicRatio 
+        = reinterpret_q16_s16( 
+            (int16_t)(wRadiusBorder2 - wRadius2));
+
     for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
 
         uint8_t *pchTargetLine = pchBuffer;
@@ -230,6 +234,8 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
 
         int_fast16_t iX = ptROI->tLocation.iX;
 
+    /* disable it for Cortex-M0/M0+ */
+    #if !(defined(__ARM_ARCH) && __ARM_ARCH_PROFILE == 'M' && (__ARM_ARCH_ISA_THUMB < 2))
         /* calculate the left most point */
         if (ABS(iYOffset) < iRadius) {
 
@@ -239,7 +245,10 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
             float fXDelta;
             arm_sqrt_f32((float)wDistance2, &fXDelta);
 
-            int16_t iLeftMostX = this.tPivot.iX - fXDelta - 1;
+            /* NOTE:here 4 is an magic number for improving the margin 
+             * smoothness, please do NOT change it
+             */
+            int16_t iLeftMostX = this.tPivot.iX - fXDelta - 4;  
             int16_t iXAdvance = iLeftMostX - iX;
             if (iX < iLeftMostX && iLeftMostX < iXLimit) {
                 iX = iLeftMostX;
@@ -247,6 +256,7 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
                 pchTargetLine += iXAdvance;
             }
         } while(0);
+    #endif
 
         for (; iX < iXLimit; iX++) {
 
@@ -283,15 +293,11 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
                     continue;
                 }
 
-                /* anti alias */
-                float fDistance;
-                arm_sqrt_f32((float)wDistance2, &fDistance);
-                q16_t q16Fraction = reinterpret_q16_f32(fDistance);
+                q16_t q16Delta = reinterpret_q16_s16(wDistance2 - wRadius2);
 
-                /* get the residual */
-                q16Fraction -= q16Radius;
+                q16Delta = div_q16(q16Delta, q161MagicRatio);
 
-                *pchTargetLine++ = 255 - ((q16Fraction & 0xFF00) >> 8);
+                *pchTargetLine++ = 255 - ((q16Delta & 0xFF00) >> 8);
             }
         }
 
