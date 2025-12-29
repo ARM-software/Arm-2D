@@ -1274,6 +1274,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="memitem:gab71dfe523df6a27f0758c29bd3a0e35b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b">arm_2d_byte_fifo_peek</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar, bool bMovePointer)</td></tr>
 <tr class="memdesc:gab71dfe523df6a27f0758c29bd3a0e35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">peek a byte continuously from a given fifo  <a href="group__gHelper.html#gab71dfe523df6a27f0758c29bd3a0e35b">More...</a><br /></td></tr>
 <tr class="separator:gab71dfe523df6a27f0758c29bd3a0e35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b7ad7474964b6f7ef6238133f0ad2f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga98b7ad7474964b6f7ef6238133f0ad2f">arm_2d_byte_fifo_peek_bytes</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis, uint8_t *pchChar, size_t tLength)</td></tr>
+<tr class="memdesc:ga98b7ad7474964b6f7ef6238133f0ad2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">peek a number of bytes from a given fifo  <a href="group__gHelper.html#ga98b7ad7474964b6f7ef6238133f0ad2f">More...</a><br /></td></tr>
+<tr class="separator:ga98b7ad7474964b6f7ef6238133f0ad2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a4996625f003ec5e18d7a7b549b072a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a">arm_2d_byte_fifo_get_all_peeked</a> (<a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga5a4996625f003ec5e18d7a7b549b072a"><td class="mdescLeft">&#160;</td><td class="mdescRight">drop all peeked byte from a given fifo  <a href="group__gHelper.html#ga5a4996625f003ec5e18d7a7b549b072a">More...</a><br /></td></tr>
 <tr class="separator:ga5a4996625f003ec5e18d7a7b549b072a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -14421,6 +14424,50 @@ false line buffer is full </dd></dl>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga98b7ad7474964b6f7ef6238133f0ad2f" name="ga98b7ad7474964b6f7ef6238133f0ad2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98b7ad7474964b6f7ef6238133f0ad2f">&#9670;&#160;</a></span>arm_2d_byte_fifo_peek_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t arm_2d_byte_fifo_peek_bytes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>ptThis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pchChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tLength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>peek a number of bytes from a given fifo </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target FIFO control block </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pchChar</td><td>a buffer to store the byte, NULL means drop a byte </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>size_t the number of bytes actually read out </dd></dl>
 
 </div>
 </div>
