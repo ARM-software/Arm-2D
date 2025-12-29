@@ -94,13 +94,11 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
 
     do {
-    #if 0
         if (NULL == this.tCFG.ImageIO.ptIO) {
             this.use_as__arm_generic_loader_t.bErrorDetected = true;
             tResult = ARM_2D_ERR_IO_ERROR;
             break;
         }
-    #endif
 
         arm_generic_loader_cfg_t tCFG = {
             .bUseHeapForVRES = this.tCFG.bUseHeapForVRES,

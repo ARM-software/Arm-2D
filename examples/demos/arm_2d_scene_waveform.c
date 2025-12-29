@@ -147,6 +147,8 @@ static void __on_scene_waveform_depose(arm_2d_scene_t *ptScene)
 
     /*---------------------- insert your depose code end  --------------------*/
 
+    __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, this.pchBuffer);
+
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
@@ -350,14 +352,27 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
     /* ------------   initialize members of user_scene_waveform_t begin ---------------*/
 
     do {
+
+        this.pchBuffer = 
+            __arm_2d_allocate_scratch_memory(   ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE * 2,
+                                                sizeof(uint16_t),
+                                                ARM_2D_MEM_TYPE_UNSPECIFIED);
+
+        arm_loader_io_window_init(  &this.tWindow, 
+                                    this.pchBuffer, 
+                                    ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE * 2,
+                                    ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE);
+        
+                                            
         waveform_view_cfg_t tCFG = {
             .tSize = {
-                .iWidth = 200,
+                .iWidth = ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE,
                 .iHeight = 180,
             },
 
             .ImageIO = {
-                .ptIO = NULL,
+                .ptIO = &ARM_LOADER_IO_WINDOW,
+                .pTarget = (uintptr_t)&this.tWindow,
             },
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,

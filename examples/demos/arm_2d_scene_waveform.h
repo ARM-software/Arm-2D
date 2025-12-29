@@ -59,6 +59,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE
+#   define ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE    200
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -85,10 +89,12 @@ struct user_scene_waveform_t {
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
+    uint8_t *pchBuffer;
+
     bool bUserAllocated;
 
     waveform_view_t tWaveform;
-
+    arm_loader_io_window_t tWindow;
 )
     /* place your public member here */
     
