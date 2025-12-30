@@ -150,9 +150,9 @@ ifeq ($(OS),Windows_NT)
 	LDFLAG  +=  -flto
 else
 	# For other platform, we are allowed to set the optimization level
-	CCFLAG  +=  -O0
-	#CCFLAG  +=  -flto
-	#LDFLAG  +=  -flto
+	CCFLAG  +=  -Ofast
+	CCFLAG  +=  -flto
+	LDFLAG  +=  -flto
 endif
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
