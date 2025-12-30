@@ -55,6 +55,11 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 
+enum {
+    WAVEFORM_SAMPLE_SIZE_BYTE = 0,
+    WAVEFORM_SAMPLE_SIZE_HWORD,
+    WAVEFORM_SAMPLE_SIZE_WORD,
+};
 
 typedef struct waveform_view_cfg_t {
 
@@ -64,7 +69,8 @@ typedef struct waveform_view_cfg_t {
     uint16_t bShowShadow            : 1;
     uint16_t                        : 6;
     uint16_t u5DotHeight            : 5;
-    uint16_t                        : 3;
+    uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
+    uint16_t bUnsigned              : 1;
 
     COLOUR_TYPE_T tBrushColour;
     COLOUR_TYPE_T tShawdowColour;
@@ -72,7 +78,12 @@ typedef struct waveform_view_cfg_t {
     struct {
         const arm_loader_io_t *ptIO;
         uintptr_t pTarget;
-    } ImageIO;
+    } IO;
+
+    struct {
+        int32_t nUpperLimit;
+        int32_t nLowerLimit;
+    } ChartScale;
 
     arm_2d_scene_t *ptScene;
 } waveform_view_cfg_t;
@@ -91,6 +102,7 @@ struct waveform_view_t {
 
 ARM_PRIVATE(
     waveform_view_cfg_t tCFG;
+    q16_t q16Scale;
 )
     /* place your public member here */
     

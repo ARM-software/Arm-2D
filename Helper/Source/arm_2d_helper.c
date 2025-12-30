@@ -1140,6 +1140,8 @@ int16_t arm_2d_byte_fifo_peek_seek( arm_2d_byte_fifo_t *ptThis,
             do {
                 if (hwNewPeekPointer >= this.hwSize) {
                     hwNewPeekPointer -= this.hwSize;
+                } else {
+                    break;
                 }
             } while(true);
 

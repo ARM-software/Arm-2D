@@ -90,6 +90,7 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     uint8_t *pchBuffer;
+    float fDegree;
 
     bool bUserAllocated;
 
@@ -105,8 +106,15 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_waveform_t *__arm_2d_scene_waveform_init(   
+                                        arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_waveform_t *ptScene);
+
+extern
+ARM_NONNULL(1)
+void arm_2d_scene_waveform_enqueue( user_scene_waveform_t *ptThis, 
+                                    int16_t *piSamples, 
+                                    uint16_t hwSampleCount);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

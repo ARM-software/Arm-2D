@@ -477,7 +477,7 @@ arm_2d_err_t arm_loader_io_window_init( arm_loader_io_window_t *ptThis,
         return ARM_2D_ERR_INVALID_PARAM;
     }
 
-    memset(ptThis, 0, sizeof(arm_loader_io_binary_t));
+    memset(ptThis, 0, sizeof(arm_loader_io_window_t));
     size_t tInputBufferSize = hwSize - hwWindowSize;
 
     if (!arm_2d_byte_fifo_init(&this.tInputFIFO, pchBuffer, tInputBufferSize)) {

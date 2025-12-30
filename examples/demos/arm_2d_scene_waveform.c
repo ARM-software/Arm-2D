@@ -147,7 +147,9 @@ static void __on_scene_waveform_depose(arm_2d_scene_t *ptScene)
 
     /*---------------------- insert your depose code end  --------------------*/
 
-    __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, this.pchBuffer);
+    if (NULL != this.pchBuffer) {
+        __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, this.pchBuffer);
+    }
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -177,12 +179,36 @@ static void __on_scene_waveform_background_complete(arm_2d_scene_t *ptScene)
 }
 #endif
 
+ARM_NONNULL(1)
+void arm_2d_scene_waveform_enqueue( user_scene_waveform_t *ptThis, 
+                                    int16_t *piSamples, 
+                                    uint16_t hwSampleCount)
+{
+    assert(NULL != ptThis);
+    if (NULL == piSamples || 0 == hwSampleCount) {
+        return ;
+    }
+
+    arm_loader_io_window_enqueue(   &this.tWindow, 
+                                    piSamples, 
+                                    hwSampleCount * 2);
+}
 
 static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    do {
+        this.fDegree += 2.0f;
+        int16_t iData = 1000 * arm_cos_f32(ARM_2D_ANGLE(this.fDegree));
+
+        arm_2d_scene_waveform_enqueue(  ptThis,
+                                        &iData,
+                                        1);
+    } while(0);
+
+    arm_loader_io_window_on_frame_start(&this.tWindow);
     waveform_view_on_frame_start(&this.tWaveform);
 
 }
@@ -352,16 +378,24 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
     /* ------------   initialize members of user_scene_waveform_t begin ---------------*/
 
     do {
-
+        size_t tBufferSize = ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE 
+                           * sizeof(uint16_t) 
+                           * 2;
         this.pchBuffer = 
-            __arm_2d_allocate_scratch_memory(   ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE * 2,
+            __arm_2d_allocate_scratch_memory(   tBufferSize,
                                                 sizeof(uint16_t),
                                                 ARM_2D_MEM_TYPE_UNSPECIFIED);
 
+        if (NULL == this.pchBuffer) {
+            assert(false);
+            __on_scene_waveform_depose(&this.use_as__arm_2d_scene_t);
+            return NULL;
+        }
+        
         arm_loader_io_window_init(  &this.tWindow, 
                                     this.pchBuffer, 
-                                    ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE * 2,
-                                    ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE);
+                                    tBufferSize,
+                                    ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE * sizeof(uint16_t));
         
                                             
         waveform_view_cfg_t tCFG = {
@@ -370,10 +404,17 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
                 .iHeight = 180,
             },
 
-            .ImageIO = {
+            .IO = {
                 .ptIO = &ARM_LOADER_IO_WINDOW,
                 .pTarget = (uintptr_t)&this.tWindow,
             },
+
+            .ChartScale = {
+                .nUpperLimit = 1000,
+                .nLowerLimit = -1000,
+            },
+
+            .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
             .ptScene = &this.use_as__arm_2d_scene_t,

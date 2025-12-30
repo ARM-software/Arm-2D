@@ -94,7 +94,7 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
 
     do {
-        if (NULL == this.tCFG.ImageIO.ptIO) {
+        if (NULL == this.tCFG.IO.ptIO) {
             this.use_as__arm_generic_loader_t.bErrorDetected = true;
             tResult = ARM_2D_ERR_IO_ERROR;
             break;
@@ -105,8 +105,8 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
             .tColourInfo.chScheme = ARM_2D_COLOUR,
             .bBlendWithBG = true,
             .ImageIO = {
-                .ptIO = this.tCFG.ImageIO.ptIO,
-                .pTarget = this.tCFG.ImageIO.pTarget,
+                .ptIO = this.tCFG.IO.ptIO,
+                .pTarget = this.tCFG.IO.pTarget,
             },
 
             .UserDecoder = {
@@ -130,6 +130,23 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
             tResult = ARM_2D_ERR_INVALID_PARAM;
             break;
         }
+
+    } while(0);
+
+    /* update scale */
+    do {
+        if (this.tCFG.ChartScale.nUpperLimit == this.tCFG.ChartScale.nLowerLimit) {
+            this.tCFG.ChartScale.nUpperLimit = this.tCFG.tSize.iHeight;
+            this.tCFG.ChartScale.nLowerLimit = 0;
+        } else if (this.tCFG.ChartScale.nUpperLimit < this.tCFG.ChartScale.nLowerLimit) {
+            int32_t nTemp = this.tCFG.ChartScale.nUpperLimit;
+            this.tCFG.ChartScale.nUpperLimit = this.tCFG.ChartScale.nLowerLimit;
+            this.tCFG.ChartScale.nLowerLimit = nTemp;
+        }
+
+        int32_t nLength = this.tCFG.ChartScale.nUpperLimit - this.tCFG.ChartScale.nLowerLimit;
+        this.q16Scale = reinterpret_q16_f32( (float)(this.tCFG.tSize.iHeight - 1) 
+                                           / (float)nLength);
 
     } while(0);
 
@@ -181,6 +198,60 @@ arm_2d_err_t __waveform_view_decoder_init(arm_generic_loader_t *ptObj)
     return ARM_2D_ERR_NONE;
 }
 
+__STATIC_INLINE
+bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
+                                    int16_t *piY)
+{
+    //assert(NULL != ptThis);
+    //assert(NULL != piY)
+
+    uint_fast8_t chSampleDataSize = 1 << this.tCFG.u2SampleSize;
+
+    uint32_t wData = 0;
+    if (0 == arm_loader_io_read( this.tCFG.IO.ptIO, 
+                        this.tCFG.IO.pTarget, 
+                        &this.use_as__arm_generic_loader_t, 
+                        (uint8_t *)&wData,
+                        chSampleDataSize)) {
+        return false;
+    }
+    int16_t iY = 0;
+
+    if (this.tCFG.bUnsigned) {
+        switch (this.tCFG.u2SampleSize) {
+            case WAVEFORM_SAMPLE_SIZE_BYTE:
+                break;
+            case WAVEFORM_SAMPLE_SIZE_HWORD:
+                break;
+            case WAVEFORM_SAMPLE_SIZE_WORD:
+                break;
+            default:
+                assert(false);
+                break;
+        }
+    } else {
+        switch (this.tCFG.u2SampleSize) {
+            case WAVEFORM_SAMPLE_SIZE_BYTE:
+                break;
+            case WAVEFORM_SAMPLE_SIZE_HWORD: {
+                    int16_t iData = *(int16_t *)&wData;
+                    iData -= this.tCFG.ChartScale.nLowerLimit;
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)iData)) >> 16);
+                }
+                break;
+            case WAVEFORM_SAMPLE_SIZE_WORD:
+                break;
+            default:
+                assert(false);
+                break;
+        }
+    }
+
+    *piY = this.tCFG.tSize.iHeight - iY - 1;
+
+    return true;
+}
+
 
 ARM_NONNULL(1, 2, 3)
 static
@@ -195,10 +266,68 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
     waveform_view_t *ptThis = (waveform_view_t *)ptObj;
 
+
     int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
     int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
+    int_fast16_t iYStart = ptROI->tLocation.iY;
 
+    uint16_t hwBrushColour = this.tCFG.tBrushColour.hwColour;
 
+    int16_t iX = ptROI->tLocation.iX;
+    assert(iX >= 0);
+    int16_t iPreviousSampleY;
+
+    if (0 == iX) {
+        arm_loader_io_seek( this.tCFG.IO.ptIO, 
+                            this.tCFG.IO.pTarget, 
+                            ptObj, 
+                            iX, 
+                            SEEK_SET);
+    } else {
+        arm_loader_io_seek( this.tCFG.IO.ptIO, 
+                            this.tCFG.IO.pTarget, 
+                            ptObj, 
+                            iX - 1, 
+                            SEEK_SET);
+    }
+
+    /* get previous height */
+    if (!__waveform_view_get_sample_y(ptThis, &iPreviousSampleY)) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    arm_loader_io_seek( this.tCFG.IO.ptIO, 
+                            this.tCFG.IO.pTarget, 
+                            ptObj, 
+                            iX, 
+                            SEEK_SET);
+
+    
+    for (int16_t n = 0; n < ptROI->tSize.iWidth; n++) {
+
+        int16_t iCurrentSampleY;
+
+        if (!__waveform_view_get_sample_y(ptThis, &iCurrentSampleY)) {
+            return ARM_2D_ERR_NONE;
+        }
+
+        if (iCurrentSampleY >= iYStart && iCurrentSampleY < iYLimit) {
+            /* we should draw this point */
+
+            int16_t iYOffset = iCurrentSampleY - iYStart;
+            
+            uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+            
+            *(uint16_t *)pchPixel = hwBrushColour;
+    
+        }
+
+        pchBuffer += 2;
+    }
+
+#if 0
+
+    /* for debug only -----------------------------------------------*/
     for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
 
         if ((iY & 0x0F)) {
@@ -221,6 +350,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         /* move to next line */
         pchBuffer += iTargetStrideInByte;
     }
+#endif
 
     return ARM_2D_ERR_NONE;
 }
