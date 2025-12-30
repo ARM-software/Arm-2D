@@ -104,6 +104,8 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
             .bUseHeapForVRES = this.tCFG.bUseHeapForVRES,
             .tColourInfo.chScheme = ARM_2D_COLOUR,
             .bBlendWithBG = true,
+            .tBackgroundColour = this.tCFG.tBackgroundColour,
+
             .ImageIO = {
                 .ptIO = this.tCFG.IO.ptIO,
                 .pTarget = this.tCFG.IO.pTarget,

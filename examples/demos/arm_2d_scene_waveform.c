@@ -416,9 +416,12 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
 
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
             .u5DotHeight = 2,
+            .bUnsigned = false,
             
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
+            .tBackgroundColour.tColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
+
             .ptScene = &this.use_as__arm_2d_scene_t,
         };
 

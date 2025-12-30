@@ -73,7 +73,8 @@ typedef struct waveform_view_cfg_t {
     uint16_t bUnsigned              : 1;
 
     COLOUR_TYPE_T tBrushColour;
-    COLOUR_TYPE_T tShawdowColour;
+    COLOUR_TYPE_T tBackgroundColour;
+    //COLOUR_TYPE_T tShawdowColour;
 
     struct {
         const arm_loader_io_t *ptIO;
