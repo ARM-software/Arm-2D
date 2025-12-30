@@ -415,6 +415,8 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             },
 
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
+            .u5DotHeight = 2,
+            
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
             .ptScene = &this.use_as__arm_2d_scene_t,
@@ -422,6 +424,20 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
 
         waveform_view_init(&this.tWaveform, &tCFG);
     } while(0);
+
+#if 0
+    do {
+
+        int16_t iData = -1000;
+        for (int32_t n = 0; n < 200; n++) {
+            iData += 10;
+            arm_2d_scene_waveform_enqueue(  ptThis,
+                                            &iData,
+                                            1);
+        }
+
+    } while(0);
+#endif
 
     /* ------------   initialize members of user_scene_waveform_t end   ---------------*/
 

@@ -103,6 +103,8 @@ struct waveform_view_t {
 ARM_PRIVATE(
     waveform_view_cfg_t tCFG;
     q16_t q16Scale;
+    int16_t iDiagramHeight;
+    int16_t iStartYOffset;
 )
     /* place your public member here */
     

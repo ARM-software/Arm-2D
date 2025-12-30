@@ -144,9 +144,13 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
             this.tCFG.ChartScale.nLowerLimit = nTemp;
         }
 
+        this.iDiagramHeight = this.tCFG.tSize.iHeight - 1 - this.tCFG.u5DotHeight;
+        this.iStartYOffset = this.tCFG.u5DotHeight >> 1;
+
         int32_t nLength = this.tCFG.ChartScale.nUpperLimit - this.tCFG.ChartScale.nLowerLimit;
-        this.q16Scale = reinterpret_q16_f32( (float)(this.tCFG.tSize.iHeight - 1) 
+        this.q16Scale = reinterpret_q16_f32( (float)this.iDiagramHeight 
                                            / (float)nLength);
+
 
     } while(0);
 
@@ -236,7 +240,7 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
             case WAVEFORM_SAMPLE_SIZE_HWORD: {
                     int16_t iData = *(int16_t *)&wData;
                     iData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)iData)) >> 16);
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)iData) + 0x8000) >> 16);
                 }
                 break;
             case WAVEFORM_SAMPLE_SIZE_WORD:
@@ -247,7 +251,7 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
         }
     }
 
-    *piY = this.tCFG.tSize.iHeight - iY - 1;
+    *piY = this.iStartYOffset + this.iDiagramHeight - iY;
 
     return true;
 }
@@ -265,7 +269,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
     assert(16 == chBitsPerPixel);
 
     waveform_view_t *ptThis = (waveform_view_t *)ptObj;
-
+    uint_fast8_t chSampleDataSize = 1 << this.tCFG.u2SampleSize;
 
     int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
     int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
@@ -281,13 +285,13 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         arm_loader_io_seek( this.tCFG.IO.ptIO, 
                             this.tCFG.IO.pTarget, 
                             ptObj, 
-                            iX, 
+                            iX * chSampleDataSize, 
                             SEEK_SET);
     } else {
         arm_loader_io_seek( this.tCFG.IO.ptIO, 
                             this.tCFG.IO.pTarget, 
                             ptObj, 
-                            iX - 1, 
+                            (iX - 1) * chSampleDataSize, 
                             SEEK_SET);
     }
 
@@ -297,12 +301,11 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
     }
 
     arm_loader_io_seek( this.tCFG.IO.ptIO, 
-                            this.tCFG.IO.pTarget, 
-                            ptObj, 
-                            iX, 
-                            SEEK_SET);
+                        this.tCFG.IO.pTarget, 
+                        ptObj, 
+                        iX * chSampleDataSize, 
+                        SEEK_SET);
 
-    
     for (int16_t n = 0; n < ptROI->tSize.iWidth; n++) {
 
         int16_t iCurrentSampleY;
@@ -311,18 +314,27 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
             return ARM_2D_ERR_NONE;
         }
 
-        if (iCurrentSampleY >= iYStart && iCurrentSampleY < iYLimit) {
-            /* we should draw this point */
+        uint_fast8_t nDotHeight = this.tCFG.u5DotHeight + 1; 
+        iCurrentSampleY -= nDotHeight >> 1;
 
-            int16_t iYOffset = iCurrentSampleY - iYStart;
-            
-            uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
-            
-            *(uint16_t *)pchPixel = hwBrushColour;
-    
+        for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
+            if (iY >= iYLimit) {
+                break;
+            }
+
+            if (iY >= iYStart) {
+                int16_t iYOffset = iY - iYStart;
+                uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+                *(uint16_t *)pchPixel = hwBrushColour;
+            }
+
+            nDotHeight--;
+            if (0 == nDotHeight) {
+                break;
+            }
         }
 
-        pchBuffer += 2;
+        pchBuffer += sizeof(uint16_t);
     }
 
 #if 0
