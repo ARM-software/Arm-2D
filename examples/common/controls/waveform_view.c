@@ -21,6 +21,8 @@
 #define __WAVEFORM_VIEW_IMPLEMENT__
 #include "waveform_view.h"
 
+#include "__arm_2d_impl.h"
+
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 
 #include <assert.h>
@@ -45,13 +47,19 @@
 
 /*============================ MACROS ========================================*/
 
+#undef __ARM_2D_PIXEL_BLENDING
+
 #if __GLCD_CFG_COLOUR_DEPTH__ == 8
 
+#   define __ARM_2D_PIXEL_BLENDING         __ARM_2D_PIXEL_BLENDING_GRAY8
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 16
 
+#   define __ARM_2D_PIXEL_BLENDING         __ARM_2D_PIXEL_BLENDING_RGB565
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+
+#   define __ARM_2D_PIXEL_BLENDING         __ARM_2D_PIXEL_BLENDING_CCCN888
 
 #else
 #   error Unsupported colour depth!
@@ -327,7 +335,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                         iX * chSampleDataSize, 
                         SEEK_SET);
 
-    for (int16_t n = 0; n < ptROI->tSize.iWidth; n++) {
+    for (int16_t n = 0; n <= ptROI->tSize.iWidth; n++) {
 
         int16_t iCurrentSampleY;
 
@@ -338,22 +346,96 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         uint_fast8_t nDotHeight = this.tCFG.u5DotHeight + 1; 
         iCurrentSampleY -= nDotHeight >> 1;
 
-        for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
-            if (iY >= iYLimit) {
-                break;
+        if (iCurrentSampleY != iPreviousSampleY) {
+            int16_t iAALineStartLeft, iAALineEndLeft, iAALineStartRight, iAALineEndRight;
+            bool bIncrease = false;
+            if (iCurrentSampleY < iPreviousSampleY) {
+                iAALineStartLeft = iCurrentSampleY;
+                iAALineEndLeft = iPreviousSampleY;
+                iAALineStartRight = iCurrentSampleY + nDotHeight;
+                iAALineEndRight = iPreviousSampleY + nDotHeight;
+            } else {
+                iAALineStartLeft = iPreviousSampleY + nDotHeight;
+                iAALineEndLeft = iCurrentSampleY + nDotHeight;
+
+                iAALineStartRight = iPreviousSampleY;
+                iAALineEndRight = iCurrentSampleY;
+                bIncrease = true;
+            }
+            int16_t iAALineHeight = iAALineEndLeft - iAALineStartLeft + 1;
+            q16_t q16OpacityRatio = div_n_q16(reinterpret_q16_s16(256), iAALineHeight);
+
+            if (n > 0) {
+                /* draw anti-alias line */
+                for (int16_t iY = iAALineStartLeft; iY < iAALineEndLeft; iY++) {
+                    if (iY >= iYLimit) {
+                        break;
+                    }
+
+                    if (iY >= iYStart) {
+                        uint8_t chOpacity = reinterpret_s16_q16(
+                                                mul_n_q16(  q16OpacityRatio, 
+                                                            iY - iAALineStartLeft + 1));
+                        if (!bIncrease) {
+                            chOpacity = 255 - chOpacity;
+                        }
+
+                        int16_t iYOffset = iY - iYStart;
+                        uint8_t *pchPixel = pchBuffer - sizeof(COLOUR_INT) + iYOffset * iTargetStrideInByte;
+                        //tBrushColour = GLCD_COLOR_GREEN;
+                        __ARM_2D_PIXEL_BLENDING(&tBrushColour, (COLOUR_INT *)pchPixel, chOpacity);
+                    }
+                }
             }
 
-            if (iY >= iYStart) {
-                int16_t iYOffset = iY - iYStart;
-                uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
-                *(COLOUR_INT *)pchPixel = tBrushColour;
-            }
+            if (n < ptROI->tSize.iWidth) {
+                /* draw anti-alias line */
+                for (int16_t iY = iAALineStartRight; iY < iAALineEndRight; iY++) {
+                    if (iY >= iYLimit) {
+                        break;
+                    }
 
-            nDotHeight--;
-            if (0 == nDotHeight) {
-                break;
+                    if (iY >= iYStart) {
+                        uint8_t chOpacity = reinterpret_s16_q16(
+                                                mul_n_q16(  q16OpacityRatio, 
+                                                            iY - iAALineStartRight + 1));
+                        if (bIncrease) {
+                            chOpacity = 255 - chOpacity;
+                        }
+
+                        int16_t iYOffset = iY - iYStart;
+                        uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+                        //tBrushColour = GLCD_COLOR_BLUE;
+                        __ARM_2D_PIXEL_BLENDING(&tBrushColour, (COLOUR_INT *)pchPixel, chOpacity);
+                    }
+                }
             }
         }
+
+    #if 1
+        if (n < ptROI->tSize.iWidth) {
+            /* draw dot */
+            for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
+                if (iY >= iYLimit) {
+                    break;
+                }
+
+                if (iY >= iYStart) {
+                    int16_t iYOffset = iY - iYStart;
+                    uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+                    //tBrushColour = GLCD_COLOR_RED;
+                    *(COLOUR_INT *)pchPixel = tBrushColour;
+                }
+
+                nDotHeight--;
+                if (0 == nDotHeight) {
+                    break;
+                }
+            }
+        }
+    #endif
+
+        iPreviousSampleY = iCurrentSampleY;
 
         pchBuffer += sizeof(COLOUR_INT);
     }

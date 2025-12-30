@@ -199,15 +199,16 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     do {
-        this.fDegree += 2.0f;
+        this.fDegree += 1.0f;
         int16_t iData = 1000 * arm_cos_f32(ARM_2D_ANGLE(this.fDegree));
 
         arm_2d_scene_waveform_enqueue(  ptThis,
                                         &iData,
                                         1);
     } while(0);
-
+#endif
     arm_loader_io_window_on_frame_start(&this.tWindow);
     waveform_view_on_frame_start(&this.tWaveform);
 
@@ -415,7 +416,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             },
 
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
-            .u5DotHeight = 2,
+            .u5DotHeight = 1,
             .bUnsigned = false,
             
 
@@ -428,12 +429,12 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
         waveform_view_init(&this.tWaveform, &tCFG);
     } while(0);
 
-#if 0
+#if 1
     do {
 
         int16_t iData = -1000;
         for (int32_t n = 0; n < 200; n++) {
-            iData += 10;
+            iData += 2;
             arm_2d_scene_waveform_enqueue(  ptThis,
                                             &iData,
                                             1);
