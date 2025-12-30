@@ -166,11 +166,7 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
         
         __arm_generic_decode_prepare(ptThis);
 
-        if (NULL != this.tCFG.ImageIO.ptIO) {
-            /* close low level IO */
-            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
-        }
+        arm_loader_io_close(this.tCFG.ImageIO.ptIO, this.tCFG.ImageIO.pTarget, ptThis);
 
         /* free scratch memory */
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -191,35 +187,24 @@ bool arm_generic_loader_io_seek(uintptr_t pTarget,
 {
     arm_generic_loader_t *ptThis = (arm_generic_loader_t *)pTarget;
 
-    if (NULL != this.tCFG.ImageIO.ptIO) {
-        return ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnSeek, 
-                    ARM_2D_PARAM(   this.tCFG.ImageIO.pTarget, 
-                                    ptThis, 
-                                    offset, 
-                                    whence));
-    }
-
-    return false;
+    return arm_loader_io_seek(  this.tCFG.ImageIO.ptIO, 
+                                pTarget, 
+                                ptThis,
+                                offset,
+                                whence);
 }
 
-size_t arm_generic_loader_io_read (   uintptr_t pTarget,       
+size_t arm_generic_loader_io_read ( uintptr_t pTarget,       
                                     uint8_t *pchBuffer,
                                     size_t tLength)
 {
     arm_generic_loader_t *ptThis = (arm_generic_loader_t *)pTarget;
 
-    size_t tResult = tLength;
-    if (NULL != pchBuffer) {
-
-        if (NULL != this.tCFG.ImageIO.ptIO) {
-            tResult = ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnRead, 
-                        ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis, pchBuffer, tLength));
-        } else {
-            tResult = 0;
-        }
-    }
-
-    return tResult;
+    return arm_loader_io_read(  this.tCFG.ImageIO.ptIO, 
+                                pTarget, 
+                                ptThis,
+                                pchBuffer, 
+                                tLength);
 }
 
 static
@@ -246,13 +231,10 @@ bool __arm_generic_decode_prepare(arm_generic_loader_t *ptThis)
             }
         }     
 
-        if (NULL != this.tCFG.ImageIO.ptIO) {
-            /* open low level IO */
-            if (!ARM_2D_INVOKE(this.tCFG.ImageIO.ptIO->fnOpen,
-                    ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis))) {
-                this.bErrorDetected = true;
-                break;    
-            }
+        /* open low level IO */
+        if (!arm_loader_io_open(this.tCFG.ImageIO.ptIO, this.tCFG.ImageIO.pTarget, ptThis)) {
+            this.bErrorDetected = true;
+            break;    
         }
 
         if (ARM_2D_ERR_NONE != ARM_2D_INVOKE(this.tCFG.UserDecoder.fnDecoderInit, 
@@ -265,11 +247,7 @@ bool __arm_generic_decode_prepare(arm_generic_loader_t *ptThis)
 
     if (this.bErrorDetected) {
 
-        if (NULL != this.tCFG.ImageIO.ptIO) {
-            /* close low level IO */
-            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
-        }
+        arm_loader_io_close(this.tCFG.ImageIO.ptIO, this.tCFG.ImageIO.pTarget, ptThis);
 
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -325,11 +303,7 @@ void __arm_generic_decode_partial(  arm_generic_loader_t *ptThis,
 
     if (this.bErrorDetected) {
 
-        if (NULL != this.tCFG.ImageIO.ptIO) {
-            /* close low level IO */
-            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
-        }
+        arm_loader_io_close(this.tCFG.ImageIO.ptIO, this.tCFG.ImageIO.pTarget, ptThis);
 
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -372,11 +346,7 @@ void arm_generic_loader_on_load( arm_generic_loader_t *ptThis)
 
     if (this.bErrorDetected) {
 
-        if (NULL != this.tCFG.ImageIO.ptIO) {
-            /* close low level IO */
-            ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-                ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
-        }
+        arm_loader_io_close(this.tCFG.ImageIO.ptIO, this.tCFG.ImageIO.pTarget, ptThis);
 
         if (NULL != this.Decoder.pWorkMemory) {
             __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST, this.Decoder.pWorkMemory);
@@ -399,11 +369,7 @@ void arm_generic_loader_depose( arm_generic_loader_t *ptThis)
         return ;
     }
 
-    if (NULL != this.tCFG.ImageIO.ptIO) {
-        /* close low level IO */
-        ARM_2D_INVOKE_RT_VOID(this.tCFG.ImageIO.ptIO->fnClose,
-            ARM_2D_PARAM(this.tCFG.ImageIO.pTarget, ptThis));
-    }
+    arm_loader_io_close(this.tCFG.ImageIO.ptIO, this.tCFG.ImageIO.pTarget, ptThis);
 
     this.ImageBuffer.pchBuffer = NULL;
 
