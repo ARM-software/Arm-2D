@@ -94,6 +94,39 @@ const arm_loader_io_t ARM_LOADER_IO_WINDOW;
 
 /*============================ PROTOTYPES ====================================*/
 
+/*----------------------------------------------------------------------------*
+ * Invoke Interface                                                           *
+ *----------------------------------------------------------------------------*/
+extern
+ARM_NONNULL(1)
+bool arm_loader_io_open(const arm_loader_io_t *ptIO, 
+                        uintptr_t pTarget, 
+                        void *ptLoader);
+
+extern
+ARM_NONNULL(1)
+void arm_loader_io_close(   const arm_loader_io_t *ptIO,
+                            uintptr_t pTarget, 
+                            void *ptLoader);
+
+extern
+ARM_NONNULL(1)
+bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
+                        uintptr_t pTarget, 
+                        void *ptLoader, 
+                        int32_t offset, 
+                        int32_t whence);
+
+extern
+ARM_NONNULL(1)
+size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
+                            uintptr_t pTarget, 
+                            void *ptLoader, 
+                            uint8_t *pchBuffer, 
+                            size_t tSize);
+/*----------------------------------------------------------------------------*
+ * IO Class                                                                   *
+ *----------------------------------------------------------------------------*/
 extern 
 ARM_NONNULL(1, 2)
 arm_2d_err_t arm_loader_io_file_init(   arm_loader_io_file_t *ptThis, 

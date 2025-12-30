@@ -137,6 +137,80 @@ const arm_loader_io_t ARM_LOADER_IO_WINDOW = {
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+/*----------------------------------------------------------------------------*
+ * Invoke Interface                                                           *
+ *----------------------------------------------------------------------------*/
+
+ARM_NONNULL(1)
+bool arm_loader_io_open(const arm_loader_io_t *ptIO, 
+                        uintptr_t pTarget, 
+                        void *ptLoader)
+{
+    ARM_2D_UNUSED(ptLoader);
+    if (NULL == ptIO) {
+        return true;
+    }
+
+    if (NULL == ptIO->fnOpen) {
+        return true;
+    }
+
+    return ptIO->fnOpen(pTarget,ptLoader);
+}
+
+ARM_NONNULL(1)
+void arm_loader_io_close(   const arm_loader_io_t *ptIO,
+                            uintptr_t pTarget, 
+                            void *ptLoader)
+{
+    ARM_2D_UNUSED(ptLoader);
+    if (NULL == ptIO) {
+        return ;
+    }
+
+    ARM_2D_INVOKE_RT_VOID(ptIO->fnClose, 
+        ARM_2D_PARAM(pTarget,
+                    ptLoader));
+}
+
+ARM_NONNULL(1)
+bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
+                        uintptr_t pTarget, 
+                        void *ptLoader, 
+                        int32_t offset, 
+                        int32_t whence)
+{
+    ARM_2D_UNUSED(ptLoader);
+    if (NULL == ptIO) {
+        return true;
+    }
+
+    if (NULL == ptIO->fnSeek) {
+        return true;
+    }
+
+    return ptIO->fnSeek(pTarget, ptLoader, offset, whence);
+}
+
+ARM_NONNULL(1)
+size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
+                            uintptr_t pTarget, 
+                            void *ptLoader, 
+                            uint8_t *pchBuffer, 
+                            size_t tSize)
+{
+    ARM_2D_UNUSED(ptLoader);
+    if (NULL == ptIO) {
+        return 0;
+    }
+
+    return ARM_2D_INVOKE(   ptIO->fnRead, 
+            ARM_2D_PARAM(   pTarget, 
+                            ptLoader, 
+                            pchBuffer, 
+                            tSize));
+}
+
 
 /*----------------------------------------------------------------------------*
  * IO                                                                         *
