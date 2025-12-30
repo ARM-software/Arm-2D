@@ -155,7 +155,7 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
         }
 
         this.iDiagramHeight = this.tCFG.tSize.iHeight - 1 - this.tCFG.u5DotHeight;
-        this.iStartYOffset = this.tCFG.u5DotHeight >> 1;
+        this.iStartYOffset = (this.tCFG.u5DotHeight + 1) >> 1;
 
         int32_t nLength = this.tCFG.ChartScale.nUpperLimit - this.tCFG.ChartScale.nLowerLimit;
         this.q16Scale = reinterpret_q16_f32( (float)this.iDiagramHeight 
