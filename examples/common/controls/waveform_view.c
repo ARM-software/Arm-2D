@@ -310,23 +310,17 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
     assert(iX >= 0);
     int16_t iPreviousSampleY;
 
-    if (0 == iX) {
-        arm_loader_io_seek( this.tCFG.IO.ptIO, 
-                            this.tCFG.IO.pTarget, 
-                            ptObj, 
-                            iX * chSampleDataSize, 
-                            SEEK_SET);
-    } else {
+    if (0 != iX) {
         arm_loader_io_seek( this.tCFG.IO.ptIO, 
                             this.tCFG.IO.pTarget, 
                             ptObj, 
                             (iX - 1) * chSampleDataSize, 
                             SEEK_SET);
-    }
 
-    /* get previous height */
-    if (!__waveform_view_get_sample_y(ptThis, &iPreviousSampleY)) {
-        return ARM_2D_ERR_NONE;
+        /* get previous height */
+        if (!__waveform_view_get_sample_y(ptThis, &iPreviousSampleY)) {
+            return ARM_2D_ERR_NONE;
+        }
     }
 
     arm_loader_io_seek( this.tCFG.IO.ptIO, 
@@ -345,6 +339,9 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
         uint_fast8_t nDotHeight = this.tCFG.u5DotHeight + 1; 
         iCurrentSampleY -= nDotHeight >> 1;
+        if (iX == 0 && n == 0) {
+            iPreviousSampleY = iCurrentSampleY;
+        }
 
         if (iCurrentSampleY != iPreviousSampleY) {
             int16_t iAALineStartLeft, iAALineEndLeft, iAALineStartRight, iAALineEndRight;
