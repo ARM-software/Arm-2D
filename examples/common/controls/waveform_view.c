@@ -223,11 +223,22 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
 
     if (this.tCFG.bUnsigned) {
         switch (this.tCFG.u2SampleSize) {
-            case WAVEFORM_SAMPLE_SIZE_BYTE:
+            case WAVEFORM_SAMPLE_SIZE_BYTE: {
+                    uint8_t chData = *(uint8_t *)&wData;
+                    chData -= this.tCFG.ChartScale.nLowerLimit;
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)chData) + 0x8000) >> 16);
+                }
                 break;
-            case WAVEFORM_SAMPLE_SIZE_HWORD:
+            case WAVEFORM_SAMPLE_SIZE_HWORD: {
+                    uint16_t hwData = *(uint16_t *)&wData;
+                    hwData -= this.tCFG.ChartScale.nLowerLimit;
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)hwData) + 0x8000) >> 16);
+                }
                 break;
-            case WAVEFORM_SAMPLE_SIZE_WORD:
+            case WAVEFORM_SAMPLE_SIZE_WORD: {
+                    wData -= this.tCFG.ChartScale.nLowerLimit;
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)wData) + 0x8000) >> 16);
+                }
                 break;
             default:
                 assert(false);
@@ -235,7 +246,11 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
         }
     } else {
         switch (this.tCFG.u2SampleSize) {
-            case WAVEFORM_SAMPLE_SIZE_BYTE:
+            case WAVEFORM_SAMPLE_SIZE_BYTE: {
+                    int8_t chData = *(int8_t *)&wData;
+                    chData -= this.tCFG.ChartScale.nLowerLimit;
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)chData) + 0x8000) >> 16);
+                }
                 break;
             case WAVEFORM_SAMPLE_SIZE_HWORD: {
                     int16_t iData = *(int16_t *)&wData;
@@ -243,7 +258,11 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
                     iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)iData) + 0x8000) >> 16);
                 }
                 break;
-            case WAVEFORM_SAMPLE_SIZE_WORD:
+            case WAVEFORM_SAMPLE_SIZE_WORD: {
+                    int32_t nData = *(int32_t *)&wData;
+                    nData -= this.tCFG.ChartScale.nLowerLimit;
+                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)nData) + 0x8000) >> 16);
+                }
                 break;
             default:
                 assert(false);
@@ -266,7 +285,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                                     uint_fast8_t chBitsPerPixel)
 {
     assert(NULL != ptObj);
-    assert(16 == chBitsPerPixel);
+    assert(__GLCD_CFG_COLOUR_DEPTH__ == chBitsPerPixel);
 
     waveform_view_t *ptThis = (waveform_view_t *)ptObj;
     uint_fast8_t chSampleDataSize = 1 << this.tCFG.u2SampleSize;
@@ -275,7 +294,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
     int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
     int_fast16_t iYStart = ptROI->tLocation.iY;
 
-    uint16_t hwBrushColour = this.tCFG.tBrushColour.hwColour;
+    COLOUR_INT tBrushColour = this.tCFG.tBrushColour.tColour;
 
     int16_t iX = ptROI->tLocation.iX;
     assert(iX >= 0);
@@ -325,7 +344,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
             if (iY >= iYStart) {
                 int16_t iYOffset = iY - iYStart;
                 uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
-                *(uint16_t *)pchPixel = hwBrushColour;
+                *(COLOUR_INT *)pchPixel = tBrushColour;
             }
 
             nDotHeight--;
@@ -334,35 +353,8 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
             }
         }
 
-        pchBuffer += sizeof(uint16_t);
+        pchBuffer += sizeof(COLOUR_INT);
     }
-
-#if 0
-
-    /* for debug only -----------------------------------------------*/
-    for (int_fast16_t iY = ptROI->tLocation.iY; iY < iYLimit; iY++) {
-
-        if ((iY & 0x0F)) {
-            /* move to next line */
-            pchBuffer += iTargetStrideInByte;
-            continue;
-        }
-
-        uint16_t *phwPixelLine = (uint16_t *)pchBuffer;
-
-        for (int_fast16_t iX = ptROI->tLocation.iX; iX < iXLimit; iX++) {
-
-            if (!(iX & 0x0F)) {
-                *phwPixelLine = this.tCFG.tBrushColour.hwColour;
-            }
-
-            phwPixelLine++;
-        }
-
-        /* move to next line */
-        pchBuffer += iTargetStrideInByte;
-    }
-#endif
 
     return ARM_2D_ERR_NONE;
 }
