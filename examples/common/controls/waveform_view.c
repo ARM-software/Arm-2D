@@ -349,10 +349,12 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         uint_fast8_t nDotHeight = this.tCFG.u5DotHeight + 1; 
         q16CurrentSampleY -= reinterpret_q16_s16(nDotHeight >> 1);
 
-        int16_t iCurrentSampleY = reinterpret_s16_q16(q16CurrentSampleY + 0x8000);
-        int16_t iPreviousSampleY = reinterpret_s16_q16(q16PreviousSampleY + 0x8000);
+        int16_t iCurrentSampleY = reinterpret_s16_q16(q16CurrentSampleY);
+        int16_t iPreviousSampleY = reinterpret_s16_q16(q16PreviousSampleY);
 
-        if ( iCurrentSampleY != iPreviousSampleY) {
+
+        q16_t q16Step = q16CurrentSampleY - q16PreviousSampleY;
+        if (abs_q16(q16Step) >= 0x10000) {
             int16_t iAALineStartLeft, iAALineEndLeft, iAALineStartRight, iAALineEndRight;
             bool bIncrease = false;
             if (iCurrentSampleY < iPreviousSampleY) {
@@ -416,30 +418,78 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                     }
                 }
             }
-        }
 
-    #if 1
-        if (n < ptROI->tSize.iWidth) {
-            /* draw dot */
-            for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
-                if (iY >= iYLimit) {
-                    break;
+            if (n < ptROI->tSize.iWidth) {
+                /* draw dot */
+                for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
+                    if (iY >= iYLimit) {
+                        break;
+                    }
+
+                    if (iY >= iYStart) {
+                        int16_t iYOffset = iY - iYStart;
+                        uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+                        //tBrushColour = GLCD_COLOR_RED;
+                        *(COLOUR_INT *)pchPixel = tBrushColour;
+                    }
+
+                    nDotHeight--;
+                    if (0 == nDotHeight) {
+                        break;
+                    }
                 }
+            }
 
-                if (iY >= iYStart) {
-                    int16_t iYOffset = iY - iYStart;
-                    uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
-                    //tBrushColour = GLCD_COLOR_RED;
-                    *(COLOUR_INT *)pchPixel = tBrushColour;
-                }
+        } else {    /* k is small */
 
-                nDotHeight--;
-                if (0 == nDotHeight) {
-                    break;
+            if (n < ptROI->tSize.iWidth) {
+
+                int16_t iScores = nDotHeight * 256;
+                bool bFirstPixel = true;
+                /* draw dot */
+                for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
+                    if (iY >= iYLimit) {
+                        break;
+                    }
+
+                    uint16_t hwPixelScores;
+                    uint16_t hwOpacity;
+                    
+                    if (bFirstPixel) {
+                        bFirstPixel = false;
+                        hwPixelScores = 0x100 - ((q16CurrentSampleY & 0xFF00) >> 8);
+
+                        hwOpacity = hwPixelScores;
+                    } else {
+                        if (iScores >= 0x100) {
+                            hwPixelScores = 0x100;
+                        } else {
+                            hwPixelScores = iScores;
+                        }
+
+                        hwOpacity = hwPixelScores;
+                    }
+
+                    if (iY >= iYStart) {
+                        int16_t iYOffset = iY - iYStart;
+                        uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+                        //tBrushColour = GLCD_COLOR_RED;
+
+                        if (hwOpacity >= 0xFF) {
+                            *(COLOUR_INT *)pchPixel = tBrushColour;
+                        } else {
+                            __ARM_2D_PIXEL_BLENDING(&tBrushColour, (COLOUR_INT *)pchPixel, 0x100 - hwOpacity);
+                        }      
+                    }
+
+                    iScores -= hwPixelScores;       
+
+                    if (iScores <= 0) {
+                        break;
+                    }
                 }
             }
         }
-    #endif
 
         q16PreviousSampleY = q16CurrentSampleY;
 
