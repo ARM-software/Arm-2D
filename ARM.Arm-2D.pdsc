@@ -531,7 +531,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.13.7" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.14.0" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -562,6 +562,7 @@
             <file category="sourceC"     name="examples/common/controls/image_box.c" />
             <file category="sourceC"     name="examples/common/controls/foldable_panel.c" />
             <file category="sourceC"     name="examples/common/controls/ring_indication.c" />
+            <file category="sourceC"     name="examples/common/controls/waveform_view.c" />
 
             <!-- assets -->
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_WhiteDotMiddle.c" />
