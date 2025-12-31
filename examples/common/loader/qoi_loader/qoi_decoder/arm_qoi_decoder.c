@@ -594,9 +594,9 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis,
             }
 
             arm_2d_color_rgb565_t tPixelRGB565 = {
-                .u5B = tPixel.tColour.chBlue,
-                .u6G = tPixel.tColour.chGreen,
-                .u5R = tPixel.tColour.chRed,
+                .u5B = tPixel.tColour.chBlue >> 3,
+                .u6G = tPixel.tColour.chGreen >> 2,
+                .u5R = tPixel.tColour.chRed >> 3,
             };
 
             *phwTarget++ = tPixelRGB565.tValue;
@@ -613,9 +613,9 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565(arm_qoi_dec_t *ptThis,
             }
 
             arm_2d_color_rgb565_t tPixelRGB565 = {
-                .u5B = tPixel.tColour.chBlue,
-                .u6G = tPixel.tColour.chGreen,
-                .u5R = tPixel.tColour.chRed,
+                .u5B = tPixel.tColour.chBlue >> 3,
+                .u6G = tPixel.tColour.chGreen >> 2,
+                .u5R = tPixel.tColour.chRed >> 3,
             };
 
             *phwTarget++ = tPixelRGB565.tValue;
