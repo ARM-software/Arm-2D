@@ -285,9 +285,14 @@ void histogram_show(histogram_t *ptThis,
                                                         &tPFBScanRegion.tLocation,
                                                         NULL,
                                                         false);
+            /* NOTE: Please do NOT quit early to ensure the built in dynamic dirty region scheme
+             *       working properly.
+             */
+            #if 0 
                 if (NULL == ptVirtualScreen && !bIsNewFrame) {
                     return ;
                 }
+            #endif
 
                 tPFBScanRegion.tSize = tValidRegion.tSize;
             } while(0);
@@ -333,7 +338,6 @@ void histogram_show(histogram_t *ptThis,
                     }
                 } else {
                 
-                #if 1
                     if (!arm_2d_region_intersect(&tBinRegion, &tPFBScanRegion, NULL)) {
                         if (tBinRegion.tLocation.iX
                         >= (tPFBScanRegion.tLocation.iX + tPFBScanRegion.tSize.iWidth)) {
@@ -343,7 +347,6 @@ void histogram_show(histogram_t *ptThis,
                             goto label_loop_end;
                         }
                     }
-                #endif
 
                     if (this.tCFG.Bin.bUseScanLine) {
                         if (iHeight > 0) {
