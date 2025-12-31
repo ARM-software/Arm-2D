@@ -515,6 +515,10 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_histogram_loader,
     },
     {
+        10000,
+        scene_waveform_loader,
+    },
+    {
         20000,
         scene_iir_blur_loader,
     },
