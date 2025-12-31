@@ -465,6 +465,7 @@ user_scene_compass_t *__arm_2d_scene_compass_init(  arm_2d_scene_player_t *ptDis
                     },
                     .tColourForKeying = GLCD_COLOR_WHITE,
                 },
+                .bDisableSaturation = true,
             },
             .tPISliderCFG = {
                 .fProportion = 0.0300f,

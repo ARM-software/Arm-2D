@@ -141,7 +141,8 @@ typedef struct spin_zoom_widget_cfg_t {
     __spin_zoom_widget_indication_t Indicator;
 
     uint32_t bUseFloatPointInCentre : 1;
-    uint32_t                        : 31;
+    uint32_t bDisableSaturation     : 1;
+    uint32_t                        : 30;
 
 } spin_zoom_widget_cfg_t;
 
