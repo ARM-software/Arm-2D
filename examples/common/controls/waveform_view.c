@@ -214,7 +214,7 @@ arm_2d_err_t __waveform_view_decoder_init(arm_generic_loader_t *ptObj)
 
 __STATIC_INLINE
 bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
-                                    int16_t *piY)
+                                    q16_t *pq16Y)
 {
     //assert(NULL != ptThis);
     //assert(NULL != piY)
@@ -229,25 +229,25 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
                         chSampleDataSize)) {
         return false;
     }
-    int16_t iY = 0;
+    q16_t q16Y = 0;
 
     if (this.tCFG.bUnsigned) {
         switch (this.tCFG.u2SampleSize) {
             case WAVEFORM_SAMPLE_SIZE_BYTE: {
                     uint8_t chData = *(uint8_t *)&wData;
                     chData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)chData) + 0x8000) >> 16);
+                    q16Y = ((((int64_t)this.q16Scale * (int64_t)chData)));
                 }
                 break;
             case WAVEFORM_SAMPLE_SIZE_HWORD: {
                     uint16_t hwData = *(uint16_t *)&wData;
                     hwData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)hwData) + 0x8000) >> 16);
+                    q16Y = ((((int64_t)this.q16Scale * (int64_t)hwData)));
                 }
                 break;
             case WAVEFORM_SAMPLE_SIZE_WORD: {
                     wData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)wData) + 0x8000) >> 16);
+                    q16Y = ((((int64_t)this.q16Scale * (int64_t)wData)));
                 }
                 break;
             default:
@@ -259,19 +259,19 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
             case WAVEFORM_SAMPLE_SIZE_BYTE: {
                     int8_t chData = *(int8_t *)&wData;
                     chData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)chData) + 0x8000) >> 16);
+                    q16Y = ((((int64_t)this.q16Scale * (int64_t)chData)));
                 }
                 break;
             case WAVEFORM_SAMPLE_SIZE_HWORD: {
                     int16_t iData = *(int16_t *)&wData;
                     iData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)iData) + 0x8000) >> 16);
+                    q16Y = ((((int64_t)this.q16Scale * (int64_t)iData)));
                 }
                 break;
             case WAVEFORM_SAMPLE_SIZE_WORD: {
                     int32_t nData = *(int32_t *)&wData;
                     nData -= this.tCFG.ChartScale.nLowerLimit;
-                    iY = (int16_t)((((int64_t)this.q16Scale * (int64_t)nData) + 0x8000) >> 16);
+                    q16Y = ((((int64_t)this.q16Scale * (int64_t)nData)));
                 }
                 break;
             default:
@@ -280,7 +280,7 @@ bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
         }
     }
 
-    *piY = this.iStartYOffset + this.iDiagramHeight - iY;
+    *pq16Y = reinterpret_q16_s16(this.iStartYOffset + this.iDiagramHeight) - q16Y;
 
     return true;
 }
@@ -308,7 +308,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
     int16_t iX = ptROI->tLocation.iX;
     assert(iX >= 0);
-    int16_t iPreviousSampleY;
+    q16_t q16PreviousSampleY;
     
 
     if (0 != iX) {
@@ -317,27 +317,20 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                             ptObj, 
                             (iX - 1) * chSampleDataSize, 
                             SEEK_SET);
-
-        /* get previous height */
-        if (!__waveform_view_get_sample_y(ptThis, &iPreviousSampleY)) {
-            return ARM_2D_ERR_NONE;
-        }
-
-        iPreviousSampleY -= (this.tCFG.u5DotHeight + 1) >> 1;
     } else {
         arm_loader_io_seek( this.tCFG.IO.ptIO, 
                             this.tCFG.IO.pTarget, 
                             ptObj, 
                             iX * chSampleDataSize, 
                             SEEK_SET);
-
-        /* get previous height */
-        if (!__waveform_view_get_sample_y(ptThis, &iPreviousSampleY)) {
-            return ARM_2D_ERR_NONE;
-        }
-
-        iPreviousSampleY -= (this.tCFG.u5DotHeight + 1) >> 1;
     }
+
+    /* get previous height */
+    if (!__waveform_view_get_sample_y(ptThis, &q16PreviousSampleY)) {
+        return ARM_2D_ERR_NONE;
+    }
+
+    q16PreviousSampleY -= reinterpret_q16_s16((this.tCFG.u5DotHeight + 1) >> 1);
 
     arm_loader_io_seek( this.tCFG.IO.ptIO, 
                         this.tCFG.IO.pTarget, 
@@ -347,16 +340,19 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
     for (int16_t n = 0; n <= ptROI->tSize.iWidth; n++) {
 
-        int16_t iCurrentSampleY;
+        q16_t q16CurrentSampleY;
 
-        if (!__waveform_view_get_sample_y(ptThis, &iCurrentSampleY)) {
+        if (!__waveform_view_get_sample_y(ptThis, &q16CurrentSampleY)) {
             return ARM_2D_ERR_NONE;
         }
 
         uint_fast8_t nDotHeight = this.tCFG.u5DotHeight + 1; 
-        iCurrentSampleY -= nDotHeight >> 1;
+        q16CurrentSampleY -= reinterpret_q16_s16(nDotHeight >> 1);
 
-        if (iCurrentSampleY != iPreviousSampleY) {
+        int16_t iCurrentSampleY = reinterpret_s16_q16(q16CurrentSampleY + 0x8000);
+        int16_t iPreviousSampleY = reinterpret_s16_q16(q16PreviousSampleY + 0x8000);
+
+        if ( iCurrentSampleY != iPreviousSampleY) {
             int16_t iAALineStartLeft, iAALineEndLeft, iAALineStartRight, iAALineEndRight;
             bool bIncrease = false;
             if (iCurrentSampleY < iPreviousSampleY) {
@@ -445,7 +441,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         }
     #endif
 
-        iPreviousSampleY = iCurrentSampleY;
+        q16PreviousSampleY = q16CurrentSampleY;
 
         pchBuffer += sizeof(COLOUR_INT);
     }
