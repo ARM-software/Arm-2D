@@ -199,20 +199,24 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 1
     do {
-        this.fDegree += 4.0f;
-        int16_t iData = 800 * arm_cos_f32(ARM_2D_ANGLE(this.fDegree));
+
+        int32_t nResult;
+            /* simulate a full battery charging/discharge cycle */
+        arm_2d_helper_time_cos_slider(50, 350, 20000, 0, &nResult, &this.lTimestamp[0]);
+
+        this.fDegree += (float)nResult / 100.0f;
+        int16_t iData = 900 * arm_cos_f32(ARM_2D_ANGLE(this.fDegree));
 
         /* add random noise */
-        srand(arm_2d_helper_get_system_timestamp());
-        iData += (rand() & 0x0FF) - 0x07F;
+        //srand(arm_2d_helper_get_system_timestamp());
+        //iData += (rand() & 0x0FF) - 0x07F;
 
         arm_2d_scene_waveform_enqueue(  ptThis,
                                         &iData,
                                         1);
     } while(0);
-#endif
+
     arm_loader_io_window_on_frame_start(&this.tWindow);
     waveform_view_on_frame_start(&this.tWaveform);
 
@@ -420,7 +424,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             },
 
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
-            .u5DotHeight = 1,
+            .u5DotHeight = 0,
             .bUnsigned = false,
             
 
@@ -437,8 +441,8 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
     do {
 
         int16_t iData = -1000;
-        for (int32_t n = 0; n < 200; n++) {
-            iData += 2;
+        for (int32_t n = 0; n < 50; n++) {
+            iData += 40;
             arm_2d_scene_waveform_enqueue(  ptThis,
                                             &iData,
                                             1);
