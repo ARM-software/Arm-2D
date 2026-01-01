@@ -128,6 +128,15 @@ static void __on_scene_waveform_load(arm_2d_scene_t *ptScene)
 
     waveform_view_on_load(&this.Waveform.tHelper);
 
+    /* disable dynamic dirty region optimization for Cortex-M0/M0+ */
+    #if (defined(__ARM_ARCH) && __ARM_ARCH_PROFILE == 'M' && (__ARM_ARCH_ISA_THUMB < 2))
+
+    this.bIsDirtyRegionOptimizationEnabled = !!
+            arm_2d_helper_pfb_disable_dirty_region_optimization(
+                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t);
+
+    #endif
+
 }
 
 static void __after_scene_waveform_switching(arm_2d_scene_t *ptScene)
@@ -230,7 +239,7 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
             /* simulate a full battery charging/discharge cycle */
         arm_2d_helper_time_cos_slider(50, 350, 20000, 0, &nResult, &this.lTimestamp[0]);
 
-        __generate_cos_samples(ptThis, 5, (float)nResult / 100.0f);
+        __generate_cos_samples(ptThis, 100, (float)nResult / 100.0f);
         
     } while(0);
 
@@ -255,6 +264,12 @@ static void __before_scene_waveform_switching_out(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    if (this.bIsDirtyRegionOptimizationEnabled) {
+        arm_2d_helper_pfb_enable_dirty_region_optimization(
+                &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t,
+                NULL,
+                0);
+    }
 }
 
 static
@@ -444,7 +459,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             },
 
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
-            .u5DotHeight = 2,
+            .u5DotHeight = 0,
             .bUnsigned = false,
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,

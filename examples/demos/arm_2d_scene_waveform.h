@@ -93,6 +93,7 @@ ARM_PRIVATE(
     float fDegree;
 
     bool bUserAllocated;
+    bool bIsDirtyRegionOptimizationEnabled;
 
     struct {
         waveform_view_t tHelper;
