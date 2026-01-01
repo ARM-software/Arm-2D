@@ -318,7 +318,7 @@ static void __waveform_view_update_dirty_bins(waveform_view_t *ptThis)
             q16Ymax = MAX(q16Y, q16Ymax);
         } while(--iSampleCount);
 
-        ptBin->Coverage[WAVEFORM_BIN_NEW].iY0 = reinterpret_s16_q16(q16Ymin);
+        ptBin->Coverage[WAVEFORM_BIN_NEW].iY0 = reinterpret_s16_q16(q16Ymin) - nDotHeight;
         ptBin->Coverage[WAVEFORM_BIN_NEW].iY1 = reinterpret_s16_q16(q16Ymax) + 1 + nDotHeight;
     }
 }
