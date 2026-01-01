@@ -1152,6 +1152,8 @@ int16_t arm_2d_byte_fifo_peek_seek( arm_2d_byte_fifo_t *ptThis,
 
         } while(0);
 label_exit:
+        /* make some compiler happy*/
+        ARM_2D_UNUSED(iCurrentIndex);   
     }
 
     return iCurrentIndex;
