@@ -239,7 +239,7 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
             /* simulate a full battery charging/discharge cycle */
         arm_2d_helper_time_cos_slider(50, 350, 20000, 0, &nResult, &this.lTimestamp[0]);
 
-        __generate_cos_samples(ptThis, 100, (float)nResult / 100.0f);
+        __generate_cos_samples(ptThis, 2, (float)nResult / 100.0f);
         
     } while(0);
 
@@ -459,7 +459,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             },
 
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
-            .u5DotHeight = 0,
+            .u5DotHeight = 2,
             .bUnsigned = false,
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
