@@ -299,7 +299,7 @@ static void __waveform_view_update_dirty_bins(waveform_view_t *ptThis)
                             SEEK_SET);
 
         iLastUnUpdatedX = iX1;
-        ptBin->iWidth = iSampleCount;
+        ptBin->iWidth = iSampleCount++;
     
         q16_t q16Ymin = __Q16_MAX__;
         q16_t q16Ymax = 0;
