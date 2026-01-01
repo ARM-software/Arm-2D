@@ -194,6 +194,31 @@ void arm_2d_scene_waveform_enqueue( user_scene_waveform_t *ptThis,
                                     hwSampleCount * 2);
 }
 
+static void __generate_cos_samples( user_scene_waveform_t *ptThis, 
+                                    size_t tCount,
+                                    float fStep)
+{
+    assert(NULL != ptThis);
+
+    if (0 == tCount) {
+        return ;
+    }
+    do {
+        this.fDegree += fStep;
+        int16_t iData = 900 * arm_cos_f32(ARM_2D_ANGLE(this.fDegree));
+
+        /* add random noise */
+        //srand(arm_2d_helper_get_system_timestamp());
+        //iData += (rand() & 0x0FF) - 0x07F;
+
+        arm_2d_scene_waveform_enqueue(  ptThis,
+                                        &iData,
+                                        1);
+    } while(--tCount);
+
+    this.fDegree = ARM_2D_FMODF(this.fDegree, 360.0f);
+}
+
 static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
 {
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
@@ -205,16 +230,8 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
             /* simulate a full battery charging/discharge cycle */
         arm_2d_helper_time_cos_slider(50, 350, 20000, 0, &nResult, &this.lTimestamp[0]);
 
-        this.fDegree += (float)nResult / 100.0f;
-        int16_t iData = 900 * arm_cos_f32(ARM_2D_ANGLE(this.fDegree));
-
-        /* add random noise */
-        //srand(arm_2d_helper_get_system_timestamp());
-        //iData += (rand() & 0x0FF) - 0x07F;
-
-        arm_2d_scene_waveform_enqueue(  ptThis,
-                                        &iData,
-                                        1);
+        __generate_cos_samples(ptThis, 5, (float)nResult / 100.0f);
+        
     } while(0);
 
     arm_loader_io_window_on_frame_start(&this.tWindow);
@@ -380,7 +397,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .fnOnFrameCPL   = &__on_scene_waveform_frame_complete,
             .fnDepose       = &__on_scene_waveform_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -431,6 +448,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
             .tBackgroundColour.tColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
 
+            .bUseDirtyRegion = true,
             .ptScene = &this.use_as__arm_2d_scene_t,
         };
 

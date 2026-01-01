@@ -61,16 +61,28 @@ enum {
     WAVEFORM_SAMPLE_SIZE_WORD,
 };
 
+typedef struct waveform_dirty_region_item_t {
+ARM_PRIVATE(
+    int16_t iY0;
+    int16_t iY1;
+)
+} waveform_dirty_region_item_t;
+
 typedef struct waveform_view_cfg_t {
 
     arm_2d_size_t tSize;
 
     uint16_t bUseHeapForVRES        : 1;
     uint16_t bShowShadow            : 1;
-    uint16_t                        : 6;
+    uint16_t bUseDirtyRegion        : 1;
+    uint16_t                        : 5;
     uint16_t u5DotHeight            : 5;
     uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
     uint16_t bUnsigned              : 1;
+
+    uint8_t                         : 8;
+    uint8_t chDirtyRegionItemCount;
+    waveform_dirty_region_item_t *ptWaveformDirtyRegionItems; 
 
     COLOUR_TYPE_T tBrushColour;
     COLOUR_TYPE_T tBackgroundColour;
@@ -106,6 +118,13 @@ ARM_PRIVATE(
     q16_t q16Scale;
     int16_t iDiagramHeight;
     int16_t iStartYOffset;
+
+    struct {
+        arm_2d_region_list_item_t tDirtyRegionItem;
+        uint8_t chCurrentBin; 
+        q16_t   q16BinWidth;
+    } DirtyRegion;
+
 )
     /* place your public member here */
     

@@ -70,6 +70,12 @@
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+enum {
+    WAVEFORM_START,
+    WAVEFORM_UPDATE_BINS,
+    WAVEFORM_DONE,
+};
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 ARM_NONNULL(1)
@@ -164,6 +170,32 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
 
     } while(0);
 
+    if (NULL == this.tCFG.ptScene) {
+        this.tCFG.bUseDirtyRegion = false;
+    } else if (this.tCFG.bUseDirtyRegion) {
+        arm_2d_scene_player_dynamic_dirty_region_init(  
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            this.tCFG.ptScene);
+
+        if (this.tCFG.chDirtyRegionItemCount > 0 && NULL != this.tCFG.ptWaveformDirtyRegionItems) {
+
+            /* update bin width */
+            this.DirtyRegion.q16BinWidth 
+                = reinterpret_q16_f32(  (float)this.tCFG.tSize.iWidth 
+                                     /  (float)this.tCFG.chDirtyRegionItemCount);
+
+            /* reset bins */
+            memset( this.tCFG.ptWaveformDirtyRegionItems, 
+                    0, 
+                    (   sizeof(waveform_dirty_region_item_t) 
+                    *   this.tCFG.chDirtyRegionItemCount));
+            
+        } else {
+            this.tCFG.chDirtyRegionItemCount = 0;
+        }
+    }
+    
+
     return tResult;
 
 }
@@ -172,6 +204,12 @@ ARM_NONNULL(1)
 void waveform_view_depose( waveform_view_t *ptThis)
 {
     assert(NULL != ptThis);
+
+    if (this.tCFG.bUseDirtyRegion) {
+        arm_2d_scene_player_dynamic_dirty_region_depose(
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            this.tCFG.ptScene);
+    }
 
     arm_generic_loader_depose(&this.use_as__arm_generic_loader_t);
 }
@@ -188,8 +226,14 @@ ARM_NONNULL(1)
 void waveform_view_on_frame_start( waveform_view_t *ptThis)
 {
     assert(NULL != ptThis);
-    
+
     arm_generic_loader_on_frame_start(&this.use_as__arm_generic_loader_t);
+
+    if (this.tCFG.bUseDirtyRegion) {
+        arm_2d_dynamic_dirty_region_on_frame_start(
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            WAVEFORM_START);
+    }
 }
 
 ARM_NONNULL(1)
@@ -211,15 +255,37 @@ void waveform_view_show(waveform_view_t *ptThis,
         ptTile = arm_2d_get_default_frame_buffer();
     }
 
-
     arm_2d_container(ptTile, __waveform_panel, ptRegion) {
 
-        arm_2d_tile_copy_only(  &this.tTile, 
-                                &__waveform_panel, 
-                                NULL);
+        arm_2d_align_centre(__waveform_panel_canvas, 
+                            this.tCFG.tSize) {
+            arm_2d_tile_copy_only(  &this.tTile, 
+                                    &__waveform_panel, 
+                                    &__centre_region);
 
+            if (this.tCFG.bUseDirtyRegion) {
+                /* update dirty region */
+                switch (arm_2d_dynamic_dirty_region_wait_next(
+                            &this.DirtyRegion.tDirtyRegionItem)) {
+                    case WAVEFORM_START:
+                        if (0 == this.tCFG.chDirtyRegionItemCount) {
+                            /* The user doesn't provide dirty region bins, let's update the whole diagram instead */
+                            arm_2d_dynamic_dirty_region_update(
+                                    &this.DirtyRegion.tDirtyRegionItem,
+                                    &__waveform_panel,
+                                    &__centre_region,
+                                    WAVEFORM_DONE);
+                        }
+                        break;
+                    case WAVEFORM_UPDATE_BINS:
+                        break;
+                    default:
+                    case WAVEFORM_DONE:
+                        break;
+                }
+            }
+        }
     }
-
 }
 
 ARM_NONNULL(1)
