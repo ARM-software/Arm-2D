@@ -396,6 +396,10 @@ void arm_generic_loader_on_frame_start( arm_generic_loader_t *ptThis)
         return ;
     }
 
+    arm_loader_io_on_frame_start(   this.tCFG.ImageIO.ptIO, 
+                                    this.tCFG.ImageIO.pTarget,
+                                    ptThis);
+
 }
 
 ARM_NONNULL(1)

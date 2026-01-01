@@ -44,10 +44,11 @@ extern "C" {
 
 typedef struct arm_loader_io_t {
 
-    bool   (*fnOpen)    (uintptr_t pTarget, void *ptLoader);
-    void   (*fnClose)   (uintptr_t pTarget, void *ptLoader);
-    bool   (*fnSeek)    (uintptr_t pTarget, void *ptLoader, int32_t offset, int32_t whence);
-    size_t (*fnRead)    (uintptr_t pTarget, void *ptLoader, uint8_t *pchBuffer, size_t tSize);
+    bool   (*fnOpen)        (uintptr_t pTarget, void *ptLoader);
+    void   (*fnClose)       (uintptr_t pTarget, void *ptLoader);
+    bool   (*fnSeek)        (uintptr_t pTarget, void *ptLoader, int32_t offset, int32_t whence);
+    size_t (*fnRead)        (uintptr_t pTarget, void *ptLoader, uint8_t *pchBuffer, size_t tSize);
+    void   (*fnOnFrameStart)(uintptr_t pTarget, void *ptLoader);
 
 } arm_loader_io_t;
 
@@ -98,19 +99,25 @@ const arm_loader_io_t ARM_LOADER_IO_WINDOW;
  * Invoke Interface                                                           *
  *----------------------------------------------------------------------------*/
 extern
-ARM_NONNULL(1)
+ARM_NONNULL(1,3)
 bool arm_loader_io_open(const arm_loader_io_t *ptIO, 
                         uintptr_t pTarget, 
                         void *ptLoader);
 
 extern
-ARM_NONNULL(1)
+ARM_NONNULL(1,3)
 void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader);
 
 extern
-ARM_NONNULL(1)
+ARM_NONNULL(1,3)
+void arm_loader_io_on_frame_start(  const arm_loader_io_t *ptIO,
+                                    uintptr_t pTarget, 
+                                    void *ptLoader);
+
+extern
+ARM_NONNULL(1,3)
 bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         uintptr_t pTarget, 
                         void *ptLoader, 
@@ -118,7 +125,7 @@ bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         int32_t whence);
 
 extern
-ARM_NONNULL(1)
+ARM_NONNULL(1,3)
 size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader, 
@@ -170,10 +177,6 @@ arm_2d_err_t arm_loader_io_window_init( arm_loader_io_window_t *ptThis,
                                         uint8_t *pchBuffer,
                                         uint16_t hwSize,
                                         uint16_t hwWindowSize);
-
-extern
-ARM_NONNULL(1)
-void arm_loader_io_window_on_frame_start(arm_loader_io_window_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

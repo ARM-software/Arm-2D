@@ -104,6 +104,11 @@ size_t __arm_loader_io_window_read( uintptr_t pTarget,
                                     void *ptLoader, 
                                     uint8_t *pchBuffer, 
                                     size_t tSize);
+
+static
+void __arm_loader_io_window_on_frame_start( uintptr_t pTarget, 
+                                            void *ptLoader);
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const arm_loader_io_t ARM_LOADER_IO_FILE = {
@@ -128,10 +133,11 @@ const arm_loader_io_t ARM_LOADER_IO_ROM = {
 };
 
 const arm_loader_io_t ARM_LOADER_IO_WINDOW = {
-    .fnOpen =   &__arm_loader_io_window_open,
-    .fnClose =  &__arm_loader_io_window_close,
-    .fnSeek =   &__arm_loader_io_window_seek,
-    .fnRead =   &__arm_loader_io_window_read,
+    .fnOpen =           &__arm_loader_io_window_open,
+    .fnClose =          &__arm_loader_io_window_close,
+    .fnSeek =           &__arm_loader_io_window_seek,
+    .fnRead =           &__arm_loader_io_window_read,
+    .fnOnFrameStart =   &__arm_loader_io_window_on_frame_start,
 };
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -141,7 +147,7 @@ const arm_loader_io_t ARM_LOADER_IO_WINDOW = {
  * Invoke Interface                                                           *
  *----------------------------------------------------------------------------*/
 
-ARM_NONNULL(1)
+ARM_NONNULL(1, 3)
 bool arm_loader_io_open(const arm_loader_io_t *ptIO, 
                         uintptr_t pTarget, 
                         void *ptLoader)
@@ -158,7 +164,7 @@ bool arm_loader_io_open(const arm_loader_io_t *ptIO,
     return ptIO->fnOpen(pTarget,ptLoader);
 }
 
-ARM_NONNULL(1)
+ARM_NONNULL(1, 3)
 void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader)
@@ -173,7 +179,7 @@ void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                     ptLoader));
 }
 
-ARM_NONNULL(1)
+ARM_NONNULL(1, 3)
 bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         uintptr_t pTarget, 
                         void *ptLoader, 
@@ -192,7 +198,7 @@ bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
     return ptIO->fnSeek(pTarget, ptLoader, offset, whence);
 }
 
-ARM_NONNULL(1)
+ARM_NONNULL(1, 3)
 size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader, 
@@ -211,6 +217,20 @@ size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
                             tSize));
 }
 
+ARM_NONNULL(1, 3)
+void arm_loader_io_on_frame_start(  const arm_loader_io_t *ptIO,
+                                    uintptr_t pTarget, 
+                                    void *ptLoader)
+{
+    ARM_2D_UNUSED(ptLoader);
+    if (NULL == ptIO) {
+        return ;
+    }
+
+    ARM_2D_INVOKE_RT_VOID(ptIO->fnOnFrameStart, 
+        ARM_2D_PARAM(   pTarget,
+                        ptLoader));
+}
 
 /*----------------------------------------------------------------------------*
  * IO                                                                         *
@@ -493,9 +513,11 @@ arm_2d_err_t arm_loader_io_window_init( arm_loader_io_window_t *ptThis,
     return ARM_2D_ERR_NONE;
 }
 
-ARM_NONNULL(1)
-void arm_loader_io_window_on_frame_start(arm_loader_io_window_t *ptThis)
+static
+void __arm_loader_io_window_on_frame_start(uintptr_t pTarget, void *ptLoader)
 {
+    arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
+
     assert(NULL != ptThis);
 
     bool bFinished = false;
