@@ -73,8 +73,10 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wnonnull-compare"
 #   pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #   pragma GCC diagnostic ignored "-Wunused-const-variable"
-#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 1296,174,64,177,1
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa029,Pe301,Pe174,Pe191,Pe177,Pe546
 #endif
 
 /*!

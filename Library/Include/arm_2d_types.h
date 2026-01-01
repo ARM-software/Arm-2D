@@ -136,7 +136,7 @@ extern "C" {
 #endif
 
 
-#if __IS_COMPILER_ARM_COMPILER_5__
+#if __IS_COMPILER_IAR__ || __IS_COMPILER_ARM_COMPILER_5__
 
 #define __UINT8_MAX__   UINT8_MAX
 #define __UINT16_MAX__  UINT16_MAX
@@ -147,8 +147,6 @@ extern "C" {
 #define __INT32_MAX__   INT32_MAX
 
 #endif
-
-
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
