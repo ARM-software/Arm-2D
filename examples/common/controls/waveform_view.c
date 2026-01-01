@@ -200,6 +200,28 @@ void waveform_view_on_frame_complete( waveform_view_t *ptThis)
     arm_generic_loader_on_frame_complete(&this.use_as__arm_generic_loader_t);
 }
 
+ARM_NONNULL(1,2)
+void waveform_view_show(waveform_view_t *ptThis,
+                        const arm_2d_tile_t *ptTile,
+                        const arm_2d_region_t *ptRegion,
+                        bool bIsNewFrame)
+{
+    assert(NULL!= ptThis);
+    if (-1 == (intptr_t)ptTile) {
+        ptTile = arm_2d_get_default_frame_buffer();
+    }
+
+
+    arm_2d_container(ptTile, __waveform_panel, ptRegion) {
+
+        arm_2d_tile_copy_only(  &this.tTile, 
+                                &__waveform_panel, 
+                                NULL);
+
+    }
+
+}
+
 ARM_NONNULL(1)
 static
 arm_2d_err_t __waveform_view_decoder_init(arm_generic_loader_t *ptObj)

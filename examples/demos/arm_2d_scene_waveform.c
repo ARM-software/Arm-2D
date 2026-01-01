@@ -277,10 +277,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
 
                         arm_2d_align_centre(__item_region, this.tWaveform.tTile.tRegion.tSize) {
 
-                            /* draw waveform as a normal tile */
-                            arm_2d_tile_copy(   &this.tWaveform.tTile, 
+                            waveform_view_show( &this.tWaveform, 
                                                 ptTile, 
-                                                &__centre_region);
+                                                &__centre_region,
+                                                bIsNewFrame);
+
                         }
                     }
 
@@ -426,7 +427,6 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .u2SampleSize = WAVEFORM_SAMPLE_SIZE_HWORD,
             .u5DotHeight = 2,
             .bUnsigned = false,
-            
 
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
             .tBackgroundColour.tColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,

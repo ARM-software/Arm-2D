@@ -134,8 +134,12 @@ extern
 ARM_NONNULL(1)
 void waveform_view_on_frame_complete( waveform_view_t *ptThis);
 
-
-
+extern
+ARM_NONNULL(1,2)
+void waveform_view_show(waveform_view_t *ptThis,
+                        const arm_2d_tile_t *ptTile,
+                        const arm_2d_region_t *ptRegion,
+                        bool bIsNewFrame);
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
