@@ -182,6 +182,8 @@ __STATIC_FORCEINLINE int32_t __QDSUB(
 
 #endif
 
+#define __Q16_MAX__     __INT32_MAX__
+
 /*============================ TYPES =========================================*/
 typedef int32_t q16_t;
 

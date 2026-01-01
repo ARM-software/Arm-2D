@@ -94,8 +94,11 @@ ARM_PRIVATE(
 
     bool bUserAllocated;
 
-    waveform_view_t tWaveform;
-    arm_loader_io_window_t tWindow;
+    struct {
+        waveform_view_t tHelper;
+        arm_loader_io_window_t tWindowIO;
+        waveform_view_dirty_bin_t tDirtyBins[10];
+    } Waveform;
 )
     /* place your public member here */
     

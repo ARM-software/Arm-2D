@@ -61,12 +61,15 @@ enum {
     WAVEFORM_SAMPLE_SIZE_WORD,
 };
 
-typedef struct waveform_dirty_region_item_t {
+typedef struct waveform_view_dirty_bin_t {
 ARM_PRIVATE(
-    int16_t iY0;
-    int16_t iY1;
+    struct {
+        int16_t iY0;
+        int16_t iY1;
+    } Coverage[2];
+    int16_t iWidth;
 )
-} waveform_dirty_region_item_t;
+} waveform_view_dirty_bin_t;
 
 typedef struct waveform_view_cfg_t {
 
@@ -75,14 +78,16 @@ typedef struct waveform_view_cfg_t {
     uint16_t bUseHeapForVRES        : 1;
     uint16_t bShowShadow            : 1;
     uint16_t bUseDirtyRegion        : 1;
-    uint16_t                        : 5;
-    uint16_t u5DotHeight            : 5;
-    uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
     uint16_t bUnsigned              : 1;
-
+    uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
+    uint16_t                        : 2;
+    uint16_t u5DotHeight            : 5;
+    uint16_t                        : 2;
+    uint16_t __bValid               : 1;    /* please ignore this */
+    
     uint8_t                         : 8;
     uint8_t chDirtyRegionItemCount;
-    waveform_dirty_region_item_t *ptWaveformDirtyRegionItems; 
+    waveform_view_dirty_bin_t *ptDirtyBins; 
 
     COLOUR_TYPE_T tBrushColour;
     COLOUR_TYPE_T tBackgroundColour;
@@ -147,7 +152,7 @@ void waveform_view_on_load( waveform_view_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void waveform_view_on_frame_start( waveform_view_t *ptThis);
+void waveform_view_on_frame_start( waveform_view_t *ptThis, bool bUpdate);
 
 extern
 ARM_NONNULL(1)

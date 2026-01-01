@@ -126,7 +126,7 @@ static void __on_scene_waveform_load(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    waveform_view_on_load(&this.tWaveform);
+    waveform_view_on_load(&this.Waveform.tHelper);
 
 }
 
@@ -143,7 +143,7 @@ static void __on_scene_waveform_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
-    waveform_view_depose(&this.tWaveform);
+    waveform_view_depose(&this.Waveform.tHelper);
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -189,7 +189,7 @@ void arm_2d_scene_waveform_enqueue( user_scene_waveform_t *ptThis,
         return ;
     }
 
-    arm_loader_io_window_enqueue(   &this.tWindow, 
+    arm_loader_io_window_enqueue(   &this.Waveform.tWindowIO, 
                                     piSamples, 
                                     hwSampleCount * 2);
 }
@@ -234,8 +234,10 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
         
     } while(0);
 
-    arm_loader_io_window_on_frame_start(&this.tWindow);
-    waveform_view_on_frame_start(&this.tWaveform);
+    /* NOTE: Please only set true to indicate the diagram data is updated (changed).
+     *       Since we change the data for each frame, we pass true here directly.
+     */
+    waveform_view_on_frame_start(&this.Waveform.tHelper, true);      
 
 }
 
@@ -244,7 +246,7 @@ static void __on_scene_waveform_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_waveform_t *ptThis = (user_scene_waveform_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    waveform_view_on_frame_complete(&this.tWaveform);
+    waveform_view_on_frame_complete(&this.Waveform.tHelper);
 
 }
 
@@ -285,16 +287,16 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
                 arm_2d_layout(__dock_region, BOTTOM_UP) {
 
                     /* waveform */
-                    __item_line_dock_vertical(this.tWaveform.tTile.tRegion.tSize.iHeight + 20) {
+                    __item_line_dock_vertical(this.Waveform.tHelper.tTile.tRegion.tSize.iHeight + 20) {
 
                         draw_round_corner_box(  ptTile, 
                                                 &__item_region, 
                                                 GLCD_COLOR_DARK_GREY, 
                                                 32);
 
-                        arm_2d_align_centre(__item_region, this.tWaveform.tTile.tRegion.tSize) {
+                        arm_2d_align_centre(__item_region, this.Waveform.tHelper.tTile.tRegion.tSize) {
 
-                            waveform_view_show( &this.tWaveform, 
+                            waveform_view_show( &this.Waveform.tHelper, 
                                                 ptTile, 
                                                 &__centre_region,
                                                 bIsNewFrame);
@@ -419,7 +421,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             return NULL;
         }
         
-        arm_loader_io_window_init(  &this.tWindow, 
+        arm_loader_io_window_init(  &this.Waveform.tWindowIO, 
                                     this.pchBuffer, 
                                     tBufferSize,
                                     ARM_2D_DEMO_WAVE_FORM_WINDOW_SIZE * sizeof(uint16_t));
@@ -433,7 +435,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
 
             .IO = {
                 .ptIO = &ARM_LOADER_IO_WINDOW,
-                .pTarget = (uintptr_t)&this.tWindow,
+                .pTarget = (uintptr_t)&this.Waveform.tWindowIO,
             },
 
             .ChartScale = {
@@ -448,11 +450,13 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
             .tBackgroundColour.tColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
 
+            .chDirtyRegionItemCount = dimof(this.Waveform.tDirtyBins),
+            .ptDirtyBins = this.Waveform.tDirtyBins,
             .bUseDirtyRegion = true,
             .ptScene = &this.use_as__arm_2d_scene_t,
         };
 
-        waveform_view_init(&this.tWaveform, &tCFG);
+        waveform_view_init(&this.Waveform.tHelper, &tCFG);
     } while(0);
 
 #if 0

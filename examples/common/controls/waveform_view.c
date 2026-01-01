@@ -71,9 +71,14 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 enum {
-    WAVEFORM_START,
+    WAVEFORM_START = 0,
     WAVEFORM_UPDATE_BINS,
     WAVEFORM_DONE,
+};
+
+enum {
+    WAVEFORM_BIN_LAST = 0,
+    WAVEFORM_BIN_NEW,
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -90,6 +95,10 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                                     uint32_t iTargetStrideInByte,
                                     uint_fast8_t chBitsPerPixel);
 
+__STATIC_INLINE
+bool __waveform_view_get_sample_y(  waveform_view_t *ptThis,
+                                    q16_t *pq16Y);
+
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
@@ -104,6 +113,8 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
     //if (NULL != ptCFG) {
         this.tCFG = *ptCFG;
     //}
+
+    this.tCFG.__bValid = false;
 
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
 
@@ -177,7 +188,7 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
                                             &this.DirtyRegion.tDirtyRegionItem,
                                             this.tCFG.ptScene);
 
-        if (this.tCFG.chDirtyRegionItemCount > 0 && NULL != this.tCFG.ptWaveformDirtyRegionItems) {
+        if (this.tCFG.chDirtyRegionItemCount > 0 && NULL != this.tCFG.ptDirtyBins) {
 
             /* update bin width */
             this.DirtyRegion.q16BinWidth 
@@ -185,15 +196,20 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
                                      /  (float)this.tCFG.chDirtyRegionItemCount);
 
             /* reset bins */
-            memset( this.tCFG.ptWaveformDirtyRegionItems, 
+            memset( this.tCFG.ptDirtyBins, 
                     0, 
-                    (   sizeof(waveform_dirty_region_item_t) 
+                    (   sizeof(waveform_view_dirty_bin_t) 
                     *   this.tCFG.chDirtyRegionItemCount));
             
+            if (255 == this.tCFG.chDirtyRegionItemCount) {
+                this.tCFG.chDirtyRegionItemCount = 254;
+            }
         } else {
             this.tCFG.chDirtyRegionItemCount = 0;
         }
     }
+
+    this.tCFG.__bValid = true;
     
 
     return tResult;
@@ -218,18 +234,110 @@ ARM_NONNULL(1)
 void waveform_view_on_load( waveform_view_t *ptThis)
 {
     assert(NULL != ptThis);
+    if (!this.tCFG.__bValid) {
+        return ;
+    }
     
     arm_generic_loader_on_load(&this.use_as__arm_generic_loader_t);
 }
 
+static void __waveform_view_update_dirty_bins(waveform_view_t *ptThis)
+{
+    assert(NULL != ptThis);
+    assert(NULL != this.tCFG.ptDirtyBins);
+    assert(this.tCFG.chDirtyRegionItemCount > 0);
+    
+    uint_fast8_t chSampleDataSize = 1 << this.tCFG.u2SampleSize;
+    int16_t iLastUnUpdatedX = 0;
+    uint_fast8_t nDotHeight = this.tCFG.u5DotHeight + 1; 
+
+    for (   uint_fast8_t chBinIndex = 0; 
+            chBinIndex < this.tCFG.chDirtyRegionItemCount; 
+            chBinIndex++) {
+
+        waveform_view_dirty_bin_t *ptBin = &this.tCFG.ptDirtyBins[chBinIndex];
+
+        /* save the last dirty bin */
+        ptBin->Coverage[WAVEFORM_BIN_LAST] = ptBin->Coverage[WAVEFORM_BIN_NEW];
+        
+        memset( &ptBin->Coverage[WAVEFORM_BIN_NEW], 
+                0,
+                sizeof(ptBin->Coverage[WAVEFORM_BIN_NEW]));
+
+        /* calculate the new dirty bin */
+        int16_t iX1 =reinterpret_s16_q16( mul_n_q16(this.DirtyRegion.q16BinWidth,
+                                                    chBinIndex + 1));
+
+        int16_t iSampleCount = iX1 - iLastUnUpdatedX;
+        if (iSampleCount <= 0) {
+            continue;
+        }
+
+        if (iLastUnUpdatedX == 0) {
+            arm_loader_io_seek( this.tCFG.IO.ptIO, 
+                            this.tCFG.IO.pTarget, 
+                            &this.use_as__arm_generic_loader_t, 
+                            0, 
+                            SEEK_SET);
+        } else {
+            arm_loader_io_seek( this.tCFG.IO.ptIO, 
+                            this.tCFG.IO.pTarget, 
+                            &this.use_as__arm_generic_loader_t, 
+                            (iLastUnUpdatedX - 1) * chSampleDataSize, 
+                            SEEK_SET);
+        }
+
+        q16_t q16LastY = 0;
+        if (!__waveform_view_get_sample_y(  ptThis, &q16LastY)) {
+            continue;
+        }
+
+        arm_loader_io_seek( this.tCFG.IO.ptIO, 
+                            this.tCFG.IO.pTarget, 
+                            &this.use_as__arm_generic_loader_t, 
+                            iLastUnUpdatedX * chSampleDataSize, 
+                            SEEK_SET);
+
+        iLastUnUpdatedX = iX1;
+        ptBin->iWidth = iSampleCount;
+    
+        q16_t q16Ymin = __Q16_MAX__;
+        q16_t q16Ymax = 0;
+
+        q16LastY -= reinterpret_q16_s16(nDotHeight);
+        q16Ymin = MIN(q16LastY, q16Ymin);
+        q16Ymax = MAX(q16LastY, q16Ymax);
+
+        do {
+            q16_t q16Y;
+            if (!__waveform_view_get_sample_y(  ptThis, &q16Y)) {
+                break;
+            }
+
+            q16Ymin = MIN(q16Y, q16Ymin);
+            q16Ymax = MAX(q16Y, q16Ymax);
+        } while(--iSampleCount);
+
+        ptBin->Coverage[WAVEFORM_BIN_NEW].iY0 = reinterpret_s16_q16(q16Ymin);
+        ptBin->Coverage[WAVEFORM_BIN_NEW].iY1 = reinterpret_s16_q16(q16Ymax) + 1 + nDotHeight;
+    }
+}
+
 ARM_NONNULL(1)
-void waveform_view_on_frame_start( waveform_view_t *ptThis)
+void waveform_view_on_frame_start( waveform_view_t *ptThis, bool bUpdate)
 {
     assert(NULL != ptThis);
 
+    if (!this.tCFG.__bValid) {
+        return ;
+    }
+
     arm_generic_loader_on_frame_start(&this.use_as__arm_generic_loader_t);
 
-    if (this.tCFG.bUseDirtyRegion) {
+    if (this.tCFG.bUseDirtyRegion && bUpdate) {
+
+        __waveform_view_update_dirty_bins(ptThis);
+
         arm_2d_dynamic_dirty_region_on_frame_start(
                                             &this.DirtyRegion.tDirtyRegionItem,
                                             WAVEFORM_START);
@@ -240,6 +348,9 @@ ARM_NONNULL(1)
 void waveform_view_on_frame_complete( waveform_view_t *ptThis)
 {
     assert(NULL != ptThis);
+    if (!this.tCFG.__bValid) {
+        return ;
+    }
 
     arm_generic_loader_on_frame_complete(&this.use_as__arm_generic_loader_t);
 }
@@ -251,6 +362,11 @@ void waveform_view_show(waveform_view_t *ptThis,
                         bool bIsNewFrame)
 {
     assert(NULL!= ptThis);
+
+    if (!this.tCFG.__bValid) {
+        return ;
+    }
+
     if (-1 == (intptr_t)ptTile) {
         ptTile = arm_2d_get_default_frame_buffer();
     }
@@ -268,16 +384,76 @@ void waveform_view_show(waveform_view_t *ptThis,
                 switch (arm_2d_dynamic_dirty_region_wait_next(
                             &this.DirtyRegion.tDirtyRegionItem)) {
                     case WAVEFORM_START:
-                        if (0 == this.tCFG.chDirtyRegionItemCount) {
+                        if ( 0 == this.tCFG.chDirtyRegionItemCount) {
                             /* The user doesn't provide dirty region bins, let's update the whole diagram instead */
                             arm_2d_dynamic_dirty_region_update(
                                     &this.DirtyRegion.tDirtyRegionItem,
                                     &__waveform_panel,
                                     &__centre_region,
                                     WAVEFORM_DONE);
+                            break;
+                        } else {
+                            this.DirtyRegion.chCurrentBin = 0;
                         }
-                        break;
-                    case WAVEFORM_UPDATE_BINS:
+                        //fall-through
+                    case WAVEFORM_UPDATE_BINS: {
+
+                            do {
+                                uint8_t chBinIndex = this.DirtyRegion.chCurrentBin;
+                                int16_t iX =reinterpret_s16_q16( 
+                                                mul_n_q16(  this.DirtyRegion.q16BinWidth,
+                                                            chBinIndex));
+                                waveform_view_dirty_bin_t *ptBin = &this.tCFG.ptDirtyBins[chBinIndex];
+
+                                int16_t iY0 = ptBin->Coverage[1].iY0;
+                                int16_t iY1 = ptBin->Coverage[1].iY1;
+
+                                if (ptBin->Coverage[0].iY0 != ptBin->Coverage[0].iY1) {
+                                    iY0 = MIN(iY0, ptBin->Coverage[0].iY0);
+                                    iY1 = MAX(iY1, ptBin->Coverage[0].iY1);
+                                }
+
+                                arm_2d_region_t tDrawRegion = {
+                                    .tLocation = {
+                                        .iX = __centre_region.tLocation.iX + iX,
+                                        .iY = __centre_region.tLocation.iY + iY0,
+                                    },
+                                    .tSize = {
+                                        .iWidth = ptBin->iWidth,
+                                        .iHeight = iY1 - iY0,
+                                    },
+                                };
+                                if (!arm_2d_region_intersect(&tDrawRegion, &__centre_region, NULL)) {
+                                    this.DirtyRegion.chCurrentBin++;
+                                    if (this.DirtyRegion.chCurrentBin >= this.tCFG.chDirtyRegionItemCount) {
+                                        /* end early*/
+                                        arm_2d_dynamic_dirty_region_change_user_region_index_only(
+                                            &this.DirtyRegion.tDirtyRegionItem,
+                                            WAVEFORM_DONE
+                                        );
+                                    } else {
+                                        continue;
+                                    }
+                                    break;
+                                }
+
+                                if (this.DirtyRegion.chCurrentBin++ < this.tCFG.chDirtyRegionItemCount) {
+                                    arm_2d_dynamic_dirty_region_update(
+                                                &this.DirtyRegion.tDirtyRegionItem,
+                                                &__waveform_panel,
+                                                &tDrawRegion,
+                                                WAVEFORM_UPDATE_BINS);
+                                    break;
+                                } else {
+                                    arm_2d_dynamic_dirty_region_update(
+                                                &this.DirtyRegion.tDirtyRegionItem,
+                                                &__waveform_panel,
+                                                &tDrawRegion,
+                                                WAVEFORM_DONE);
+                                    break;
+                                }
+                            } while(true);
+                        }
                         break;
                     default:
                     case WAVEFORM_DONE:
@@ -384,8 +560,12 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 {
     assert(NULL != ptObj);
     assert(__GLCD_CFG_COLOUR_DEPTH__ == chBitsPerPixel);
-
     waveform_view_t *ptThis = (waveform_view_t *)ptObj;
+
+    if (!this.tCFG.__bValid) {
+        return ARM_2D_ERR_NOT_AVAILABLE;
+    }
+
     uint_fast8_t chSampleDataSize = 1 << this.tCFG.u2SampleSize;
 
     int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
