@@ -414,7 +414,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .fnOnFrameCPL   = &__on_scene_waveform_frame_complete,
             .fnDepose       = &__on_scene_waveform_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -477,7 +477,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
 
             .chDirtyRegionItemCount = dimof(this.Waveform.tDirtyBins),
             .ptDirtyBins = this.Waveform.tDirtyBins,
-            .bUseDirtyRegion = false,
+            .bUseDirtyRegion = true,
             .ptScene = &this.use_as__arm_2d_scene_t,
         };
 
