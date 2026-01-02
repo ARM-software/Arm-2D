@@ -88,7 +88,7 @@ struct user_scene_waveform_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[1];
+    int64_t lTimestamp[2];
     uint8_t *pchBuffer;
     float fDegree;
 
@@ -98,7 +98,7 @@ ARM_PRIVATE(
     struct {
         waveform_view_t tHelper;
         arm_loader_io_window_t tWindowIO;
-        waveform_view_dirty_bin_t tDirtyBins[8];
+        waveform_view_dirty_bin_t tDirtyBins[10];
     } Waveform;
 )
     /* place your public member here */

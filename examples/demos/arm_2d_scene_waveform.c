@@ -234,12 +234,14 @@ static void __on_scene_waveform_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     do {
+        int32_t nSamples, nStepInDegree;
+        arm_2d_helper_time_cos_slider(1, 300, 120000, 0, &nSamples, &this.lTimestamp[1]);
 
-        int32_t nResult;
+
             /* simulate a full battery charging/discharge cycle */
-        arm_2d_helper_time_cos_slider(50, 350, 20000, 0, &nResult, &this.lTimestamp[0]);
+        arm_2d_helper_time_cos_slider(50, 350, 15000, 0, &nStepInDegree, &this.lTimestamp[0]);
 
-        __generate_cos_samples(ptThis, 2, (float)nResult / 100.0f);
+        __generate_cos_samples(ptThis, nSamples, (float)nStepInDegree / 100.0f);
         
     } while(0);
 
