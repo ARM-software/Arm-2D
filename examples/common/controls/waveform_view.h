@@ -82,7 +82,8 @@ typedef struct waveform_view_cfg_t {
     uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
     uint16_t                        : 2;
     uint16_t u5DotHeight            : 5;
-    uint16_t                        : 2;
+    uint16_t                        : 1;
+    uint16_t __bShowGradient        : 1;    /* please ignore this */
     uint16_t __bValid               : 1;    /* please ignore this */
     
     uint8_t                         : 8;
@@ -91,8 +92,7 @@ typedef struct waveform_view_cfg_t {
 
     COLOUR_TYPE_T tBrushColour;
     COLOUR_TYPE_T tBackgroundColour;
-    //COLOUR_TYPE_T tShawdowColour;
-
+    
     struct {
         const arm_loader_io_t *ptIO;
         uintptr_t pTarget;
@@ -102,6 +102,11 @@ typedef struct waveform_view_cfg_t {
         int32_t nUpperLimit;
         int32_t nLowerLimit;
     } ChartScale;
+
+    struct {
+        COLOUR_TYPE_T tColour;
+        arm_2d_alpha_samples_4pts_t tGradient;
+    } Shadow;
 
     arm_2d_scene_t *ptScene;
 } waveform_view_cfg_t;
@@ -129,6 +134,11 @@ ARM_PRIVATE(
         uint8_t chCurrentBin; 
         q16_t   q16BinWidth;
     } DirtyRegion;
+
+    struct {
+        q16_t q16UpperGradientRatio;
+        q16_t q16LowerGradientRatio;
+    } Shadow;
 
 )
     /* place your public member here */

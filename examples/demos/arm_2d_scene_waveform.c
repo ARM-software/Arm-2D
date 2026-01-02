@@ -306,8 +306,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
 
                         draw_round_corner_box(  ptTile, 
                                                 &__item_region, 
-                                                GLCD_COLOR_DARK_GREY, 
-                                                32);
+                                                GLCD_COLOR_LIGHT_GREY, 
+                                                64);
 
                         arm_2d_align_centre(__item_region, this.Waveform.tHelper.tTile.tRegion.tSize) {
 
@@ -325,7 +325,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_waveform_handler)
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                         arm_lcd_text_set_font((const arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4);
                         arm_lcd_text_set_draw_region(&__item_region);
-                        arm_lcd_text_set_colour(GLCD_COLOR_NIXIE_TUBE, GLCD_COLOR_WHITE);
+                        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
                         arm_lcd_text_set_scale(1.3f);
 
                         arm_lcd_printf_label(ARM_2D_ALIGN_LEFT, "+ Waveform Demo");
@@ -396,7 +396,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
-            .tCanvas = {GLCD_COLOR_WHITE}, 
+            .tCanvas = {GLCD_COLOR_GRAY(128 + 32)}, 
 
             /* Please uncommon the callbacks if you need them
              */
@@ -414,7 +414,7 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .fnOnFrameCPL   = &__on_scene_waveform_frame_complete,
             .fnDepose       = &__on_scene_waveform_depose,
 
-            .bUseDirtyRegionHelper = true,
+            .bUseDirtyRegionHelper = false,
         },
         .bUserAllocated = bUserAllocated,
     };
@@ -462,31 +462,37 @@ user_scene_waveform_t *__arm_2d_scene_waveform_init(   arm_2d_scene_player_t *pt
             .u5DotHeight = 2,
             .bUnsigned = false,
 
-            .tBrushColour.tColour = GLCD_COLOR_NIXIE_TUBE,
+            .tBrushColour.tColour = GLCD_COLOR_WHITE,
             .tBackgroundColour.tColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
+
+            .bShowShadow = true,
+
+            .Shadow = {
+                .tColour.tColour = GLCD_COLOR_NIXIE_TUBE,
+                .tGradient = (arm_2d_alpha_samples_4pts_t) 
+                    {  {0, 64,
+                        128, 255},
+                    },  
+            },
 
             .chDirtyRegionItemCount = dimof(this.Waveform.tDirtyBins),
             .ptDirtyBins = this.Waveform.tDirtyBins,
-            .bUseDirtyRegion = true,
+            .bUseDirtyRegion = false,
             .ptScene = &this.use_as__arm_2d_scene_t,
         };
 
         waveform_view_init(&this.Waveform.tHelper, &tCFG);
+
+        /* fill the window with the lower-limit */
+        do {
+            int16_t iData = -1000;
+            for (int32_t n = 0; n < 200; n++) {
+                arm_2d_scene_waveform_enqueue(  ptThis,
+                                                &iData,
+                                                1);
+            }
+        } while(0);
     } while(0);
-
-#if 0
-    do {
-
-        int16_t iData = -1000;
-        for (int32_t n = 0; n < 50; n++) {
-            iData += 40;
-            arm_2d_scene_waveform_enqueue(  ptThis,
-                                            &iData,
-                                            1);
-        }
-
-    } while(0);
-#endif
 
     /* ------------   initialize members of user_scene_waveform_t end   ---------------*/
 

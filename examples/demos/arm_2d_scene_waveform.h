@@ -98,7 +98,7 @@ ARM_PRIVATE(
     struct {
         waveform_view_t tHelper;
         arm_loader_io_window_t tWindowIO;
-        waveform_view_dirty_bin_t tDirtyBins[10];
+        waveform_view_dirty_bin_t tDirtyBins[8];
     } Waveform;
 )
     /* place your public member here */

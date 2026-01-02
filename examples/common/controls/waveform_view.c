@@ -209,6 +209,30 @@ arm_2d_err_t waveform_view_init(waveform_view_t *ptThis,
         }
     }
 
+    if (this.tCFG.bShowShadow) {
+
+        uint32_t wTemp = *(uint32_t *)&this.tCFG.Shadow.tGradient;
+        this.tCFG.__bShowGradient = ((0 != wTemp) && (0xFFFFFFFF != wTemp));
+
+        if (this.tCFG.__bShowGradient) {
+
+            /* generate opacity ratio */
+            int16_t iOpacityDelta = this.tCFG.Shadow.tGradient.chTopRight
+                                  - this.tCFG.Shadow.tGradient.chTopLeft;
+            int16_t iWidth = this.tCFG.tSize.iWidth;
+            this.Shadow.q16UpperGradientRatio = 
+                div_n_q16(reinterpret_q16_s16(iOpacityDelta), iWidth);
+
+            iOpacityDelta = this.tCFG.Shadow.tGradient.chBottomRight
+                          - this.tCFG.Shadow.tGradient.chBottomLeft;
+            
+            this.Shadow.q16LowerGradientRatio = 
+                div_n_q16(reinterpret_q16_s16(iOpacityDelta), iWidth);
+        }
+    } else {
+        this.tCFG.__bShowGradient = false;
+    }
+
     this.tCFG.__bValid = true;
     
 
@@ -606,6 +630,8 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                         iX * chSampleDataSize, 
                         SEEK_SET);
 
+    int16_t iHeight = this.tCFG.tSize.iHeight;
+
     for (int16_t n = 0; n <= ptROI->tSize.iWidth; n++) {
 
         q16_t q16CurrentSampleY;
@@ -620,6 +646,66 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         int16_t iCurrentSampleY = reinterpret_s16_q16(q16CurrentSampleY);
         int16_t iPreviousSampleY = reinterpret_s16_q16(q16PreviousSampleY);
 
+        /* draw shadow */
+        if (n < ptROI->tSize.iWidth && this.tCFG.bShowShadow) {
+            
+            int16_t iShadowStartY = reinterpret_s16_q16(q16CurrentSampleY) + nDotHeight;
+            COLOUR_INT tShadowColour = this.tCFG.Shadow.tColour.tColour;
+
+            if (this.tCFG.__bShowGradient) {
+
+                q16_t q16UpperOpacity 
+                    = mul_q16(  this.Shadow.q16UpperGradientRatio,
+                                reinterpret_q16_s16(iX))
+                    + reinterpret_q16_s16(this.tCFG.Shadow.tGradient.chTopLeft);
+                                     
+                q16_t q16LowerOpacity 
+                    = mul_q16(  this.Shadow.q16LowerGradientRatio,
+                                reinterpret_q16_s16(iX))
+                    + reinterpret_q16_s16(this.tCFG.Shadow.tGradient.chBottomLeft);
+
+                q16_t q16YGradientRatio = div_n_q16((q16LowerOpacity - q16UpperOpacity),
+                                                    iHeight);
+
+
+                for (int16_t iY = iShadowStartY; iY < iHeight; iY++) {
+                
+                    if (iY >= iYLimit) {
+                        break;
+                    }
+
+                    if (iY >= iYStart) {
+
+                        uint16_t hwOpacity = reinterpret_s16_q16(
+                                                q16UpperOpacity
+                                            +   mul_n_q16(q16YGradientRatio, iY)
+                                            +   0x8000);
+
+                        hwOpacity = 0x100 - hwOpacity;
+
+                        int16_t iYOffset = iY - iYStart;
+                        uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+
+                        __ARM_2D_PIXEL_BLENDING(&tShadowColour, (COLOUR_INT *)pchPixel, hwOpacity);
+                    }
+                }
+
+            } else {
+                for (int16_t iY = iShadowStartY; iY < iHeight; iY++) {
+                
+                    if (iY >= iYLimit) {
+                        break;
+                    }
+
+                    if (iY >= iYStart) {
+                        int16_t iYOffset = iY - iYStart;
+                        uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
+
+                        *(COLOUR_INT *)pchPixel = tShadowColour; 
+                    }
+                }
+            }
+        }
 
         q16_t q16Step = q16CurrentSampleY - q16PreviousSampleY;
         if (abs_q16(q16Step) >= 0x10000) {
@@ -629,7 +715,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                 iAALineStartLeft = iCurrentSampleY;
                 iAALineEndLeft = iPreviousSampleY;
                 iAALineStartRight = iCurrentSampleY + nDotHeight;
-                iAALineEndRight = iPreviousSampleY + nDotHeight;
+                iAALineEndRight = iPreviousSampleY + nDotHeight - 1;
             } else {
                 iAALineStartLeft = iPreviousSampleY + nDotHeight;
                 iAALineEndLeft = iCurrentSampleY + nDotHeight;
@@ -681,7 +767,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
                         int16_t iYOffset = iY - iYStart;
                         uint8_t *pchPixel = pchBuffer + iYOffset * iTargetStrideInByte;
-                        //tBrushColour = GLCD_COLOR_BLUE;
+
                         __ARM_2D_PIXEL_BLENDING(&tBrushColour, (COLOUR_INT *)pchPixel, chOpacity);
                     }
                 }
@@ -689,7 +775,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
             if (n < ptROI->tSize.iWidth) {
                 /* draw dot */
-                for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
+                for (int16_t iY = iCurrentSampleY; iY < iHeight; iY++) {
                     if (iY >= iYLimit) {
                         break;
                     }
@@ -715,7 +801,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
                 int16_t iScores = nDotHeight * 256;
                 bool bFirstPixel = true;
                 /* draw dot */
-                for (int16_t iY = iCurrentSampleY; iY < this.tCFG.tSize.iHeight; iY++) {
+                for (int16_t iY = iCurrentSampleY; iY < iHeight; iY++) {
                     if (iY >= iYLimit) {
                         break;
                     }
@@ -760,7 +846,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
         }
 
         q16PreviousSampleY = q16CurrentSampleY;
-
+        iX ++;
         pchBuffer += sizeof(COLOUR_INT);
     }
 

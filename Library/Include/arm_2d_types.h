@@ -747,6 +747,7 @@ typedef struct arm_2d_padding_t {
  * \brief type for 4 points alpha sample points
  * 
  */
+__attribute__((aligned(4)))
 typedef union arm_2d_alpha_samples_4pts_t {
     struct {
         uint8_t chTopLeft;
