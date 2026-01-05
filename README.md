@@ -6,7 +6,7 @@
 
 **Arm-2D is an open-source project for 2.5D image processing on Cortex processors.**
 
-- Initial target: IoT endpoint devices, white goods, hand-held devices and wearables, especially for devices with **resource-constrained** and **low power** requirements.
+- Initial target: IoT endpoint devices, white goods, handheld devices and wearables, especially those with **resource-constrained**, **low-power** requirements.
 - Initial focus: Graphical User Interface
 
 **Arm-2D consists of:**
@@ -14,7 +14,7 @@
 - Generic software **pixel pipeline** infrastructure for graphic processing
   - A set of rules for adding new algorithms and colour formats
   - A default software implementation and **SIMD acceleration** when [Helium technology](https://developer.arm.com/architectures/instruction-sets/simd-isas/helium) is available.
-  - Supports adding **3rd party hardware accelerators** at low-level in a "feature-agnostic" manner.
+  - Supports adding **3rd party hardware accelerators** at the low level in a "feature-agnostic" manner.
 - A **CMSIS-Pack** for ease of use
 - Examples and Documents
 
@@ -22,27 +22,27 @@
 
 **Position in Ecosystem:**
 
-- **Focus on low-level** and works as **a hardware abstraction layer** for 2.5D image processing.
+- **Focuses on low-level** and works as **a hardware abstraction layer** for 2.5D image processing.
 - **Arm-2D is NOT a GUI.**
   - No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support
 - **Provide conveniences for Arm eco-partners to create value through differentiation.**
-  - Provide the default implementation for commonly used 2.5D operations and **enable 3rd-parties to accelerate application-specific algorithms.**
+  - Provide the default implementation of commonly used 2.5D operations and **enable 3rd-parties to accelerate application-specific algorithms.**
 
 **Current Focus and Objectives:**
 
 - **Help industry partners with technology adoption**
-  - Guidance for integration of Arm-2D into graphic stacks
+  - Guidance for the integration of Arm-2D into graphic stacks
 - **Optimisation for ultra-small memory footprint**
-  - Enable existing Cortex-M processors to use modernised GUI with no or few cost increases.
+  - Enable existing Cortex-M processors to use a modernised GUI with no or few cost increases.
   - Helping customers to cost-down
 
 ## Key Messages for You
 
 - **Arm-2D always keeps light-weight**
-  - Arm-2D keeps an ultra-low memory footprint for both ROM and RAM
+  - Arm-2D maintains an ultra-low memory footprint for both ROM and RAM.
 
-  - Arm-2D uses the commonly available linker features to remove unused functions and data whenever possible.
-    - Only functions that are actually used will take up memory
+  - Arm-2D uses standard linker features to remove unused functions and data whenever possible.
+    - Only functions that are actually used will take up memory.
 
     - Please use feature-specific APIs whenever possible. 
       - For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call `arm_2dp_rgb565_copy_with_src_mask_only()` rather than the generic one, i.e. `arm_2dp_rgb565_copy_with_src_mask()` which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.
@@ -87,7 +87,7 @@ In general, anyone from opensource community can find something interesting from
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (v1.2.5-dev)](#in-this-version-v125-dev)
+  - [In this version (v1.2.5)](#in-this-version-v125-dev)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -107,7 +107,7 @@ In general, anyone from opensource community can find something interesting from
 
 ## Features
 
-### In this version (v1.2.5-dev)
+### In this version (v1.2.5)
 
 Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many **Deep Embedded Display systems** soon after it debuted in 2020.  Now you can find its [precence](https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&origin=HASH_TAG_FROM_FEED) from the [tiniest Cortex-M0](https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg) to the [Raspberry Pi 5 powerhouse](https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg).  The supported features include but not limited to:
 
@@ -121,6 +121,7 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     - Supports Colour-Filling with Alpha-Gradient defined in 4-points, 3-points, horizontal and vertical mode.
       - Supports Mask
       - Supports an optional Opacity
+    - **[new]** Supports mirroring
 
 - **Image Copy (Blit) ** 
 
@@ -139,7 +140,7 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
   - Ready for **monochrome LCD** (the 1bit colour) and **E-ink devices** (the 1bit, 2bits and 4bits colour formats)
     - Using **Gray8** as the internal processing format and converting to target colour format inside the Display Adapter, e.g. `Disp0_DrawBitmap`
     - Provides a dedicated colour solution in the display adapter service for monochrome display devices.
-    - **[new]** Provides a smart **Full-Frame-Refresh** mode for e-ink devices to flush the whole frame for any updates on the screen.
+    - Provides a smart **Full-Frame-Refresh** mode for e-ink devices to flush the whole frame for any updates on the screen.
 
 - **Display Adapter Service for connecting LCD**
 
@@ -158,18 +159,13 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
     - Provides a debug mode for dirty regions
     - Provides optimization for dirty regions to reduce the chances of refreshing overlapped areas.
     - Provides dirty region helper services for ease of use.
-
   - Supports swapping high and low bytes for RGB16 pixels
-
   - Provides a **Scene Player** with various scene switching modes (Fade-In-Fade-Out, Slide, Erase etc.)
-
   - Supports various buffering Modes with a built-in frame buffer pool.
     - Single Buffer/Double-Buffers
     - Provides a helper service for Direct Mode (i.e. 3FB Mode)
     - Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)
-
-  - **[new]** Adds an nano-drawing mode as an alternative option of the Scene Player. 
-
+  - Adds an nano-drawing mode as an alternative option of the Scene Player. 
 - **Transform** (i.e. rotation and scaling)
   - With/Without Colour-keying
   - Supports an optional **Opacity** ratio
@@ -178,18 +174,16 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
   - Supports source masks
   - Supports specifying different scaling ratios for X and Y axes, respectively
   - Supports using floating point numbers (i.e. `float`) to specify the pivot coordinate.
-  - **[new]** Supports using negative scaling ratios for x/y mirroring
-  
+  - Supports using negative scaling ratios for x/y mirroring
+  - **[new]** Supports colour-filling / tile-copy with a transformed mask, optional source mask and target mask.
 - **Filters**
 
   - Generic Anti-alias and Fast IIR-Blur
   - Colour Inversion
-
 - **An Unified and User-Friendly Programmers' Model**
   - APIs can be used in **Synchronous** manner (  **Classic Blocking-code** ) and/or **Asynchronous** manner ( **Event-Driven** )
   - Supports both **bare-metal** and **RTOS** environments
   - Ultra-small memory footprint
-
 - **Helper Services, Tools and Others**
 
   - **Timer Services**
@@ -199,49 +193,37 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
       - Liner: `arm_2d_helper_time_liner_slider` and **[new]** `arm_2d_helper_timer_liner_slider_i64`
       - Cosine: `arm_2d_helper_time_cos_slider`
       - S-curve: `arm_2d_helper_time_half_cos_slider`
-
   - **Virtual Resource**
     - Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.
     - Supports background-image-loading mode that requests **NO** extra PFB block. 
-    - JPEG loaders derived from [TJpgDec](https://elm-chan.org/fsw/tjpgd/) and **[new]** [ZJpgD](https://github.com/JiapengLi/zjpgd)
-      - Supports and Optimized for PFB and Dirty Regions
-    
+    - **Example Loaders** for loading
+      - JPEG images
+      - **[new]** [QOI images](https://qoiformat.org/) (a Lossless image compression format)
+      - **[new]** TrueType fonts via freetype
+      - **[new]** A generic loader for loading user defined image formats, or drawing shapes/masks directly. 
   - **Layout Assistant**
     - Alignments, e.g. `arm_2d_align_centre`, `arm_2d_align_bottom_right` etc.
-    
     - Docking, e.g. `arm_2d_dock_top`,`arm_2d_dock_right`, `arm_2d_dock_vertical`, `__item_line_dock_horizontal` etc.
-    
     - Line Stream Layout, e.g. `__item_line_horizontal` and `__item_line_vertical`
-    
     - Stream Layout (with wrapping), e.g. `__item_horizontal` and `__item_vertical`
-    
-    - A dedicated layout debug mode
-    
     - Users can specify alignment in `arm_2d_layout()` macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.
-    
   - RTOS Helper Services for CMSIS-RTOS2 and RT-Thread
-  
   - **Templates**
     - Provides templates for user controls and scenes.
     - Scene templates for Meter, Watch and Fitness trackers
     - Provides a template for adding new RTOS support.
-    
   - **Tools**
     - A `img2c.py` for generating arm-2d resources from user-specified images
     - A `ttf2c.py` for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font
-    - A `jinja2c.py` for code generation.
-  
   - **Demos**
     - Demos for various scenarios
     - A dedicated demo for Helium-ACI acceleration. 
     - A set of demos for monochrome devices
-  
+    - **[new]** A set of demos for drawing masks, waveform etc. 
   - **Project Templates**
     - A project template for Windows, Linux and MacOS platform
     - A project template for Raspberry Pi Pico
-  
 - **CMSIS-Pack is available.**
-
 - **Ready and Welcome 3rd party adoption**
 
   - Accelerating [LVGL](https://lvgl.io/) as [soft-GPU](https://docs.lvgl.io/master/details/integration/renderers/arm2d.html) when Helium is ready
@@ -261,7 +243,7 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
 
 With the increasing introduction of smart IoT edge devices into our daily lives, users accustomed to smartphone-like graphical user interfaces (GUIs) now expect a similar modernized experience, even when using microcontroller-based products. This trend has been long recognized and understood by Arm's ecosystem partners.
 
-Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to facilitate 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as [LVGL](https://lvgl.io/), are gaining popularity on GitHub.
+Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to improve the 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as [LVGL](https://lvgl.io/), are gaining popularity on GitHub.
 
 In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. Pursuing a user experience comparable to a smartphone has become a fundamental requirement for many products.
 
@@ -294,7 +276,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 - Armv6-M processors: Cortex-M0/M0+/M1/SC000
 - Armv7-M processors: Cortex-M3/M4/M7/SC300
 - Armv8-M processors: Cortex-M23/M33/Star-MC1/M35P
-- Armv8.1-M processors: Cortex-M55/M85/M52
+- Armv8.1-M processors: Cortex-M52/M55/M85
 
 **The library is designed with ACI (Arm Custom Instructions) in mind.** Accelerations implemented with user-defined instructions can be integrated into the library easily as software extensions and it is transparent for upper-layer software.
 
@@ -309,22 +291,23 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
   - See **section 3.2** for details.
 - The library supports **Arm Compiler 6**, **GCC**, **LLVM** and **IAR**
   - See **section 5** for details.
+  - Arm Compiler 5 is deprecated.
 
 ## 3 Examples, Benchmark and Templates
 
 ### 3.1 Summary
 
-| Projects                                          | Description                                                  | Folder                                                       | Note                                   |
-| :------------------------------------------------ | :----------------------------------------------------------- | :----------------------------------------------------------- | :------------------------------------- |
-| \[template\]\[bare-metal\]\[mps2\]                | It is a bare-metal project for processors running on the [MPS2 platforms](https://developer.arm.com/Tools%20and%20Software/MPS2%20Plus%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[mps2\]                  |                                        |
-| \[template\]\[bare-metal\]\[an552\]               | It is a bare-metal project for the Cortex-M55 processor([AN552](https://developer.arm.com/downloads/view/AN552)) running on the [MPS3 platforms](https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[an552\]                 |                                        |
-| \[template\]\[bare-metal\]\[cortex-m85\]          | It is a bare-metal project for the Cortex-M85 processor.     | examples/\[template\]\[bare-metal\]\[cortex-m85\]            |                                        |
-| \[template\]\[bare-metal\]\[helium-aci\]          | It is a bare-metal project to demonstrate the Cortex-M55 ([AN552](https://developer.arm.com/downloads/view/AN552))  Helium ACI running on [MPS3 platforms](https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[helium-aci\]            |                                        |
-| \[template\]\[bare-metal\]\[STM32F746G-Discovery] | It is a bare-metal project for the [STM32F746G-Discovery](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) board. | examples/\[template\]\[bare-metal\]\[cSTM32F746G-Discovery\] | Arm Compiler 5, Arm Compiler 6 and GCC |
-| \[template\]\[cmsis-rtos2\]                       | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]                         |                                        |
-| \[template\]\[pc\]\[vscode\]                      | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\]                        |                                        |
-| \[template\]\[csolution\]                         | It is a csolution project template.                          | examples/\[template\]\[csolution\]                           |                                        |
-| \[template\]\[pico\]\[oled]                       | An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display. | examples/\[template\]\[pico\]\[oled]                         |                                        |
+| Projects                                          | Description                                                  | Folder                                                      | Note                                   |
+| :------------------------------------------------ | :----------------------------------------------------------- | :---------------------------------------------------------- | :------------------------------------- |
+| \[template\]\[bare-metal\]\[mps2\]                | It is a bare-metal project for processors running on the [MPS2 platforms](https://developer.arm.com/Tools%20and%20Software/MPS2%20Plus%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[mps2\]                 |                                        |
+| \[template\]\[bare-metal\]\[an552\]               | It is a bare-metal project for the Cortex-M55 processor([AN552](https://developer.arm.com/downloads/view/AN552)) running on the [MPS3 platforms](https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[an552\]                |                                        |
+| \[template\]\[bare-metal\]\[cortex-m85\]          | It is a bare-metal project for the Cortex-M85 processor.     | examples/\[template\]\[bare-metal\]\[cortex-m85\]           |                                        |
+| \[template\]\[bare-metal\]\[helium-aci\]          | It is a bare-metal project to demonstrate the Cortex-M55 ([AN552](https://developer.arm.com/downloads/view/AN552))  Helium ACI running on [MPS3 platforms](https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board). | examples/\[template\]\[bare-metal\]\[helium-aci\]           |                                        |
+| \[template\]\[bare-metal\]\[STM32F746G-Discovery] | It is a bare-metal project for the [STM32F746G-Discovery](https://www.st.com/en/evaluation-tools/32f746gdiscovery.html) board. | examples/\[template\]\[bare-metal\]\[STM32F746G-Discovery\] | Arm Compiler 5, Arm Compiler 6 and GCC |
+| \[template\]\[cmsis-rtos2\]                       | It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS. | examples/\[template\]\[cmsis-rtos2\]                        |                                        |
+| \[template\]\[pc\]\[vscode\]                      | It is a project template for PC (i.e. **MacOS**, **Windows** and **Linux**) using **VS Code + SDL2** | examples/\[template\]\[pc\]\[vscode\]                       |                                        |
+| \[template\]\[csolution\]                         | It is a csolution project template.                          | examples/\[template\]\[csolution\]                          |                                        |
+| \[template\]\[pico\]\[oled]                       | An MDK project template for Raspberry Pi Pico to demonstrate OLED (monochrome) display. | examples/\[template\]\[pico\]\[oled]                        |                                        |
 
 ### 3.2 Benchmark
 
@@ -434,4 +417,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-12 September 2025
+05 January 2026
