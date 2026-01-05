@@ -123,14 +123,13 @@ Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply
       - Supports an optional Opacity
     - **[new]** Supports mirroring
 
-- **Image Copy (Blit) ** 
-
+- **Image Copy (Blit)** 
   - With or without Colour-Keying
   - Supports four mirroring modes: No-mirroring, X-mirroring, Y-mirroring and XY-mirroring
   - Supports **masks** on the source side and/or the target side
   - Provides API variants that accept **Opacity** as arguments.
   -  Implicit colour conversion for **ARGB8888** (**ccca8888**)
-
+  
 - **Supported Colour formats**
 
   - **GRAY8 (8-bit Grayscale)**, **RGB565** and **RGB888**
